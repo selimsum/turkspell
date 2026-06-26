@@ -1,0 +1,32 @@
+# Test for suffix chaining and stem class voicing/vowel-drop/doubling
+SET UTF-8
+FLAG long
+LANG tr
+
+TRY aeıioöuübcdfgğhjklmnprsştvyz
+
+# Stem class V1: voicing consonant stem
+SFX V1 Y 2
+SFX V1 0 0 .
+SFX V1 p b/AC,DA,P1 p
+
+# Stem class B1: non-voicing consonant stem
+SFX B1 Y 1
+SFX B1 0 0 .
+
+# AC flag (Accusative): applied directly or via chaining
+SFX AC Y 1
+SFX AC 0 ı [^aeıioöuü]
+
+# DA flag (Dative)
+SFX DA Y 1
+SFX DA 0 a [^aeıioöuü]
+
+# LO flag (Locative): unvoiced ending
+SFX LO Y 2
+SFX LO 0 ta [çfhkpsşt]
+SFX LO 0 da [^çfhkpsşt]
+
+# P1 flag (1sg possessive)
+SFX P1 Y 1
+SFX P1 0 ım [^aeıioöuü]

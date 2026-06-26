@@ -1,0 +1,9 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Corpus and wordlist files
+*.txt
+*.csv
+*.json
+*.aff.old
