@@ -61,6 +61,8 @@ import sys
 import os
 import json
 from pathlib import Path
+from utf8_flag_mapping import remap_flag_string
+
 
 # ---------------------------------------------------------------------------
 # Flag mapping
@@ -330,6 +332,11 @@ def migrate_dictionary(input_path: str = 'tr.dic',
         if warning:
             all_warnings.append(warning)
         if new_line is not None:
+            new_line = new_line.rstrip('\n')
+            if '/' in new_line:
+                word, flags_str = new_line.split('/', 1)
+                utf8_flags = remap_flag_string(flags_str)
+                new_line = f"{word}/{utf8_flags}"
             out_lines.append(new_line + '\n')
             migrated += 1
 

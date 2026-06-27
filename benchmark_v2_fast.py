@@ -19,7 +19,7 @@ SEED     = 42
 
 DICTIONARIES = {
     'v1 (current)':       str(BASE / 'tr_v1'),
-    'v2 (new FLAG long)': str(BASE / 'tr'),
+    'v2 (FLAG UTF-8)':    str(BASE / 'tr'),
     'tdd-ai/hunspell-tr': str(BASE / 'external_dictionaries' / 'tdd-ai'     / 'tr_TR'),
     'harunzafer':         str(BASE / 'external_dictionaries' / 'harunzafer' / 'tr_TR'),
     'selimsum':           str(BASE / 'external_dictionaries' / 'selimsum'   / 'tr'),
@@ -157,9 +157,23 @@ def benchmark(dic_base: str, rows: list, name: str) -> dict:
 
 
 def main():
-    print(f"Loading {TEST_CSV}...")
-    with open(TEST_CSV, encoding='utf-8') as f:
-        rows = list(csv.DictReader(f))
+    test_csv = TEST_CSV
+    if len(sys.argv) > 1:
+        test_csv = Path(sys.argv[1])
+    print(f"Loading {test_csv}...")
+    rows = []
+    with open(test_csv, encoding='utf-8') as f:
+        # Read the first line to check for headers
+        first_line = f.readline()
+        f.seek(0)
+        if 'gold' in first_line or 'input' in first_line:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+        else:
+            reader = csv.reader(f)
+            for parts in reader:
+                if len(parts) >= 2:
+                    rows.append({'gold': parts[0].strip(), 'input': parts[1].strip()})
     print(f"Loaded {len(rows)} test pairs.  "
           f"Suggestion sample: {SAMPLE_N or 'all'} words  seed={SEED}\n")
 
@@ -191,10 +205,10 @@ def main():
         print(f"{m:<20}" + ''.join(cell(n, m) for n in names))
     print(sep)
 
-    if 'v1 (current)' in results and 'v2 (new FLAG long)' in results:
+    if 'v1 (current)' in results and 'v2 (FLAG UTF-8)' in results:
         print("\nv2 vs v1 delta:")
         for m in metrics:
-            d = results['v2 (new FLAG long)'][m] - results['v1 (current)'][m]
+            d = results['v2 (FLAG UTF-8)'][m] - results['v1 (current)'][m]
             print(f"  {m:<20} {'+' if d>=0 else ''}{d:.2f}%")
 
 
