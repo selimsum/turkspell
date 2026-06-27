@@ -437,6 +437,13 @@ def _plural_cases(pl_vowel: str, harmony: str) -> list[str]:
         f"{pl}{cop_sa}",
         # -ken
         f"{pl}ken",
+        # 3sg/3pl possessive of plural cases
+        f"{pl}{acc_v}yl{dat_v}",       # larıyla/leriyle (instrumental)
+        f"{pl}{acc_v}yl{dat_v}/CL",    # larıyla/leriyle + copula
+        f"{pl}n{eq_v}",                # larınca/lerince (equative)
+        f"{pl}n{eq_v}/CL",             # larınca/lerince + copula
+        f"{pl}n{acc_v}n",              # larının/lerinin (genitive)
+        f"{pl}n{acc_v}n/CL",           # larının/lerinin + copula
     ]
     # Also relative-ki on genitive and locative
     gen_form = f"{pl}{gen_v}"
@@ -962,6 +969,7 @@ SET UTF-8
 FLAG long
 NOSUGGEST NS
 LANG tr
+WORDCHARS '
 
 # Suggestion parameters
 TRY aıeiouödgbsnrlhmyçtzkşvğpcfjAIEİOUÖDGBSNRLHMYÇTZKŞVĞPCFJ
@@ -978,7 +986,7 @@ MAP uüUÜ
 MAP ıiIİ
 MAXDIFF 2
 
-REP 28
+REP 38
 REP a â
 REP â a
 REP u û
@@ -1007,6 +1015,16 @@ REP bb p
 REP pp b
 REP cc c
 REP kk g
+REP ğ y
+REP y ğ
+REP h ğ
+REP ğ h
+REP a e
+REP e a
+REP d t
+REP t d
+REP p b
+REP b p
 """
 
 
@@ -1137,6 +1155,17 @@ def generate_grammar_v2():
     print(f"tr_v2.aff size: {size_kb:.1f} KB")
 
 
+def get_verbal_noun_chain(stem_flag: str) -> str:
+    """Verbal nouns (like -mak, -me, -iş) should only take case, plural, possessive, and copula.
+    They must never take noun/adjective derivations (like -lik, -li, -siz, -ci, -leş, -len).
+    """
+    if stem_flag in ("PX", "NX"):
+        return stem_flag
+    chain = get_noun_chain(stem_flag)
+    for deriv in ["LI", "SZ", "LK", "CI", "CK", "DL", "DT", "DE"]:
+        chain = chain.replace(deriv, "")
+    return chain
+
 def _generate_verb_flags_from_v1() -> str:
     """
     Re-use verb content from v1 tr.aff directly (already generated on disk).
@@ -1200,15 +1229,15 @@ def _generate_verb_flags_from_v1() -> str:
                     if stem_flag.startswith('V'):
                         # Voicing class: generate unvoiced and voiced rules!
                         # 1. Unvoiced (ends in k) -> cons_chain (exclude the stem flag V1/V2/V3/V4)
-                        cons_chain = get_noun_chain(stem_flag)
+                        cons_chain = get_verbal_noun_chain(stem_flag)
                         if cons_chain.startswith(stem_flag):
                             cons_chain = cons_chain[len(stem_flag):]
                         
                         unvoiced_line = f"{prefix}/{cons_chain} {suffix}"
                         out_lines.append(unvoiced_line)
                         
-                        # 2. Voiced (ends in ğ) -> vowel_chain
-                        vowel_chain = get_vowel_chain(stem_flag) + "CLLILKSZCIDLDTDE"
+                        # 2. Voiced (ends in ğ) -> vowel_chain (restricted - no derivations)
+                        vowel_chain = get_vowel_chain(stem_flag) + "CL"
                         
                         # Replace final 'k' of the suffix in prefix with 'ğ'
                         parts = prefix.split()
@@ -1222,7 +1251,7 @@ def _generate_verb_flags_from_v1() -> str:
                             out_lines.append(line)
                     else:
                         # Non-voicing class: normal chain
-                        chain = get_noun_chain(stem_flag)
+                        chain = get_verbal_noun_chain(stem_flag)
                         normal_line = f"{prefix}/{chain} {suffix}"
                         out_lines.append(normal_line)
                 else:

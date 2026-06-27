@@ -1,5 +1,7 @@
 import json
 import re
+from utf8_flag_mapping import LONG_TO_UTF8, remap_flag_string
+
 
 # Vowels definition
 FRONT_VOWELS = set('eioüîiöEİÖÜÎ')
@@ -548,6 +550,23 @@ def compile_dictionary():
         except Exception as e:
             print(f"Warning: Failed to load {oscar_path}: {e}")
 
+    # Load dynamically harvested undetected words if they exist
+    harvested_path = 'harvested_words.json'
+    if os.path.exists(harvested_path):
+        try:
+            with open(harvested_path, 'r', encoding='utf-8') as f:
+                harvested_list = json.load(f)
+            for w in harvested_list:
+                # Add as standard Noun entry
+                custom_entries.append({
+                    'lemma': w,
+                    'pos': 'Noun',
+                    'attributes': []
+                })
+            print(f"Loaded {len(harvested_list)} harvested words from {harvested_path}.")
+        except Exception as e:
+            print(f"Warning: Failed to load harvested words: {e}")
+
     lexicon.extend(custom_entries)
     
     # We will define a set of flags for our paradigms:
@@ -748,12 +767,54 @@ def compile_dictionary():
             f.write(f"{entry}\n")
             
     # Write tr.aff by calling our generator script
-    print("Calling generate_grammar_rules.py to generate tr.aff...")
+    print("Calling generate_grammar_rules.py to generate baseline rules...")
     try:
         from generate_grammar_rules import generate_grammar_v2
         generate_grammar_v2()
+        
+        # Now remap tr_v2.aff to tr.aff
+        print("Remapping rules to FLAG UTF-8 and writing to tr.aff...")
+        with open('tr_v2.aff', 'r', encoding='utf-8') as f:
+            content = f.read()
+            
+        content = content.replace("FLAG long", "FLAG UTF-8")
+        lines = content.split('\n')
+        new_lines = []
+        for line in lines:
+            line_strip = line.strip()
+            if not line_strip or line_strip.startswith('#'):
+                new_lines.append(line)
+                continue
+            parts = line.split()
+            if len(parts) == 2 and parts[0] == 'NOSUGGEST':
+                flag = parts[1]
+                if flag in LONG_TO_UTF8:
+                    parts[1] = LONG_TO_UTF8[flag]
+                new_lines.append(" ".join(parts))
+            elif len(parts) >= 4 and parts[0] in ('SFX', 'PFX') and parts[2] in ('Y', 'N'):
+                flag = parts[1]
+                if flag in LONG_TO_UTF8:
+                    parts[1] = LONG_TO_UTF8[flag]
+                new_lines.append(" ".join(parts))
+            elif len(parts) >= 2 and parts[0] in ('SFX', 'PFX'):
+                flag = parts[1]
+                if flag in LONG_TO_UTF8:
+                    parts[1] = LONG_TO_UTF8[flag]
+                if len(parts) >= 4:
+                    add_field = parts[3]
+                    if '/' in add_field:
+                        prefix_str, flags_str = add_field.split('/', 1)
+                        remapped_flags = remap_flag_string(flags_str)
+                        parts[3] = f"{prefix_str}/{remapped_flags}"
+                new_lines.append(" ".join(parts))
+            else:
+                new_lines.append(line)
+                
+        with open('tr.aff', 'w', encoding='utf-8', newline='\n') as f:
+            f.write("\n".join(new_lines))
+            
     except Exception as e:
-        print(f"Error calling grammar generator: {e}")
+        print(f"Error compiling/remapping grammar generator: {e}")
         
     print("Compile complete!")
 
