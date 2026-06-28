@@ -1451,8 +1451,8 @@ def _generate_verb_flags_from_v1() -> str:
         90:  "PX",
     }
 
-    print("  Reading tr_v1.aff to extract verb sections...")
-    with open('tr_v1.aff', 'r', encoding='utf-8') as f:
+    print("  Reading data/tr_v1.aff to extract verb sections...")
+    with open('data/tr_v1.aff', 'r', encoding='utf-8') as f:
         content = f.read()
 
     lines = content.split('\n')
