@@ -85,7 +85,7 @@ def main():
         sys.stdout.reconfigure(encoding='utf-8')
 
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    corpus_path = os.path.join(base_dir, 'magazine_corpus.txt')
+    corpus_path = os.path.join(base_dir, 'data', 'magazine_corpus.txt')
     if not os.path.exists(corpus_path):
         print(f"Error: {corpus_path} not found.")
         return

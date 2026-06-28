@@ -23,7 +23,7 @@ from collections import defaultdict
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 BASE = Path(__file__).parent.parent
-TEST_CSV = BASE / 'official_test_v2_fixed.csv'
+TEST_CSV = BASE / 'data' / 'official_test_v2_fixed.csv'
 
 DICTIONARIES = {
     'v1 (current)':      str(BASE / 'tr_v1'),
