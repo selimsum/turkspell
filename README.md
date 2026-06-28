@@ -12,18 +12,21 @@ Turkspell has been evaluated on the standard V1 and V2 official test sets of the
 
 | Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Zemberek NLP** | 99.06 | 94.05 | 96.49 | 99.24 |
-| **Turkspell (Ours - Final)** | 98.58 | 92.97 | **95.69** | 86.81 |
-| **Velhasil** | 96.77 | 94.19 | 95.46 | 93.92 |
-| **Hunspell (hrzafer)** | 92.73 | 96.51 | 94.58 | 79.68 |
+| **Turkspell (Ours)** (14.94 MB) | **99.25** | 93.20 | **96.13** | 84.48 |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.19 | 94.36 | 95.75 | **91.88** |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 92.56 | **96.51** | 94.49 | 78.40 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 97.77 | 94.36 | 96.03 | 92.09 |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 81.12 | 97.17 | 88.42 | 75.80 |
 
 ### Official Test V2 (10,000 words)
 
 | Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell (Ours - Final)** | 98.31 | 95.13 | **96.70** | 52.96 |
-| **Hunspell (hrzafer)** | 95.38 | 97.27 | 96.32 | 48.93 |
-| **Velhasil** | 96.74 | 94.73 | 95.73 | 52.99 |
+| **Turkspell (Ours)** (14.94 MB) | **99.72** | 95.13 | **97.37** | 53.61 |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.87 | 95.23 | 96.53 | 55.09 |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 95.26 | 97.27 | 96.25 | 48.92 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 98.23 | 95.19 | 96.69 | **55.34** |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 90.86 | **97.47** | 94.05 | 47.01 |
 
 ---
 
@@ -80,7 +83,7 @@ Turkspell uses a **Dynamic Chained Flags** architecture to dynamically combine s
    - **y-buffering & Vowel Harmony**: Suffix flags are split by ending type (uppercase for consonant endings, lowercase for vowel endings, e.g. `A1`/`a1` for accusative) to safely apply proper buffer vowels without using complex multi-byte bracket classes (`[...]` negated groups), bypassing UTF-8 parsing constraints in Hunspell.
 4. **Obsolete/Obscure Roots Pruning (`NOSUGGEST`)**:
    - To prevent obscure or archaic Zemberek lemmas (e.g. *şad*, *Abidyan*, *akasma*) from matching spelling errors and cluttering spelling suggestions, we analyze all lexicon stems against the Wikipedia and magazine corpora.
-   - Any root with a combined frequency of **<= 2** (frequencies 0, 1, and 2, including all common inflections) in the corpora is flagged as obsolete and annotated with Hunspell's `NOSUGGEST` (`NS`) flag.
+   - Any root with a combined frequency of **0** (never appearing in the corpora, including all common inflections) is flagged as obsolete and annotated with Hunspell's `NOSUGGEST` (`NS`) flag.
    - Stems marked with `NS` are **fully accepted as correct** when typed, but are excluded from suggestions for typos, keeping the correction list focused and relevant.
 
 ## How to Obtain & Generate Open-Source Datasets
@@ -156,18 +159,21 @@ Turkspell, [tdd-ai/spell-checking-and-correction](https://github.com/tdd-ai/spel
 
 | Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Zemberek NLP** | 99.06 | 94.05 | 96.49 | 99.24 |
-| **Turkspell (Bizim - Final)** | 98.58 | 92.97 | **95.69** | 86.81 |
-| **Velhasil** | 96.77 | 94.19 | 95.46 | 93.92 |
-| **Hunspell (hrzafer)** | 92.73 | 96.51 | 94.58 | 79.68 |
+| **Turkspell (Bizim)** (14.94 MB) | **99.25** | 93.20 | **96.13** | 84.48 |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.19 | 94.36 | 95.75 | **91.88** |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 92.56 | **96.51** | 94.49 | 78.40 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 97.77 | 94.36 | 96.03 | 92.09 |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 81.12 | 97.17 | 88.42 | 75.80 |
 
 ### Resmi Test V2 (10.000 kelime)
 
 | Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell (Bizim - Final)** | 98.31 | 95.13 | **96.70** | 52.96 |
-| **Hunspell (hrzafer)** | 95.38 | 97.27 | 96.32 | 48.93 |
-| **Velhasil** | 96.74 | 94.73 | 95.73 | 52.99 |
+| **Turkspell (Bizim)** (14.94 MB) | **99.72** | 95.13 | **97.37** | 53.61 |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.87 | 95.23 | 96.53 | 55.09 |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 95.26 | 97.27 | 96.25 | 48.92 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 98.23 | 95.19 | 96.69 | **55.34** |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 90.86 | **97.47** | 94.05 | 47.01 |
 
 ---
 
@@ -224,7 +230,7 @@ Turkspell, ekleri Hunspell motoru içinde dinamik olarak birleştirmek için bir
    - **Kaynaştırma Harfleri & Ünlü Uyumu**: Ek bayrakları son ses harfinin sesli/sessiz oluşuna göre ayrılmıştır (sessiz için büyük harf, sesli için küçük harf, örn. belirtme hali için `A1`/`a1`). Bu sayede Hunspell içindeki UTF-8 kısıtlamalarına takılan karmaşık negatif karakter sınıfları (`[...]` negated groups) kullanılmadan kaynaştırma harfleri güvenle uygulanır.
 4. **Eski/Kullanımdan Kalkmış Köklerin Budanması (`NOSUGGEST`)**:
    - Zemberek sözlüğünde yer alan ancak günümüz Türkçesinde neredeyse hiç kullanılmayan eski/arkaik kelimelerin (örn. *şad*, *Abidyan*, *akasma*) yazım hatalarını kabul edip öneri listelerini kirletmesini önlemek amacıyla, tüm kelime kökleri Wikipedia ve dergi külliyatları üzerinden analiz edilir.
-   - Külliyatlarda toplam frekansı **<= 2** (tüm çekimli biçimleriyle birlikte 0, 1 veya 2 kez geçen) olan kökler "kullanımdan kalkmış" kabul edilerek Hunspell'in `NOSUGGEST` (`NS`) bayrağı ile işaretlenir.
+   - Külliyatlarda toplam frekansı **0** olan (tüm çekimli biçimleriyle birlikte hiç geçmeyen) kökler "kullanımdan kalkmış" kabul edilerek Hunspell'in `NOSUGGEST` (`NS`) bayrağı ile işaretlenir.
    - `NS` bayraklı kökler yazıldığında **tamamen doğru kabul edilir**, ancak başka yazım hataları için bir düzeltme önerisi olarak sunulmaz; böylece düzeltme listelerinin kalitesi korunur.
 
 ## Açık Kaynaklı Veri Kümelerini Edinme ve Üretme

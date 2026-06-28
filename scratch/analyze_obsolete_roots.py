@@ -69,8 +69,8 @@ def main():
     scratch_dir = os.path.dirname(os.path.abspath(__file__))
     workspace = os.path.dirname(scratch_dir)
     lexicon_path = os.path.join(workspace, 'zemberek_lexicon.json')
-    wiki_path = os.path.join(workspace, 'wiki_corpus.txt')
-    mag_path = os.path.join(workspace, 'magazine_corpus.txt')
+    wiki_path = os.path.join(workspace, 'data', 'wiki_corpus.txt')
+    mag_path = os.path.join(workspace, 'data', 'magazine_corpus.txt')
     
     if not os.path.exists(lexicon_path):
         print(f"Error: {lexicon_path} not found.")
@@ -139,10 +139,10 @@ def main():
             obsolete_lemmas.add(lemma_lower)
         elif freq == 1:
             freq_1.append((lemma, pos))
-            obsolete_lemmas.add(lemma_lower)
+            # Do not add to obsolete_lemmas so they can be suggested
         elif freq == 2:
             freq_2.append((lemma, pos))
-            obsolete_lemmas.add(lemma_lower)
+            # Do not add to obsolete_lemmas so they can be suggested
             
     print(f"Found {len(freq_0)} stems with frequency = 0 (freq < 1)")
     print(f"Found {len(freq_1)} stems with frequency = 1")
