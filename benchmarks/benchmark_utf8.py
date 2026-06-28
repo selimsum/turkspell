@@ -10,7 +10,7 @@ from pathlib import Path
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 BASE     = Path(__file__).parent.parent
-TEST_CSV = BASE / 'official_test_v2_fixed.csv'
+TEST_CSV = BASE / 'data' / 'official_test_v2_fixed.csv'
 SAMPLE_N = 50    # words for Top-1/Top-5
 SEED     = 42
 

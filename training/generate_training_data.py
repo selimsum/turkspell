@@ -10,17 +10,19 @@ def turkish_lowercase(text):
     return text.replace('I', 'ı').replace('İ', 'i').replace('Î', 'î').replace('Â', 'â').replace('Û', 'û').lower()
 
 def load_english_words():
-    english_path = "english_words_large.txt"
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    english_path = os.path.join(base_dir, "data", "english_words_large.txt")
     if not os.path.exists(english_path):
-        print("Warning: english_words_large.txt not found. English cleaning will be skipped.")
+        print(f"Warning: {english_path} not found. English cleaning will be skipped.")
         return set()
     with open(english_path, "r", encoding="utf-8", errors="ignore") as f:
         return {turkish_lowercase(line.strip()) for line in f if line.strip()}
 
 def load_roots():
-    roots_path = "merged_dictionary_cleaned.txt"
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    roots_path = os.path.join(base_dir, "data", "merged_dictionary_cleaned.txt")
     if not os.path.exists(roots_path):
-        print("Warning: merged_dictionary_cleaned.txt not found.")
+        print(f"Warning: {roots_path} not found.")
         return set()
     with open(roots_path, "r", encoding="utf-8", errors="ignore") as f:
         return {turkish_lowercase(line.strip()) for line in f if line.strip()}
@@ -139,8 +141,10 @@ def generate_training_data():
     proper_names = set()
     candidates = Counter()
     
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     for corp in ["wiki_corpus.txt", "magazine_corpus.txt"]:
-        cand, prop = process_corpus(corp, english_words, proper_names)
+        corp_path = os.path.join(base_dir, "data", corp)
+        cand, prop = process_corpus(corp_path, english_words, proper_names)
         candidates.update(cand)
         proper_names.update(prop)
         
