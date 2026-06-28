@@ -22,7 +22,7 @@ from collections import defaultdict
 # Force UTF-8 output on Windows
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-BASE = Path(__file__).parent
+BASE = Path(__file__).parent.parent
 TEST_CSV = BASE / 'official_test_v2_fixed.csv'
 
 DICTIONARIES = {

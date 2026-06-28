@@ -92,9 +92,58 @@ CONS_RE     = "[^aeıioöuü]"
 def sfx(flag: str, strip: str, add: str, condition: str) -> str:
     return f"SFX {flag} {strip} {add} {condition}"
 
+def sfx_copula(flag: str, strip: str, add: str, cond: str, rules: list):
+    lv = None
+    for c in reversed(add):
+        if c in 'aeıioöuüâîû':
+            lv = c.lower()
+            break
+    if not lv:
+        rules.append(sfx(flag, strip, add, cond))
+        return
+        
+    is_vowel = add[-1] in 'aeıioöuüâîû'
+    if lv in 'aı':
+        sim_stem = "oda" if is_vowel else "bak"
+    elif lv in 'ei':
+        sim_stem = "kedi" if is_vowel else "ev"
+    elif lv in 'ou':
+        sim_stem = "kutu" if is_vowel else "uç"
+    else:
+        sim_stem = "ütü" if is_vowel else "gör"
+
+    
+    if is_vowel:
+        copulas = [
+            "ydI", "ydIm", "ydIn", "ydIk", "ydInIz", "ydIlAr",
+            "ymIş", "ymIşIm", "ymIşsIn", "ymIşIz", "ymIşsInIz", "ymIşlAr",
+            "ysA", "ysAm", "ysAn", "ysAk", "ysAnIz", "ysAlAr",
+            "yIm", "sIn", "yIz", "sInIz", "lAr",
+            "dIr", "dIrlAr", "lArdIr", "yken",
+            "yImdIr", "sIndIr", "yIzdIr", "sInIzdIr",
+        ]
+    else:
+        copulas = [
+            "dI", "dIm", "dIn", "dIk", "dInIz", "dIlAr",
+            "tI", "tIm", "tIn", "tIk", "tInIz", "tIlAr",
+            "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
+            "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
+            "Im", "sIn", "Iz", "sInIz", "lAr",
+            "dIr", "tIr", "dIrlAr", "tIrlAr", "lArdIr", "ken",
+            "ImdIr", "sIndIr", "IzdIr", "sInIzdIr",
+        ]
+        
+    rules.append(sfx(flag, strip, add, cond))
+    for cop in copulas:
+        resolved = harmonize(sim_stem, cop)
+        if resolved:
+            rules.append(sfx(flag, strip, add + resolved, cond))
+
 def sfx_ki(flag: str, strip: str, add: str, cond: str, rules: list, chain_copula: bool = True):
-    base_add = add + "/CL" if chain_copula else add
-    rules.append(sfx(flag, strip, base_add, cond))
+    if chain_copula:
+        sfx_copula(flag, strip, add, cond, rules)
+    else:
+        rules.append(sfx(flag, strip, add, cond))
     is_loc = any(add.endswith(x) for x in ['da', 'de', 'ta', 'te', 'nda', 'nde'])
     is_gen = any(add.endswith(x) for x in ['ın', 'in', 'un', 'ün', 'nın', 'nin', 'nun', 'nün'])
     ki_suffixes = [
@@ -174,7 +223,10 @@ def get_noun_chain(stem_flag: str) -> str:
         cases = f"{acc_f}{dat_f}{loc_f}{abl_f}{gen_f}{ins_f}{eq_f}"
         possessives = f"{p3}{p1}{p2s}{p1pl}{p2pl}"
 
-    return f"{stem_flag}{cases}{plural}{possessives}CLLILKSZCIDLDTDE"
+    copula_flag = "CL" if is_back else "cl"
+
+    return f"{stem_flag}{cases}{plural}{possessives}{copula_flag}LILKSZCIDLDTDE"
+
 
 def get_vowel_chain(stem_flag: str) -> str:
     back_flags = {"B1", "B2", "V1", "V2", "D1", "D2", "C1", "C2", "G1", "G2"}
@@ -335,17 +387,15 @@ def gen_ab_flags() -> list[str]:
     """Ablative flags: R1 (back), R2 (front)"""
     blocks = []
     # R1
-    rules = [
-        sfx("R1", "0", "dan/CL", "[^çfhkpsşt]"),
-        sfx("R1", "0", "tan/CL", "[çfhkpsşt]")
-    ]
-    blocks.append(make_flag_block("R1", rules))
+    rules = []
+    sfx_copula("R1", "0", "dan", "[^çfhkpsşt]", rules)
+    sfx_copula("R1", "0", "tan", "[çfhkpsşt]", rules)
+    blocks.append(make_flag_block("R1", unique(rules)))
     # R2
-    rules = [
-        sfx("R2", "0", "den/CL", "[^çfhkpsşt]"),
-        sfx("R2", "0", "ten/CL", "[çfhkpsşt]")
-    ]
-    blocks.append(make_flag_block("R2", rules))
+    rules = []
+    sfx_copula("R2", "0", "den", "[^çfhkpsşt]", rules)
+    sfx_copula("R2", "0", "ten", "[çfhkpsşt]", rules)
+    blocks.append(make_flag_block("R2", unique(rules)))
     return blocks
 
 def gen_ge_flags() -> list[str]:
@@ -366,27 +416,25 @@ def gen_ge_flags() -> list[str]:
 def gen_in_flags() -> list[str]:
     """Instrumental flags: I1/I2 (consonant) and i1/i2 (vowel)"""
     blocks = []
-    blocks.append(make_flag_block("I1", [sfx("I1", "0", "la/CL", ".")]))
-    blocks.append(make_flag_block("I2", [sfx("I2", "0", "le/CL", ".")]))
-    blocks.append(make_flag_block("i1", [sfx("i1", "0", "yla/CL", ".")]))
-    blocks.append(make_flag_block("i2", [sfx("i2", "0", "yle/CL", ".")]))
+    rules_i1 = []; sfx_copula("I1", "0", "la", ".", rules_i1); blocks.append(make_flag_block("I1", unique(rules_i1)))
+    rules_i2 = []; sfx_copula("I2", "0", "le", ".", rules_i2); blocks.append(make_flag_block("I2", unique(rules_i2)))
+    rules_i1_v = []; sfx_copula("i1", "0", "yla", ".", rules_i1_v); blocks.append(make_flag_block("i1", unique(rules_i1_v)))
+    rules_i2_v = []; sfx_copula("i2", "0", "yle", ".", rules_i2_v); blocks.append(make_flag_block("i2", unique(rules_i2_v)))
     return blocks
 
 def gen_eq_flags() -> list[str]:
     """Equative flags: Q1 (back), Q2 (front)"""
     blocks = []
     # Q1
-    rules = [
-        sfx("Q1", "0", "ca/CL", "[^çfhkpsşt]"),
-        sfx("Q1", "0", "ça/CL", "[çfhkpsşt]")
-    ]
-    blocks.append(make_flag_block("Q1", rules))
+    rules = []
+    sfx_copula("Q1", "0", "ca", "[^çfhkpsşt]", rules)
+    sfx_copula("Q1", "0", "ça", "[çfhkpsşt]", rules)
+    blocks.append(make_flag_block("Q1", unique(rules)))
     # Q2
-    rules = [
-        sfx("Q2", "0", "ce/CL", "[^çfhkpsşt]"),
-        sfx("Q2", "0", "çe/CL", "[çfhkpsşt]")
-    ]
-    blocks.append(make_flag_block("Q2", rules))
+    rules = []
+    sfx_copula("Q2", "0", "ce", "[^çfhkpsşt]", rules)
+    sfx_copula("Q2", "0", "çe", "[çfhkpsşt]", rules)
+    blocks.append(make_flag_block("Q2", unique(rules)))
     return blocks
 
 
@@ -411,6 +459,7 @@ def _plural_cases(pl_vowel: str, harmony: str) -> list[str]:
     cop_di = 'dı' if harmony == 'back' else 'di'
     cop_m  = 'mış' if harmony == 'back' else 'miş'
     cop_sa = 'sa' if harmony == 'back' else 'se'
+    cop_flag = "CL" if harmony == 'back' else "CP"
     
     suffixes = [
         # accusative
@@ -437,14 +486,39 @@ def _plural_cases(pl_vowel: str, harmony: str) -> list[str]:
         f"{pl}{cop_sa}",
         # -ken
         f"{pl}ken",
-        # 3sg/3pl possessive of plural cases
-        f"{pl}{acc_v}yl{dat_v}",       # larıyla/leriyle (instrumental)
-        f"{pl}{acc_v}yl{dat_v}/CL",    # larıyla/leriyle + copula
-        f"{pl}n{eq_v}",                # larınca/lerince (equative)
-        f"{pl}n{eq_v}/CL",             # larınca/lerince + copula
-        f"{pl}n{acc_v}n",              # larının/lerinin (genitive)
-        f"{pl}n{acc_v}n/CL",           # larının/lerinin + copula
     ]
+    
+    # 3sg/3pl possessive of plural cases (with pre-combined copulas)
+    poss_cases = [
+        f"{pl}{acc_v}",           # ları/leri (bare possessive)
+        f"{pl}{acc_v}yl{dat_v}",  # larıyla/leriyle
+        f"{pl}n{eq_v}",           # larınca/lerince
+        f"{pl}n{acc_v}n",         # larının/lerinin
+    ]
+    for pc in poss_cases:
+        suffixes.append(pc)
+        is_vow = pc[-1] in 'aeıioöuü'
+        sim_s = "oda" if harmony == 'back' else "ev"
+        copulas = [
+            "ydI", "ydIm", "ydIn", "ydIk", "ydInIz", "ydIlAr",
+            "ymIş", "ymIşIm", "ymIşsIn", "ymIşIz", "ymIşsInIz", "ymIşlAr",
+            "ysA", "ysAm", "ysAn", "ysAk", "ysAnIz", "ysAlAr",
+            "yIm", "sIn", "yIz", "sInIz", "lAr",
+            "dIr", "dIrlAr", "lArdIr", "yken",
+            "yImdIr", "sIndIr", "yIzdIr", "sInIzdIr",
+        ] if is_vow else [
+            "dI", "dIm", "dIn", "dIk", "dInIz", "dIlAr",
+            "tI", "tIm", "tIn", "tIk", "tInIz", "tIlAr",
+            "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
+            "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
+            "Im", "sIn", "Iz", "sInIz", "lAr",
+            "dIr", "tIr", "dIrlAr", "tIrlAr", "lArdIr", "ken",
+            "ImdIr", "sIndIr", "IzdIr", "sInIzdIr",
+        ]
+        for cop in copulas:
+            resolved = harmonize(sim_s, cop)
+            if resolved:
+                suffixes.append(pc + resolved)
     # Also relative-ki on genitive and locative
     gen_form = f"{pl}{gen_v}"
     loc_form = f"{pl}d{dat_v}"
@@ -464,16 +538,16 @@ def gen_plural_back(flag: str = "PB") -> str:
         rules.append(sfx(flag, "0", sfx_str, "."))
     # 1sg/2sg/1pl/2pl possessive of plural (back harmony)
     for poss, acc_v, cases in [
-        ("larım",   "ı", ["", "ı", "a", "da", "dan", "ın", "la"]),
-        ("ların",   "ı", ["", "ı", "a", "da", "dan", "ın", "la"]),
-        ("larımız", "ı", ["", "ı", "a", "da", "dan", "ın", "la"]),
-        ("larınız", "ı", ["", "ı", "a", "da", "dan", "ın", "la"]),
+        ("larım",   "ı", ["", "ı", "a", "da", "dan", "ın", "la", "ca"]),
+        ("ların",   "ı", ["", "ı", "a", "da", "dan", "ın", "la", "ca"]),
+        ("larımız", "ı", ["", "ı", "a", "da", "dan", "ın", "la", "ca"]),
+        ("larınız", "ı", ["", "ı", "a", "da", "dan", "ın", "la", "ca"]),
     ]:
         for c in cases:
             if c in ("da", "ın"):
                 sfx_ki(flag, "0", poss + c, ".", rules)
             elif c in ("", "dan", "la"):
-                rules.append(sfx(flag, "0", poss + c + "/CL", "."))
+                sfx_copula(flag, "0", poss + c, ".", rules)
             else:
                 rules.append(sfx(flag, "0", poss + c, "."))
     return make_flag_block(flag, unique(rules))
@@ -487,16 +561,16 @@ def gen_plural_front(flag: str = "PF") -> str:
         rules.append(sfx(flag, "0", sfx_str, "."))
     # 1sg/2sg/1pl/2pl possessive of plural (front harmony)
     for poss, cases in [
-        ("lerim",   ["", "i", "e", "de", "den", "in", "le"]),
-        ("lerin",   ["", "i", "e", "de", "den", "in", "le"]),
-        ("lerimiz", ["", "i", "e", "de", "den", "in", "le"]),
-        ("leriniz", ["", "i", "e", "de", "den", "in", "le"]),
+        ("lerim",   ["", "i", "e", "de", "den", "in", "le", "ce"]),
+        ("lerin",   ["", "i", "e", "de", "den", "in", "le", "ce"]),
+        ("lerimiz", ["", "i", "e", "de", "den", "in", "le", "ce"]),
+        ("leriniz", ["", "i", "e", "de", "den", "in", "le", "ce"]),
     ]:
         for c in cases:
             if c in ("de", "in"):
                 sfx_ki(flag, "0", poss + c, ".", rules)
             elif c in ("", "den", "le"):
-                rules.append(sfx(flag, "0", poss + c + "/CL", "."))
+                sfx_copula(flag, "0", poss + c, ".", rules)
             else:
                 rules.append(sfx(flag, "0", poss + c, "."))
     return make_flag_block(flag, unique(rules))
@@ -522,17 +596,20 @@ def gen_all_possessive_flags() -> list[str]:
         abl = loc + "n"
         gen_s = acc + "n"
         ins = loc
+        cop_flag = "CL" if back else "CP"
 
+        eq_v = "ca" if back else "ce"
         rules = []
         for base_poss, after_vowel in [(sg, False), (m, True)]:
             cond = VOWEL_RE if after_vowel else CONS_RE
-            rules.append(sfx(flag, "0", base_poss + "/CL", cond))
+            sfx_copula(flag, "0", base_poss, cond, rules)
             rules.append(sfx(flag, "0", base_poss + acc,       cond))
             rules.append(sfx(flag, "0", base_poss + loc,       cond))
             sfx_ki(flag, "0", base_poss + "d" + loc,           cond, rules)
-            rules.append(sfx(flag, "0", base_poss + "d" + loc + "n/CL", cond))
+            sfx_copula(flag, "0", base_poss + "d" + loc + "n", cond, rules)
             sfx_ki(flag, "0", base_poss + gen_s,               cond, rules)
-            rules.append(sfx(flag, "0", base_poss + "l" + loc + "/CL", cond))
+            sfx_copula(flag, "0", base_poss + "l" + loc,       cond, rules)
+            rules.append(sfx(flag, "0", base_poss + eq_v,      cond))
         blocks.append(make_flag_block(flag, unique(rules)))
     return blocks
 
@@ -551,27 +628,27 @@ def gen_3sg_poss_flags() -> list[str]:
 
         rules = []
         # After consonant: just -[vowel]
-        rules.append(sfx(flag, "0", acc_v + "/CL",            f"[^aeıioöuü]"))
+        sfx_copula(flag, "0", acc_v,            f"[^aeıioöuü]", rules)
         # After vowel: -s[vowel] (buffer s)
-        rules.append(sfx(flag, "0", f"s{acc_v}/CL",          f"[aeıioöuü]"))
+        sfx_copula(flag, "0", f"s{acc_v}",          f"[aeıioöuü]", rules)
 
         # Cases after poss (n-buffer before all cases)
         # 1. Consonant ending stems (condition: [^aeıioöuü])
         rules.append(sfx(flag, "0", acc_v + "n" + acc_v,         "[^aeıioöuü]")) # acc
         rules.append(sfx(flag, "0", acc_v + "n" + loc_v,         "[^aeıioöuü]")) # dat
         sfx_ki(flag, "0", acc_v + "nd" + loc_v,        "[^aeıioöuü]", rules)      # loc
-        rules.append(sfx(flag, "0", acc_v + "nd" + loc_v + "n/CL",  "[^aeıioöuü]")) # abl
+        sfx_copula(flag, "0", acc_v + "nd" + loc_v + "n",  "[^aeıioöuü]", rules) # abl
         sfx_ki(flag, "0", acc_v + "n" + acc_v + "n",   "[^aeıioöuü]", rules)      # gen
-        rules.append(sfx(flag, "0", acc_v + "yl" + loc_v + "/CL",        "[^aeıioöuü]")) # ins
+        sfx_copula(flag, "0", acc_v + "yl" + loc_v,        "[^aeıioöuü]", rules) # ins
 
         # 2. Vowel ending stems (condition: [aeıioöuü])
         poss_s = f"s{acc_v}"
         rules.append(sfx(flag, "0", poss_s + "n" + acc_v,         "[aeıioöuü]")) # acc
         rules.append(sfx(flag, "0", poss_s + "n" + loc_v,         "[aeıioöuü]")) # dat
         sfx_ki(flag, "0", poss_s + "nd" + loc_v,        "[aeıioöuü]", rules)      # loc
-        rules.append(sfx(flag, "0", poss_s + "nd" + loc_v + "n/CL",  "[aeıioöuü]")) # abl
+        sfx_copula(flag, "0", poss_s + "nd" + loc_v + "n",  "[aeıioöuü]", rules) # abl
         sfx_ki(flag, "0", poss_s + "n" + acc_v + "n",   "[aeıioöuü]", rules)      # gen
-        rules.append(sfx(flag, "0", poss_s + "yl" + loc_v + "/CL",        "[aeıioöuü]")) # ins
+        sfx_copula(flag, "0", poss_s + "yl" + loc_v,        "[aeıioöuü]", rules) # ins
 
         blocks.append(make_flag_block(flag, unique(rules)))
     return blocks
@@ -591,16 +668,19 @@ def gen_2sg_poss_flags() -> list[str]:
         sg = f"{acc_v}n"
         m  = "n"
 
+        eq_v = "ca" if back else "ce"
         rules = []
         for base_poss, cond in [(sg, CONS_RE), (m, VOWEL_RE)]:
-            rules.append(sfx(flag, "0", base_poss + "/CL", cond))
+            sfx_copula(flag, "0", base_poss, cond, rules)
             rules.append(sfx(flag, "0", base_poss + acc_v,        cond))
             rules.append(sfx(flag, "0", base_poss + loc_v,        cond))
             sfx_ki(flag, "0", base_poss + "d" + loc_v,  cond, rules)
-            rules.append(sfx(flag, "0", base_poss + "d" + loc_v + "n/CL", cond))
+            sfx_copula(flag, "0", base_poss + "d" + loc_v + "n", cond, rules)
             sfx_ki(flag, "0", base_poss + acc_v + "n",  cond, rules)
-            rules.append(sfx(flag, "0", base_poss + "l" + loc_v + "/CL",  cond))
+            sfx_copula(flag, "0", base_poss + "l" + loc_v,  cond, rules)
+            rules.append(sfx(flag, "0", base_poss + eq_v,       cond))
         blocks.append(make_flag_block(flag, unique(rules)))
+
     return blocks
 
 
@@ -619,16 +699,19 @@ def gen_1pl_poss_flags() -> list[str]:
              ("umuz" if rounded and back else ("imiz" if not back and not rounded else "ümüz"))
         m  = "mız" if back and not rounded else ("muz" if rounded and back else ("miz" if not back and not rounded else "müz"))
 
+        eq_v = "ca" if back else "ce"
         rules = []
         for base_poss, cond in [(sg, CONS_RE), (m, VOWEL_RE)]:
-            rules.append(sfx(flag, "0", base_poss + "/CL", cond))
+            sfx_copula(flag, "0", base_poss, cond, rules)
             rules.append(sfx(flag, "0", base_poss + acc_v,        cond))
             rules.append(sfx(flag, "0", base_poss + loc_v,        cond))
             sfx_ki(flag, "0", base_poss + "d" + loc_v,  cond, rules)
-            rules.append(sfx(flag, "0", base_poss + "d" + loc_v + "n/CL", cond))
+            sfx_copula(flag, "0", base_poss + "d" + loc_v + "n", cond, rules)
             sfx_ki(flag, "0", base_poss + acc_v + "n",  cond, rules)
-            rules.append(sfx(flag, "0", base_poss + "l" + loc_v + "/CL",  cond))
+            sfx_copula(flag, "0", base_poss + "l" + loc_v,  cond, rules)
+            rules.append(sfx(flag, "0", base_poss + eq_v,       cond))
         blocks.append(make_flag_block(flag, unique(rules)))
+
     return blocks
 
 
@@ -647,15 +730,17 @@ def gen_2pl_poss_flags() -> list[str]:
              ("umuz" if rounded and back else ("iniz" if not back and not rounded else "ünüz"))
         m  = "nız" if back and not rounded else ("nuz" if rounded and back else ("niz" if not back and not rounded else "nüz"))
 
+        eq_v = "ca" if back else "ce"
         rules = []
         for base_poss, cond in [(sg, CONS_RE), (m, VOWEL_RE)]:
-            rules.append(sfx(flag, "0", base_poss + "/CL", cond))
+            sfx_copula(flag, "0", base_poss, cond, rules)
             rules.append(sfx(flag, "0", base_poss + acc_v,        cond))
             rules.append(sfx(flag, "0", base_poss + loc_v,        cond))
             sfx_ki(flag, "0", base_poss + "d" + loc_v,  cond, rules)
-            rules.append(sfx(flag, "0", base_poss + "d" + loc_v + "n/CL", cond))
+            sfx_copula(flag, "0", base_poss + "d" + loc_v + "n", cond, rules)
             sfx_ki(flag, "0", base_poss + acc_v + "n",  cond, rules)
-            rules.append(sfx(flag, "0", base_poss + "l" + loc_v + "/CL",  cond))
+            sfx_copula(flag, "0", base_poss + "l" + loc_v,  cond, rules)
+            rules.append(sfx(flag, "0", base_poss + eq_v,       cond))
         blocks.append(make_flag_block(flag, unique(rules)))
     return blocks
 
@@ -664,10 +749,7 @@ def gen_2pl_poss_flags() -> list[str]:
 # SECTION 5: Copula flag
 # ---------------------------------------------------------------------------
 
-def gen_copula_flag(flag: str = "CL") -> str:
-    """All nominal copula forms — uses harmonize() with stem-based conditions.
-    Conditions: match last 1 or 2 chars of the stem (no $ anchor needed — Hunspell end-anchors implicitly).
-    """
+def gen_copula_flag_back(flag: str = "CL") -> str:
     COPULAS_VOWEL = [
         "ydI", "ydIm", "ydIn", "ydIk", "ydInIz", "ydIlAr",
         "ymIş", "ymIşIm", "ymIşsIn", "ymIşIz", "ymIşsInIz", "ymIşlAr",
@@ -686,25 +768,43 @@ def gen_copula_flag(flag: str = "CL") -> str:
         "ImdIr", "sIndIr", "IzdIr", "sInIzdIr",
     ]
     rules = []
-    
-    # Each harmony class: (sim_stem, is_vowel_end, last_v, copulas, condition)
-    harmony_cases = [
-        ("oda",   False, "a",  COPULAS_CONS,  "[aı][^ıiaeöoüu]"),  # back unrounded cons
-        ("uç",    False, "u",  COPULAS_CONS,  "[ou][^ıiaeöoüu]"),  # back rounded cons
-        ("ev",    False, "e",  COPULAS_CONS,  "[ei][^ıiaeöoüu]"),  # front unrounded cons
-        ("gör",   False, "ö",  COPULAS_CONS,  "[öü][^ıiaeöoüu]"),  # front rounded cons
-        ("araba", True,  "a",  COPULAS_VOWEL, "[aı]"),              # back unrounded vowel
-        ("kutu",  True,  "u",  COPULAS_VOWEL, "[ou]"),              # back rounded vowel
-        ("kedi",  True,  "e",  COPULAS_VOWEL, "[ei]"),              # front unrounded vowel
-        ("ütü",   True,  "ö",  COPULAS_VOWEL, "[öü]"),              # front rounded vowel
+    for cop_tmpl in COPULAS_VOWEL:
+        resolved = harmonize("oda", cop_tmpl)
+        if resolved:
+            rules.append(sfx(flag, "0", resolved, "."))
+    for cop_tmpl in COPULAS_CONS:
+        resolved = harmonize("bak", cop_tmpl)
+        if resolved:
+            rules.append(sfx(flag, "0", resolved, "."))
+    return make_flag_block(flag, unique(rules))
+
+def gen_copula_flag_front(flag: str = "cl") -> str:
+    COPULAS_VOWEL = [
+        "ydI", "ydIm", "ydIn", "ydIk", "ydInIz", "ydIlAr",
+        "ymIş", "ymIşIm", "ymIşsIn", "ymIşIz", "ymIşsInIz", "ymIşlAr",
+        "ysA", "ysAm", "ysAn", "ysAk", "ysAnIz", "ysAlAr",
+        "yIm", "sIn", "yIz", "sInIz", "lAr",
+        "dIr", "dIrlAr", "lArdIr", "yken",
+        "yImdIr", "sIndIr", "yIzdIr", "sInIzdIr",
     ]
-    
-    for sim_stem, is_vowel_end, last_v, copulas, cond in harmony_cases:
-        for cop_tmpl in copulas:
-            resolved = harmonize(sim_stem, cop_tmpl)
-            if resolved:
-                rules.append(sfx(flag, "0", resolved, cond))
-    
+    COPULAS_CONS = [
+        "dI", "dIm", "dIn", "dIk", "dInIz", "dIlAr",
+        "tI", "tIm", "tIn", "tIk", "tInIz", "tIlAr",
+        "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
+        "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
+        "Im", "sIn", "Iz", "sInIz", "lAr",
+        "dIr", "tIr", "dIrlAr", "tIrlAr", "lArdIr", "ken",
+        "ImdIr", "sIndIr", "IzdIr", "sInIzdIr",
+    ]
+    rules = []
+    for cop_tmpl in COPULAS_VOWEL:
+        resolved = harmonize("kedi", cop_tmpl)
+        if resolved:
+            rules.append(sfx(flag, "0", resolved, "."))
+    for cop_tmpl in COPULAS_CONS:
+        resolved = harmonize("ev", cop_tmpl)
+        if resolved:
+            rules.append(sfx(flag, "0", resolved, "."))
     return make_flag_block(flag, unique(rules))
 
 
@@ -971,9 +1071,18 @@ NOSUGGEST NS
 LANG tr
 WORDCHARS '
 
+# Break characters (allow breaking at hyphens, en-dashes, and em-dashes)
+BREAK 5
+BREAK -
+BREAK ^-
+BREAK -$
+BREAK –
+BREAK —
+
+
 # Suggestion parameters
-TRY aıeiouödgbsnrlhmyçtzkşvğpcfjAIEİOUÖDGBSNRLHMYÇTZKŞVĞPCFJ
-KEY qwertyuıopğü|asdfghjklşi|zxcvbnmçö|fgğıodrnhpqw|uıevazyktsx|jövcçzsb
+KEY qwertyuıopğü|asdfghjklşi|zxcvbnmçö|QWERTYUIOPĞÜ|ASDFGHJKLŞİ|ZXCVBNMÇÖ|fgğıodrnhpqw|uıevazyktsx|jövcçzsb|FGĞIODRNHPQW|UIEVAZYKTSX|JÖVCÇZSB|qaz|wsx|edc|rfv|tgb|yhn|ujm|ıkö|olç|pş|QAZ|WSX|EDC|RFV|TGB|YHN|UJM|IKÖ|OLÇ|PŞ
+TRY aeilrıtdknsmyuböuşzcgçhpvğfjAEİLRITDKNSMYUBÖUŞZCGÇHPVĞFJ
 MAP 9
 MAP aâAÂ
 MAP uûUÛ
@@ -984,9 +1093,9 @@ MAP sşSŞ
 MAP oöOÖ
 MAP uüUÜ
 MAP ıiIİ
-MAXDIFF 2
+MAXDIFF 3
 
-REP 38
+REP 52
 REP a â
 REP â a
 REP u û
@@ -1025,6 +1134,20 @@ REP d t
 REP t d
 REP p b
 REP b p
+REP z s
+REP s z
+REP k g
+REP g k
+REP ın in
+REP in ın
+REP un ün
+REP ün un
+REP da de
+REP de da
+REP lar ler
+REP ler lar
+REP la le
+REP le la
 """
 
 
@@ -1107,10 +1230,11 @@ def generate_grammar_v2():
     for block in gen_2pl_poss_flags():
         content += block + "\n"
 
-    # --- Copula flag ---
-    print("Generating copula flag (CL)...")
-    content += "\n# COPULA FLAG\n"
-    content += gen_copula_flag() + "\n"
+    # --- Copula flags ---
+    print("Generating copula flags (CL, cl)...")
+    content += "\n# COPULA FLAGS\n"
+    content += gen_copula_flag_back() + "\n"
+    content += gen_copula_flag_front() + "\n"
 
     # --- Relative -ki flag ---
     print("Generating relative -ki flag (KI)...")
@@ -1143,6 +1267,12 @@ def generate_grammar_v2():
     content += "\n# PREFIX FLAG\n"
     content += gen_prefix_flag() + "\n"
 
+    # --- Proper Noun flags ---
+    print("Generating Proper Noun case/possessive flags with apostrophes...")
+    content += "\n# PROPER NOUN CASE/POSSESSIVE FLAGS\n"
+    for block in gen_proper_flags():
+        content += block + "\n"
+
     print("Writing tr_v2.aff...")
     with open('tr_v2.aff', 'w', encoding='utf-8', newline='\n') as f:
         f.write(content)
@@ -1153,6 +1283,125 @@ def generate_grammar_v2():
     import os
     size_kb = os.path.getsize('tr_v2.aff') / 1024
     print(f"tr_v2.aff size: {size_kb:.1f} KB")
+
+
+def gen_proper_flags() -> list[str]:
+    blocks = []
+    
+    # uA (Accusative: 'ü)
+    blocks.append(make_flag_block("uA", [sfx("uA", "0", "'ü", ".")]))
+    
+    # uY (Dative: 'e)
+    blocks.append(make_flag_block("uY", [sfx("uY", "0", "'e", ".")]))
+    
+    # uL (Locative: 'de / 'te)
+    blocks.append(make_flag_block("uL", [
+        sfx("uL", "0", "'de", "[^çfhkpsşt]"),
+        sfx("uL", "0", "'te", "[çfhkpsşt]")
+    ]))
+    
+    # uR (Ablative: 'den / 'ten)
+    blocks.append(make_flag_block("uR", [
+        sfx("uR", "0", "'den/cl", "[^çfhkpsşt]"),
+        sfx("uR", "0", "'ten/cl", "[çfhkpsşt]")
+    ]))
+    
+    # uN (Genitive: 'ün)
+    rules_uN = []
+    sfx_ki("uN", "0", "'ün", ".", rules_uN)
+    blocks.append(make_flag_block("uN", unique(rules_uN)))
+    
+    # uI (Instrumental: 'le)
+    blocks.append(make_flag_block("uI", [sfx("uI", "0", "'le/cl", ".")]))
+    
+    # uQ (Equative: 'ce / 'çe)
+    blocks.append(make_flag_block("uQ", [
+        sfx("uQ", "0", "'ce/cl", "[^çfhkpsşt]"),
+        sfx("uQ", "0", "'çe/cl", "[çfhkpsşt]")
+    ]))
+    
+    # uP (3sg possessive: 'ü / 'sü)
+    rules_uP = [
+        sfx("uP", "0", "'ü/cl", "[^aeıioöuü]"),
+        sfx("uP", "0", "'sü/cl", "[aeıioöuü]"),
+        sfx("uP", "0", "'ünün", "[^aeıioöuü]"), # gen
+        sfx("uP", "0", "'ünü", "[^aeıioöuü]"), # acc
+        sfx("uP", "0", "'üne", "[^aeıioöuü]"), # dat
+        sfx("uP", "0", "'ünde", "[^aeıioöuü]"), # loc
+        sfx("uP", "0", "'ünden/cl", "[^aeıioöuü]"), # abl
+        sfx("uP", "0", "'üyle/cl", "[^aeıioöuü]"), # ins
+    ]
+    sfx_ki("uP", "0", "'ünde", "[^aeıioöuü]", rules_uP)
+    sfx_ki("uP", "0", "'ünün", "[^aeıioöuü]", rules_uP)
+    blocks.append(make_flag_block("uP", unique(rules_uP)))
+    
+    # u1 (1sg possessive: 'üm)
+    rules_u1 = [
+        sfx("u1", "0", "'üm/cl", "[^aeıioöuü]"),
+        sfx("u1", "0", "'ümü", "[^aeıioöuü]"),
+        sfx("u1", "0", "'üme", "[^aeıioöuü]"),
+        sfx("u1", "0", "'ümden/cl", "[^aeıioöuü]"),
+        sfx("u1", "0", "'ümle/cl", "[^aeıioöuü]"),
+    ]
+    sfx_ki("u1", "0", "'ümde", "[^aeıioöuü]", rules_u1)
+    sfx_ki("u1", "0", "'ümün", "[^aeıioöuü]", rules_u1)
+    blocks.append(make_flag_block("u1", unique(rules_u1)))
+    
+    # u2 (2sg possessive: 'ün)
+    rules_u2 = [
+        sfx("u2", "0", "'ün/cl", "[^aeıioöuü]"),
+        sfx("u2", "0", "'ünü", "[^aeıioöuü]"),
+        sfx("u2", "0", "'üne", "[^aeıioöuü]"),
+        sfx("u2", "0", "'ünden/cl", "[^aeıioöuü]"),
+        sfx("u2", "0", "'ünle/cl", "[^aeıioöuü]"),
+    ]
+    sfx_ki("u2", "0", "'ünde", "[^aeıioöuü]", rules_u2)
+    sfx_ki("u2", "0", "'ünün", "[^aeıioöuü]", rules_u2)
+    blocks.append(make_flag_block("u2", unique(rules_u2)))
+    
+    # u3 (1pl possessive: 'ümüz)
+    rules_u3 = [
+        sfx("u3", "0", "'ümüz/cl", "[^aeıioöuü]"),
+        sfx("u3", "0", "'ümüzü", "[^aeıioöuü]"),
+        sfx("u3", "0", "'ümüze", "[^aeıioöuü]"),
+        sfx("u3", "0", "'ümüzden/cl", "[^aeıioöuü]"),
+        sfx("u3", "0", "'ümüzle/cl", "[^aeıioöuü]"),
+    ]
+    sfx_ki("u3", "0", "'ümüzde", "[^aeıioöuü]", rules_u3)
+    sfx_ki("u3", "0", "'ümüzün", "[^aeıioöuü]", rules_u3)
+    blocks.append(make_flag_block("u3", unique(rules_u3)))
+    
+    # u4 (2pl possessive: 'ünüz)
+    rules_u4 = [
+        sfx("u4", "0", "'ünüz/cl", "[^aeıioöuü]"),
+        sfx("u4", "0", "'ünüzü", "[^aeıioöuü]"),
+        sfx("u4", "0", "'ünüze", "[^aeıioöuü]"),
+        sfx("u4", "0", "'ünüzden/cl", "[^aeıioöuü]"),
+        sfx("u4", "0", "'ünüzle/cl", "[^aeıioöuü]"),
+    ]
+    sfx_ki("u4", "0", "'ünüzde", "[^aeıioöuü]", rules_u4)
+    sfx_ki("u4", "0", "'ünüzün", "[^aeıioöuü]", rules_u4)
+    blocks.append(make_flag_block("u4", unique(rules_u4)))
+    
+    # uC (Proper Nominal Copula: 'dir, 'dirler, etc.)
+    rules_uC = []
+    COPULAS_PROP = [
+        "'di", "'dim", "'din", "'dik", "'diniz", "'diler",
+        "'ti", "'tim", "'tin", "'tik", "'tiniz", "'tiler",
+        "'miş", "'mişim", "'mişsin", "'mişiz", "'mişsiniz", "'mişler",
+        "'se", "'sem", "'sen", "'sek", "'seniz", "'seler",
+        "'im", "'sin", "'iz", "'siniz", "'ler",
+        "'dir", "'tir", "'dirler", "'tirler", "'lerdir", "'ken",
+        "'imdir", "'sindir", "'izdir", "'sinizdir",
+    ]
+    for cop_tmpl in COPULAS_PROP:
+        resolved = harmonize("gör", cop_tmpl)
+        if resolved:
+            rules_uC.append(sfx("uC", "0", resolved, "[öü][^ıiaeöoüu]"))
+            
+    blocks.append(make_flag_block("uC", unique(rules_uC)))
+    
+    return blocks
 
 
 def get_verbal_noun_chain(stem_flag: str) -> str:

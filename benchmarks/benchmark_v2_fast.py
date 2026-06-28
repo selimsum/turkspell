@@ -12,13 +12,12 @@ from pathlib import Path
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-BASE     = Path(__file__).parent
+BASE     = Path(__file__).parent.parent
 TEST_CSV = BASE / 'official_test_v2_fixed.csv'
-SAMPLE_N = 50    # words for Top-1/Top-5 (small to keep under timeout)
+SAMPLE_N = 500    # words for Top-1/Top-5 (small to keep under timeout)
 SEED     = 42
 
 DICTIONARIES = {
-    'v1 (current)':       str(BASE / 'tr_v1'),
     'v2 (FLAG UTF-8)':    str(BASE / 'tr'),
     'tdd-ai/hunspell-tr': str(BASE / 'external_dictionaries' / 'tdd-ai'     / 'tr_TR'),
     'harunzafer':         str(BASE / 'external_dictionaries' / 'harunzafer' / 'tr_TR'),
@@ -205,10 +204,10 @@ def main():
         print(f"{m:<20}" + ''.join(cell(n, m) for n in names))
     print(sep)
 
-    if 'v1 (current)' in results and 'v2 (FLAG UTF-8)' in results:
-        print("\nv2 vs v1 delta:")
+    if 'tdd-ai/hunspell-tr' in results and 'v2 (FLAG UTF-8)' in results:
+        print("\nv2 vs tdd-ai delta:")
         for m in metrics:
-            d = results['v2 (FLAG UTF-8)'][m] - results['v1 (current)'][m]
+            d = results['v2 (FLAG UTF-8)'][m] - results['tdd-ai/hunspell-tr'][m]
             print(f"  {m:<20} {'+' if d>=0 else ''}{d:.2f}%")
 
 

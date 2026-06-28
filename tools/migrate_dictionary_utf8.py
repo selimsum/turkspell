@@ -1,6 +1,16 @@
 import os
 import sys
 import json
+
+# Add parent directory to path so it can import from root when run from tools/
+base_dir = os.path.dirname(os.path.abspath(__file__))
+if os.path.basename(base_dir) in ('tools', 'scripts'):
+    project_root = os.path.dirname(base_dir)
+else:
+    project_root = base_dir
+
+sys.path.append(project_root)
+
 from utf8_flag_mapping import remap_flag_string
 from migrate_dictionary import migrate_line
 
@@ -8,9 +18,9 @@ def migrate_dictionary_utf8(input_path: str = 'tr.dic',
                             output_path: str = 'tr_utf8.dic',
                             max_warnings: int = 50):
     """Migrate tr.dic to FLAG UTF-8 format by first getting the 2-char flags and remapping them."""
-    # Try loading obsolete lemmas (same path as migrate_dictionary.py)
+    # Try loading obsolete lemmas (relative to project root)
     obsolete_set = set()
-    obsolete_path = r"C:\Users\selim\.gemini\antigravity-ide\brain\367fb0b0-eb2a-4a2c-9259-f2c7a24d09eb\scratch\obsolete_lemmas.json"
+    obsolete_path = os.path.join(project_root, 'scratch', 'obsolete_lemmas.json')
     if os.path.exists(obsolete_path):
         try:
             with open(obsolete_path, 'r', encoding='utf-8') as f:

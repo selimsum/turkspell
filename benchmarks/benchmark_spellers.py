@@ -84,7 +84,8 @@ def main():
     if hasattr(sys.stdout, 'reconfigure'):
         sys.stdout.reconfigure(encoding='utf-8')
 
-    corpus_path = 'magazine_corpus.txt'
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    corpus_path = os.path.join(base_dir, 'magazine_corpus.txt')
     if not os.path.exists(corpus_path):
         print(f"Error: {corpus_path} not found.")
         return
@@ -121,9 +122,9 @@ def main():
     print(f"Total unique sub-words to check: {len(sub_words_to_check)}")
 
     spellers = {
-        "Turkspell": "c:\\gemini\\turkspell\\tr",
-        "TDD (hunspell-tr)": "C:\\gemini\\hunspell-tr\\tr",
-        "hunspell-tr-moz": "C:\\gemini\\hunspell-tr-moz\\tr"
+        "Turkspell": os.path.join(base_dir, "tr"),
+        "TDD (hunspell-tr)": os.path.join(base_dir, "external_dictionaries", "tdd-ai", "tr_TR"),
+        "hunspell-tr-moz": os.path.join(base_dir, "external_dictionaries", "selimsum", "tr")
     }
 
     results = {}

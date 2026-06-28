@@ -310,13 +310,14 @@ def main():
     if hasattr(sys.stdout, 'reconfigure'):
         sys.stdout.reconfigure(encoding='utf-8')
 
-    corpus_path = 'anayasa.txt'
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    corpus_path = os.path.join(base_dir, 'anayasa.txt')
     if not os.path.exists(corpus_path):
         print(f"Error: {corpus_path} not found.")
         return
         
-    test_set_path = 'spell-checking-and-correction/evaluation/data/one_million_test_set.csv'
-    test_set_fixed_path = 'spell-checking-and-correction/evaluation/data/one_million_test_set_fixed.csv'
+    test_set_path = os.path.join(base_dir, 'spell-checking-and-correction/evaluation/data/one_million_test_set.csv')
+    test_set_fixed_path = os.path.join(base_dir, 'spell-checking-and-correction/evaluation/data/one_million_test_set_fixed.csv')
     
     if not os.path.exists(test_set_path) or not os.path.exists(test_set_fixed_path):
         print("Error: Test set CSV files are missing.")
@@ -342,11 +343,11 @@ def main():
 
     # Dictionary configurations (renamed to GitHub Repository Names)
     spellers = {
-        "Turkspell": os.path.abspath("tr"),
-        "tdd-ai/hunspell-tr": os.path.abspath("external_dictionaries/tdd-ai/tr_TR"),
-        "vdemir/hunspell-tr": os.path.abspath("external_dictionaries/vdemir/tr_TR"),
-        "harunzafer/hunspell-tr": os.path.abspath("external_dictionaries/harunzafer/tr_TR"),
-        "selimsum/hunspell-tr-moz": os.path.abspath("external_dictionaries/selimsum/tr")
+        "Turkspell": os.path.join(base_dir, "tr"),
+        "tdd-ai/hunspell-tr": os.path.join(base_dir, "external_dictionaries/tdd-ai/tr_TR"),
+        "vdemir/hunspell-tr": os.path.join(base_dir, "external_dictionaries/vdemir/tr_TR"),
+        "harunzafer/hunspell-tr": os.path.join(base_dir, "external_dictionaries/harunzafer/tr_TR"),
+        "selimsum/hunspell-tr-moz": os.path.join(base_dir, "external_dictionaries/selimsum/tr")
     }
 
     # ==================== RUN SPELLING BENCHMARKS ====================
