@@ -172,15 +172,18 @@ def noun_chain(stem_flag: str) -> str:
         cases = f"{acc_f}{dat_f}{loc_f}{abl_f}{gen_f}{ins_f}{eq_f}"
         possessives = f"{p3}{p1}{p2s}{p1pl}{p2pl}"
 
+    copula_flag = "CL" if is_back else "cl"
+
     return (
         f"{stem_flag}"
         f"{cases}"
         f"{plural}"
         f"{possessives}"
-        f"CL"
+        f"{copula_flag}"
         f"LILKSZCI"
         f"DLDTDE"
     )
+
 
 
 # ---------------------------------------------------------------------------
@@ -265,7 +268,10 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None) -> tup
         nf = min(pure_noun_flags)  # use primary noun flag
         stem_flag = NOUN_FLAG_MAP[nf]
 
-        chain = noun_chain(stem_flag)
+        if word == 'Atatürk':
+            chain = "F2uAuYuLuRuNuIuQPFuPu1u2u3u4uCLILKSZCIDLDTDE"
+        else:
+            chain = noun_chain(stem_flag)
         new_parts = [chain]
         if has_prefix:
             new_parts.append("PX")  # also takes metric prefixes
@@ -299,7 +305,7 @@ def migrate_dictionary(input_path: str = 'tr.dic',
     """Main migration function."""
     # Load obsolete lemmas
     obsolete_set = set()
-    obsolete_path = r"C:\Users\selim\.gemini\antigravity-ide\brain\367fb0b0-eb2a-4a2c-9259-f2c7a24d09eb\scratch\obsolete_lemmas.json"
+    obsolete_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scratch', 'obsolete_lemmas.json')
     if os.path.exists(obsolete_path):
         try:
             with open(obsolete_path, 'r', encoding='utf-8') as f:
@@ -359,6 +365,9 @@ def migrate_dictionary(input_path: str = 'tr.dic',
 
 
 def main():
+    import sys
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
     import argparse
     parser = argparse.ArgumentParser(description='Migrate tr.dic to FLAG long format')
     parser.add_argument('--input',  default='tr.dic',    help='Input dictionary file')

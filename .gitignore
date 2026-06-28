@@ -7,3 +7,16 @@ __pycache__/
 *.csv
 *.json
 *.aff.old
+
+# Temporary/Experimental build outputs
+test_tr.*
+tr_v1.*
+tr_v2.*
+tr_utf8.*
+tr_v2_test.*
+
+# Scratch directory exclusions
+scratch/*
+!scratch/analyze_obsolete_roots.py
+!scratch/flag_decomposition_map.md
+!scratch/obsolete_lemmas.json

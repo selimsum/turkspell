@@ -58,7 +58,7 @@ The Turkspell dictionary structure and grammar rules were optimized using the fi
 1. **Base LLM**:
    - **Qwen/Qwen2.5-Coder-7B-Instruct** was selected as the base model due to its high performance in coding, structured formatting, and linguistic reasoning.
 2. **SFT (Supervised Fine-Tuning) Pipeline**:
-   - The model was fine-tuned using Hugging Face's `SFTTrainer` (from the `trl` library). The training script is located in [lightning_upload/train.py](file:///c:/gemini/turkspell/lightning_upload/train.py).
+    - The model was fine-tuned using Hugging Face's `SFTTrainer` (from the `trl` library). The training script is located in [training/train.py](file:///c:/gemini/turkspell/training/train.py).
    - The setup dynamically optimizes based on available hardware: it uses **4-bit QLoRA (NF4)** for systems under 20 GB VRAM (e.g., T4 GPU) and **bfloat16 LoRA** for higher-end configurations (e.g., L4 GPU).
 3. **Dataset and Error Diagnostics**:
    - The model was trained on `train_dataset.jsonl` containing instruction-input-output pairs to learn Turkish word stems, suffix transitions, and Hunspell continuation flags.
@@ -202,7 +202,7 @@ Turkspell sözlük yapısı ve dilbilgisi kuralları, büyük dil modellerinin (
 1. **Kullanılan Temel LLM**:
    - Kodlama, yapılandırılmış çıktı üretme ve dilsel akıl yürütme becerileri yüksek olan **Qwen/Qwen2.5-Coder-7B-Instruct** modeli temel alınmıştır.
 2. **SFT (Supervised Fine-Tuning) Süreci**:
-   - Hugging Face `trl` kütüphanesindeki `SFTTrainer` kullanılarak model eğitime tabi tutulmuştur. Eğitim betiği [lightning_upload/train.py](file:///c:/gemini/turkspell/lightning_upload/train.py) dosyasında yer almaktadır.
+    - Hugging Face `trl` kütüphanesindeki `SFTTrainer` kullanılarak model eğitime tabi tutulmuştur. Eğitim betiği [training/train.py](file:///c:/gemini/turkspell/training/train.py) dosyasında yer almaktadır.
    - Donanım kaynaklarına göre otomatik olarak optimize olan bir altyapı kurulmuştur: 20 GB altındaki VRAM'e sahip sistemlerde (örn. T4 GPU) **4-bit QLoRA (NF4)** kullanılırken, daha yüksek sistemlerde (örn. L4 GPU) **bfloat16 LoRA** tercih edilir.
 3. **Eğitim Veriseti ve Hata Analizi**:
    - Model, `train_dataset.jsonl` üzerindeki talimat (instruction-input-output) çiftleriyle eğitilerek Türkçe kelime köklerini, ek yapılarını ve Hunspell continuation flag (sürdürme bayrağı) eşleştirmelerini öğrenmiştir.
