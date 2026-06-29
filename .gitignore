@@ -20,3 +20,7 @@ scratch/*
 !scratch/analyze_obsolete_roots.py
 !scratch/flag_decomposition_map.md
 !scratch/obsolete_lemmas.json
+
+# External dictionaries
+external_dictionaries/
+
