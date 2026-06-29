@@ -1064,7 +1064,7 @@ def gen_prefix_flag(flag: str = "PX") -> str:
 # ---------------------------------------------------------------------------
 
 def generate_header() -> str:
-    return """# Türkçe Yazım Denetimi Sözlüğü - Chained Flags Architecture v1
+    return """# Türkçe Yazım Denetimi Sözlüğü - Chained Flags Architecture
 SET UTF-8
 FLAG long
 NOSUGGEST NS
@@ -1095,7 +1095,7 @@ MAP uüUÜ
 MAP ıiIİ
 MAXDIFF 3
 
-REP 52
+REP 62
 REP a â
 REP â a
 REP u û
@@ -1103,6 +1103,16 @@ REP û u
 REP i î
 REP î i
 REP c ç
+REP ani ânı
+REP anı ânı
+REP anın ânın
+REP anidir ânıdır
+REP anıdir ânıdır
+REP anda ânda
+REP anlar ânlar
+REP anların ânların
+REP idir îdir
+REP inin înin
 REP ç c
 REP g ğ
 REP ğ g
@@ -1151,7 +1161,7 @@ REP le la
 """
 
 
-def generate_grammar_v1():
+def generate_grammar():
     """Main entry point — generates the new chained tr.aff."""
     content = generate_header()
 
@@ -1273,16 +1283,16 @@ def generate_grammar_v1():
     for block in gen_proper_flags():
         content += block + "\n"
 
-    print("Writing tr_v1.aff...")
-    with open('tr_v1.aff', 'w', encoding='utf-8', newline='\n') as f:
+    print("Writing tr.aff...")
+    with open('tr.aff', 'w', encoding='utf-8', newline='\n') as f:
         f.write(content)
 
     # Count rules
     total_sfx = content.count('\nSFX ')
     print(f"Done. Total SFX rules: {total_sfx}")
     import os
-    size_kb = os.path.getsize('tr_v1.aff') / 1024
-    print(f"tr_v1.aff size: {size_kb:.1f} KB")
+    size_kb = os.path.getsize('tr.aff') / 1024
+    print(f"tr.aff size: {size_kb:.1f} KB")
 
 
 def gen_proper_flags() -> list[str]:
@@ -1451,8 +1461,8 @@ def _generate_verb_flags_from_v1() -> str:
         90:  "PX",
     }
 
-    print("  Reading data/tr_v1.aff to extract verb sections...")
-    with open('data/tr_v1.aff', 'r', encoding='utf-8') as f:
+    print("  Reading data/tr_reference.aff to extract verb sections...")
+    with open('data/tr_reference.aff', 'r', encoding='utf-8') as f:
         content = f.read()
 
     lines = content.split('\n')
@@ -1558,4 +1568,4 @@ def _generate_verb_flags_from_v1() -> str:
 
 
 if __name__ == '__main__':
-    generate_grammar_v1()
+    generate_grammar()
