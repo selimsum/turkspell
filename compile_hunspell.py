@@ -769,12 +769,12 @@ def compile_dictionary():
     # Write tr.aff by calling our generator script
     print("Calling generate_grammar_rules.py to generate baseline rules...")
     try:
-        from generate_grammar_rules import generate_grammar_v1
-        generate_grammar_v1()
+        from generate_grammar_rules import generate_grammar
+        generate_grammar()
         
-        # Now remap tr_v1.aff to tr.aff
+        # Now remap tr.aff in-place to FLAG UTF-8
         print("Remapping rules to FLAG UTF-8 and writing to tr.aff...")
-        with open('tr_v1.aff', 'r', encoding='utf-8') as f:
+        with open('tr.aff', 'r', encoding='utf-8') as f:
             content = f.read()
             
         content = content.replace("FLAG long", "FLAG UTF-8")

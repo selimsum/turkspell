@@ -3,7 +3,7 @@ from compile_hunspell import compile_dictionary
 from utf8_flag_mapping import LONG_TO_UTF8, remap_flag_string
 from migrate_dictionary_utf8 import migrate_dictionary_utf8
 
-def remap_aff_file(input_path: str = 'tr_v1.aff', output_path: str = 'tr_utf8.aff'):
+def remap_aff_file(input_path: str = 'tr.aff', output_path: str = 'tr_utf8.aff'):
     print(f"Reading {input_path}...")
     with open(input_path, 'r', encoding='utf-8') as f:
         content = f.read()
@@ -62,13 +62,13 @@ def remap_aff_file(input_path: str = 'tr_v1.aff', output_path: str = 'tr_utf8.af
     print("Affix remapping complete.")
 
 def main():
-    # 1. Compile baseline (writes tr.dic and tr_v1.aff)
+    # 1. Compile baseline (writes tr.dic and tr.aff)
     print("Step 1: Compiling baseline dictionary and rules...")
     compile_dictionary()
 
-    # 2. Remap tr_v1.aff to tr_utf8.aff
+    # 2. Remap tr.aff to tr_utf8.aff
     print("Step 2: Remapping affix rules to FLAG UTF-8...")
-    remap_aff_file('tr_v1.aff', 'tr_utf8.aff')
+    remap_aff_file('tr.aff', 'tr_utf8.aff')
 
     # 3. Migrate tr.dic to tr_utf8.dic
     print("Step 3: Migrating dictionary to FLAG UTF-8...")

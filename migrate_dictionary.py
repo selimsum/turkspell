@@ -1,7 +1,7 @@
 """
 migrate_dictionary.py
 =====================
-Converts tr.dic (integer FLAG-based) → tr_v1.dic (FLAG long 2-char-based).
+Converts tr.dic (integer FLAG-based) → tr.dic (FLAG long 2-char-based).
 
 Integer flag → FLAG long mapping:
   Noun stem classes:
@@ -300,7 +300,7 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None) -> tup
 
 
 def migrate_dictionary(input_path: str = 'tr.dic',
-                       output_path: str = 'tr_v1.dic',
+                       output_path: str = 'tr.dic',
                        max_warnings: int = 50):
     """Main migration function."""
     # Load obsolete lemmas
@@ -371,7 +371,7 @@ def main():
     import argparse
     parser = argparse.ArgumentParser(description='Migrate tr.dic to FLAG long format')
     parser.add_argument('--input',  default='tr.dic',    help='Input dictionary file')
-    parser.add_argument('--output', default='tr_v1.dic', help='Output dictionary file')
+    parser.add_argument('--output', default='tr.dic', help='Output dictionary file')
     parser.add_argument('--max-warnings', type=int, default=50,
                         help='Max warnings to display (default: 50)')
     args = parser.parse_args()
