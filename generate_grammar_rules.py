@@ -1224,6 +1224,8 @@ MAP oöOÖ
 MAP uüUÜ
 MAP ıiIİ
 MAXDIFF 5
+MAXNGRAMSUGS 6
+ONLYMAXDIFF
 
 {rep_block}
 """
