@@ -661,7 +661,7 @@ def compile_dictionary():
             
         # Inverse harmony overrides
         inverse_harmony_words = {'kalp', 'saat', 'harf', 'rol', 'alkol', 'hâl', 'hal', 'metal', 'normal', 'ideal', 'gol', 'kontrol', 'petrol', 'seans', 'sembol', 'şefkat', 'dikkat', 'polifenol', 'flavanol', 'kortizol', 'istirahat'}
-        if lemma.lower() in inverse_harmony_words:
+        if lemma.lower() in inverse_harmony_words or (pos != 'Verb' and (lemma.lower().endswith('âl') or lemma.lower().endswith('ûl'))):
             back = False
 
         vowel_end = ends_with_vowel(lemma)
