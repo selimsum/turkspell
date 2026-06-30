@@ -1063,8 +1063,138 @@ def gen_prefix_flag(flag: str = "PX") -> str:
 # MAIN GENERATOR
 # ---------------------------------------------------------------------------
 
+def generate_rep_rules() -> list[tuple[str, str]]:
+    rep_list = []
+    
+    # 1. Base typographic & phonological character substitutions
+    char_reps = [
+        ("a", "â"), ("â", "a"), ("u", "û"), ("û", "u"), ("i", "î"), ("î", "i"),
+        ("c", "ç"), ("ç", "c"), ("g", "ğ"), ("ğ", "g"), ("s", "ş"), ("ş", "s"),
+        ("o", "ö"), ("ö", "o"), ("u", "ü"), ("ü", "u"), ("ı", "i"), ("i", "ı"),
+        ("sh", "ş"), ("ch", "ç"), ("gh", "ğ"), ("ss", "ş"),
+        ("dd", "t"), ("tt", "d"), ("bb", "p"), ("pp", "b"), ("cc", "c"), ("kk", "g"),
+        ("ğ", "y"), ("y", "ğ"), ("h", "ğ"), ("ğ", "h"),
+        ("a", "e"), ("e", "a"), ("d", "t"), ("t", "d"), ("p", "b"), ("b", "p"),
+        ("z", "s"), ("s", "z"), ("k", "g"), ("g", "k"),
+        ("ın", "in"), ("in", "ın"), ("un", "ün"), ("ün", "un"),
+        ("da", "de"), ("de", "da"), ("lar", "ler"), ("ler", "lar"),
+        ("la", "le"), ("le", "la")
+    ]
+    for src, dst in char_reps:
+        rep_list.append((src, dst))
+        
+    # 2. Common Lexical Typos
+    lexical_typos = [
+        ("yanlız", "yalnız"),
+        ("yalnış", "yanlış"),
+        ("herkez", "herkes"),
+        ("şarz", "şarj"),
+        ("kirbit", "kibrit"),
+        ("pantalon", "pantolon"),
+        ("şöför", "şoför"),
+        ("egsoz", "egzoz"),
+        ("sarmısak", "sarımsak"),
+        ("entellektüel", "entelektüel"),
+        ("vejeteryan", "vejetaryen"),
+        ("insiyatif", "inisiyatif"),
+        ("orjinal", "orijinal"),
+        ("dinazor", "dinozor"),
+        ("klavuz", "kılavuz"),
+        ("muhattap", "muhatap"),
+        ("idda", "iddaa"),
+        ("klüp", "kulüp"),
+        ("mualif", "muhalif"),
+        ("seftali", "şeftali"),
+        ("direk", "direkt"),
+        ("makina", "makine"),
+        ("meyva", "meyve"),
+        ("süpriz", "sürpriz"),
+        ("eskişehir", "Eskişehir"),
+        ("anadolu", "Anadolu"),
+        ("istihbarat", "istihbarat"),
+        # V2 failure analysis patterns
+        ("attır", "arttır"),
+        ("attir", "arttir"),
+        ("attur", "arttur"),
+        ("attür", "arttür"),
+        ("wayr", "ayr"),
+        ("wair", "air"),
+        ("xin", "sin"),
+        ("xır", "sır"),
+        ("yk", "k"),
+        ("yb", "b"),
+        ("oligo", "oligar"),
+    ]
+    for src, dst in lexical_typos:
+        rep_list.append((src, dst))
+        
+    # 3. Morphological Typos (Vowel Drop, Voicing, soft-l loans)
+    voicing_stems = [
+        ("kitap", "kitab", ["ı", "ın", "a", "ımız", "ınız"]),
+        ("ağaç", "ağac", ["ı", "ın", "a", "ımız", "ınız"]),
+        ("çocuk", "çocuğ", ["u", "un", "a", "umuz", "unuz"]),
+        ("kağıt", "kâğıd", ["ı", "ın", "a", "ımız", "ınız"]),
+        ("borç", "borc", ["u", "un", "a", "umuz", "unuz"]),
+        ("renk", "reng", ["i", "in", "e", "imiz", "iniz"]),
+        ("kalp", "kalb", ["i", "in", "e", "imiz", "iniz"])
+    ]
+    for unv, voiced, suffixes in voicing_stems:
+        for s in suffixes:
+            rep_list.append((f"{unv}{s}", f"{voiced}{s}"))
+            
+    drop_stems = [
+        ("akıl", "akl", ["ı", "ın", "a", "ımız", "ınız"]),
+        ("ağız", "ağz", ["ı", "ın", "a", "ımız", "ınız"]),
+        ("şehir", "şehr", ["i", "in", "e", "imiz", "iniz"]),
+        ("ömür", "ömr", ["ü", "ün", "e", "ümüz", "ünüz"]),
+        ("resim", "resm", ["i", "in", "e", "imiz", "iniz"]),
+        ("burun", "burn", ["u", "un", "a", "umuz", "unuz"]),
+        ("karın", "karn", ["ı", "ın", "a", "ımız", "ınız"]),
+        ("zehir", "zehr", ["i", "in", "e", "imiz", "iniz"])
+    ]
+    for full, dropped, suffixes in drop_stems:
+        for s in suffixes:
+            rep_list.append((f"{full}{s}", f"{dropped}{s}"))
+            
+    soft_loans = [
+        ("saat", ["ler", "le", "leri", "lerin", "lerinizin", "lerimizin", "e", "i", "in"]),
+        ("hâl", ["ler", "le", "leri", "lerin", "e", "i", "in"]),
+        ("rol", ["ler", "le", "leri", "lerin", "e", "ü", "ün"]),
+        ("alkol", ["ler", "le", "leri", "lerin", "e", "ü", "ün"]),
+        ("metal", ["ler", "le", "leri", "lerin", "e", "i", "in"]),
+        ("kontrol", ["ler", "le", "leri", "lerin", "e", "ü", "ün"])
+    ]
+    
+    harmony_map = {
+        "lar": "ler", "la": "le", "ları": "leri", "ların": "lerin", 
+        "larının": "lerinin", "larımızın": "lerimizin", "larınızın": "lerinizin",
+        "a": "e", "ı": "i", "ın": "in", "u": "ü", "un": "ün"
+    }
+    for stem, suffixes in soft_loans:
+        for corr_s in suffixes:
+            for back_s, front_s in harmony_map.items():
+                if corr_s == front_s:
+                    rep_list.append((f"{stem}{back_s}", f"{stem}{corr_s}"))
+                    
+    circumflex_typos = [
+        ("hal", "hâl"), ("hala", "hâlâ"), ("adet", "âdet"), ("alem", "âlem"),
+        ("dahi", "dâhi"), ("sura", "şûra"), ("kagit", "kâğıt"), ("ruzgar", "rüzgâr"),
+        ("tezgah", "tezgâh"), ("dukkan", "dükkân"), ("mahkum", "mahkûm")
+    ]
+    for src, dst in circumflex_typos:
+        rep_list.append((src, dst))
+        
+    return rep_list
+
+
 def generate_header() -> str:
-    return """# Türkçe Yazım Denetimi Sözlüğü - Chained Flags Architecture
+    rep_pairs = generate_rep_rules()
+    rep_lines = [f"REP {len(rep_pairs)}"]
+    for src, dst in rep_pairs:
+        rep_lines.append(f"REP {src} {dst}")
+    rep_block = "\n".join(rep_lines)
+
+    return f"""# Türkçe Yazım Denetimi Sözlüğü - Chained Flags Architecture
 SET UTF-8
 FLAG long
 NOSUGGEST NS
@@ -1093,71 +1223,9 @@ MAP sşSŞ
 MAP oöOÖ
 MAP uüUÜ
 MAP ıiIİ
-MAXDIFF 3
+MAXDIFF 5
 
-REP 62
-REP a â
-REP â a
-REP u û
-REP û u
-REP i î
-REP î i
-REP c ç
-REP ani ânı
-REP anı ânı
-REP anın ânın
-REP anidir ânıdır
-REP anıdir ânıdır
-REP anda ânda
-REP anlar ânlar
-REP anların ânların
-REP idir îdir
-REP inin înin
-REP ç c
-REP g ğ
-REP ğ g
-REP s ş
-REP ş s
-REP o ö
-REP ö o
-REP u ü
-REP ü u
-REP ı i
-REP i ı
-REP sh ş
-REP ch ç
-REP gh ğ
-REP ss ş
-REP dd t
-REP tt d
-REP bb p
-REP pp b
-REP cc c
-REP kk g
-REP ğ y
-REP y ğ
-REP h ğ
-REP ğ h
-REP a e
-REP e a
-REP d t
-REP t d
-REP p b
-REP b p
-REP z s
-REP s z
-REP k g
-REP g k
-REP ın in
-REP in ın
-REP un ün
-REP ün un
-REP da de
-REP de da
-REP lar ler
-REP ler lar
-REP la le
-REP le la
+{rep_block}
 """
 
 
@@ -1542,6 +1610,7 @@ def _generate_verb_flags_from_v1() -> str:
             f'/\\g<1>{new_flag}',
             verb_content
         )
+
 
     # Recalculate verb rule counts dynamically to prevent header count mismatches
     lines = verb_content.split('\n')
