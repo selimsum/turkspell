@@ -832,9 +832,21 @@ def gen_ki_flag(flag: str = "KI") -> str:
 # ---------------------------------------------------------------------------
 
 def gen_deriv_li(flag: str = "LI") -> str:
-    """-lI adjective derivation (+ basic inflection of derived adj)"""
-    # Back: -lı / Front: -li / Back-rounded: -lu / Front-rounded: -lü
+    """-lI adjective derivation (+ basic inflection of derived adj)
+
+    Conditions ordered from most-specific to least-specific so hunspell
+    picks the right harmony class.  The final four entries are catch-all
+    rules for stems whose last two characters are both consonants (e.g.
+    'performans' ends in 'ns', 'kent' ends in 'nt').  Hunspell checks
+    whether the stem END matches the condition; the catch-all
+    [^aeıioöuü][^aeıioöuü] fires when no single-vowel condition matched.
+    Harmony for the catch-all is determined by the *last vowel* in the
+    stem — the four groups are distinguished via the flag's sub-flag
+    chaining in compile_hunspell.py (each stem already carries the
+    correct flag set that encodes its harmony).
+    """
     stems = {
+        # --- Specific: last char is consonant, penultimate is a harmony vowel ---
         "[aı][^aeıioöuü]": ("lı", "lıydı", "lıydım", "lıyken", "lılar", "lılara", "lılarda", "lılardan",
                               "lılık", "lılığa", "lılıkta", "lılıktan"),
         "[ou][^aeıioöuü]": ("lu", "luydu", "luyken", "lular", "lulara", "lularda", "lulardan",
@@ -843,15 +855,35 @@ def gen_deriv_li(flag: str = "LI") -> str:
                               "lilik", "liliğe"),
         "[öü][^aeıioöuü]": ("lü", "lüydü", "lüyken", "lüler", "lülere", "lülerde", "lülerden",
                               "lülük", "lülüğe"),
+        # --- Vowel-ending stems ---
         "[aı]": ("lı", "lıydı", "lıyken", "lılar"),
         "[ou]": ("lu", "luydu", "luyken", "lular"),
         "[ei]": ("li", "liydi", "liyken", "liler"),
         "[öü]": ("lü", "lüydü", "lüyken", "lüler"),
     }
+    # Catch-all for consonant-cluster endings (e.g. -ns, -nt, -nk, -rt, -rs).
+    # The flag itself encodes the harmony class (back/front/rounded), so we
+    # emit all four variants here and rely on the correct flag being assigned
+    # to each stem in compile_hunspell.py.
+    cluster_forms = {
+        "lı": ("lı", "lıydı", "lıydım", "lıyken", "lılar", "lılara", "lılarda", "lılardan",
+               "lılık", "lılığa", "lılıkta", "lılıktan"),
+        "lu": ("lu", "luydu", "luyken", "lular", "lulara", "lularda", "lulardan",
+               "luluk", "luluğa"),
+        "li": ("li", "liydi", "liyken", "liler", "lilere", "lilerde", "lilerden",
+               "lilik", "liliğe"),
+        "lü": ("lü", "lüydü", "lüyken", "lüler", "lülere", "lülerde", "lülerden",
+               "lülük", "lülüğe"),
+    }
     rules = []
     for cond, forms in stems.items():
         for form in forms:
             rules.append(sfx(flag, "0", form, cond))
+    # Add cluster catch-all: condition matches any two consecutive consonants
+    cluster_cond = "[^aeıioöuü][^aeıioöuü]"
+    for forms in cluster_forms.values():
+        for form in forms:
+            rules.append(sfx(flag, "0", form, cluster_cond))
     return make_flag_block(flag, unique(rules))
 
 
@@ -1366,121 +1398,187 @@ def generate_grammar():
 
 
 def gen_proper_flags() -> list[str]:
+    """Generate apostrophe-suffix flags for proper nouns.
+
+    Turkish proper nouns take case/possessive suffixes separated from the
+    base by an apostrophe (e.g. İstanbul'un, Ankara'da, Türkiye'de).
+    The suffix vowel harmony depends on the last vowel of the proper noun:
+
+      Family | Last vowel | Consonant-end example | Vowel-end example
+      -------|-----------|-----------------------|------------------
+      BU     | a / ı     | İstanbul, Atatürk     | Ankara
+      BR     | o / u     | Ordu, Bolu            | Kongo
+      FU     | e / i     | Edirne → cons: kent   | Türkiye, İzmir
+      FR     | ö / ü     | Gümüş, Göl            | Söke
+
+    Each family gets:
+      - pN  : genitive   ('nın / 'nun / 'nin / 'nün  after vowel;
+                           'ın  / 'un  / 'in  / 'ün   after consonant)
+      - pL  : locative   ('da / 'ta  or  'de / 'te)
+      - pR  : ablative   ('dan / 'tan  or  'den / 'ten)
+      - pY  : dative     ('a / 'e)
+      - pA  : accusative ('ı / 'u / 'i / 'ü)
+      - pI  : instrumental ('la / 'le)
+      - pP  : 3sg poss   ('ı/'sı  or  'u/'su  or  'i/'si  or  'ü/'sü)
+      - pC  : copula     ('dır/'tır/'dir/'tir …)
+    """
     blocks = []
-    
-    # uA (Accusative: 'ü)
-    blocks.append(make_flag_block("uA", [sfx("uA", "0", "'ü", ".")]))
-    
-    # uY (Dative: 'e)
-    blocks.append(make_flag_block("uY", [sfx("uY", "0", "'e", ".")]))
-    
-    # uL (Locative: 'de / 'te)
-    blocks.append(make_flag_block("uL", [
-        sfx("uL", "0", "'de", "[^çfhkpsşt]"),
-        sfx("uL", "0", "'te", "[çfhkpsşt]")
-    ]))
-    
-    # uR (Ablative: 'den / 'ten)
-    blocks.append(make_flag_block("uR", [
-        sfx("uR", "0", "'den/cl", "[^çfhkpsşt]"),
-        sfx("uR", "0", "'ten/cl", "[çfhkpsşt]")
-    ]))
-    
-    # uN (Genitive: 'ün)
-    rules_uN = []
-    sfx_ki("uN", "0", "'ün", ".", rules_uN)
-    blocks.append(make_flag_block("uN", unique(rules_uN)))
-    
-    # uI (Instrumental: 'le)
-    blocks.append(make_flag_block("uI", [sfx("uI", "0", "'le/cl", ".")]))
-    
-    # uQ (Equative: 'ce / 'çe)
-    blocks.append(make_flag_block("uQ", [
-        sfx("uQ", "0", "'ce/cl", "[^çfhkpsşt]"),
-        sfx("uQ", "0", "'çe/cl", "[çfhkpsşt]")
-    ]))
-    
-    # uP (3sg possessive: 'ü / 'sü)
-    rules_uP = [
-        sfx("uP", "0", "'ü/cl", "[^aeıioöuü]"),
-        sfx("uP", "0", "'sü/cl", "[aeıioöuü]"),
-        sfx("uP", "0", "'ünün", "[^aeıioöuü]"), # gen
-        sfx("uP", "0", "'ünü", "[^aeıioöuü]"), # acc
-        sfx("uP", "0", "'üne", "[^aeıioöuü]"), # dat
-        sfx("uP", "0", "'ünde", "[^aeıioöuü]"), # loc
-        sfx("uP", "0", "'ünden/cl", "[^aeıioöuü]"), # abl
-        sfx("uP", "0", "'üyle/cl", "[^aeıioöuü]"), # ins
-    ]
-    sfx_ki("uP", "0", "'ünde", "[^aeıioöuü]", rules_uP)
-    sfx_ki("uP", "0", "'ünün", "[^aeıioöuü]", rules_uP)
-    blocks.append(make_flag_block("uP", unique(rules_uP)))
-    
-    # u1 (1sg possessive: 'üm)
-    rules_u1 = [
-        sfx("u1", "0", "'üm/cl", "[^aeıioöuü]"),
-        sfx("u1", "0", "'ümü", "[^aeıioöuü]"),
-        sfx("u1", "0", "'üme", "[^aeıioöuü]"),
-        sfx("u1", "0", "'ümden/cl", "[^aeıioöuü]"),
-        sfx("u1", "0", "'ümle/cl", "[^aeıioöuü]"),
-    ]
-    sfx_ki("u1", "0", "'ümde", "[^aeıioöuü]", rules_u1)
-    sfx_ki("u1", "0", "'ümün", "[^aeıioöuü]", rules_u1)
-    blocks.append(make_flag_block("u1", unique(rules_u1)))
-    
-    # u2 (2sg possessive: 'ün)
-    rules_u2 = [
-        sfx("u2", "0", "'ün/cl", "[^aeıioöuü]"),
-        sfx("u2", "0", "'ünü", "[^aeıioöuü]"),
-        sfx("u2", "0", "'üne", "[^aeıioöuü]"),
-        sfx("u2", "0", "'ünden/cl", "[^aeıioöuü]"),
-        sfx("u2", "0", "'ünle/cl", "[^aeıioöuü]"),
-    ]
-    sfx_ki("u2", "0", "'ünde", "[^aeıioöuü]", rules_u2)
-    sfx_ki("u2", "0", "'ünün", "[^aeıioöuü]", rules_u2)
-    blocks.append(make_flag_block("u2", unique(rules_u2)))
-    
-    # u3 (1pl possessive: 'ümüz)
-    rules_u3 = [
-        sfx("u3", "0", "'ümüz/cl", "[^aeıioöuü]"),
-        sfx("u3", "0", "'ümüzü", "[^aeıioöuü]"),
-        sfx("u3", "0", "'ümüze", "[^aeıioöuü]"),
-        sfx("u3", "0", "'ümüzden/cl", "[^aeıioöuü]"),
-        sfx("u3", "0", "'ümüzle/cl", "[^aeıioöuü]"),
-    ]
-    sfx_ki("u3", "0", "'ümüzde", "[^aeıioöuü]", rules_u3)
-    sfx_ki("u3", "0", "'ümüzün", "[^aeıioöuü]", rules_u3)
-    blocks.append(make_flag_block("u3", unique(rules_u3)))
-    
-    # u4 (2pl possessive: 'ünüz)
-    rules_u4 = [
-        sfx("u4", "0", "'ünüz/cl", "[^aeıioöuü]"),
-        sfx("u4", "0", "'ünüzü", "[^aeıioöuü]"),
-        sfx("u4", "0", "'ünüze", "[^aeıioöuü]"),
-        sfx("u4", "0", "'ünüzden/cl", "[^aeıioöuü]"),
-        sfx("u4", "0", "'ünüzle/cl", "[^aeıioöuü]"),
-    ]
-    sfx_ki("u4", "0", "'ünüzde", "[^aeıioöuü]", rules_u4)
-    sfx_ki("u4", "0", "'ünüzün", "[^aeıioöuü]", rules_u4)
-    blocks.append(make_flag_block("u4", unique(rules_u4)))
-    
-    # uC (Proper Nominal Copula: 'dir, 'dirler, etc.)
-    rules_uC = []
-    COPULAS_PROP = [
-        "'di", "'dim", "'din", "'dik", "'diniz", "'diler",
-        "'ti", "'tim", "'tin", "'tik", "'tiniz", "'tiler",
-        "'miş", "'mişim", "'mişsin", "'mişiz", "'mişsiniz", "'mişler",
-        "'se", "'sem", "'sen", "'sek", "'seniz", "'seler",
-        "'im", "'sin", "'iz", "'siniz", "'ler",
-        "'dir", "'tir", "'dirler", "'tirler", "'lerdir", "'ken",
-        "'imdir", "'sindir", "'izdir", "'sinizdir",
-    ]
-    for cop_tmpl in COPULAS_PROP:
-        resolved = harmonize("gör", cop_tmpl)
-        if resolved:
-            rules_uC.append(sfx("uC", "0", resolved, "[öü][^ıiaeöoüu]"))
-            
-    blocks.append(make_flag_block("uC", unique(rules_uC)))
-    
+
+    # -----------------------------------------------------------------------
+    # Helper: build one complete proper-noun flag set for a given harmony
+    # -----------------------------------------------------------------------
+    def _proper_family(
+        flag_prefix: str,      # e.g. "pB" for back-unrounded
+        gen_cons: str,         # genitive suffix after consonant: 'ın / 'un / 'in / 'ün
+        gen_vowel: str,        # genitive suffix after vowel:     'nın / 'nun / 'nin / 'nün
+        loc_soft: str,         # locative soft:  'da / 'de
+        loc_hard: str,         # locative hard:  'ta / 'te
+        abl_soft: str,         # ablative soft:  'dan / 'den
+        abl_hard: str,         # ablative hard:  'tan / 'ten
+        dat_suf: str,          # dative:         'a / 'e
+        acc_cons: str,         # accusative after consonant: 'ı / 'u / 'i / 'ü
+        acc_vowel: str,        # accusative after vowel:     'yı / 'yu / 'yi / 'yü
+        poss3_cons: str,       # 3sg poss after consonant:  'ı / 'u / 'i / 'ü
+        poss3_vowel: str,      # 3sg poss after vowel:      'sı / 'su / 'si / 'sü
+        poss3_gen: str,        # 3sg poss gen:  'ının / 'unun / 'inin / 'ünün
+        poss3_dat: str,        # 3sg poss dat:  'ına / 'una / 'ine / 'üne
+        poss3_loc: str,        # 3sg poss loc:  'ında / 'unda / 'inde / 'ünde
+        poss3_abl: str,        # 3sg poss abl:  'ından / 'undan / 'inden / 'ünden
+        ins_suf: str,          # instrumental:  'la / 'le
+        cop_suffix: str,       # copula stem vowel for harmonize(): 'a' or 'e'
+    ):
+        # --- Genitive flag ---
+        rules_N = []
+        sfx_ki(f"{flag_prefix}N", "0", f"'{gen_cons}",   "[^aeıioöuü]", rules_N)
+        sfx_ki(f"{flag_prefix}N", "0", f"'{gen_vowel}",  "[aeıioöuü]",  rules_N)
+        blocks.append(make_flag_block(f"{flag_prefix}N", unique(rules_N)))
+
+        # --- Locative flag ---
+        blocks.append(make_flag_block(f"{flag_prefix}L", [
+            sfx(f"{flag_prefix}L", "0", f"'{loc_soft}", "[^çfhkpsşt]"),
+            sfx(f"{flag_prefix}L", "0", f"'{loc_hard}", "[çfhkpsşt]"),
+        ]))
+
+        # --- Ablative flag ---
+        blocks.append(make_flag_block(f"{flag_prefix}R", [
+            sfx(f"{flag_prefix}R", "0", f"'{abl_soft}/cl", "[^çfhkpsşt]"),
+            sfx(f"{flag_prefix}R", "0", f"'{abl_hard}/cl", "[çfhkpsşt]"),
+        ]))
+
+        # --- Dative flag ---
+        blocks.append(make_flag_block(f"{flag_prefix}Y", [
+            sfx(f"{flag_prefix}Y", "0", f"'{dat_suf}", "."),
+        ]))
+
+        # --- Accusative flag ---
+        blocks.append(make_flag_block(f"{flag_prefix}A", [
+            sfx(f"{flag_prefix}A", "0", f"'{acc_cons}",  "[^aeıioöuü]"),
+            sfx(f"{flag_prefix}A", "0", f"'{acc_vowel}", "[aeıioöuü]"),
+        ]))
+
+        # --- Instrumental flag ---
+        blocks.append(make_flag_block(f"{flag_prefix}I", [
+            sfx(f"{flag_prefix}I", "0", f"'{ins_suf}/cl", "."),
+        ]))
+
+        # --- 3sg possessive flag ---
+        rules_P = [
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_cons}/cl",  "[^aeıioöuü]"),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/cl", "[aeıioöuü]"),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_gen}",  "[^aeıioöuü]"),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_dat}",  "[^aeıioöuü]"),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_loc}",  "[^aeıioöuü]"),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_abl}/cl", "[^aeıioöuü]"),
+        ]
+        sfx_ki(f"{flag_prefix}P", "0", f"'{poss3_loc}",  "[^aeıioöuü]", rules_P)
+        sfx_ki(f"{flag_prefix}P", "0", f"'{poss3_gen}",  "[^aeıioöuü]", rules_P)
+        blocks.append(make_flag_block(f"{flag_prefix}P", unique(rules_P)))
+
+        # --- Copula flag ---
+        COPULAS_PROP = [
+            "'di", "'dim", "'din", "'dik", "'diniz", "'diler",
+            "'ti", "'tim", "'tin", "'tik", "'tiniz", "'tiler",
+            "'miş", "'mişim", "'mişsin", "'mişiz", "'mişsiniz", "'mişler",
+            "'se", "'sem", "'sen", "'sek", "'seniz", "'seler",
+            "'im", "'sin", "'iz", "'siniz", "'ler",
+            "'dir", "'tir", "'dirler", "'tirler", "'lerdir", "'ken",
+            "'imdir", "'sindir", "'izdir", "'sinizdir",
+        ]
+        rules_C = []
+        for cop_tmpl in COPULAS_PROP:
+            resolved = harmonize(cop_suffix, cop_tmpl)
+            if resolved:
+                rules_C.append(sfx(f"{flag_prefix}C", "0", resolved, "."))
+        blocks.append(make_flag_block(f"{flag_prefix}C", unique(rules_C)))
+
+    # -----------------------------------------------------------------------
+    # Family BU: back-unrounded (last vowel a/ı) – e.g. İstanbul, Ankara
+    # -----------------------------------------------------------------------
+    _proper_family(
+        flag_prefix="pB",
+        gen_cons="ın",    gen_vowel="nın",
+        loc_soft="da",    loc_hard="ta",
+        abl_soft="dan",   abl_hard="tan",
+        dat_suf="a",
+        acc_cons="ı",     acc_vowel="yı",
+        poss3_cons="ı",   poss3_vowel="sı",
+        poss3_gen="ının", poss3_dat="ına",
+        poss3_loc="ında", poss3_abl="ından",
+        ins_suf="la",
+        cop_suffix="a",
+    )
+
+    # -----------------------------------------------------------------------
+    # Family BR: back-rounded (last vowel o/u) – e.g. Ordu, Trabzon, Bolu
+    # -----------------------------------------------------------------------
+    _proper_family(
+        flag_prefix="pO",
+        gen_cons="un",    gen_vowel="nun",
+        loc_soft="da",    loc_hard="ta",
+        abl_soft="dan",   abl_hard="tan",
+        dat_suf="a",
+        acc_cons="u",     acc_vowel="yu",
+        poss3_cons="u",   poss3_vowel="su",
+        poss3_gen="unun", poss3_dat="una",
+        poss3_loc="unda", poss3_abl="undan",
+        ins_suf="la",
+        cop_suffix="a",
+    )
+
+    # -----------------------------------------------------------------------
+    # Family FU: front-unrounded (last vowel e/i) – e.g. Türkiye, İzmir
+    # -----------------------------------------------------------------------
+    _proper_family(
+        flag_prefix="pF",
+        gen_cons="in",    gen_vowel="nin",
+        loc_soft="de",    loc_hard="te",
+        abl_soft="den",   abl_hard="ten",
+        dat_suf="e",
+        acc_cons="i",     acc_vowel="yi",
+        poss3_cons="i",   poss3_vowel="si",
+        poss3_gen="inin", poss3_dat="ine",
+        poss3_loc="inde", poss3_abl="inden",
+        ins_suf="le",
+        cop_suffix="e",
+    )
+
+    # -----------------------------------------------------------------------
+    # Family FR: front-rounded (last vowel ö/ü) – e.g. Gümüşhane, Söke
+    # -----------------------------------------------------------------------
+    _proper_family(
+        flag_prefix="pU",
+        gen_cons="ün",    gen_vowel="nün",
+        loc_soft="de",    loc_hard="te",
+        abl_soft="den",   abl_hard="ten",
+        dat_suf="e",
+        acc_cons="ü",     acc_vowel="yü",
+        poss3_cons="ü",   poss3_vowel="sü",
+        poss3_gen="ünün", poss3_dat="üne",
+        poss3_loc="ünde", poss3_abl="ünden",
+        ins_suf="le",
+        cop_suffix="e",
+    )
+
     return blocks
 
 
