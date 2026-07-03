@@ -527,7 +527,6 @@ def compile_dictionary():
         {'lemma': 'bit', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'saniye', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'dakika', 'pos': 'Noun', 'attributes': []},
-        {'lemma': 'saat', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'gün', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'yıl', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'dejeneratif', 'pos': 'Noun', 'attributes': []},
@@ -604,6 +603,14 @@ def compile_dictionary():
         {'lemma': "'yü", 'pos': 'Noun', 'attributes': []},
         {'lemma': "'la", 'pos': 'Noun', 'attributes': []},
         {'lemma': "'le", 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'dijitalleşmek', 'pos': 'Verb', 'attributes': []},
+        {'lemma': 'dijitalleştirmek', 'pos': 'Verb', 'attributes': []},
+        {'lemma': 'eşlikçi', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'batım', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'İrlanda', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'yarışmacı', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'merkezi', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'sahnesi', 'pos': 'Noun', 'attributes': []},
     ]
     # Load dynamically parsed candidates from OSCAR/Corpus pipeline if available
     import os
@@ -735,7 +742,7 @@ def compile_dictionary():
                 back = not back
             
         # Inverse harmony overrides
-        inverse_harmony_words = {'kalp', 'saat', 'harf', 'rol', 'alkol', 'hâl', 'hal', 'metal', 'normal', 'ideal', 'gol', 'kontrol', 'petrol', 'seans', 'sembol', 'şefkat', 'dikkat', 'polifenol', 'flavanol', 'kortizol', 'istirahat'}
+        inverse_harmony_words = {'kalp', 'saat', 'harf', 'rol', 'alkol', 'hâl', 'hal', 'metal', 'normal', 'ideal', 'gol', 'kontrol', 'petrol', 'sembol', 'şefkat', 'dikkat', 'polifenol', 'flavanol', 'kortizol', 'istirahat'}
         if lemma.lower() in inverse_harmony_words or (pos != 'Verb' and (lemma.lower().endswith('âl') or lemma.lower().endswith('ûl'))):
             back = False
 
@@ -874,6 +881,39 @@ def compile_dictionary():
         'adnan':       'pB',
         'esenboğa':    'pB',
         'sabiha':      'pB',
+        'irlanda':     'pB',
+        'izlanda':     'pB',
+        'iskoçya':     'pB',
+        'ocak':        'pB',
+        'şubat':       'pB',
+        'mart':        'pB',
+        'nisan':       'pB',
+        'mayıs':       'pB',
+        'haziran':     'pB',
+        'kasım':       'pB',
+        'aralık':      'pB',
+        'bakanlık':    'pB',
+        'bakanlığı':   'pB',
+        'başkanlık':   'pB',
+        'başkanlığı':  'pB',
+        'kaymakamlık': 'pB',
+        'kaymakamlığı':'pB',
+        'vakıf':       'pB',
+        'vakfı':       'pB',
+        'oda':         'pB',
+        'odası':       'pB',
+        'saray':       'pB',
+        'sarayı':      'pB',
+        'sokak':       'pB',
+        'sokağı':      'pB',
+        'meydan':      'pB',
+        'meydanı':     'pB',
+        'park':        'pB',
+        'parkı':       'pB',
+        'dağ':         'pB',
+        'dağı':        'pB',
+        'ada':         'pB',
+        'adası':       'pB',
         'almanya':     'pB',
         'fransa':      'pB',
         'italya':      'pB',
@@ -942,6 +982,14 @@ def compile_dictionary():
 
         # --- Back-rounded (o/u) ---
         'istanbul':    'pO',
+        'temmuz':      'pO',
+        'ağustos':     'pO',
+        'okul':        'pO',
+        'okulu':       'pO',
+        'tiyatro':     'pO',
+        'tiyatrosu':   'pO',
+        'okyanus':     'pO',
+        'okyanusu':    'pO',
         'anadolu':     'pO',
         'trabzon':     'pO',
         'ordu':        'pO',
@@ -958,6 +1006,39 @@ def compile_dictionary():
 
         # --- Front-unrounded (e/i) ---
         'türkiye':     'pF',
+        'galler':      'pF',
+        'isviçre':     'pF',
+        'ekim':        'pF',
+        'üniversite':  'pF',
+        'üniversitesi':'pF',
+        'fakülte':     'pF',
+        'fakültesi':   'pF',
+        'lise':        'pF',
+        'lisesi':      'pF',
+        'kolej':       'pF',
+        'koleji':      'pF',
+        'hastane':     'pF',
+        'hastanesi':   'pF',
+        'belediye':    'pF',
+        'belediyesi':  'pF',
+        'valilik':     'pF',
+        'valiliği':    'pF',
+        'dernek':      'pF',
+        'derneği':     'pF',
+        'birlik':      'pF',
+        'birliği':     'pF',
+        'müze':        'pF',
+        'müzesi':      'pF',
+        'kütüphane':   'pF',
+        'kütüphanesi': 'pF',
+        'cadde':       'pF',
+        'caddesi':     'pF',
+        'nehir':       'pF',
+        'nehri':       'pF',
+        'deniz':       'pF',
+        'denizi':      'pF',
+        'körfez':      'pF',
+        'körfezi':     'pF',
         'izmir':       'pF',
         'edirne':      'pF',
         'ingiltere':   'pF',
@@ -966,6 +1047,10 @@ def compile_dictionary():
         'navi':        'pF',
         'gökçen':      'pF',
         'menderes':    'pF',
+        'merkez':      'pF',
+        'sahne':       'pF',
+        'merkezi':     'pF',
+        'sahnesi':     'pF',
         'portekiz':    'pF',
         'çin':         'pF',
         'arjantin':    'pF',
@@ -998,6 +1083,17 @@ def compile_dictionary():
 
         # --- Front-rounded (ö/ü) ---
         'bakü':        'pU',
+        'eylül':       'pU',
+        'enstitü':     'pU',
+        'enstitüsü':   'pU',
+        'müdürlük':    'pU',
+        'müdürlüğü':   'pU',
+        'kulüp':       'pU',
+        'kulübü':      'pU',
+        'köprü':       'pU',
+        'köprüsü':     'pU',
+        'göl':         'pU',
+        'gölü':        'pU',
 
         # Abbreviations/units: no vowel -> back-unrounded by convention
         'mm':        'pB',
@@ -1022,6 +1118,7 @@ def compile_dictionary():
 
     # Rebuild dic_entries, appending proper-noun flags where needed
     new_dic_entries = []
+    seen_overrides = set()
     for entry in dic_entries:
         if '/' in entry:
             lemma_part, flags_part = entry.split('/', 1)
@@ -1036,8 +1133,16 @@ def compile_dictionary():
                 entry = f"{lemma_part}/{flags_part},{extra}"
             else:
                 entry = f"{lemma_part}/{extra}"
+            if lkey in PROPER_NOUN_OVERRIDES:
+                seen_overrides.add(lkey)
 
         new_dic_entries.append(entry)
+
+    # Inject missing overrides directly as stems
+    for key, pfx in PROPER_NOUN_OVERRIDES.items():
+        if key not in seen_overrides:
+            extra = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
+            new_dic_entries.append(f"{key}/{extra}")
 
     dic_entries = new_dic_entries
     print(f"Injected proper-noun flags into {sum(1 for e in dic_entries if any(f'p{x}N' in e for x in 'BOFU'))} entries.")

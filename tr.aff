@@ -3,7 +3,7 @@ SET UTF-8
 FLAG UTF-8
 NOSUGGEST Ь
 LANG tr
-WORDCHARS '
+WORDCHARS '’‘
 
 # Break characters (allow breaking at hyphens, en-dashes, and em-dashes)
 BREAK 5
@@ -17,7 +17,7 @@ BREAK —
 # Suggestion parameters
 KEY qwertyuıopğü|asdfghjklşi|zxcvbnmçö|QWERTYUIOPĞÜ|ASDFGHJKLŞİ|ZXCVBNMÇÖ|fgğıodrnhpqw|uıevazyktsx|jövcçzsb|FGĞIODRNHPQW|UIEVAZYKTSX|JÖVCÇZSB|qaz|wsx|edc|rfv|tgb|yhn|ujm|ıkö|olç|pş|QAZ|WSX|EDC|RFV|TGB|YHN|UJM|IKÖ|OLÇ|PŞ
 TRY aeilrıtdknsmyuböuşzcgçhpvğfjAEİLRITDKNSMYUBÖUŞZCGÇHPVĞFJ
-MAP 9
+MAP 10
 MAP aâAÂ
 MAP uûUÛ
 MAP iîİÎ
@@ -27,11 +27,12 @@ MAP sşSŞ
 MAP oöOÖ
 MAP uüUÜ
 MAP ıiIİ
+MAP '’‘
 MAXDIFF 5
 MAXNGRAMSUGS 6
 ONLYMAXDIFF
 
-REP 220
+REP 221
 REP a â
 REP â a
 REP u û
@@ -84,6 +85,7 @@ REP lar ler
 REP ler lar
 REP la le
 REP le la
+REP ’ '
 REP yanlız yalnız
 REP yalnış yanlış
 REP herkez herkes
@@ -1396,10 +1398,12 @@ SFX Ћ 0 nünkikiymiş .
 SFX Ћ 0 nünkikiyken .
 SFX Ћ 0 yle .
 SFX Ћ 0 nce .
-SFX Н Y 13
+SFX Н Y 15
 SFX Н 0 0 .
 SFX Н p bb/ЀћШоЮвий p
 SFX Н t dd/ЀћШоЮвий t
+SFX Н t tt/ЀћШоЮвий t
+SFX Н d dd/ЀћШоЮвий d
 SFX Н k kk/ЀћШоЮвий k
 SFX Н s ss/ЀћШоЮвий s
 SFX Н z zz/ЀћШоЮвий z
@@ -1410,10 +1414,12 @@ SFX Н m mm/ЀћШоЮвий m
 SFX Н c cc/ЀћШоЮвий c
 SFX Н f ff/ЀћШоЮвий f
 SFX Н b bb/ЀћШоЮвий b
-SFX О Y 13
+SFX О Y 15
 SFX О 0 0 .
 SFX О p bb/ЁћЩпЯгкн p
 SFX О t dd/ЁћЩпЯгкн t
+SFX О t tt/ЁћЩпЯгкн t
+SFX О d dd/ЁћЩпЯгкн d
 SFX О k kk/ЁћЩпЯгкн k
 SFX О s ss/ЁћЩпЯгкн s
 SFX О z zz/ЁћЩпЯгкн z
@@ -1424,10 +1430,12 @@ SFX О m mm/ЁћЩпЯгкн m
 SFX О c cc/ЁћЩпЯгкн c
 SFX О f ff/ЁћЩпЯгкн f
 SFX О b bb/ЁћЩпЯгкн b
-SFX П Y 13
+SFX П Y 15
 SFX П 0 0 .
 SFX П p bb/ЂќЪрадлт p
 SFX П t dd/ЂќЪрадлт t
+SFX П t tt/ЂќЪрадлт t
+SFX П d dd/ЂќЪрадлт d
 SFX П k kk/ЂќЪрадлт k
 SFX П s ss/ЂќЪрадлт s
 SFX П z zz/ЂќЪрадлт z
@@ -1438,10 +1446,12 @@ SFX П m mm/ЂќЪрадлт m
 SFX П c cc/ЂќЪрадлт c
 SFX П f ff/ЂќЪрадлт f
 SFX П b bb/ЂќЪрадлт b
-SFX Р Y 13
+SFX Р Y 15
 SFX Р 0 0 .
 SFX Р p bb/ЃќЫсбемф p
 SFX Р t dd/ЃќЫсбемф t
+SFX Р t tt/ЃќЫсбемф t
+SFX Р d dd/ЃќЫсбемф d
 SFX Р k kk/ЃќЫсбемф k
 SFX Р s ss/ЃќЫсбемф s
 SFX Р z zz/ЃќЫсбемф z
@@ -12218,7 +12228,7 @@ SFX м 0 müzlesinizdir [aeıioöuü]
 SFX м 0 müzce [aeıioöuü]
 
 # 2PL POSSESSIVE FLAGS
-SFX й Y 478
+SFX й Y 414
 SFX й 0 ınız [^aeıioöuü]
 SFX й 0 ınızdı [^aeıioöuü]
 SFX й 0 ınızdım [^aeıioöuü]
@@ -12425,38 +12435,6 @@ SFX й 0 ınızınkidir [^aeıioöuü]
 SFX й 0 ınızınkiydi [^aeıioöuü]
 SFX й 0 ınızınkiymiş [^aeıioöuü]
 SFX й 0 ınızınkiyken [^aeıioöuü]
-SFX й 0 ınızla [^aeıioöuü]
-SFX й 0 ınızlaydı [^aeıioöuü]
-SFX й 0 ınızlaydım [^aeıioöuü]
-SFX й 0 ınızlaydın [^aeıioöuü]
-SFX й 0 ınızlaydık [^aeıioöuü]
-SFX й 0 ınızlaydınız [^aeıioöuü]
-SFX й 0 ınızlaydılar [^aeıioöuü]
-SFX й 0 ınızlaymış [^aeıioöuü]
-SFX й 0 ınızlaymışım [^aeıioöuü]
-SFX й 0 ınızlaymışsın [^aeıioöuü]
-SFX й 0 ınızlaymışız [^aeıioöuü]
-SFX й 0 ınızlaymışsınız [^aeıioöuü]
-SFX й 0 ınızlaymışlar [^aeıioöuü]
-SFX й 0 ınızlaysa [^aeıioöuü]
-SFX й 0 ınızlaysam [^aeıioöuü]
-SFX й 0 ınızlaysan [^aeıioöuü]
-SFX й 0 ınızlaysak [^aeıioöuü]
-SFX й 0 ınızlaysanız [^aeıioöuü]
-SFX й 0 ınızlaysalar [^aeıioöuü]
-SFX й 0 ınızlayım [^aeıioöuü]
-SFX й 0 ınızlasın [^aeıioöuü]
-SFX й 0 ınızlayız [^aeıioöuü]
-SFX й 0 ınızlasınız [^aeıioöuü]
-SFX й 0 ınızlalar [^aeıioöuü]
-SFX й 0 ınızladır [^aeıioöuü]
-SFX й 0 ınızladırlar [^aeıioöuü]
-SFX й 0 ınızlalardır [^aeıioöuü]
-SFX й 0 ınızlayken [^aeıioöuü]
-SFX й 0 ınızlayımdır [^aeıioöuü]
-SFX й 0 ınızlasındır [^aeıioöuü]
-SFX й 0 ınızlayızdır [^aeıioöuü]
-SFX й 0 ınızlasınızdır [^aeıioöuü]
 SFX й 0 ınızca [^aeıioöuü]
 SFX й 0 nız [aeıioöuü]
 SFX й 0 nızdı [aeıioöuü]
@@ -12664,40 +12642,8 @@ SFX й 0 nızınkidir [aeıioöuü]
 SFX й 0 nızınkiydi [aeıioöuü]
 SFX й 0 nızınkiymiş [aeıioöuü]
 SFX й 0 nızınkiyken [aeıioöuü]
-SFX й 0 nızla [aeıioöuü]
-SFX й 0 nızlaydı [aeıioöuü]
-SFX й 0 nızlaydım [aeıioöuü]
-SFX й 0 nızlaydın [aeıioöuü]
-SFX й 0 nızlaydık [aeıioöuü]
-SFX й 0 nızlaydınız [aeıioöuü]
-SFX й 0 nızlaydılar [aeıioöuü]
-SFX й 0 nızlaymış [aeıioöuü]
-SFX й 0 nızlaymışım [aeıioöuü]
-SFX й 0 nızlaymışsın [aeıioöuü]
-SFX й 0 nızlaymışız [aeıioöuü]
-SFX й 0 nızlaymışsınız [aeıioöuü]
-SFX й 0 nızlaymışlar [aeıioöuü]
-SFX й 0 nızlaysa [aeıioöuü]
-SFX й 0 nızlaysam [aeıioöuü]
-SFX й 0 nızlaysan [aeıioöuü]
-SFX й 0 nızlaysak [aeıioöuü]
-SFX й 0 nızlaysanız [aeıioöuü]
-SFX й 0 nızlaysalar [aeıioöuü]
-SFX й 0 nızlayım [aeıioöuü]
-SFX й 0 nızlasın [aeıioöuü]
-SFX й 0 nızlayız [aeıioöuü]
-SFX й 0 nızlasınız [aeıioöuü]
-SFX й 0 nızlalar [aeıioöuü]
-SFX й 0 nızladır [aeıioöuü]
-SFX й 0 nızladırlar [aeıioöuü]
-SFX й 0 nızlalardır [aeıioöuü]
-SFX й 0 nızlayken [aeıioöuü]
-SFX й 0 nızlayımdır [aeıioöuü]
-SFX й 0 nızlasındır [aeıioöuü]
-SFX й 0 nızlayızdır [aeıioöuü]
-SFX й 0 nızlasınızdır [aeıioöuü]
 SFX й 0 nızca [aeıioöuü]
-SFX н Y 478
+SFX н Y 414
 SFX н 0 unuz [^aeıioöuü]
 SFX н 0 unuzdu [^aeıioöuü]
 SFX н 0 unuzdum [^aeıioöuü]
@@ -12904,38 +12850,6 @@ SFX н 0 unuzunkidir [^aeıioöuü]
 SFX н 0 unuzunkiydi [^aeıioöuü]
 SFX н 0 unuzunkiymiş [^aeıioöuü]
 SFX н 0 unuzunkiyken [^aeıioöuü]
-SFX н 0 unuzla [^aeıioöuü]
-SFX н 0 unuzlaydı [^aeıioöuü]
-SFX н 0 unuzlaydım [^aeıioöuü]
-SFX н 0 unuzlaydın [^aeıioöuü]
-SFX н 0 unuzlaydık [^aeıioöuü]
-SFX н 0 unuzlaydınız [^aeıioöuü]
-SFX н 0 unuzlaydılar [^aeıioöuü]
-SFX н 0 unuzlaymış [^aeıioöuü]
-SFX н 0 unuzlaymışım [^aeıioöuü]
-SFX н 0 unuzlaymışsın [^aeıioöuü]
-SFX н 0 unuzlaymışız [^aeıioöuü]
-SFX н 0 unuzlaymışsınız [^aeıioöuü]
-SFX н 0 unuzlaymışlar [^aeıioöuü]
-SFX н 0 unuzlaysa [^aeıioöuü]
-SFX н 0 unuzlaysam [^aeıioöuü]
-SFX н 0 unuzlaysan [^aeıioöuü]
-SFX н 0 unuzlaysak [^aeıioöuü]
-SFX н 0 unuzlaysanız [^aeıioöuü]
-SFX н 0 unuzlaysalar [^aeıioöuü]
-SFX н 0 unuzlayım [^aeıioöuü]
-SFX н 0 unuzlasın [^aeıioöuü]
-SFX н 0 unuzlayız [^aeıioöuü]
-SFX н 0 unuzlasınız [^aeıioöuü]
-SFX н 0 unuzlalar [^aeıioöuü]
-SFX н 0 unuzladır [^aeıioöuü]
-SFX н 0 unuzladırlar [^aeıioöuü]
-SFX н 0 unuzlalardır [^aeıioöuü]
-SFX н 0 unuzlayken [^aeıioöuü]
-SFX н 0 unuzlayımdır [^aeıioöuü]
-SFX н 0 unuzlasındır [^aeıioöuü]
-SFX н 0 unuzlayızdır [^aeıioöuü]
-SFX н 0 unuzlasınızdır [^aeıioöuü]
 SFX н 0 unuzca [^aeıioöuü]
 SFX н 0 nuz [aeıioöuü]
 SFX н 0 nuzdu [aeıioöuü]
@@ -13143,40 +13057,8 @@ SFX н 0 nuzunkidir [aeıioöuü]
 SFX н 0 nuzunkiydi [aeıioöuü]
 SFX н 0 nuzunkiymiş [aeıioöuü]
 SFX н 0 nuzunkiyken [aeıioöuü]
-SFX н 0 nuzla [aeıioöuü]
-SFX н 0 nuzlaydı [aeıioöuü]
-SFX н 0 nuzlaydım [aeıioöuü]
-SFX н 0 nuzlaydın [aeıioöuü]
-SFX н 0 nuzlaydık [aeıioöuü]
-SFX н 0 nuzlaydınız [aeıioöuü]
-SFX н 0 nuzlaydılar [aeıioöuü]
-SFX н 0 nuzlaymış [aeıioöuü]
-SFX н 0 nuzlaymışım [aeıioöuü]
-SFX н 0 nuzlaymışsın [aeıioöuü]
-SFX н 0 nuzlaymışız [aeıioöuü]
-SFX н 0 nuzlaymışsınız [aeıioöuü]
-SFX н 0 nuzlaymışlar [aeıioöuü]
-SFX н 0 nuzlaysa [aeıioöuü]
-SFX н 0 nuzlaysam [aeıioöuü]
-SFX н 0 nuzlaysan [aeıioöuü]
-SFX н 0 nuzlaysak [aeıioöuü]
-SFX н 0 nuzlaysanız [aeıioöuü]
-SFX н 0 nuzlaysalar [aeıioöuü]
-SFX н 0 nuzlayım [aeıioöuü]
-SFX н 0 nuzlasın [aeıioöuü]
-SFX н 0 nuzlayız [aeıioöuü]
-SFX н 0 nuzlasınız [aeıioöuü]
-SFX н 0 nuzlalar [aeıioöuü]
-SFX н 0 nuzladır [aeıioöuü]
-SFX н 0 nuzladırlar [aeıioöuü]
-SFX н 0 nuzlalardır [aeıioöuü]
-SFX н 0 nuzlayken [aeıioöuü]
-SFX н 0 nuzlayımdır [aeıioöuü]
-SFX н 0 nuzlasındır [aeıioöuü]
-SFX н 0 nuzlayızdır [aeıioöuü]
-SFX н 0 nuzlasınızdır [aeıioöuü]
 SFX н 0 nuzca [aeıioöuü]
-SFX т Y 478
+SFX т Y 414
 SFX т 0 iniz [^aeıioöuü]
 SFX т 0 inizdi [^aeıioöuü]
 SFX т 0 inizdim [^aeıioöuü]
@@ -13383,38 +13265,6 @@ SFX т 0 inizinkidir [^aeıioöuü]
 SFX т 0 inizinkiydi [^aeıioöuü]
 SFX т 0 inizinkiymiş [^aeıioöuü]
 SFX т 0 inizinkiyken [^aeıioöuü]
-SFX т 0 inizle [^aeıioöuü]
-SFX т 0 inizleydi [^aeıioöuü]
-SFX т 0 inizleydim [^aeıioöuü]
-SFX т 0 inizleydin [^aeıioöuü]
-SFX т 0 inizleydik [^aeıioöuü]
-SFX т 0 inizleydiniz [^aeıioöuü]
-SFX т 0 inizleydiler [^aeıioöuü]
-SFX т 0 inizleymiş [^aeıioöuü]
-SFX т 0 inizleymişim [^aeıioöuü]
-SFX т 0 inizleymişsin [^aeıioöuü]
-SFX т 0 inizleymişiz [^aeıioöuü]
-SFX т 0 inizleymişsiniz [^aeıioöuü]
-SFX т 0 inizleymişler [^aeıioöuü]
-SFX т 0 inizleyse [^aeıioöuü]
-SFX т 0 inizleysem [^aeıioöuü]
-SFX т 0 inizleysen [^aeıioöuü]
-SFX т 0 inizleysek [^aeıioöuü]
-SFX т 0 inizleyseniz [^aeıioöuü]
-SFX т 0 inizleyseler [^aeıioöuü]
-SFX т 0 inizleyim [^aeıioöuü]
-SFX т 0 inizlesin [^aeıioöuü]
-SFX т 0 inizleyiz [^aeıioöuü]
-SFX т 0 inizlesiniz [^aeıioöuü]
-SFX т 0 inizleler [^aeıioöuü]
-SFX т 0 inizledir [^aeıioöuü]
-SFX т 0 inizledirler [^aeıioöuü]
-SFX т 0 inizlelerdir [^aeıioöuü]
-SFX т 0 inizleyken [^aeıioöuü]
-SFX т 0 inizleyimdir [^aeıioöuü]
-SFX т 0 inizlesindir [^aeıioöuü]
-SFX т 0 inizleyizdir [^aeıioöuü]
-SFX т 0 inizlesinizdir [^aeıioöuü]
 SFX т 0 inizce [^aeıioöuü]
 SFX т 0 niz [aeıioöuü]
 SFX т 0 nizdi [aeıioöuü]
@@ -13622,40 +13472,8 @@ SFX т 0 nizinkidir [aeıioöuü]
 SFX т 0 nizinkiydi [aeıioöuü]
 SFX т 0 nizinkiymiş [aeıioöuü]
 SFX т 0 nizinkiyken [aeıioöuü]
-SFX т 0 nizle [aeıioöuü]
-SFX т 0 nizleydi [aeıioöuü]
-SFX т 0 nizleydim [aeıioöuü]
-SFX т 0 nizleydin [aeıioöuü]
-SFX т 0 nizleydik [aeıioöuü]
-SFX т 0 nizleydiniz [aeıioöuü]
-SFX т 0 nizleydiler [aeıioöuü]
-SFX т 0 nizleymiş [aeıioöuü]
-SFX т 0 nizleymişim [aeıioöuü]
-SFX т 0 nizleymişsin [aeıioöuü]
-SFX т 0 nizleymişiz [aeıioöuü]
-SFX т 0 nizleymişsiniz [aeıioöuü]
-SFX т 0 nizleymişler [aeıioöuü]
-SFX т 0 nizleyse [aeıioöuü]
-SFX т 0 nizleysem [aeıioöuü]
-SFX т 0 nizleysen [aeıioöuü]
-SFX т 0 nizleysek [aeıioöuü]
-SFX т 0 nizleyseniz [aeıioöuü]
-SFX т 0 nizleyseler [aeıioöuü]
-SFX т 0 nizleyim [aeıioöuü]
-SFX т 0 nizlesin [aeıioöuü]
-SFX т 0 nizleyiz [aeıioöuü]
-SFX т 0 nizlesiniz [aeıioöuü]
-SFX т 0 nizleler [aeıioöuü]
-SFX т 0 nizledir [aeıioöuü]
-SFX т 0 nizledirler [aeıioöuü]
-SFX т 0 nizlelerdir [aeıioöuü]
-SFX т 0 nizleyken [aeıioöuü]
-SFX т 0 nizleyimdir [aeıioöuü]
-SFX т 0 nizlesindir [aeıioöuü]
-SFX т 0 nizleyizdir [aeıioöuü]
-SFX т 0 nizlesinizdir [aeıioöuü]
 SFX т 0 nizce [aeıioöuü]
-SFX ф Y 478
+SFX ф Y 414
 SFX ф 0 ünüz [^aeıioöuü]
 SFX ф 0 ünüzdü [^aeıioöuü]
 SFX ф 0 ünüzdüm [^aeıioöuü]
@@ -13862,38 +13680,6 @@ SFX ф 0 ünüzünkidir [^aeıioöuü]
 SFX ф 0 ünüzünkiydi [^aeıioöuü]
 SFX ф 0 ünüzünkiymiş [^aeıioöuü]
 SFX ф 0 ünüzünkiyken [^aeıioöuü]
-SFX ф 0 ünüzle [^aeıioöuü]
-SFX ф 0 ünüzleydi [^aeıioöuü]
-SFX ф 0 ünüzleydim [^aeıioöuü]
-SFX ф 0 ünüzleydin [^aeıioöuü]
-SFX ф 0 ünüzleydik [^aeıioöuü]
-SFX ф 0 ünüzleydiniz [^aeıioöuü]
-SFX ф 0 ünüzleydiler [^aeıioöuü]
-SFX ф 0 ünüzleymiş [^aeıioöuü]
-SFX ф 0 ünüzleymişim [^aeıioöuü]
-SFX ф 0 ünüzleymişsin [^aeıioöuü]
-SFX ф 0 ünüzleymişiz [^aeıioöuü]
-SFX ф 0 ünüzleymişsiniz [^aeıioöuü]
-SFX ф 0 ünüzleymişler [^aeıioöuü]
-SFX ф 0 ünüzleyse [^aeıioöuü]
-SFX ф 0 ünüzleysem [^aeıioöuü]
-SFX ф 0 ünüzleysen [^aeıioöuü]
-SFX ф 0 ünüzleysek [^aeıioöuü]
-SFX ф 0 ünüzleyseniz [^aeıioöuü]
-SFX ф 0 ünüzleyseler [^aeıioöuü]
-SFX ф 0 ünüzleyim [^aeıioöuü]
-SFX ф 0 ünüzlesin [^aeıioöuü]
-SFX ф 0 ünüzleyiz [^aeıioöuü]
-SFX ф 0 ünüzlesiniz [^aeıioöuü]
-SFX ф 0 ünüzleler [^aeıioöuü]
-SFX ф 0 ünüzledir [^aeıioöuü]
-SFX ф 0 ünüzledirler [^aeıioöuü]
-SFX ф 0 ünüzlelerdir [^aeıioöuü]
-SFX ф 0 ünüzleyken [^aeıioöuü]
-SFX ф 0 ünüzleyimdir [^aeıioöuü]
-SFX ф 0 ünüzlesindir [^aeıioöuü]
-SFX ф 0 ünüzleyizdir [^aeıioöuü]
-SFX ф 0 ünüzlesinizdir [^aeıioöuü]
 SFX ф 0 ünüzce [^aeıioöuü]
 SFX ф 0 nüz [aeıioöuü]
 SFX ф 0 nüzdü [aeıioöuü]
@@ -14101,54 +13887,34 @@ SFX ф 0 nüzünkidir [aeıioöuü]
 SFX ф 0 nüzünkiydi [aeıioöuü]
 SFX ф 0 nüzünkiymiş [aeıioöuü]
 SFX ф 0 nüzünkiyken [aeıioöuü]
-SFX ф 0 nüzle [aeıioöuü]
-SFX ф 0 nüzleydi [aeıioöuü]
-SFX ф 0 nüzleydim [aeıioöuü]
-SFX ф 0 nüzleydin [aeıioöuü]
-SFX ф 0 nüzleydik [aeıioöuü]
-SFX ф 0 nüzleydiniz [aeıioöuü]
-SFX ф 0 nüzleydiler [aeıioöuü]
-SFX ф 0 nüzleymiş [aeıioöuü]
-SFX ф 0 nüzleymişim [aeıioöuü]
-SFX ф 0 nüzleymişsin [aeıioöuü]
-SFX ф 0 nüzleymişiz [aeıioöuü]
-SFX ф 0 nüzleymişsiniz [aeıioöuü]
-SFX ф 0 nüzleymişler [aeıioöuü]
-SFX ф 0 nüzleyse [aeıioöuü]
-SFX ф 0 nüzleysem [aeıioöuü]
-SFX ф 0 nüzleysen [aeıioöuü]
-SFX ф 0 nüzleysek [aeıioöuü]
-SFX ф 0 nüzleyseniz [aeıioöuü]
-SFX ф 0 nüzleyseler [aeıioöuü]
-SFX ф 0 nüzleyim [aeıioöuü]
-SFX ф 0 nüzlesin [aeıioöuü]
-SFX ф 0 nüzleyiz [aeıioöuü]
-SFX ф 0 nüzlesiniz [aeıioöuü]
-SFX ф 0 nüzleler [aeıioöuü]
-SFX ф 0 nüzledir [aeıioöuü]
-SFX ф 0 nüzledirler [aeıioöuü]
-SFX ф 0 nüzlelerdir [aeıioöuü]
-SFX ф 0 nüzleyken [aeıioöuü]
-SFX ф 0 nüzleyimdir [aeıioöuü]
-SFX ф 0 nüzlesindir [aeıioöuü]
-SFX ф 0 nüzleyizdir [aeıioöuü]
-SFX ф 0 nüzlesinizdir [aeıioöuü]
 SFX ф 0 nüzce [aeıioöuü]
 
 # COPULA FLAGS
-SFX Ў Y 62
+SFX Ў Y 108
 SFX Ў 0 ydı .
+SFX Ў 0 ydu .
 SFX Ў 0 ydım .
+SFX Ў 0 ydum .
 SFX Ў 0 ydın .
+SFX Ў 0 ydun .
 SFX Ў 0 ydık .
+SFX Ў 0 yduk .
 SFX Ў 0 ydınız .
+SFX Ў 0 ydunuz .
 SFX Ў 0 ydılar .
+SFX Ў 0 ydular .
 SFX Ў 0 ymış .
+SFX Ў 0 ymuş .
 SFX Ў 0 ymışım .
+SFX Ў 0 ymuşum .
 SFX Ў 0 ymışsın .
+SFX Ў 0 ymuşsun .
 SFX Ў 0 ymışız .
+SFX Ў 0 ymuşuz .
 SFX Ў 0 ymışsınız .
+SFX Ў 0 ymuşsunuz .
 SFX Ў 0 ymışlar .
+SFX Ў 0 ymuşlar .
 SFX Ў 0 ysa .
 SFX Ў 0 ysam .
 SFX Ў 0 ysan .
@@ -14156,36 +13922,64 @@ SFX Ў 0 ysak .
 SFX Ў 0 ysanız .
 SFX Ў 0 ysalar .
 SFX Ў 0 yım .
+SFX Ў 0 yum .
 SFX Ў 0 sın .
+SFX Ў 0 sun .
 SFX Ў 0 yız .
+SFX Ў 0 yuz .
 SFX Ў 0 sınız .
+SFX Ў 0 sunuz .
 SFX Ў 0 lar .
 SFX Ў 0 dır .
+SFX Ў 0 dur .
 SFX Ў 0 dırlar .
+SFX Ў 0 durlar .
 SFX Ў 0 lardır .
 SFX Ў 0 yken .
 SFX Ў 0 yımdır .
+SFX Ў 0 yumdur .
 SFX Ў 0 sındır .
+SFX Ў 0 sundur .
 SFX Ў 0 yızdır .
+SFX Ў 0 yuzdur .
 SFX Ў 0 sınızdır .
+SFX Ў 0 sunuzdur .
 SFX Ў 0 dı .
+SFX Ў 0 du .
 SFX Ў 0 dım .
+SFX Ў 0 dum .
 SFX Ў 0 dın .
+SFX Ў 0 dun .
 SFX Ў 0 dık .
+SFX Ў 0 duk .
 SFX Ў 0 dınız .
+SFX Ў 0 dunuz .
 SFX Ў 0 dılar .
+SFX Ў 0 dular .
 SFX Ў 0 tı .
+SFX Ў 0 tu .
 SFX Ў 0 tım .
+SFX Ў 0 tum .
 SFX Ў 0 tın .
+SFX Ў 0 tun .
 SFX Ў 0 tık .
+SFX Ў 0 tuk .
 SFX Ў 0 tınız .
+SFX Ў 0 tunuz .
 SFX Ў 0 tılar .
+SFX Ў 0 tular .
 SFX Ў 0 mış .
+SFX Ў 0 muş .
 SFX Ў 0 mışım .
+SFX Ў 0 muşum .
 SFX Ў 0 mışsın .
+SFX Ў 0 muşsun .
 SFX Ў 0 mışız .
+SFX Ў 0 muşuz .
 SFX Ў 0 mışsınız .
+SFX Ў 0 muşsunuz .
 SFX Ў 0 mışlar .
+SFX Ў 0 muşlar .
 SFX Ў 0 sa .
 SFX Ў 0 sam .
 SFX Ў 0 san .
@@ -14193,25 +13987,43 @@ SFX Ў 0 sak .
 SFX Ў 0 sanız .
 SFX Ў 0 salar .
 SFX Ў 0 ım .
+SFX Ў 0 um .
 SFX Ў 0 ız .
+SFX Ў 0 uz .
 SFX Ў 0 tır .
+SFX Ў 0 tur .
 SFX Ў 0 tırlar .
+SFX Ў 0 turlar .
 SFX Ў 0 ken .
 SFX Ў 0 ımdır .
+SFX Ў 0 umdur .
 SFX Ў 0 ızdır .
-SFX ѡ Y 62
+SFX Ў 0 uzdur .
+SFX ѡ Y 108
 SFX ѡ 0 ydi .
+SFX ѡ 0 ydü .
 SFX ѡ 0 ydim .
+SFX ѡ 0 ydüm .
 SFX ѡ 0 ydin .
+SFX ѡ 0 ydün .
 SFX ѡ 0 ydik .
+SFX ѡ 0 ydük .
 SFX ѡ 0 ydiniz .
+SFX ѡ 0 ydünüz .
 SFX ѡ 0 ydiler .
+SFX ѡ 0 ydüler .
 SFX ѡ 0 ymiş .
+SFX ѡ 0 ymüş .
 SFX ѡ 0 ymişim .
+SFX ѡ 0 ymüşüm .
 SFX ѡ 0 ymişsin .
+SFX ѡ 0 ymüşsün .
 SFX ѡ 0 ymişiz .
+SFX ѡ 0 ymüşüz .
 SFX ѡ 0 ymişsiniz .
+SFX ѡ 0 ymüşsünüz .
 SFX ѡ 0 ymişler .
+SFX ѡ 0 ymüşler .
 SFX ѡ 0 yse .
 SFX ѡ 0 ysem .
 SFX ѡ 0 ysen .
@@ -14219,36 +14031,64 @@ SFX ѡ 0 ysek .
 SFX ѡ 0 yseniz .
 SFX ѡ 0 yseler .
 SFX ѡ 0 yim .
+SFX ѡ 0 yüm .
 SFX ѡ 0 sin .
+SFX ѡ 0 sün .
 SFX ѡ 0 yiz .
+SFX ѡ 0 yüz .
 SFX ѡ 0 siniz .
+SFX ѡ 0 sünüz .
 SFX ѡ 0 ler .
 SFX ѡ 0 dir .
+SFX ѡ 0 dür .
 SFX ѡ 0 dirler .
+SFX ѡ 0 dürler .
 SFX ѡ 0 lerdir .
 SFX ѡ 0 yken .
 SFX ѡ 0 yimdir .
+SFX ѡ 0 yümdür .
 SFX ѡ 0 sindir .
+SFX ѡ 0 sündür .
 SFX ѡ 0 yizdir .
+SFX ѡ 0 yüzdür .
 SFX ѡ 0 sinizdir .
+SFX ѡ 0 sünüzdür .
 SFX ѡ 0 di .
+SFX ѡ 0 dü .
 SFX ѡ 0 dim .
+SFX ѡ 0 düm .
 SFX ѡ 0 din .
+SFX ѡ 0 dün .
 SFX ѡ 0 dik .
+SFX ѡ 0 dük .
 SFX ѡ 0 diniz .
+SFX ѡ 0 dünüz .
 SFX ѡ 0 diler .
+SFX ѡ 0 düler .
 SFX ѡ 0 ti .
+SFX ѡ 0 tü .
 SFX ѡ 0 tim .
+SFX ѡ 0 tüm .
 SFX ѡ 0 tin .
+SFX ѡ 0 tün .
 SFX ѡ 0 tik .
+SFX ѡ 0 tük .
 SFX ѡ 0 tiniz .
+SFX ѡ 0 tünüz .
 SFX ѡ 0 tiler .
+SFX ѡ 0 tüler .
 SFX ѡ 0 miş .
+SFX ѡ 0 müş .
 SFX ѡ 0 mişim .
+SFX ѡ 0 müşüm .
 SFX ѡ 0 mişsin .
+SFX ѡ 0 müşsün .
 SFX ѡ 0 mişiz .
+SFX ѡ 0 müşüz .
 SFX ѡ 0 mişsiniz .
+SFX ѡ 0 müşsünüz .
 SFX ѡ 0 mişler .
+SFX ѡ 0 müşler .
 SFX ѡ 0 se .
 SFX ѡ 0 sem .
 SFX ѡ 0 sen .
@@ -14256,12 +14096,18 @@ SFX ѡ 0 sek .
 SFX ѡ 0 seniz .
 SFX ѡ 0 seler .
 SFX ѡ 0 im .
+SFX ѡ 0 üm .
 SFX ѡ 0 iz .
+SFX ѡ 0 üz .
 SFX ѡ 0 tir .
+SFX ѡ 0 tür .
 SFX ѡ 0 tirler .
+SFX ѡ 0 türler .
 SFX ѡ 0 ken .
 SFX ѡ 0 imdir .
+SFX ѡ 0 ümdür .
 SFX ѡ 0 izdir .
+SFX ѡ 0 üzdür .
 
 # RELATIVE -KI FLAG
 SFX У Y 26
