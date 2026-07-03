@@ -727,7 +727,7 @@ def gen_2pl_poss_flags() -> list[str]:
         acc_v = "ı" if back and not rounded else ("u" if rounded and back else ("i" if not back and not rounded else "ü"))
         loc_v = "a" if back else "e"
         sg = f"{acc_v}nız" if back and not rounded else \
-             ("umuz" if rounded and back else ("iniz" if not back and not rounded else "ünüz"))
+             ("unuz" if rounded and back else ("iniz" if not back and not rounded else "ünüz"))
         m  = "nız" if back and not rounded else ("nuz" if rounded and back else ("niz" if not back and not rounded else "nüz"))
 
         eq_v = "ca" if back else "ce"
@@ -847,32 +847,32 @@ def gen_deriv_li(flag: str = "LI") -> str:
     """
     stems = {
         # --- Specific: last char is consonant, penultimate is a harmony vowel ---
-        "[aı][^aeıioöuü]": ("lı", "lıydı", "lıydım", "lıyken", "lılar", "lılara", "lılarda", "lılardan",
+        "[aı][^aeıioöuü]": ("lı/DL", "lıydı", "lıydım", "lıyken", "lılar", "lılara", "lılarda", "lılardan",
                               "lılık", "lılığa", "lılıkta", "lılıktan"),
-        "[ou][^aeıioöuü]": ("lu", "luydu", "luyken", "lular", "lulara", "lularda", "lulardan",
+        "[ou][^aeıioöuü]": ("lu/DL", "luydu", "luyken", "lular", "lulara", "lularda", "lulardan",
                               "luluk", "luluğa"),
-        "[ei][^aeıioöuü]": ("li", "liydi", "liyken", "liler", "lilere", "lilerde", "lilerden",
+        "[ei][^aeıioöuü]": ("li/DL", "liydi", "liyken", "liler", "lilere", "lilerde", "lilerden",
                               "lilik", "liliğe"),
-        "[öü][^aeıioöuü]": ("lü", "lüydü", "lüyken", "lüler", "lülere", "lülerde", "lülerden",
+        "[öü][^aeıioöuü]": ("lü/DL", "lüydü", "lüyken", "lüler", "lülere", "lülerde", "lülerden",
                               "lülük", "lülüğe"),
         # --- Vowel-ending stems ---
-        "[aı]": ("lı", "lıydı", "lıyken", "lılar"),
-        "[ou]": ("lu", "luydu", "luyken", "lular"),
-        "[ei]": ("li", "liydi", "liyken", "liler"),
-        "[öü]": ("lü", "lüydü", "lüyken", "lüler"),
+        "[aı]": ("lı/DL", "lıydı", "lıyken", "lılar"),
+        "[ou]": ("lu/DL", "luydu", "luyken", "lular"),
+        "[ei]": ("li/DL", "liydi", "liyken", "liler"),
+        "[öü]": ("lü/DL", "lüydü", "lüyken", "lüler"),
     }
     # Catch-all for consonant-cluster endings (e.g. -ns, -nt, -nk, -rt, -rs).
     # The flag itself encodes the harmony class (back/front/rounded), so we
     # emit all four variants here and rely on the correct flag being assigned
     # to each stem in compile_hunspell.py.
     cluster_forms = {
-        "lı": ("lı", "lıydı", "lıydım", "lıyken", "lılar", "lılara", "lılarda", "lılardan",
+        "lı": ("lı/DL", "lıydı", "lıydım", "lıyken", "lılar", "lılara", "lılarda", "lılardan",
                "lılık", "lılığa", "lılıkta", "lılıktan"),
-        "lu": ("lu", "luydu", "luyken", "lular", "lulara", "lularda", "lulardan",
+        "lu": ("lu/DL", "luydu", "luyken", "lular", "lulara", "lularda", "lulardan",
                "luluk", "luluğa"),
-        "li": ("li", "liydi", "liyken", "liler", "lilere", "lilerde", "lilerden",
+        "li": ("li/DL", "liydi", "liyken", "liler", "lilere", "lilerde", "lilerden",
                "lilik", "liliğe"),
-        "lü": ("lü", "lüydü", "lüyken", "lüler", "lülere", "lülerde", "lülerden",
+        "lü": ("lü/DL", "lüydü", "lüyken", "lüler", "lülere", "lülerde", "lülerden",
                "lülük", "lülüğe"),
     }
     rules = []
@@ -1435,7 +1435,8 @@ def gen_proper_flags() -> list[str]:
         loc_hard: str,         # locative hard:  'ta / 'te
         abl_soft: str,         # ablative soft:  'dan / 'den
         abl_hard: str,         # ablative hard:  'tan / 'ten
-        dat_suf: str,          # dative:         'a / 'e
+        dat_cons: str,         # dative after consonant: 'a / 'e
+        dat_vowel: str,        # dative after vowel:     'ya / 'ye
         acc_cons: str,         # accusative after consonant: 'ı / 'u / 'i / 'ü
         acc_vowel: str,        # accusative after vowel:     'yı / 'yu / 'yi / 'yü
         poss3_cons: str,       # 3sg poss after consonant:  'ı / 'u / 'i / 'ü
@@ -1451,30 +1452,46 @@ def gen_proper_flags() -> list[str]:
         rules_N = []
         sfx_ki(f"{flag_prefix}N", "0", f"'{gen_cons}",   "[^aeıioöuü]", rules_N)
         sfx_ki(f"{flag_prefix}N", "0", f"'{gen_vowel}",  "[aeıioöuü]",  rules_N)
+        if flag_prefix == "pF":
+            sfx_ki(f"{flag_prefix}N", "0", f"'{gen_vowel}",  "tl",          rules_N)
+            sfx_ki(f"{flag_prefix}N", "0", f"'{gen_vowel}",  "TL",          rules_N)
         blocks.append(make_flag_block(f"{flag_prefix}N", unique(rules_N)))
 
         # --- Locative flag ---
         blocks.append(make_flag_block(f"{flag_prefix}L", [
             sfx(f"{flag_prefix}L", "0", f"'{loc_soft}", "[^çfhkpsşt]"),
             sfx(f"{flag_prefix}L", "0", f"'{loc_hard}", "[çfhkpsşt]"),
+            sfx(f"{flag_prefix}L", "0", f"'n{loc_soft}", "[aeıioöuü]"),
         ]))
 
         # --- Ablative flag ---
         blocks.append(make_flag_block(f"{flag_prefix}R", [
             sfx(f"{flag_prefix}R", "0", f"'{abl_soft}/cl", "[^çfhkpsşt]"),
             sfx(f"{flag_prefix}R", "0", f"'{abl_hard}/cl", "[çfhkpsşt]"),
+            sfx(f"{flag_prefix}R", "0", f"'n{abl_soft}/cl", "[aeıioöuü]"),
         ]))
 
         # --- Dative flag ---
-        blocks.append(make_flag_block(f"{flag_prefix}Y", [
-            sfx(f"{flag_prefix}Y", "0", f"'{dat_suf}", "."),
-        ]))
+        rules_Y = [
+            sfx(f"{flag_prefix}Y", "0", f"'{dat_cons}",  "[^aeıioöuü]"),
+            sfx(f"{flag_prefix}Y", "0", f"'{dat_vowel}", "[aeıioöuü]"),
+            sfx(f"{flag_prefix}Y", "0", f"'n{dat_cons}",  "[aeıioöuü]"),
+        ]
+        if flag_prefix == "pF":
+            rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_vowel}", "tl"))
+            rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_vowel}", "TL"))
+        blocks.append(make_flag_block(f"{flag_prefix}Y", unique(rules_Y)))
 
         # --- Accusative flag ---
-        blocks.append(make_flag_block(f"{flag_prefix}A", [
+        rules_A = [
             sfx(f"{flag_prefix}A", "0", f"'{acc_cons}",  "[^aeıioöuü]"),
             sfx(f"{flag_prefix}A", "0", f"'{acc_vowel}", "[aeıioöuü]"),
-        ]))
+            sfx(f"{flag_prefix}A", "0", f"'n{acc_cons}",  "[aeıioöuü]"),
+        ]
+        if flag_prefix == "pF":
+            rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_vowel}", "tl"))
+            rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_vowel}", "TL"))
+        blocks.append(make_flag_block(f"{flag_prefix}A", unique(rules_A)))
 
         # --- Instrumental flag ---
         blocks.append(make_flag_block(f"{flag_prefix}I", [
@@ -1492,6 +1509,9 @@ def gen_proper_flags() -> list[str]:
         ]
         sfx_ki(f"{flag_prefix}P", "0", f"'{poss3_loc}",  "[^aeıioöuü]", rules_P)
         sfx_ki(f"{flag_prefix}P", "0", f"'{poss3_gen}",  "[^aeıioöuü]", rules_P)
+        if flag_prefix == "pF":
+            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/cl", "tl"))
+            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/cl", "TL"))
         blocks.append(make_flag_block(f"{flag_prefix}P", unique(rules_P)))
 
         # --- Copula flag ---
@@ -1519,7 +1539,7 @@ def gen_proper_flags() -> list[str]:
         gen_cons="ın",    gen_vowel="nın",
         loc_soft="da",    loc_hard="ta",
         abl_soft="dan",   abl_hard="tan",
-        dat_suf="a",
+        dat_cons="a",     dat_vowel="ya",
         acc_cons="ı",     acc_vowel="yı",
         poss3_cons="ı",   poss3_vowel="sı",
         poss3_gen="ının", poss3_dat="ına",
@@ -1536,7 +1556,7 @@ def gen_proper_flags() -> list[str]:
         gen_cons="un",    gen_vowel="nun",
         loc_soft="da",    loc_hard="ta",
         abl_soft="dan",   abl_hard="tan",
-        dat_suf="a",
+        dat_cons="a",     dat_vowel="ya",
         acc_cons="u",     acc_vowel="yu",
         poss3_cons="u",   poss3_vowel="su",
         poss3_gen="unun", poss3_dat="una",
@@ -1553,7 +1573,7 @@ def gen_proper_flags() -> list[str]:
         gen_cons="in",    gen_vowel="nin",
         loc_soft="de",    loc_hard="te",
         abl_soft="den",   abl_hard="ten",
-        dat_suf="e",
+        dat_cons="e",     dat_vowel="ye",
         acc_cons="i",     acc_vowel="yi",
         poss3_cons="i",   poss3_vowel="si",
         poss3_gen="inin", poss3_dat="ine",
@@ -1570,7 +1590,7 @@ def gen_proper_flags() -> list[str]:
         gen_cons="ün",    gen_vowel="nün",
         loc_soft="de",    loc_hard="te",
         abl_soft="den",   abl_hard="ten",
-        dat_suf="e",
+        dat_cons="e",     dat_vowel="ye",
         acc_cons="ü",     acc_vowel="yü",
         poss3_cons="ü",   poss3_vowel="sü",
         poss3_gen="ünün", poss3_dat="üne",
