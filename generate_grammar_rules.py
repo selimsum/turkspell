@@ -1458,11 +1458,11 @@ def gen_proper_flags() -> list[str]:
         blocks.append(make_flag_block(f"{flag_prefix}N", unique(rules_N)))
 
         # --- Locative flag ---
-        blocks.append(make_flag_block(f"{flag_prefix}L", [
-            sfx(f"{flag_prefix}L", "0", f"'{loc_soft}", "[^çfhkpsşt]"),
-            sfx(f"{flag_prefix}L", "0", f"'{loc_hard}", "[çfhkpsşt]"),
-            sfx(f"{flag_prefix}L", "0", f"'n{loc_soft}", "[aeıioöuü]"),
-        ]))
+        rules_L = []
+        sfx_ki(f"{flag_prefix}L", "0", f"'{loc_soft}", "[^çfhkpsşt]", rules_L)
+        sfx_ki(f"{flag_prefix}L", "0", f"'{loc_hard}", "[çfhkpsşt]", rules_L)
+        sfx_ki(f"{flag_prefix}L", "0", f"'n{loc_soft}", "[aeıioöuü]", rules_L)
+        blocks.append(make_flag_block(f"{flag_prefix}L", unique(rules_L)))
 
         # --- Ablative flag ---
         blocks.append(make_flag_block(f"{flag_prefix}R", [
@@ -1615,39 +1615,17 @@ def get_verbal_noun_chain(stem_flag: str) -> str:
 
 def _generate_verb_flags_from_v1() -> str:
     """
-    Re-use verb content from v1 tr.aff directly (already generated on disk).
-    Extract verb paradigm sections and remap integer flags to FLAG long 2-char identifiers.
-    Also remap noun continuation flags on verb nominalizations to their full FLAG long chains,
-    splitting voicing flags into unvoiced and voiced variants to bypass the 2-suffix limit.
+    Extract verb sections from data/tr_reference.aff.
+    Since data/tr_reference.aff is already remapped to UTF-8 Cyrillic flags,
+    we can extract the verb blocks verbatim.
     """
-    import re
+    from utf8_flag_mapping import LONG_TO_UTF8
 
-    FLAG_MAP = {
-        9:   "VB", 109: "VR",
-        10:  "VF", 110: "VG",
-        11:  "VA", 111: "VS",
-        12:  "VE", 112: "VH",
-        15:  "VK", 115: "VL",
-        16:  "VM", 116: "VN",
-        17:  "VY",
-    }
-    VERB_FLAG_INTS = set(FLAG_MAP.keys())
-
-    NOUN_MAP = {
-        1:   "B1",  101: "B2",
-        2:   "F1",  102: "F2",
-        3:   "B3",  103: "B4",
-        4:   "F3",  104: "F4",
-        5:   "V1",  105: "V2",
-        6:   "V3",  106: "V4",
-        7:   "D1",  107: "D2",
-        8:   "D3",  108: "D4",
-        13:  "C1",  113: "C2",
-        14:  "C3",  114: "C4",
-        18:  "G1",  118: "G2",
-        19:  "G3",  119: "G4",
-        90:  "PX",
-    }
+    # The long flag names for verbs
+    VERB_FLAGS = {"VB", "VR", "VF", "VG", "VA", "VS", "VE", "VH", "VK", "VL", "VM", "VN", "VY"}
+    
+    # Map them to their Cyrillic characters
+    VERB_CYRILLIC = {LONG_TO_UTF8[f] for f in VERB_FLAGS}
 
     print("  Reading data/tr_reference.aff to extract verb sections...")
     with open('data/tr_reference.aff', 'r', encoding='utf-8') as f:
@@ -1658,102 +1636,21 @@ def _generate_verb_flags_from_v1() -> str:
     in_verb_block = False
 
     for line in lines:
-        # Detect start of a new SFX block
-        m = re.match(r'^SFX (\d+) Y (\d+)', line)
-        if m:
-            flag_int = int(m.group(1))
-            in_verb_block = (flag_int in VERB_FLAG_INTS)
-        # Process lines that belong to verb blocks
-        if in_verb_block:
-            # Check if this line has a noun nominalization flag (e.g. /6 or /5)
-            # Line format: SFX 9 mak abildik/6 .
-            m_rule = re.match(r'^(SFX \d+ \S+ \S+)/(\d+) (.*)$', line)
-            if m_rule:
-                prefix, old_int_str, suffix = m_rule.group(1), m_rule.group(2), m_rule.group(3)
-                old_int = int(old_int_str)
-                if old_int in NOUN_MAP:
-                    stem_flag = NOUN_MAP[old_int]
-                    if stem_flag.startswith('V'):
-                        # Voicing class: generate unvoiced and voiced rules!
-                        # 1. Unvoiced (ends in k) -> cons_chain (exclude the stem flag V1/V2/V3/V4)
-                        cons_chain = get_verbal_noun_chain(stem_flag)
-                        if cons_chain.startswith(stem_flag):
-                            cons_chain = cons_chain[len(stem_flag):]
-                        
-                        unvoiced_line = f"{prefix}/{cons_chain} {suffix}"
-                        out_lines.append(unvoiced_line)
-                        
-                        # 2. Voiced (ends in ğ) -> vowel_chain (restricted - no derivations)
-                        vowel_chain = get_vowel_chain(stem_flag) + "CL"
-                        
-                        # Replace final 'k' of the suffix in prefix with 'ğ'
-                        parts = prefix.split()
-                        if len(parts) == 4 and parts[3].endswith('k'):
-                            parts[3] = parts[3][:-1] + 'ğ'
-                            voiced_prefix = ' '.join(parts)
-                            voiced_line = f"{voiced_prefix}/{vowel_chain} {suffix}"
-                            out_lines.append(voiced_line)
-                        else:
-                            # Fallback if it doesn't end in k
-                            out_lines.append(line)
-                    else:
-                        # Non-voicing class: normal chain
-                        chain = get_verbal_noun_chain(stem_flag)
-                        normal_line = f"{prefix}/{chain} {suffix}"
-                        out_lines.append(normal_line)
-                else:
-                    out_lines.append(line)
-            else:
-                out_lines.append(line)
-
-    verb_content = '\n'.join(out_lines)
-
-    # Remap integer flags to FLAG long (longest int first to avoid substring issues)
-    for old_int, new_flag in sorted(FLAG_MAP.items(), key=lambda x: -x[0]):
-        # Replace SFX header lines: "SFX 9 Y 15043" -> "SFX VB Y 15043"
-        verb_content = re.sub(
-            rf'^SFX {old_int} (Y \d+)$',
-            f'SFX {new_flag} \\1',
-            verb_content,
-            flags=re.MULTILINE
-        )
-        # Replace SFX rule lines: "SFX 9 mak ..." -> "SFX VB mak ..."
-        verb_content = re.sub(
-            rf'^SFX {old_int} (\S)',
-            f'SFX {new_flag} \\1',
-            verb_content,
-            flags=re.MULTILINE
-        )
-        # Remap continuation flags in nominalization suffix lines (e.g. /9 or /109)
-        verb_content = re.sub(
-            rf'/(\S+?){old_int}\b',
-            f'/\\g<1>{new_flag}',
-            verb_content
-        )
-
-
-    # Recalculate verb rule counts dynamically to prevent header count mismatches
-    lines = verb_content.split('\n')
-    header_indices = {}
-    counts = {}
-    for idx, line in enumerate(lines):
-        line_clean = line.strip()
-        if not line_clean:
+        line_strip = line.strip()
+        if not line_strip:
             continue
-        parts = line_clean.split()
-        if len(parts) == 4 and parts[0] == 'SFX' and parts[2] == 'Y':
-            flag = parts[1]
-            header_indices[flag] = idx
-            counts[flag] = 0
-        elif len(parts) >= 2 and parts[0] == 'SFX':
-            flag = parts[1]
-            if flag in counts:
-                counts[flag] += 1
+        parts = line_strip.split()
+        if len(parts) >= 4 and parts[0] == 'SFX' and parts[2] == 'Y':
+            flag_char = parts[1]
+            if flag_char in VERB_CYRILLIC:
+                in_verb_block = True
+            else:
+                in_verb_block = False
+        
+        if in_verb_block:
+            out_lines.append(line_strip)
 
-    for flag, idx in header_indices.items():
-        lines[idx] = f"SFX {flag} Y {counts[flag]}"
-
-    return '\n'.join(lines)
+    return '\n'.join(out_lines)
 
 
 if __name__ == '__main__':
