@@ -283,7 +283,7 @@ def gen_stem_flag(flag: str) -> str:
     elif flag in ("G1", "G2", "G3", "G4"):
         vowel_chain = get_vowel_chain(flag)
         doubling_pairs = [
-            ('p', 'bb'), ('t', 'dd'), ('k', 'kk'), ('s', 'ss'), ('z', 'zz'),
+            ('p', 'bb'), ('t', 'dd'), ('t', 'tt'), ('d', 'dd'), ('k', 'kk'), ('s', 'ss'), ('z', 'zz'),
             ('l', 'll'), ('n', 'nn'), ('r', 'rr'), ('m', 'mm'), ('c', 'cc'),
             ('f', 'ff'), ('b', 'bb')
         ]
@@ -739,7 +739,6 @@ def gen_2pl_poss_flags() -> list[str]:
             sfx_ki(flag, "0", base_poss + "d" + loc_v,  cond, rules)
             sfx_copula(flag, "0", base_poss + "d" + loc_v + "n", cond, rules)
             sfx_ki(flag, "0", base_poss + acc_v + "n",  cond, rules)
-            sfx_copula(flag, "0", base_poss + "l" + loc_v,  cond, rules)
             rules.append(sfx(flag, "0", base_poss + eq_v,       cond))
         blocks.append(make_flag_block(flag, unique(rules)))
     return blocks
@@ -769,13 +768,15 @@ def gen_copula_flag_back(flag: str = "CL") -> str:
     ]
     rules = []
     for cop_tmpl in COPULAS_VOWEL:
-        resolved = harmonize("oda", cop_tmpl)
-        if resolved:
-            rules.append(sfx(flag, "0", resolved, "."))
+        resolved1 = harmonize("oda", cop_tmpl)
+        resolved2 = harmonize("kutu", cop_tmpl)
+        if resolved1: rules.append(sfx(flag, "0", resolved1, "."))
+        if resolved2: rules.append(sfx(flag, "0", resolved2, "."))
     for cop_tmpl in COPULAS_CONS:
-        resolved = harmonize("bak", cop_tmpl)
-        if resolved:
-            rules.append(sfx(flag, "0", resolved, "."))
+        resolved1 = harmonize("bak", cop_tmpl)
+        resolved2 = harmonize("uç", cop_tmpl)
+        if resolved1: rules.append(sfx(flag, "0", resolved1, "."))
+        if resolved2: rules.append(sfx(flag, "0", resolved2, "."))
     return make_flag_block(flag, unique(rules))
 
 def gen_copula_flag_front(flag: str = "cl") -> str:
@@ -798,13 +799,15 @@ def gen_copula_flag_front(flag: str = "cl") -> str:
     ]
     rules = []
     for cop_tmpl in COPULAS_VOWEL:
-        resolved = harmonize("kedi", cop_tmpl)
-        if resolved:
-            rules.append(sfx(flag, "0", resolved, "."))
+        resolved1 = harmonize("kedi", cop_tmpl)
+        resolved2 = harmonize("ütü", cop_tmpl)
+        if resolved1: rules.append(sfx(flag, "0", resolved1, "."))
+        if resolved2: rules.append(sfx(flag, "0", resolved2, "."))
     for cop_tmpl in COPULAS_CONS:
-        resolved = harmonize("ev", cop_tmpl)
-        if resolved:
-            rules.append(sfx(flag, "0", resolved, "."))
+        resolved1 = harmonize("ev", cop_tmpl)
+        resolved2 = harmonize("gör", cop_tmpl)
+        if resolved1: rules.append(sfx(flag, "0", resolved1, "."))
+        if resolved2: rules.append(sfx(flag, "0", resolved2, "."))
     return make_flag_block(flag, unique(rules))
 
 
@@ -1110,7 +1113,7 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("z", "s"), ("s", "z"), ("k", "g"), ("g", "k"),
         ("ın", "in"), ("in", "ın"), ("un", "ün"), ("ün", "un"),
         ("da", "de"), ("de", "da"), ("lar", "ler"), ("ler", "lar"),
-        ("la", "le"), ("le", "la")
+        ("la", "le"), ("le", "la"), ("’", "'")
     ]
     for src, dst in char_reps:
         rep_list.append((src, dst))
@@ -1231,7 +1234,7 @@ SET UTF-8
 FLAG long
 NOSUGGEST NS
 LANG tr
-WORDCHARS '
+WORDCHARS '’‘
 
 # Break characters (allow breaking at hyphens, en-dashes, and em-dashes)
 BREAK 5
@@ -1245,7 +1248,7 @@ BREAK —
 # Suggestion parameters
 KEY qwertyuıopğü|asdfghjklşi|zxcvbnmçö|QWERTYUIOPĞÜ|ASDFGHJKLŞİ|ZXCVBNMÇÖ|fgğıodrnhpqw|uıevazyktsx|jövcçzsb|FGĞIODRNHPQW|UIEVAZYKTSX|JÖVCÇZSB|qaz|wsx|edc|rfv|tgb|yhn|ujm|ıkö|olç|pş|QAZ|WSX|EDC|RFV|TGB|YHN|UJM|IKÖ|OLÇ|PŞ
 TRY aeilrıtdknsmyuböuşzcgçhpvğfjAEİLRITDKNSMYUBÖUŞZCGÇHPVĞFJ
-MAP 9
+MAP 10
 MAP aâAÂ
 MAP uûUÛ
 MAP iîİÎ
@@ -1255,6 +1258,7 @@ MAP sşSŞ
 MAP oöOÖ
 MAP uüUÜ
 MAP ıiIİ
+MAP '’‘
 MAXDIFF 5
 MAXNGRAMSUGS 6
 ONLYMAXDIFF
