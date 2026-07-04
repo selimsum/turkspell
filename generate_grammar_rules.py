@@ -1675,19 +1675,60 @@ def get_verbal_noun_chain(stem_flag: str) -> str:
 
 def _generate_verb_flags_from_v1() -> str:
     """
-    Extract verb sections from data/tr_reference.aff.
-    Since data/tr_reference.aff is already remapped to UTF-8 Cyrillic flags,
-    we can extract the verb blocks verbatim.
+    Extract verb sections from data/tr_reference.aff and remap their flags
+    from the old UTF-8 block positions to the current LONG_TO_UTF8 map.
     """
     from utf8_flag_mapping import LONG_TO_UTF8
+
+    # Reconstruct the OLD flag mapping (before KC was added)
+    ALL_FLAGS_OLD = sorted([
+        "B1", "B2", "B3", "B4", "F1", "F2", "F3", "F4", 
+        "V1", "V2", "V3", "V4", "D1", "D2", "D3", "D4", 
+        "C1", "C2", "C3", "C4", "G1", "G2", "G3", "G4", 
+        "NX", "PX",
+        "A1", "A2", "A3", "A4", "Y1", "Y2", "L1", "L2", "R1", "R2", "N1", "N2", "N3", "N4", "I1", "I2", "Q1", "Q2",
+        "a1", "a2", "a3", "a4", "y1", "y2", "n1", "n2", "n3", "n4", "i1", "i2",
+        "PB", "PF",
+        "PS", "PT", "PU", "PV", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "PM", "PO", "PP", "PQ", "PN", "PR", "PW", "PZ",
+        "CL", "cl", "CP", "CV", "CO", "KI", "LI", "SZ", "LK", "CI", "CK", "DL", "DT", "DE",
+        "uA", "uY", "uL", "uR", "uN", "uI", "uQ", "uP", "u1", "u2", "u3", "u4", "uC",
+        "VB", "VR", "VF", "VG", "VA", "VS", "VE", "VH", "VK", "VL", "VM", "VN", "VY",
+        "NS"
+    ])
+    PROPER_NOUN_FLAGS_3 = [
+        f"p{fam}{sub}"
+        for fam in "BOFU"
+        for sub in "NLRYAIPC"
+    ]
+    OLD_LONG_TO_UTF8 = {}
+    for idx, flag in enumerate(ALL_FLAGS_OLD):
+        OLD_LONG_TO_UTF8[flag] = chr(1024 + idx)
+    for idx, flag in enumerate(PROPER_NOUN_FLAGS_3):
+        OLD_LONG_TO_UTF8[flag] = chr(1024 + len(ALL_FLAGS_OLD) + idx)
+    OLD_UTF8_TO_LONG = {v: k for k, v in OLD_LONG_TO_UTF8.items()}
 
     # The long flag names for verbs
     VERB_FLAGS = {"VB", "VR", "VF", "VG", "VA", "VS", "VE", "VH", "VK", "VL", "VM", "VN", "VY"}
     
-    # Map them to their Cyrillic characters
-    VERB_CYRILLIC = {LONG_TO_UTF8[f] for f in VERB_FLAGS}
+    # Map them to their OLD Cyrillic characters to locate them in tr_reference.aff
+    OLD_VERB_CYRILLIC = {OLD_LONG_TO_UTF8[f] for f in VERB_FLAGS}
 
-    print("  Reading data/tr_reference.aff to extract verb sections...")
+    def remap_old_to_new_flag_string(old_flag_str: str) -> str:
+        if not old_flag_str:
+            return ""
+        new_chars = []
+        for char in old_flag_str:
+            if char in OLD_UTF8_TO_LONG:
+                long_flag = OLD_UTF8_TO_LONG[char]
+                if long_flag in LONG_TO_UTF8:
+                    new_chars.append(LONG_TO_UTF8[long_flag])
+                else:
+                    new_chars.append(char)
+            else:
+                new_chars.append(char)
+        return "".join(new_chars)
+
+    print("  Reading data/tr_reference.aff to extract and remap verb sections...")
     with open('data/tr_reference.aff', 'r', encoding='utf-8') as f:
         content = f.read()
 
@@ -1700,14 +1741,29 @@ def _generate_verb_flags_from_v1() -> str:
         if not line_strip:
             continue
         parts = line_strip.split()
-        if len(parts) >= 4 and parts[0] == 'SFX' and parts[2] == 'Y':
+        if len(parts) >= 3 and parts[0] == 'SFX':
             flag_char = parts[1]
-            if flag_char in VERB_CYRILLIC:
+            if flag_char in OLD_VERB_CYRILLIC:
                 in_verb_block = True
+                
+                # Remap the primary flag name
+                long_flag = OLD_UTF8_TO_LONG[flag_char]
+                parts[1] = LONG_TO_UTF8[long_flag]
+                
+                # Remap other flags on the suffix if any (e.g. add/flags)
+                if len(parts) >= 4 and parts[2] not in ('Y', 'N'):
+                    add_field = parts[3]
+                    if '/' in add_field:
+                        prefix_str, flags_str = add_field.split('/', 1)
+                        remapped_flags = remap_old_to_new_flag_string(flags_str)
+                        parts[3] = f"{prefix_str}/{remapped_flags}"
+                
+                out_lines.append(" ".join(parts))
             else:
                 in_verb_block = False
-        
-        if in_verb_block:
+                
+        elif in_verb_block:
+            # Not an SFX header/rule, but inside verb block
             out_lines.append(line_strip)
 
     return '\n'.join(out_lines)
