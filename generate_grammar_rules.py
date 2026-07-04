@@ -1555,7 +1555,8 @@ def gen_proper_flags() -> list[str]:
 
         # --- Instrumental flag ---
         blocks.append(make_flag_block(f"{flag_prefix}I", [
-            sfx(f"{flag_prefix}I", "0", f"'{ins_suf}/cl", "."),
+            sfx(f"{flag_prefix}I", "0", f"'{ins_suf}/cl", "[^aeıioöuü]"),
+            sfx(f"{flag_prefix}I", "0", f"'y{ins_suf}/cl", "[aeıioöuü]"),
         ]))
 
         # --- 3sg possessive flag ---
