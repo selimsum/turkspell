@@ -316,11 +316,37 @@ def gen_stem_flag(flag: str) -> str:
             f"{pl}yl{loc}",
             f"{pl}nc{loc}",
         ]
+        # Voicing transitions and buffer-s stripping for compound plurals:
+        # e.g. buzdolabı + ları -> buzdolapları (b -> p)
+        # ipucu + ları -> ipuçları (c -> ç)
+        # denizanası + ları -> denizanaları (s -> strip s as well)
+        voicing_devoicing = [
+            ('b', 'p'),
+            ('c', 'ç'),
+            ('d', 't'),
+            ('ğ', 'k'),
+            ('s', '')
+        ]
+
         for s in plural_suffixes:
-            rules.append(sfx(flag, strip_v, s, strip_v))
-            # Support relative-ki on plural locative and genitive
-            if s.endswith(f"nd{loc}") or s.endswith(f"n{acc}n"):
-                sfx_ki(flag, strip_v, s + "ki", strip_v, rules, chain_copula=True)
+            is_ki = s.endswith(f"nd{loc}") or s.endswith(f"n{acc}n")
+            
+            for voiced, unvoiced in voicing_devoicing:
+                add_base = unvoiced + s
+                cond_str = voiced + strip_v
+                strip_str = voiced + strip_v
+                if is_ki:
+                    sfx_ki(flag, strip_str, add_base, cond_str, rules, chain_copula=True)
+                else:
+                    sfx_copula(flag, strip_str, add_base, cond_str, rules)
+            
+            cond_neg = f"[^bcğds]{strip_v}"
+            add_base = s
+            strip_str = strip_v
+            if is_ki:
+                sfx_ki(flag, strip_str, add_base, cond_neg, rules, chain_copula=True)
+            else:
+                sfx_copula(flag, strip_str, add_base, cond_neg, rules)
                 
         # 2. Suffixes that keep the final vowel (Singular cases/possessives with pronominal n/y buffer)
         singular_suffixes = [
@@ -527,6 +553,39 @@ def _plural_cases(pl_vowel: str, harmony: str) -> list[str]:
     for ks in ['ler', 'leri', 'lere', 'lerde', 'lerden', 'ni', 'ne', 'nde', 'nden', 'nin', 'dir', 'ydi']:
         suffixes.append(gen_form + 'ki' + ks)
         suffixes.append(loc_form + 'ki' + ks)
+
+    # Plural locative copulas (e.g. lardaysa, lerdeyse, lardayken, lerdeyken)
+    # Since loc_form ends in a vowel, we use the vowel-ending copulas.
+    sim_s = "oda" if harmony == 'back' else "ev"
+    copulas_vow = [
+        "ydI", "ydIm", "ydIn", "ydIk", "ydInIz", "ydIlAr",
+        "ymIş", "ymIşIm", "ymIşsIn", "ymIşIz", "ymIşsInIz", "ymIşlAr",
+        "ysA", "ysAm", "ysAn", "ysAk", "ysAnIz", "ysAlAr",
+        "yIm", "sIn", "yIz", "sInIz", "lAr",
+        "dIr", "dIrlAr", "lArdIr", "yken",
+    ]
+    for cop in copulas_vow:
+        resolved = harmonize(sim_s, cop)
+        if resolved:
+            suffixes.append(loc_form + resolved)
+
+    # Plural ablative and genitive copulas (e.g. lerdense, lerdendir, lerdendirler, lerindendir, lerindense)
+    # Since abl_form and gen_form end in a consonant, we use the consonant-ending copulas.
+    abl_form = f"{pl}d{dat_v}n"
+    copulas_cons = [
+        "dI", "dIm", "dIn", "dIk", "dInIz", "dIlAr",
+        "tI", "tIm", "tIn", "tIk", "tInIz", "tIlAr",
+        "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
+        "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
+        "Im", "sIn", "Iz", "sInIz", "lAr",
+        "dIr", "tIr", "dIrlAr", "tIrlAr", "lArdIr", "ken",
+    ]
+    for cop in copulas_cons:
+        resolved = harmonize(sim_s, cop)
+        if resolved:
+            suffixes.append(abl_form + resolved)
+            suffixes.append(gen_form + resolved)
+
     return suffixes
 
 
@@ -546,10 +605,8 @@ def gen_plural_back(flag: str = "PB") -> str:
         for c in cases:
             if c in ("da", "ın"):
                 sfx_ki(flag, "0", poss + c, ".", rules)
-            elif c in ("", "dan", "la"):
-                sfx_copula(flag, "0", poss + c, ".", rules)
             else:
-                rules.append(sfx(flag, "0", poss + c, "."))
+                sfx_copula(flag, "0", poss + c, ".", rules)
     return make_flag_block(flag, unique(rules))
 
 
@@ -569,10 +626,8 @@ def gen_plural_front(flag: str = "PF") -> str:
         for c in cases:
             if c in ("de", "in"):
                 sfx_ki(flag, "0", poss + c, ".", rules)
-            elif c in ("", "den", "le"):
-                sfx_copula(flag, "0", poss + c, ".", rules)
             else:
-                rules.append(sfx(flag, "0", poss + c, "."))
+                sfx_copula(flag, "0", poss + c, ".", rules)
     return make_flag_block(flag, unique(rules))
 
 
