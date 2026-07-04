@@ -1233,6 +1233,7 @@ def generate_header() -> str:
 SET UTF-8
 FLAG long
 NOSUGGEST NS
+KEEPCASE KC
 LANG tr
 WORDCHARS '’‘
 
