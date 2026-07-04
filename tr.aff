@@ -366111,8 +366111,9 @@ SFX Ѽ Y 3
 SFX Ѽ 0 'ı [^aeıioöuü]
 SFX Ѽ 0 'yı [aeıioöuü]
 SFX Ѽ 0 'nı [aeıioöuü]
-SFX ѽ Y 1
-SFX ѽ 0 'la/Ѣ .
+SFX ѽ Y 2
+SFX ѽ 0 'la/Ѣ [^aeıioöuü]
+SFX ѽ 0 'yla/Ѣ [aeıioöuü]
 SFX Ѿ Y 128
 SFX Ѿ 0 'ı/Ѣ [^aeıioöuü]
 SFX Ѿ 0 'sı/Ѣ [aeıioöuü]
@@ -366602,8 +366603,9 @@ SFX ҄ Y 3
 SFX ҄ 0 'u [^aeıioöuü]
 SFX ҄ 0 'yu [aeıioöuü]
 SFX ҄ 0 'nu [aeıioöuü]
-SFX ҅ Y 1
-SFX ҅ 0 'la/Ѣ .
+SFX ҅ Y 2
+SFX ҅ 0 'la/Ѣ [^aeıioöuü]
+SFX ҅ 0 'yla/Ѣ [aeıioöuü]
 SFX ҆ Y 128
 SFX ҆ 0 'u/Ѣ [^aeıioöuü]
 SFX ҆ 0 'su/Ѣ [aeıioöuü]
@@ -367229,8 +367231,9 @@ SFX Ҍ 0 'yi [aeıioöuü]
 SFX Ҍ 0 'ni [aeıioöuü]
 SFX Ҍ 0 'yi tl
 SFX Ҍ 0 'yi TL
-SFX ҍ Y 1
-SFX ҍ 0 'le/Ѣ .
+SFX ҍ Y 2
+SFX ҍ 0 'le/Ѣ [^aeıioöuü]
+SFX ҍ 0 'yle/Ѣ [aeıioöuü]
 SFX Ҏ Y 130
 SFX Ҏ 0 'i/Ѣ [^aeıioöuü]
 SFX Ҏ 0 'si/Ѣ [aeıioöuü]
@@ -367722,8 +367725,9 @@ SFX Ҕ Y 3
 SFX Ҕ 0 'ü [^aeıioöuü]
 SFX Ҕ 0 'yü [aeıioöuü]
 SFX Ҕ 0 'nü [aeıioöuü]
-SFX ҕ Y 1
-SFX ҕ 0 'le/Ѣ .
+SFX ҕ Y 2
+SFX ҕ 0 'le/Ѣ [^aeıioöuü]
+SFX ҕ 0 'yle/Ѣ [aeıioöuü]
 SFX Җ Y 128
 SFX Җ 0 'ü/Ѣ [^aeıioöuü]
 SFX Җ 0 'sü/Ѣ [aeıioöuü]
