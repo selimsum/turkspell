@@ -564,6 +564,7 @@ def compile_dictionary():
         {'lemma': 'yaprakçı', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'tarihlemek', 'pos': 'Verb', 'attributes': []},
         {'lemma': 'tarihleme', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'pozlama', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'filtrelemek', 'pos': 'Verb', 'attributes': []},
         {'lemma': 'filtreleme', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'filtrelenmek', 'pos': 'Verb', 'attributes': []},
