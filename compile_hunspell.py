@@ -14,6 +14,71 @@ def get_last_vowel(word):
             return ch.lower()
     return None
 
+def turkish_capitalize(s: str) -> str:
+    if not s:
+        return s
+    first = s[0]
+    if first == 'i':
+        first_cap = 'İ'
+    elif first == 'ı':
+        first_cap = 'I'
+    else:
+        first_cap = first.upper()
+    return first_cap + s[1:]
+
+def get_poss3sg_stems(lemma: str) -> list[str]:
+    if not lemma:
+        return []
+    
+    # Detect last vowel
+    vowels = 'aeıioöuüâîû'
+    lv = None
+    for ch in reversed(lemma):
+        if ch.lower() in vowels:
+            lv = ch.lower()
+            break
+    if not lv:
+        lv = 'a'
+        
+    # Suffix vowel selection
+    if lv in 'aıâ':
+        s_vow = 'ı'
+    elif lv in 'eiî':
+        s_vow = 'i'
+    elif lv in 'ouû':
+        s_vow = 'u'
+    else:
+        s_vow = 'ü'
+        
+    # Check if ends in vowel
+    ends_vow = lemma[-1].lower() in vowels
+    
+    if ends_vow:
+        return [lemma + 's' + s_vow]
+    else:
+        # Consonant ending - check for voicing
+        base = lemma[:-1]
+        last_char = lemma[-1].lower()
+        
+        # Voicing rules
+        voiced_char = last_char
+        if last_char == 'k':
+            if lemma.lower().endswith('nk'):
+                voiced_char = 'g'
+            else:
+                voiced_char = 'ğ'
+        elif last_char == 'p':
+            voiced_char = 'b'
+        elif last_char == 't':
+            return [lemma + s_vow, base + 'd' + s_vow]
+        elif last_char == 'ç':
+            voiced_char = 'c'
+            
+        if voiced_char != last_char:
+            return [lemma + s_vow, base + voiced_char + s_vow]
+        else:
+            return [lemma + s_vow]
+
 def is_back_vowel(word):
     lv = get_last_vowel(word)
     if lv is None:
@@ -34,6 +99,8 @@ def compile_dictionary():
     # Inject custom entries to resolve undetected words
     custom_entries = [
         {'lemma': 'Atatürk', 'pos': 'Noun', 'attributes': ['NoVoicing']},
+        {'lemma': 'çarpıştırıcı', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'patlama', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'gezinge', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'kafatası', 'pos': 'Noun', 'attributes': ['CompoundP3sg']},
         {'lemma': 'kolonileşmek', 'pos': 'Verb', 'attributes': []},
@@ -1102,9 +1169,13 @@ def compile_dictionary():
         'kg':        'pB',
     }
 
+    # Collect all nouns from lexicon to apply proper noun suffix + KC rules
+    noun_lemmas = set()
+    for item in lexicon:
+        if item.get('pos') == 'Noun':
+            noun_lemmas.add(item['lemma'].replace('I', 'ı').replace('İ', 'i').lower())
+
     # Words that should get proper-noun suffix flags.
-    # Includes all entries from PROPER_NOUN_OVERRIDES plus any zemberek entry
-    # tagged as ProperNoun.
     proper_nouns_to_flag: set[str] = set(PROPER_NOUN_OVERRIDES.keys())
     for item in lexicon:
         if item.get('pos') == 'ProperNoun':
@@ -1116,7 +1187,7 @@ def compile_dictionary():
         lv = get_last_vowel(lemma_lower)
         return PROPER_HARMONY.get(lv, 'pB')  # default back-unrounded
 
-    # Rebuild dic_entries, appending proper-noun flags where needed
+    # Rebuild dic_entries, enforcing capitalization with KEEPCASE (KC)
     new_dic_entries = []
     seen_overrides = set()
     for entry in dic_entries:
@@ -1126,23 +1197,63 @@ def compile_dictionary():
             lemma_part, flags_part = entry, ''
 
         lkey = lemma_part.lower()
+
+        # Case 1: Word is a proper noun (e.g. Ankara, or overrides like Temmuz, İrlanda)
         if lkey in proper_nouns_to_flag:
             pfx = _proper_flag_for(lkey)
-            extra = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
+            proper_flags = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
+            cap_lemma = turkish_capitalize(lkey)
+            
+            # Rebuild entry as capitalized with proper noun flags and KEEPCASE
             if flags_part:
-                entry = f"{lemma_part}/{flags_part},{extra}"
+                new_entry = f"{cap_lemma}/{flags_part},{proper_flags},KC"
             else:
-                entry = f"{lemma_part}/{extra}"
+                new_entry = f"{cap_lemma}/{proper_flags},KC"
+            new_dic_entries.append(new_entry)
+            
             if lkey in PROPER_NOUN_OVERRIDES:
                 seen_overrides.add(lkey)
+            
+            # If it also functions as a common noun (e.g. Temmuz), keep the lowercase common-noun entry and add its possessive forms
+            if lkey in noun_lemmas:
+                new_dic_entries.append(entry)
+                for poss_stem in get_poss3sg_stems(lkey):
+                    pfx_poss = _proper_flag_for(poss_stem)
+                    proper_flags_poss = ','.join(f'{pfx_poss}{s}' for s in PROPER_SUB_FLAGS)
+                    cap_poss = turkish_capitalize(poss_stem)
+                    poss_entry = f"{cap_poss}/{proper_flags_poss},KC"
+                    new_dic_entries.append(poss_entry)
 
-        new_dic_entries.append(entry)
+        # Case 2: Word is a common noun (but not explicitly tagged as proper noun/override)
+        elif lkey in noun_lemmas:
+            # 1. Keep lowercase entry for normal common noun usage (no apostrophes/KC)
+            new_dic_entries.append(entry)
+            
+            # 2. Add capitalized version of base stem with proper noun flags and KEEPCASE
+            pfx = _proper_flag_for(lkey)
+            proper_flags = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
+            cap_lemma = turkish_capitalize(lkey)
+            new_entry = f"{cap_lemma}/{proper_flags},KC"
+            new_dic_entries.append(new_entry)
 
-    # Inject missing overrides directly as stems
+            # 3. Add capitalized version of 3sg possessive stems (e.g. Bölümü, Teleskobu) with proper noun flags and KEEPCASE
+            for poss_stem in get_poss3sg_stems(lkey):
+                pfx_poss = _proper_flag_for(poss_stem)
+                proper_flags_poss = ','.join(f'{pfx_poss}{s}' for s in PROPER_SUB_FLAGS)
+                cap_poss = turkish_capitalize(poss_stem)
+                poss_entry = f"{cap_poss}/{proper_flags_poss},KC"
+                new_dic_entries.append(poss_entry)
+
+        # Case 3: Other POS (verbs, adjectives, etc.) — leave as-is
+        else:
+            new_dic_entries.append(entry)
+
+    # Inject missing overrides directly as capitalized stems with KC
     for key, pfx in PROPER_NOUN_OVERRIDES.items():
         if key not in seen_overrides:
             extra = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
-            new_dic_entries.append(f"{key}/{extra}")
+            cap_key = turkish_capitalize(key)
+            new_dic_entries.append(f"{cap_key}/{extra},KC")
 
     dic_entries = new_dic_entries
     print(f"Injected proper-noun flags into {sum(1 for e in dic_entries if any(f'p{x}N' in e for x in 'BOFU'))} entries.")
