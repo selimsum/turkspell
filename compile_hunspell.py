@@ -717,6 +717,21 @@ def compile_dictionary():
         {'lemma': 'yarışmacı', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'merkezi', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'sahnesi', 'pos': 'Noun', 'attributes': []},
+        # Batch 3 custom entries
+        {'lemma': 'inçlik', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'haşır', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'reflü', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'değişikli', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'duraklamasız', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'dönüklük', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'sinyalleşmek', 'pos': 'Verb', 'attributes': []},
+        {'lemma': 'sürüntü', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'terabaytlık', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'trilyonlarca', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'yanlışlamak', 'pos': 'Verb', 'attributes': []},
+        {'lemma': 'üssü', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'öngörülemezlik', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'şifacı', 'pos': 'Noun', 'attributes': []},
     ]
     # Load dynamically parsed candidates from OSCAR/Corpus pipeline if available
     import os
@@ -1222,6 +1237,7 @@ def compile_dictionary():
         'neandertal': 'pF',
         'pers':      'pF',
         'burnu':     'pO',
+        'üssü':      'pU',
     }
 
     # Collect all nouns from lexicon to apply proper noun suffix + KC rules
