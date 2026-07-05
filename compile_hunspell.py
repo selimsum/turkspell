@@ -732,6 +732,25 @@ def compile_dictionary():
         {'lemma': 'üssü', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'öngörülemezlik', 'pos': 'Noun', 'attributes': ['Voicing']},
         {'lemma': 'şifacı', 'pos': 'Noun', 'attributes': []},
+        # Batch 4 custom entries
+        {'lemma': 'basınç', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'basınçsız', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'bilinirlik', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'computer', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'donanımsal', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'içeydim', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'kargacık', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'karşıya', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'kullanışlı', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'lisanssız', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'savunmacı', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'serflik', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'statüsüz', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'taşınım', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'yolcuk', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'zon', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'ıvır', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'zıvır', 'pos': 'Noun', 'attributes': []},
     ]
     # Load dynamically parsed candidates from OSCAR/Corpus pipeline if available
     import os
@@ -1238,6 +1257,7 @@ def compile_dictionary():
         'pers':      'pF',
         'burnu':     'pO',
         'üssü':      'pU',
+        'computer':  'pB',
     }
 
     # Collect all nouns from lexicon to apply proper noun suffix + KC rules
@@ -1291,7 +1311,10 @@ def compile_dictionary():
             
             # If it also functions as a common noun (e.g. Temmuz), keep the lowercase common-noun entry and add its possessive forms
             if lkey in noun_lemmas:
-                new_dic_entries.append(entry)
+                if flags_part:
+                    new_dic_entries.append(f"{lkey}/{flags_part},{proper_flags}")
+                else:
+                    new_dic_entries.append(f"{lkey}/{proper_flags}")
                 for poss_stem in get_poss3sg_stems(lkey):
                     pfx_poss = _proper_flag_for(poss_stem)
                     proper_flags_poss = ','.join(f'{pfx_poss}{s}' for s in PROPER_SUB_FLAGS)
