@@ -26,6 +26,16 @@ def turkish_capitalize(s: str) -> str:
         first_cap = first.upper()
     return first_cap + s[1:]
 
+ALL_CAPS_ABBREVS = {'abd', 'dna', 'gps', 'uuı', 'uv', 'bbc', 'vr', 'eeg', 'yz', 'sscb', 'esa', 'rfid', 'dehb', 'mit', 'ngc', 'hiv', 'sls', 'atp', 'cern', 'iq', 'tl'}
+
+def turkish_upper(s: str) -> str:
+    return s.replace('i', 'İ').replace('ı', 'I').upper()
+
+def capitalize_word(s: str, base_lkey: str) -> str:
+    if base_lkey in ALL_CAPS_ABBREVS:
+        return turkish_upper(s)
+    return turkish_capitalize(s)
+
 def get_poss3sg_stems(lemma: str) -> list[str]:
     if not lemma:
         return []
@@ -102,12 +112,40 @@ def compile_dictionary():
         {'lemma': 'çarpıştırıcı', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'patlama', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'gezinge', 'pos': 'Noun', 'attributes': []},
-        {'lemma': 'kafatası', 'pos': 'Noun', 'attributes': ['CompoundP3sg']},
+        {'lemma': 'kafatas', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'kolonileşmek', 'pos': 'Verb', 'attributes': []},
         {'lemma': 'moderatör', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'moralsizlik', 'pos': 'Noun', 'attributes': ['Voicing']},
         {'lemma': 'yıldızlararası', 'pos': 'Noun', 'attributes': ['CompoundP3sg']},
         {'lemma': 'ötegezegen', 'pos': 'Noun', 'attributes': []},
+        # --- New custom entries for requested words ---
+        {'lemma': 'hal', 'pos': 'Noun', 'attributes': ['InverseHarmony', 'NoVoicing']},
+        {'lemma': 'implant', 'pos': 'Noun', 'attributes': ['NoVoicing']},
+        {'lemma': 'konuşmacı', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'kriptografi', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'planlamacı', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'seferki', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'sistem', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'yaralı', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'yerleşimci', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'sadakat', 'pos': 'Noun', 'attributes': ['InverseHarmony', 'NoVoicing']},
+        {'lemma': 'Atlantik', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'Neandertal', 'pos': 'Noun', 'attributes': ['InverseHarmony']},
+        {'lemma': 'Sibirya', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'Himalaya', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'Zelanda', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'Alaska', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'seddi', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'Paralimpik', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'DNA', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'Bahamalar', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'kutbu', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'dağları', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'Pers', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'antiviral', 'pos': 'Noun', 'attributes': ['InverseHarmony']},
+        {'lemma': 'karatlık', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'korunmasız', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'pörçük', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'amino', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'manipüle', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'anki', 'pos': 'Noun', 'attributes': []},
@@ -1166,8 +1204,24 @@ def compile_dictionary():
         # Abbreviations/units: no vowel -> back-unrounded by convention
         'mm':        'pB',
         'cm':        'pB',
-        'km':        'pB',
+        'km':        'pF',  # Pronounced 'kay-me' / 'kilometre' -> front vowel harmony
         'kg':        'pB',
+        'abd':       'pF',  # 'a-be-de' -> front vowel harmony
+        'dna':       'pB',  # 'de-ne-a' -> back vowel harmony
+        'sibirya':   'pB',
+        'himalayalar': 'pB',
+        'dünya':     'pB',
+        'zelanda':   'pB',
+        'alaska':    'pB',
+        'atlantik':  'pF',
+        'paralimpik': 'pF',
+        'seddi':     'pF',
+        'kutbu':     'pO',
+        'dağları':   'pB',
+        'bahamalar': 'pB',
+        'neandertal': 'pF',
+        'pers':      'pF',
+        'burnu':     'pO',
     }
 
     # Collect all nouns from lexicon to apply proper noun suffix + KC rules
@@ -1203,14 +1257,18 @@ def compile_dictionary():
         if lkey in proper_nouns_to_flag:
             pfx = _proper_flag_for(lkey)
             proper_flags = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
-            cap_lemma = turkish_capitalize(lkey)
-            
-            # Rebuild entry as capitalized with proper noun flags and KEEPCASE
-            if flags_part:
-                new_entry = f"{cap_lemma}/{flags_part},{proper_flags},KC"
+            # For lowercase abbreviations/units (like km, cm, mm, kg, gr), keep them lowercase and add proper noun flags
+            if lkey in {'km', 'cm', 'mm', 'kg', 'gr'}:
+                new_entry = f"{lkey}/{proper_flags}"
+                new_dic_entries.append(new_entry)
             else:
-                new_entry = f"{cap_lemma}/{proper_flags},KC"
-            new_dic_entries.append(new_entry)
+                cap_lemma = capitalize_word(lkey, lkey)
+                # Rebuild entry as capitalized with proper noun flags and KEEPCASE
+                if flags_part:
+                    new_entry = f"{cap_lemma}/{flags_part},{proper_flags},KC"
+                else:
+                    new_entry = f"{cap_lemma}/{proper_flags},KC"
+                new_dic_entries.append(new_entry)
             
             if lkey in PROPER_NOUN_OVERRIDES:
                 seen_overrides.add(lkey)
@@ -1221,7 +1279,7 @@ def compile_dictionary():
                 for poss_stem in get_poss3sg_stems(lkey):
                     pfx_poss = _proper_flag_for(poss_stem)
                     proper_flags_poss = ','.join(f'{pfx_poss}{s}' for s in PROPER_SUB_FLAGS)
-                    cap_poss = turkish_capitalize(poss_stem)
+                    cap_poss = capitalize_word(poss_stem, lkey)
                     poss_entry = f"{cap_poss}/{proper_flags_poss},KC"
                     new_dic_entries.append(poss_entry)
 
@@ -1233,7 +1291,7 @@ def compile_dictionary():
             # 2. Add capitalized version of base stem with proper noun flags and KEEPCASE
             pfx = _proper_flag_for(lkey)
             proper_flags = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
-            cap_lemma = turkish_capitalize(lkey)
+            cap_lemma = capitalize_word(lkey, lkey)
             new_entry = f"{cap_lemma}/{proper_flags},KC"
             new_dic_entries.append(new_entry)
 
@@ -1241,7 +1299,7 @@ def compile_dictionary():
             for poss_stem in get_poss3sg_stems(lkey):
                 pfx_poss = _proper_flag_for(poss_stem)
                 proper_flags_poss = ','.join(f'{pfx_poss}{s}' for s in PROPER_SUB_FLAGS)
-                cap_poss = turkish_capitalize(poss_stem)
+                cap_poss = capitalize_word(poss_stem, lkey)
                 poss_entry = f"{cap_poss}/{proper_flags_poss},KC"
                 new_dic_entries.append(poss_entry)
 
@@ -1253,7 +1311,7 @@ def compile_dictionary():
     for key, pfx in PROPER_NOUN_OVERRIDES.items():
         if key not in seen_overrides:
             extra = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
-            cap_key = turkish_capitalize(key)
+            cap_key = capitalize_word(key, key)
             new_dic_entries.append(f"{cap_key}/{extra},KC")
 
     dic_entries = new_dic_entries
