@@ -36,7 +36,7 @@ def capitalize_word(s: str, base_lkey: str) -> str:
         return turkish_upper(s)
     return turkish_capitalize(s)
 
-def get_poss3sg_stems(lemma: str) -> list[str]:
+def get_poss3sg_stems(lemma: str, voicing: bool = False) -> list[str]:
     if not lemma:
         return []
     
@@ -80,12 +80,12 @@ def get_poss3sg_stems(lemma: str) -> list[str]:
         elif last_char == 'p':
             voiced_char = 'b'
         elif last_char == 't':
-            return [lemma + s_vow, base + 'd' + s_vow]
+            voiced_char = 'd'
         elif last_char == 'ç':
             voiced_char = 'c'
             
-        if voiced_char != last_char:
-            return [lemma + s_vow, base + voiced_char + s_vow]
+        if voiced_char != last_char and voicing:
+            return [base + voiced_char + s_vow]
         else:
             return [lemma + s_vow]
 
@@ -751,6 +751,15 @@ def compile_dictionary():
         {'lemma': 'zon', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'ıvır', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'zıvır', 'pos': 'Noun', 'attributes': []},
+        # --- Deep agglutinative verbs & rare words to bypass Hunspell depth limit ---
+        {'lemma': 'işlevselleştirmek', 'pos': 'Verb', 'attributes': []},
+        {'lemma': 'işlevlendirmek', 'pos': 'Verb', 'attributes': []},
+        {'lemma': 'sendikasızlaştırmak', 'pos': 'Verb', 'attributes': []},
+        {'lemma': 'kaydileştirmek', 'pos': 'Verb', 'attributes': []},
+        {'lemma': 'kaydileşmek', 'pos': 'Verb', 'attributes': []},
+        {'lemma': 'kaydileştirme', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'bakmayıvermek', 'pos': 'Verb', 'attributes': []},
+        {'lemma': 'bakıvermek', 'pos': 'Verb', 'attributes': []},
     ]
     # Load dynamically parsed candidates from OSCAR/Corpus pipeline if available
     import os
@@ -800,6 +809,7 @@ def compile_dictionary():
     # 8: Front Vowel with Vowel Drop (e.g., şehir -> şehri)
     
     dic_entries = []
+    voicing_map = {}
     
     # Create a mapping of custom lemmas to their custom pos and attributes
     custom_map = {e['lemma'].lower(): e for e in custom_entries}
@@ -879,7 +889,7 @@ def compile_dictionary():
         # Check Zemberek vowel exceptions
         if pos != 'Verb' and not lemma.endswith(('leşmek', 'laşmak', 'leşme', 'laşma', 'lik', 'lık', 'luk', 'lük', 'ci', 'cı', 'cu', 'cü', 'cilik', 'cılık', 'suz', 'süz', 'siz', 'suzluk', 'süzlük', 'sizlik')):
             if 'LastVowelFrontal' in attrs or 'FrontVowelHarmony' in attrs or 'InverseHarmony' in attrs:
-                back = not back
+                back = False
             
         # Inverse harmony overrides
         inverse_harmony_words = {'kalp', 'saat', 'harf', 'rol', 'alkol', 'hâl', 'hal', 'metal', 'normal', 'ideal', 'gol', 'kontrol', 'petrol', 'sembol', 'şefkat', 'dikkat', 'polifenol', 'flavanol', 'kortizol', 'istirahat'}
@@ -899,7 +909,8 @@ def compile_dictionary():
                 # Exclude explicitly marked NoVoicing and a few manual exceptions
                 if ('NoVoicing' not in attrs or lemma in ['teleskop', 'radyoteleskop', 'eşlik', 'karbondioksit']) and lemma not in ['dikkat', 'sepet', 'paket', 'bilet', 'kaset', 'anket', 'davet']:
                     voicing = True
-                
+        
+        voicing_map[lemma.lower()] = voicing
         # Check vowel drop attributes
         if lemma in ['ağız', 'zehir']:
             attrs.add('LastVowelDrop')
@@ -1315,7 +1326,7 @@ def compile_dictionary():
                     new_dic_entries.append(f"{lkey}/{flags_part},{proper_flags}")
                 else:
                     new_dic_entries.append(f"{lkey}/{proper_flags}")
-                for poss_stem in get_poss3sg_stems(lkey):
+                for poss_stem in get_poss3sg_stems(lkey, voicing=voicing_map.get(lkey, False)):
                     pfx_poss = _proper_flag_for(poss_stem)
                     proper_flags_poss = ','.join(f'{pfx_poss}{s}' for s in PROPER_SUB_FLAGS)
                     cap_poss = capitalize_word(poss_stem, lkey)
@@ -1335,7 +1346,7 @@ def compile_dictionary():
             new_dic_entries.append(new_entry)
 
             # 3. Add capitalized version of 3sg possessive stems (e.g. Bölümü, Teleskobu) with proper noun flags and KEEPCASE
-            for poss_stem in get_poss3sg_stems(lkey):
+            for poss_stem in get_poss3sg_stems(lkey, voicing=voicing_map.get(lkey, False)):
                 pfx_poss = _proper_flag_for(poss_stem)
                 proper_flags_poss = ','.join(f'{pfx_poss}{s}' for s in PROPER_SUB_FLAGS)
                 cap_poss = capitalize_word(poss_stem, lkey)

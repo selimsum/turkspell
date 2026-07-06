@@ -180,7 +180,7 @@ def noun_chain(stem_flag: str) -> str:
         f"{plural}"
         f"{possessives}"
         f"{copula_flag}"
-        f"LILKSZCI"
+        f"LILKSZCISL"
         f"DLDTDE"
     )
 
