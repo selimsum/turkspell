@@ -11,7 +11,7 @@ ALL_FLAGS = sorted([
     "a1", "a2", "a3", "a4", "y1", "y2", "n1", "n2", "n3", "n4", "i1", "i2",
     "PB", "PF",
     "PS", "PT", "PU", "PV", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "PM", "PO", "PP", "PQ", "PN", "PR", "PW", "PZ",
-    "CL", "cl", "CP", "CV", "CO", "KI", "LI", "SZ", "LK", "CI", "CK", "DL", "DT", "DE", "KC",
+    "CL", "cl", "CP", "CV", "CO", "KI", "LI", "SZ", "LK", "CI", "CK", "DL", "DT", "DE", "KC", "SL",
     # Proper Noun morphological classes (with apostrophe prefix) - OLD (kept for back-compat)
     "uA", "uY", "uL", "uR", "uN", "uI", "uQ", "uP", "u1", "u2", "u3", "u4", "uC",
     # Verb flags

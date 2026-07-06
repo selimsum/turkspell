@@ -99,18 +99,49 @@ def sfx_copula(flag: str, strip: str, add: str, cond: str, rules: list):
             lv = c.lower()
             break
     if not lv:
-        rules.append(sfx(flag, strip, add, cond))
-        return
+        # Determine fallback last vowel from the flag name
+        back_flags = {
+            "P1", "P2", "P5", "P6", "PM", "PO", "PN", "PR", "CL", "PS", "PT",
+            "R1", "I1", "i1", "Q1", "PB", "VC", "C1", "C2", "B1", "B2", "B3", "B4",
+            "V1", "V2", "D1", "D2", "G1", "G2"
+        }
+        if flag.startswith('p') and len(flag) >= 3:
+            is_back_flag = flag[1] in ('B', 'O')
+        else:
+            is_back_flag = flag in back_flags
+        lv = 'a' if is_back_flag else 'e'
         
-    is_vowel = add[-1] in 'aeıioöuüâîû'
+    is_vowel = add[-1] in 'aeıioöuüâîû' if add else False
+    is_unvoiced = add[-1] in 'pçtksşhf' if add else False
+    
     if lv in 'aı':
-        sim_stem = "oda" if is_vowel else "bak"
+        if is_vowel:
+            sim_stem = "oda"
+        elif is_unvoiced:
+            sim_stem = "bak"
+        else:
+            sim_stem = "bal"
     elif lv in 'ei':
-        sim_stem = "kedi" if is_vowel else "ev"
+        if is_vowel:
+            sim_stem = "kedi"
+        elif is_unvoiced:
+            sim_stem = "tek"
+        else:
+            sim_stem = "ev"
     elif lv in 'ou':
-        sim_stem = "kutu" if is_vowel else "uç"
+        if is_vowel:
+            sim_stem = "kutu"
+        elif is_unvoiced:
+            sim_stem = "uç"
+        else:
+            sim_stem = "yol"
     else:
-        sim_stem = "ütü" if is_vowel else "gör"
+        if is_vowel:
+            sim_stem = "ütü"
+        elif is_unvoiced:
+            sim_stem = "düş"
+        else:
+            sim_stem = "gör"
 
     
     if is_vowel:
@@ -225,7 +256,7 @@ def get_noun_chain(stem_flag: str) -> str:
 
     copula_flag = "CL" if is_back else "cl"
 
-    return f"{stem_flag}{cases}{plural}{possessives}{copula_flag}LILKSZCIDLDTDE"
+    return f"{stem_flag}{cases}{plural}{possessives}{copula_flag}LILKSZCISLDLDTDE"
 
 
 def get_vowel_chain(stem_flag: str) -> str:
@@ -831,13 +862,13 @@ def gen_copula_flag_back(flag: str = "CL") -> str:
     for cop_tmpl in COPULAS_VOWEL:
         resolved1 = harmonize("oda", cop_tmpl)
         resolved2 = harmonize("kutu", cop_tmpl)
-        if resolved1: rules.append(sfx(flag, "0", resolved1, "."))
-        if resolved2: rules.append(sfx(flag, "0", resolved2, "."))
+        if resolved1: rules.append(sfx(flag, "0", resolved1, VOWEL_RE))
+        if resolved2: rules.append(sfx(flag, "0", resolved2, VOWEL_RE))
     for cop_tmpl in COPULAS_CONS:
         resolved1 = harmonize("bak", cop_tmpl)
         resolved2 = harmonize("uç", cop_tmpl)
-        if resolved1: rules.append(sfx(flag, "0", resolved1, "."))
-        if resolved2: rules.append(sfx(flag, "0", resolved2, "."))
+        if resolved1: rules.append(sfx(flag, "0", resolved1, CONS_RE))
+        if resolved2: rules.append(sfx(flag, "0", resolved2, CONS_RE))
     return make_flag_block(flag, unique(rules))
 
 def gen_copula_flag_front(flag: str = "cl") -> str:
@@ -862,13 +893,13 @@ def gen_copula_flag_front(flag: str = "cl") -> str:
     for cop_tmpl in COPULAS_VOWEL:
         resolved1 = harmonize("kedi", cop_tmpl)
         resolved2 = harmonize("ütü", cop_tmpl)
-        if resolved1: rules.append(sfx(flag, "0", resolved1, "."))
-        if resolved2: rules.append(sfx(flag, "0", resolved2, "."))
+        if resolved1: rules.append(sfx(flag, "0", resolved1, VOWEL_RE))
+        if resolved2: rules.append(sfx(flag, "0", resolved2, VOWEL_RE))
     for cop_tmpl in COPULAS_CONS:
         resolved1 = harmonize("ev", cop_tmpl)
         resolved2 = harmonize("gör", cop_tmpl)
-        if resolved1: rules.append(sfx(flag, "0", resolved1, "."))
-        if resolved2: rules.append(sfx(flag, "0", resolved2, "."))
+        if resolved1: rules.append(sfx(flag, "0", resolved1, CONS_RE))
+        if resolved2: rules.append(sfx(flag, "0", resolved2, CONS_RE))
     return make_flag_block(flag, unique(rules))
 
 
@@ -896,72 +927,54 @@ def gen_ki_flag(flag: str = "KI") -> str:
 # ---------------------------------------------------------------------------
 
 def gen_deriv_li(flag: str = "LI") -> str:
-    """-lI adjective derivation (+ basic inflection of derived adj)
-
-    Conditions ordered from most-specific to least-specific so hunspell
-    picks the right harmony class.  The final four entries are catch-all
-    rules for stems whose last two characters are both consonants (e.g.
-    'performans' ends in 'ns', 'kent' ends in 'nt').  Hunspell checks
-    whether the stem END matches the condition; the catch-all
-    [^aeıioöuü][^aeıioöuü] fires when no single-vowel condition matched.
-    Harmony for the catch-all is determined by the *last vowel* in the
-    stem — the four groups are distinguished via the flag's sub-flag
-    chaining in compile_hunspell.py (each stem already carries the
-    correct flag set that encodes its harmony).
-    """
+    """-lI adjective derivation"""
     stems = {
-        # --- Specific: last char is consonant, penultimate is a harmony vowel ---
-        "[aı][^aeıioöuü]": ("lı/DL", "lıydı", "lıydım", "lıyken", "lılar", "lılara", "lılarda", "lılardan",
-                              "lılık", "lılığa", "lılıkta", "lılıktan"),
-        "[ou][^aeıioöuü]": ("lu/DL", "luydu", "luyken", "lular", "lulara", "lularda", "lulardan",
-                              "luluk", "luluğa"),
-        "[ei][^aeıioöuü]": ("li/DL", "liydi", "liyken", "liler", "lilere", "lilerde", "lilerden",
-                              "lilik", "liliğe"),
-        "[öü][^aeıioöuü]": ("lü/DL", "lüydü", "lüyken", "lüler", "lülere", "lülerde", "lülerden",
-                              "lülük", "lülüğe"),
-        # --- Vowel-ending stems ---
-        "[aı]": ("lı/DL", "lıydı", "lıyken", "lılar"),
-        "[ou]": ("lu/DL", "luydu", "luyken", "lular"),
-        "[ei]": ("li/DL", "liydi", "liyken", "liler"),
-        "[öü]": ("lü/DL", "lüydü", "lüyken", "lüler"),
+        "[aı][^aeıioöuü]": ("lı", "B3"),
+        "[ou][^aeıioöuü]": ("lu", "B4"),
+        "[ei][^aeıioöuü]": ("li", "F3"),
+        "[öü][^aeıioöuü]": ("lü", "F4"),
+        "[aı]": ("lı", "B3"),
+        "[ou]": ("lu", "B4"),
+        "[ei]": ("li", "F3"),
+        "[öü]": ("lü", "F4"),
     }
-    # Catch-all for consonant-cluster endings (e.g. -ns, -nt, -nk, -rt, -rs).
-    # The flag itself encodes the harmony class (back/front/rounded), so we
-    # emit all four variants here and rely on the correct flag being assigned
-    # to each stem in compile_hunspell.py.
     cluster_forms = {
-        "lı": ("lı/DL", "lıydı", "lıydım", "lıyken", "lılar", "lılara", "lılarda", "lılardan",
-               "lılık", "lılığa", "lılıkta", "lılıktan"),
-        "lu": ("lu/DL", "luydu", "luyken", "lular", "lulara", "lularda", "lulardan",
-               "luluk", "luluğa"),
-        "li": ("li/DL", "liydi", "liyken", "liler", "lilere", "lilerde", "lilerden",
-               "lilik", "liliğe"),
-        "lü": ("lü/DL", "lüydü", "lüyken", "lüler", "lülere", "lülerde", "lülerden",
-               "lülük", "lülüğe"),
+        "lı": "B3",
+        "lu": "B4",
+        "li": "F3",
+        "lü": "F4",
     }
     rules = []
-    for cond, forms in stems.items():
-        for form in forms:
-            rules.append(sfx(flag, "0", form, cond))
-    # Add cluster catch-all: condition matches any two consecutive consonants
+    for cond, (suf, sc) in stems.items():
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
     cluster_cond = "[^aeıioöuü][^aeıioöuü]"
-    for forms in cluster_forms.values():
-        for form in forms:
-            rules.append(sfx(flag, "0", form, cluster_cond))
+    for suf, sc in cluster_forms.items():
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cluster_cond))
     return make_flag_block(flag, unique(rules))
 
 
 def gen_deriv_sz(flag: str = "SZ") -> str:
     """-sIz (without) derivation"""
     rules = []
-    for cond, suf in [("[aıou]", "sız"), ("[eiöü]", "siz"),
-                      ("[aı][^aeıioöuü]","sız"), ("[ou][^aeıioöuü]","suz"),
-                      ("[ei][^aeıioöuü]","siz"), ("[öü][^aeıioöuü]","süz")]:
-        rules.append(sfx(flag, "0", suf, cond))
-        rules.append(sfx(flag, "0", suf + "lık", cond))
-        rules.append(sfx(flag, "0", suf + "lar", cond))
-        rules.append(sfx(flag, "0", suf + "lara", cond))
-        rules.append(sfx(flag, "0", suf + "larda", cond))
+    for cond, suf, sc in [
+        ("[aıou]", "sız", "B1"), ("[eiöü]", "siz", "F1"),
+        ("[aı][^aeıioöuü]", "sız", "B1"), ("[ou][^aeıioöuü]", "suz", "B2"),
+        ("[ei][^aeıioöuü]", "siz", "F1"), ("[öü][^aeıioöuü]", "süz", "F2")
+    ]:
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
+    return make_flag_block(flag, unique(rules))
+
+
+def gen_deriv_sl(flag: str = "SL") -> str:
+    """-sAl adjective derivation"""
+    rules = []
+    for cond, suf, sc in [
+        ("[aıou]",             "sal", "B1"),
+        ("[eiöü]",             "sel", "F1"),
+        ("[aıou][^aeıioöuü]",  "sal", "B1"),
+        ("[eiöü][^aeıioöuü]",  "sel", "F1"),
+    ]:
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
     return make_flag_block(flag, unique(rules))
 
 
@@ -1012,19 +1025,14 @@ def gen_deriv_lk(flag: str = "LK") -> str:
 def gen_deriv_ci(flag: str = "CI") -> str:
     """-CI agentive/occupational noun derivation"""
     rules = []
-    for cond, suf in [
-        ("[aı][^çfhkpsşt]", "cı"), ("[ou][^çfhkpsşt]", "cu"),
-        ("[ei][^çfhkpsşt]", "ci"), ("[öü][^çfhkpsşt]", "cü"),
-        ("[aı][çfhkpsşt]",  "çı"), ("[ou][çfhkpsşt]",  "çu"),
-        ("[ei][çfhkpsşt]",  "çi"), ("[öü][çfhkpsşt]",  "çü"),
-        # vowel ending
-        ("[aı]", "cı"), ("[ou]", "cu"), ("[ei]", "ci"), ("[öü]", "cü"),
+    for cond, suf, sc in [
+        ("[aı][^çfhkpsşt]", "cı", "B3"), ("[ou][^çfhkpsşt]", "cu", "B4"),
+        ("[ei][^çfhkpsşt]", "ci", "F3"), ("[öü][^çfhkpsşt]", "cü", "F4"),
+        ("[aı][çfhkpsşt]",  "çı", "B3"), ("[ou][çfhkpsşt]",  "çu", "B4"),
+        ("[ei][çfhkpsşt]",  "çi", "F3"), ("[öü][çfhkpsşt]",  "çü", "F4"),
+        ("[aı]", "cı", "B3"), ("[ou]", "cu", "B4"), ("[ei]", "ci", "F3"), ("[öü]", "cü", "F4"),
     ]:
-        rules.append(sfx(flag, "0", suf, cond))
-        rules.append(sfx(flag, "0", suf + "lar", cond))
-        rules.append(sfx(flag, "0", suf + "lık", cond))
-        rules.append(sfx(flag, "0", suf + "lara", cond))
-        rules.append(sfx(flag, "0", suf + "larda", cond))
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
     return make_flag_block(flag, unique(rules))
 
 
@@ -1059,12 +1067,8 @@ def gen_deriv_las(flag: str = "DL") -> str:
         ("[ei][^aeıioöuü]",       "leş", "leşmek"),
         ("[öü][^aeıioöuü]",       "leş", "leşmek"),
     ]:
-        inf = verb_inf
-        rules.append(sfx(flag, "0", inf, cond))
-        for case in ['ın', 'a', 'ta', 'tan', 'la', 'lar']:
-            rules.append(sfx(flag, "0", inf[:-3] + case, cond))
-        for ger in ['ma', 'me', 'ış', 'iş', 'uş', 'üş']:
-            rules.append(sfx(flag, "0", suf + ger, cond))
+        verb_flag = "VB" if "a" in suf else "VF"
+        rules.append(sfx(flag, "0", f"{verb_inf}/{verb_flag}", cond))
     return make_flag_block(flag, unique(rules))
 
 
@@ -1077,12 +1081,9 @@ def gen_deriv_las_tir(flag: str = "DT") -> str:
         ("[aıou][^aeıioöuü]",  "laştır"),
         ("[eiöü][^aeıioöuü]",  "leştir"),
     ]:
-        rules.append(sfx(flag, "0", suf + "mak", cond))
-        rules.append(sfx(flag, "0", suf + "mek", cond))
-        rules.append(sfx(flag, "0", suf + "ma",  cond))
-        rules.append(sfx(flag, "0", suf + "me",  cond))
-        rules.append(sfx(flag, "0", suf + "ış",  cond))
-        rules.append(sfx(flag, "0", suf + "iş",  cond))
+        verb_flag = "VB" if "ı" in suf else "VF"
+        inf_suf = "mak" if verb_flag == "VB" else "mek"
+        rules.append(sfx(flag, "0", f"{suf}{inf_suf}/{verb_flag}", cond))
     return make_flag_block(flag, unique(rules))
 
 
@@ -1095,10 +1096,9 @@ def gen_deriv_len(flag: str = "DE") -> str:
         ("[aıou][^aeıioöuü]",  "lan"),
         ("[eiöü][^aeıioöuü]",  "len"),
     ]:
-        rules.append(sfx(flag, "0", suf + "mak", cond))
-        rules.append(sfx(flag, "0", suf + "mek", cond))
-        rules.append(sfx(flag, "0", suf + "ma",  cond))
-        rules.append(sfx(flag, "0", suf + "me",  cond))
+        verb_flag = "VB" if "a" in suf else "VF"
+        inf_suf = "mak" if verb_flag == "VB" else "mek"
+        rules.append(sfx(flag, "0", f"{suf}{inf_suf}/{verb_flag}", cond))
     return make_flag_block(flag, unique(rules))
 
 
@@ -1420,13 +1420,14 @@ def generate_grammar():
     content += gen_ki_flag() + "\n"
 
     # --- Derivation flags ---
-    print("Generating derivation flags (LI, SZ, LK, CI, CK)...")
+    print("Generating derivation flags (LI, SZ, LK, CI, CK, SL)...")
     content += "\n# DERIVATION FLAGS (1ST-LEVEL)\n"
     content += gen_deriv_li() + "\n"
     content += gen_deriv_sz() + "\n"
     content += gen_deriv_lk() + "\n"
     content += gen_deriv_ci() + "\n"
     content += gen_deriv_ck() + "\n"
+    content += gen_deriv_sl() + "\n"
 
     # --- 2nd-level derivation flags ---
     print("Generating 2nd-level derivation flags (DL, DT, DE)...")
