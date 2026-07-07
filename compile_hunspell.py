@@ -1350,16 +1350,19 @@ def compile_dictionary():
             
             # If it also functions as a common noun (e.g. Temmuz), keep the lowercase common-noun entry and add its possessive forms
             if lkey in noun_lemmas:
-                if flags_part:
-                    new_dic_entries.append(f"{lkey}/{flags_part},{proper_flags}")
+                if lkey in {'km', 'cm', 'mm', 'kg', 'gr'}:
+                    pass
                 else:
-                    new_dic_entries.append(f"{lkey}/{proper_flags}")
-                for poss_stem in get_poss3sg_stems(lkey, voicing=voicing_map.get(lkey, False)):
-                    pfx_poss = _proper_flag_for(poss_stem)
-                    proper_flags_poss = ','.join(f'{pfx_poss}{s}' for s in PROPER_SUB_FLAGS)
-                    cap_poss = capitalize_word(poss_stem, lkey)
-                    poss_entry = f"{cap_poss}/{proper_flags_poss},KC"
-                    new_dic_entries.append(poss_entry)
+                    if flags_part:
+                        new_dic_entries.append(f"{lkey}/{flags_part},{proper_flags}")
+                    else:
+                        new_dic_entries.append(f"{lkey}/{proper_flags}")
+                    for poss_stem in get_poss3sg_stems(lkey, voicing=voicing_map.get(lkey, False)):
+                        pfx_poss = _proper_flag_for(poss_stem)
+                        proper_flags_poss = ','.join(f'{pfx_poss}{s}' for s in PROPER_SUB_FLAGS)
+                        cap_poss = capitalize_word(poss_stem, lkey)
+                        poss_entry = f"{cap_poss}/{proper_flags_poss},KC"
+                        new_dic_entries.append(poss_entry)
 
         # Case 2: Word is a common noun (but not explicitly tagged as proper noun/override)
         elif lkey in noun_lemmas:

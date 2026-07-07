@@ -1106,7 +1106,7 @@ def gen_deriv_las(flag: str = "DL") -> str:
         ("[ei][^aeıioöuü][^aeıioöuü]",       "leş", "leşmek"),
         ("[öü][^aeıioöuü][^aeıioöuü]",       "leş", "leşmek"),
     ]:
-        verb_flag = "VB" if "a" in suf else "VF"
+        verb_flag = "Vb" if "a" in suf else "Vf"
         rules.append(sfx(flag, "0", f"{verb_inf}/{verb_flag}", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -1123,8 +1123,8 @@ def gen_deriv_las_tir(flag: str = "DT") -> str:
         ("[aıou][^aeıioöuü][^aeıioöuü]",  "laştır"),
         ("[eiöü][^aeıioöuü][^aeıioöuü]",  "leştir"),
     ]:
-        verb_flag = "VB" if "ı" in suf else "VF"
-        inf_suf = "mak" if verb_flag == "VB" else "mek"
+        verb_flag = "Vb" if "ı" in suf else "Vf"
+        inf_suf = "mak" if verb_flag == "Vb" else "mek"
         rules.append(sfx(flag, "0", f"{suf}{inf_suf}/{verb_flag}", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -1141,8 +1141,8 @@ def gen_deriv_len(flag: str = "DE") -> str:
         ("[aıou][^aeıioöuü][^aeıioöuü]",  "lan"),
         ("[eiöü][^aeıioöuü][^aeıioöuü]",  "len"),
     ]:
-        verb_flag = "VB" if "a" in suf else "VF"
-        inf_suf = "mak" if verb_flag == "VB" else "mek"
+        verb_flag = "Vb" if "a" in suf else "Vf"
+        inf_suf = "mak" if verb_flag == "Vb" else "mek"
         rules.append(sfx(flag, "0", f"{suf}{inf_suf}/{verb_flag}", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -1834,6 +1834,11 @@ def _generate_verb_flags_from_v1() -> str:
     verb_flags_rules = {} # new_flag_char -> (combine_char, list of rules)
     verb_flags_order = []
 
+    new_vb_char = LONG_TO_UTF8["Vb"]
+    new_vf_char = LONG_TO_UTF8["Vf"]
+    verb_flags_rules[new_vb_char] = ('Y', [])
+    verb_flags_rules[new_vf_char] = ('Y', [])
+
     for line in lines:
         line_strip = line.strip()
         if not line_strip or line_strip.startswith('#'):
@@ -1853,6 +1858,12 @@ def _generate_verb_flags_from_v1() -> str:
                         verb_flags_order.append(new_flag_char)
                 else:
                     # Rule line
+                    if len(parts) >= 4:
+                        suf = parts[3].split('/')[0]
+                        # Skip grammatically incorrect potential suffixes starting with 'tebil' or 'tabil'
+                        if suf.startswith(('tebil', 'tabil')):
+                            continue
+
                     # Skip reflexive/passive -n rules on consonant-ending verb flags
                     if long_flag in ("VB", "VR", "VF", "VG"):
                         if len(parts) >= 4:
@@ -1880,6 +1891,21 @@ def _generate_verb_flags_from_v1() -> str:
                     
                     if new_flag_char in verb_flags_rules:
                         verb_flags_rules[new_flag_char][1].append(parts)
+                        
+                        # Clone VB and VF rules to Vb and Vf, filtering out ırmak/irmek/urmak/ürmek
+                        suf = parts[3].split('/')[0] if len(parts) >= 4 else ""
+                        if new_flag_char == LONG_TO_UTF8["VB"]:
+                            if not any(x in suf for x in ('ırmak', 'irmek', 'urmak', 'ürmek')):
+                                p_clone = list(parts)
+                                verb_flags_rules[new_vb_char][1].append(p_clone)
+                        elif new_flag_char == LONG_TO_UTF8["VF"]:
+                            if not any(x in suf for x in ('ırmak', 'irmek', 'urmak', 'ürmek')):
+                                p_clone = list(parts)
+                                verb_flags_rules[new_vf_char][1].append(p_clone)
+
+    # Append Vb and Vf to order
+    verb_flags_order.append(new_vb_char)
+    verb_flags_order.append(new_vf_char)
 
     out_lines = []
     for flag_char in verb_flags_order:

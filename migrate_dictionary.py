@@ -286,6 +286,9 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
             chain = "F2uAuYuLuRuNuIuQPFuPu1u2u3u4uCLILKSZCIDLDTDE"
         else:
             chain = noun_chain(stem_flag, only_vowel=only_vowel)
+            if len(word) == 1:
+                for deriv in ["LI", "SZ", "LK", "CI", "SL", "DL", "DT", "DE"]:
+                    chain = chain.replace(deriv, "")
         new_parts = [chain]
         if has_prefix:
             new_parts.append("PX")  # also takes metric prefixes
