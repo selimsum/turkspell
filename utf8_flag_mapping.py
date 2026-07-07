@@ -11,7 +11,7 @@ ALL_FLAGS = sorted([
     "a1", "a2", "a3", "a4", "y1", "y2", "n1", "n2", "n3", "n4", "i1", "i2",
     "PB", "PF",
     "PS", "PT", "PU", "PV", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "PM", "PO", "PP", "PQ", "PN", "PR", "PW", "PZ",
-    "CL", "cl", "CP", "CV", "CO", "KI", "LI", "SZ", "LK", "CI", "CK", "DL", "DT", "DE", "KC", "SL",
+    "CL", "cl", "CP", "CV", "CO", "KI", "LI", "SZ", "LK", "CI", "CK", "DL", "DT", "DE", "KC", "SL", "NE", "VC", "vc",
     # Proper Noun morphological classes (with apostrophe prefix) - OLD (kept for back-compat)
     "uA", "uY", "uL", "uR", "uN", "uI", "uQ", "uP", "u1", "u2", "u3", "u4", "uC",
     # Verb flags
@@ -39,6 +39,9 @@ for idx, flag in enumerate(ALL_FLAGS):
     LONG_TO_UTF8[flag] = chr(1024 + idx)
 for idx, flag in enumerate(PROPER_NOUN_FLAGS_3):
     LONG_TO_UTF8[flag] = chr(1024 + len(ALL_FLAGS) + idx)
+
+# Override NE to ASCII 'X' to guarantee correct NEEDAFFIX parsing by Hunspell
+LONG_TO_UTF8["NE"] = "X"
 
 UTF8_TO_LONG = {v: k for k, v in LONG_TO_UTF8.items()}
 

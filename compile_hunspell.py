@@ -31,6 +31,15 @@ ALL_CAPS_ABBREVS = {'abd', 'dna', 'gps', 'uuı', 'uv', 'bbc', 'vr', 'eeg', 'yz',
 def turkish_upper(s: str) -> str:
     return s.replace('i', 'İ').replace('ı', 'I').upper()
 
+def get_voiced_stem(lemma: str) -> str:
+    if not lemma:
+        return ""
+    last_char = lemma[-1].lower()
+    voicing_map = {'p': 'b', 'ç': 'c', 't': 'd', 'k': 'ğ'}
+    if last_char in voicing_map:
+        return lemma[:-1] + voicing_map[last_char]
+    return lemma
+
 def capitalize_word(s: str, base_lkey: str) -> str:
     if base_lkey in ALL_CAPS_ABBREVS:
         return turkish_upper(s)
@@ -987,6 +996,10 @@ def compile_dictionary():
                 flag = f"{flag},90"
                 
             dic_entries.append(f"{lemma}/{flag}")
+            if voicing and pos != 'Verb':
+                voiced_stem = get_voiced_stem(lemma)
+                if voiced_stem and voiced_stem != lemma:
+                    dic_entries.append(f"{voiced_stem}/{flag},NE,only_vowel")
         else:
             dic_entries.append(lemma)
             
@@ -1385,6 +1398,10 @@ def compile_dictionary():
             content = f.read()
             
         content = content.replace("FLAG long", "FLAG UTF-8")
+        if "NEEDAFFIX NE" in content:
+            content = content.replace("NEEDAFFIX NE", f"NEEDAFFIX {LONG_TO_UTF8['NE']}")
+        if "KEEPCASE KC" in content:
+            content = content.replace("KEEPCASE KC", f"KEEPCASE {LONG_TO_UTF8['KC']}")
         lines = content.split('\n')
         new_lines = []
         for line in lines:
@@ -1439,11 +1456,13 @@ def compile_dictionary():
                 continue
             _word, _flag_part = _ls.split('/', 1)
             _parts = _flag_part.split(',')
+            _only_vowel = 'only_vowel' in _parts
+            _parts = [p for p in _parts if p != 'only_vowel']
             _numeric = [p.strip() for p in _parts if not (p.strip().startswith('p') and len(p.strip()) == 3)]
             _proper  = [p.strip() for p in _parts if p.strip().startswith('p') and len(p.strip()) == 3]
             if _numeric:
                 _fake = _word + '/' + ','.join(_numeric)
-                _mig, _ = _migrate_line(_fake, _i, set())
+                _mig, _ = _migrate_line(_fake, _i, set(), only_vowel=_only_vowel)
                 if _mig and '/' in _mig:
                     _w2, _fc = _mig.split('/', 1)
                     _utf8 = remap_flag_string(_fc)

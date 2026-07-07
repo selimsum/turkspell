@@ -102,7 +102,7 @@ ALL_FLAG_MAP = {**NOUN_FLAG_MAP, **VERB_FLAG_MAP}
 # Each noun stem class maps to a set of morphological flags.
 # The chain includes: cases, plural, all possessives, copula, relative-ki, derivations.
 
-def noun_chain(stem_flag: str) -> str:
+def noun_chain(stem_flag: str, only_vowel: bool = False) -> str:
     """Return the morphological flag chain for a given stem class flag."""
     if stem_flag in ("PX", "NX"):
         return stem_flag
@@ -165,24 +165,38 @@ def noun_chain(stem_flag: str) -> str:
     else:                              p2pl = "PZ"
 
     exclude_vowel = stem_flag[0] in ("V", "D", "G")
-    if exclude_vowel:
+    if only_vowel:
+        cases = f"{acc_f}{dat_f}{gen_f}"
+        possessives = f"{p3}{p1}{p2s}{p1pl}{p2pl}"
+        plural = ""
+        copula_flag = "VC" if is_back else "vc"
+        derivs = ""
+    elif exclude_vowel:
         cases = f"{loc_f}{abl_f}{ins_f}{eq_f}"
         possessives = ""
+        copula_flag = "CL" if is_back else "cl"
+        derivs = "LILKSZCISL" + "DLDTDE"
     else:
         cases = f"{acc_f}{dat_f}{loc_f}{abl_f}{gen_f}{ins_f}{eq_f}"
         possessives = f"{p3}{p1}{p2s}{p1pl}{p2pl}"
+        copula_flag = "CL" if is_back else "cl"
+        derivs = "LILKSZCISL" + "DLDTDE"
 
-    copula_flag = "CL" if is_back else "cl"
-
-    return (
-        f"{stem_flag}"
-        f"{cases}"
-        f"{plural}"
-        f"{possessives}"
-        f"{copula_flag}"
-        f"LILKSZCISL"
-        f"DLDTDE"
-    )
+    if only_vowel:
+        return (
+            f"{cases}"
+            f"{possessives}"
+            f"{copula_flag}"
+        )
+    else:
+        return (
+            f"{stem_flag}"
+            f"{cases}"
+            f"{plural}"
+            f"{possessives}"
+            f"{copula_flag}"
+            f"{derivs}"
+        )
 
 
 
@@ -201,7 +215,7 @@ def parse_flags(flag_str: str) -> list[int]:
     return result
 
 
-def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None) -> tuple[str, str]:
+def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_vowel: bool = False) -> tuple[str, str]:
     """
     Migrate a single dictionary line.
     Returns (migrated_line, warning_message).
@@ -271,10 +285,13 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None) -> tup
         if word == 'Atatürk':
             chain = "F2uAuYuLuRuNuIuQPFuPu1u2u3u4uCLILKSZCIDLDTDE"
         else:
-            chain = noun_chain(stem_flag)
+            chain = noun_chain(stem_flag, only_vowel=only_vowel)
         new_parts = [chain]
         if has_prefix:
             new_parts.append("PX")  # also takes metric prefixes
+        raw_parts = [p.strip() for p in flag_part.split(',')]
+        if 'NE' in raw_parts:
+            new_parts.append("NE")
         for vf in sorted(verb_flags):
             new_parts.append(VERB_FLAG_MAP[vf])
         if is_obsolete:
