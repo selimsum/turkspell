@@ -185,7 +185,7 @@ def sfx_ki(flag: str, strip: str, add: str, cond: str, rules: list, chain_copula
     for ks in ki_suffixes:
         rules.append(sfx(flag, strip, add + ks, cond))
 
-def get_noun_chain(stem_flag: str) -> str:
+def get_noun_chain(stem_flag: str, only_vowel: bool = False) -> str:
     if stem_flag in ("PX", "NX"):
         return stem_flag
     back_flags = {"B1", "B2", "V1", "V2", "D1", "D2", "C1", "C2", "G1", "G2"}  # back cons
@@ -247,16 +247,27 @@ def get_noun_chain(stem_flag: str) -> str:
     else:                              p2pl = "PZ"
 
     exclude_vowel = stem_flag[0] in ("V", "D", "G")
-    if exclude_vowel:
+    if only_vowel:
+        cases = f"{acc_f}{dat_f}{gen_f}"
+        possessives = f"{p3}{p1}{p2s}{p1pl}{p2pl}"
+        copula_flag = "VC" if is_back else "vc"
+        derivs = ""
+        plural = ""
+    elif exclude_vowel:
         cases = f"{loc_f}{abl_f}{ins_f}{eq_f}"
         possessives = ""
+        copula_flag = "CL" if is_back else "cl"
+        derivs = "LILKSZCISLDLDTDE"
     else:
         cases = f"{acc_f}{dat_f}{loc_f}{abl_f}{gen_f}{ins_f}{eq_f}"
         possessives = f"{p3}{p1}{p2s}{p1pl}{p2pl}"
+        copula_flag = "CL" if is_back else "cl"
+        derivs = "LILKSZCISLDLDTDE"
 
-    copula_flag = "CL" if is_back else "cl"
-
-    return f"{stem_flag}{cases}{plural}{possessives}{copula_flag}LILKSZCISLDLDTDE"
+    if only_vowel:
+        return f"{cases}{possessives}{copula_flag}"
+    else:
+        return f"{stem_flag}{cases}{plural}{possessives}{copula_flag}{derivs}"
 
 
 def get_vowel_chain(stem_flag: str) -> str:
@@ -422,11 +433,24 @@ def gen_ac_flags() -> list[str]:
 def gen_da_flags() -> list[str]:
     """Dative flags: Y1/Y2 (consonant) and y1/y2 (vowel)"""
     blocks = []
-    blocks.append(make_flag_block("Y1", [sfx("Y1", "0", "a", ".")]))
-    blocks.append(make_flag_block("Y2", [sfx("Y2", "0", "e", ".")]))
-    blocks.append(make_flag_block("y1", [sfx("y1", "0", "ya", ".")]))
-    blocks.append(make_flag_block("y2", [sfx("y2", "0", "ye", ".")]))
+    rules_y1 = []
+    sfx_copula("Y1", "0", "a", ".", rules_y1)
+    blocks.append(make_flag_block("Y1", unique(rules_y1)))
+    
+    rules_y2 = []
+    sfx_copula("Y2", "0", "e", ".", rules_y2)
+    blocks.append(make_flag_block("Y2", unique(rules_y2)))
+    
+    rules_y1_v = []
+    sfx_copula("y1", "0", "ya", ".", rules_y1_v)
+    blocks.append(make_flag_block("y1", unique(rules_y1_v)))
+    
+    rules_y2_v = []
+    sfx_copula("y2", "0", "ye", ".", rules_y2_v)
+    blocks.append(make_flag_block("y2", unique(rules_y2_v)))
+    
     return blocks
+
 
 def gen_lo_flags() -> list[str]:
     """Locative flags: L1 (back), L2 (front)"""
@@ -519,8 +543,11 @@ def _plural_cases(pl_vowel: str, harmony: str) -> list[str]:
     cop_di = 'dı' if harmony == 'back' else 'di'
     cop_m  = 'mış' if harmony == 'back' else 'miş'
     cop_sa = 'sa' if harmony == 'back' else 'se'
-    cop_flag = "CL" if harmony == 'back' else "CP"
-    
+    cop_p1sg  = 'ım' if harmony == 'back' else 'im'
+    cop_p2sg  = 'sın' if harmony == 'back' else 'sin'
+    cop_p1pl  = 'ız' if harmony == 'back' else 'iz'
+    cop_p2pl  = 'sınız' if harmony == 'back' else 'siniz'
+
     suffixes = [
         # accusative
         f"{pl}{acc_v}",
@@ -546,6 +573,11 @@ def _plural_cases(pl_vowel: str, harmony: str) -> list[str]:
         f"{pl}{cop_sa}",
         # -ken
         f"{pl}ken",
+        # personal copulas
+        f"{pl}{cop_p1sg}",
+        f"{pl}{cop_p2sg}",
+        f"{pl}{cop_p1pl}",
+        f"{pl}{cop_p2pl}",
     ]
     
     # 3sg/3pl possessive of plural cases (with pre-combined copulas)
@@ -724,7 +756,7 @@ def gen_3sg_poss_flags() -> list[str]:
         # Cases after poss (n-buffer before all cases)
         # 1. Consonant ending stems (condition: CONS_RE)
         rules.append(sfx(flag, "0", acc_v + "n" + acc_v,         CONS_RE)) # acc
-        rules.append(sfx(flag, "0", acc_v + "n" + loc_v,         CONS_RE)) # dat
+        sfx_copula(flag, "0", acc_v + "n" + loc_v,         CONS_RE, rules) # dat
         sfx_ki(flag, "0", acc_v + "nd" + loc_v,        CONS_RE, rules)      # loc
         sfx_copula(flag, "0", acc_v + "nd" + loc_v + "n",  CONS_RE, rules) # abl
         sfx_ki(flag, "0", acc_v + "n" + acc_v + "n",   CONS_RE, rules)      # gen
@@ -733,7 +765,7 @@ def gen_3sg_poss_flags() -> list[str]:
         # 2. Vowel ending stems (condition: VOWEL_RE)
         poss_s = f"s{acc_v}"
         rules.append(sfx(flag, "0", poss_s + "n" + acc_v,         VOWEL_RE)) # acc
-        rules.append(sfx(flag, "0", poss_s + "n" + loc_v,         VOWEL_RE)) # dat
+        sfx_copula(flag, "0", poss_s + "n" + loc_v,         VOWEL_RE, rules) # dat
         sfx_ki(flag, "0", poss_s + "nd" + loc_v,        VOWEL_RE, rules)      # loc
         sfx_copula(flag, "0", poss_s + "nd" + loc_v + "n",  VOWEL_RE, rules) # abl
         sfx_ki(flag, "0", poss_s + "n" + acc_v + "n",   VOWEL_RE, rules)      # gen
@@ -762,7 +794,7 @@ def gen_2sg_poss_flags() -> list[str]:
         for base_poss, cond in [(sg, CONS_RE), (m, VOWEL_RE)]:
             sfx_copula(flag, "0", base_poss, cond, rules)
             rules.append(sfx(flag, "0", base_poss + acc_v,        cond))
-            rules.append(sfx(flag, "0", base_poss + loc_v,        cond))
+            sfx_copula(flag, "0", base_poss + loc_v,        cond, rules)
             sfx_ki(flag, "0", base_poss + "d" + loc_v,  cond, rules)
             sfx_copula(flag, "0", base_poss + "d" + loc_v + "n", cond, rules)
             sfx_ki(flag, "0", base_poss + acc_v + "n",  cond, rules)
@@ -793,7 +825,7 @@ def gen_1pl_poss_flags() -> list[str]:
         for base_poss, cond in [(sg, CONS_RE), (m, VOWEL_RE)]:
             sfx_copula(flag, "0", base_poss, cond, rules)
             rules.append(sfx(flag, "0", base_poss + acc_v,        cond))
-            rules.append(sfx(flag, "0", base_poss + loc_v,        cond))
+            sfx_copula(flag, "0", base_poss + loc_v,        cond, rules)
             sfx_ki(flag, "0", base_poss + "d" + loc_v,  cond, rules)
             sfx_copula(flag, "0", base_poss + "d" + loc_v + "n", cond, rules)
             sfx_ki(flag, "0", base_poss + acc_v + "n",  cond, rules)
@@ -824,7 +856,7 @@ def gen_2pl_poss_flags() -> list[str]:
         for base_poss, cond in [(sg, CONS_RE), (m, VOWEL_RE)]:
             sfx_copula(flag, "0", base_poss, cond, rules)
             rules.append(sfx(flag, "0", base_poss + acc_v,        cond))
-            rules.append(sfx(flag, "0", base_poss + loc_v,        cond))
+            sfx_copula(flag, "0", base_poss + loc_v,        cond, rules)
             sfx_ki(flag, "0", base_poss + "d" + loc_v,  cond, rules)
             sfx_copula(flag, "0", base_poss + "d" + loc_v + "n", cond, rules)
             sfx_ki(flag, "0", base_poss + acc_v + "n",  cond, rules)
@@ -865,8 +897,12 @@ def gen_copula_flag_back(flag: str = "CL") -> str:
     for cop_tmpl in COPULAS_CONS:
         r_flat = harmonize("bak", cop_tmpl)
         r_round = harmonize("uç", cop_tmpl)
-        if r_flat: rules.append(sfx(flag, "0", r_flat, "[aı][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
-        if r_round: rules.append(sfx(flag, "0", r_round, "[ou][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
+        if r_flat:
+            rules.append(sfx(flag, "0", r_flat, "[aı][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
+            rules.append(sfx(flag, "0", r_flat, "[aı][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
+        if r_round:
+            rules.append(sfx(flag, "0", r_round, "[ou][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
+            rules.append(sfx(flag, "0", r_round, "[ou][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
     return make_flag_block(flag, unique(rules))
 
 def gen_copula_flag_front(flag: str = "cl") -> str:
@@ -891,13 +927,17 @@ def gen_copula_flag_front(flag: str = "cl") -> str:
     for cop_tmpl in COPULAS_VOWEL:
         r_flat = harmonize("kedi", cop_tmpl)
         r_round = harmonize("ütü", cop_tmpl)
-        if r_flat: rules.append(sfx(flag, "0", r_flat, "[ei]"))
-        if r_round: rules.append(sfx(flag, "0", r_round, "[öü]"))
+        if r_flat: rules.append(sfx(flag, "0", r_flat, "[eiaâ]"))
+        if r_round: rules.append(sfx(flag, "0", r_round, "[öüou]"))
     for cop_tmpl in COPULAS_CONS:
         r_flat = harmonize("ev", cop_tmpl)
         r_round = harmonize("gör", cop_tmpl)
-        if r_flat: rules.append(sfx(flag, "0", r_flat, "[ei][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
-        if r_round: rules.append(sfx(flag, "0", r_round, "[öü][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
+        if r_flat:
+            rules.append(sfx(flag, "0", r_flat, "[eiaâ][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
+            rules.append(sfx(flag, "0", r_flat, "[eiaâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
+        if r_round:
+            rules.append(sfx(flag, "0", r_round, "[öüou][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
+            rules.append(sfx(flag, "0", r_round, "[öüou][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
     return make_flag_block(flag, unique(rules))
 
 
@@ -957,7 +997,10 @@ def gen_deriv_sz(flag: str = "SZ") -> str:
     for cond, suf, sc in [
         ("[aıou]", "sız", "B1"), ("[eiöü]", "siz", "F1"),
         ("[aı][^aeıioöuü]", "sız", "B1"), ("[ou][^aeıioöuü]", "suz", "B2"),
-        ("[ei][^aeıioöuü]", "siz", "F1"), ("[öü][^aeıioöuü]", "süz", "F2")
+        ("[ei][^aeıioöuü]", "siz", "F1"), ("[öü][^aeıioöuü]", "süz", "F2"),
+        # Two-consonant endings
+        ("[aı][^aeıioöuü][^aeıioöuü]", "sız", "B1"), ("[ou][^aeıioöuü][^aeıioöuü]", "suz", "B2"),
+        ("[ei][^aeıioöuü][^aeıioöuü]", "siz", "F1"), ("[öü][^aeıioöuü][^aeıioöuü]", "süz", "F2"),
     ]:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
     return make_flag_block(flag, unique(rules))
@@ -971,53 +1014,36 @@ def gen_deriv_sl(flag: str = "SL") -> str:
         ("[eiöü]",             "sel", "F1"),
         ("[aıou][^aeıioöuü]",  "sal", "B1"),
         ("[eiöü][^aeıioöuü]",  "sel", "F1"),
+        # Two-consonant endings
+        ("[aıou][^aeıioöuü][^aeıioöuü]",  "sal", "B1"),
+        ("[eiöü][^aeıioöuü][^aeıioöuü]",  "sel", "F1"),
     ]:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
     return make_flag_block(flag, unique(rules))
 
 
 def gen_deriv_lk(flag: str = "LK") -> str:
-    """-lIk abstract noun derivation + full possessive and case forms"""
+    """-lIk abstract noun derivation + two-stage flag chaining"""
     rules = []
-    for cond, suf, suf_v, acc, gen, dat, loc, abl, ins in [
-        ("[aı][^aeıioöuü]", "lık", "lığ", "lığı", "lığın", "lığa",  "lıkta",  "lıktan",  "lıkla"),
-        ("[ou][^aeıioöuü]", "luk", "luğ", "luğu", "luğun", "luğa",  "lukta",  "luktan",  "lukla"),
-        ("[ei][^aeıioöuü]", "lik", "liğ", "liği", "liğin", "liğe",  "likte",  "likten",  "likle"),
-        ("[öü][^aeıioöuü]", "lük", "lüğ", "lüğü", "lüğün", "lüğe",  "lükte",  "lükten",  "lükle"),
-        ("[aı]",            "lık", "lığ", "lığı", "lığın", "lığa",  "lıkta",  "lıktan",  "lıkla"),
-        ("[ou]",            "luk", "luğ", "luğu", "luğun", "luğa",  "lukta",  "luktan",  "lukla"),
-        ("[ei]",            "lik", "liğ", "liği", "liğin", "liğe",  "likte",  "likten",  "likle"),
-        ("[öü]",            "lük", "lüğ", "lüğü", "lüğün", "lüğe",  "lükte",  "lükten",  "lükle"),
+    for cond, suf, suf_v, sc in [
+        ("[aı][^aeıioöuü]", "lık", "lığ", "B1"),
+        ("[ou][^aeıioöuü]", "luk", "luğ", "B2"),
+        ("[ei][^aeıioöuü]", "lik", "liğ", "F1"),
+        ("[öü][^aeıioöuü]", "lük", "lüğ", "F2"),
+        ("[aı]",            "lık", "lığ", "B1"),
+        ("[ou]",            "luk", "luğ", "B2"),
+        ("[ei]",            "lik", "liğ", "F1"),
+        ("[öü]",            "lük", "lüğ", "F2"),
+        # Two-consonant stems support
+        ("[aı][^aeıioöuü][^aeıioöuü]", "lık", "lığ", "B1"),
+        ("[ou][^aeıioöuü][^aeıioöuü]", "luk", "luğ", "B2"),
+        ("[ei][^aeıioöuü][^aeıioöuü]", "lik", "liğ", "F1"),
+        ("[öü][^aeıioöuü][^aeıioöuü]", "lük", "lüğ", "F2"),
     ]:
-        # Bare derived noun + case
-        rules.append(sfx(flag, "0", suf, cond))
-        rules.append(sfx(flag, "0", suf + "lar", cond))
-        rules.append(sfx(flag, "0", suf_v + "a",  cond))   # dat
-        rules.append(sfx(flag, "0", suf_v + "ı" if 'ı' in acc else suf_v + "i" if 'i' in acc else suf_v + "u" if 'u' in acc else suf_v + "ü", cond))  # acc
-        rules.append(sfx(flag, "0", suf + "ta",   cond))   # loc
-        rules.append(sfx(flag, "0", suf + "tan",  cond))   # abl
-        rules.append(sfx(flag, "0", suf_v + "ın" if 'ı' in gen else suf_v + "in" if 'i' in gen else suf_v + "un" if 'u' in gen else suf_v + "ün", cond))  # gen
-        rules.append(sfx(flag, "0", suf + "la",   cond))   # ins
-        # 3sg possessive + case (n-buffer before case suffix: lığ+ı+n+a=lığına)
-        poss_v = "ı" if 'ı' in acc else "i" if 'i' in acc else "u" if 'u' in acc else "ü"
-        dat_v  = "a" if poss_v in ("ı", "u") else "e"
-        for form in [
-            suf_v + poss_v,                               # 3sg poss bare (lığı)
-            suf_v + poss_v + "n" + dat_v,                # 3sg poss dative (lığına)
-            suf_v + poss_v + "nd" + dat_v,               # 3sg poss locative (lığında)
-            suf_v + poss_v + "nd" + dat_v + "n",         # 3sg poss ablative (lığından)
-            suf_v + poss_v + "n" + poss_v + "n",         # 3sg poss genitive (lığının)
-            suf_v + poss_v + ("yla" if poss_v in ("u", "ı") else "yle"),  # 3sg poss ins
-        ]:
-            rules.append(sfx(flag, "0", form, cond))
-        # 1sg possessive: bare, acc, loc, gen
-        p1bare = suf + poss_v + "m"                      # lık+ım = lıkım
-        p1acc  = suf + poss_v + "m" + poss_v             # lıkımı
-        p1loc  = suf + poss_v + "md" + dat_v             # lıkımda
-        p1gen  = suf + poss_v + "m" + poss_v + "n"       # lıkımın
-        for form in [p1bare, p1acc, p1loc, p1gen]:
-            rules.append(sfx(flag, "0", form, cond))
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
+        rules.append(sfx(flag, "0", f"{suf_v}/{get_noun_chain(sc, only_vowel=True)}NE", cond))
     return make_flag_block(flag, unique(rules))
+
 
 
 def gen_deriv_ci(flag: str = "CI") -> str:
@@ -1029,6 +1055,11 @@ def gen_deriv_ci(flag: str = "CI") -> str:
         ("[aı][çfhkpsşt]",  "çı", "B3"), ("[ou][çfhkpsşt]",  "çu", "B4"),
         ("[ei][çfhkpsşt]",  "çi", "F3"), ("[öü][çfhkpsşt]",  "çü", "F4"),
         ("[aı]", "cı", "B3"), ("[ou]", "cu", "B4"), ("[ei]", "ci", "F3"), ("[öü]", "cü", "F4"),
+        # Two-consonant endings
+        ("[aı][^aeıioöuü][^çfhkpsşt]", "cı", "B3"), ("[ou][^aeıioöuü][^çfhkpsşt]", "cu", "B4"),
+        ("[ei][^aeıioöuü][^çfhkpsşt]", "ci", "F3"), ("[öü][^aeıioöuü][^çfhkpsşt]", "cü", "F4"),
+        ("[aı][^aeıioöuü][çfhkpsşt]",  "çı", "B3"), ("[ou][^aeıioöuü][çfhkpsşt]",  "çu", "B4"),
+        ("[ei][^aeıioöuü][çfhkpsşt]",  "çi", "F3"), ("[öü][^aeıioöuü][çfhkpsşt]",  "çü", "F4"),
     ]:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
     return make_flag_block(flag, unique(rules))
@@ -1043,6 +1074,11 @@ def gen_deriv_ck(flag: str = "CK") -> str:
         ("[aı][çfhkpsşt]",  "çık"), ("[ou][çfhkpsşt]",  "çuk"),
         ("[ei][çfhkpsşt]",  "çik"), ("[öü][çfhkpsşt]",  "çük"),
         ("[aı]", "cık"), ("[ou]", "cuk"), ("[ei]", "cik"), ("[öü]", "cük"),
+        # Two-consonant endings
+        ("[aı][^aeıioöuü][^çfhkpsşt]", "cık"), ("[ou][^aeıioöuü][^çfhkpsşt]", "cuk"),
+        ("[ei][^aeıioöuü][^çfhkpsşt]", "cik"), ("[öü][^aeıioöuü][^çfhkpsşt]", "cük"),
+        ("[aı][^aeıioöuü][çfhkpsşt]",  "çık"), ("[ou][^aeıioöuü][çfhkpsşt]",  "çuk"),
+        ("[ei][^aeıioöuü][çfhkpsşt]",  "çik"), ("[öü][^aeıioöuü][çfhkpsşt]",  "çük"),
     ]:
         rules.append(sfx(flag, "0", suf, cond))
     return make_flag_block(flag, unique(rules))
@@ -1064,6 +1100,11 @@ def gen_deriv_las(flag: str = "DL") -> str:
         ("[ou][^aeıioöuü]",       "laş", "laşmak"),
         ("[ei][^aeıioöuü]",       "leş", "leşmek"),
         ("[öü][^aeıioöuü]",       "leş", "leşmek"),
+        # Two-consonant endings
+        ("[aı][^aeıioöuü][^aeıioöuü]",       "laş", "laşmak"),
+        ("[ou][^aeıioöuü][^aeıioöuü]",       "laş", "laşmak"),
+        ("[ei][^aeıioöuü][^aeıioöuü]",       "leş", "leşmek"),
+        ("[öü][^aeıioöuü][^aeıioöuü]",       "leş", "leşmek"),
     ]:
         verb_flag = "VB" if "a" in suf else "VF"
         rules.append(sfx(flag, "0", f"{verb_inf}/{verb_flag}", cond))
@@ -1078,6 +1119,9 @@ def gen_deriv_las_tir(flag: str = "DT") -> str:
         ("[eiöü]",             "leştir"),
         ("[aıou][^aeıioöuü]",  "laştır"),
         ("[eiöü][^aeıioöuü]",  "leştir"),
+        # Two-consonant endings
+        ("[aıou][^aeıioöuü][^aeıioöuü]",  "laştır"),
+        ("[eiöü][^aeıioöuü][^aeıioöuü]",  "leştir"),
     ]:
         verb_flag = "VB" if "ı" in suf else "VF"
         inf_suf = "mak" if verb_flag == "VB" else "mek"
@@ -1093,6 +1137,9 @@ def gen_deriv_len(flag: str = "DE") -> str:
         ("[eiöü]",             "len"),
         ("[aıou][^aeıioöuü]",  "lan"),
         ("[eiöü][^aeıioöuü]",  "len"),
+        # Two-consonant endings
+        ("[aıou][^aeıioöuü][^aeıioöuü]",  "lan"),
+        ("[eiöü][^aeıioöuü][^aeıioöuü]",  "len"),
     ]:
         verb_flag = "VB" if "a" in suf else "VF"
         inf_suf = "mak" if verb_flag == "VB" else "mek"
@@ -1816,10 +1863,20 @@ def _generate_verb_flags_from_v1() -> str:
                     # Remap other flags on the suffix if any (e.g. add/flags)
                     if len(parts) >= 4:
                         add_field = parts[3]
-                        if '/' in add_field:
-                            prefix_str, flags_str = add_field.split('/', 1)
-                            remapped_flags = remap_old_to_new_flag_string(flags_str)
-                            parts[3] = f"{prefix_str}/{remapped_flags}"
+                        prefix_str = add_field.split('/', 1)[0]
+                        if prefix_str.endswith(('lar', 'ler')):
+                            cop_flag_char = LONG_TO_UTF8["CL"] if long_flag in ("VB", "VR", "VA", "VS", "VK", "VL") else LONG_TO_UTF8["cl"]
+                            if '/' in add_field:
+                                prefix_str, flags_str = add_field.split('/', 1)
+                                remapped_flags = remap_old_to_new_flag_string(flags_str)
+                                parts[3] = f"{prefix_str}/{remapped_flags}{cop_flag_char}"
+                            else:
+                                parts[3] = f"{prefix_str}/{cop_flag_char}"
+                        else:
+                            if '/' in add_field:
+                                prefix_str, flags_str = add_field.split('/', 1)
+                                remapped_flags = remap_old_to_new_flag_string(flags_str)
+                                parts[3] = f"{prefix_str}/{remapped_flags}"
                     
                     if new_flag_char in verb_flags_rules:
                         verb_flags_rules[new_flag_char][1].append(parts)

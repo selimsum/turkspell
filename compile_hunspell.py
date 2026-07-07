@@ -769,6 +769,12 @@ def compile_dictionary():
         {'lemma': 'kaydileştirme', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'bakmayıvermek', 'pos': 'Verb', 'attributes': []},
         {'lemma': 'bakıvermek', 'pos': 'Verb', 'attributes': []},
+        # --- Intermediate stems to bypass Hunspell 2-stage suffixation limit ---
+        {'lemma': 'algınlık', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'göremezlik', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'kuşatıcı', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'kuşatıcılık', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'istikrarsızlaştırmak', 'pos': 'Verb', 'attributes': []},
     ]
     # Load dynamically parsed candidates from OSCAR/Corpus pipeline if available
     import os
@@ -916,7 +922,7 @@ def compile_dictionary():
             # Voicing applies by default to multi-syllable nouns, or if explicitly marked/exception
             if 'Voicing' in attrs or 'VoicingOpt' in attrs or 'VoicingSelf' in attrs or num_vowels >= 2 or lemma in ['teleskop', 'radyoteleskop', 'asteroit', 'eşlik', 'karbondioksit']:
                 # Exclude explicitly marked NoVoicing and a few manual exceptions
-                if ('NoVoicing' not in attrs or lemma in ['teleskop', 'radyoteleskop', 'eşlik', 'karbondioksit']) and lemma not in ['dikkat', 'sepet', 'paket', 'bilet', 'kaset', 'anket', 'davet']:
+                if ('NoVoicing' not in attrs or lemma in ['teleskop', 'radyoteleskop', 'eşlik', 'karbondioksit']) and lemma not in ['dikkat', 'sepet', 'paket', 'bilet', 'kaset', 'anket', 'davet', 'menfaat']:
                     voicing = True
         
         voicing_map[lemma.lower()] = voicing
@@ -939,11 +945,20 @@ def compile_dictionary():
             elif vowel_drop:
                 flag = "7" if back else "8"
             elif voicing:
-                flag = "5" if back else "6"
-            elif vowel_end:
-                flag = "3" if back else "4"
+                voiced_stem = get_voiced_stem(lemma)
+                if voiced_stem and voiced_stem != lemma:
+                    flag = "5" if back else "6"
+                else:
+                    voicing = False
+                    if vowel_end:
+                        flag = "3" if back else "4"
+                    else:
+                        flag = "1" if back else "2"
             else:
-                flag = "1" if back else "2"
+                if vowel_end:
+                    flag = "3" if back else "4"
+                else:
+                    flag = "1" if back else "2"
         elif pos == 'Verb':
             voicing = 'Voicing' in attrs
             # Determine if stem ends in a vowel before stripping mak/mek
