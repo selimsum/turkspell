@@ -292,10 +292,8 @@ def gen_stem_flag(flag: str) -> str:
     rules = []
     rules.append(sfx(flag, "0", "0", "."))
     if flag in ("V1", "V2", "V3", "V4"):
-        vowel_chain = get_vowel_chain(flag)
-        voicing_pairs = [('p', 'b'), ('ç', 'c'), ('t', 'd'), ('k', 'ğ'), ('g', 'ğ')]
-        for unv, vc in voicing_pairs:
-            rules.append(sfx(flag, unv, f"{vc}/{vowel_chain}", f"{unv}"))
+        # Voicing stems are now generated directly in the dictionary as voiced/NE
+        pass
     elif flag in ("D1", "D2", "D3", "D4"):
         vowel_chain = get_vowel_chain(flag)
         is_back = flag in ("D1", "D2")
@@ -860,15 +858,15 @@ def gen_copula_flag_back(flag: str = "CL") -> str:
     ]
     rules = []
     for cop_tmpl in COPULAS_VOWEL:
-        resolved1 = harmonize("oda", cop_tmpl)
-        resolved2 = harmonize("kutu", cop_tmpl)
-        if resolved1: rules.append(sfx(flag, "0", resolved1, VOWEL_RE))
-        if resolved2: rules.append(sfx(flag, "0", resolved2, VOWEL_RE))
+        r_flat = harmonize("oda", cop_tmpl)
+        r_round = harmonize("kutu", cop_tmpl)
+        if r_flat: rules.append(sfx(flag, "0", r_flat, "[aı]"))
+        if r_round: rules.append(sfx(flag, "0", r_round, "[ou]"))
     for cop_tmpl in COPULAS_CONS:
-        resolved1 = harmonize("bak", cop_tmpl)
-        resolved2 = harmonize("uç", cop_tmpl)
-        if resolved1: rules.append(sfx(flag, "0", resolved1, CONS_RE))
-        if resolved2: rules.append(sfx(flag, "0", resolved2, CONS_RE))
+        r_flat = harmonize("bak", cop_tmpl)
+        r_round = harmonize("uç", cop_tmpl)
+        if r_flat: rules.append(sfx(flag, "0", r_flat, "[aı][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
+        if r_round: rules.append(sfx(flag, "0", r_round, "[ou][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
     return make_flag_block(flag, unique(rules))
 
 def gen_copula_flag_front(flag: str = "cl") -> str:
@@ -891,15 +889,15 @@ def gen_copula_flag_front(flag: str = "cl") -> str:
     ]
     rules = []
     for cop_tmpl in COPULAS_VOWEL:
-        resolved1 = harmonize("kedi", cop_tmpl)
-        resolved2 = harmonize("ütü", cop_tmpl)
-        if resolved1: rules.append(sfx(flag, "0", resolved1, VOWEL_RE))
-        if resolved2: rules.append(sfx(flag, "0", resolved2, VOWEL_RE))
+        r_flat = harmonize("kedi", cop_tmpl)
+        r_round = harmonize("ütü", cop_tmpl)
+        if r_flat: rules.append(sfx(flag, "0", r_flat, "[ei]"))
+        if r_round: rules.append(sfx(flag, "0", r_round, "[öü]"))
     for cop_tmpl in COPULAS_CONS:
-        resolved1 = harmonize("ev", cop_tmpl)
-        resolved2 = harmonize("gör", cop_tmpl)
-        if resolved1: rules.append(sfx(flag, "0", resolved1, CONS_RE))
-        if resolved2: rules.append(sfx(flag, "0", resolved2, CONS_RE))
+        r_flat = harmonize("ev", cop_tmpl)
+        r_round = harmonize("gör", cop_tmpl)
+        if r_flat: rules.append(sfx(flag, "0", r_flat, "[ei][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
+        if r_round: rules.append(sfx(flag, "0", r_round, "[öü][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
     return make_flag_block(flag, unique(rules))
 
 
@@ -1295,6 +1293,7 @@ SET UTF-8
 FLAG long
 NOSUGGEST NS
 KEEPCASE KC
+NEEDAFFIX NE
 LANG tr
 WORDCHARS '’‘
 
@@ -1785,38 +1784,54 @@ def _generate_verb_flags_from_v1() -> str:
         content = f.read()
 
     lines = content.split('\n')
-    out_lines = []
-    in_verb_block = False
+    verb_flags_rules = {} # new_flag_char -> (combine_char, list of rules)
+    verb_flags_order = []
 
     for line in lines:
         line_strip = line.strip()
-        if not line_strip:
+        if not line_strip or line_strip.startswith('#'):
             continue
         parts = line_strip.split()
         if len(parts) >= 3 and parts[0] == 'SFX':
             flag_char = parts[1]
             if flag_char in OLD_VERB_CYRILLIC:
-                in_verb_block = True
-                
-                # Remap the primary flag name
                 long_flag = OLD_UTF8_TO_LONG[flag_char]
-                parts[1] = LONG_TO_UTF8[long_flag]
+                new_flag_char = LONG_TO_UTF8[long_flag]
                 
-                # Remap other flags on the suffix if any (e.g. add/flags)
-                if len(parts) >= 4 and parts[2] not in ('Y', 'N'):
-                    add_field = parts[3]
-                    if '/' in add_field:
-                        prefix_str, flags_str = add_field.split('/', 1)
-                        remapped_flags = remap_old_to_new_flag_string(flags_str)
-                        parts[3] = f"{prefix_str}/{remapped_flags}"
-                
-                out_lines.append(" ".join(parts))
-            else:
-                in_verb_block = False
-                
-        elif in_verb_block:
-            # Not an SFX header/rule, but inside verb block
-            out_lines.append(line_strip)
+                if parts[2] in ('Y', 'N'):
+                    # Header line
+                    combine_char = parts[2]
+                    if new_flag_char not in verb_flags_rules:
+                        verb_flags_rules[new_flag_char] = (combine_char, [])
+                        verb_flags_order.append(new_flag_char)
+                else:
+                    # Rule line
+                    # Skip reflexive/passive -n rules on consonant-ending verb flags
+                    if long_flag in ("VB", "VR", "VF", "VG"):
+                        if len(parts) >= 4:
+                            suf = parts[3].split('/')[0]
+                            if suf.startswith('n'):
+                                continue
+                    
+                    # Remap other flags on the suffix if any (e.g. add/flags)
+                    if len(parts) >= 4:
+                        add_field = parts[3]
+                        if '/' in add_field:
+                            prefix_str, flags_str = add_field.split('/', 1)
+                            remapped_flags = remap_old_to_new_flag_string(flags_str)
+                            parts[3] = f"{prefix_str}/{remapped_flags}"
+                    
+                    if new_flag_char in verb_flags_rules:
+                        verb_flags_rules[new_flag_char][1].append(parts)
+
+    out_lines = []
+    for flag_char in verb_flags_order:
+        combine_char, rules = verb_flags_rules[flag_char]
+        count = len(rules)
+        out_lines.append(f"SFX {flag_char} {combine_char} {count}")
+        for p in rules:
+            p[1] = flag_char
+            out_lines.append(" ".join(p))
 
     return '\n'.join(out_lines)
 
