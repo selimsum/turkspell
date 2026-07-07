@@ -28,6 +28,12 @@ def turkish_capitalize(s: str) -> str:
 
 ALL_CAPS_ABBREVS = {'abd', 'dna', 'gps', 'uuı', 'uv', 'bbc', 'vr', 'eeg', 'yz', 'sscb', 'esa', 'rfid', 'dehb', 'mit', 'ngc', 'hiv', 'sls', 'atp', 'cern', 'iq', 'tl'}
 
+CASE_PRESERVED_OVERRIDES = {
+    'khz': 'KHz',
+    'mhz': 'MHz',
+    'eugh': 'EuGH',
+}
+
 def turkish_upper(s: str) -> str:
     return s.replace('i', 'İ').replace('ı', 'I').upper()
 
@@ -41,6 +47,8 @@ def get_voiced_stem(lemma: str) -> str:
     return lemma
 
 def capitalize_word(s: str, base_lkey: str) -> str:
+    if base_lkey in CASE_PRESERVED_OVERRIDES:
+        return CASE_PRESERVED_OVERRIDES[base_lkey]
     if base_lkey in ALL_CAPS_ABBREVS:
         return turkish_upper(s)
     return turkish_capitalize(s)
@@ -811,7 +819,22 @@ def compile_dictionary():
         except Exception as e:
             print(f"Warning: Failed to load harvested words: {e}")
 
+    # Load custom abbreviations if they exist
+    abbrev_path = 'custom_abbreviations.json'
+    if os.path.exists(abbrev_path):
+        try:
+            with open(abbrev_path, 'r', encoding='utf-8') as f:
+                abbrev_list = json.load(f)
+            custom_entries.extend(abbrev_list)
+            print(f"Loaded {len(abbrev_list)} custom abbreviations.")
+        except Exception as e:
+            print(f"Warning: Failed to load custom abbreviations: {e}")
+
     lexicon.extend(custom_entries)
+    for item in lexicon:
+        lemma = item.get('lemma', '')
+        if len(lemma) > 1 and lemma.isupper():
+            ALL_CAPS_ABBREVS.add(lemma.replace('I', 'ı').replace('İ', 'i').lower())
     
     # We will define a set of flags for our paradigms:
     # 1: Back Vowel ending in Consonant (e.g., yol)
