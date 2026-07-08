@@ -32,6 +32,7 @@ CASE_PRESERVED_OVERRIDES = {
     'khz': 'KHz',
     'mhz': 'MHz',
     'eugh': 'EuGH',
+    'amerika birleşik devletleri': 'Amerika Birleşik Devletleri',
 }
 
 def turkish_upper(s: str) -> str:
@@ -136,6 +137,8 @@ def compile_dictionary():
         {'lemma': 'yıldızlararası', 'pos': 'Noun', 'attributes': ['CompoundP3sg']},
         {'lemma': 'ötegezegen', 'pos': 'Noun', 'attributes': []},
         # --- New custom entries for requested words ---
+        {'lemma': 'Amerika Birleşik Devletleri', 'pos': 'Noun', 'attributes': ['CompoundP3sg']},
+        {'lemma': 'Devletleri', 'pos': 'Noun', 'attributes': ['CompoundP3sg']},
         {'lemma': 'hal', 'pos': 'Noun', 'attributes': ['InverseHarmony', 'NoVoicing']},
         {'lemma': 'implant', 'pos': 'Noun', 'attributes': ['NoVoicing']},
         {'lemma': 'konuşmacı', 'pos': 'Noun', 'attributes': []},
@@ -498,6 +501,7 @@ def compile_dictionary():
         {'lemma': 'tetiklenmek', 'pos': 'Verb', 'attributes': []},
         {'lemma': 'tescillenmek', 'pos': 'Verb', 'attributes': []},
         {'lemma': 'ivmelenmek', 'pos': 'Verb', 'attributes': []},
+        {'lemma': 'ölçeklemek', 'pos': 'Verb', 'attributes': []},
         {'lemma': 'ölçeklenmek', 'pos': 'Verb', 'attributes': []},
         {'lemma': 'gençleşmek', 'pos': 'Verb', 'attributes': []},
         {'lemma': 'şoklanmak', 'pos': 'Verb', 'attributes': []},
@@ -1320,6 +1324,8 @@ def compile_dictionary():
         'burnu':     'pO',
         'üssü':      'pU',
         'computer':  'pB',
+        'amerika birleşik devletleri': 'pF',
+        'devletleri': 'pF',
     }
 
     # Collect all nouns from lexicon to apply proper noun suffix + KC rules
