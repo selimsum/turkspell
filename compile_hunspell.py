@@ -667,6 +667,8 @@ def compile_dictionary():
         {'lemma': "kg'lık", 'pos': 'Noun', 'attributes': ['Voicing']},
         {'lemma': "m'lik", 'pos': 'Noun', 'attributes': ['Voicing']},
         {'lemma': "tl'lik", 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': "ml'lik", 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': "ml", 'pos': 'Noun', 'attributes': []},
         # Missing proper nouns to ensure they exist in lexicon
         {'lemma': "Ingiltere", 'pos': 'Noun', 'attributes': []},
         {'lemma': "Italya", 'pos': 'Noun', 'attributes': []},
@@ -868,8 +870,8 @@ def compile_dictionary():
         if 'kağıt' in lemma:
             lemma = lemma.replace('kağıt', 'kâğıt')
         
-        # Override with custom entry if present
-        if lemma.lower() in custom_map:
+        # Override with custom entry if present and has matching POS
+        if lemma.lower() in custom_map and custom_map[lemma.lower()]['pos'] == item['pos']:
             pos = custom_map[lemma.lower()]['pos']
             attrs = set(custom_map[lemma.lower()]['attributes'])
         else:
@@ -897,7 +899,7 @@ def compile_dictionary():
             continue
  
         # Force common abbreviations to lowercase for optimal Hunspell case matching
-        common_abbrevs = {'km', 'abd', 'örn', 'dr', 'dna', 'prof', 'x', 'mö', 'ms', 'sf', 'cm', 'kg', 'vb', 'bkz', 'm', 'g', 'b', 'mm', 'gps', 'uuı', 'uv', 'bbc', 'vr', 'dr', 'eeg', 'yz', 'sscb', 'esa', 'rfid', 'dehb', 'mit', 'ngc', 'hiv', 'sls', 'atp', 'cern', 'iq'}
+        common_abbrevs = {'km', 'abd', 'örn', 'dr', 'dna', 'prof', 'x', 'mö', 'ms', 'sf', 'cm', 'kg', 'vb', 'bkz', 'm', 'g', 'b', 'mm', 'ml', 'gps', 'uuı', 'uv', 'bbc', 'vr', 'dr', 'eeg', 'yz', 'sscb', 'esa', 'rfid', 'dehb', 'mit', 'ngc', 'hiv', 'sls', 'atp', 'cern', 'iq'}
         if lemma.lower() in common_abbrevs:
             lemma = lemma.lower()
             
@@ -1326,6 +1328,7 @@ def compile_dictionary():
         'computer':  'pB',
         'amerika birleşik devletleri': 'pF',
         'devletleri': 'pF',
+        'ml': 'pF',
     }
 
     # Collect all nouns from lexicon to apply proper noun suffix + KC rules
