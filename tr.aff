@@ -21214,7 +21214,7 @@ SFX Ж 0 lanmak/џ [aıou][^aeıioöuü][^aeıioöuü]
 SFX Ж 0 lenmek/Ѡ [eiöü][^aeıioöuü][^aeıioöuü]
 
 # VERB PARADIGM FLAGS
-SFX ђ Y 13776
+SFX ђ Y 13778
 SFX ђ mak 0 .
 SFX ђ mak a .
 SFX ђ mak abildi .
@@ -21611,7 +21611,7 @@ SFX ђ mak amıyoruz .
 SFX ђ mak amıyoruzdur .
 SFX ђ mak an .
 SFX ђ mak an/ЄЀѡХщЩСчирадклЎ .
-SFX ђ mak ar [^ı]rmak
+SFX ђ mak ar .
 SFX ђ mak arak .
 SFX ђ mak arcasına .
 SFX ђ mak ardı .
@@ -34917,6 +34917,8 @@ SFX ђ mak ıryasın .
 SFX ђ mak ıryasınız .
 SFX ђ mak ıryayım .
 SFX ђ mak ırysalardı .
+SFX ђ mak ırım .
+SFX ђ mak ırımdır .
 SFX ђ mak ırıp .
 SFX ђ mak ırır .
 SFX ђ mak ırırcasına .
@@ -34991,7 +34993,7 @@ SFX ђ mak ıyoruz .
 SFX ђ mak ıyoruzdur .
 SFX ђ mak ış .
 SFX ђ mak ış/ЄЀѡХщЩСчирадклЎ .
-SFX ќ Y 13740
+SFX ќ Y 13742
 SFX ќ mak 0 .
 SFX ќ mak a .
 SFX ќ mak abildi .
@@ -35388,7 +35390,7 @@ SFX ќ mak amıyoruz .
 SFX ќ mak amıyoruzdur .
 SFX ќ mak an .
 SFX ќ mak an/ЄЀѡХщЩСчирадклЎ .
-SFX ќ mak ar [^ı]rmak
+SFX ќ mak ar .
 SFX ќ mak arak .
 SFX ќ mak arcasına .
 SFX ќ mak ardı .
@@ -48025,6 +48027,8 @@ SFX ќ mak ursundur .
 SFX ќ mak ursunlar/Ў .
 SFX ќ mak ursunuz .
 SFX ќ mak ursunuzdur .
+SFX ќ mak urum .
+SFX ќ mak urumdur .
 SFX ќ mak urup .
 SFX ќ mak urur .
 SFX ќ mak ururcasına .
@@ -48732,7 +48736,7 @@ SFX ќ mak yasın .
 SFX ќ mak yasınız .
 SFX ќ mak yayım .
 SFX ќ mak ysalardı .
-SFX ѕ Y 13820
+SFX ѕ Y 13822
 SFX ѕ mek 0 .
 SFX ѕ mek cesine [^çfhkpsşt]mek
 SFX ѕ mek di [^çfhkpsşt]mek
@@ -51692,7 +51696,7 @@ SFX ѕ mek emiyoruz .
 SFX ѕ mek emiyoruzdur .
 SFX ѕ mek en .
 SFX ѕ mek en/ЙЂѢЦъЫТшйтвжнфѧ .
-SFX ѕ mek er [^i]rmek
+SFX ѕ mek er .
 SFX ѕ mek ercesine .
 SFX ѕ mek erdi .
 SFX ѕ mek erdik .
@@ -54578,6 +54582,8 @@ SFX ѕ mek iresi/ЛѥѽЦъѬѩшйтвжнфѧ .
 SFX ѕ mek iresin .
 SFX ѕ mek iresiniz .
 SFX ѕ mek ireyim .
+SFX ѕ mek irim .
+SFX ѕ mek irimdir .
 SFX ѕ mek irip .
 SFX ѕ mek irir .
 SFX ѕ mek irircesine .
@@ -62553,7 +62559,7 @@ SFX ѕ mek yesin .
 SFX ѕ mek yesiniz .
 SFX ѕ mek yeyim .
 SFX ѕ mek yselerdi .
-SFX і Y 13784
+SFX і Y 13786
 SFX і mek 0 .
 SFX і mek cesine [^çfhkpsşt]mek
 SFX і mek dü [^çfhkpsşt]mek
@@ -76264,6 +76270,8 @@ SFX і mek üryesin .
 SFX і mek üryesiniz .
 SFX і mek üryeyim .
 SFX і mek üryselerdi .
+SFX і mek ürüm .
+SFX і mek ürümdür .
 SFX і mek ürüp .
 SFX і mek ürür .
 SFX і mek ürürcesine .
@@ -76338,7 +76346,7 @@ SFX і mek üyoruz .
 SFX і mek üyoruzdur .
 SFX і mek üş .
 SFX і mek üş/КЃѢЦъЬТшйугзоцѧ .
-SFX ё Y 43648
+SFX ё Y 43650
 SFX ё mak 0 .
 SFX ё amak aya amak
 SFX ё ımak ıya ımak
@@ -91032,6 +91040,8 @@ SFX ё amak arsınız amak
 SFX ё ımak ırsınız ımak
 SFX ё umak ursunuz umak
 SFX ё amak arım amak
+SFX ё ımak ırım ımak
+SFX ё umak urum umak
 SFX ё amak arız amak
 SFX ё ımak ırız ımak
 SFX ё umak uruz umak
@@ -119987,7 +119997,7 @@ SFX ё umak uyuş umak
 SFX ё amak ayış/ЄЀѡХщЩСчирадклЎ amak
 SFX ё ımak ıyış/ЄЀѡХщЩСчирадклЎ ımak
 SFX ё umak uyuş/ЅЁѡХщЪСчисбемпЎ umak
-SFX ѝ Y 42583
+SFX ѝ Y 42585
 SFX ѝ mak 0 .
 SFX ѝ amak acasına amak
 SFX ѝ ımak ıcasına ımak
@@ -133373,6 +133383,8 @@ SFX ѝ amak arsınız amak
 SFX ѝ ımak ırsınız ımak
 SFX ѝ umak ursunuz umak
 SFX ѝ amak arım amak
+SFX ѝ ımak ırım ımak
+SFX ѝ umak urum umak
 SFX ѝ amak arız amak
 SFX ѝ ımak ırız ımak
 SFX ѝ umak uruz umak
@@ -162571,7 +162583,7 @@ SFX ѝ umak uyuş umak
 SFX ѝ amak ayış/ЄЀѡХщЩСчирадклЎ amak
 SFX ѝ ımak ıyış/ЄЀѡХщЩСчирадклЎ ımak
 SFX ѝ umak uyuş/ЅЁѡХщЪСчисбемпЎ umak
-SFX є Y 43784
+SFX є Y 43786
 SFX є mek 0 .
 SFX є emek ecesine emek
 SFX є imek icesine imek
@@ -192550,6 +192562,8 @@ SFX є emek erdiniz emek
 SFX є imek irdiniz imek
 SFX є ümek ürdünüz ümek
 SFX є emek erim emek
+SFX є imek irim imek
+SFX є ümek ürüm ümek
 SFX є emek eriz emek
 SFX є imek iriz imek
 SFX є ümek ürüz ümek
@@ -206356,7 +206370,7 @@ SFX є ümek üyeyim ümek
 SFX є emek eyselerdi emek
 SFX є imek iyselerdi imek
 SFX є ümek üyselerdi ümek
-SFX ї Y 43784
+SFX ї Y 43786
 SFX ї mek 0 .
 SFX ї emek ecesine emek
 SFX ї imek icesine imek
@@ -221095,6 +221109,8 @@ SFX ї emek ersiniz emek
 SFX ї imek irsiniz imek
 SFX ї ümek ürsünüz ümek
 SFX ї emek erim emek
+SFX ї imek irim imek
+SFX ї ümek ürüm ümek
 SFX ї emek eriz emek
 SFX ї imek iriz imek
 SFX ї ümek ürüz ümek
@@ -351746,7 +351762,7 @@ SFX ў mek yeyim demek
 SFX ў mek yeyim yemek
 SFX ў mek yselerdi demek
 SFX ў mek yselerdi yemek
-SFX џ Y 12443
+SFX џ Y 12445
 SFX џ mak 0 .
 SFX џ mak a .
 SFX џ mak abildi .
@@ -352143,7 +352159,7 @@ SFX џ mak amıyoruz .
 SFX џ mak amıyoruzdur .
 SFX џ mak an .
 SFX џ mak an/ЄЀѡХщЩСчирадклЎ .
-SFX џ mak ar [^ı]rmak
+SFX џ mak ar .
 SFX џ mak arak .
 SFX џ mak arcasına .
 SFX џ mak ardı .
@@ -364116,6 +364132,8 @@ SFX џ mak ıryasın .
 SFX џ mak ıryasınız .
 SFX џ mak ıryayım .
 SFX џ mak ırysalardı .
+SFX џ mak ırım .
+SFX џ mak ırımdır .
 SFX џ mak ırıp .
 SFX џ mak ırır .
 SFX џ mak ırırcasına .
@@ -364190,7 +364208,7 @@ SFX џ mak ıyoruz .
 SFX џ mak ıyoruzdur .
 SFX џ mak ış .
 SFX џ mak ış/ЄЀѡХщЩСчирадклЎ .
-SFX Ѡ Y 12483
+SFX Ѡ Y 12485
 SFX Ѡ mek 0 .
 SFX Ѡ mek cesine [^çfhkpsşt]mek
 SFX Ѡ mek di [^çfhkpsşt]mek
@@ -367117,7 +367135,7 @@ SFX Ѡ mek emiyoruz .
 SFX Ѡ mek emiyoruzdur .
 SFX Ѡ mek en .
 SFX Ѡ mek en/ЙЂѢЦъЫТшйтвжнфѧ .
-SFX Ѡ mek er [^i]rmek
+SFX Ѡ mek er .
 SFX Ѡ mek ercesine .
 SFX Ѡ mek erdi .
 SFX Ѡ mek erdik .
@@ -370003,6 +370021,8 @@ SFX Ѡ mek iresi/ЛѥѽЦъѬѩшйтвжнфѧ .
 SFX Ѡ mek iresin .
 SFX Ѡ mek iresiniz .
 SFX Ѡ mek ireyim .
+SFX Ѡ mek irim .
+SFX Ѡ mek irimdir .
 SFX Ѡ mek irip .
 SFX Ѡ mek irir .
 SFX Ѡ mek irircesine .
