@@ -154,16 +154,36 @@ def sfx_copula(flag: str, strip: str, add: str, cond: str, rules: list):
             "yImdIr", "sIndIr", "yIzdIr", "sInIzdIr",
         ]
     else:
-        copulas = [
-            "dI", "dIm", "dIn", "dIk", "dInIz", "dIlAr",
-            "tI", "tIm", "tIn", "tIk", "tInIz", "tIlAr",
-            "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
-            "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
-            "Im", "sIn", "Iz", "sInIz", "lAr",
-            "dIr", "tIr", "dIrlAr", "tIrlAr", "lArdIr", "ken",
-            "ImdIr", "sIndIr", "IzdIr", "sInIzdIr",
-        ]
+        # Filter COPULAS_CONS by the voicing of the suffix's last consonant
+        last_char = add[-1] if add else ''
+        is_unvoiced_suffix = last_char in UNVOICED
+        if is_unvoiced_suffix:
+            # Exclude templates starting with 'd'
+            copulas = [
+                "tI", "tIm", "tIn", "tIk", "tInIz", "tIlAr",
+                "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
+                "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
+                "Im", "sIn", "Iz", "sInIz", "lAr",
+                "tIr", "tIrlAr", "lArdIr", "ken",
+                "ImdIr", "sIndIr", "IzdIr", "sInIzdIr",
+            ]
+        else:
+            # Exclude templates starting with 't'
+            copulas = [
+                "dI", "dIm", "dIn", "dIk", "dInIz", "dIlAr",
+                "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
+                "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
+                "Im", "sIn", "Iz", "sInIz", "lAr",
+                "dIr", "dIrlAr", "lArdIr", "ken",
+                "ImdIr", "sIndIr", "IzdIr", "sInIzdIr",
+            ]
         
+    is_suffix_flag = flag in {
+        "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "PM", "PO", "PP", "PQ", "PN", "PR", "PW", "PZ", "PS", "PT", "PU", "PV"
+    } or (len(flag) >= 1 and flag[0] in "YyRIiNnAaQ")
+    if is_suffix_flag:
+        copulas = [c for c in copulas if c not in ("lAr", "lArdIr")]
+
     rules.append(sfx(flag, strip, add, cond))
     for cop in copulas:
         resolved = harmonize(sim_stem, cop)
@@ -185,7 +205,7 @@ def sfx_ki(flag: str, strip: str, add: str, cond: str, rules: list, chain_copula
     for ks in ki_suffixes:
         rules.append(sfx(flag, strip, add + ks, cond))
 
-def get_noun_chain(stem_flag: str, only_vowel: bool = False) -> str:
+def get_noun_chain(stem_flag: str, only_vowel: bool = False, only_consonant: bool = False) -> str:
     if stem_flag in ("PX", "NX"):
         return stem_flag
     back_flags = {"B1", "B2", "V1", "V2", "D1", "D2", "C1", "C2", "G1", "G2"}  # back cons
@@ -253,7 +273,7 @@ def get_noun_chain(stem_flag: str, only_vowel: bool = False) -> str:
         copula_flag = "VC" if is_back else "vc"
         derivs = ""
         plural = ""
-    elif exclude_vowel:
+    elif only_consonant or exclude_vowel:
         cases = f"{loc_f}{abl_f}{ins_f}{eq_f}"
         possessives = ""
         copula_flag = "CL" if is_back else "cl"
@@ -296,7 +316,7 @@ def get_vowel_chain(stem_flag: str) -> str:
     else:                              p3, p1, p2s, p1pl, p2pl = "PV", "P4", "P8", "PQ", "PZ"
 
     cop_f = "VC" if is_back else "vc"
-    return f"{acc_f}{dat_f}{gen_f}{p3}{p1}{p2s}{p1pl}{p2pl}{cop_f}"
+    return f"{acc_f}{dat_f}{gen_f}{p3}{p1}{p2s}{p1pl}{p2pl}{cop_f}NE"
 
 def gen_stem_flag(flag: str) -> str:
     """Slim stem-class flag. Handles bare stem validation and voicing/dropping/doubling."""
@@ -671,6 +691,8 @@ def gen_plural_back(flag: str = "PB") -> str:
         for c in cases:
             if c in ("da", "ın"):
                 sfx_ki(flag, "0", poss + c, ".", rules)
+            elif c in ("ı", "a", "ca"):
+                rules.append(sfx(flag, "0", poss + c, "."))
             else:
                 sfx_copula(flag, "0", poss + c, ".", rules)
     return make_flag_block(flag, unique(rules))
@@ -692,6 +714,8 @@ def gen_plural_front(flag: str = "PF") -> str:
         for c in cases:
             if c in ("de", "in"):
                 sfx_ki(flag, "0", poss + c, ".", rules)
+            elif c in ("i", "e", "ce"):
+                rules.append(sfx(flag, "0", poss + c, "."))
             else:
                 sfx_copula(flag, "0", poss + c, ".", rules)
     return make_flag_block(flag, unique(rules))
@@ -897,12 +921,20 @@ def gen_copula_flag_back(flag: str = "CL") -> str:
     for cop_tmpl in COPULAS_CONS:
         r_flat = harmonize("bak", cop_tmpl)
         r_round = harmonize("uç", cop_tmpl)
+        
+        if cop_tmpl.startswith('d'):
+            cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛçfhkpsşt]" # Voiced consonant
+        elif cop_tmpl.startswith('t'):
+            cond_suffix = "[çfhkpsşt]" # Unvoiced consonant
+        else:
+            cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛ]" # Any consonant
+
         if r_flat:
-            rules.append(sfx(flag, "0", r_flat, "[aı][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
-            rules.append(sfx(flag, "0", r_flat, "[aı][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
+            rules.append(sfx(flag, "0", r_flat, f"[aı]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_flat, f"[aı][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
         if r_round:
-            rules.append(sfx(flag, "0", r_round, "[ou][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
-            rules.append(sfx(flag, "0", r_round, "[ou][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
+            rules.append(sfx(flag, "0", r_round, f"[ou]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_round, f"[ou][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
     return make_flag_block(flag, unique(rules))
 
 def gen_copula_flag_front(flag: str = "cl") -> str:
@@ -932,12 +964,20 @@ def gen_copula_flag_front(flag: str = "cl") -> str:
     for cop_tmpl in COPULAS_CONS:
         r_flat = harmonize("ev", cop_tmpl)
         r_round = harmonize("gör", cop_tmpl)
+        
+        if cop_tmpl.startswith('d'):
+            cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛçfhkpsşt]" # Voiced consonant
+        elif cop_tmpl.startswith('t'):
+            cond_suffix = "[çfhkpsşt]" # Unvoiced consonant
+        else:
+            cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛ]" # Any consonant
+
         if r_flat:
-            rules.append(sfx(flag, "0", r_flat, "[eiaâ][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
-            rules.append(sfx(flag, "0", r_flat, "[eiaâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
+            rules.append(sfx(flag, "0", r_flat, f"[eiaâ]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_flat, f"[eiaâ][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
         if r_round:
-            rules.append(sfx(flag, "0", r_round, "[öüou][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
-            rules.append(sfx(flag, "0", r_round, "[öüou][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]"))
+            rules.append(sfx(flag, "0", r_round, f"[öüou]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_round, f"[öüou][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
     return make_flag_block(flag, unique(rules))
 
 
@@ -966,28 +1006,26 @@ def gen_ki_flag(flag: str = "KI") -> str:
 
 def gen_deriv_li(flag: str = "LI") -> str:
     """-lI adjective derivation"""
-    stems = {
-        "[aı][^aeıioöuü]": ("lı", "B3"),
-        "[ou][^aeıioöuü]": ("lu", "B4"),
-        "[ei][^aeıioöuü]": ("li", "F3"),
-        "[öü][^aeıioöuü]": ("lü", "F4"),
-        "[aı]": ("lı", "B3"),
-        "[ou]": ("lu", "B4"),
-        "[ei]": ("li", "F3"),
-        "[öü]": ("lü", "F4"),
-    }
-    cluster_forms = {
-        "lı": "B3",
-        "lu": "B4",
-        "li": "F3",
-        "lü": "F4",
-    }
+    stems = [
+        # Vowel endings
+        ("[aı]", "lı", "B3"),
+        ("[ou]", "lu", "B4"),
+        ("[ei]", "li", "F3"),
+        ("[öü]", "lü", "F4"),
+        # Consonant endings (single consonant)
+        ("[aı][^aeıioöuü]", "lı", "B3"),
+        ("[ou][^aeıioöuü]", "lu", "B4"),
+        ("[ei][^aeıioöuü]", "li", "F3"),
+        ("[öü][^aeıioöuü]", "lü", "F4"),
+        # Double consonant endings
+        ("[aı][^aeıioöuü][^aeıioöuü]", "lı", "B3"),
+        ("[ou][^aeıioöuü][^aeıioöuü]", "lu", "B4"),
+        ("[ei][^aeıioöuü][^aeıioöuü]", "li", "F3"),
+        ("[öü][^aeıioöuü][^aeıioöuü]", "lü", "F4"),
+    ]
     rules = []
-    for cond, (suf, sc) in stems.items():
+    for cond, suf, sc in stems:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
-    cluster_cond = "[^aeıioöuü][^aeıioöuü]"
-    for suf, sc in cluster_forms.items():
-        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cluster_cond))
     return make_flag_block(flag, unique(rules))
 
 
@@ -1040,7 +1078,7 @@ def gen_deriv_lk(flag: str = "LK") -> str:
         ("[ei][^aeıioöuü][^aeıioöuü]", "lik", "liğ", "F1"),
         ("[öü][^aeıioöuü][^aeıioöuü]", "lük", "lüğ", "F2"),
     ]:
-        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc, only_consonant=True)[2:]}", cond))
         rules.append(sfx(flag, "0", f"{suf_v}/{get_noun_chain(sc, only_vowel=True)}NE", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -1811,19 +1849,41 @@ def _generate_verb_flags_from_v1() -> str:
     # Map them to their OLD Cyrillic characters to locate them in tr_reference.aff
     OLD_VERB_CYRILLIC = {OLD_LONG_TO_UTF8[f] for f in VERB_FLAGS}
 
-    def remap_old_to_new_flag_string(old_flag_str: str) -> str:
+    def remap_old_to_new_flag_string(old_flag_str: str, prefix_str: str = "") -> str:
         if not old_flag_str:
             return ""
-        new_chars = []
+        old_decoded = []
         for char in old_flag_str:
             if char in OLD_UTF8_TO_LONG:
-                long_flag = OLD_UTF8_TO_LONG[char]
-                if long_flag in LONG_TO_UTF8:
-                    new_chars.append(LONG_TO_UTF8[long_flag])
-                else:
-                    new_chars.append(char)
+                old_decoded.append(OLD_UTF8_TO_LONG[char])
             else:
-                new_chars.append(char)
+                old_decoded.append(char)
+                
+        if prefix_str.endswith(('mak', 'mek')):
+            bad_flags = {
+                'A1', 'A2', 'A3', 'A4', 'Y1', 'Y2', 'N1', 'N2', 'N3', 'N4',
+                'PB', 'PF',
+                'PS', 'PT', 'PU', 'PV', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8',
+                'PM', 'PO', 'PP', 'PQ', 'PN', 'PR', 'PW', 'PZ'
+            }
+            old_decoded = [f for f in old_decoded if f not in bad_flags]
+            
+        if 'yor' in prefix_str:
+            old_decoded = ['CL' if f == 'cl' else f for f in old_decoded]
+            
+        if prefix_str.endswith(('mam', 'mem', 'man', 'men', 'masi', 'mesi', 'ması', 'mamız', 'memiz', 'manız', 'meniz', 'maları', 'meleri')):
+            poss_flags = {
+                'PS', 'PT', 'PU', 'PV', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8',
+                'PM', 'PO', 'PP', 'PQ', 'PN', 'PR', 'PW', 'PZ'
+            }
+            old_decoded = [f for f in old_decoded if f not in poss_flags]
+            
+        new_chars = []
+        for f in old_decoded:
+            if f in LONG_TO_UTF8:
+                new_chars.append(LONG_TO_UTF8[f])
+            else:
+                new_chars.append(f)
         return "".join(new_chars)
 
     print("  Reading data/tr_reference.aff to extract and remap verb sections...")
@@ -1860,8 +1920,28 @@ def _generate_verb_flags_from_v1() -> str:
                     # Rule line
                     if len(parts) >= 4:
                         suf = parts[3].split('/')[0]
-                        # Skip grammatically incorrect potential suffixes starting with 'tebil' or 'tabil'
-                        if suf.startswith(('tebil', 'tabil')):
+                        # Skip grammatically incorrect potential suffixes starting with 'tebil', 'tabil', 'tici', etc.
+                        if suf.startswith(('tebil', 'tabil', 'tici', 'tıcı', 'tucu', 'tücü')):
+                            continue
+                        # Skip suffix rules with ar/er typos instead of lar/ler
+                        if suf.endswith(('ırar', 'irer', 'urar', 'ürer', 'arar', 'erer',
+                                         'dırar', 'direr', 'durar', 'dürer',
+                                         'tırar', 'tirer', 'turar', 'türer',
+                                         'ttırar', 'ttirer', 'tturar', 'ttürer',
+                                         'yırar', 'yirer', 'yurar', 'yürer')):
+                            continue
+                        # Skip suffix rules with duplicate/typo 'ir'/'ır'/'ur'/'ür'
+                        if suf.startswith(('iriy', 'ırıy', 'uruy', 'ürüy',
+                                           'ireb', 'ırab', 'urab', 'üreb',
+                                           'iric', 'ırıc', 'uruc', 'ürüc',
+                                           'iril', 'ırıl', 'urul', 'ürül',
+                                           'irin', 'ırın', 'urun', 'ürün',
+                                           'iriş', 'ırış', 'uruş', 'ürüş',
+                                           'irim', 'ırım', 'urum', 'ürüm',
+                                           'itir', 'ıtır', 'utur', 'ütür')):
+                            continue
+                        # Skip suffix rules with missing r typos (e.g. ular, üler instead of urlar, ürler)
+                        if suf.startswith(('ular', 'üler', 'ulard', 'ülerd', 'ulark', 'ülerk', 'ularl', 'ülerl', 'ularm', 'ülerm', 'ulars', 'ülers')):
                             continue
 
                     # Skip reflexive/passive -n rules on consonant-ending verb flags
@@ -1876,21 +1956,77 @@ def _generate_verb_flags_from_v1() -> str:
                         add_field = parts[3]
                         prefix_str = add_field.split('/', 1)[0]
                         if prefix_str.endswith(('lar', 'ler')):
-                            cop_flag_char = LONG_TO_UTF8["CL"] if long_flag in ("VB", "VR", "VA", "VS", "VK", "VL") else LONG_TO_UTF8["cl"]
+                            if 'yor' in prefix_str:
+                                cop_flag_char = LONG_TO_UTF8["CL"]
+                            else:
+                                cop_flag_char = LONG_TO_UTF8["CL"] if long_flag in ("VB", "VR", "VA", "VS", "VK", "VL") else LONG_TO_UTF8["cl"]
                             if '/' in add_field:
                                 prefix_str, flags_str = add_field.split('/', 1)
-                                remapped_flags = remap_old_to_new_flag_string(flags_str)
+                                remapped_flags = remap_old_to_new_flag_string(flags_str, prefix_str)
                                 parts[3] = f"{prefix_str}/{remapped_flags}{cop_flag_char}"
                             else:
                                 parts[3] = f"{prefix_str}/{cop_flag_char}"
                         else:
                             if '/' in add_field:
                                 prefix_str, flags_str = add_field.split('/', 1)
-                                remapped_flags = remap_old_to_new_flag_string(flags_str)
+                                remapped_flags = remap_old_to_new_flag_string(flags_str, prefix_str)
                                 parts[3] = f"{prefix_str}/{remapped_flags}"
-                    
+
                     if new_flag_char in verb_flags_rules:
-                        verb_flags_rules[new_flag_char][1].append(parts)
+                        suf_field = parts[3] if len(parts) >= 4 else ""
+                        suf_base = suf_field.split('/')[0]
+                        cond_field = parts[4] if len(parts) >= 5 else "."
+
+                        # Fix: When a suffix starts with 'tt' (double-t) and the
+                        # condition includes 't' before 'mak'/'mek', verbs whose stems
+                        # end in 't' would get triple-t forms (e.g. tutmak → tutttuğu,
+                        # sıkışmak → sıkışttırma, lağvetmek → lağvetttik).
+                        # Split each such rule into:
+                        #   1) stems ending in tmak/tmek → single-t suffix
+                        #   2) all other consonant stems → keep double-t suffix
+                        import re as _re
+                        is_tt_suffix = suf_base.startswith('tt')
+                        # The 't' check: if condition includes 't' in a char class OR
+                        # the condition is a bare 'mak'/'mek' (which matches all consonant
+                        # endings including 't'-ending stems like lağvetmek, atmak, etc.)
+                        cond_has_t = (
+                            ('t' in cond_field and ('mak' in cond_field or 'mek' in cond_field))
+                            or cond_field in ('mak', 'mek')
+                        )
+                        is_relevant_flag = long_flag in ("VF", "VG", "VM", "VN", "VB", "VR", "VK", "VL")
+
+                        if is_tt_suffix and cond_has_t and is_relevant_flag:
+                            # Rule 1: stems ending in tmak/tmek → drop the first 't'
+                            t_part = suf_base[1:]  # 'ttik'→'tik', 'ttır'→'tır', 'ttuğu'→'tuğu'
+                            t_parts = list(parts)
+                            t_parts[3] = (t_part + '/' + suf_field.split('/')[1]) if '/' in suf_field else t_part
+                            t_parts[4] = 'tmak' if 'mak' in cond_field else 'tmek'
+                            verb_flags_rules[new_flag_char][1].append(t_parts)
+
+                            # Rule 2: all other consonant-ending stems → keep double-t
+                            # Remove 't' from the character class in the condition
+                            new_cond = _re.sub(r'\[([^\]]*?)t([^\]]*?)\]',
+                                               lambda m: '[' + m.group(1) + m.group(2) + ']',
+                                               cond_field)
+                            if new_cond and new_cond != cond_field:
+                                restricted_parts = list(parts)
+                                restricted_parts[4] = new_cond
+                                verb_flags_rules[new_flag_char][1].append(restricted_parts)
+                            elif cond_field in ('mak', 'mek'):
+                                # Bare 'mak'/'mek' condition: restrict to non-t endings
+                                non_t = '[çfhkpsşbcdğjlmnrvyz]'
+                                non_t_cond = non_t + 'mak' if 'mak' in cond_field else non_t + 'mek'
+                                restricted_parts = list(parts)
+                                restricted_parts[4] = non_t_cond
+                                verb_flags_rules[new_flag_char][1].append(restricted_parts)
+                            else:
+                                verb_flags_rules[new_flag_char][1].append(parts)
+                        else:
+                            if long_flag == "VF" and suf_base == "er" and cond_field == ".":
+                                parts[4] = "[^i]rmek"
+                            elif long_flag in ("VB", "VR") and suf_base == "ar" and cond_field == ".":
+                                parts[4] = "[^ı]rmak"
+                            verb_flags_rules[new_flag_char][1].append(parts)
                         
                         # Clone VB and VF rules to Vb and Vf, filtering out ırmak/irmek/urmak/ürmek
                         suf = parts[3].split('/')[0] if len(parts) >= 4 else ""
