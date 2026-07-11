@@ -668,7 +668,8 @@ def compile_dictionary():
         {'lemma': "m'lik", 'pos': 'Noun', 'attributes': ['Voicing']},
         {'lemma': "tl'lik", 'pos': 'Noun', 'attributes': ['Voicing']},
         {'lemma': "ml'lik", 'pos': 'Noun', 'attributes': ['Voicing']},
-        {'lemma': "ml", 'pos': 'Noun', 'attributes': []},
+        # Note: 'ml' bare stem intentionally removed to prevent acceptance
+        # of misspellings like 'mlla' -> 'malla' (ml + -la instrumental suffix)
         # Missing proper nouns to ensure they exist in lexicon
         {'lemma': "Ingiltere", 'pos': 'Noun', 'attributes': []},
         {'lemma': "Italya", 'pos': 'Noun', 'attributes': []},
@@ -881,6 +882,50 @@ def compile_dictionary():
         # Skip abbreviations, punctuation, or single-character noise
         if not lemma or len(lemma) == 0:
             continue
+
+        # Skip short (1-3 char) zemberek 'PronunciationGuessed' entries — they are
+        # chemical element symbols / abbreviations that produce spurious inflected
+        # forms which silently accept misspellings (false negatives).
+        # Exception: meaningful Turkish words like 'ay', 'çay', 'ray', 'çin', 'nil'.
+        PRONUNCIATION_GUESSED_ALLOWLIST = {'ay', 'çay', 'ray', 'çin', 'nil', 'nil', 'rn'}
+        if (
+            len(lemma) <= 3
+            and 'PronunciationGuessed' in attrs
+            and lemma.lower() not in PRONUNCIATION_GUESSED_ALLOWLIST
+        ):
+            continue
+
+        # Skip dubious nouns/interjections that cause false negatives by accepting
+        # fragment-inflections of misspelled words. These stems are either very rare,
+        # not standard Turkish, or their morphological forms collide with common typos.
+        FALSE_NEGATIVE_STEMS = {
+            # Single/two-letter nouns that over-generate (caught by PronunciationGuessed
+            # filter above for most, but these are in zemberek as normal entries)
+            'ü',
+            # 'bi' in zemberek as element Bismuth (no PronunciationGuessed) but causes
+            # 'bideki' and similar to be accepted as misspellings of 'bindeki'
+            'bi',
+            # Short interjections being over-inflected  
+            'hu', 'ole', 'be', 'vah',
+            # Dubious nouns whose inflected forms match misspellings
+            'becet', 'döger', 'seme', 'fer', 'enç', 'havşa',
+            'ikil', 'gelimli', 'cümlesi',
+            # 'ağış' registered as Verb with extra flags — produces 'bideki'
+            # style forms (ağış + de + ki)
+            'ağış',
+            # 'işl' in custom_abbreviations.json — produces 'işltir' accepted
+            # as misspelling of 'işletir'
+            'işl',
+            # 'urmak' registered as Noun (it is a verb root, not a standalone noun)
+            'urmak',
+            # 'elmek' as Noun (it is a verb 'elmek' meaning to filter — but causes
+            # 'elmeye' to be accepted, masking a misspelling of 'gelmeye')
+            'elmek',
+            # Stems causing V2 false negatives
+            'pur', 'aysal', 'sahin', 'dölenme', 'ila', 'lava', 'çet', 'dölenmek',
+        }
+        if lemma.lower() in FALSE_NEGATIVE_STEMS:
+            continue
             
         # Irregular word 'su' handling
         if lemma == 'su':
@@ -923,6 +968,9 @@ def compile_dictionary():
         # Force Noun POS for any lemma ending in ıcı/ici/ucu/ücü (Deverbal Agent Nouns)
         if lemma.endswith(('ıcı', 'ici', 'ucu', 'ücü')):
             pos = 'Noun'
+            
+        if lemma == 'sahi':
+            pos = 'Adverb'
             
         # Force Noun POS for any lemma ending in ış/iş/uş/üş that does not end in mak/mek (Deverbal Action Nouns)
         if lemma.endswith(('ış', 'iş', 'uş', 'üş')) and not lemma.endswith(('mak', 'mek')):
