@@ -34,7 +34,7 @@ MAXDIFF 5
 MAXNGRAMSUGS 6
 ONLYMAXDIFF
 
-REP 221
+REP 225
 REP a â
 REP â a
 REP u û
@@ -114,6 +114,10 @@ REP meyva meyve
 REP süpriz sürpriz
 REP eskişehir Eskişehir
 REP anadolu Anadolu
+REP atatürk'ün Atatürk'ün
+REP Atatürkün Atatürk'ün
+REP Türkün Türk'ün
+REP türkten Türk'ten
 REP istihbarat istihbarat
 REP attır arttır
 REP attir arttir

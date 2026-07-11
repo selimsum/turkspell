@@ -126,7 +126,8 @@ def compile_dictionary():
     
     # Inject custom entries to resolve undetected words
     custom_entries = [
-        {'lemma': 'Atatürk', 'pos': 'Noun', 'attributes': ['NoVoicing']},
+        {'lemma': 'Atatürk', 'pos': 'ProperNoun', 'attributes': ['NoVoicing']},
+        {'lemma': 'Türk', 'pos': 'ProperNoun', 'attributes': []},
         {'lemma': 'çarpıştırıcı', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'patlama', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'gezinge', 'pos': 'Noun', 'attributes': []},
@@ -905,10 +906,11 @@ def compile_dictionary():
         if 'kağıt' in lemma:
             lemma = lemma.replace('kağıt', 'kâğıt')
         
-        # Override with custom entry if present and has matching POS
-        if lemma.lower() in custom_map and custom_map[lemma.lower()]['pos'] == item['pos']:
-            pos = custom_map[lemma.lower()]['pos']
-            attrs = set(custom_map[lemma.lower()]['attributes'])
+        # Override with custom entry if present and has matching POS, or allows ProperNoun to override Noun
+        custom_item = custom_map.get(lemma.lower())
+        if custom_item and (custom_item['pos'] == item['pos'] or (custom_item['pos'] == 'ProperNoun' and item['pos'] == 'Noun')):
+            pos = custom_item['pos']
+            attrs = set(custom_item['attributes'])
         else:
             pos = item['pos']
             attrs = set(item['attributes'])
@@ -1430,6 +1432,9 @@ def compile_dictionary():
     for item in lexicon:
         if item.get('pos') == 'ProperNoun':
             proper_nouns_to_flag.add(item['lemma'].replace('I', 'ı').replace('İ', 'i').lower())
+
+    # Remove proper nouns from noun_lemmas to prevent them from being treated as common nouns
+    noun_lemmas = noun_lemmas - proper_nouns_to_flag
 
     def _proper_flag_for(lemma_lower: str) -> str:
         if lemma_lower in PROPER_NOUN_OVERRIDES:
