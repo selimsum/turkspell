@@ -1937,7 +1937,6 @@ def _generate_verb_flags_from_v1() -> str:
                                            'iril', 'ırıl', 'urul', 'ürül',
                                            'irin', 'ırın', 'urun', 'ürün',
                                            'iriş', 'ırış', 'uruş', 'ürüş',
-                                           'irim', 'ırım', 'urum', 'ürüm',
                                            'itir', 'ıtır', 'utur', 'ütür')):
                             continue
                         # Skip suffix rules with missing r typos (e.g. ular, üler instead of urlar, ürler)
@@ -2022,10 +2021,6 @@ def _generate_verb_flags_from_v1() -> str:
                             else:
                                 verb_flags_rules[new_flag_char][1].append(parts)
                         else:
-                            if long_flag == "VF" and suf_base == "er" and cond_field == ".":
-                                parts[4] = "[^i]rmek"
-                            elif long_flag in ("VB", "VR") and suf_base == "ar" and cond_field == ".":
-                                parts[4] = "[^ı]rmak"
                             verb_flags_rules[new_flag_char][1].append(parts)
                         
                         # Clone VB and VF rules to Vb and Vf, filtering out ırmak/irmek/urmak/ürmek
