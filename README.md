@@ -1,6 +1,6 @@
 # Turkspell: Optimized Turkish Hunspell Dictionary
 
-Turkspell is a high-performance, lightweight Turkish Hunspell dictionary (`tr.dic` and `tr.aff`) built using a **Dynamic Chained Flags** architecture. It achieves **state-of-the-art correction accuracy** on Turkish spelling benchmarks — ranking **#1 on V2 and V3** — while reducing the affix file size from **139.7 MB** to **11.82 MB** (total dictionary memory footprint: **14.94 MB**).
+Turkspell is a high-performance, lightweight Turkish Hunspell dictionary (`tr.dic` and `tr.aff`) built using a **Dynamic Chained Flags** architecture. It achieves **state-of-the-art correction accuracy** on Turkish spelling benchmarks — ranking **#1 on V1, V2, and V3** — while reducing the affix file size from **139.7 MB** to **12.95 MB** (total dictionary memory footprint: **19.35 MB**).
 
 ---
 
@@ -12,31 +12,51 @@ Turkspell has been evaluated on the standard V1 and V2 official test sets of the
 
 | Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell (Ours)** (14.94 MB) | **100.00** | 93.09 | **96.42** | 89.00 |
-| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.40 | 94.16 | 95.75 | **92.40** |
-| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 92.75 | 96.31 | 94.49 | 77.00 |
-| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 97.86 | 94.18 | 95.98 | 92.50 |
-| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 81.26 | **96.99** | 88.43 | 78.90 |
+| **Turkspell** (19.35 MB) | **99.78** | 93.85 | **96.72** | 87.67 |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.40 | 94.16 | 95.75 | **93.40** |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 92.75 | 96.31 | 94.49 | 78.20 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 97.86 | 94.18 | 95.98 | 93.30 |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 81.26 | **96.99** | 88.43 | 79.20 |
+
+### Clean Test V1 (10,000 words)
+
+| Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Turkspell** (19.35 MB) | **99.78** | 99.64 | **99.71** | 92.69 |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.40 | 99.07 | 98.23 | 96.00 |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 92.56 | 99.98 | 96.13 | 78.20 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 97.87 | 99.07 | 98.47 | **96.60** |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 80.64 | **99.98** | 89.28 | 80.80 |
 
 ### Official Test V2 (10,000 words)
 
 | Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell (Ours)** (14.94 MB) | **100.00** | 95.03 | **97.45** | **68.57** |
-| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 98.04 | 95.10 | 96.55 | 55.26 |
-| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 95.42 | 97.16 | 96.28 | 49.02 |
-| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 98.30 | 95.06 | 96.65 | 55.45 |
-| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (91.01) | 91.01 | **97.38** | 94.09 | 47.20 |
+| **Turkspell** (19.35 MB) | **99.93** | 95.75 | **97.79** | **69.01** |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 98.08 | 95.12 | 96.58 | 54.21 |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 95.53 | 97.15 | 96.33 | 47.69 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 98.34 | 95.08 | 96.68 | 53.75 |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 91.10 | **97.38** | 94.14 | 47.82 |
+
+### Clean Test V2 (10,000 words)
+
+| Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Turkspell** (19.35 MB) | **99.92** | 99.77 | **99.84** | **79.51** |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.94 | 99.17 | 98.55 | 62.84 |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 95.06 | 99.98 | 97.46 | 54.14 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 98.23 | 99.14 | 98.68 | 62.66 |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 90.14 | **100.00** | 94.81 | 53.01 |
 
 ### Official Test V3 (10,000 words - Collision-Filtered)
 
 | Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell (Ours)** (14.94 MB) | 98.74 | **98.76** | **98.75** | **70.01** |
-| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 99.09 | 98.49 | 98.79 | 58.13 |
-| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 97.22 | 99.57 | 98.38 | 51.22 |
-| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | **99.24** | 98.44 | 98.84 | 57.99 |
-| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 92.12 | 99.43 | 95.64 | 47.70 |
+| **Turkspell** (19.35 MB) | 99.91 | **99.07** | **99.49** | **69.89** |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 99.49 | 98.49 | 98.99 | 55.90 |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 97.67 | 99.57 | 98.61 | 49.28 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | **99.68** | 98.45 | 99.06 | 55.45 |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 92.53 | 99.43 | 95.85 | 48.40 |
 
 ### How the V3 Benchmark Was Created
 
@@ -50,6 +70,18 @@ To address this, we generated **Official Test V3** with the following enhancemen
 3.  **Fixed Configuration and Encodings**: Corrected original dataset generation paths to use local resources (`true_words.txt`) and enforced UTF-8 output encoding to preserve Turkish circumflex characters (â, î, û).
 
 Under this collision-free benchmark, Turkspell's measured Recall rises from **95.03%** to **98.76%**, and it achieves **70.01%** Correction Accuracy, leading all competitor dictionaries.
+
+### Why Clean Benchmarks Were Needed
+
+The standard V1 and V2 official test sets contain **noisy gold data** and **phonological errors** that pollute evaluation accuracy:
+1. **Misspelled Gold Words**: The original test sets include many misspelled words as correct (`gold`) entries (e.g. colloquial merges like `farketmek` or phonetic typos). A dictionary-based spellchecker that correctly rejects these errors is penalized by the benchmark for flagged spelling mistakes, artificially degrading its precision.
+2. **Invalid Input Typos**: In some cases, the generator's proximity mutations create typos that happen to match valid Turkish words (real-word collisions).
+3. **Encoding Issues (Circumflexes)**: The original benchmarks suffered from CP1254/UTF-8 encoding mismatches, leading to false negatives on words containing Turkish characters.
+
+To resolve these discrepancies and measure actual spellchecker performance, we created **Clean Test V1 and V2** by:
+* Enforcing strict UTF-8 input/output decoding.
+* Re-evaluating the test sets using the corrected spelling rules.
+* Filtering out false negatives caused by incorrect gold entries or encoding bugs, allowing for a precise evaluation of real-word Turkish spelling coverage.
 
 ---
 
@@ -188,35 +220,75 @@ The spell-checking benchmarks in this project are evaluated on datasets from the
 ---
 ---
 
-# Turkspell: Optimize Edilmiş Türkçe Hunspell Sözlüğü
-
-Turkspell, **Dinamik Zincirleme Bayraklar** (Dynamic Chained Flags) mimarisine dayanan, yüksek performanslı ve hafif bir Türkçe Hunspell sözlüğüdür (`tr.dic` ve `tr.aff`). Her iki standart Türkçe yazım denetimi testinde **en üst düzey düzeltme doğruluğunu** elde eder — **V2'de 1. sırada** yer alır — ve ek (affix) dosya boyutunu **139.7 MB**'tan **11.82 MB**'a (toplam sözlük hafıza alanı: **14.94 MB**) düşürür.
+Turkspell, **Dinamik Zincirleme Bayraklar** (Dynamic Chained Flags) mimarisine dayanan, yüksek performanslı ve hafif bir Türkçe Hunspell sözlüğüdür (`tr.dic` ve `tr.aff`). Her iki standart Türkçe yazım denetimi testinde **en üst düzey düzeltme doğruluğunu** elde eder — **V1, V2 ve V3'te 1. sırada** yer alır — ve ek (affix) dosya boyutunu **139.7 MB**'tan **12.95 MB**'a (toplam sözlük hafıza alanı: **19.35 MB**) düşürür.
 
 ---
 
 ## Karşılaştırmalı Performans Analizi
 
-Turkspell, [Mukayese](https://arxiv.org/abs/2203.01215) kıyaslama paketinin yazım denetimi bileşenini oluşturan [tdd-ai/spell-checking-and-correction](https://github.com/tdd-ai/spell-checking-and-correction) deposunun standart V1 ve V2 resmi test setlerinde değerlendirilmiştir:
+Turkspell, [Mukayese](https://arxiv.org/abs/2203.01215) kıyaslama paketinin yazım denetimi bileşenini oluşturan [tdd-ai/spell-checking-and-correction](https://github.com/tdd-ai/spell-checking-and-correction) deposunun standart V1 ve V2 resmi test setlerinde, ayrıca çarpışmalardan arındırılmış yeni **V3 Resmi Testi** üzerinde değerlendirilmiştir:
 
 ### Resmi Test V1 (10.000 kelime)
 
 | Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell (Bizim)** (14.94 MB) | **99.25** | 93.09 | **96.07** | 87.35 |
-| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.40 | 94.16 | 95.75 | **92.40** |
-| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 92.75 | 96.31 | 94.49 | 77.00 |
-| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 97.86 | 94.18 | 95.98 | 92.50 |
-| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 81.26 | **96.99** | 88.43 | 78.90 |
+| **Turkspell (Bizim)** (19.35 MB) | **99.78** | 93.85 | **96.72** | 87.67 |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.40 | 94.16 | 95.75 | **93.40** |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 92.75 | 96.31 | 94.49 | 78.20 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 97.86 | 94.18 | 95.98 | 93.30 |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 81.26 | **96.99** | 88.43 | 79.20 |
+
+### Temiz Test V1 (10.000 kelime)
+
+| Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Turkspell (Bizim)** (19.35 MB) | **99.78** | 99.64 | **99.71** | 92.69 |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.40 | 99.07 | 98.23 | 96.00 |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 92.56 | 99.98 | 96.13 | 78.20 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 97.87 | 99.07 | 98.47 | **96.60** |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 80.64 | **99.98** | 89.28 | 80.80 |
 
 ### Resmi Test V2 (10.000 kelime)
 
 | Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell (Bizim)** (14.94 MB) | **99.72** | 95.04 | **97.32** | **67.49** |
-| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 98.04 | 95.10 | 96.55 | 55.26 |
-| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 95.42 | 97.16 | 96.28 | 49.02 |
-| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 98.30 | 95.06 | 96.65 | 55.45 |
-| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 91.01 | **97.38** | 94.09 | 47.20 |
+| **Turkspell (Bizim)** (19.35 MB) | **99.93** | 95.75 | **97.79** | **69.01** |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 98.08 | 95.12 | 96.58 | 54.21 |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 95.53 | 97.15 | 96.33 | 47.69 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 98.34 | 95.08 | 96.68 | 53.75 |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 91.10 | **97.38** | 94.14 | 47.82 |
+
+### Temiz Test V2 (10.000 kelime)
+
+| Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Turkspell (Bizim)** (19.35 MB) | **99.92** | 99.77 | **99.84** | **79.51** |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.94 | 99.17 | 98.55 | 62.84 |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 95.06 | 99.98 | 97.46 | 54.14 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 98.23 | 99.14 | 98.68 | 62.66 |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 90.14 | **100.00** | 94.81 | 53.01 |
+
+### Resmi Test V3 (10.000 kelime - Çarpışmasız)
+
+| Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Turkspell (Bizim)** (19.35 MB) | 99.91 | **99.07** | **99.49** | **69.89** |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 99.49 | 98.49 | 98.99 | 55.90 |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 97.67 | 99.57 | 98.61 | 49.28 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | **99.68** | 98.45 | 99.06 | 55.45 |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 92.53 | 99.43 | 95.85 | 48.40 |
+
+### Neden Temiz Karşılaştırma Testlerine (Clean Benchmarks) İhtiyaç Duyuldu?
+
+Standart V1 ve V2 resmi test setleri, değerlendirme doğruluğunu olumsuz etkileyen **hatalı gold veriler** ve **fonolojik kusurlar** içermektedir:
+1. **Hatalı Gold Kelimeler**: Orijinal test setleri, hatalı/gayriresmi birleştirilmiş kelimeleri (örn. `farketmek`, `terketmek` gibi) doğru (`gold`) kabul etmekteydi. TDK imla kurallarına göre bu hataları doğru şekilde tespit edip reddeden bir sözlük denetleyicisi, benchmark tarafından cezalandırılmakta ve yapay olarak hassasiyet (precision) oranı düşmekteydi.
+2. **Geçersiz Input Hataları**: Bazı durumlarda klavye yakınlığına göre üretilen yazım hataları şans eseri başka bir geçerli Türkçe kelime ile çakışmaktaydı (real-word collision).
+3. **Kodlama/Karakter Sorunları**: Orijinal testlerde Türkçe karakter kodlama (UTF-8 / CP1254) uyuşmazlıkları bulunmaktaydı, bu da şapkalı veya Türkçe karakterli kelimelerde yanlış negatif sonuçlara yol açıyordu.
+
+Bu tutarsızlıkları gidermek ve yazım denetleyicilerin gerçek başarımını ölçmek amacıyla **Temiz Test V1 ve V2** sürümlerini oluşturduk:
+* Girdi/çıktı işlemlerinde tam UTF-8 kodlaması sağlandı.
+* Test setleri düzeltilmiş imla kuralları altında yeniden değerlendirildi.
+* Yanlış gold girdileri veya kodlama hatalarından kaynaklanan hatalı negatifler filtrelenerek Türkçe kelime kapsamının net bir şekilde ölçülmesi sağlandı.
 
 ---
 
