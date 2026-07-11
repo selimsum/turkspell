@@ -5,7 +5,7 @@ NOSUGGEST Ю
 KEEPCASE У
 NEEDAFFIX X
 LANG tr
-WORDCHARS '’‘
+WORDCHARS '’‘.
 
 # Break characters (allow breaking at hyphens, en-dashes, and em-dashes)
 BREAK 5
@@ -377632,7 +377632,7 @@ SFX ҄ 0 'sı/ѧ [A-Z]
 SFX ҄ 0 'sı/ѧ km
 SFX ҄ 0 'sı/ѧ cm
 SFX ҄ 0 'sı/ѧ mm
-SFX ҅ Y 115
+SFX ҅ Y 120
 SFX ҅ 0 'dı .
 SFX ҅ 0 'dım .
 SFX ҅ 0 'dın .
@@ -377720,6 +377720,11 @@ SFX ҅ 0 'larında .
 SFX ҅ 0 'larından .
 SFX ҅ 0 'larının .
 SFX ҅ 0 'larıyla .
+SFX ҅ 0 'ların .
+SFX ҅ 0 'lara .
+SFX ҅ 0 'larda .
+SFX ҅ 0 'lardan .
+SFX ҅ 0 'larla .
 SFX ҅ 0 'm .
 SFX ҅ 0 'mın .
 SFX ҅ 0 'ma .
@@ -378660,7 +378665,7 @@ SFX Ҍ 0 'su/ѧ [A-Z]
 SFX Ҍ 0 'su/ѧ km
 SFX Ҍ 0 'su/ѧ cm
 SFX Ҍ 0 'su/ѧ mm
-SFX ҍ Y 115
+SFX ҍ Y 120
 SFX ҍ 0 'du .
 SFX ҍ 0 'dum .
 SFX ҍ 0 'dun .
@@ -378748,6 +378753,11 @@ SFX ҍ 0 'larında .
 SFX ҍ 0 'larından .
 SFX ҍ 0 'larının .
 SFX ҍ 0 'larıyla .
+SFX ҍ 0 'ların .
+SFX ҍ 0 'lara .
+SFX ҍ 0 'larda .
+SFX ҍ 0 'lardan .
+SFX ҍ 0 'larla .
 SFX ҍ 0 'm .
 SFX ҍ 0 'mun .
 SFX ҍ 0 'ma .
@@ -379810,7 +379820,7 @@ SFX Ҕ 0 'si/ѧ [A-Z]
 SFX Ҕ 0 'si/ѧ km
 SFX Ҕ 0 'si/ѧ cm
 SFX Ҕ 0 'si/ѧ mm
-SFX ҕ Y 115
+SFX ҕ Y 120
 SFX ҕ 0 'di .
 SFX ҕ 0 'dim .
 SFX ҕ 0 'din .
@@ -379898,6 +379908,11 @@ SFX ҕ 0 'lerinde .
 SFX ҕ 0 'lerinden .
 SFX ҕ 0 'lerinin .
 SFX ҕ 0 'leriyle .
+SFX ҕ 0 'lerin .
+SFX ҕ 0 'lere .
+SFX ҕ 0 'lerde .
+SFX ҕ 0 'lerden .
+SFX ҕ 0 'lerle .
 SFX ҕ 0 'm .
 SFX ҕ 0 'min .
 SFX ҕ 0 'me .
@@ -380838,7 +380853,7 @@ SFX Ҝ 0 'sü/ѧ [A-Z]
 SFX Ҝ 0 'sü/ѧ km
 SFX Ҝ 0 'sü/ѧ cm
 SFX Ҝ 0 'sü/ѧ mm
-SFX ҝ Y 115
+SFX ҝ Y 120
 SFX ҝ 0 'dü .
 SFX ҝ 0 'düm .
 SFX ҝ 0 'dün .
@@ -380926,6 +380941,11 @@ SFX ҝ 0 'lerinde .
 SFX ҝ 0 'lerinden .
 SFX ҝ 0 'lerinin .
 SFX ҝ 0 'leriyle .
+SFX ҝ 0 'lerin .
+SFX ҝ 0 'lere .
+SFX ҝ 0 'lerde .
+SFX ҝ 0 'lerden .
+SFX ҝ 0 'lerle .
 SFX ҝ 0 'm .
 SFX ҝ 0 'mün .
 SFX ҝ 0 'me .

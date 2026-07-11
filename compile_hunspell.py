@@ -137,6 +137,9 @@ def compile_dictionary():
         {'lemma': 'yıldızlararası', 'pos': 'Noun', 'attributes': ['CompoundP3sg']},
         {'lemma': 'ötegezegen', 'pos': 'Noun', 'attributes': []},
         # --- New custom entries for requested words ---
+        {'lemma': 'vb.', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'T.C.', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'Mustafa', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'Amerika Birleşik Devletleri', 'pos': 'Noun', 'attributes': ['CompoundP3sg']},
         {'lemma': 'Devletleri', 'pos': 'Noun', 'attributes': ['CompoundP3sg']},
         {'lemma': 'hal', 'pos': 'Noun', 'attributes': ['InverseHarmony', 'NoVoicing']},
@@ -964,7 +967,7 @@ def compile_dictionary():
             continue
  
         # Force common abbreviations to lowercase for optimal Hunspell case matching
-        common_abbrevs = {'km', 'abd', 'örn', 'dr', 'dna', 'prof', 'x', 'mö', 'ms', 'sf', 'cm', 'kg', 'vb', 'bkz', 'm', 'g', 'b', 'mm', 'ml', 'gps', 'uuı', 'uv', 'bbc', 'vr', 'dr', 'eeg', 'yz', 'sscb', 'esa', 'rfid', 'dehb', 'mit', 'ngc', 'hiv', 'sls', 'atp', 'cern', 'iq'}
+        common_abbrevs = {'km', 'abd', 'örn', 'dr', 'dna', 'prof', 'x', 'mö', 'ms', 'sf', 'cm', 'kg', 'vb', 'bkz', 'm', 'g', 'b', 'mm', 'ml', 'gps', 'uuı', 'uv', 'bbc', 'vr', 'dr', 'eeg', 'yz', 'sscb', 'esa', 'rfid', 'dehb', 'mit', 'ngc', 'hiv', 'sls', 'atp', 'cern', 'iq', 'vb.', 't.c.'}
         if lemma.lower() in common_abbrevs:
             lemma = lemma.lower()
             
@@ -998,6 +1001,8 @@ def compile_dictionary():
             
         # Determine vowel harmony
         back = is_back_vowel(lemma)
+        if lemma.lower() in ('vb.', 't.c.'):
+            back = False
         # Check Zemberek vowel exceptions
         if pos != 'Verb' and not lemma.endswith(('leşmek', 'laşmak', 'leşme', 'laşma', 'lik', 'lık', 'luk', 'lük', 'ci', 'cı', 'cu', 'cü', 'cilik', 'cılık', 'suz', 'süz', 'siz', 'suzluk', 'süzlük', 'sizlik')):
             if 'LastVowelFrontal' in attrs or 'FrontVowelHarmony' in attrs or 'InverseHarmony' in attrs:
@@ -1009,6 +1014,8 @@ def compile_dictionary():
             back = False
 
         vowel_end = ends_with_vowel(lemma)
+        if lemma.lower() in ('vb.', 't.c.'):
+            vowel_end = True
         
         # Check voicing attributes
         voicing = False
@@ -1148,7 +1155,6 @@ def compile_dictionary():
     PROPER_NOUN_OVERRIDES: dict[str, str] = {
         # --- Back-unrounded (a/ı) ---
         'ankara':      'pB',
-        'atatürk':     'pB',
         'diyarbakır':  'pB',
         'yunanistan':  'pB',
         'havalimanı':  'pB',
@@ -1357,9 +1363,11 @@ def compile_dictionary():
         'dubai':       'pF',
         'kahire':      'pF',
         'tl':          'pF',
+        'kemal':       'pF',
 
         # --- Front-rounded (ö/ü) ---
         'bakü':        'pU',
+        'atatürk':     'pU',
         'eylül':       'pU',
         'enstitü':     'pU',
         'enstitüsü':   'pU',
@@ -1428,6 +1436,10 @@ def compile_dictionary():
             lemma_part, flags_part = entry, ''
 
         lkey = lemma_part.lower()
+
+        if lkey == 't.c.':
+            new_dic_entries.append(f"T.C./{flags_part},KC" if flags_part else "T.C./KC")
+            continue
 
         # Case 1: Word is a proper noun (e.g. Ankara, or overrides like Temmuz, İrlanda)
         if lkey in proper_nouns_to_flag:

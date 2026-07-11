@@ -1380,7 +1380,7 @@ NOSUGGEST NS
 KEEPCASE KC
 NEEDAFFIX NE
 LANG tr
-WORDCHARS '’‘
+WORDCHARS '’‘.
 
 # Break characters (allow breaking at hyphens, en-dashes, and em-dashes)
 BREAK 5
@@ -1711,6 +1711,7 @@ def gen_proper_flags() -> list[str]:
             "'InIz", "'InIzIn", "'InIzA", "'InIzI", "'InIzdA", "'InIzdAn", "'InIzlA",
             # 3pl possessives
             "'lArI", "'lArInI", "'lArInA", "'lArIndA", "'lArIndAn", "'lArInIn", "'lArIylA",
+            "'lArIn", "'lArA", "'lArdA", "'lArdAn", "'lArlA",
             # 1sg possessives (vowel-ending stem)
             "'m", "'mIn", "'mA", "'mI", "'mdA", "'mdAn", "'mlA",
             # 2sg possessives (vowel-ending stem)
