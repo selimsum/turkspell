@@ -1290,6 +1290,10 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("süpriz", "sürpriz"),
         ("eskişehir", "Eskişehir"),
         ("anadolu", "Anadolu"),
+        ("atatürk'ün", "Atatürk'ün"),
+        ("Atatürkün", "Atatürk'ün"),
+        ("Türkün", "Türk'ün"),
+        ("türkten", "Türk'ten"),
         ("istihbarat", "istihbarat"),
         # V2 failure analysis patterns
         ("attır", "arttır"),
