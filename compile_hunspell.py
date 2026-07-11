@@ -860,6 +860,17 @@ def compile_dictionary():
         except Exception as e:
             print(f"Warning: Failed to load custom abbreviations: {e}")
 
+    # Load custom names if they exist
+    names_path = 'custom_names.json'
+    if os.path.exists(names_path):
+        try:
+            with open(names_path, 'r', encoding='utf-8') as f:
+                names_list = json.load(f)
+            custom_entries.extend(names_list)
+            print(f"Loaded {len(names_list)} custom names.")
+        except Exception as e:
+            print(f"Warning: Failed to load custom names: {e}")
+
     lexicon.extend(custom_entries)
     for item in lexicon:
         lemma = item.get('lemma', '')
