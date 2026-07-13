@@ -1434,7 +1434,7 @@ def compile_dictionary():
             proper_nouns_to_flag.add(item['lemma'].replace('I', 'ı').replace('İ', 'i').lower())
 
     # Remove proper nouns from noun_lemmas to prevent them from being treated as common nouns
-    noun_lemmas = noun_lemmas - proper_nouns_to_flag
+    # noun_lemmas = noun_lemmas - proper_nouns_to_flag
 
     def _proper_flag_for(lemma_lower: str) -> str:
         if lemma_lower in PROPER_NOUN_OVERRIDES:
