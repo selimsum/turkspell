@@ -295,6 +295,8 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
         raw_parts = [p.strip() for p in flag_part.split(',')]
         if 'NE' in raw_parts:
             new_parts.append("NE")
+        if 'KC' in raw_parts:
+            new_parts.append("KC")
         for vf in sorted(verb_flags):
             new_parts.append(VERB_FLAG_MAP[vf])
         if is_obsolete:
