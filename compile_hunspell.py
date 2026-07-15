@@ -906,9 +906,9 @@ def compile_dictionary():
         if 'kağıt' in lemma:
             lemma = lemma.replace('kağıt', 'kâğıt')
         
-        # Override with custom entry if present and has matching POS, or allows ProperNoun to override Noun
+        # Override with custom entry if present and has matching POS
         custom_item = custom_map.get(lemma.lower())
-        if custom_item and (custom_item['pos'] == item['pos'] or (custom_item['pos'] == 'ProperNoun' and item['pos'] == 'Noun')):
+        if custom_item and custom_item['pos'] == item['pos']:
             pos = custom_item['pos']
             attrs = set(custom_item['attributes'])
         else:
