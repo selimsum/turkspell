@@ -814,6 +814,9 @@ def compile_dictionary():
         {'lemma': 'gever', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'sarkmak', 'pos': 'Verb', 'attributes': []},
         {'lemma': 'uçulmak', 'pos': 'Verb', 'attributes': []},
+        {'lemma': 'kullanmalık', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'düzeyleri', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'kuran', 'pos': 'Noun', 'attributes': []},
     ]
     # Load dynamically parsed candidates from OSCAR/Corpus pipeline if available
     import os
