@@ -31,6 +31,17 @@ def compile_dictionary():
     
     # Inject custom entries to resolve undetected words
     custom_entries = [
+        {'lemma': 'web', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'online', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'offline', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'email', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'blog', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'server', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'chat', 'pos': 'Noun', 'attributes': ['InverseHarmony']},
+        {'lemma': 'wifi', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'wi-fi', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'wi', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'fi', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'yıldızlararası', 'pos': 'Noun', 'attributes': ['CompoundP3sg']},
         {'lemma': 'antimadde', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'ötegezegen', 'pos': 'Noun', 'attributes': []},
@@ -613,6 +624,8 @@ def compile_dictionary():
             
         # Determine vowel harmony
         back = is_back_vowel(lemma)
+        if lemma.lower() in ('online', 'offline', 'server', 'wifi', 'wi-fi', 'wi', 'fi'):
+            back = True
         # Check Zemberek vowel exceptions
         if pos != 'Verb' and not lemma.endswith(('leşmek', 'laşmak', 'leşme', 'laşma', 'lik', 'lık', 'luk', 'lük', 'ci', 'cı', 'cu', 'cü', 'cilik', 'cılık', 'suz', 'süz', 'siz', 'suzluk', 'süzlük', 'sizlik')):
             if 'LastVowelFrontal' in attrs or 'FrontVowelHarmony' in attrs or 'InverseHarmony' in attrs:
@@ -624,6 +637,8 @@ def compile_dictionary():
             back = False
 
         vowel_end = ends_with_vowel(lemma)
+        if lemma.lower() in ('online', 'offline', 'wifi', 'wi-fi', 'wi', 'fi'):
+            vowel_end = False
         
         # Check voicing attributes
         voicing = False
