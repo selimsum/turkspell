@@ -33,6 +33,7 @@ CASE_PRESERVED_OVERRIDES = {
     'mhz': 'MHz',
     'eugh': 'EuGH',
     'amerika birleşik devletleri': 'Amerika Birleşik Devletleri',
+    'wi-fi': 'Wi-Fi',
 }
 
 def turkish_upper(s: str) -> str:
@@ -138,6 +139,17 @@ def compile_dictionary():
         {'lemma': 'yıldızlararası', 'pos': 'Noun', 'attributes': ['CompoundP3sg']},
         {'lemma': 'ötegezegen', 'pos': 'Noun', 'attributes': []},
         # --- New custom entries for requested words ---
+        {'lemma': 'web', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'online', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'offline', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'email', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'blog', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'server', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'chat', 'pos': 'Noun', 'attributes': ['InverseHarmony']},
+        {'lemma': 'wifi', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'wi-fi', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'wi', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'fi', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'vb.', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'T.C.', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'Mustafa', 'pos': 'Noun', 'attributes': []},
@@ -1019,6 +1031,8 @@ def compile_dictionary():
         back = is_back_vowel(lemma)
         if lemma.lower() in ('vb.', 't.c.'):
             back = False
+        if lemma.lower() in ('online', 'offline', 'server', 'wifi', 'wi-fi', 'wi', 'fi'):
+            back = True
         # Check Zemberek vowel exceptions
         if pos != 'Verb' and not lemma.endswith(('leşmek', 'laşmak', 'leşme', 'laşma', 'lik', 'lık', 'luk', 'lük', 'ci', 'cı', 'cu', 'cü', 'cilik', 'cılık', 'suz', 'süz', 'siz', 'suzluk', 'süzlük', 'sizlik')):
             if 'LastVowelFrontal' in attrs or 'FrontVowelHarmony' in attrs or 'InverseHarmony' in attrs:
@@ -1032,6 +1046,8 @@ def compile_dictionary():
         vowel_end = ends_with_vowel(lemma)
         if lemma.lower() in ('vb.', 't.c.'):
             vowel_end = True
+        if lemma.lower() in ('online', 'offline', 'wifi', 'wi-fi', 'wi', 'fi'):
+            vowel_end = False
         
         # Check voicing attributes
         voicing = False
@@ -1422,6 +1438,15 @@ def compile_dictionary():
         'amerika birleşik devletleri': 'pF',
         'devletleri': 'pF',
         'ml': 'pF',
+        # Tech words harmony overrides
+        'online':    'pB',
+        'offline':   'pB',
+        'server':    'pB',
+        'chat':      'pF',
+        'wifi':      'pB',
+        'wi-fi':     'pB',
+        'wi':        'pB',
+        'fi':        'pB',
     }
 
     # Collect all nouns from lexicon to apply proper noun suffix + KC rules
@@ -1499,7 +1524,15 @@ def compile_dictionary():
         # Case 2: Word is a common noun (but not explicitly tagged as proper noun/override)
         elif lkey in noun_lemmas:
             # 1. Keep lowercase entry for normal common noun usage (no apostrophes/KC)
-            new_dic_entries.append(entry)
+            if lkey in {'web', 'online', 'offline', 'email', 'blog', 'server', 'chat', 'wifi', 'wi-fi'}:
+                pfx = _proper_flag_for(lkey)
+                proper_flags = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
+                if flags_part:
+                    new_dic_entries.append(f"{lkey}/{flags_part},{proper_flags}")
+                else:
+                    new_dic_entries.append(f"{lkey}/{proper_flags}")
+            else:
+                new_dic_entries.append(entry)
             
             # 2. Add capitalized version of base stem with proper noun flags and KEEPCASE
             pfx = _proper_flag_for(lkey)

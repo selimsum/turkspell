@@ -1613,6 +1613,8 @@ def gen_proper_flags() -> list[str]:
         rules_N = []
         sfx_ki(f"{flag_prefix}N", "0", f"'{gen_cons}",   CONS_RE, rules_N)
         sfx_ki(f"{flag_prefix}N", "0", f"'{gen_vowel}",  VOWEL_RE,  rules_N)
+        if flag_prefix == "pB":
+            sfx_ki(f"{flag_prefix}N", "0", f"'{gen_cons}",   "[eıiEİ]", rules_N)
         if flag_prefix == "pF":
             sfx_ki(f"{flag_prefix}N", "0", f"'{gen_vowel}",  "tl",          rules_N)
             sfx_ki(f"{flag_prefix}N", "0", f"'{gen_vowel}",  "TL",          rules_N)
@@ -1645,6 +1647,8 @@ def gen_proper_flags() -> list[str]:
             sfx(f"{flag_prefix}Y", "0", f"'{dat_vowel}", VOWEL_RE),
             sfx(f"{flag_prefix}Y", "0", f"'n{dat_cons}",  VOWEL_RE),
         ]
+        if flag_prefix == "pB":
+            rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_cons}",  "[eıiEİ]"))
         if flag_prefix == "pF":
             rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_vowel}", "tl"))
             rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_vowel}", "TL"))
@@ -1658,6 +1662,8 @@ def gen_proper_flags() -> list[str]:
             sfx(f"{flag_prefix}A", "0", f"'{acc_vowel}", VOWEL_RE),
             sfx(f"{flag_prefix}A", "0", f"'n{acc_cons}",  VOWEL_RE),
         ]
+        if flag_prefix == "pB":
+            rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_cons}",  "[eıiEİ]"))
         if flag_prefix == "pF":
             rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_vowel}", "tl"))
             rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_vowel}", "TL"))
@@ -1716,6 +1722,9 @@ def gen_proper_flags() -> list[str]:
             # 3pl possessives
             "'lArI", "'lArInI", "'lArInA", "'lArIndA", "'lArIndAn", "'lArInIn", "'lArIylA",
             "'lArIn", "'lArA", "'lArdA", "'lArdAn", "'lArlA",
+            # Plural locative relative-ki (e.g. server'lardaki, server'larındaki)
+            "'lArdAki", "'lArdAkiler", "'lArdAkilerden", "'lArdAkileri",
+            "'lArIndAki", "'lArIndAkiler",
             # 1sg possessives (vowel-ending stem)
             "'m", "'mIn", "'mA", "'mI", "'mdA", "'mdAn", "'mlA",
             # 2sg possessives (vowel-ending stem)
