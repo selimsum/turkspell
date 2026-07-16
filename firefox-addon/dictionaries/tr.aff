@@ -376724,7 +376724,7 @@ PFX х 0 makro .
 PFX х 0 nöro .
 
 # PROPER NOUN CASE/POSSESSIVE FLAGS
-SFX Ѿ Y 348
+SFX Ѿ Y 406
 SFX Ѿ 0 'ın [^aeıioöuüâîûAEIİOÖUÜÂÎÛ]
 SFX Ѿ 0 'ındı [^aeıioöuüâîûAEIİOÖUÜÂÎÛ]
 SFX Ѿ 0 'ındım [^aeıioöuüâîûAEIİOÖUÜÂÎÛ]
@@ -376841,6 +376841,64 @@ SFX Ѿ 0 'nınkidir [aeıioöuüâîûAEIİOÖUÜÂÎÛ]
 SFX Ѿ 0 'nınkiydi [aeıioöuüâîûAEIİOÖUÜÂÎÛ]
 SFX Ѿ 0 'nınkiymiş [aeıioöuüâîûAEIİOÖUÜÂÎÛ]
 SFX Ѿ 0 'nınkiyken [aeıioöuüâîûAEIİOÖUÜÂÎÛ]
+SFX Ѿ 0 'ın [eıiEİ]
+SFX Ѿ 0 'ındı [eıiEİ]
+SFX Ѿ 0 'ındım [eıiEİ]
+SFX Ѿ 0 'ındın [eıiEİ]
+SFX Ѿ 0 'ındık [eıiEİ]
+SFX Ѿ 0 'ındınız [eıiEİ]
+SFX Ѿ 0 'ındılar [eıiEİ]
+SFX Ѿ 0 'ınmış [eıiEİ]
+SFX Ѿ 0 'ınmışım [eıiEİ]
+SFX Ѿ 0 'ınmışsın [eıiEİ]
+SFX Ѿ 0 'ınmışız [eıiEİ]
+SFX Ѿ 0 'ınmışsınız [eıiEİ]
+SFX Ѿ 0 'ınmışlar [eıiEİ]
+SFX Ѿ 0 'ınsa [eıiEİ]
+SFX Ѿ 0 'ınsam [eıiEİ]
+SFX Ѿ 0 'ınsan [eıiEİ]
+SFX Ѿ 0 'ınsak [eıiEİ]
+SFX Ѿ 0 'ınsanız [eıiEİ]
+SFX Ѿ 0 'ınsalar [eıiEİ]
+SFX Ѿ 0 'ınım [eıiEİ]
+SFX Ѿ 0 'ınsın [eıiEİ]
+SFX Ѿ 0 'ınız [eıiEİ]
+SFX Ѿ 0 'ınsınız [eıiEİ]
+SFX Ѿ 0 'ınlar [eıiEİ]
+SFX Ѿ 0 'ındır [eıiEİ]
+SFX Ѿ 0 'ındırlar [eıiEİ]
+SFX Ѿ 0 'ınlardır [eıiEİ]
+SFX Ѿ 0 'ınken [eıiEİ]
+SFX Ѿ 0 'ınımdır [eıiEİ]
+SFX Ѿ 0 'ınsındır [eıiEİ]
+SFX Ѿ 0 'ınızdır [eıiEİ]
+SFX Ѿ 0 'ınsınızdır [eıiEİ]
+SFX Ѿ 0 'ınki [eıiEİ]
+SFX Ѿ 0 'ınkiler [eıiEİ]
+SFX Ѿ 0 'ınkilerin [eıiEİ]
+SFX Ѿ 0 'ınkilere [eıiEİ]
+SFX Ѿ 0 'ınkilerde [eıiEİ]
+SFX Ѿ 0 'ınkilerden [eıiEİ]
+SFX Ѿ 0 'ınkilerle [eıiEİ]
+SFX Ѿ 0 'ınkilerce [eıiEİ]
+SFX Ѿ 0 'ınkileri [eıiEİ]
+SFX Ѿ 0 'ınkilerini [eıiEİ]
+SFX Ѿ 0 'ınkilerine [eıiEİ]
+SFX Ѿ 0 'ınkilerinde [eıiEİ]
+SFX Ѿ 0 'ınkilerinden [eıiEİ]
+SFX Ѿ 0 'ınkileriyle [eıiEİ]
+SFX Ѿ 0 'ınkilerinin [eıiEİ]
+SFX Ѿ 0 'ınkini [eıiEİ]
+SFX Ѿ 0 'ınkine [eıiEİ]
+SFX Ѿ 0 'ınkinde [eıiEİ]
+SFX Ѿ 0 'ınkinden [eıiEİ]
+SFX Ѿ 0 'ınkinin [eıiEİ]
+SFX Ѿ 0 'ınkiyle [eıiEİ]
+SFX Ѿ 0 'ınkiyse [eıiEİ]
+SFX Ѿ 0 'ınkidir [eıiEİ]
+SFX Ѿ 0 'ınkiydi [eıiEİ]
+SFX Ѿ 0 'ınkiymiş [eıiEİ]
+SFX Ѿ 0 'ınkiyken [eıiEİ]
 SFX Ѿ 0 'nın [A-Z]
 SFX Ѿ 0 'nındı [A-Z]
 SFX Ѿ 0 'nındım [A-Z]
@@ -377488,18 +377546,20 @@ SFX Ҁ 0 'ndan/ѧ [A-Z]
 SFX Ҁ 0 'ndan/ѧ km
 SFX Ҁ 0 'ndan/ѧ cm
 SFX Ҁ 0 'ndan/ѧ mm
-SFX ҁ Y 7
+SFX ҁ Y 8
 SFX ҁ 0 'a [^aeıioöuüâîûAEIİOÖUÜÂÎÛ]
 SFX ҁ 0 'ya [aeıioöuüâîûAEIİOÖUÜÂÎÛ]
 SFX ҁ 0 'na [aeıioöuüâîûAEIİOÖUÜÂÎÛ]
+SFX ҁ 0 'a [eıiEİ]
 SFX ҁ 0 'ya [A-Z]
 SFX ҁ 0 'ya km
 SFX ҁ 0 'ya cm
 SFX ҁ 0 'ya mm
-SFX ҂ Y 7
+SFX ҂ Y 8
 SFX ҂ 0 'ı [^aeıioöuüâîûAEIİOÖUÜÂÎÛ]
 SFX ҂ 0 'yı [aeıioöuüâîûAEIİOÖUÜÂÎÛ]
 SFX ҂ 0 'nı [aeıioöuüâîûAEIİOÖUÜÂÎÛ]
+SFX ҂ 0 'ı [eıiEİ]
 SFX ҂ 0 'yı [A-Z]
 SFX ҂ 0 'yı km
 SFX ҂ 0 'yı cm
@@ -377636,7 +377696,7 @@ SFX ҄ 0 'sı/ѧ [A-Z]
 SFX ҄ 0 'sı/ѧ km
 SFX ҄ 0 'sı/ѧ cm
 SFX ҄ 0 'sı/ѧ mm
-SFX ҅ Y 120
+SFX ҅ Y 126
 SFX ҅ 0 'dı .
 SFX ҅ 0 'dım .
 SFX ҅ 0 'dın .
@@ -377729,6 +377789,12 @@ SFX ҅ 0 'lara .
 SFX ҅ 0 'larda .
 SFX ҅ 0 'lardan .
 SFX ҅ 0 'larla .
+SFX ҅ 0 'lardaki .
+SFX ҅ 0 'lardakiler .
+SFX ҅ 0 'lardakilerden .
+SFX ҅ 0 'lardakileri .
+SFX ҅ 0 'larındaki .
+SFX ҅ 0 'larındakiler .
 SFX ҅ 0 'm .
 SFX ҅ 0 'mın .
 SFX ҅ 0 'ma .
@@ -378669,7 +378735,7 @@ SFX Ҍ 0 'su/ѧ [A-Z]
 SFX Ҍ 0 'su/ѧ km
 SFX Ҍ 0 'su/ѧ cm
 SFX Ҍ 0 'su/ѧ mm
-SFX ҍ Y 120
+SFX ҍ Y 126
 SFX ҍ 0 'du .
 SFX ҍ 0 'dum .
 SFX ҍ 0 'dun .
@@ -378762,6 +378828,12 @@ SFX ҍ 0 'lara .
 SFX ҍ 0 'larda .
 SFX ҍ 0 'lardan .
 SFX ҍ 0 'larla .
+SFX ҍ 0 'lardaki .
+SFX ҍ 0 'lardakiler .
+SFX ҍ 0 'lardakilerden .
+SFX ҍ 0 'lardakileri .
+SFX ҍ 0 'larındaki .
+SFX ҍ 0 'larındakiler .
 SFX ҍ 0 'm .
 SFX ҍ 0 'mun .
 SFX ҍ 0 'ma .
@@ -379824,7 +379896,7 @@ SFX Ҕ 0 'si/ѧ [A-Z]
 SFX Ҕ 0 'si/ѧ km
 SFX Ҕ 0 'si/ѧ cm
 SFX Ҕ 0 'si/ѧ mm
-SFX ҕ Y 120
+SFX ҕ Y 126
 SFX ҕ 0 'di .
 SFX ҕ 0 'dim .
 SFX ҕ 0 'din .
@@ -379917,6 +379989,12 @@ SFX ҕ 0 'lere .
 SFX ҕ 0 'lerde .
 SFX ҕ 0 'lerden .
 SFX ҕ 0 'lerle .
+SFX ҕ 0 'lerdeki .
+SFX ҕ 0 'lerdekiler .
+SFX ҕ 0 'lerdekilerden .
+SFX ҕ 0 'lerdekileri .
+SFX ҕ 0 'lerindeki .
+SFX ҕ 0 'lerindekiler .
 SFX ҕ 0 'm .
 SFX ҕ 0 'min .
 SFX ҕ 0 'me .
@@ -380857,7 +380935,7 @@ SFX Ҝ 0 'sü/ѧ [A-Z]
 SFX Ҝ 0 'sü/ѧ km
 SFX Ҝ 0 'sü/ѧ cm
 SFX Ҝ 0 'sü/ѧ mm
-SFX ҝ Y 120
+SFX ҝ Y 126
 SFX ҝ 0 'dü .
 SFX ҝ 0 'düm .
 SFX ҝ 0 'dün .
@@ -380950,6 +381028,12 @@ SFX ҝ 0 'lere .
 SFX ҝ 0 'lerde .
 SFX ҝ 0 'lerden .
 SFX ҝ 0 'lerle .
+SFX ҝ 0 'lerdeki .
+SFX ҝ 0 'lerdekiler .
+SFX ҝ 0 'lerdekilerden .
+SFX ҝ 0 'lerdekileri .
+SFX ҝ 0 'lerindeki .
+SFX ҝ 0 'lerindekiler .
 SFX ҝ 0 'm .
 SFX ҝ 0 'mün .
 SFX ҝ 0 'me .
