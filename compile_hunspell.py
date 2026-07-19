@@ -43,7 +43,9 @@ def get_voiced_stem(lemma: str) -> str:
     if not lemma:
         return ""
     last_char = lemma[-1].lower()
-    voicing_map = {'p': 'b', 'ç': 'c', 't': 'd', 'k': 'ğ'}
+    if last_char == 'k' and lemma.lower().endswith('nk'):
+        return lemma[:-1] + 'g'
+    voicing_map = {'p': 'b', 'ç': 'c', 't': 'd', 'k': 'ğ', 'g': 'ğ'}
     if last_char in voicing_map:
         return lemma[:-1] + voicing_map[last_char]
     return lemma
@@ -100,6 +102,8 @@ def get_poss3sg_stems(lemma: str, voicing: bool = False) -> list[str]:
             voiced_char = 'b'
         elif last_char == 't':
             voiced_char = 'd'
+        elif last_char == 'g':
+            voiced_char = 'ğ'
         elif last_char == 'ç':
             voiced_char = 'c'
             
@@ -127,6 +131,14 @@ def compile_dictionary():
     
     # Inject custom entries to resolve undetected words
     custom_entries = [
+        # User requested additions:
+        {'lemma': 'ahenk', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'diyalog', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'dip', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'dahaki', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'imiş', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'idi', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'idik', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'Atatürk', 'pos': 'ProperNoun', 'attributes': ['NoVoicing']},
         {'lemma': 'Türk', 'pos': 'ProperNoun', 'attributes': []},
         {'lemma': 'çarpıştırıcı', 'pos': 'Noun', 'attributes': []},
@@ -1478,6 +1490,10 @@ def compile_dictionary():
             lemma_part, flags_part = entry.split('/', 1)
         else:
             lemma_part, flags_part = entry, ''
+
+        if 'only_vowel' in flags_part:
+            new_dic_entries.append(entry)
+            continue
 
         lkey = lemma_part.lower()
 
