@@ -916,8 +916,8 @@ def gen_copula_flag_back(flag: str = "CL") -> str:
     for cop_tmpl in COPULAS_VOWEL:
         r_flat = harmonize("oda", cop_tmpl)
         r_round = harmonize("kutu", cop_tmpl)
-        if r_flat: rules.append(sfx(flag, "0", r_flat, "[aı]"))
-        if r_round: rules.append(sfx(flag, "0", r_round, "[ou]"))
+        if r_flat: rules.append(sfx(flag, "0", r_flat, "[aıâ]"))
+        if r_round: rules.append(sfx(flag, "0", r_round, "[ouû]"))
     for cop_tmpl in COPULAS_CONS:
         r_flat = harmonize("bak", cop_tmpl)
         r_round = harmonize("uç", cop_tmpl)
@@ -930,11 +930,11 @@ def gen_copula_flag_back(flag: str = "CL") -> str:
             cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛ]" # Any consonant
 
         if r_flat:
-            rules.append(sfx(flag, "0", r_flat, f"[aı]{cond_suffix}"))
-            rules.append(sfx(flag, "0", r_flat, f"[aı][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_flat, f"[aıâ]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_flat, f"[aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
         if r_round:
-            rules.append(sfx(flag, "0", r_round, f"[ou]{cond_suffix}"))
-            rules.append(sfx(flag, "0", r_round, f"[ou][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_round, f"[ouû]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_round, f"[ouû][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
     return make_flag_block(flag, unique(rules))
 
 def gen_copula_flag_front(flag: str = "cl") -> str:
@@ -959,8 +959,8 @@ def gen_copula_flag_front(flag: str = "cl") -> str:
     for cop_tmpl in COPULAS_VOWEL:
         r_flat = harmonize("kedi", cop_tmpl)
         r_round = harmonize("ütü", cop_tmpl)
-        if r_flat: rules.append(sfx(flag, "0", r_flat, "[eiaâ]"))
-        if r_round: rules.append(sfx(flag, "0", r_round, "[öüou]"))
+        if r_flat: rules.append(sfx(flag, "0", r_flat, "[eiaâî]"))
+        if r_round: rules.append(sfx(flag, "0", r_round, "[öüouû]"))
     for cop_tmpl in COPULAS_CONS:
         r_flat = harmonize("ev", cop_tmpl)
         r_round = harmonize("gör", cop_tmpl)
@@ -973,11 +973,11 @@ def gen_copula_flag_front(flag: str = "cl") -> str:
             cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛ]" # Any consonant
 
         if r_flat:
-            rules.append(sfx(flag, "0", r_flat, f"[eiaâ]{cond_suffix}"))
-            rules.append(sfx(flag, "0", r_flat, f"[eiaâ][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_flat, f"[eiaâî]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_flat, f"[eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
         if r_round:
-            rules.append(sfx(flag, "0", r_round, f"[öüou]{cond_suffix}"))
-            rules.append(sfx(flag, "0", r_round, f"[öüou][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_round, f"[öüouû]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_round, f"[öüouû][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
     return make_flag_block(flag, unique(rules))
 
 
@@ -1008,20 +1008,20 @@ def gen_deriv_li(flag: str = "LI") -> str:
     """-lI adjective derivation"""
     stems = [
         # Vowel endings
-        ("[aı]", "lı", "B3"),
-        ("[ou]", "lu", "B4"),
-        ("[ei]", "li", "F3"),
-        ("[öü]", "lü", "F4"),
+        ("[aıâ]", "lı", "B3"),
+        ("[ouû]", "lu", "B4"),
+        ("[eiîâ]", "li", "F3"),
+        ("[öüû]", "lü", "F4"),
         # Consonant endings (single consonant)
-        ("[aı][^aeıioöuü]", "lı", "B3"),
-        ("[ou][^aeıioöuü]", "lu", "B4"),
-        ("[ei][^aeıioöuü]", "li", "F3"),
-        ("[öü][^aeıioöuü]", "lü", "F4"),
+        ("[aıâ][^aeıioöuüâîû]", "lı", "B3"),
+        ("[ouû][^aeıioöuüâîû]", "lu", "B4"),
+        ("[eiîâ][^aeıioöuüâîû]", "li", "F3"),
+        ("[öüû][^aeıioöuüâîû]", "lü", "F4"),
         # Double consonant endings
-        ("[aı][^aeıioöuü][^aeıioöuü]", "lı", "B3"),
-        ("[ou][^aeıioöuü][^aeıioöuü]", "lu", "B4"),
-        ("[ei][^aeıioöuü][^aeıioöuü]", "li", "F3"),
-        ("[öü][^aeıioöuü][^aeıioöuü]", "lü", "F4"),
+        ("[aıâ][^aeıioöuüâîû][^aeıioöuüâîû]", "lı", "B3"),
+        ("[ouû][^aeıioöuüâîû][^aeıioöuüâîû]", "lu", "B4"),
+        ("[eiîâ][^aeıioöuüâîû][^aeıioöuüâîû]", "li", "F3"),
+        ("[öüû][^aeıioöuüâîû][^aeıioöuüâîû]", "lü", "F4"),
     ]
     rules = []
     for cond, suf, sc in stems:
@@ -1033,12 +1033,12 @@ def gen_deriv_sz(flag: str = "SZ") -> str:
     """-sIz (without) derivation"""
     rules = []
     for cond, suf, sc in [
-        ("[aıou]", "sız", "B1"), ("[eiöü]", "siz", "F1"),
-        ("[aı][^aeıioöuü]", "sız", "B1"), ("[ou][^aeıioöuü]", "suz", "B2"),
-        ("[ei][^aeıioöuü]", "siz", "F1"), ("[öü][^aeıioöuü]", "süz", "F2"),
+        ("[aıouâû]", "sız", "B1"), ("[eiöüîâû]", "siz", "F1"),
+        ("[aıâ][^aeıioöuüâîû]", "sız", "B1"), ("[ouû][^aeıioöuüâîû]", "suz", "B2"),
+        ("[eiîâ][^aeıioöuüâîû]", "siz", "F1"), ("[öüû][^aeıioöuüâîû]", "süz", "F2"),
         # Two-consonant endings
-        ("[aı][^aeıioöuü][^aeıioöuü]", "sız", "B1"), ("[ou][^aeıioöuü][^aeıioöuü]", "suz", "B2"),
-        ("[ei][^aeıioöuü][^aeıioöuü]", "siz", "F1"), ("[öü][^aeıioöuü][^aeıioöuü]", "süz", "F2"),
+        ("[aıâ][^aeıioöuüâîû][^aeıioöuüâîû]", "sız", "B1"), ("[ouû][^aeıioöuüâîû][^aeıioöuüâîû]", "suz", "B2"),
+        ("[eiîâ][^aeıioöuüâîû][^aeıioöuüâîû]", "siz", "F1"), ("[öüû][^aeıioöuüâîû][^aeıioöuüâîû]", "süz", "F2"),
     ]:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
     return make_flag_block(flag, unique(rules))
@@ -1048,13 +1048,13 @@ def gen_deriv_sl(flag: str = "SL") -> str:
     """-sAl adjective derivation"""
     rules = []
     for cond, suf, sc in [
-        ("[aıou]",             "sal", "B1"),
-        ("[eiöü]",             "sel", "F1"),
-        ("[aıou][^aeıioöuü]",  "sal", "B1"),
-        ("[eiöü][^aeıioöuü]",  "sel", "F1"),
+        ("[aıouâû]",             "sal", "B1"),
+        ("[eiöüîâû]",             "sel", "F1"),
+        ("[aıouâû][^aeıioöuüâîû]",  "sal", "B1"),
+        ("[eiöüîâû][^aeıioöuüâîû]",  "sel", "F1"),
         # Two-consonant endings
-        ("[aıou][^aeıioöuü][^aeıioöuü]",  "sal", "B1"),
-        ("[eiöü][^aeıioöuü][^aeıioöuü]",  "sel", "F1"),
+        ("[aıouâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "sal", "B1"),
+        ("[eiöüîâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "sel", "F1"),
     ]:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
     return make_flag_block(flag, unique(rules))
@@ -1064,19 +1064,19 @@ def gen_deriv_lk(flag: str = "LK") -> str:
     """-lIk abstract noun derivation + two-stage flag chaining"""
     rules = []
     for cond, suf, suf_v, sc in [
-        ("[aı][^aeıioöuü]", "lık", "lığ", "B1"),
-        ("[ou][^aeıioöuü]", "luk", "luğ", "B2"),
-        ("[ei][^aeıioöuü]", "lik", "liğ", "F1"),
-        ("[öü][^aeıioöuü]", "lük", "lüğ", "F2"),
-        ("[aı]",            "lık", "lığ", "B1"),
-        ("[ou]",            "luk", "luğ", "B2"),
-        ("[ei]",            "lik", "liğ", "F1"),
-        ("[öü]",            "lük", "lüğ", "F2"),
+        ("[aıâ][^aeıioöuüâîû]", "lık", "lığ", "B1"),
+        ("[ouû][^aeıioöuüâîû]", "luk", "luğ", "B2"),
+        ("[eiîâ][^aeıioöuüâîû]", "lik", "liğ", "F1"),
+        ("[öüû][^aeıioöuüâîû]", "lük", "lüğ", "F2"),
+        ("[aıâ]",            "lık", "lığ", "B1"),
+        ("[ouû]",            "luk", "luğ", "B2"),
+        ("[eiîâ]",            "lik", "liğ", "F1"),
+        ("[öüû]",            "lük", "lüğ", "F2"),
         # Two-consonant stems support
-        ("[aı][^aeıioöuü][^aeıioöuü]", "lık", "lığ", "B1"),
-        ("[ou][^aeıioöuü][^aeıioöuü]", "luk", "luğ", "B2"),
-        ("[ei][^aeıioöuü][^aeıioöuü]", "lik", "liğ", "F1"),
-        ("[öü][^aeıioöuü][^aeıioöuü]", "lük", "lüğ", "F2"),
+        ("[aıâ][^aeıioöuüâîû][^aeıioöuüâîû]", "lık", "lığ", "B1"),
+        ("[ouû][^aeıioöuüâîû][^aeıioöuüâîû]", "luk", "luğ", "B2"),
+        ("[eiîâ][^aeıioöuüâîû][^aeıioöuüâîû]", "lik", "liğ", "F1"),
+        ("[öüû][^aeıioöuüâîû][^aeıioöuüâîû]", "lük", "lüğ", "F2"),
     ]:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc, only_consonant=True)[2:]}", cond))
         rules.append(sfx(flag, "0", f"{suf_v}/{get_noun_chain(sc, only_vowel=True)}NE", cond))
@@ -1088,16 +1088,16 @@ def gen_deriv_ci(flag: str = "CI") -> str:
     """-CI agentive/occupational noun derivation"""
     rules = []
     for cond, suf, sc in [
-        ("[aı][^çfhkpsşt]", "cı", "B3"), ("[ou][^çfhkpsşt]", "cu", "B4"),
-        ("[ei][^çfhkpsşt]", "ci", "F3"), ("[öü][^çfhkpsşt]", "cü", "F4"),
-        ("[aı][çfhkpsşt]",  "çı", "B3"), ("[ou][çfhkpsşt]",  "çu", "B4"),
-        ("[ei][çfhkpsşt]",  "çi", "F3"), ("[öü][çfhkpsşt]",  "çü", "F4"),
-        ("[aı]", "cı", "B3"), ("[ou]", "cu", "B4"), ("[ei]", "ci", "F3"), ("[öü]", "cü", "F4"),
+        ("[aıâ][^çfhkpsşt]", "cı", "B3"), ("[ouû][^çfhkpsşt]", "cu", "B4"),
+        ("[eiîâ][^çfhkpsşt]", "ci", "F3"), ("[öüû][^çfhkpsşt]", "cü", "F4"),
+        ("[aıâ][çfhkpsşt]",  "çı", "B3"), ("[ouû][çfhkpsşt]",  "çu", "B4"),
+        ("[eiîâ][çfhkpsşt]",  "çi", "F3"), ("[öüû][çfhkpsşt]",  "çü", "F4"),
+        ("[aıâ]", "cı", "B3"), ("[ouû]", "cu", "B4"), ("[eiîâ]", "ci", "F3"), ("[öüû]", "cü", "F4"),
         # Two-consonant endings
-        ("[aı][^aeıioöuü][^çfhkpsşt]", "cı", "B3"), ("[ou][^aeıioöuü][^çfhkpsşt]", "cu", "B4"),
-        ("[ei][^aeıioöuü][^çfhkpsşt]", "ci", "F3"), ("[öü][^aeıioöuü][^çfhkpsşt]", "cü", "F4"),
-        ("[aı][^aeıioöuü][çfhkpsşt]",  "çı", "B3"), ("[ou][^aeıioöuü][çfhkpsşt]",  "çu", "B4"),
-        ("[ei][^aeıioöuü][çfhkpsşt]",  "çi", "F3"), ("[öü][^aeıioöuü][çfhkpsşt]",  "çü", "F4"),
+        ("[aıâ][^aeıioöuüâîû][^çfhkpsşt]", "cı", "B3"), ("[ouû][^aeıioöuüâîû][^çfhkpsşt]", "cu", "B4"),
+        ("[eiîâ][^aeıioöuüâîû][^çfhkpsşt]", "ci", "F3"), ("[öüû][^aeıioöuüâîû][^çfhkpsşt]", "cü", "F4"),
+        ("[aıâ][^aeıioöuüâîû][çfhkpsşt]",  "çı", "B3"), ("[ouû][^aeıioöuüâîû][çfhkpsşt]",  "çu", "B4"),
+        ("[eiîâ][^aeıioöuüâîû][çfhkpsşt]",  "çi", "F3"), ("[öüû][^aeıioöuüâîû][çfhkpsşt]",  "çü", "F4"),
     ]:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
     return make_flag_block(flag, unique(rules))
@@ -1107,16 +1107,16 @@ def gen_deriv_ck(flag: str = "CK") -> str:
     """-cIk diminutive"""
     rules = []
     for cond, suf in [
-        ("[aı][^çfhkpsşt]", "cık"), ("[ou][^çfhkpsşt]", "cuk"),
-        ("[ei][^çfhkpsşt]", "cik"), ("[öü][^çfhkpsşt]", "cük"),
-        ("[aı][çfhkpsşt]",  "çık"), ("[ou][çfhkpsşt]",  "çuk"),
-        ("[ei][çfhkpsşt]",  "çik"), ("[öü][çfhkpsşt]",  "çük"),
-        ("[aı]", "cık"), ("[ou]", "cuk"), ("[ei]", "cik"), ("[öü]", "cük"),
+        ("[aıâ][^çfhkpsşt]", "cık"), ("[ouû][^çfhkpsşt]", "cuk"),
+        ("[eiîâ][^çfhkpsşt]", "cik"), ("[öüû][^çfhkpsşt]", "cük"),
+        ("[aıâ][çfhkpsşt]",  "çık"), ("[ouû][çfhkpsşt]",  "çuk"),
+        ("[eiîâ][çfhkpsşt]",  "çik"), ("[öüû][çfhkpsşt]",  "çük"),
+        ("[aıâ]", "cık"), ("[ouû]", "cuk"), ("[eiîâ]", "cik"), ("[öüû]", "cük"),
         # Two-consonant endings
-        ("[aı][^aeıioöuü][^çfhkpsşt]", "cık"), ("[ou][^aeıioöuü][^çfhkpsşt]", "cuk"),
-        ("[ei][^aeıioöuü][^çfhkpsşt]", "cik"), ("[öü][^aeıioöuü][^çfhkpsşt]", "cük"),
-        ("[aı][^aeıioöuü][çfhkpsşt]",  "çık"), ("[ou][^aeıioöuü][çfhkpsşt]",  "çuk"),
-        ("[ei][^aeıioöuü][çfhkpsşt]",  "çik"), ("[öü][^aeıioöuü][çfhkpsşt]",  "çük"),
+        ("[aıâ][^aeıioöuüâîû][^çfhkpsşt]", "cık"), ("[ouû][^aeıioöuüâîû][^çfhkpsşt]", "cuk"),
+        ("[eiîâ][^aeıioöuüâîû][^çfhkpsşt]", "cik"), ("[öüû][^aeıioöuüâîû][^çfhkpsşt]", "cük"),
+        ("[aıâ][^aeıioöuüâîû][çfhkpsşt]",  "çık"), ("[ouû][^aeıioöuüâîû][çfhkpsşt]",  "çuk"),
+        ("[eiîâ][^aeıioöuüâîû][çfhkpsşt]",  "çik"), ("[öüû][^aeıioöuüâîû][çfhkpsşt]",  "çük"),
     ]:
         rules.append(sfx(flag, "0", suf, cond))
     return make_flag_block(flag, unique(rules))
@@ -1130,19 +1130,19 @@ def gen_deriv_las(flag: str = "DL") -> str:
     """-lAş verb-forming derivation"""
     rules = []
     for cond, suf, verb_inf in [
-        ("[aı]",                  "laş", "laşmak"),
-        ("[ou]",                  "laş", "laşmak"),
-        ("[ei]",                  "leş", "leşmek"),
-        ("[öü]",                  "leş", "leşmek"),
-        ("[aı][^aeıioöuü]",       "laş", "laşmak"),
-        ("[ou][^aeıioöuü]",       "laş", "laşmak"),
-        ("[ei][^aeıioöuü]",       "leş", "leşmek"),
-        ("[öü][^aeıioöuü]",       "leş", "leşmek"),
+        ("[aıâ]",                  "laş", "laşmak"),
+        ("[ouû]",                  "laş", "laşmak"),
+        ("[eiîâ]",                  "leş", "leşmek"),
+        ("[öüû]",                  "leş", "leşmek"),
+        ("[aıâ][^aeıioöuüâîû]",       "laş", "laşmak"),
+        ("[ouû][^aeıioöuüâîû]",       "laş", "laşmak"),
+        ("[eiîâ][^aeıioöuüâîû]",       "leş", "leşmek"),
+        ("[öüû][^aeıioöuüâîû]",       "leş", "leşmek"),
         # Two-consonant endings
-        ("[aı][^aeıioöuü][^aeıioöuü]",       "laş", "laşmak"),
-        ("[ou][^aeıioöuü][^aeıioöuü]",       "laş", "laşmak"),
-        ("[ei][^aeıioöuü][^aeıioöuü]",       "leş", "leşmek"),
-        ("[öü][^aeıioöuü][^aeıioöuü]",       "leş", "leşmek"),
+        ("[aıâ][^aeıioöuüâîû][^aeıioöuüâîû]",       "laş", "laşmak"),
+        ("[ouû][^aeıioöuüâîû][^aeıioöuüâîû]",       "laş", "laşmak"),
+        ("[eiîâ][^aeıioöuüâîû][^aeıioöuüâîû]",       "leş", "leşmek"),
+        ("[öüû][^aeıioöuüâîû][^aeıioöuüâîû]",       "leş", "leşmek"),
     ]:
         verb_flag = "Vb" if "a" in suf else "Vf"
         rules.append(sfx(flag, "0", f"{verb_inf}/{verb_flag}", cond))
@@ -1153,13 +1153,13 @@ def gen_deriv_las_tir(flag: str = "DT") -> str:
     """-lAştIr causative verb-forming derivation"""
     rules = []
     for cond, suf in [
-        ("[aıou]",             "laştır"),
-        ("[eiöü]",             "leştir"),
-        ("[aıou][^aeıioöuü]",  "laştır"),
-        ("[eiöü][^aeıioöuü]",  "leştir"),
+        ("[aıouâû]",             "laştır"),
+        ("[eiöüîâû]",             "leştir"),
+        ("[aıouâû][^aeıioöuüâîû]",  "laştır"),
+        ("[eiöüîâû][^aeıioöuüâîû]",  "leştir"),
         # Two-consonant endings
-        ("[aıou][^aeıioöuü][^aeıioöuü]",  "laştır"),
-        ("[eiöü][^aeıioöuü][^aeıioöuü]",  "leştir"),
+        ("[aıouâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "laştır"),
+        ("[eiöüîâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "leştir"),
     ]:
         verb_flag = "Vb" if "ı" in suf else "Vf"
         inf_suf = "mak" if verb_flag == "Vb" else "mek"
@@ -1171,13 +1171,13 @@ def gen_deriv_len(flag: str = "DE") -> str:
     """-lAn reflexive/passive verb-forming derivation"""
     rules = []
     for cond, suf in [
-        ("[aıou]",             "lan"),
-        ("[eiöü]",             "len"),
-        ("[aıou][^aeıioöuü]",  "lan"),
-        ("[eiöü][^aeıioöuü]",  "len"),
+        ("[aıouâû]",             "lan"),
+        ("[eiöüîâû]",             "len"),
+        ("[aıouâû][^aeıioöuüâîû]",  "lan"),
+        ("[eiöüîâû][^aeıioöuüâîû]",  "len"),
         # Two-consonant endings
-        ("[aıou][^aeıioöuü][^aeıioöuü]",  "lan"),
-        ("[eiöü][^aeıioöuü][^aeıioöuü]",  "len"),
+        ("[aıouâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "lan"),
+        ("[eiöüîâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "len"),
     ]:
         verb_flag = "Vb" if "a" in suf else "Vf"
         inf_suf = "mak" if verb_flag == "Vb" else "mek"
