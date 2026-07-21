@@ -1707,9 +1707,6 @@ def gen_proper_flags() -> list[str]:
             "'Im", "'sIn", "'Iz", "'sInIz", "'lAr",
             "'dIr", "'tIr", "'dIrlAr", "'tIrlAr", "'lArdIr", "'ken",
             "'ImdIr", "'sIndIr", "'IzdIr", "'sInIzdIr",
-            # Add proper noun -li / -lı / -lu / -lü derivatives (e.g. ABD’li, Bahamalar’daki)
-            "'lI", "'lIylA", "'lIlAr", "'lIlArA", "'lIlArdI", "'lIlArdAn",
-            "'lIyI", "'lIyA", "'lIdA", "'lIdAn", "'lIydI", "'lIymIş", "'lIsA", "'lIdIr",
             # Add proper noun possessive forms and their case inflections (e.g. Güneş'imizin, Dünya'mızın)
             # 1sg possessives (consonant-ending stem)
             "'Im", "'ImIn", "'ImA", "'ImI", "'ImdA", "'ImdAn", "'ImlA",

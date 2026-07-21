@@ -1473,18 +1473,30 @@ def compile_dictionary():
         if item.get('pos') == 'ProperNoun':
             proper_nouns_to_flag.add(item['lemma'].replace('I', 'ı').replace('İ', 'i').lower())
 
+    for item in custom_entries:
+        if isinstance(item, dict) and item.get('pos') == 'ProperNoun':
+            proper_nouns_to_flag.add(item['lemma'].replace('I', 'ı').replace('İ', 'i').lower())
+
     # Remove proper nouns from noun_lemmas to prevent them from being treated as common nouns
     # noun_lemmas = noun_lemmas - proper_nouns_to_flag
 
     def _proper_flag_for(lemma_lower: str) -> str:
         if lemma_lower in PROPER_NOUN_OVERRIDES:
             return PROPER_NOUN_OVERRIDES[lemma_lower]
+        # Turkish consonant-only abbreviations (e.g. TDK, TBMM, TRT, SGK, BDDK, THY, TSK, CHP, MHP, AKP, MİT, LGS, YKS)
+        has_vowels = any(c in 'aeıioöuüâîû' for c in lemma_lower)
+        if not has_vowels:
+            return 'pF'  # Turkish letters are read with 'e' (te-de-ke, se-ge-ke, te-re-te, etc.)
         lv = get_last_vowel(lemma_lower)
         return PROPER_HARMONY.get(lv, 'pB')  # default back-unrounded
 
     # Rebuild dic_entries, enforcing capitalization with KEEPCASE (KC)
     new_dic_entries = []
     seen_overrides = set()
+    
+    # Derived proper noun patterns that MUST NOT take apostrophes (TDK rule: yapım eki almış özel adlara kesme konmaz)
+    derived_no_apostrophe_suffixes = ('ce', 'ca', 'çe', 'ça', 'lı', 'li', 'lu', 'lü', 'lık', 'lik', 'luk', 'lük')
+    
     for entry in dic_entries:
         if '/' in entry:
             lemma_part, flags_part = entry.split('/', 1)
@@ -1501,41 +1513,39 @@ def compile_dictionary():
             new_dic_entries.append(f"T.C./{flags_part},KC" if flags_part else "T.C./KC")
             continue
 
-        # Case 1: Word is a proper noun (e.g. Ankara, or overrides like Temmuz, İrlanda)
+        # Case 1: Word is a proper noun (e.g. Ankara, TDK, Atatürk, or overrides like Temmuz, İrlanda)
         if lkey in proper_nouns_to_flag:
-            pfx = _proper_flag_for(lkey)
-            proper_flags = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
-            # For lowercase abbreviations/units (like km, cm, mm, kg, gr), keep them lowercase and add proper noun flags
-            if lkey in {'km', 'cm', 'mm', 'kg', 'gr'}:
-                new_entry = f"{lkey}/{proper_flags}"
+            is_derived_proper = lkey.endswith(derived_no_apostrophe_suffixes) and lkey not in PROPER_NOUN_OVERRIDES
+            if is_derived_proper:
+                # Derived proper noun (e.g. Türkçe, Ankaralı, Türklük): takes standard case flags WITHOUT apostrophes
+                cap_lemma = capitalize_word(lkey, lkey)
+                new_entry = f"{cap_lemma}/{flags_part},KC" if flags_part else f"{cap_lemma}/KC"
                 new_dic_entries.append(new_entry)
             else:
-                cap_lemma = capitalize_word(lkey, lkey)
-                # Rebuild entry as capitalized with proper noun flags and KEEPCASE
-                if flags_part:
-                    new_entry = f"{cap_lemma}/{flags_part},{proper_flags},KC"
+                pfx = _proper_flag_for(lkey)
+                proper_flags = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
+                # For lowercase abbreviations/units (like km, cm, mm, kg, gr), keep them lowercase and add proper noun flags
+                if lkey in {'km', 'cm', 'mm', 'kg', 'gr'}:
+                    new_entry = f"{lkey}/{proper_flags}"
+                    new_dic_entries.append(new_entry)
                 else:
-                    new_entry = f"{cap_lemma}/{proper_flags},KC"
-                new_dic_entries.append(new_entry)
+                    cap_lemma = capitalize_word(lkey, lkey)
+                    # Rebuild entry as capitalized with proper noun flags and KEEPCASE
+                    if flags_part:
+                        new_entry = f"{cap_lemma}/{flags_part},{proper_flags},KC"
+                    else:
+                        new_entry = f"{cap_lemma}/{proper_flags},KC"
+                    new_dic_entries.append(new_entry)
             
             if lkey in PROPER_NOUN_OVERRIDES:
                 seen_overrides.add(lkey)
             
-            # If it also functions as a common noun (e.g. Temmuz), keep the lowercase common-noun entry and add its possessive forms
+            # If it also functions as a common noun (e.g. Temmuz), keep the lowercase common-noun entry
             if lkey in noun_lemmas:
                 if lkey in {'km', 'cm', 'mm', 'kg', 'gr', 'şii'}:
                     pass
                 else:
-                    if flags_part:
-                        new_dic_entries.append(f"{lkey}/{flags_part},{proper_flags}")
-                    else:
-                        new_dic_entries.append(f"{lkey}/{proper_flags}")
-                    for poss_stem in get_poss3sg_stems(lkey, voicing=voicing_map.get(lkey, False)):
-                        pfx_poss = _proper_flag_for(poss_stem)
-                        proper_flags_poss = ','.join(f'{pfx_poss}{s}' for s in PROPER_SUB_FLAGS)
-                        cap_poss = capitalize_word(poss_stem, lkey)
-                        poss_entry = f"{cap_poss}/{proper_flags_poss},KC"
-                        new_dic_entries.append(poss_entry)
+                    new_dic_entries.append(f"{lkey}/{flags_part}" if flags_part else lkey)
 
         # Case 2: Word is a common noun (but not explicitly tagged as proper noun/override)
         elif lkey in noun_lemmas:
@@ -1550,11 +1560,9 @@ def compile_dictionary():
             else:
                 new_dic_entries.append(entry)
             
-            # 2. Add capitalized version of base stem with proper noun flags and KEEPCASE
-            pfx = _proper_flag_for(lkey)
-            proper_flags = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
+            # 2. Add capitalized version of base stem with KEEPCASE for sentence-start capitalization (without spurious apostrophe flags)
             cap_lemma = capitalize_word(lkey, lkey)
-            new_entry = f"{cap_lemma}/{proper_flags},KC"
+            new_entry = f"{cap_lemma}/{flags_part},KC" if flags_part else f"{cap_lemma}/KC"
             new_dic_entries.append(new_entry)
 
             # 3. Add capitalized version of 3sg possessive stems (e.g. Bölümü, Teleskobu) with proper noun flags and KEEPCASE
