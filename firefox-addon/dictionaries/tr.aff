@@ -377696,7 +377696,7 @@ SFX ҄ 0 'sı/ѧ [A-Z]
 SFX ҄ 0 'sı/ѧ km
 SFX ҄ 0 'sı/ѧ cm
 SFX ҄ 0 'sı/ѧ mm
-SFX ҅ Y 126
+SFX ҅ Y 112
 SFX ҅ 0 'dı .
 SFX ҅ 0 'dım .
 SFX ҅ 0 'dın .
@@ -377736,20 +377736,6 @@ SFX ҅ 0 'ımdır .
 SFX ҅ 0 'sındır .
 SFX ҅ 0 'ızdır .
 SFX ҅ 0 'sınızdır .
-SFX ҅ 0 'lı .
-SFX ҅ 0 'lıyla .
-SFX ҅ 0 'lılar .
-SFX ҅ 0 'lılara .
-SFX ҅ 0 'lılardı .
-SFX ҅ 0 'lılardan .
-SFX ҅ 0 'lıyı .
-SFX ҅ 0 'lıya .
-SFX ҅ 0 'lıda .
-SFX ҅ 0 'lıdan .
-SFX ҅ 0 'lıydı .
-SFX ҅ 0 'lıymış .
-SFX ҅ 0 'lısa .
-SFX ҅ 0 'lıdır .
 SFX ҅ 0 'ımın .
 SFX ҅ 0 'ıma .
 SFX ҅ 0 'ımı .
@@ -378735,7 +378721,7 @@ SFX Ҍ 0 'su/ѧ [A-Z]
 SFX Ҍ 0 'su/ѧ km
 SFX Ҍ 0 'su/ѧ cm
 SFX Ҍ 0 'su/ѧ mm
-SFX ҍ Y 126
+SFX ҍ Y 112
 SFX ҍ 0 'du .
 SFX ҍ 0 'dum .
 SFX ҍ 0 'dun .
@@ -378775,20 +378761,6 @@ SFX ҍ 0 'umdur .
 SFX ҍ 0 'sundur .
 SFX ҍ 0 'uzdur .
 SFX ҍ 0 'sunuzdur .
-SFX ҍ 0 'lu .
-SFX ҍ 0 'luyla .
-SFX ҍ 0 'lular .
-SFX ҍ 0 'lulara .
-SFX ҍ 0 'lulardı .
-SFX ҍ 0 'lulardan .
-SFX ҍ 0 'luyu .
-SFX ҍ 0 'luya .
-SFX ҍ 0 'luda .
-SFX ҍ 0 'ludan .
-SFX ҍ 0 'luydu .
-SFX ҍ 0 'luymuş .
-SFX ҍ 0 'lusa .
-SFX ҍ 0 'ludur .
 SFX ҍ 0 'umun .
 SFX ҍ 0 'uma .
 SFX ҍ 0 'umu .
@@ -379896,7 +379868,7 @@ SFX Ҕ 0 'si/ѧ [A-Z]
 SFX Ҕ 0 'si/ѧ km
 SFX Ҕ 0 'si/ѧ cm
 SFX Ҕ 0 'si/ѧ mm
-SFX ҕ Y 126
+SFX ҕ Y 112
 SFX ҕ 0 'di .
 SFX ҕ 0 'dim .
 SFX ҕ 0 'din .
@@ -379936,20 +379908,6 @@ SFX ҕ 0 'imdir .
 SFX ҕ 0 'sindir .
 SFX ҕ 0 'izdir .
 SFX ҕ 0 'sinizdir .
-SFX ҕ 0 'li .
-SFX ҕ 0 'liyle .
-SFX ҕ 0 'liler .
-SFX ҕ 0 'lilere .
-SFX ҕ 0 'lilerdi .
-SFX ҕ 0 'lilerden .
-SFX ҕ 0 'liyi .
-SFX ҕ 0 'liye .
-SFX ҕ 0 'lide .
-SFX ҕ 0 'liden .
-SFX ҕ 0 'liydi .
-SFX ҕ 0 'liymiş .
-SFX ҕ 0 'lise .
-SFX ҕ 0 'lidir .
 SFX ҕ 0 'imin .
 SFX ҕ 0 'ime .
 SFX ҕ 0 'imi .
@@ -380935,7 +380893,7 @@ SFX Ҝ 0 'sü/ѧ [A-Z]
 SFX Ҝ 0 'sü/ѧ km
 SFX Ҝ 0 'sü/ѧ cm
 SFX Ҝ 0 'sü/ѧ mm
-SFX ҝ Y 126
+SFX ҝ Y 112
 SFX ҝ 0 'dü .
 SFX ҝ 0 'düm .
 SFX ҝ 0 'dün .
@@ -380975,20 +380933,6 @@ SFX ҝ 0 'ümdür .
 SFX ҝ 0 'sündür .
 SFX ҝ 0 'üzdür .
 SFX ҝ 0 'sünüzdür .
-SFX ҝ 0 'lü .
-SFX ҝ 0 'lüyle .
-SFX ҝ 0 'lüler .
-SFX ҝ 0 'lülere .
-SFX ҝ 0 'lülerdi .
-SFX ҝ 0 'lülerden .
-SFX ҝ 0 'lüyü .
-SFX ҝ 0 'lüye .
-SFX ҝ 0 'lüde .
-SFX ҝ 0 'lüden .
-SFX ҝ 0 'lüydü .
-SFX ҝ 0 'lüymüş .
-SFX ҝ 0 'lüse .
-SFX ҝ 0 'lüdür .
 SFX ҝ 0 'ümün .
 SFX ҝ 0 'üme .
 SFX ҝ 0 'ümü .
