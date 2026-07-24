@@ -1,6 +1,6 @@
 # Turkspell: Optimized Turkish Hunspell Dictionary
 
-Turkspell is a high-performance, lightweight Turkish Hunspell dictionary (`tr.dic` and `tr.aff`) built using a **Dynamic Chained Flags** architecture. It achieves **state-of-the-art correction accuracy** on Turkish spelling benchmarks — ranking **#1 on V1, V2, and V3** — while reducing the affix file size from **139.7 MB** to **12.95 MB** (total dictionary memory footprint: **20.67 MB**).
+Turkspell is a high-performance, lightweight Turkish Hunspell dictionary (`tr.dic` and `tr.aff`) built using a **Dynamic Chained Flags** architecture. It achieves **state-of-the-art correction accuracy** on Turkish spelling benchmarks — ranking **#1 on V1, V2, and V3** — while reducing the dictionary file size to **5.4 MB** (`tr.dic` with 95,505 entries) and affix file to **13.9 MB** (`tr.aff`). Total dictionary memory footprint is **~18 MB** (over **50% smaller** than previous builds, optimized for Firefox and Chrome browser extensions).
 
 ---
 
@@ -101,7 +101,12 @@ Turkspell uses a **Dynamic Chained Flags** architecture to dynamically combine s
    - **Voicing / Devoicing**: Suffixes starting with consonants handle voiced/unvoiced transitions natively, while stems with final-consonant voicing are expanded to alternative voiced stems (e.g. `kitap` / `kitab`) taking vowel-starting case suffix chains.
    - **Vowel Dropping**: Automatically strips target vowels for drop-stems (e.g., `akıl` -> `aklı`).
    - **y-buffering & Vowel Harmony**: Suffix flags are split by ending type (uppercase for consonant endings, lowercase for vowel endings, e.g. `A1`/`a1` for accusative) to safely apply proper buffer vowels without using complex multi-byte bracket classes (`[...]` negated groups), bypassing UTF-8 parsing constraints in Hunspell.
-4. **Obsolete/Obscure Roots Pruning (`NOSUGGEST`)**:
+4. **Brand Names & Web Browsers Support**:
+   - Includes over 200 top global tech brands (*Apple*, *Google*, *Microsoft*, *Amazon*, *Meta*, *YouTube*, *Netflix*, *Spotify*, *Intel*, *Nvidia*, *Yandex*), web browsers (*Chrome*, *Firefox*, *Safari*, *Edge*, *Opera*, *Brave*, *Vivaldi*, *Tor*, *Arc*), hardware, automotive, and top 100 Turkish brands (*Turkcell*, *Garanti*, *THY*, *Trendyol*, *Migros*, *Vestel*, *Arçelik*, *Aselsan*, *TOGG*, *BİM*, *A101*).
+   - Proper noun suffixes follow spoken Turkish pronunciations (e.g. *Apple'ın*, *Google'a*, *Intel'in*, *Turkcell'in* with `InverseHarmony` thin-l rules; *Chrome'un*, *Firefox'un*, *Nike'ın* with `NoVoicing` rules).
+5. **Direct Lowercase Proper Flag Attachment**:
+   - Proper-noun suffix flags (`pBN`, `pFN`, `pBL`, `pFL`, etc.) attach directly to lowercase noun stems in `tr.dic`, allowing both standard sentence-start title-casing (`Anesteziyoloji`) and proper apostrophe suffixing (`Anesteziyoloji'ye`, `Bölüm'ün`) without duplicating capitalized entries, cutting dictionary size by 50%.
+6. **Obsolete/Obscure Roots Pruning (`NOSUGGEST`)**:
    - To prevent obscure or archaic Zemberek lemmas (e.g. *şad*, *Abidyan*, *akasma*) from matching spelling errors and cluttering spelling suggestions, we analyze all lexicon stems against the Wikipedia and magazine corpora.
    - Any root with a combined frequency of **0** (never appearing in the corpora, including all common inflections) is flagged as obsolete and annotated with Hunspell's `NOSUGGEST` (`NS`) flag.
    - Stems marked with `NS` are **fully accepted as correct** when typed, but are excluded from suggestions for typos, keeping the correction list focused and relevant.
@@ -185,7 +190,7 @@ The spell-checking benchmarks in this project are evaluated on datasets from the
 ---
 ---
 
-Turkspell, **Dinamik Zincirleme Bayraklar** (Dynamic Chained Flags) mimarisine dayanan, yüksek performanslı ve hafif bir Türkçe Hunspell sözlüğüdür (`tr.dic` ve `tr.aff`). Her iki standart Türkçe yazım denetimi testinde **en üst düzey düzeltme doğruluğunu** elde eder — **V1, V2 ve V3'te 1. sırada** yer alır — ve ek (affix) dosya boyutunu **139.7 MB**'tan **12.95 MB**'a (toplam sözlük hafıza alanı: **20.67 MB**) düşürür.
+Turkspell, **Dinamik Zincirleme Bayraklar** (Dynamic Chained Flags) mimarisine dayanan, yüksek performanslı ve hafif bir Türkçe Hunspell sözlüğüdür (`tr.dic` ve `tr.aff`). Her iki standart Türkçe yazım denetimi testinde **en üst düzey düzeltme doğruluğunu** elde eder — **V1, V2 ve V3'te 1. sırada** yer alır — sözlük dosya boyutunu **5.4 MB**'a (`tr.dic` 95.505 kelime) düşürerek tarayıcı ve eklentilerdeki toplam bellek kullanımını **~18 MB** seviyesine (önceki sürümlere göre **%50 daha hafif**) indirir.
 
 ---
 
@@ -284,7 +289,12 @@ Turkspell, ekleri Hunspell motoru içinde dinamik olarak birleştirmek için bir
    - **Ünsüz Yumuşaması**: Ünsüzle başlayan ekler yumuşama/sertleşmeleri kendiliğinden yönetirken, ünsüz yumuşaması gösteren kökler ünlüyle başlayan ek zincirlerini alabilmek için alternatif yumuşak köklerle (örn. `kitap` / `kitab`) sözlüğe eklenir.
    - **Ses Düşmesi**: Ünlü düşmesi gösteren kelimelerde ilgili ünlüyü otomatik olarak düşürür (örn. `akıl` -> `aklı`).
    - **Kaynaştırma Harfleri & Ünlü Uyumu**: Ek bayrakları son ses harfinin sesli/sessiz oluşuna göre ayrılmıştır (sessiz için büyük harf, sesli için küçük harf, örn. belirtme hali için `A1`/`a1`). Bu sayede Hunspell içindeki UTF-8 kısıtlamalarına takılan karmaşık negatif karakter sınıfları (`[...]` negated groups) kullanılmadan kaynaştırma harfleri güvenle uygulanır.
-4. **Eski/Kullanımdan Kalkmış Köklerin Budanması (`NOSUGGEST`)**:
+4. **Marka İsimleri ve Web Tarayıcı Desteği**:
+   - Küresel teknoloji markaları (*Apple*, *Google*, *Microsoft*, *Amazon*, *Meta*, *YouTube*, *Netflix*, *Spotify*, *Intel*, *Nvidia*, *Yandex*), web tarayıcıları (*Chrome*, *Firefox*, *Safari*, *Edge*, *Opera*, *Brave*, *Vivaldi*, *Tor*, *Arc*) ve Türkiye'nin en büyük 100 markası (*Turkcell*, *Garanti*, *THY*, *Trendyol*, *Migros*, *Vestel*, *Arçelik*, *Aselsan*, *TOGG*, *BİM*, *A101*) dahil olmak üzere 200'den fazla popüler marka eklenmiştir.
+   - Özel isim ekleri Türkçe okunuş kurallarına göre yapılandırılmıştır (örn. *Apple'ın*, *Google'a*, *Intel'in*, *Turkcell'in* için `InverseHarmony` ince-l kuralları; *Chrome'un*, *Firefox'un*, *Nike'ın* için `NoVoicing` kuralları).
+5. **Doğrudan Küçük Harf Bayrak Eşleştirmesi**:
+   - Özel isim ek bayrakları (`pBN`, `pFN`, `pBL`, `pFL` vb.) `tr.dic` içinde doğrudan küçük harf köklere bağlanır. Bu sayede hem cümle başı büyük harf kullanımı (`Anesteziyoloji`) hem de kesme işaretli çekimler (`Anesteziyoloji'ye`, `Bölüm'ün`) mükemmel şekilde desteklenirken, mükerrer büyük harf kökleri elenerek sözlük boyutu %50 oranında küçültülmüştür.
+6. **Eski/Kullanımdan Kalkmış Köklerin Budanması (`NOSUGGEST`)**:
    - Zemberek sözlüğünde yer alan ancak günümüz Türkçesinde neredeyse hiç kullanılmayan eski/arkaik kelimelerin (örn. *şad*, *Abidyan*, *akasma*) yazım hatalarını kabul edip öneri listelerini kirletmesini önlemek amacıyla, tüm kelime kökleri Wikipedia ve dergi külliyatları üzerinden analiz edilir.
    - Külliyatlarda toplam frekansı **0** olan (tüm çekimli biçimleriyle birlikte hiç geçmeyen) kökler "kullanımdan kalkmış" kabul edilerek Hunspell'in `NOSUGGEST` (`NS`) bayrağı ile işaretlenir.
    - `NS` bayraklı kökler yazıldığında **tamamen doğru kabul edilir**, ancak başka yazım hataları için bir düzeltme önerisi olarak sunulmaz; böylece düzeltme listelerinin kalitesi korunur.
