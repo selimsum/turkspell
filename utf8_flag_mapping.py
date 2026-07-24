@@ -33,13 +33,13 @@ PROPER_NOUN_FLAGS_3 = [
     for sub in "NLRYAIPC"
 ]
 
-# Map each flag to a unique Cyrillic codepoint starting at \u0400 (1024)
+# Map each flag to a unique Mathematical Operator codepoint starting at \u2200 (8704)
 # 2-char flags come first, then 3-char flags.
 LONG_TO_UTF8 = {}
 for idx, flag in enumerate(ALL_FLAGS):
-    LONG_TO_UTF8[flag] = chr(1024 + idx)
+    LONG_TO_UTF8[flag] = chr(8704 + idx)
 for idx, flag in enumerate(PROPER_NOUN_FLAGS_3):
-    LONG_TO_UTF8[flag] = chr(1024 + len(ALL_FLAGS) + idx)
+    LONG_TO_UTF8[flag] = chr(8704 + len(ALL_FLAGS) + idx)
 
 # Override NE to ASCII 'X' to guarantee correct NEEDAFFIX parsing by Hunspell
 LONG_TO_UTF8["NE"] = "X"
