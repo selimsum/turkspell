@@ -1469,18 +1469,25 @@ def compile_dictionary():
 
     # Words that should get proper-noun suffix flags.
     proper_nouns_to_flag: set[str] = set(PROPER_NOUN_OVERRIDES.keys())
+    proper_nouns_attrs_map: dict[str, set] = {}
     for item in lexicon:
         if item.get('pos') == 'ProperNoun':
-            proper_nouns_to_flag.add(item['lemma'].replace('I', 'ı').replace('İ', 'i').lower())
+            lk = item['lemma'].replace('I', 'ı').replace('İ', 'i').lower()
+            proper_nouns_to_flag.add(lk)
+            proper_nouns_attrs_map[lk] = set(item.get('attributes', []))
 
     for item in custom_entries:
         if isinstance(item, dict) and item.get('pos') == 'ProperNoun':
-            proper_nouns_to_flag.add(item['lemma'].replace('I', 'ı').replace('İ', 'i').lower())
+            lk = item['lemma'].replace('I', 'ı').replace('İ', 'i').lower()
+            proper_nouns_to_flag.add(lk)
+            proper_nouns_attrs_map[lk] = set(item.get('attributes', []))
 
     # Remove proper nouns from noun_lemmas to prevent them from being treated as common nouns
     # noun_lemmas = noun_lemmas - proper_nouns_to_flag
 
-    def _proper_flag_for(lemma_lower: str) -> str:
+    def _proper_flag_for(lemma_lower: str, attrs: set = None) -> str:
+        if attrs and 'InverseHarmony' in attrs:
+            return 'pF'
         if lemma_lower in PROPER_NOUN_OVERRIDES:
             return PROPER_NOUN_OVERRIDES[lemma_lower]
         # Turkish consonant-only abbreviations (e.g. TDK, TBMM, TRT, SGK, BDDK, THY, TSK, CHP, MHP, AKP, MİT, LGS, YKS)
@@ -1522,7 +1529,8 @@ def compile_dictionary():
                 new_entry = f"{cap_lemma}/{flags_part},KC" if flags_part else f"{cap_lemma}/KC"
                 new_dic_entries.append(new_entry)
             else:
-                pfx = _proper_flag_for(lkey)
+                item_attrs = proper_nouns_attrs_map.get(lkey, set())
+                pfx = _proper_flag_for(lkey, item_attrs)
                 proper_flags = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
                 # For lowercase abbreviations/units (like km, cm, mm, kg, gr), keep them lowercase and add proper noun flags
                 if lkey in {'km', 'cm', 'mm', 'kg', 'gr'}:
