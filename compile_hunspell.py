@@ -1538,11 +1538,11 @@ def compile_dictionary():
                     new_dic_entries.append(new_entry)
                 else:
                     cap_lemma = capitalize_word(lkey, lkey)
-                    # Rebuild entry as capitalized with proper noun flags and KEEPCASE
+                    # Rebuild entry as capitalized with proper noun flags
                     if flags_part:
-                        new_entry = f"{cap_lemma}/{flags_part},{proper_flags},KC"
+                        new_entry = f"{cap_lemma}/{flags_part},{proper_flags}"
                     else:
-                        new_entry = f"{cap_lemma}/{proper_flags},KC"
+                        new_entry = f"{cap_lemma}/{proper_flags}"
                     new_dic_entries.append(new_entry)
             
             if lkey in PROPER_NOUN_OVERRIDES:
@@ -1557,29 +1557,15 @@ def compile_dictionary():
 
         # Case 2: Word is a common noun (but not explicitly tagged as proper noun/override)
         elif lkey in noun_lemmas:
-            # 1. Keep lowercase entry for normal common noun usage (no apostrophes/KC)
-            if lkey in {'web', 'online', 'offline', 'email', 'blog', 'server', 'chat', 'wifi', 'wi-fi'}:
-                pfx = _proper_flag_for(lkey)
-                proper_flags = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
-                if flags_part:
-                    new_dic_entries.append(f"{lkey}/{flags_part},{proper_flags}")
-                else:
-                    new_dic_entries.append(f"{lkey}/{proper_flags}")
-            else:
-                new_dic_entries.append(entry)
+            # Attach proper noun flags directly to the lowercase entry (Alternative 1)
+            item_attrs = proper_nouns_attrs_map.get(lkey, set())
+            pfx = _proper_flag_for(lkey, item_attrs)
+            proper_flags = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
             
-            # 2. Add capitalized version of base stem with KEEPCASE for sentence-start capitalization (without spurious apostrophe flags)
-            cap_lemma = capitalize_word(lkey, lkey)
-            new_entry = f"{cap_lemma}/{flags_part},KC" if flags_part else f"{cap_lemma}/KC"
-            new_dic_entries.append(new_entry)
-
-            # 3. Add capitalized version of 3sg possessive stems (e.g. Bölümü, Teleskobu) with proper noun flags and KEEPCASE
-            for poss_stem in get_poss3sg_stems(lkey, voicing=voicing_map.get(lkey, False)):
-                pfx_poss = _proper_flag_for(poss_stem)
-                proper_flags_poss = ','.join(f'{pfx_poss}{s}' for s in PROPER_SUB_FLAGS)
-                cap_poss = capitalize_word(poss_stem, lkey)
-                poss_entry = f"{cap_poss}/{proper_flags_poss},KC"
-                new_dic_entries.append(poss_entry)
+            if flags_part:
+                new_dic_entries.append(f"{lkey}/{flags_part},{proper_flags}")
+            else:
+                new_dic_entries.append(f"{lkey}/{proper_flags}")
 
         # Case 3: Other POS (verbs, adjectives, etc.) — leave as-is
         else:

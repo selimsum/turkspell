@@ -1616,8 +1616,9 @@ def gen_proper_flags() -> list[str]:
         if flag_prefix == "pB":
             sfx_ki(f"{flag_prefix}N", "0", f"'{gen_cons}",   "[eıiEİ]", rules_N)
         if flag_prefix == "pF":
-            sfx_ki(f"{flag_prefix}N", "0", f"'{gen_cons}",   CONS_RE, rules_N)
-            sfx_ki(f"{flag_prefix}N", "0", f"'ın",          CONS_RE, rules_N)
+            sfx_ki(f"{flag_prefix}N", "0", f"'{gen_cons}",   ".", rules_N)
+            sfx_ki(f"{flag_prefix}N", "0", f"'ın",          ".", rules_N)
+            sfx_ki(f"{flag_prefix}N", "0", f"'un",          ".", rules_N)
             sfx_ki(f"{flag_prefix}N", "0", f"'{gen_vowel}",  "tl",          rules_N)
             sfx_ki(f"{flag_prefix}N", "0", f"'{gen_vowel}",  "TL",          rules_N)
         for cond_pattern in ("[A-Z]", "km", "cm", "mm"):
@@ -1652,7 +1653,8 @@ def gen_proper_flags() -> list[str]:
         if flag_prefix == "pB":
             rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_cons}",  "[eıiEİ]"))
         if flag_prefix == "pF":
-            rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_cons}",  CONS_RE))
+            rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_cons}",  "."))
+            rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'a",          "."))
             rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_vowel}", "tl"))
             rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_vowel}", "TL"))
         for cond_pattern in ("[A-Z]", "km", "cm", "mm"):
@@ -1668,7 +1670,8 @@ def gen_proper_flags() -> list[str]:
         if flag_prefix == "pB":
             rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_cons}",  "[eıiEİ]"))
         if flag_prefix == "pF":
-            rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_cons}",  CONS_RE))
+            rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_cons}",  "."))
+            rules_A.append(sfx(f"{flag_prefix}A", "0", f"'ı",          "."))
             rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_vowel}", "tl"))
             rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_vowel}", "TL"))
         for cond_pattern in ("[A-Z]", "km", "cm", "mm"):
