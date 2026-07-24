@@ -1641,8 +1641,33 @@ def compile_dictionary():
             else:
                 new_lines.append(line)
                 
+        # Separate header lines from SFX/PFX blocks in tr.aff and sort SFX/PFX blocks alphabetically
+        header_lines = []
+        sfx_blocks = {}  # flag -> list of lines
+        curr_flag = None
+        for line in new_lines:
+            line_strip = line.strip()
+            if len(line_strip.split()) >= 2 and line_strip.split()[0] in ('SFX', 'PFX'):
+                flag = line_strip.split()[1]
+                curr_flag = flag
+                if curr_flag not in sfx_blocks:
+                    sfx_blocks[curr_flag] = []
+                sfx_blocks[curr_flag].append(line)
+            elif curr_flag is not None and (not line_strip or line_strip.startswith('#')):
+                # trailing comments/blank lines end the block
+                curr_flag = None
+                header_lines.append(line)
+            elif curr_flag is not None:
+                sfx_blocks[curr_flag].append(line)
+            else:
+                header_lines.append(line)
+
+        sorted_aff_content = "\n".join(header_lines).rstrip() + "\n\n"
+        for flag in sorted(sfx_blocks.keys()):
+            sorted_aff_content += "\n".join(sfx_blocks[flag]) + "\n\n"
+
         with open('tr.aff', 'w', encoding='utf-8', newline='\n') as f:
-            f.write("\n".join(new_lines))
+            f.write(sorted_aff_content.strip() + "\n")
 
         # Remap tr.dic in-place: convert numeric flags + 3-char proper-noun flags to UTF-8
         print("Remapping tr.dic to FLAG UTF-8...")
@@ -1681,6 +1706,10 @@ def compile_dictionary():
                 _utf8 += ''.join(LONG_TO_UTF8[p] for p in _proper if p in LONG_TO_UTF8)
             dic_out.append((_w2 + '/' + _utf8 if _utf8 else _w2) + '\n')
             dic_migrated += 1
+
+        # Sort tr.dic entries alphabetically for easier navigation
+        dic_out.sort(key=lambda s: (s.split('/')[0].lower(), s))
+
         with open('tr.dic', 'w', encoding='utf-8', newline='\n') as f:
             f.write(str(dic_migrated) + '\n')
             f.writelines(dic_out)
