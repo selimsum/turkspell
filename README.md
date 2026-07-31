@@ -1,6 +1,6 @@
 # Turkspell: Optimized Turkish Hunspell Dictionary
 
-Turkspell is a high-performance, lightweight Turkish Hunspell dictionary (`tr.dic` and `tr.aff`) built using a **Dynamic Chained Flags** architecture. It achieves **state-of-the-art correction accuracy** on Turkish spelling benchmarks — ranking **#1 on V1, V2, and V3** — while reducing the dictionary file size to **5.4 MB** (`tr.dic` with 95,505 entries) and affix file to **13.9 MB** (`tr.aff`). Total dictionary memory footprint is **~18 MB** (over **50% smaller** than previous builds, optimized for Firefox and Chrome browser extensions).
+Turkspell is a high-performance, lightweight Turkish Hunspell dictionary (`tr.dic` and `tr.aff`) built using a **Dynamic Chained Flags** architecture. It achieves **state-of-the-art correction accuracy** on Turkish spelling benchmarks — ranking **#1 on V1, V2, and V3** — while reducing the dictionary file size to **6.28 MB** (`tr.dic` with 95,505 entries) and affix file to **13.67 MB** (`tr.aff`). Total dictionary memory footprint is **19.95 MB** (over **45% smaller** than previous builds, optimized for Firefox and Chrome browser extensions).
 
 ---
 
@@ -12,7 +12,7 @@ Turkspell has been evaluated on the modified V1 and V2 test sets of the [tdd-ai/
 
 | Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell** (20.67 MB) | **100.00** | 99.62 | **99.81** | 94.98 |
+| **Turkspell** (19.95 MB) | **100.00** | 99.62 | **99.81** | 94.98 |
 | [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.47 | 99.07 | 98.26 | 95.70 |
 | [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 92.64 | **99.98** | 96.17 | 78.90 |
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 97.94 | 99.07 | 98.50 | **96.20** |
@@ -22,7 +22,7 @@ Turkspell has been evaluated on the modified V1 and V2 test sets of the [tdd-ai/
 
 | Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell** (20.67 MB) | **100.00** | 99.74 | **99.87** | **79.30** |
+| **Turkspell** (19.95 MB) | **100.00** | 99.74 | **99.87** | **79.30** |
 | [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.94 | 99.16 | 98.54 | 62.13 |
 | [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 95.07 | 99.98 | 97.47 | 53.20 |
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 98.23 | 99.12 | 98.67 | 61.95 |
@@ -32,7 +32,7 @@ Turkspell has been evaluated on the modified V1 and V2 test sets of the [tdd-ai/
 
 | Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell** (20.67 MB) | **100.00** | 99.07 | **99.53** | **70.77** |
+| **Turkspell** (19.95 MB) | **100.00** | 99.07 | **99.53** | **70.77** |
 | [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 99.51 | 98.49 | 99.00 | 55.84 |
 | [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 97.69 | **99.57** | 98.62 | 49.33 |
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 99.69 | 98.45 | 99.07 | 55.23 |
@@ -190,7 +190,7 @@ The spell-checking benchmarks in this project are evaluated on datasets from the
 ---
 ---
 
-Turkspell, **Dinamik Zincirleme Bayraklar** (Dynamic Chained Flags) mimarisine dayanan, yüksek performanslı ve hafif bir Türkçe Hunspell sözlüğüdür (`tr.dic` ve `tr.aff`). Her iki standart Türkçe yazım denetimi testinde **en üst düzey düzeltme doğruluğunu** elde eder — **V1, V2 ve V3'te 1. sırada** yer alır — sözlük dosya boyutunu **5.4 MB**'a (`tr.dic` 95.505 kelime) düşürerek tarayıcı ve eklentilerdeki toplam bellek kullanımını **~18 MB** seviyesine (önceki sürümlere göre **%50 daha hafif**) indirir.
+Turkspell, **Dinamik Zincirleme Bayraklar** (Dynamic Chained Flags) mimarisine dayanan, yüksek performanslı ve hafif bir Türkçe Hunspell sözlüğüdür (`tr.dic` ve `tr.aff`). Her iki standart Türkçe yazım denetimi testinde **en üst düzey düzeltme doğruluğunu** elde eder — **V1, V2 ve V3'te 1. sırada** yer alır — sözlük dosya boyutunu **6.28 MB**'a (`tr.dic` 95.505 kelime) düşürerek tarayıcı ve eklentilerdeki toplam bellek kullanımını **19.95 MB** seviyesine (önceki sürümlere göre **%45 daha hafif**) indirir.
 
 ---
 
@@ -202,7 +202,7 @@ Turkspell, [Mukayese](https://arxiv.org/abs/2203.01215) kıyaslama paketinin yaz
 
 | Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell** (20.67 MB) | **100.00** | 99.62 | **99.81** | 94.98 |
+| **Turkspell** (19.95 MB) | **100.00** | 99.62 | **99.81** | 94.98 |
 | [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.47 | 99.07 | 98.26 | 95.70 |
 | [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 92.64 | **99.98** | 96.17 | 78.90 |
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 97.94 | 99.07 | 98.50 | **96.20** |
@@ -212,7 +212,7 @@ Turkspell, [Mukayese](https://arxiv.org/abs/2203.01215) kıyaslama paketinin yaz
 
 | Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell** (20.67 MB) | **100.00** | 99.74 | **99.87** | **79.30** |
+| **Turkspell** (19.95 MB) | **100.00** | 99.74 | **99.87** | **79.30** |
 | [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.94 | 99.16 | 98.54 | 62.13 |
 | [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 95.07 | 99.98 | 97.47 | 53.20 |
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 98.23 | 99.12 | 98.67 | 61.95 |
@@ -222,7 +222,7 @@ Turkspell, [Mukayese](https://arxiv.org/abs/2203.01215) kıyaslama paketinin yaz
 
 | Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell** (20.67 MB) | **100.00** | 99.07 | **99.53** | **70.77** |
+| **Turkspell** (19.95 MB) | **100.00** | 99.07 | **99.53** | **70.77** |
 | [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 99.51 | 98.49 | 99.00 | 55.84 |
 | [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 97.69 | **99.57** | 98.62 | 49.33 |
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 99.69 | 98.45 | 99.07 | 55.23 |
