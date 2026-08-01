@@ -1247,9 +1247,15 @@ def generate_rep_rules() -> list[tuple[str, str]]:
     
     # 1. Base typographic & phonological character substitutions
     char_reps = [
+        # Circumflex pairs (priority)
         ("a", "â"), ("â", "a"), ("u", "û"), ("û", "u"), ("i", "î"), ("î", "i"),
+        ("A", "Â"), ("Â", "A"), ("U", "Û"), ("Û", "U"), ("İ", "Î"), ("Î", "İ"),
+        # De-ASCII lowercase & uppercase character swaps
         ("c", "ç"), ("ç", "c"), ("g", "ğ"), ("ğ", "g"), ("s", "ş"), ("ş", "s"),
         ("o", "ö"), ("ö", "o"), ("u", "ü"), ("ü", "u"), ("ı", "i"), ("i", "ı"),
+        ("C", "Ç"), ("Ç", "C"), ("G", "Ğ"), ("Ğ", "G"), ("S", "Ş"), ("Ş", "S"),
+        ("O", "Ö"), ("Ö", "O"), ("U", "Ü"), ("Ü", "U"), ("I", "İ"), ("İ", "I"), ("I", "I"),
+        # Multi-char typography & phonology
         ("sh", "ş"), ("ch", "ç"), ("gh", "ğ"), ("ss", "ş"),
         ("dd", "t"), ("tt", "d"), ("bb", "p"), ("pp", "b"), ("cc", "c"), ("kk", "g"),
         ("ğ", "y"), ("y", "ğ"), ("h", "ğ"), ("ğ", "h"),
@@ -1257,7 +1263,10 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("z", "s"), ("s", "z"), ("k", "g"), ("g", "k"),
         ("ın", "in"), ("in", "ın"), ("un", "ün"), ("ün", "un"),
         ("da", "de"), ("de", "da"), ("lar", "ler"), ("ler", "lar"),
-        ("la", "le"), ("le", "la"), ("’", "'")
+        ("la", "le"), ("le", "la"), ("’", "'"),
+        # Common de-ASCII suffix clusters
+        ("lari", "ları"), ("larin", "ların"), ("larimi", "larımı"), ("lariniz", "larınız"),
+        ("sutcu", "şütçü"), ("sucu", "şücü"), ("tcu", "tçü"), ("biliyor", "biliyor")
     ]
     for src, dst in char_reps:
         rep_list.append((src, dst))
@@ -1398,7 +1407,7 @@ BREAK —
 # Suggestion parameters
 KEY qwertyuıopğü|asdfghjklşi|zxcvbnmçö|QWERTYUIOPĞÜ|ASDFGHJKLŞİ|ZXCVBNMÇÖ|fgğıodrnhpqw|uıevazyktsx|jövcçzsb|FGĞIODRNHPQW|UIEVAZYKTSX|JÖVCÇZSB|qaz|wsx|edc|rfv|tgb|yhn|ujm|ıkö|olç|pş|QAZ|WSX|EDC|RFV|TGB|YHN|UJM|IKÖ|OLÇ|PŞ
 TRY aeilrıtdknsmyuböuşzcgçhpvğfjAEİLRITDKNSMYUBÖUŞZCGÇHPVĞFJ
-MAP 10
+MAP 18
 MAP aâAÂ
 MAP uûUÛ
 MAP iîİÎ
@@ -1409,9 +1418,16 @@ MAP oöOÖ
 MAP uüUÜ
 MAP ıiIİ
 MAP '’‘
-MAXDIFF 5
-MAXNGRAMSUGS 6
-ONLYMAXDIFF
+MAP 0o0ö0O0Ö
+MAP 3e3E
+MAP 4r4e4R4E
+MAP 5t5r5T5R
+MAP 6y6t6Y6T
+MAP 7u7y7U7Y
+MAP 8i8u8İ8U
+MAP 9o9i9O9İ
+MAXDIFF 3
+MAXNGRAMSUGS 4
 
 {rep_block}
 """
