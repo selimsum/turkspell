@@ -848,23 +848,6 @@ def compile_dictionary():
         except Exception as e:
             print(f"Warning: Failed to load {oscar_path}: {e}")
 
-    # Load dynamically harvested undetected words if they exist
-    harvested_path = 'harvested_words.json'
-    if os.path.exists(harvested_path):
-        try:
-            with open(harvested_path, 'r', encoding='utf-8') as f:
-                harvested_list = json.load(f)
-            for w in harvested_list:
-                # Add as standard Noun entry
-                custom_entries.append({
-                    'lemma': w,
-                    'pos': 'Noun',
-                    'attributes': []
-                })
-            print(f"Loaded {len(harvested_list)} harvested words from {harvested_path}.")
-        except Exception as e:
-            print(f"Warning: Failed to load harvested words: {e}")
-
     # Load custom abbreviations if they exist
     abbrev_path = 'custom_abbreviations.json'
     if os.path.exists(abbrev_path):
@@ -931,8 +914,10 @@ def compile_dictionary():
             attrs = set(item['attributes'])
         
         # Skip abbreviations, punctuation, or single-character noise
-        if not lemma or len(lemma) == 0:
+        # Skip empty or single-character noise
+        if not lemma or len(lemma.strip()) == 0:
             continue
+
 
         # Skip short (1-3 char) zemberek 'PronunciationGuessed' entries — they are
         # chemical element symbols / abbreviations that produce spurious inflected
@@ -1493,10 +1478,15 @@ def compile_dictionary():
     derived_no_apostrophe_suffixes = ('ce', 'ca', 'çe', 'ça', 'lı', 'li', 'lu', 'lü', 'lık', 'lik', 'luk', 'lük')
     
     for entry in dic_entries:
+        if not entry or not entry.strip():
+            continue
         if '/' in entry:
             lemma_part, flags_part = entry.split('/', 1)
         else:
             lemma_part, flags_part = entry, ''
+
+        if not lemma_part or not lemma_part.strip():
+            continue
 
         if 'only_vowel' in flags_part:
             new_dic_entries.append(entry)
