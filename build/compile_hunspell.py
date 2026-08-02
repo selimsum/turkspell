@@ -123,13 +123,15 @@ def ends_with_vowel(word):
     return len(word) > 0 and word[-1] in all_vowel_chars
 
 def compile_dictionary():
-    print("Reading zemberek_lexicon.json...")
-    with open('zemberek_lexicon.json', 'r', encoding='utf-8') as f:
+    lexicon_path = os.path.join(os.path.dirname(__file__), 'lexicons', 'zemberek_lexicon.json')
+    if not os.path.exists(lexicon_path):
+        lexicon_path = 'zemberek_lexicon.json'
+    print(f"Reading {lexicon_path}...")
+    with open(lexicon_path, 'r', encoding='utf-8') as f:
         lexicon = json.load(f)
         
     print(f"Loaded {len(lexicon)} entries from lexicon.")
     
-    # Inject custom entries to resolve undetected words
     custom_entries = [
         # User requested additions:
         {'lemma': 'ahenk', 'pos': 'Noun', 'attributes': ['Voicing']},
@@ -826,10 +828,19 @@ def compile_dictionary():
         {'lemma': 'gever', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'sarkmak', 'pos': 'Verb', 'attributes': []},
         {'lemma': 'uçulmak', 'pos': 'Verb', 'attributes': []},
-        {'lemma': 'kullanmalık', 'pos': 'Noun', 'attributes': ['Voicing']},
-        {'lemma': 'düzeyleri', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'kuran', 'pos': 'Noun', 'attributes': []},
     ]
+    # Inject all missing TDK words dynamically from scratch file
+    import os
+    missing_tdk_path = os.path.join(os.path.dirname(__file__), 'scratch', 'all_missing_tdk_words.txt')
+    if os.path.exists(missing_tdk_path):
+        with open(missing_tdk_path, 'r', encoding='utf-8') as _mf:
+            _mwords = [line.strip() for line in _mf if line.strip()]
+        for _mw in _mwords:
+            _pos = 'Verb' if (_mw.endswith('mak') or _mw.endswith('mek')) else 'Noun'
+            custom_entries.append({'lemma': _mw, 'pos': _pos, 'attributes': []})
+        print(f'Injected {len(_mwords)} missing TDK entries into custom_entries.')
+
     # Load dynamically parsed candidates from OSCAR/Corpus pipeline if available
     import os
     oscar_path = 'oscar_parsed_candidates.json'
