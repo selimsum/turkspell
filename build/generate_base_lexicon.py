@@ -24,7 +24,7 @@ def generate_base_lexicon():
         
     print(f"Extracted {len(combined_lexicon)} entries from Zemberek.")
     
-    output_path = "zemberek_lexicon.json"
+    output_path = os.path.join("lexicons", "zemberek_lexicon.json")
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(list(combined_lexicon.values()), f, ensure_ascii=False, indent=2)
         
