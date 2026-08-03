@@ -41,7 +41,7 @@ MAP 9o9i9O9İ
 MAXDIFF 3
 MAXNGRAMSUGS 4
 
-REP 252
+REP 256
 REP a â
 REP â a
 REP u û
@@ -179,11 +179,11 @@ REP çocukun çocuğun
 REP çocuka çocuğa
 REP çocukumuz çocuğumuz
 REP çocukunuz çocuğunuz
-REP kağıtı kâğıdı
-REP kağıtın kâğıdın
-REP kağıta kâğıda
-REP kağıtımız kâğıdımız
-REP kağıtınız kâğıdınız
+REP kâğıtı kâğıdı
+REP kâğıtın kâğıdın
+REP kâğıta kâğıda
+REP kâğıtımız kâğıdımız
+REP kâğıtınız kâğıdınız
 REP borçu borcu
 REP borçun borcun
 REP borça borca
@@ -290,10 +290,14 @@ REP alem âlem
 REP dahi dâhi
 REP sura şûra
 REP kagit kâğıt
+REP kağıt kâğıt
 REP ruzgar rüzgâr
+REP rüzgar rüzgâr
 REP tezgah tezgâh
 REP dukkan dükkân
 REP mahkum mahkûm
+REP alim âlim
+REP hakimevi hâkimevi
 
 # STEM CLASS FLAGS
 
