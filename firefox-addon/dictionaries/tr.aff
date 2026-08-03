@@ -19,7 +19,7 @@ BREAK —
 # Suggestion parameters
 KEY qwertyuıopğü|asdfghjklşi|zxcvbnmçö|QWERTYUIOPĞÜ|ASDFGHJKLŞİ|ZXCVBNMÇÖ|fgğıodrnhpqw|uıevazyktsx|jövcçzsb|FGĞIODRNHPQW|UIEVAZYKTSX|JÖVCÇZSB|qaz|wsx|edc|rfv|tgb|yhn|ujm|ıkö|olç|pş|QAZ|WSX|EDC|RFV|TGB|YHN|UJM|IKÖ|OLÇ|PŞ
 TRY aeilrıtdknsmyuböuşzcgçhpvğfjAEİLRITDKNSMYUBÖUŞZCGÇHPVĞFJ
-MAP 10
+MAP 18
 MAP aâAÂ
 MAP uûUÛ
 MAP iîİÎ
@@ -30,17 +30,30 @@ MAP oöOÖ
 MAP uüUÜ
 MAP ıiIİ
 MAP '’‘
-MAXDIFF 5
-MAXNGRAMSUGS 6
-ONLYMAXDIFF
+MAP 0o0ö0O0Ö
+MAP 3e3E
+MAP 4r4e4R4E
+MAP 5t5r5T5R
+MAP 6y6t6Y6T
+MAP 7u7y7U7Y
+MAP 8i8u8İ8U
+MAP 9o9i9O9İ
+MAXDIFF 3
+MAXNGRAMSUGS 4
 
-REP 225
+REP 256
 REP a â
 REP â a
 REP u û
 REP û u
 REP i î
 REP î i
+REP A Â
+REP Â A
+REP U Û
+REP Û U
+REP İ Î
+REP Î İ
 REP c ç
 REP ç c
 REP g ğ
@@ -53,6 +66,19 @@ REP u ü
 REP ü u
 REP ı i
 REP i ı
+REP C Ç
+REP Ç C
+REP G Ğ
+REP Ğ G
+REP S Ş
+REP Ş S
+REP O Ö
+REP Ö O
+REP U Ü
+REP Ü U
+REP I İ
+REP İ I
+REP I I
 REP sh ş
 REP ch ç
 REP gh ğ
@@ -88,6 +114,14 @@ REP ler lar
 REP la le
 REP le la
 REP ’ '
+REP lari ları
+REP larin ların
+REP larimi larımı
+REP lariniz larınız
+REP sutcu şütçü
+REP sucu şücü
+REP tcu tçü
+REP biliyor biliyor
 REP yanlız yalnız
 REP yalnış yanlış
 REP herkez herkes
@@ -145,11 +179,11 @@ REP çocukun çocuğun
 REP çocuka çocuğa
 REP çocukumuz çocuğumuz
 REP çocukunuz çocuğunuz
-REP kağıtı kâğıdı
-REP kağıtın kâğıdın
-REP kağıta kâğıda
-REP kağıtımız kâğıdımız
-REP kağıtınız kâğıdınız
+REP kâğıtı kâğıdı
+REP kâğıtın kâğıdın
+REP kâğıta kâğıda
+REP kâğıtımız kâğıdımız
+REP kâğıtınız kâğıdınız
 REP borçu borcu
 REP borçun borcun
 REP borça borca
@@ -256,10 +290,14 @@ REP alem âlem
 REP dahi dâhi
 REP sura şûra
 REP kagit kâğıt
+REP kağıt kâğıt
 REP ruzgar rüzgâr
+REP rüzgar rüzgâr
 REP tezgah tezgâh
 REP dukkan dükkân
 REP mahkum mahkûm
+REP alim âlim
+REP hakimevi hâkimevi
 
 # STEM CLASS FLAGS
 

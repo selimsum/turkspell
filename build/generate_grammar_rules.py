@@ -1325,7 +1325,7 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("kitap", "kitab", ["ı", "ın", "a", "ımız", "ınız"]),
         ("ağaç", "ağac", ["ı", "ın", "a", "ımız", "ınız"]),
         ("çocuk", "çocuğ", ["u", "un", "a", "umuz", "unuz"]),
-        ("kağıt", "kâğıd", ["ı", "ın", "a", "ımız", "ınız"]),
+        ("kâğıt", "kâğıd", ["ı", "ın", "a", "ımız", "ınız"]),
         ("borç", "borc", ["u", "un", "a", "umuz", "unuz"]),
         ("renk", "reng", ["i", "in", "e", "imiz", "iniz"]),
         ("kalp", "kalb", ["i", "in", "e", "imiz", "iniz"])
@@ -1370,8 +1370,9 @@ def generate_rep_rules() -> list[tuple[str, str]]:
                     
     circumflex_typos = [
         ("hal", "hâl"), ("hala", "hâlâ"), ("adet", "âdet"), ("alem", "âlem"),
-        ("dahi", "dâhi"), ("sura", "şûra"), ("kagit", "kâğıt"), ("ruzgar", "rüzgâr"),
-        ("tezgah", "tezgâh"), ("dukkan", "dükkân"), ("mahkum", "mahkûm")
+        ("dahi", "dâhi"), ("sura", "şûra"), ("kagit", "kâğıt"), ("kağıt", "kâğıt"),
+        ("ruzgar", "rüzgâr"), ("rüzgar", "rüzgâr"), ("tezgah", "tezgâh"),
+        ("dukkan", "dükkân"), ("mahkum", "mahkûm"), ("alim", "âlim"), ("hakimevi", "hâkimevi")
     ]
     for src, dst in circumflex_typos:
         rep_list.append((src, dst))

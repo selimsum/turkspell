@@ -1,3 +1,4 @@
+import os
 import json
 import re
 from utf8_flag_mapping import LONG_TO_UTF8, remap_flag_string
@@ -123,7 +124,9 @@ def ends_with_vowel(word):
     return len(word) > 0 and word[-1] in all_vowel_chars
 
 def compile_dictionary():
-    lexicon_path = os.path.join(os.path.dirname(__file__), 'lexicons', 'zemberek_lexicon.json')
+    import os
+    base_dir = os.path.dirname(os.path.dirname(__file__))
+    lexicon_path = os.path.join(base_dir, 'lexicons', 'zemberek_lexicon.json')
     if not os.path.exists(lexicon_path):
         lexicon_path = 'zemberek_lexicon.json'
     print(f"Reading {lexicon_path}...")
@@ -131,7 +134,35 @@ def compile_dictionary():
         lexicon = json.load(f)
         
     print(f"Loaded {len(lexicon)} entries from lexicon.")
-    
+
+    # -----------------------------------------------------------------------
+    # TDK + Dil Derneği: authoritative sources of truth
+    # -----------------------------------------------------------------------
+    # Every word in either list must appear in tr.dic.
+    # Zemberek is used only as a morphological helper — any Zemberek entry
+    # whose lemma is not in TDK or Dil Derneği is excluded.
+    def _tlc(s):
+        """Turkish lowercase (I→ı, İ→i)."""
+        return s.replace('I', 'ı').replace('İ', 'i').lower()
+
+    _raw_dir = os.path.join(base_dir, 'raw_data')
+    _authority_set = set()
+    for _fname in ('tdk_pdf_words.txt', 'dil_dernegi_words.txt'):
+        _fpath = os.path.join(_raw_dir, _fname)
+        if os.path.exists(_fpath):
+            with open(_fpath, encoding='utf-8') as _f:
+                for _line in _f:
+                    _w = _line.strip()
+                    if _w:
+                        _authority_set.add(_tlc(_w))
+    print(f"Authority set: {len(_authority_set):,} words from TDK + Dil Derneği.")
+
+    # Filter Zemberek: keep only entries whose lemma is in TDK or Dil Derneği
+    _before_filter = len(lexicon)
+    lexicon = [e for e in lexicon if _tlc(e.get('lemma', '')) in _authority_set]
+    print(f"Zemberek filtered: {_before_filter} -> {len(lexicon)} "
+          f"({_before_filter - len(lexicon)} Zemberek-only entries removed.)")
+
     custom_entries = [
         # User requested additions:
         {'lemma': 'ahenk', 'pos': 'Noun', 'attributes': ['Voicing']},
@@ -161,6 +192,15 @@ def compile_dictionary():
         {'lemma': 'server', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'chat', 'pos': 'Noun', 'attributes': ['InverseHarmony']},
         {'lemma': 'wifi', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'arktik', 'pos': 'Noun', 'attributes': ['Voicing']},
+        {'lemma': 'bulabilmek', 'pos': 'Verb', 'attributes': []},
+        {'lemma': 'gerekçelendirme', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'gerçekleştirme', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'güçsüzleşme', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'miting', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'mitingi', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'arkticte', 'pos': 'Noun', 'attributes': []},
+        {'lemma': 'yükseltmek', 'pos': 'Verb', 'attributes': []},
         {'lemma': 'wi-fi', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'wi', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'fi', 'pos': 'Noun', 'attributes': []},
@@ -882,6 +922,23 @@ def compile_dictionary():
             print(f"Warning: Failed to load custom names: {e}")
 
     lexicon.extend(custom_entries)
+
+    # Add every TDK|DD word not already covered by Zemberek or custom_entries.
+    # These get a minimal entry with POS inferred from the word form.
+    _covered = {_tlc(e.get('lemma', '')) for e in lexicon}
+    _noun_ends_excl = (
+        'parmak', 'ırmak', 'ekmek', 'yemek', 'çakmak', 'tokmak', 'yaşmak',
+        'kaymak', 'ilmek', 'basamak', 'mercimek', 'damak', 'yumak', 'oymak',
+        'yamak', 'hamak', 'sumak', 'kaçamak', 'kuymak', 'ramak', 'somak', 'tomak', 'emek'
+    )
+    _tdk_added = 0
+    for _w in sorted(_authority_set):
+        if _w not in _covered:
+            _is_verb = _w.endswith(('mak', 'mek')) and not _w.endswith(_noun_ends_excl)
+            lexicon.append({'lemma': _w, 'pos': 'Verb' if _is_verb else 'Noun', 'attributes': []})
+            _tdk_added += 1
+    print(f"Added {_tdk_added:,} TDK|DD-only entries to lexicon.")
+
     for item in lexicon:
         lemma = item.get('lemma', '')
         if len(lemma) > 1 and lemma.isupper():
@@ -1654,6 +1711,8 @@ def compile_dictionary():
 
         # Remap tr.dic in-place: convert numeric flags + 3-char proper-noun flags to UTF-8
         print("Remapping tr.dic to FLAG UTF-8...")
+        import sys
+        sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
         from migrate_dictionary import migrate_line as _migrate_line
         with open('tr.dic', 'r', encoding='utf-8') as f:
             dic_raw_lines = f.readlines()
