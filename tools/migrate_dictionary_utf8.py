@@ -10,6 +10,8 @@ else:
     project_root = base_dir
 
 sys.path.append(project_root)
+# utf8_flag_mapping and compile_hunspell live in build/
+sys.path.append(os.path.join(project_root, 'build'))
 
 from utf8_flag_mapping import remap_flag_string
 from migrate_dictionary import migrate_line

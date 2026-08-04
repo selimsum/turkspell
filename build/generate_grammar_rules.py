@@ -1436,6 +1436,9 @@ MAXNGRAMSUGS 4
 
 def generate_grammar():
     """Main entry point — generates the new chained tr.aff."""
+    import os
+    _build_dir = os.path.dirname(os.path.abspath(__file__))
+    _root_dir = os.path.dirname(_build_dir)  # project root (one level up from build/)
     content = generate_header()
 
     # --- Case flags ---
@@ -1564,14 +1567,14 @@ def generate_grammar():
         content += block + "\n"
 
     print("Writing tr.aff...")
-    with open('tr.aff', 'w', encoding='utf-8', newline='\n') as f:
+    with open(os.path.join(_root_dir, 'tr.aff'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(content)
 
     # Count rules
     total_sfx = content.count('\nSFX ')
     print(f"Done. Total SFX rules: {total_sfx}")
-    import os
-    size_kb = os.path.getsize('tr.aff') / 1024
+    import os as _os
+    size_kb = _os.path.getsize(os.path.join(_root_dir, 'tr.aff')) / 1024
     print(f"tr.aff size: {size_kb:.1f} KB")
 
 
@@ -1849,6 +1852,10 @@ def _generate_verb_flags_from_v1() -> str:
     Extract verb sections from data/tr_reference.aff and remap their flags
     from the old UTF-8 block positions to the current LONG_TO_UTF8 map.
     """
+    import os
+    _build_dir = os.path.dirname(os.path.abspath(__file__))
+    _root_dir = os.path.dirname(_build_dir)
+
     from utf8_flag_mapping import LONG_TO_UTF8
 
     # Reconstruct the OLD flag mapping (before KC was added)
@@ -1922,7 +1929,8 @@ def _generate_verb_flags_from_v1() -> str:
         return "".join(new_chars)
 
     print("  Reading data/tr_reference.aff to extract and remap verb sections...")
-    with open('data/tr_reference.aff', 'r', encoding='utf-8') as f:
+    _ref_aff = os.path.join(_root_dir, 'data', 'tr_reference.aff')
+    with open(_ref_aff, 'r', encoding='utf-8') as f:
         content = f.read()
 
     lines = content.split('\n')

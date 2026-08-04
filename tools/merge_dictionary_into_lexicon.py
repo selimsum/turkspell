@@ -7,10 +7,11 @@ def turkish_lowercase(text):
     return text.replace('I', 'ı').replace('İ', 'i').lower()
 
 def merge_spelling_into_lexicon():
+    _root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     print("Initializing Zemberek Morphological Analyzer...")
     morphology = TurkishMorphology.create_with_defaults()
 
-    lexicon_path = 'zemberek_lexicon.json'
+    lexicon_path = os.path.join(_root_dir, 'lexicons', 'zemberek_lexicon.json')
     if not os.path.exists(lexicon_path):
         print(f"Error: {lexicon_path} not found.")
         return
