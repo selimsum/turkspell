@@ -8,6 +8,19 @@ __pycache__/
 *.json
 *.aff.old
 
+# Build inputs — these are sources, not artifacts. The blanket *.json/*.txt
+# rules above would otherwise leave a fresh clone unable to build.
+!lexicons/zemberek_lexicon.json
+!lexicons/custom_abbreviations.json
+!lexicons/custom_names.json
+!raw_data/tdk_pdf_words.txt
+!raw_data/dil_dernegi_words.txt
+!firefox-addon/manifest.json
+
+# Generated build outputs (kept out of source control)
+turkspell-addon.xpi
+tr_test.*
+
 # Temporary/Experimental build outputs
 test_tr.*
 tr_v1.*

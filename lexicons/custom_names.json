@@ -1,0 +1,1125 @@
+[
+  {
+    "lemma": "Ahmet",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Mehmet",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ali",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hüseyin",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hasan",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İbrahim",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yusuf",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ömer",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Osman",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Murat",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Halil",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Süleyman",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ramazan",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Can",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hakan",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Serkan",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Gökhan",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Metin",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Orhan",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Engin",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Burak",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Emre",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Kerem",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Umut",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ozan",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Fatma",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ayşe",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Emine",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hatice",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Zeynep",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Elif",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Meryem",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Zehra",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Cemile",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Sevim",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Aslı",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Leyla",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hülya",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Sibel",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Derya",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yasemin",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Esra",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Merve",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Büşra",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tuğba",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Kübra",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Seda",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Selin",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ece",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ceren",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Chrome",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Firefox",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Safari",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Edge",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Opera",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Brave",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Vivaldi",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tor",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Chromium",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Arc",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "DuckDuckGo",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Apple",
+    "pos": "ProperNoun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "Google",
+    "pos": "ProperNoun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "Microsoft",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Amazon",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Meta",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Facebook",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Instagram",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WhatsApp",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "YouTube",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Netflix",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Spotify",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Twitter",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TikTok",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Uber",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Airbnb",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tesla",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Nvidia",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Intel",
+    "pos": "ProperNoun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "AMD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Adobe",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Oracle",
+    "pos": "ProperNoun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "Salesforce",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Zoom",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "LinkedIn",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Reddit",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Telegram",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "GitHub",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "OpenAI",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ChatGPT",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Yandex",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Samsung",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Sony",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "LG",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Xiaomi",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Huawei",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Asus",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Lenovo",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "HP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Dell",
+    "pos": "ProperNoun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "Canon",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Philips",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Panasonic",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Mercedes",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "BMW",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Audi",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Volkswagen",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Porsche",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ford",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Toyota",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Honda",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hyundai",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Renault",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Peugeot",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Volvo",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ferrari",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Fiat",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Nike",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Adidas",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Puma",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Zara",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "H&M",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Gucci",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Prada",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Chanel",
+    "pos": "ProperNoun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "IKEA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Starbucks",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "McDonald's",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Burger King",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "KFC",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Domino's",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Garanti",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Akbank",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Yapı Kredi",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ziraat",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Halkbank",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "VakıfBank",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Finansbank",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "DenizBank",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Kuveyt Türk",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "TEB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Papara",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ininal",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Turkcell",
+    "pos": "ProperNoun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "Vodafone",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Türk Telekom",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Telekom",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TurkNet",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Superonline",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Trendyol",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hepsiburada",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "N11",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Çiçeksepeti",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Sahibinden",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Getir",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yemeksepeti",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Monster",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Casper",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Vestel",
+    "pos": "ProperNoun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "Arçelik",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Beko",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Pegasus",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "AnadoluJet",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "SunExpress",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "THY",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Aras Kargo",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yurtiçi Kargo",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "MNG Kargo",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Sürat Kargo",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "PTT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "BİM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "A101",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Şok",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Migros",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "CarrefourSA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Gratis",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Watsons",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "LC Waikiki",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "DeFacto",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Koton",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Mavi",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Boyner",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Kiğılı",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Sarar",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "English Home",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Karaca",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Simit Sarayı",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Köfteci Yusuf",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Kahve Dünyası",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Koç",
+    "pos": "ProperNoun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Sabancı",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Eczacıbaşı",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ülker",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Eti",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Sütaş",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Torku",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Pınar",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Efes",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tuborg",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tüpraş",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tupras",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Petkim",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Şişecam",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Aselsan",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Roketsan",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TUSAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Baykar",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TOGG",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Aksa",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Enerjisa",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Zorlu",
+    "pos": "ProperNoun",
+    "attributes": []
+  }
+]
