@@ -5,8 +5,9 @@ def turkish_lowercase(text):
     return text.replace('I', 'ı').replace('İ', 'i').lower()
 
 def extract_zemberek_only():
+    _root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     print("Loading Zemberek lexicon (cleaned)...")
-    with open('zemberek_lexicon.json', 'r', encoding='utf-8') as f:
+    with open(os.path.join(_root_dir, 'lexicons', 'zemberek_lexicon.json'), 'r', encoding='utf-8') as f:
         lexicon = json.load(f)
         
     zemberek_lemmas = set()

@@ -1,4 +1,5 @@
 import json
+import os
 import re
 
 def turkish_lowercase(text):
@@ -53,8 +54,9 @@ def run_merge_and_compare():
             f.write(original_casing[w] + '\n')
 
     # 2. Load Zemberek lexicon
+    _root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     print("\nLoading Zemberek lexicon...")
-    with open('zemberek_lexicon.json', 'r', encoding='utf-8') as f:
+    with open(os.path.join(_root_dir, 'lexicons', 'zemberek_lexicon.json'), 'r', encoding='utf-8') as f:
         zemberek_entries = json.load(f)
 
     zemberek_lemmas = set()

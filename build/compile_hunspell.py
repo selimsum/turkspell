@@ -1,6 +1,13 @@
 import os
 import json
 import re
+import sys
+
+# utf8_flag_mapping and generate_grammar_rules are siblings in build/. Python only
+# adds this directory to sys.path when the file is run as a script, so importing
+# compile_dictionary from elsewhere (e.g. tools/) would otherwise fail.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from utf8_flag_mapping import LONG_TO_UTF8, remap_flag_string
 
 
@@ -126,9 +133,28 @@ def ends_with_vowel(word):
 def compile_dictionary():
     import os
     base_dir = os.path.dirname(os.path.dirname(__file__))
-    lexicon_path = os.path.join(base_dir, 'lexicons', 'zemberek_lexicon.json')
-    if not os.path.exists(lexicon_path):
-        lexicon_path = 'zemberek_lexicon.json'
+
+    def lexicon_file(name: str, required: bool = True) -> str:
+        """Resolve a lexicon input to an absolute path.
+
+        Looks in lexicons/ first, then falls back to the CWD so the script
+        still works when invoked from a directory holding loose inputs.
+        Required inputs that are missing raise instead of being skipped —
+        a build that silently drops a lexicon is never a valid build.
+        """
+        path = os.path.join(base_dir, 'lexicons', name)
+        if os.path.exists(path):
+            return path
+        if os.path.exists(name):
+            return name
+        if required:
+            raise FileNotFoundError(
+                f"Required lexicon '{name}' not found in "
+                f"{os.path.join(base_dir, 'lexicons')} or {os.getcwd()}"
+            )
+        return ""
+
+    lexicon_path = lexicon_file('zemberek_lexicon.json')
     print(f"Reading {lexicon_path}...")
     with open(lexicon_path, 'r', encoding='utf-8') as f:
         lexicon = json.load(f)
@@ -149,12 +175,26 @@ def compile_dictionary():
     _authority_set = set()
     for _fname in ('tdk_pdf_words.txt', 'dil_dernegi_words.txt'):
         _fpath = os.path.join(_raw_dir, _fname)
-        if os.path.exists(_fpath):
-            with open(_fpath, encoding='utf-8') as _f:
-                for _line in _f:
-                    _w = _line.strip()
-                    if _w:
-                        _authority_set.add(_tlc(_w))
+        if not os.path.exists(_fpath):
+            raise FileNotFoundError(
+                f"Required authority wordlist '{_fname}' not found in {_raw_dir}. "
+                f"Without it the Zemberek filter below would discard the entire lexicon."
+            )
+        with open(_fpath, encoding='utf-8') as _f:
+            for _line in _f:
+                _w = _line.strip()
+                if not _w:
+                    continue
+                # Dil Derneği writes co-variants with a slash ("geçer akça/akçe").
+                # Expand to both full forms — a raw '/' in a lemma would otherwise
+                # reach tr.dic and be parsed by Hunspell as a flag separator.
+                if '/' in _w:
+                    _head, _, _alt = _w.partition('/')
+                    _authority_set.add(_tlc(_head))
+                    _prefix = _head.rsplit(' ', 1)[0] if ' ' in _head else ''
+                    _authority_set.add(_tlc(f"{_prefix} {_alt}".strip()))
+                    continue
+                _authority_set.add(_tlc(_w))
     print(f"Authority set: {len(_authority_set):,} words from TDK + Dil Derneği.")
 
     # Filter Zemberek: keep only entries whose lemma is in TDK or Dil Derneği
@@ -872,7 +912,7 @@ def compile_dictionary():
     ]
     # Inject all missing TDK words dynamically from scratch file
     import os
-    missing_tdk_path = os.path.join(os.path.dirname(__file__), 'scratch', 'all_missing_tdk_words.txt')
+    missing_tdk_path = os.path.join(base_dir, 'scratch', 'all_missing_tdk_words.txt')
     if os.path.exists(missing_tdk_path):
         with open(missing_tdk_path, 'r', encoding='utf-8') as _mf:
             _mwords = [line.strip() for line in _mf if line.strip()]
@@ -881,50 +921,58 @@ def compile_dictionary():
             custom_entries.append({'lemma': _mw, 'pos': _pos, 'attributes': []})
         print(f'Injected {len(_mwords)} missing TDK entries into custom_entries.')
 
-    # Load dynamically parsed candidates from OSCAR/Corpus pipeline if available
+    # Load dynamically parsed candidates from OSCAR/Corpus pipeline if available.
+    # Genuinely optional: this is a generated pipeline artifact, not a source lexicon.
     import os
-    oscar_path = 'oscar_parsed_candidates.json'
-    if os.path.exists(oscar_path):
-        try:
-            with open(oscar_path, 'r', encoding='utf-8') as f:
-                oscar_entries = json.load(f)
-            print(f"Loaded {len(oscar_entries)} dynamically parsed candidates from {oscar_path}.")
-            for entry in oscar_entries:
-                if entry.get('lemma'):
-                    custom_entries.append({
-                        'lemma': entry['lemma'],
-                        'pos': entry['pos'],
-                        'attributes': entry.get('attributes', [])
-                    })
-        except Exception as e:
-            print(f"Warning: Failed to load {oscar_path}: {e}")
+    oscar_path = lexicon_file('oscar_parsed_candidates.json', required=False)
+    if oscar_path:
+        with open(oscar_path, 'r', encoding='utf-8') as f:
+            oscar_entries = json.load(f)
+        print(f"Loaded {len(oscar_entries)} dynamically parsed candidates from {oscar_path}.")
+        for entry in oscar_entries:
+            if entry.get('lemma'):
+                custom_entries.append({
+                    'lemma': entry['lemma'],
+                    'pos': entry['pos'],
+                    'attributes': entry.get('attributes', [])
+                })
+    else:
+        print("No oscar_parsed_candidates.json found - skipping (optional).")
 
-    # Load custom abbreviations if they exist
-    abbrev_path = 'custom_abbreviations.json'
-    if os.path.exists(abbrev_path):
-        try:
-            with open(abbrev_path, 'r', encoding='utf-8') as f:
-                abbrev_list = json.load(f)
-            custom_entries.extend(abbrev_list)
-            print(f"Loaded {len(abbrev_list)} custom abbreviations.")
-        except Exception as e:
-            print(f"Warning: Failed to load custom abbreviations: {e}")
+    # Load custom abbreviations (required)
+    abbrev_path = lexicon_file('custom_abbreviations.json')
+    with open(abbrev_path, 'r', encoding='utf-8') as f:
+        abbrev_list = json.load(f)
+    custom_entries.extend(abbrev_list)
+    print(f"Loaded {len(abbrev_list)} custom abbreviations.")
 
-    # Load custom names if they exist
-    names_path = 'custom_names.json'
-    if os.path.exists(names_path):
-        try:
-            with open(names_path, 'r', encoding='utf-8') as f:
-                names_list = json.load(f)
-            custom_entries.extend(names_list)
-            print(f"Loaded {len(names_list)} custom names.")
-        except Exception as e:
-            print(f"Warning: Failed to load custom names: {e}")
+    # Load custom names (required)
+    names_path = lexicon_file('custom_names.json')
+    with open(names_path, 'r', encoding='utf-8') as f:
+        names_list = json.load(f)
+    custom_entries.extend(names_list)
+    print(f"Loaded {len(names_list)} custom names.")
 
     lexicon.extend(custom_entries)
 
     # Add every TDK|DD word not already covered by Zemberek or custom_entries.
-    # These get a minimal entry with POS inferred from the word form.
+    # For words that differ from a Zemberek entry only in circumflex spelling
+    # (e.g. TDK "halen" vs Zemberek "hâlen"), transfer the Zemberek POS and
+    # attributes so that morphological correctness (voicing, inverse harmony…)
+    # is preserved despite the spelling reform.
+    def _strip_hat(s):
+        return s.replace('â','a').replace('î','i').replace('û','u')
+
+    # Build a lookup: stripped-lowercase lemma -> full Zemberek entry
+    # (used only for the circumflex-transfer logic below)
+    _zem_by_stripped = {}
+    with open(lexicon_path, encoding='utf-8') as _zf:
+        _zem_all = json.load(_zf)
+    for _ze in _zem_all:
+        _key = _strip_hat(_tlc(_ze['lemma']))
+        if _key not in _zem_by_stripped:
+            _zem_by_stripped[_key] = _ze
+
     _covered = {_tlc(e.get('lemma', '')) for e in lexicon}
     _noun_ends_excl = (
         'parmak', 'ırmak', 'ekmek', 'yemek', 'çakmak', 'tokmak', 'yaşmak',
@@ -932,12 +980,29 @@ def compile_dictionary():
         'yamak', 'hamak', 'sumak', 'kaçamak', 'kuymak', 'ramak', 'somak', 'tomak', 'emek'
     )
     _tdk_added = 0
+    _attrs_transferred = 0
     for _w in sorted(_authority_set):
         if _w not in _covered:
-            _is_verb = _w.endswith(('mak', 'mek')) and not _w.endswith(_noun_ends_excl)
-            lexicon.append({'lemma': _w, 'pos': 'Verb' if _is_verb else 'Noun', 'attributes': []})
+            # Check for a circumflex-spelling match in Zemberek
+            _zem_match = _zem_by_stripped.get(_strip_hat(_w))
+            if _zem_match and _tlc(_zem_match['lemma']) != _w:
+                # Transfer POS + attributes from the Zemberek entry
+                _pos  = _zem_match.get('pos', 'Noun')
+                _attrs = list(_zem_match.get('attributes', []))
+                # Remove Zemberek-internal flags that don't map to our system
+                _attrs = [a for a in _attrs if a not in ('PronunciationGuessed', 'Ext', 'NoQuote')]
+                if _pos == 'Verb':
+                    pass  # keep Verb
+                elif _pos not in ('Noun','Adjective','Adverb','Conjunction','Interjection',
+                                  'Numeral','Pronoun','PostPositive','Determiner','Duplicator'):
+                    _pos = 'Noun'
+                lexicon.append({'lemma': _w, 'pos': _pos, 'attributes': _attrs})
+                _attrs_transferred += 1
+            else:
+                _is_verb = _w.endswith(('mak', 'mek')) and not _w.endswith(_noun_ends_excl)
+                lexicon.append({'lemma': _w, 'pos': 'Verb' if _is_verb else 'Noun', 'attributes': []})
             _tdk_added += 1
-    print(f"Added {_tdk_added:,} TDK|DD-only entries to lexicon.")
+    print(f"Added {_tdk_added:,} TDK|DD-only entries ({_attrs_transferred} with transferred Zemberek attributes).")
 
     for item in lexicon:
         lemma = item.get('lemma', '')
@@ -972,11 +1037,15 @@ def compile_dictionary():
         if 'kağıt' in lemma:
             lemma = lemma.replace('kağıt', 'kâğıt')
         
-        # Override with custom entry if present and has matching POS
+        # Override with custom entry if present and has matching POS.
+        # An empty custom "attributes" list means "unspecified", not "strip all
+        # morphology" — abbreviation entries that case-collide with a real word
+        # (ant/ANT, bağ, haz, öz) would otherwise silently drop Voicing /
+        # NoVoicing / Doubling and break their inflected forms.
         custom_item = custom_map.get(lemma.lower())
         if custom_item and custom_item['pos'] == item['pos']:
             pos = custom_item['pos']
-            attrs = set(custom_item['attributes'])
+            attrs = set(custom_item['attributes']) or set(item['attributes'])
         else:
             pos = item['pos']
             attrs = set(item['attributes'])
@@ -984,6 +1053,13 @@ def compile_dictionary():
         # Skip abbreviations, punctuation, or single-character noise
         # Skip empty or single-character noise
         if not lemma or len(lemma.strip()) == 0:
+            continue
+
+        # A '/' inside a lemma would be read by Hunspell as the flag separator,
+        # turning the rest of the word into garbage flags. Source lists should
+        # already be expanded upstream; this is the last line of defence.
+        if '/' in lemma:
+            print(f"  Skipping malformed lemma containing '/': {lemma!r}")
             continue
 
 
@@ -1508,6 +1584,16 @@ def compile_dictionary():
         if item.get('pos') == 'Noun':
             noun_lemmas.add(item['lemma'].replace('I', 'ı').replace('İ', 'i').lower())
 
+    # Every lemma that also exists as an ordinary (non-proper) word, across all
+    # parts of speech. An uppercase abbreviation may case-fold onto a real
+    # lowercase word (AKUT/akut "acute", RAM/ram, FM/fm, SEK/sek); without this
+    # the lowercase form is silently replaced by the abbreviation and stops
+    # being recognised. noun_lemmas alone misses Adjective/Adverb/Interjection.
+    common_lemmas = set()
+    for item in lexicon:
+        if item.get('pos') != 'ProperNoun' and item.get('lemma'):
+            common_lemmas.add(item['lemma'].replace('I', 'ı').replace('İ', 'i').lower())
+
     # Words that should get proper-noun suffix flags.
     proper_nouns_to_flag: set[str] = set(PROPER_NOUN_OVERRIDES.keys())
     proper_nouns_attrs_map: dict[str, set] = {}
@@ -1594,8 +1680,9 @@ def compile_dictionary():
             if lkey in PROPER_NOUN_OVERRIDES:
                 seen_overrides.add(lkey)
             
-            # If it also functions as a common noun (e.g. Temmuz), keep the lowercase common-noun entry
-            if lkey in noun_lemmas:
+            # If it also functions as a common word (e.g. Temmuz, akut, ram),
+            # keep the lowercase entry alongside the proper-noun one.
+            if lkey in common_lemmas:
                 if lkey in {'km', 'cm', 'mm', 'kg', 'gr', 'şii'}:
                     pass
                 else:
@@ -1628,140 +1715,194 @@ def compile_dictionary():
     print(f"Injected proper-noun flags into {sum(1 for e in dic_entries if any(f'p{x}N' in e for x in 'BOFU'))} entries.")
 
     print("Writing tr.dic...")
-    with open('tr.dic', 'w', encoding='utf-8', newline='\n') as f:
+    with open(os.path.join(base_dir, 'tr.dic'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(f"{len(dic_entries)}\n")
         for entry in dic_entries:
             f.write(f"{entry}\n")
             
     # Write tr.aff by calling our generator script
     print("Calling generate_grammar_rules.py to generate baseline rules...")
-    try:
-        from generate_grammar_rules import generate_grammar
-        generate_grammar()
+    from generate_grammar_rules import generate_grammar
+    generate_grammar()
+    
+    # Now remap tr.aff in-place to FLAG UTF-8
+    print("Remapping rules to FLAG UTF-8 and writing to tr.aff...")
+    with open(os.path.join(base_dir, 'tr.aff'), 'r', encoding='utf-8') as f:
+        content = f.read()
         
-        # Now remap tr.aff in-place to FLAG UTF-8
-        print("Remapping rules to FLAG UTF-8 and writing to tr.aff...")
-        with open('tr.aff', 'r', encoding='utf-8') as f:
-            content = f.read()
+    content = content.replace("FLAG long", "FLAG UTF-8")
+    if "NEEDAFFIX NE" in content:
+        content = content.replace("NEEDAFFIX NE", f"NEEDAFFIX {LONG_TO_UTF8['NE']}")
+    if "KEEPCASE KC" in content:
+        content = content.replace("KEEPCASE KC", f"KEEPCASE {LONG_TO_UTF8['KC']}")
+    lines = content.split('\n')
+    new_lines = []
+    for line in lines:
+        line_strip = line.strip()
+        if not line_strip or line_strip.startswith('#'):
+            new_lines.append(line)
+            continue
+        parts = line.split()
+        if len(parts) == 2 and parts[0] == 'NOSUGGEST':
+            flag = parts[1]
+            if flag in LONG_TO_UTF8:
+                parts[1] = LONG_TO_UTF8[flag]
+            new_lines.append(" ".join(parts))
+        elif len(parts) >= 4 and parts[0] in ('SFX', 'PFX') and parts[2] in ('Y', 'N'):
+            flag = parts[1]
+            if flag in LONG_TO_UTF8:
+                parts[1] = LONG_TO_UTF8[flag]
+            new_lines.append(" ".join(parts))
+        elif len(parts) >= 2 and parts[0] in ('SFX', 'PFX'):
+            flag = parts[1]
+            if flag in LONG_TO_UTF8:
+                parts[1] = LONG_TO_UTF8[flag]
+            if len(parts) >= 4:
+                add_field = parts[3]
+                if '/' in add_field:
+                    prefix_str, flags_str = add_field.split('/', 1)
+                    remapped_flags = remap_flag_string(flags_str)
+                    parts[3] = f"{prefix_str}/{remapped_flags}"
+            new_lines.append(" ".join(parts))
+        else:
+            new_lines.append(line)
             
-        content = content.replace("FLAG long", "FLAG UTF-8")
-        if "NEEDAFFIX NE" in content:
-            content = content.replace("NEEDAFFIX NE", f"NEEDAFFIX {LONG_TO_UTF8['NE']}")
-        if "KEEPCASE KC" in content:
-            content = content.replace("KEEPCASE KC", f"KEEPCASE {LONG_TO_UTF8['KC']}")
-        lines = content.split('\n')
-        new_lines = []
-        for line in lines:
-            line_strip = line.strip()
-            if not line_strip or line_strip.startswith('#'):
-                new_lines.append(line)
-                continue
-            parts = line.split()
-            if len(parts) == 2 and parts[0] == 'NOSUGGEST':
-                flag = parts[1]
-                if flag in LONG_TO_UTF8:
-                    parts[1] = LONG_TO_UTF8[flag]
-                new_lines.append(" ".join(parts))
-            elif len(parts) >= 4 and parts[0] in ('SFX', 'PFX') and parts[2] in ('Y', 'N'):
-                flag = parts[1]
-                if flag in LONG_TO_UTF8:
-                    parts[1] = LONG_TO_UTF8[flag]
-                new_lines.append(" ".join(parts))
-            elif len(parts) >= 2 and parts[0] in ('SFX', 'PFX'):
-                flag = parts[1]
-                if flag in LONG_TO_UTF8:
-                    parts[1] = LONG_TO_UTF8[flag]
-                if len(parts) >= 4:
-                    add_field = parts[3]
-                    if '/' in add_field:
-                        prefix_str, flags_str = add_field.split('/', 1)
-                        remapped_flags = remap_flag_string(flags_str)
-                        parts[3] = f"{prefix_str}/{remapped_flags}"
-                new_lines.append(" ".join(parts))
-            else:
-                new_lines.append(line)
-                
-        # Separate header lines from SFX/PFX blocks in tr.aff and sort SFX/PFX blocks alphabetically
-        header_lines = []
-        sfx_blocks = {}  # flag -> list of lines
-        curr_flag = None
-        for line in new_lines:
-            line_strip = line.strip()
-            if len(line_strip.split()) >= 2 and line_strip.split()[0] in ('SFX', 'PFX'):
-                flag = line_strip.split()[1]
-                curr_flag = flag
-                if curr_flag not in sfx_blocks:
-                    sfx_blocks[curr_flag] = []
-                sfx_blocks[curr_flag].append(line)
-            elif curr_flag is not None and (not line_strip or line_strip.startswith('#')):
-                # trailing comments/blank lines end the block
-                curr_flag = None
-                header_lines.append(line)
-            elif curr_flag is not None:
-                sfx_blocks[curr_flag].append(line)
-            else:
-                header_lines.append(line)
+    # Separate header lines from SFX/PFX blocks in tr.aff and sort SFX/PFX blocks alphabetically
+    header_lines = []
+    sfx_blocks = {}  # flag -> list of lines
+    curr_flag = None
+    for line in new_lines:
+        line_strip = line.strip()
+        if len(line_strip.split()) >= 2 and line_strip.split()[0] in ('SFX', 'PFX'):
+            flag = line_strip.split()[1]
+            curr_flag = flag
+            if curr_flag not in sfx_blocks:
+                sfx_blocks[curr_flag] = []
+            sfx_blocks[curr_flag].append(line)
+        elif curr_flag is not None and (not line_strip or line_strip.startswith('#')):
+            # trailing comments/blank lines end the block
+            curr_flag = None
+            header_lines.append(line)
+        elif curr_flag is not None:
+            sfx_blocks[curr_flag].append(line)
+        else:
+            header_lines.append(line)
 
-        sorted_aff_content = "\n".join(header_lines).rstrip() + "\n\n"
-        for flag in sorted(sfx_blocks.keys()):
-            sorted_aff_content += "\n".join(sfx_blocks[flag]) + "\n\n"
-
-        with open('tr.aff', 'w', encoding='utf-8', newline='\n') as f:
-            f.write(sorted_aff_content.strip() + "\n")
-
-        # Remap tr.dic in-place: convert numeric flags + 3-char proper-noun flags to UTF-8
-        print("Remapping tr.dic to FLAG UTF-8...")
-        import sys
-        sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-        from migrate_dictionary import migrate_line as _migrate_line
-        with open('tr.dic', 'r', encoding='utf-8') as f:
-            dic_raw_lines = f.readlines()
-        dic_count_str = dic_raw_lines[0].strip()
-        dic_data = dic_raw_lines[1:]
-        dic_out = []
-        dic_migrated = 0
-        for _i, _line in enumerate(dic_data, start=2):
-            _ls = _line.rstrip()
-            if not _ls or _ls.startswith('#'):
+    # Drop exactly-duplicated rules within each block. Hunspell applies the
+    # first match, so a byte-identical repeat is dead weight — it only inflates
+    # the file and the load-time rule table. The block header declares its rule
+    # count, so it has to be rewritten to match or Hunspell misparses the block.
+    _aff_dropped = 0
+    for flag, block in sfx_blocks.items():
+        header, rules = block[0], block[1:]
+        seen = set()
+        kept = []
+        for r in rules:
+            key = r.strip()
+            if key in seen:
+                _aff_dropped += 1
                 continue
-            if '/' not in _ls:
-                dic_out.append(_ls + '\n')
-                dic_migrated += 1
-                continue
-            _word, _flag_part = _ls.split('/', 1)
-            _parts = _flag_part.split(',')
-            _only_vowel = 'only_vowel' in _parts
-            _parts = [p for p in _parts if p != 'only_vowel']
-            _numeric = [p.strip() for p in _parts if not (p.strip().startswith('p') and len(p.strip()) == 3)]
-            _proper  = [p.strip() for p in _parts if p.strip().startswith('p') and len(p.strip()) == 3]
-            if _numeric:
-                _fake = _word + '/' + ','.join(_numeric)
-                _mig, _ = _migrate_line(_fake, _i, set(), only_vowel=_only_vowel)
-                if _mig and '/' in _mig:
-                    _w2, _fc = _mig.split('/', 1)
-                    _utf8 = remap_flag_string(_fc)
-                else:
-                    _w2, _utf8 = _word, ''
+            seen.add(key)
+            kept.append(r)
+        parts = header.split()
+        if len(parts) >= 4 and parts[2] in ('Y', 'N'):
+            parts[3] = str(len(kept))
+            header = " ".join(parts)
+        sfx_blocks[flag] = [header] + kept
+
+    if _aff_dropped:
+        print(f"Removed {_aff_dropped:,} duplicate affix rules.")
+
+    sorted_aff_content = "\n".join(header_lines).rstrip() + "\n\n"
+    for flag in sorted(sfx_blocks.keys()):
+        sorted_aff_content += "\n".join(sfx_blocks[flag]) + "\n\n"
+
+    with open(os.path.join(base_dir, 'tr.aff'), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(sorted_aff_content.strip() + "\n")
+
+    # Remap tr.dic in-place: convert numeric flags + 3-char proper-noun flags to UTF-8
+    print("Remapping tr.dic to FLAG UTF-8...")
+    import sys
+    sys.path.insert(0, base_dir)
+    from migrate_dictionary import migrate_line as _migrate_line
+    with open(os.path.join(base_dir, 'tr.dic'), 'r', encoding='utf-8') as f:
+        dic_raw_lines = f.readlines()
+    dic_count_str = dic_raw_lines[0].strip()
+    dic_data = dic_raw_lines[1:]
+    dic_out = []
+    dic_migrated = 0
+    for _i, _line in enumerate(dic_data, start=2):
+        _ls = _line.rstrip()
+        if not _ls or _ls.startswith('#'):
+            continue
+        if '/' not in _ls:
+            dic_out.append(_ls + '\n')
+            dic_migrated += 1
+            continue
+        _word, _flag_part = _ls.split('/', 1)
+        _parts = _flag_part.split(',')
+        _only_vowel = 'only_vowel' in _parts
+        _parts = [p for p in _parts if p != 'only_vowel']
+        _numeric = [p.strip() for p in _parts if not (p.strip().startswith('p') and len(p.strip()) == 3)]
+        _proper  = [p.strip() for p in _parts if p.strip().startswith('p') and len(p.strip()) == 3]
+        if _numeric:
+            _fake = _word + '/' + ','.join(_numeric)
+            _mig, _ = _migrate_line(_fake, _i, set(), only_vowel=_only_vowel)
+            if _mig and '/' in _mig:
+                _w2, _fc = _mig.split('/', 1)
+                _utf8 = remap_flag_string(_fc)
             else:
                 _w2, _utf8 = _word, ''
-            if _proper:
-                _utf8 += ''.join(LONG_TO_UTF8[p] for p in _proper if p in LONG_TO_UTF8)
-            dic_out.append((_w2 + '/' + _utf8 if _utf8 else _w2) + '\n')
-            dic_migrated += 1
+        else:
+            _w2, _utf8 = _word, ''
+        if _proper:
+            _utf8 += ''.join(LONG_TO_UTF8[p] for p in _proper if p in LONG_TO_UTF8)
+        dic_out.append((_w2 + '/' + _utf8 if _utf8 else _w2) + '\n')
+        dic_migrated += 1
 
-        # Sort tr.dic entries alphabetically for easier navigation
-        dic_out.sort(key=lambda s: (s.split('/')[0].lower(), s))
+    # Drop byte-identical duplicate entries. These come from lemmas that appear
+    # more than once in the source lexicon under different POS (e.g. 'rate' as
+    # both Noun and Adjective) but map to the same stem class and flag chain.
+    # Entries for the same word with *different* flags are kept: Hunspell treats
+    # them as homonyms and each contributes its own paradigm.
+    _seen_entries = set()
+    _deduped = []
+    for _e in dic_out:
+        if _e in _seen_entries:
+            continue
+        _seen_entries.add(_e)
+        _deduped.append(_e)
+    _dic_dropped = len(dic_out) - len(_deduped)
+    dic_out = _deduped
+    dic_migrated = len(dic_out)
+    if _dic_dropped:
+        print(f"Removed {_dic_dropped:,} duplicate dictionary entries.")
 
-        with open('tr.dic', 'w', encoding='utf-8', newline='\n') as f:
-            f.write(str(dic_migrated) + '\n')
-            f.writelines(dic_out)
-        print(f"tr.dic remapped: {dic_migrated} entries.")
+    # Sort tr.dic entries alphabetically for easier navigation
+    dic_out.sort(key=lambda s: (s.split('/')[0].lower(), s))
 
-    except Exception as e:
-        print(f"Error compiling/remapping grammar generator: {e}")
+    with open(os.path.join(base_dir, 'tr.dic'), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(str(dic_migrated) + '\n')
+        f.writelines(dic_out)
+    print(f"tr.dic remapped: {dic_migrated} entries.")
 
-        
     print("Compile complete!")
+
+    # Validate the pair we just wrote. A build that produced a broken or
+    # incomplete dictionary must not report success.
+    print("\nValidating output...")
+    from validate_build import validate
+    errors, warnings = validate('tr.dic', 'tr.aff')
+    for w in warnings:
+        print(f"  WARNING: {w}")
+    for e in errors:
+        print(f"  ERROR:   {e}")
+    if errors:
+        raise SystemExit(
+            f"\nBuild produced an invalid dictionary: {len(errors)} error(s). "
+            f"tr.dic/tr.aff should not be shipped."
+        )
+    print(f"Validation passed ({len(warnings)} warning(s)).")
 
 if __name__ == "__main__":
     compile_dictionary()

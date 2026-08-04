@@ -7,7 +7,10 @@ import json
 TEXT_EXTENSIONS = {'.json', '.txt', '.md', '.css', '.html', '.js'}
 
 def package_addon():
-    addon_dir = os.path.abspath("firefox-addon")
+    # Resolve project root: build/ is one level below the project root
+    _root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    addon_dir = os.path.join(_root_dir, "firefox-addon")
     dictionaries_dir = os.path.join(addon_dir, "dictionaries")
 
     # 1. Ensure directories exist (don't wipe them — manifest.json is kept in source control)
@@ -15,8 +18,8 @@ def package_addon():
 
     # 2. Copy dictionary files
     print("Copying tr.dic and tr.aff...")
-    shutil.copy("tr.dic", os.path.join(dictionaries_dir, "tr.dic"))
-    shutil.copy("tr.aff", os.path.join(dictionaries_dir, "tr.aff"))
+    shutil.copy(os.path.join(_root_dir, "tr.dic"), os.path.join(dictionaries_dir, "tr.dic"))
+    shutil.copy(os.path.join(_root_dir, "tr.aff"), os.path.join(dictionaries_dir, "tr.aff"))
 
     # 3. Verify manifest.json is present
     manifest_path = os.path.join(addon_dir, "manifest.json")
@@ -30,7 +33,7 @@ def package_addon():
     print(f"Packaging addon: {manifest.get('name', '(unnamed)')} v{manifest['version']}")
 
     # 4. Create zip (xpi) archive
-    xpi_filename = "turkspell-addon.xpi"
+    xpi_filename = os.path.join(_root_dir, "turkspell-addon.xpi")
     if os.path.exists(xpi_filename):
         os.remove(xpi_filename)
 

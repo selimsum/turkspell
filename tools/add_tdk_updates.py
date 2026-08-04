@@ -6,7 +6,8 @@ def turkish_lowercase(text):
     return text.replace('I', 'ı').replace('İ', 'i').lower()
 
 def update_lexicon():
-    lexicon_path = 'zemberek_lexicon.json'
+    _root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    lexicon_path = os.path.join(_root_dir, 'lexicons', 'zemberek_lexicon.json')
     if not os.path.exists(lexicon_path):
         print(f"Error: {lexicon_path} not found.")
         return
@@ -58,7 +59,7 @@ def update_lexicon():
 
     print("\nRe-compiling Hunspell dictionary files...")
     try:
-        result = subprocess.run(['python', 'compile_hunspell.py'], capture_output=True, text=True)
+        result = subprocess.run(['python', os.path.join(_root_dir, 'build', 'compile_hunspell.py')], capture_output=True, text=True)
         print(result.stdout)
     except Exception as e:
         print(f"Error recompiling Hunspell: {e}")

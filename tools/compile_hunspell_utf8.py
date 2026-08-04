@@ -1,4 +1,13 @@
 import os
+import sys
+
+# compile_hunspell and utf8_flag_mapping live in build/; migrate_dictionary at root;
+# migrate_dictionary_utf8 is a sibling in tools/.
+_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, _root)
+sys.path.insert(0, os.path.join(_root, 'build'))
+sys.path.insert(0, os.path.join(_root, 'tools'))
+
 from compile_hunspell import compile_dictionary
 from utf8_flag_mapping import LONG_TO_UTF8, remap_flag_string
 from migrate_dictionary_utf8 import migrate_dictionary_utf8

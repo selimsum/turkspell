@@ -61,6 +61,9 @@ import sys
 import os
 import json
 from pathlib import Path
+
+# utf8_flag_mapping lives in build/ — make it importable regardless of CWD.
+sys.path.insert(0, str(Path(__file__).resolve().parent / 'build'))
 from utf8_flag_mapping import remap_flag_string
 
 
