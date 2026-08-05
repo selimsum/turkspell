@@ -1076,7 +1076,7 @@ def compile_dictionary():
         # chemical element symbols / abbreviations that produce spurious inflected
         # forms which silently accept misspellings (false negatives).
         # Exception: meaningful Turkish words like 'ay', 'çay', 'ray', 'çin', 'nil'.
-        PRONUNCIATION_GUESSED_ALLOWLIST = {'ay', 'çay', 'ray', 'çin', 'nil', 'nil', 'rn'}
+        PRONUNCIATION_GUESSED_ALLOWLIST = {'ay', 'çay', 'ray', 'çin', 'nil', 'nil', 'rn', 'sir'}
         if (
             len(lemma) <= 3
             and 'PronunciationGuessed' in attrs
@@ -1095,9 +1095,9 @@ def compile_dictionary():
             # 'bideki' and similar to be accepted as misspellings of 'bindeki'
             'bi',
             # Short interjections being over-inflected  
-            'hu', 'ole', 'be', 'vah',
+            'hu', 'ole', 'be',
             # Dubious nouns whose inflected forms match misspellings
-            'becet', 'döger', 'seme', 'fer', 'enç', 'havşa',
+            'becet', 'döger', 'seme', 'enç', 'havşa',
             'ikil', 'gelimli', 'cümlesi',
             # 'ağış' registered as Verb with extra flags — produces 'bideki'
             # style forms (ağış + de + ki)
@@ -1111,7 +1111,7 @@ def compile_dictionary():
             # 'elmeye' to be accepted, masking a misspelling of 'gelmeye')
             # 'elmek',
             # Stems causing V2 false negatives
-            'pur', 'aysal', 'sahin', 'dölenme', 'ila', 'lava', 'çet', 'dölenmek',
+            'pur', 'aysal', 'sahin', 'dölenme', 'lava', 'çet', 'dölenmek',
         }
         if lemma.lower() in FALSE_NEGATIVE_STEMS:
             continue
