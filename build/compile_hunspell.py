@@ -990,7 +990,15 @@ def compile_dictionary():
     )
     _tdk_added = 0
     _attrs_transferred = 0
+    # Dil Derneği wrongly lists front-variant derivatives of the back-harmony
+    # loanword emlak ("emlakçi", "emlakçilik"); TDK has only the back forms
+    # (emlakçı, emlakçılık). They are also marked obsolete in
+    # scratch/obsolete_lemmas.json. Exclude them so they are never accepted.
+    _BAD_DD_VARIANTS = {'emlakçi', 'emlakçilik'}
     for _w in sorted(_authority_set):
+        if _w in _BAD_DD_VARIANTS:
+            print(f"Excluding Dil Derneği front-variant misspelling: {_w}")
+            continue
         if _w not in _covered:
             # Check for a circumflex-spelling match in Zemberek
             _zem_match = _zem_by_stripped.get(_strip_hat(_w))
@@ -1012,6 +1020,30 @@ def compile_dictionary():
                 lexicon.append({'lemma': _w, 'pos': 'Verb' if _is_verb else 'Noun', 'attributes': []})
             _tdk_added += 1
     print(f"Added {_tdk_added:,} TDK|DD-only entries ({_attrs_transferred} with transferred Zemberek attributes).")
+
+    # Zemberek also lists capitalized (name) variants of some words — e.g.
+    # "Şecaat", "Şefaat", "Fesahat", "Rikkat" — as separate Noun entries.
+    # Once lowercased they collide with the real word and, lacking the
+    # inverse-harmony attribute, generate a spurious back-voiced twin
+    # (şecaad, şefaad, fesahad, rikkad). Drop such capitalized duplicates;
+    # proper nouns (pos='ProperNoun') are kept for the apostrophe logic, and
+    # capitalized lemmas without a lowercase twin (Ingiltere, Bakü, ...) are
+    # unaffected.
+    _lc_lemmas = {_tlc(it.get('lemma', '')) for it in lexicon
+                  if it.get('lemma') == _tlc(it.get('lemma', ''))}
+    _dup_count = 0
+    _kept = []
+    for _it in lexicon:
+        _l = _tlc(_it.get('lemma', ''))
+        if (_it.get('pos') != 'ProperNoun'
+                and _it.get('lemma') != _l
+                and _l in _lc_lemmas):
+            _dup_count += 1
+            continue
+        _kept.append(_it)
+    if _dup_count:
+        print(f"Dropped {_dup_count} capitalized duplicates colliding with lowercase lemmas.")
+    lexicon = _kept
 
     for item in lexicon:
         lemma = item.get('lemma', '')
@@ -1171,6 +1203,17 @@ def compile_dictionary():
             back = False
         if lemma.lower() in ('online', 'offline', 'server', 'wifi', 'wi-fi', 'wi', 'fi'):
             back = True
+        # A few Arabic borrowings that Zemberek tags as inverse-harmony actually
+        # take back suffixes in standard Turkish (TDK): emlak -> "emlakçı",
+        # istihraç -> "maden istihracı". Force back harmony for them, and mark
+        # emlak NoVoicing (it keeps the final k: "emlaka", "emlakın").
+        if lemma.lower() in ('emlak', 'istihraç'):
+            attrs.discard('InverseHarmony')
+            attrs.discard('LastVowelFrontal')
+            attrs.discard('FrontVowelHarmony')
+            if lemma.lower() == 'emlak':
+                attrs.add('NoVoicing')
+
         # Check Zemberek vowel exceptions
         if pos != 'Verb' and not lemma.endswith(('leşmek', 'laşmak', 'leşme', 'laşma', 'lik', 'lık', 'luk', 'lük', 'ci', 'cı', 'cu', 'cü', 'cilik', 'cılık', 'suz', 'süz', 'siz', 'suzluk', 'süzlük', 'sizlik')):
             if 'LastVowelFrontal' in attrs or 'FrontVowelHarmony' in attrs or 'InverseHarmony' in attrs:
@@ -1200,8 +1243,15 @@ def compile_dictionary():
             # Count vowels to check if multi-syllable
             all_vowel_chars = 'aeıioöuüâîûAEIİOÖUÜÂÎÛ'
             num_vowels = sum(1 for c in lemma if c in all_vowel_chars)
-            # Voicing applies by default to multi-syllable nouns, or if explicitly marked/exception
-            if 'Voicing' in attrs or 'VoicingOpt' in attrs or 'VoicingSelf' in attrs or num_vowels >= 2 or lemma in ['teleskop', 'radyoteleskop', 'asteroit', 'eşlik', 'karbondioksit']:
+            # Voicing applies when explicitly marked (Voicing/VoicingOpt/
+            # VoicingSelf), to multi-syllable stems, or to a few manual
+            # exceptions. Inverse-harmony borrowings (Arabic -at/-ak/-kat and
+            # friends) keep their final consonant even when polysyllabic
+            # (emlak -> emlaki, istirahat -> istirahati, idrak -> idraki), so
+            # the multi-syllable heuristic is skipped for them; only stems with
+            # an explicit Voicing attribute (kalp -> kalbi, harp -> harbi,
+            # vaat -> vaadi) voice.
+            if 'Voicing' in attrs or 'VoicingOpt' in attrs or 'VoicingSelf' in attrs or (not inverse_harmony and num_vowels >= 2) or lemma in ['teleskop', 'radyoteleskop', 'asteroit', 'eşlik', 'karbondioksit']:
                 # Exclude explicitly marked NoVoicing and a few manual exceptions
                 if ('NoVoicing' not in attrs or lemma in ['teleskop', 'radyoteleskop', 'eşlik', 'karbondioksit']) and lemma not in ['dikkat', 'sepet', 'paket', 'bilet', 'kaset', 'anket', 'davet', 'menfaat']:
                     voicing = True
