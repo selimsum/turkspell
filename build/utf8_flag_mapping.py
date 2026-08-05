@@ -12,6 +12,7 @@ ALL_FLAGS = sorted([
     "PB", "PF",
     "PS", "PT", "PU", "PV", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "PM", "PO", "PP", "PQ", "PN", "PR", "PW", "PZ",
     "CL", "cl", "CP", "CV", "CO", "KI", "LI", "SZ", "LK", "CI", "CK", "DL", "DT", "DE", "KC", "SL", "NE", "VC", "vc",
+    # LI (LI) = regular -lI derivation
     # Proper Noun morphological classes (with apostrophe prefix) - OLD (kept for back-compat)
     "uA", "uY", "uL", "uR", "uN", "uI", "uQ", "uP", "u1", "u2", "u3", "u4", "uC",
     # Verb flags
@@ -33,13 +34,25 @@ PROPER_NOUN_FLAGS_3 = [
     for sub in "NLRYAIPC"
 ]
 
+# Front-only derivations for inverse-harmony stems. Kept OUT of ALL_FLAGS and
+# assigned codepoints AFTER the proper-noun block so that the codepoints of all
+# pre-existing flags stay identical between builds (which keeps the generated
+# tr.dic/tr.aff diffs small and reviewable).
+#   LF  = front-only -lI   (kontrollü, not kontrollu)
+#   LSZ = front-only -sIz  (kontrolsüz, not kontrolsuz)
+#   LFK = front-only -lIk  (kontrollük, not kontrolluk)
+#   LCI = front-only -cI   (kontrolcü, not kontrolcu)
+INVERSE_DERIV_FLAGS = ["LF", "LSZ", "LFK", "LCI"]
+
 # Map each flag to a unique Mathematical Operator codepoint starting at \u2200 (8704)
-# 2-char flags come first, then 3-char flags.
+# 2-char flags come first, then 3-char flags, then the inverse-harmony deriv flags.
 LONG_TO_UTF8 = {}
 for idx, flag in enumerate(ALL_FLAGS):
     LONG_TO_UTF8[flag] = chr(8704 + idx)
 for idx, flag in enumerate(PROPER_NOUN_FLAGS_3):
     LONG_TO_UTF8[flag] = chr(8704 + len(ALL_FLAGS) + idx)
+for idx, flag in enumerate(INVERSE_DERIV_FLAGS):
+    LONG_TO_UTF8[flag] = chr(8704 + len(ALL_FLAGS) + len(PROPER_NOUN_FLAGS_3) + idx)
 
 # Override NE to ASCII 'X' to guarantee correct NEEDAFFIX parsing by Hunspell
 LONG_TO_UTF8["NE"] = "X"
