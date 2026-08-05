@@ -30,6 +30,8 @@ Integer flag → FLAG long mapping:
     19  → G3  (front, doubling)
     119 → G4  (front, doubling rounded)
     90  → PX  (prefix flag)
+    91  → front-only derivation markers for inverse-harmony stems: LF (-lI),
+           LFK (-lIk), LSZ (-sIz), LCI (-cI)
 
   Verb stem classes:
     9   → VB  (back consonant, unrounded)
@@ -255,8 +257,13 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
     noun_flags_set = set(flags) & set(NOUN_FLAG_MAP.keys())
     # Flag 90 = PX prefix — can legitimately appear alongside a noun stem flag
     has_prefix = 90 in noun_flags_set
+    # Flag 91 = inverse-harmony marker — swaps the -lI/-lIk/-sIz/-cI
+    # derivations for their front-only variants (LF/LFK/LSZ/LCI blocks, see
+    # gen_deriv_li2/gen_deriv_lk2/gen_deriv_sz2/gen_deriv_ci2 in
+    # generate_grammar_rules.py)
+    has_inverse = 91 in flags
     pure_noun_flags = noun_flags_set - {90}  # noun stem flags (not prefix)
-    other_flags = set(flags) - set(ALL_FLAG_MAP.keys())
+    other_flags = set(flags) - set(ALL_FLAG_MAP.keys()) - {91}
 
     warnings = []
     if other_flags:
@@ -289,6 +296,11 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
             chain = "F2uAuYuLuRuNuIuQPFuPu1u2u3u4uCLILKSZCIDLDTDE"
         else:
             chain = noun_chain(stem_flag, only_vowel=only_vowel)
+            if has_inverse:
+                chain = chain.replace("LI", "LF")
+                chain = chain.replace("LK", "LFK")
+                chain = chain.replace("SZ", "LSZ")
+                chain = chain.replace("CI", "LCI")
             if len(word) == 1:
                 for deriv in ["LI", "SZ", "LK", "CI", "SL", "DL", "DT", "DE"]:
                     chain = chain.replace(deriv, "")

@@ -1029,6 +1029,34 @@ def gen_deriv_li(flag: str = "LI") -> str:
     return make_flag_block(flag, unique(rules))
 
 
+def gen_deriv_li2(flag: str = "LF") -> str:
+    """Front-only -lI derivation for inverse-harmony stems.
+
+    Inverse-harmony stems (kontrol, rol, kalp …) keep back vowels but take
+    front suffixes, so the regular LI block — whose conditions key on the last
+    vowel — emits only the back form ("kontrollu", "rollu"). This block matches
+    the same orthographic conditions but produces only the front suffix
+    ("li"/"lü", e.g. "kontrollü", "kalpli"). It is attached exclusively to
+    inverse-harmony stems (numeric marker 91, expanded to LF by
+    migrate_dictionary), so "okullü" / "kitapli" / "yollü" stay invalid.
+    """
+    stems = [
+        # Vowel endings
+        ("[aıâ]", "li", "F3"),
+        ("[ouû]", "lü", "F4"),
+        # Consonant endings (single consonant)
+        ("[aıâ][^aeıioöuüâîû]", "li", "F3"),
+        ("[ouû][^aeıioöuüâîû]", "lü", "F4"),
+        # Double consonant endings
+        ("[aıâ][^aeıioöuüâîû][^aeıioöuüâîû]", "li", "F3"),
+        ("[ouû][^aeıioöuüâîû][^aeıioöuüâîû]", "lü", "F4"),
+    ]
+    rules = []
+    for cond, suf, sc in stems:
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
+    return make_flag_block(flag, unique(rules))
+
+
 def gen_deriv_sz(flag: str = "SZ") -> str:
     """-sIz (without) derivation"""
     rules = []
@@ -1039,6 +1067,26 @@ def gen_deriv_sz(flag: str = "SZ") -> str:
         # Two-consonant endings
         ("[aıâ][^aeıioöuüâîû][^aeıioöuüâîû]", "sız", "B1"), ("[ouû][^aeıioöuüâîû][^aeıioöuüâîû]", "suz", "B2"),
         ("[eiîâ][^aeıioöuüâîû][^aeıioöuüâîû]", "siz", "F1"), ("[öüû][^aeıioöuüâîû][^aeıioöuüâîû]", "süz", "F2"),
+    ]:
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
+    return make_flag_block(flag, unique(rules))
+
+
+def gen_deriv_sz2(flag: str = "LSZ") -> str:
+    """Front-only -sIz (without) derivation for inverse-harmony stems.
+
+    Inverse-harmony stems (kontrol, ideal …) keep back vowels but take front
+    suffixes, so the regular SZ block — keyed on the last vowel — emits only
+    the back form ("kontrolsuz", "idealsuz"). This block produces only the
+    front suffix ("siz"/"süz": "kontrolsüz", "idealsiz") and is attached
+    exclusively to inverse-harmony stems (numeric marker 91, expanded to LSZ
+    by migrate_dictionary).
+    """
+    rules = []
+    for cond, suf, sc in [
+        ("[aıâ]", "siz", "F1"), ("[ouû]", "süz", "F2"),
+        ("[aıâ][^aeıioöuüâîû]", "siz", "F1"), ("[ouû][^aeıioöuüâîû]", "süz", "F2"),
+        ("[aıâ][^aeıioöuüâîû][^aeıioöuüâîû]", "siz", "F1"), ("[ouû][^aeıioöuüâîû][^aeıioöuüâîû]", "süz", "F2"),
     ]:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
     return make_flag_block(flag, unique(rules))
@@ -1083,6 +1131,27 @@ def gen_deriv_lk(flag: str = "LK") -> str:
     return make_flag_block(flag, unique(rules))
 
 
+def gen_deriv_lk2(flag: str = "LFK") -> str:
+    """Front-only -lIk abstract noun derivation for inverse-harmony stems.
+
+    Same rationale as gen_deriv_li2/gen_deriv_sz2: only the front suffixes
+    ("lik"/"lük", plus the vowel allomorphs "liğ"/"lüğ") are emitted, so
+    "kontrollük" / "ideallik" are produced while "kontrolluk" is not.
+    """
+    rules = []
+    for cond, suf, suf_v, sc in [
+        ("[aıâ][^aeıioöuüâîû]", "lik", "liğ", "F1"),
+        ("[ouû][^aeıioöuüâîû]", "lük", "lüğ", "F2"),
+        ("[aıâ]",            "lik", "liğ", "F1"),
+        ("[ouû]",            "lük", "lüğ", "F2"),
+        ("[aıâ][^aeıioöuüâîû][^aeıioöuüâîû]", "lik", "liğ", "F1"),
+        ("[ouû][^aeıioöuüâîû][^aeıioöuüâîû]", "lük", "lüğ", "F2"),
+    ]:
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc, only_consonant=True)[2:]}", cond))
+        rules.append(sfx(flag, "0", f"{suf_v}/{get_noun_chain(sc, only_vowel=True)}NE", cond))
+    return make_flag_block(flag, unique(rules))
+
+
 
 def gen_deriv_ci(flag: str = "CI") -> str:
     """-CI agentive/occupational noun derivation"""
@@ -1098,6 +1167,25 @@ def gen_deriv_ci(flag: str = "CI") -> str:
         ("[eiîâ][^aeıioöuüâîû][^çfhkpsşt]", "ci", "F3"), ("[öüû][^aeıioöuüâîû][^çfhkpsşt]", "cü", "F4"),
         ("[aıâ][^aeıioöuüâîû][çfhkpsşt]",  "çı", "B3"), ("[ouû][^aeıioöuüâîû][çfhkpsşt]",  "çu", "B4"),
         ("[eiîâ][^aeıioöuüâîû][çfhkpsşt]",  "çi", "F3"), ("[öüû][^aeıioöuüâîû][çfhkpsşt]",  "çü", "F4"),
+    ]:
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
+    return make_flag_block(flag, unique(rules))
+
+
+def gen_deriv_ci2(flag: str = "LCI") -> str:
+    """Front-only -cI agentive/occupational derivation for inverse-harmony stems.
+
+    Same rationale as gen_deriv_li2/gen_deriv_sz2: only the front suffixes
+    ("ci"/"cü", with the "çi"/"çü" allomorphs after ç/f/h/k/p/s/şt) are emitted,
+    so "kontrolcü" is produced while "kontrolcu" is not.
+    """
+    rules = []
+    for cond, suf, sc in [
+        ("[aıâ][^çfhkpsşt]", "ci", "F3"), ("[ouû][^çfhkpsşt]", "cü", "F4"),
+        ("[aıâ][çfhkpsşt]",  "çi", "F3"), ("[ouû][çfhkpsşt]",  "çü", "F4"),
+        ("[aıâ]", "ci", "F3"), ("[ouû]", "cü", "F4"),
+        ("[aıâ][^aeıioöuüâîû][^çfhkpsşt]", "ci", "F3"), ("[ouû][^aeıioöuüâîû][^çfhkpsşt]", "cü", "F4"),
+        ("[aıâ][^aeıioöuüâîû][çfhkpsşt]",  "çi", "F3"), ("[ouû][^aeıioöuüâîû][çfhkpsşt]",  "çü", "F4"),
     ]:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
     return make_flag_block(flag, unique(rules))
@@ -1528,12 +1616,16 @@ def generate_grammar():
     content += gen_ki_flag() + "\n"
 
     # --- Derivation flags ---
-    print("Generating derivation flags (LI, SZ, LK, CI, CK, SL)...")
+    print("Generating derivation flags (LI, LF, SZ, LSZ, LK, LFK, CI, LCI, CK, SL)...")
     content += "\n# DERIVATION FLAGS (1ST-LEVEL)\n"
     content += gen_deriv_li() + "\n"
+    content += gen_deriv_li2() + "\n"
     content += gen_deriv_sz() + "\n"
+    content += gen_deriv_sz2() + "\n"
     content += gen_deriv_lk() + "\n"
+    content += gen_deriv_lk2() + "\n"
     content += gen_deriv_ci() + "\n"
+    content += gen_deriv_ci2() + "\n"
     content += gen_deriv_ck() + "\n"
     content += gen_deriv_sl() + "\n"
 
@@ -1843,7 +1935,7 @@ def get_verbal_noun_chain(stem_flag: str) -> str:
     if stem_flag in ("PX", "NX"):
         return stem_flag
     chain = get_noun_chain(stem_flag)
-    for deriv in ["LI", "SZ", "LK", "CI", "CK", "DL", "DT", "DE"]:
+    for deriv in ["LI", "LF", "SZ", "LSZ", "LK", "LFK", "CI", "LCI", "CK", "DL", "DT", "DE"]:
         chain = chain.replace(deriv, "")
     return chain
 

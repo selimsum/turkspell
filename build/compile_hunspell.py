@@ -1181,6 +1181,13 @@ def compile_dictionary():
         if lemma.lower() in inverse_harmony_words or (pos != 'Verb' and (lemma.lower().endswith('âl') or lemma.lower().endswith('ûl'))):
             back = False
 
+        # Inverse-harmony stems keep a back last vowel but take front suffixes.
+        # The -lI derivation suffix is chosen by orthographic conditions, so for
+        # these stems the regular LI block only yields the back form ("kontrollu",
+        # not "kontrollü"). Mark them with numeric flag 91, which migrate_dictionary
+        # expands to the front-only LF derivation flag (see gen_deriv_li2).
+        inverse_harmony = (not back) and (get_last_vowel(lemma) or '') in 'aıouâû'
+
         vowel_end = ends_with_vowel(lemma)
         if lemma.lower() in ('vb.', 't.c.'):
             vowel_end = True
@@ -1283,6 +1290,8 @@ def compile_dictionary():
             }
             if lemma.lower() in PREFIXABLE_STEMS:
                 flag = f"{flag},90"
+            if inverse_harmony:
+                flag = f"{flag},91"
                 
             dic_entries.append(f"{lemma}/{flag}")
             if voicing and pos != 'Verb':
