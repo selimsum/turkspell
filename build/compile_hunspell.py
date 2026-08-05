@@ -250,6 +250,15 @@ def compile_dictionary():
         {'lemma': 'Amerika Birleşik Devletleri', 'pos': 'Noun', 'attributes': ['CompoundP3sg']},
         {'lemma': 'Devletleri', 'pos': 'Noun', 'attributes': ['CompoundP3sg']},
         {'lemma': 'hal', 'pos': 'Noun', 'attributes': ['InverseHarmony', 'NoVoicing']},
+        # Arabic-origin -al loanwords that take front suffixes despite the back
+        # vowel ('ihlaller', not 'ihlallar'). Their siblings (ihmal, ihtimal,
+        # misal, emsal) carry InverseHarmony from Zemberek, but these reach the
+        # build only through the TDK/Dil Dernegi list, which has no attributes,
+        # so they would otherwise default to back harmony.
+        {'lemma': 'ihlal', 'pos': 'Noun', 'attributes': ['InverseHarmony']},
+        {'lemma': 'istiklal', 'pos': 'Noun', 'attributes': ['InverseHarmony']},
+        {'lemma': 'hilal', 'pos': 'Noun', 'attributes': ['InverseHarmony']},
+        {'lemma': 'celal', 'pos': 'Noun', 'attributes': ['InverseHarmony']},
         {'lemma': 'implant', 'pos': 'Noun', 'attributes': ['NoVoicing']},
         {'lemma': 'konuşmacı', 'pos': 'Noun', 'attributes': []},
         {'lemma': 'kriptografi', 'pos': 'Noun', 'attributes': []},
