@@ -1352,9 +1352,13 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("ın", "in"), ("in", "ın"), ("un", "ün"), ("ün", "un"),
         ("da", "de"), ("de", "da"), ("lar", "ler"), ("ler", "lar"),
         ("la", "le"), ("le", "la"), ("’", "'"),
-        # Common de-ASCII suffix clusters
+        # Circumflex single-char mappings
+        ("a", "â"), ("â", "a"), ("u", "û"), ("û", "u"), ("i", "î"), ("î", "i"),
+        ("A", "Â"), ("Â", "A"), ("U", "Û"), ("Û", "U"), ("İ", "Î"), ("Î", "İ"),
+        # Common de-ASCII & uppercase suffix clusters
         ("lari", "ları"), ("larin", "ların"), ("larimi", "larımı"), ("lariniz", "larınız"),
-        ("sutcu", "şütçü"), ("sucu", "şücü"), ("tcu", "tçü"), ("biliyor", "biliyor")
+        ("sutcu", "şütçü"), ("sucu", "şücü"), ("tcu", "tçü"),
+        ("IS", "İŞ"), ("IL", "İL"), ("IN", "İN"), ("IY", "İY"), ("IR", "İR"), ("ES", "EŞ"), ("IK", "İK")
     ]
     for src, dst in char_reps:
         rep_list.append((src, dst))
@@ -1460,7 +1464,59 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("hal", "hâl"), ("hala", "hâlâ"), ("adet", "âdet"), ("alem", "âlem"),
         ("dahi", "dâhi"), ("sura", "şûra"), ("kagit", "kâğıt"), ("kağıt", "kâğıt"),
         ("ruzgar", "rüzgâr"), ("rüzgar", "rüzgâr"), ("tezgah", "tezgâh"),
-        ("dukkan", "dükkân"), ("mahkum", "mahkûm"), ("alim", "âlim"), ("hakimevi", "hâkimevi")
+        ("dukkan", "dükkân"), ("mahkum", "mahkûm"), ("alim", "âlim"), ("hakimevi", "hâkimevi"),
+        ("aciz", "âciz"), ("acizleşebilme", "âcizleşebilme"), ("acizlik", "âcizlik"),
+        ("adem", "âdem"), ("ademiyet", "âdemiyet"), ("ademci", "Âdemci"), ("alemşümullük", "âlemşümullük"),
+        ("alimlik", "âlimlik"), ("aliyyülala", "aliyyülâlâ"), ("amalık", "âmâlık"), ("amin", "âmin"),
+        ("araz", "âraz"), ("arzuhalci", "arzuhâlci"), ("arzuhalcilik", "arzuhâlcilik"),
+        ("askerileşme", "askerîleşme"), ("askerileşmek", "askerîleşmek"),
+        ("askerileştirilme", "askerîleştirilme"), ("askerileştirmek", "askerîleştirmek"),
+        ("ayan", "âyan"), ("aşık", "âşık"), ("aşıkane", "âşıkane"), ("aşıklı", "âşıklı"),
+        ("aşıklık", "âşıklık"), ("aşıktaş", "âşıktaş"), ("batın", "bâtın"), ("batıni", "Bâtıni"),
+        ("bedeni", "bedenî"), ("behemehal", "behemehâl"), ("beniadem", "beniâdem"), ("beşeri", "beşerî"),
+        ("celali", "Celâli"), ("celalilik", "Celâlilik"), ("ceylanpınar", "Ceylânpınar"), ("cebri", "cebrî"),
+        ("cevizi", "cevizî"), ("cinsi", "cinsî"), ("dahilik", "dâhilik"), ("dahiliye", "dâhiliye"),
+        ("dahiliyeci", "dâhiliyeci"), ("dahiyane", "dâhiyane"), ("derhal", "derhâl"), ("dini", "dinî"),
+        ("ebedi", "ebedî"), ("ebedileşmek", "ebedîleşmek"), ("ebedileştirme", "ebedîleştirme"),
+        ("ebedileştirmek", "ebedîleştirmek"), ("ebedilik", "ebedîlik"), ("edebi", "edebî"),
+        ("ehli", "ehlî"), ("ehlileşmek", "ehlîleşmek"), ("ehlileştirilme", "ehlîleştirilme"),
+        ("ehlileştirme", "ehlîleştirme"), ("ehlileştirmek", "ehlîleştirmek"), ("elifi", "elifî"),
+        ("elazığlılık", "Elâzığlılık"), ("esatiri", "esatirî"), ("ezelilik", "ezelîlik"), ("fani", "fâni"),
+        ("fenni", "fennî"), ("ferdi", "ferdî"), ("ferdilik", "ferdîlik"), ("feri", "ferî"),
+        ("fiili", "fiilî"), ("fikri", "fikrî"), ("gülgun", "gülgûn"), ("günaşık", "günâşık"),
+        ("hakimane", "hâkimane"), ("hakkısükut", "hakkısükût"), ("halbuki", "hâlbuki"), ("halen", "hâlen"),
+        ("halet", "hâlet"), ("haletiruhiye", "hâletiruhiye"), ("halihazır", "hâlihazır"),
+        ("halihazırda", "hâlihazırda"), ("haliyle", "hâliyle"), ("hallenmek", "hâllenmek"),
+        ("hallice", "hâllice"), ("halsiz", "hâlsiz"), ("halsizce", "hâlsizce"),
+        ("halsizleşmek", "hâlsizleşmek"), ("halsizlik", "hâlsizlik"), ("harbi", "harbî"),
+        ("harcıalem", "harcıâlem"), ("hayalilik", "hayalîlik"), ("hayasız", "hayâsız"),
+        ("hayasızca", "hayâsızca"), ("hayasızcasına", "hayâsızcasına"), ("hemhallik", "hemhâllik"),
+        ("hikemi", "hikemî"), ("hüsnühal", "hüsnühâl"), ("ilmi", "ilmî"), ("ilmihal", "ilmihâl"),
+        ("ilmilik", "ilmîlik"), ("irsi", "irsî"), ("isyankarlık", "isyankârlık"), ("kabe", "Kâbe"),
+        ("kameri", "kamerî"), ("karlı", "kârlı"), ("karlıca", "kârlıca"), ("karlılık", "kârlılık"),
+        ("karsızca", "kârsızca"), ("karsızlık", "kârsızlık"), ("kavmi", "kavmî"), ("kesbi", "kesbî"),
+        ("keyfi", "keyfî"), ("keyfilik", "keyfîlik"), ("kündekari", "kündekâri"), ("laciverdi", "laciverdî"),
+        ("ladini", "ladinî"), ("lam", "lâm"), ("mahallilik", "mahallîlik"), ("mahkumane", "mahkûmane"),
+        ("mani", "mâni"), ("maniasız", "mâniasız"), ("mefkure", "mefkûre"), ("mefkureci", "mefkûreci"),
+        ("melekut", "melekût"), ("merkezileşme", "merkezîleşme"), ("merkezileşmek", "merkezîleşmek"),
+        ("merkezileştirme", "merkezîleştirme"), ("merkezileştirmek", "merkezîleştirmek"),
+        ("merkezilik", "merkezîlik"), ("metin", "metîn"), ("metinlik", "metînlik"), ("meşkuk", "meşkûk"),
+        ("milli", "millî"), ("millicilik", "millîcilik"), ("millileşme", "millîleşme"),
+        ("millileştirilmek", "millîleştirilmek"), ("millileştirmek", "millîleştirmek"), ("millilik", "millîlik"),
+        ("mirici", "mirîci"), ("misakımilli", "Misakımillî"), ("muhammedi", "Muhammedî"), ("nakli", "naklî"),
+        ("narıbeyza", "nârıbeyza"), ("nazım", "nâzım"), ("neftileşmek", "neftîleşmek"),
+        ("neftileştirme", "neftîleştirme"), ("neftileştirmek", "neftîleştirmek"), ("reddihakim", "reddihâkim"),
+        ("resmileşme", "resmîleşme"), ("resmileştirebilmek", "resmîleştirebilmek"),
+        ("resmileştirme", "resmîleştirme"), ("resmileştirmek", "resmîleştirmek"), ("rüku", "rükû"),
+        ("sadır", "sâdır"), ("sari", "sâri"), ("sükun", "sükûn"), ("sükunetli", "sükûnetli"),
+        ("sükut", "sükût"), ("sükuti", "sükûti"), ("tahmini", "tahminî"), ("tarihi", "tarihî"),
+        ("tatbiki", "tatbikî"), ("tedrici", "tedricî"), ("tekasül", "tekâsül"), ("temsili", "temsilî"),
+        ("tenkidi", "tenkidî"), ("topyekun", "topyekûn"), ("vakıa", "vâkıâ"), ("vakıf", "vâkıf"),
+        ("varis", "vâris"), ("varislik", "vârislik"), ("varissiz", "vârissiz"), ("yad", "yâd"),
+        ("yar", "yâr"), ("yaran", "yâran"), ("yarence", "yârence"), ("yarenlik", "yârenlik"),
+        ("yekun", "yekûn"), ("zahiri", "zahirî"), ("zati", "zatî"), ("zecri", "zecrî"),
+        ("zifiri", "zifirî"), ("zihni", "zihnî"), ("İlahi", "İlahî"), ("şekli", "şeklî"),
+        ("şemsi", "şemsî"), ("şimali", "şimalî")
     ]
     for src, dst in circumflex_typos:
         rep_list.append((src, dst))
