@@ -1,6 +1,6 @@
 # Turkspell: Optimized Turkish Hunspell Dictionary
 
-Turkspell is a high-performance, lightweight Turkish Hunspell dictionary (`tr.dic` and `tr.aff`) built using a **Dynamic Chained Flags** architecture. It achieves **state-of-the-art correction accuracy** on Turkish spelling benchmarks — ranking **#1 on V1, V2, and V3** — while reducing the dictionary file size to **3.09 MB** (`tr.dic` with 41,046 entries) and affix file to **13.67 MB** (`tr.aff`). Total dictionary memory footprint is **16.76 MB** (over **50% smaller** than previous builds, optimized for Firefox and Chrome browser extensions).
+Turkspell is a high-performance, lightweight Turkish Hunspell dictionary (`tr.dic` and `tr.aff`) built using a **Dynamic Chained Flags** architecture. It achieves **state-of-the-art correction accuracy** on Turkish spelling benchmarks — ranking **#1 on V1, V2, and V3** — with a dictionary file size of **7.69 MB** (`tr.dic` with 100,748 entries) and affix file of **13.35 MB** (`tr.aff`). Total dictionary memory footprint is **21.04 MB** (optimized for Firefox and Chrome browser extensions).
 
 ---
 
@@ -12,7 +12,7 @@ Turkspell has been evaluated on the modified V1 and V2 test sets of the [tdd-ai/
 
 | Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell** (16.76 MB) | **100.00** | 99.62 | **99.81** | 94.98 |
+| **Turkspell** (21.04 MB) | **100.00** | 99.62 | **99.81** | 94.98 |
 | [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.47 | 99.07 | 98.26 | 95.70 |
 | [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 92.64 | **99.98** | 96.17 | 78.90 |
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 97.94 | 99.07 | 98.50 | **96.20** |
@@ -22,7 +22,7 @@ Turkspell has been evaluated on the modified V1 and V2 test sets of the [tdd-ai/
 
 | Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell** (16.76 MB) | **100.00** | 99.74 | **99.87** | **79.30** |
+| **Turkspell** (21.04 MB) | **100.00** | 99.74 | **99.87** | **79.30** |
 | [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.94 | 99.16 | 98.54 | 62.13 |
 | [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 95.07 | 99.98 | 97.47 | 53.20 |
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 98.23 | 99.12 | 98.67 | 61.95 |
@@ -32,7 +32,7 @@ Turkspell has been evaluated on the modified V1 and V2 test sets of the [tdd-ai/
 
 | Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell** (16.76 MB) | **100.00** | 99.07 | **99.53** | **70.77** |
+| **Turkspell** (21.04 MB) | **100.00** | 99.07 | **99.53** | **70.77** |
 | [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 99.51 | 98.49 | 99.00 | 55.84 |
 | [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 97.69 | **99.57** | 98.62 | 49.33 |
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 99.69 | 98.45 | 99.07 | 55.23 |
@@ -120,11 +120,11 @@ You can generate the base morphological lexicon directly using the provided gene
    ```bash
    pip install zemberek-python
    ```
-2. Run the generator script in the root directory:
+2. Run the generator script:
    ```bash
-   python generate_base_lexicon.py
+   python build/generate_base_lexicon.py
    ```
-This will initialize Zemberek's built-in lexicon, extract lemmas and attributes, and save them to `zemberek_lexicon.json`.
+This will initialize Zemberek's built-in lexicon, extract lemmas and attributes, and save them to `lexicons/zemberek_lexicon.json`.
 
 ### 2. Wikipedia Corpus Dump (`wiki_corpus.txt`)
 To generate a clean text corpus of Turkish Wikipedia:
@@ -138,29 +138,18 @@ To generate a clean text corpus of Turkish Wikipedia:
 
 ---
 
-To compile the `tr.dic` and `tr.aff` files, follow these steps:
+To compile the `tr.dic` and `tr.aff` files, run:
 
-1. **Analyze Corpus Frequencies** to identify obsolete roots:
-   ```bash
-   python scratch/analyze_obsolete_roots.py
-   ```
-2. **Generate the Base Dictionary**:
-   ```bash
-   python compile_hunspell.py
-   ```
-3. **Migrate Dictionary and Apply Flags** (applies long flags and the `NS` flag):
-   ```bash
-   python migrate_dictionary.py
-   ```
-4. **Compile Grammar Rules** (`tr.aff`):
-   ```bash
-   python generate_grammar_rules.py
-   ```
+```bash
+python build/compile_hunspell.py
+```
 
-### Compilation Flow:
-1. **Lexicon Parsing**: `compile_hunspell.py` reads the base lexicon (`zemberek_lexicon.json`), merges custom additions/corrections, and writes the base dictionary `tr.dic` in integer flag format.
-2. **Migration & Pruning**: `migrate_dictionary.py` loads the obsolete roots list generated by the analyzer, translates the integer flags to long 2-character flag chains, appends `NS` to obsolete lemmas, and outputs `tr.dic`.
-3. **Affix Rules Generation**: `generate_grammar_rules.py` generates the rules for all grammatical paradigms and composable morphological layers. Build time takes just **~4.5 seconds** and outputs `tr.aff`.
+### Compilation & Validation Flow:
+1. **Lexicon Parsing & Rule Generation**: `build/compile_hunspell.py` reads the base lexicon (`lexicons/zemberek_lexicon.json`), merges custom additions and corrections from TDK/Dil Derneği, generates grammar rules and affix tables (`tr.aff`), and applies compact UTF-8 flag remapping to output `tr.dic` and `tr.aff`.
+2. **Build Validation**: Validate the generated dictionary integrity with:
+   ```bash
+   python build/validate_build.py
+   ```
 
 ## Citation & References
 
@@ -189,7 +178,7 @@ The spell-checking benchmarks in this project are evaluated on datasets from the
 ---
 ---
 
-Turkspell, **Dinamik Zincirleme Bayraklar** (Dynamic Chained Flags) mimarisine dayanan, yüksek performanslı ve hafif bir Türkçe Hunspell sözlüğüdür (`tr.dic` ve `tr.aff`). Her iki standart Türkçe yazım denetimi testinde **en üst düzey düzeltme doğruluğunu** elde eder — **V1, V2 ve V3'te 1. sırada** yer alır — sözlük dosya boyutunu **3.09 MB**'a (`tr.dic` 41.046 kelime) düşürerek tarayıcı ve eklentilerdeki toplam bellek kullanımını **16.76 MB** seviyesine (önceki sürümlere göre **%50'den fazla daha hafif**) indirir.
+Turkspell, **Dinamik Zincirleme Bayraklar** (Dynamic Chained Flags) mimarisine dayanan, yüksek performanslı ve hafif bir Türkçe Hunspell sözlüğüdür (`tr.dic` ve `tr.aff`). Her iki standart Türkçe yazım denetimi testinde **en üst düzey düzeltme doğruluğunu** elde eder — **V1, V2 ve V3'te 1. sırada** yer alır — sözlük dosya boyutunu **7.69 MB**'a (`tr.dic` 100.748 kelime) ve affix dosyasını **13.35 MB**'a (`tr.aff`) indirerek tarayıcı ve eklentilerdeki toplam bellek kullanımını **21.04 MB** seviyesine ulaştırır.
 
 ---
 
@@ -201,7 +190,7 @@ Turkspell, [Mukayese](https://arxiv.org/abs/2203.01215) kıyaslama paketinin yaz
 
 | Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell** (16.76 MB) | **100.00** | 99.62 | **99.81** | 94.98 |
+| **Turkspell** (21.04 MB) | **100.00** | 99.62 | **99.81** | 94.98 |
 | [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.47 | 99.07 | 98.26 | 95.70 |
 | [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 92.64 | **99.98** | 96.17 | 78.90 |
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 97.94 | 99.07 | 98.50 | **96.20** |
@@ -211,7 +200,7 @@ Turkspell, [Mukayese](https://arxiv.org/abs/2203.01215) kıyaslama paketinin yaz
 
 | Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell** (16.76 MB) | **100.00** | 99.74 | **99.87** | **79.30** |
+| **Turkspell** (21.04 MB) | **100.00** | 99.74 | **99.87** | **79.30** |
 | [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 97.94 | 99.16 | 98.54 | 62.13 |
 | [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 95.07 | 99.98 | 97.47 | 53.20 |
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 98.23 | 99.12 | 98.67 | 61.95 |
@@ -221,7 +210,7 @@ Turkspell, [Mukayese](https://arxiv.org/abs/2203.01215) kıyaslama paketinin yaz
 
 | Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Turkspell** (16.76 MB) | **100.00** | 99.07 | **99.53** | **70.77** |
+| **Turkspell** (21.04 MB) | **100.00** | 99.07 | **99.53** | **70.77** |
 | [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 99.51 | 98.49 | 99.00 | 55.84 |
 | [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 97.69 | **99.57** | 98.62 | 49.33 |
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 99.69 | 98.45 | 99.07 | 55.23 |
@@ -307,11 +296,11 @@ Sağlanan dönüştürücü betiği kullanarak temel morfolojik sözlüğü doğ
    ```bash
    pip install zemberek-python
    ```
-2. Ana dizinde dönüştürücü betiği çalıştırın:
+2. Dönüştürücü betiği çalıştırın:
    ```bash
-   python generate_base_lexicon.py
+   python build/generate_base_lexicon.py
    ```
-Bu işlem Zemberek'in yerleşik sözlüğünü başlatacak, kök ve öznitelikleri çıkaracak ve bunları `zemberek_lexicon.json` olarak kaydedecektir.
+Bu işlem Zemberek'in yerleşik sözlüğünü başlatacak, kök ve öznitelikleri çıkaracak ve bunları `lexicons/zemberek_lexicon.json` olarak kaydedecektir.
 
 ### 2. Wikipedia Metin Külliyatı (`wiki_corpus.txt`)
 Türkçe Wikipedia'nın temiz bir metin külliyatını oluşturmak için:
@@ -325,29 +314,18 @@ Türkçe Wikipedia'nın temiz bir metin külliyatını oluşturmak için:
 
 ---
 
-`tr.dic` ve `tr.aff` dosyalarını derlemek için aşağıdaki adımları sırasıyla çalıştırın:
+`tr.dic` ve `tr.aff` dosyalarını derlemek için aşağıdaki komutu çalıştırın:
 
-1. **Frekans Analizini Çalıştırma** (Kullanımdan kalkmış kelimeleri tespit eder):
-   ```bash
-   python scratch/analyze_obsolete_roots.py
-   ```
-2. **Temel Sözlüğü Derleme**:
-   ```bash
-   python compile_hunspell.py
-   ```
-3. **Sözlüğü Dönüştürme ve Bayrakları Ekleme** (NS ve 2-karakter bayraklarını uygular):
-   ```bash
-   python migrate_dictionary.py
-   ```
-4. **Affix Kurallarını Derleme**:
-   ```bash
-   python generate_grammar_rules.py
-   ```
+```bash
+python build/compile_hunspell.py
+```
 
-### Derleme Akışı:
-1. **Sözlük Ayrıştırma**: `compile_hunspell.py` taban sözlüğü (`zemberek_lexicon.json`) okur, özel eklemeleri/düzeltmeleri birleştirir ve sayısal bayraklarla temel `tr.dic` dosyasını oluşturur.
-2. **Dönüştürme ve Budama**: `migrate_dictionary.py` analiz betiğinin oluşturduğu eski kelime listesini yükler, sayısal bayrakları 2 karakterli bayrak zincirlerine dönüştürür, eski kelimelere `NS` ekler ve `tr.dic` olarak kaydeder.
-3. **Affix Kurallarının Üretimi**: `generate_grammar_rules.py` tüm dilbilgisel paradigmalar için kuralları üretir ve `tr.aff` dosyasını kaydeder (Derleme süresi sadece **~4.5 saniye**).
+### Derleme ve Doğrulama Akışı:
+1. **Sözlük Ayrıştırma ve Kural Üretimi**: `build/compile_hunspell.py` taban sözlüğü (`lexicons/zemberek_lexicon.json`) okur, TDK ve Dil Derneği özel eklemelerini/düzeltmelerini birleştirir, gramer kurallarını ve affix tablolarını (`tr.aff`) üretir, kompakt UTF-8 bayrak dönüştürmesini uygulayarak `tr.dic` ve `tr.aff` dosyalarını kaydeder.
+2. **Derleme Doğrulaması**: Derlenen sözlük bütünlüğünü doğrulamak için:
+   ```bash
+   python build/validate_build.py
+   ```
 
 ## Atıf ve Kaynaklar
 
