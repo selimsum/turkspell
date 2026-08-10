@@ -172,8 +172,10 @@ def compile_dictionary():
         return s.replace('I', 'ı').replace('İ', 'i').lower()
 
     _raw_dir = os.path.join(base_dir, 'raw_data')
-    _authority_set = set()
-    for _fname in ('tdk_pdf_words.txt', 'dil_dernegi_words.txt'):
+    _tdk_set = set()
+    _dd_set = set()
+    
+    for _fname, _target_set in [('tdk_pdf_words.txt', _tdk_set), ('dil_dernegi_words.txt', _dd_set)]:
         _fpath = os.path.join(_raw_dir, _fname)
         if not os.path.exists(_fpath):
             raise FileNotFoundError(
@@ -185,16 +187,39 @@ def compile_dictionary():
                 _w = _line.strip()
                 if not _w:
                     continue
-                # Dil Derneği writes co-variants with a slash ("geçer akça/akçe").
-                # Expand to both full forms — a raw '/' in a lemma would otherwise
-                # reach tr.dic and be parsed by Hunspell as a flag separator.
                 if '/' in _w:
                     _head, _, _alt = _w.partition('/')
-                    _authority_set.add(_tlc(_head))
+                    _target_set.add(_tlc(_head))
                     _prefix = _head.rsplit(' ', 1)[0] if ' ' in _head else ''
-                    _authority_set.add(_tlc(f"{_prefix} {_alt}".strip()))
+                    _target_set.add(_tlc(f"{_prefix} {_alt}".strip()))
                     continue
-                _authority_set.add(_tlc(_w))
+                _target_set.add(_tlc(_w))
+                
+    def _strip_hat(s):
+        return s.replace('â','a').replace('î','i').replace('û','u')
+
+    _authority_set = set(_dd_set)
+    _dd_unhatted_map = {}
+    for w in _dd_set:
+        unhatted = _strip_hat(w)
+        if unhatted not in _dd_unhatted_map:
+            _dd_unhatted_map[unhatted] = set()
+        _dd_unhatted_map[unhatted].add(w)
+
+    # Distinct unhatted words in TDK that have a different meaning from Dil Derneği's hatted version
+    UNHATTED_EXCEPTIONS = {'ademiyet'}
+
+    _dropped_unhatted = 0
+    for w in _tdk_set:
+        if w == _strip_hat(w): # w is unhatted
+            if w in _dd_unhatted_map and w not in _dd_set and w not in UNHATTED_EXCEPTIONS:
+                # DD has hatted version(s) of this word, but NOT the unhatted version.
+                # User rule: "Eğer bir kelimenin Dil Derneği'nde şapkalı hâli varsa, TDK'daki şapkasız hâlini yoksay"
+                _dropped_unhatted += 1
+                continue
+        _authority_set.add(w)
+        
+    print(f"Dropped {_dropped_unhatted} unhatted TDK words because Dil Derneği dictates the hatted form.")
     print(f"Authority set: {len(_authority_set):,} words from TDK + Dil Derneği.")
 
     # Filter Zemberek: keep only entries whose lemma is in TDK or Dil Derneği
@@ -1960,7 +1985,7 @@ def compile_dictionary():
     # incomplete dictionary must not report success.
     print("\nValidating output...")
     from validate_build import validate
-    errors, warnings = validate('tr.dic', 'tr.aff')
+    errors, warnings = validate(os.path.join(base_dir, 'tr.dic'), os.path.join(base_dir, 'tr.aff'))
     for w in warnings:
         print(f"  WARNING: {w}")
     for e in errors:

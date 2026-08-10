@@ -5,6 +5,8 @@ NOSUGGEST ∮
 KEEPCASE ∣
 NEEDAFFIX X
 LANG tr
+NOSPLITSUGS
+NOPOLYSUGS
 WORDCHARS '’‘.
 
 # Break characters (allow breaking at hyphens, en-dashes, and em-dashes)
@@ -41,7 +43,7 @@ MAP 9o9i9O9İ
 MAXDIFF 3
 MAXNGRAMSUGS 4
 
-REP 454
+REP 453
 REP a â
 REP â a
 REP u û
@@ -320,7 +322,6 @@ REP aciz âciz
 REP acizleşebilme âcizleşebilme
 REP acizlik âcizlik
 REP adem âdem
-REP ademiyet âdemiyet
 REP ademci Âdemci
 REP alemşümullük âlemşümullük
 REP alimlik âlimlik
