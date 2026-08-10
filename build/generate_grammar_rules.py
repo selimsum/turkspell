@@ -1466,7 +1466,7 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("ruzgar", "rüzgâr"), ("rüzgar", "rüzgâr"), ("tezgah", "tezgâh"),
         ("dukkan", "dükkân"), ("mahkum", "mahkûm"), ("alim", "âlim"), ("hakimevi", "hâkimevi"),
         ("aciz", "âciz"), ("acizleşebilme", "âcizleşebilme"), ("acizlik", "âcizlik"),
-        ("adem", "âdem"), ("ademiyet", "âdemiyet"), ("ademci", "Âdemci"), ("alemşümullük", "âlemşümullük"),
+        ("adem", "âdem"), ("ademci", "Âdemci"), ("alemşümullük", "âlemşümullük"),
         ("alimlik", "âlimlik"), ("aliyyülala", "aliyyülâlâ"), ("amalık", "âmâlık"), ("amin", "âmin"),
         ("araz", "âraz"), ("arzuhalci", "arzuhâlci"), ("arzuhalcilik", "arzuhâlcilik"),
         ("askerileşme", "askerîleşme"), ("askerileşmek", "askerîleşmek"),
@@ -1538,6 +1538,8 @@ NOSUGGEST NS
 KEEPCASE KC
 NEEDAFFIX NE
 LANG tr
+NOSPLITSUGS
+NOPOLYSUGS
 WORDCHARS '’‘.
 
 # Break characters (allow breaking at hyphens, en-dashes, and em-dashes)

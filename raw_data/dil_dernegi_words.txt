@@ -35461,7 +35461,7 @@ merkezcilik
 merkezde
 merkezi
 merkezileşme
-merkezileşmek
+merkezîleşmek
 merkezileştirme
 merkezileştirmek
 merkeziyet
@@ -56862,8 +56862,8 @@ yardırma
 yardırmak
 Yaren
 yaren
-yarence
-yarenlik
+yârence
+yârenlik
 yargı
 yargıcı
 yargıcılık
