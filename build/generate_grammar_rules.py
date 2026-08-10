@@ -1232,7 +1232,7 @@ def gen_deriv_las(flag: str = "DL") -> str:
         ("[eiîâ][^aeıioöuüâîû][^aeıioöuüâîû]",       "leş", "leşmek"),
         ("[öüû][^aeıioöuüâîû][^aeıioöuüâîû]",       "leş", "leşmek"),
     ]:
-        verb_flag = "Vb" if "a" in suf else "Vf"
+        verb_flag = "Vi" if "a" in suf else "Vj"
         rules.append(sfx(flag, "0", f"{verb_inf}/{verb_flag}", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -1249,8 +1249,8 @@ def gen_deriv_las_tir(flag: str = "DT") -> str:
         ("[aıouâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "laştır"),
         ("[eiöüîâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "leştir"),
     ]:
-        verb_flag = "Vb" if "ı" in suf else "Vf"
-        inf_suf = "mak" if verb_flag == "Vb" else "mek"
+        verb_flag = "Vi" if "ı" in suf else "Vj"
+        inf_suf = "mak" if verb_flag == "Vi" else "mek"
         rules.append(sfx(flag, "0", f"{suf}{inf_suf}/{verb_flag}", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -1267,8 +1267,8 @@ def gen_deriv_len(flag: str = "DE") -> str:
         ("[aıouâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "lan"),
         ("[eiöüîâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "len"),
     ]:
-        verb_flag = "Vb" if "a" in suf else "Vf"
-        inf_suf = "mak" if verb_flag == "Vb" else "mek"
+        verb_flag = "Vi" if "a" in suf else "Vj"
+        inf_suf = "mak" if verb_flag == "Vi" else "mek"
         rules.append(sfx(flag, "0", f"{suf}{inf_suf}/{verb_flag}", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -2089,8 +2089,17 @@ def _generate_verb_flags_from_v1() -> str:
 
     new_vb_char = LONG_TO_UTF8["Vb"]
     new_vf_char = LONG_TO_UTF8["Vf"]
-    verb_flags_rules[new_vb_char] = ('Y', [])
-    verb_flags_rules[new_vf_char] = ('Y', [])
+    new_wa_char = LONG_TO_UTF8["wa"]
+    new_wi_char = LONG_TO_UTF8["wi"]
+    new_wr_char = LONG_TO_UTF8["wr"]
+    new_wu_char = LONG_TO_UTF8["wu"]
+    new_we_char = LONG_TO_UTF8["we"]
+    new_wj_char = LONG_TO_UTF8["wj"]
+    new_wg_char = LONG_TO_UTF8["wg"]
+    new_wh_char = LONG_TO_UTF8["wh"]
+    
+    for c in [new_vb_char, new_vf_char, new_wa_char, new_wi_char, new_wr_char, new_wu_char, new_we_char, new_wj_char, new_wg_char, new_wh_char]:
+        verb_flags_rules[c] = ('Y', [])
 
     for line in lines:
         line_strip = line.strip()
@@ -2216,20 +2225,39 @@ def _generate_verb_flags_from_v1() -> str:
                         else:
                             verb_flags_rules[new_flag_char][1].append(parts)
                         
-                        # Clone VB and VF rules to Vb and Vf, filtering out ırmak/irmek/urmak/ürmek
+                        # Clone VB and VF rules to new Aorist-specific flags
                         suf = parts[3].split('/')[0] if len(parts) >= 4 else ""
+                        
+                        def is_aorist_a_suf(s, is_back):
+                            return s.startswith('ar' if is_back else 'er') and not s.startswith('arak' if is_back else 'erek')
+                            
+                        def is_aorist_i_suf(s, is_back):
+                            v = ('ır', 'ur') if is_back else ('ir', 'ür')
+                            return s.startswith(v) and not s.startswith(tuple(x + 'mak' if is_back else x + 'mek' for x in v))
+                            
                         if new_flag_char == LONG_TO_UTF8["VB"]:
                             if not any(x in suf for x in ('ırmak', 'irmek', 'urmak', 'ürmek')):
-                                p_clone = list(parts)
-                                verb_flags_rules[new_vb_char][1].append(p_clone)
+                                verb_flags_rules[new_vb_char][1].append(list(parts))
+                            verb_flags_rules[new_wa_char][1].append(list(parts))
+                            if not is_aorist_a_suf(suf, True):
+                                verb_flags_rules[new_wi_char][1].append(list(parts))
                         elif new_flag_char == LONG_TO_UTF8["VF"]:
                             if not any(x in suf for x in ('ırmak', 'irmek', 'urmak', 'ürmek')):
-                                p_clone = list(parts)
-                                verb_flags_rules[new_vf_char][1].append(p_clone)
+                                verb_flags_rules[new_vf_char][1].append(list(parts))
+                            verb_flags_rules[new_we_char][1].append(list(parts))
+                            if not is_aorist_a_suf(suf, False):
+                                verb_flags_rules[new_wj_char][1].append(list(parts))
+                        elif new_flag_char == LONG_TO_UTF8["VR"]:
+                            verb_flags_rules[new_wr_char][1].append(list(parts))
+                            if not is_aorist_a_suf(suf, True):
+                                verb_flags_rules[new_wu_char][1].append(list(parts))
+                        elif new_flag_char == LONG_TO_UTF8["VG"]:
+                            verb_flags_rules[new_wg_char][1].append(list(parts))
+                            if not is_aorist_a_suf(suf, False):
+                                verb_flags_rules[new_wh_char][1].append(list(parts))
 
-    # Append Vb and Vf to order
-    verb_flags_order.append(new_vb_char)
-    verb_flags_order.append(new_vf_char)
+    # Append new flags to order
+    verb_flags_order.extend([new_vb_char, new_vf_char, new_wa_char, new_wi_char, new_wr_char, new_wu_char, new_we_char, new_wj_char, new_wg_char, new_wh_char])
 
     out_lines = []
     for flag_char in verb_flags_order:

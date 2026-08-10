@@ -1097,6 +1097,8 @@ def compile_dictionary():
             lemma = 'TL' if orig_lemma.lower() == 'tl' else "TL'lik"
         elif orig_lemma == 'Atatürk':
             lemma = 'Atatürk'
+        elif orig_lemma.lower() == 'bi':
+            lemma = 'Bi'
         else:
             lemma = orig_lemma.replace('I', 'ı').replace('İ', 'i').lower()
             
@@ -1154,23 +1156,17 @@ def compile_dictionary():
             # Short interjections being over-inflected  
             'hu', 'ole', 'be',
             # Dubious nouns whose inflected forms match misspellings
-            'becet', 'döger', 'seme', 'enç', 'havşa',
+            'enç', 'havşa',
             'ikil', 'gelimli', 'cümlesi',
-            # 'ağış' registered as Verb with extra flags — produces 'bideki'
-            # style forms (ağış + de + ki)
-            'ağış',
-            # 'işl' in custom_abbreviations.json — produces 'işltir' accepted
-            # as misspelling of 'işletir'
-            'işl',
             # 'urmak' registered as Noun (it is a verb root, not a standalone noun)
             'urmak',
             # 'elmek' as Noun (it is a verb 'elmek' meaning to filter — but causes
             # 'elmeye' to be accepted, masking a misspelling of 'gelmeye')
             # 'elmek',
             # Stems causing V2 false negatives
-            'pur', 'aysal', 'sahin', 'dölenme', 'lava', 'çet', 'dölenmek',
+            'pur', 'aysal', 'sahin', 'dölenme', 'çet', 'dölenmek',
         }
-        if lemma.lower() in FALSE_NEGATIVE_STEMS:
+        if lemma.lower() in FALSE_NEGATIVE_STEMS and lemma != 'Bi':
             continue
             
         # Irregular word 'su' handling
@@ -1331,7 +1327,21 @@ def compile_dictionary():
             elif vowel_end:
                 flag = "11" if back else "12"
             else:
-                flag = "9" if back else "10"
+                all_vowels = 'aeıioöuüâîûAEIİOÖUÜÂÎÛ'
+                num_vowels = sum(1 for c in root if c in all_vowels)
+                aorist_i_exceptions = {
+                    'al', 'bil', 'bul', 'dur', 'gel', 'gör', 'kal', 'ol', 'öl', 'san', 'var', 'ver', 'vur', 'yen'
+                }
+                
+                is_aorist_i = 'Aorist_I' in attrs or (num_vowels > 1) or (root in aorist_i_exceptions)
+                is_aorist_a = 'Aorist_A' in attrs or (num_vowels == 1 and root not in aorist_i_exceptions)
+                
+                if is_aorist_i and not is_aorist_a:
+                    flag = "21" if back else "23" # wi or wj
+                elif is_aorist_a and not is_aorist_i:
+                    flag = "20" if back else "22" # wa or we
+                else:
+                    flag = "9" if back else "10"
         elif pos == 'Question':
             flag = "3" if back else "4"
             
@@ -1917,7 +1927,7 @@ def compile_dictionary():
     print("Remapping tr.dic to FLAG UTF-8...")
     import sys
     sys.path.insert(0, base_dir)
-    from migrate_dictionary import migrate_line as _migrate_line
+    from tools.migrate_dictionary import migrate_line as _migrate_line
     with open(os.path.join(base_dir, 'tr.dic'), 'r', encoding='utf-8') as f:
         dic_raw_lines = f.readlines()
     dic_count_str = dic_raw_lines[0].strip()

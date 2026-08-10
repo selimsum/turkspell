@@ -17,7 +17,7 @@ ALL_FLAGS = sorted([
     "uA", "uY", "uL", "uR", "uN", "uI", "uQ", "uP", "u1", "u2", "u3", "u4", "uC",
     # Verb flags
     "VB", "VR", "VF", "VG", "VA", "VS", "VE", "VH", "VK", "VL", "VM", "VN", "VY",
-    "Vb", "Vf",
+    "Vb", "Vf", "wa", "wi", "wr", "wu", "we", "wj", "wg", "wh",
     # Obsolete
     "NS"
 ])
