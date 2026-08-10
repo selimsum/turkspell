@@ -1,14 +1,14 @@
 # Turkspell: Optimized Turkish Hunspell Dictionary
 
-Turkspell is a high-performance, lightweight Turkish Hunspell dictionary (`tr.dic` and `tr.aff`) built using a **Dynamic Chained Flags** architecture. It achieves **state-of-the-art correction accuracy** on Turkish spelling benchmarks — ranking **#1 on V1, V2, and V3** — with a dictionary file size of **7.32 MB** (`tr.dic` with 96,692 entries) and affix file of **13.35 MB** (`tr.aff`). Total dictionary memory footprint is **20.67 MB** (optimized for Firefox and Chrome browser extensions).
+Turkspell is a high-performance, lightweight Turkish Hunspell dictionary (`tr.dic` and `tr.aff`) built using a **Dynamic Chained Flags** architecture. It achieves **state-of-the-art correction accuracy** on Turkish spelling benchmarks — ranking **#1 across all Mukayese and Turkspell benchmarks** — with a dictionary file size of **7.32 MB** (`tr.dic` with 96,692 entries) and affix file of **13.35 MB** (`tr.aff`). Total dictionary memory footprint is **20.67 MB** (optimized for Firefox and Chrome browser extensions).
 
 ---
 
 ## Benchmark Performance
 
-Turkspell has been evaluated on the modified V1 and V2 test sets of the [tdd-ai/spell-checking-and-correction](https://github.com/tdd-ai/spell-checking-and-correction) repository (part of the [Mukayese](https://arxiv.org/abs/2203.01215) benchmarking suite), as well as a newly created **V3 Official Test** designed to eliminate real-word typo collisions:
+Turkspell has been evaluated on the modified V1 and V2 test sets of the [tdd-ai/spell-checking-and-correction](https://github.com/tdd-ai/spell-checking-and-correction) repository (part of the [Mukayese](https://arxiv.org/abs/2203.01215) benchmarking suite), as well as **Turkspell Benchmark V1** and **Official Turkspell Benchmark V2**:
 
-### Clean Test V1 (10,000 words)
+### Mukayese Benchmark Test V1 (Clean) (10,000 words)
 
 | Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
 | :--- | :---: | :---: | :---: | :---: |
@@ -18,7 +18,7 @@ Turkspell has been evaluated on the modified V1 and V2 test sets of the [tdd-ai/
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 97.94 | 99.07 | 98.50 | **96.20** |
 | [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 80.71 | **99.98** | 89.32 | 80.00 |
 
-### Clean Test V2 (10,000 words)
+### Mukayese Benchmark Test V2 (Clean) (10,000 words)
 
 | Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
 | :--- | :---: | :---: | :---: | :---: |
@@ -28,7 +28,7 @@ Turkspell has been evaluated on the modified V1 and V2 test sets of the [tdd-ai/
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 98.23 | 99.12 | 98.67 | 61.95 |
 | [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 90.15 | **100.00** | 94.82 | 52.68 |
 
-### Official Test V3 (10,000 words - Collision-Filtered)
+### Turkspell Benchmark V1 (10,000 words - Collision-Filtered)
 
 | Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
 | :--- | :---: | :---: | :---: | :---: |
@@ -38,13 +38,34 @@ Turkspell has been evaluated on the modified V1 and V2 test sets of the [tdd-ai/
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 99.69 | 98.45 | 99.07 | 55.23 |
 | [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 92.54 | 99.43 | 95.86 | 48.15 |
 
+### Official Turkspell Benchmark V2 (TDK + Dil Derneği)
+
+| Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Turkspell** (20.67 MB) | **100.00** | **98.33** | **99.16** | **67.59** |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 99.73 | 86.68 | 92.75 | 49.81 |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 99.02 | 89.51 | 94.03 | 42.07 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 99.79 | 90.34 | 94.83 | 51.10 |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 97.81 | 91.13 | 94.35 | 47.06 |
+
+### Official Turkspell Benchmark V2 (TDK-only)
+
+| Model / Dictionary | Error Detection Precision (%) | Error Detection Recall (%) | Error Detection F1 (%) | Error Correction Accuracy (%) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Turkspell** (20.67 MB) | **100.00** | **92.13** | **95.90** | **56.82** |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 99.73 | 81.21 | 89.52 | 42.15 |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 99.49 | 84.25 | 91.24 | 38.00 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 99.79 | 84.65 | 91.60 | 44.31 |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 98.56 | 86.04 | 91.87 | 39.77 |
+
 ### Why Only Clean Benchmarks Are Used
 
 The original, noisy V1 and V2 official test sets suffered from **noisy gold data**, **spelling errors inside the test set keys**, and **Windows console encoding mismatches** that severely polluted spelling accuracy metrics. 
 
 To ensure realistic, clean evaluation statistics, we exclusively present:
-1.  **Clean V1 & V2 Tests**: Generated by scrubbing noisy gold words (such as incorrect colloquial merges like `farketmek`, `terketmek`, or lowercase abbreviations) that are technically invalid Turkish spelling. Additionally, we corrected the CP1254 to UTF-8 output encoding issues under Windows, which previously caused false negatives on Turkish circumflex characters (â, î, û).
-2.  **Official Test V3 (Collision-Filtered)**: Resolves the issue of keyboard-proximity mutations accidentally generating valid Turkish words (e.g. mutating `verir` into the valid noun `veri`). Dictionary spellcheckers correctly accept these mutated real words, but the noisy dataset marks them as typos, artificially penalizing Recall. V3 uses Zemberek to filter out all such real-word collisions.
+1.  **Mukayese Benchmark Test V1 & V2 (Clean)**: Generated by scrubbing noisy gold words (such as incorrect colloquial merges like `farketmek`, `terketmek`, or lowercase abbreviations) that are technically invalid Turkish spelling. Additionally, we corrected the CP1254 to UTF-8 output encoding issues under Windows, which previously caused false negatives on Turkish circumflex characters (â, î, û).
+2.  **Turkspell Benchmark V1 (Collision-Filtered)**: Resolves the issue of keyboard-proximity mutations accidentally generating valid Turkish words (e.g. mutating `verir` into the valid noun `veri`). Dictionary spellcheckers correctly accept these mutated real words, but the noisy dataset marks them as typos, artificially penalizing Recall. V3 uses Zemberek to filter out all such real-word collisions.
+3.  **Official Turkspell Benchmark V2**: Evaluates speller performance across strict TDK and combined TDK + Dil Derneği spelling rules with comprehensive affix and typo coverage.
 
 ---
 
@@ -176,6 +197,7 @@ The spell-checking benchmarks in this project are evaluated on datasets from the
 ```
 
 ---
+
 ---
 
 Turkspell, **Dinamik Zincirleme Bayraklar** (Dynamic Chained Flags) mimarisine dayanan, yüksek performanslı ve hafif bir Türkçe Hunspell sözlüğüdür (`tr.dic` ve `tr.aff`). Her iki standart Türkçe yazım denetimi testinde **en üst düzey düzeltme doğruluğunu** elde eder — **V1, V2 ve V3'te 1. sırada** yer alır — sözlük dosya boyutunu **7.32 MB**'a (`tr.dic` 96.692 kelime) ve affix dosyasını **13.35 MB**'a (`tr.aff`) indirerek tarayıcı ve eklentilerdeki toplam bellek kullanımını **20.67 MB** seviyesine ulaştırır.
@@ -186,7 +208,7 @@ Turkspell, **Dinamik Zincirleme Bayraklar** (Dynamic Chained Flags) mimarisine d
 
 Turkspell, [Mukayese](https://arxiv.org/abs/2203.01215) kıyaslama paketinin yazım denetimi bileşenini oluşturan [tdd-ai/spell-checking-and-correction](https://github.com/tdd-ai/spell-checking-and-correction) deposunun standart V1 ve V2 resmi test setlerinde, ayrıca çarpışmalardan arındırılmış yeni **V3 Resmi Testi** üzerinde değerlendirilmiştir:
 
-### Temiz Test V1 (10.000 kelime)
+### Mukayese Benchmark Test V1 (Clean) (10.000 kelime)
 
 | Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
 | :--- | :---: | :---: | :---: | :---: |
@@ -196,7 +218,7 @@ Turkspell, [Mukayese](https://arxiv.org/abs/2203.01215) kıyaslama paketinin yaz
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 97.94 | 99.07 | 98.50 | **96.20** |
 | [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 80.71 | **99.98** | 89.32 | 80.00 |
 
-### Temiz Test V2 (10.000 kelime)
+### Mukayese Benchmark Test V2 (Clean) (10.000 kelime)
 
 | Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
 | :--- | :---: | :---: | :---: | :---: |
@@ -206,7 +228,7 @@ Turkspell, [Mukayese](https://arxiv.org/abs/2203.01215) kıyaslama paketinin yaz
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 98.23 | 99.12 | 98.67 | 61.95 |
 | [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 90.15 | **100.00** | 94.82 | 52.68 |
 
-### Resmi Test V3 (10.000 kelime - Çarpışmasız)
+### Turkspell Benchmark V1 (10.000 kelime - Çarpışmasız)
 
 | Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
 | :--- | :---: | :---: | :---: | :---: |
@@ -216,13 +238,34 @@ Turkspell, [Mukayese](https://arxiv.org/abs/2203.01215) kıyaslama paketinin yaz
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 99.69 | 98.45 | 99.07 | 55.23 |
 | [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 92.54 | 99.43 | 95.86 | 48.15 |
 
+### Official Turkspell Benchmark V2 (TDK + Dil Derneği)
+
+| Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Turkspell** (20.67 MB) | **100.00** | **98.33** | **99.16** | **67.59** |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 99.73 | 86.68 | 92.75 | 49.81 |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 99.02 | 89.51 | 94.03 | 42.07 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 99.79 | 90.34 | 94.83 | 51.10 |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 97.81 | 91.13 | 94.35 | 47.06 |
+
+### Official Turkspell Benchmark V2 (TDK-only)
+
+| Model / Sözlük | Hata Tespiti Keskinlik (%) | Hata Tespiti Duyarlılık (%) | Hata Tespiti F1 (%) | Hata Düzeltme Doğruluk (%) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Turkspell** (20.67 MB) | **100.00** | **92.13** | **95.90** | **56.82** |
+| [**tdd-ai/hunspell-tr**](https://github.com/tdd-ai/hunspell-tr) (36.64 MB) | 99.73 | 81.21 | 89.52 | 42.15 |
+| [**harunzafer/hunspell-tr**](https://github.com/hrzafer/hunspell-tr) (8.86 MB) | 99.49 | 84.25 | 91.24 | 38.00 |
+| [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) (32.78 MB) | 99.79 | 84.65 | 91.60 | 44.31 |
+| [**vdemir/hunspell-tr**](https://github.com/vdemir/hunspell-tr) (8.02 MB) | 98.56 | 86.04 | 91.87 | 39.77 |
+
 ### Neden Yalnızca Temiz Karşılaştırma Testleri (Clean Benchmarks) Gösterilmektedir?
 
 Orijinal V1 ve V2 resmi test setleri; **hatalı gold veriler**, **imla hataları içeren test anahtarları** ve Windows altındaki **console kodlama uyuşmazlıkları** sebebiyle yazım denetimi başarımını gerçek dışı şekilde etkilemekteydi. 
 
 Bu sebeple, yalnızca aşağıdaki temizlenmiş veri setleri sunulmaktadır:
-1. **Temiz V1 ve V2 Testleri**: Yazım kurallarına uymayan birleşik kelimeler (örn. `farketmek`, `terketmek`) ve standart dışı kısaltmalar gold veri setinden temizlendi. Ayrıca Windows üzerindeki CP1254/UTF-8 uyuşmazlığı giderilerek Türkçe şapkalı karakterlerin (â, î, û) yanlış negatif üretmesi önlendi.
-2. **Resmi Test V3 (Çarpışmasız)**: Rastgele harf değişimlerinin geçerli Türkçe kelimeler üretmesinden kaynaklanan çakışmalar (örn. `verir` kelimesinin yazım hatasıyla `veri` isim köküne dönüşmesi) Zemberek morfolojik analizörü ile ayıklanarak duyarlılık (Recall) ölçümündeki yapay düşüş engellendi.
+1. **Mukayese Benchmark Test V1 ve V2 (Clean)**: Yazım kurallarına uymayan birleşik kelimeler (örn. `farketmek`, `terketmek`) ve standart dışı kısaltmalar gold veri setinden temizlendi. Ayrıca Windows üzerindeki CP1254/UTF-8 uyuşmazlığı giderilerek Türkçe şapkalı karakterlerin (â, î, û) yanlış negatif üretmesi önlendi.
+2. **Turkspell Benchmark V1 (Çarpışmasız)**: Rastgele harf değişimlerinin geçerli Türkçe kelimeler üretmesinden kaynaklanan çakışmalar (örn. `verir` kelimesinin yazım hatasıyla `veri` isim köküne dönüşmesi) Zemberek morfolojik analizörü ile ayıklanarak duyarlılık (Recall) ölçümündeki yapay düşüş engellendi.
+3. **Official Turkspell Benchmark V2**: Sözlüklerin başarımını hem yalnızca TDK hem de TDK + Dil Derneği yazım kuralları standartlarında kapsamlı çekim eki ve yazım hatası senaryoları altında değerlendirir.
 
 ---
 
