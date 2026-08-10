@@ -97,6 +97,10 @@ VERB_FLAG_MAP = {
     15:  "VK",  115: "VL",
     16:  "VM",  116: "VN",
     17:  "VY",
+    20:  "wa",  120: "wr",
+    21:  "wi",  121: "wu",
+    22:  "we",  122: "wg",
+    23:  "wj",  123: "wh",
 }
 
 ALL_FLAG_MAP = {**NOUN_FLAG_MAP, **VERB_FLAG_MAP}
