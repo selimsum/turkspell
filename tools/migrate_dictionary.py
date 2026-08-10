@@ -65,7 +65,7 @@ import json
 from pathlib import Path
 
 # utf8_flag_mapping lives in build/ — make it importable regardless of CWD.
-sys.path.insert(0, str(Path(__file__).resolve().parent / 'build'))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'build'))
 from utf8_flag_mapping import remap_flag_string
 
 
@@ -342,7 +342,7 @@ def migrate_dictionary(input_path: str = 'tr.dic',
     """Main migration function."""
     # Load obsolete lemmas
     obsolete_set = set()
-    obsolete_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'scratch', 'obsolete_lemmas.json')
+    obsolete_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scratch', 'obsolete_lemmas.json')
     if os.path.exists(obsolete_path):
         try:
             with open(obsolete_path, 'r', encoding='utf-8') as f:
