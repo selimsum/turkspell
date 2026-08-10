@@ -1165,7 +1165,7 @@ def compile_dictionary():
             continue
  
         # Force common abbreviations to lowercase for optimal Hunspell case matching
-        common_abbrevs = {'km', 'abd', 'örn', 'dr', 'dna', 'prof', 'x', 'mö', 'ms', 'sf', 'cm', 'kg', 'vb', 'bkz', 'm', 'g', 'b', 'mm', 'ml', 'gps', 'uuı', 'uv', 'bbc', 'vr', 'dr', 'eeg', 'yz', 'sscb', 'esa', 'rfid', 'dehb', 'mit', 'ngc', 'hiv', 'sls', 'atp', 'cern', 'iq', 'vb.', 't.c.'}
+        common_abbrevs = {'km', 'abd', 'örn', 'örn.', 'dr', 'dna', 'prof', 'x', 'mö', 'ms', 'sf', 'cm', 'kg', 'vb', 'bkz', 'm', 'g', 'b', 'mm', 'ml', 'gps', 'uuı', 'uv', 'bbc', 'vr', 'dr', 'eeg', 'yz', 'sscb', 'esa', 'rfid', 'dehb', 'mit', 'ngc', 'hiv', 'sls', 'atp', 'cern', 'iq', 'vb.', 't.c.'}
         if lemma.lower() in common_abbrevs:
             lemma = lemma.lower()
             
