@@ -2,7 +2,7 @@
 cleanup_compiled_wordlist.py
 ===========================
 Cleans up Turkspell compiled wordlist (tr.dic) using authoritative sources of truth:
-1. raw_data/tdk_pdf_words.txt
+1. raw_data/tdk_words.txt
 2. raw_data/dil_dernegi_words.txt
 
 Actions performed:
@@ -25,7 +25,7 @@ TURKSPELL_DIR = Path(__file__).parent.parent
 RAW_DATA_DIR = TURKSPELL_DIR / 'raw_data'
 LEXICONS_DIR = TURKSPELL_DIR / 'lexicons'
 
-TDK_FILE = RAW_DATA_DIR / 'tdk_pdf_words.txt'
+TDK_FILE = RAW_DATA_DIR / 'tdk_words.txt'
 DIL_DERNEGI_FILE = RAW_DATA_DIR / 'dil_dernegi_words.txt'
 TR_DIC = TURKSPELL_DIR / 'tr.dic'
 REPORT_FILE = RAW_DATA_DIR / 'wordlist_cleanup_report.txt'

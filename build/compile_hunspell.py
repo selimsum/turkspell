@@ -175,7 +175,7 @@ def compile_dictionary():
     _tdk_set = set()
     _dd_set = set()
     
-    for _fname, _target_set in [('tdk_pdf_words.txt', _tdk_set), ('dil_dernegi_words.txt', _dd_set)]:
+    for _fname, _target_set in [('tdk_words.txt', _tdk_set), ('dil_dernegi_words.txt', _dd_set)]:
         _fpath = os.path.join(_raw_dir, _fname)
         if not os.path.exists(_fpath):
             raise FileNotFoundError(
