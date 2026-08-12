@@ -1,6 +1,6 @@
 # Turkspell: Optimized Turkish Hunspell Dictionary
 
-Turkspell is a high-performance, lightweight Turkish Hunspell dictionary (`tr.dic` and `tr.aff`) built using a **Dynamic Chained Flags** architecture. It achieves **state-of-the-art correction accuracy** on Turkish spelling benchmarks — ranking **#1 across all Mukayese and Turkspell benchmarks** — with a dictionary file size of **7.35 MB** (`tr.dic` with 97,525 entries) and affix file of **17.19 MB** (`tr.aff`). Total dictionary memory footprint is **24.54 MB** (optimized for Firefox and Chrome browser extensions).
+Turkspell is a high-performance, lightweight Turkish Hunspell dictionary (`tr.dic` and `tr.aff`) built using a **Dynamic Chained Flags** architecture. It achieves **state-of-the-art correction accuracy** on Turkish spelling benchmarks — ranking **#1 across all Mukayese and Turkspell benchmarks** — with a dictionary file size of **7.35 MB** (`tr.dic` with 97,521 entries) and affix file of **17.19 MB** (`tr.aff`). Total dictionary memory footprint is **24.54 MB** (optimized for Firefox and Chrome browser extensions).
 
 ---
 
@@ -200,7 +200,7 @@ The spell-checking benchmarks in this project are evaluated on datasets from the
 
 ---
 
-Turkspell, **Dinamik Zincirleme Bayraklar** (Dynamic Chained Flags) mimarisine dayanan, yüksek performanslı ve hafif bir Türkçe Hunspell sözlüğüdür (`tr.dic` ve `tr.aff`). Her iki standart Türkçe yazım denetimi testinde **en üst düzey düzeltme doğruluğunu** elde eder — **V1, V2 ve V3'te 1. sırada** yer alır — sözlük dosya boyutunu **7.35 MB**'a (`tr.dic` 97.525 kelime) ve affix dosyasını **17.19 MB**'a (`tr.aff`) indirerek tarayıcı ve eklentilerdeki toplam bellek kullanımını **24.54 MB** seviyesine ulaştırır.
+Turkspell, **Dinamik Zincirleme Bayraklar** (Dynamic Chained Flags) mimarisine dayanan, yüksek performanslı ve hafif bir Türkçe Hunspell sözlüğüdür (`tr.dic` ve `tr.aff`). Her iki standart Türkçe yazım denetimi testinde **en üst düzey düzeltme doğruluğunu** elde eder — **V1, V2 ve V3'te 1. sırada** yer alır — sözlük dosya boyutunu **7.35 MB**'a (`tr.dic` 97.521 kelime) ve affix dosyasını **17.19 MB**'a (`tr.aff`) indirerek tarayıcı ve eklentilerdeki toplam bellek kullanımını **24.54 MB** seviyesine ulaştırır.
 
 ---
 

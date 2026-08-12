@@ -730,11 +730,6 @@
     "attributes": []
   },
   {
-    "lemma": "B.K.",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
     "lemma": "BAB",
     "pos": "ProperNoun",
     "attributes": []
@@ -861,6 +856,11 @@
   },
   {
     "lemma": "BJK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "BK",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1526,11 +1526,6 @@
   },
   {
     "lemma": "DLH",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "DM",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2345,21 +2340,6 @@
     "attributes": []
   },
   {
-    "lemma": "G",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "G.B.",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "G.D.",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
     "lemma": "GAMHK",
     "pos": "ProperNoun",
     "attributes": []
@@ -3075,16 +3055,6 @@
     "attributes": []
   },
   {
-    "lemma": "K.B.",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "K.D.",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
     "lemma": "KAMUSEN",
     "pos": "ProperNoun",
     "attributes": []
@@ -3166,11 +3136,6 @@
   },
   {
     "lemma": "KHK",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "KHz",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3515,11 +3480,6 @@
     "attributes": []
   },
   {
-    "lemma": "M",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
     "lemma": "MAKÜ",
     "pos": "ProperNoun",
     "attributes": []
@@ -3576,11 +3536,6 @@
   },
   {
     "lemma": "MHP",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "MHz",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3842,6 +3797,16 @@
   {
     "lemma": "No.",
     "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "No.lu",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "No.suz",
+    "pos": "Noun",
     "attributes": []
   },
   {
@@ -4626,11 +4591,6 @@
   },
   {
     "lemma": "T.",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "T.C",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -6275,6 +6235,16 @@
     "attributes": []
   },
   {
+    "lemma": "cm²",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "cm³",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "cos",
     "pos": "Noun",
     "attributes": []
@@ -6351,7 +6321,7 @@
   },
   {
     "lemma": "dm",
-    "pos": "Noun",
+    "pos": "ProperNoun",
     "attributes": []
   },
   {
@@ -6481,7 +6451,7 @@
   },
   {
     "lemma": "g",
-    "pos": "Noun",
+    "pos": "ProperNoun",
     "attributes": []
   },
   {
@@ -6585,6 +6555,11 @@
     "attributes": []
   },
   {
+    "lemma": "hz.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "i.",
     "pos": "Noun",
     "attributes": []
@@ -6615,11 +6590,6 @@
     "attributes": []
   },
   {
-    "lemma": "kHz",
-    "pos": "Noun",
-    "attributes": []
-  },
-  {
     "lemma": "kal",
     "pos": "Noun",
     "attributes": []
@@ -6632,6 +6602,11 @@
   {
     "lemma": "kg",
     "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "khz",
+    "pos": "ProperNoun",
     "attributes": []
   },
   {
@@ -6701,7 +6676,7 @@
   },
   {
     "lemma": "m",
-    "pos": "Noun",
+    "pos": "ProperNoun",
     "attributes": []
   },
   {
@@ -6755,6 +6730,11 @@
     "attributes": []
   },
   {
+    "lemma": "mhz",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "mim",
     "pos": "Noun",
     "attributes": []
@@ -6776,6 +6756,26 @@
   },
   {
     "lemma": "mm",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "mm²",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "mm³",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "m²",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "m³",
     "pos": "Noun",
     "attributes": []
   },

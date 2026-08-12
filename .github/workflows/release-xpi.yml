@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - master
     paths:
       - 'tr.aff'
       - 'tr.dic'
@@ -89,7 +90,7 @@ jobs:
             echo "No manifest changes to commit."
           else
             git commit -m "chore: release version v${VERSION} [skip ci]"
-            git push origin main
+            git push origin HEAD
           fi
           
           git tag "v${VERSION}"
