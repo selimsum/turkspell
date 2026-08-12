@@ -1,5 +1,15 @@
 [
   {
+    "lemma": "A",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "A-Bomb",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "AA",
     "pos": "ProperNoun",
     "attributes": []
@@ -66,6 +76,11 @@
   },
   {
     "lemma": "ADB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ADD",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -145,6 +160,11 @@
     "attributes": []
   },
   {
+    "lemma": "AGSK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "AGİK",
     "pos": "ProperNoun",
     "attributes": []
@@ -200,7 +220,17 @@
     "attributes": []
   },
   {
+    "lemma": "AKKA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "AKM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "AKP",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -256,6 +286,11 @@
   },
   {
     "lemma": "ANAM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ANAP",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -400,7 +435,17 @@
     "attributes": []
   },
   {
+    "lemma": "ATAF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "ATAM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ATATÜRK ÜNİ",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -415,7 +460,17 @@
     "attributes": []
   },
   {
+    "lemma": "ATM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "ATO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ATP",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -440,6 +495,11 @@
     "attributes": []
   },
   {
+    "lemma": "AWACS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "AYB",
     "pos": "ProperNoun",
     "attributes": []
@@ -455,7 +515,17 @@
     "attributes": []
   },
   {
+    "lemma": "Adr.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Alb",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Alb.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -465,7 +535,22 @@
     "attributes": []
   },
   {
+    "lemma": "Alm.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ank.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Apt",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Apt.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -475,7 +560,22 @@
     "attributes": []
   },
   {
+    "lemma": "Ar-Ge",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ar.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Arş",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Arş. Gör.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -485,7 +585,32 @@
     "attributes": []
   },
   {
+    "lemma": "As.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "As. İz.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Asb",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Asb.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ass.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Atgm.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -495,7 +620,22 @@
     "attributes": []
   },
   {
+    "lemma": "Atğm.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Av",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Av.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "AÇEV",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -575,6 +715,31 @@
     "attributes": []
   },
   {
+    "lemma": "B",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "B.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "B. Elçi",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "B.K.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "BAB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "BADET",
     "pos": "ProperNoun",
     "attributes": []
@@ -615,6 +780,11 @@
     "attributes": []
   },
   {
+    "lemma": "BAY ÜNİ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "BAÜN",
     "pos": "ProperNoun",
     "attributes": []
@@ -630,7 +800,17 @@
     "attributes": []
   },
   {
+    "lemma": "BBP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "BCG",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "BCP",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -660,12 +840,27 @@
     "attributes": []
   },
   {
+    "lemma": "BESAM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "BEÜ",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
     "lemma": "BIS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "BIST",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "BJK",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -725,6 +920,16 @@
     "attributes": []
   },
   {
+    "lemma": "BOÜN",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "BP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "BRT",
     "pos": "ProperNoun",
     "attributes": []
@@ -750,6 +955,11 @@
     "attributes": []
   },
   {
+    "lemma": "BTP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "BTÜ",
     "pos": "ProperNoun",
     "attributes": []
@@ -770,7 +980,32 @@
     "attributes": []
   },
   {
+    "lemma": "Bağ-Kur",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Bl",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Bl.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Bl. K.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Bld.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Bld. Bşk.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -780,7 +1015,22 @@
     "attributes": []
   },
   {
+    "lemma": "Bn.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Bnb",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Bnb.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Bot.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -790,7 +1040,22 @@
     "attributes": []
   },
   {
+    "lemma": "Bul.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Bulg",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Bulg.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "BÇG",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -810,7 +1075,17 @@
     "attributes": []
   },
   {
+    "lemma": "Bçvş.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Böl",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Böl.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -825,7 +1100,32 @@
     "attributes": []
   },
   {
+    "lemma": "BİO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "BŞK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Bşk",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Bşk.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Bştbp.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "C",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -846,6 +1146,16 @@
   },
   {
     "lemma": "CARICOM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "CB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "CBD",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -925,7 +1235,17 @@
     "attributes": []
   },
   {
+    "lemma": "CERP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "CGS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "CHP",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1000,6 +1320,21 @@
     "attributes": []
   },
   {
+    "lemma": "CPU",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "CRR",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "CS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "CSO",
     "pos": "ProperNoun",
     "attributes": []
@@ -1015,12 +1350,32 @@
     "attributes": []
   },
   {
+    "lemma": "CV",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Cad",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
+    "lemma": "Cad.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Cum",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Cum. Başk.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Cum. Bşk.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1031,6 +1386,11 @@
   },
   {
     "lemma": "CİGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "D",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1065,7 +1425,27 @@
     "attributes": []
   },
   {
+    "lemma": "DCL",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "DD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "DDB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "DDK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "DDS",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1115,12 +1495,22 @@
     "attributes": []
   },
   {
+    "lemma": "DGSA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "DGÖ",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
     "lemma": "DHMİ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "DJ",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1140,6 +1530,11 @@
     "attributes": []
   },
   {
+    "lemma": "DM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "DMO",
     "pos": "ProperNoun",
     "attributes": []
@@ -1150,12 +1545,22 @@
     "attributes": []
   },
   {
+    "lemma": "DNA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "DOBGM",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
     "lemma": "DOÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "DP",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1176,6 +1581,11 @@
   },
   {
     "lemma": "DSO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "DSP",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1205,6 +1615,11 @@
     "attributes": []
   },
   {
+    "lemma": "DTP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "DTÖ",
     "pos": "ProperNoun",
     "attributes": []
@@ -1215,7 +1630,42 @@
     "attributes": []
   },
   {
+    "lemma": "DVM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "DW",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "DYP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Danıştay",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Der.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Dipl.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Doç",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Doç.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1225,7 +1675,47 @@
     "attributes": []
   },
   {
+    "lemma": "Dr.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Dr. Öğr. Üyesi",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Dz",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Dz. Ataş.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Dz. HO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Dz. K.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Dz. Kuv.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Dz. Kuv. K.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "DÇM",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1255,7 +1745,22 @@
     "attributes": []
   },
   {
+    "lemma": "DİSK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "DİYİH",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Dışiş.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "E",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1281,6 +1786,11 @@
   },
   {
     "lemma": "EAT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "EBF",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1345,6 +1855,11 @@
     "attributes": []
   },
   {
+    "lemma": "EDAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "EEC",
     "pos": "ProperNoun",
     "attributes": []
@@ -1390,6 +1905,16 @@
     "attributes": []
   },
   {
+    "lemma": "ELSA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "EMA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "EMG",
     "pos": "ProperNoun",
     "attributes": []
@@ -1410,6 +1935,11 @@
     "attributes": []
   },
   {
+    "lemma": "ENMG",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "EPA",
     "pos": "ProperNoun",
     "attributes": []
@@ -1425,6 +1955,16 @@
     "attributes": []
   },
   {
+    "lemma": "EQ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ERASMUS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "ERDEMİR",
     "pos": "ProperNoun",
     "attributes": []
@@ -1436,6 +1976,11 @@
   },
   {
     "lemma": "ERÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ES",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1490,6 +2035,16 @@
     "attributes": []
   },
   {
+    "lemma": "EUROFER",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "EUROSPACE",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "EWG",
     "pos": "ProperNoun",
     "attributes": []
@@ -1505,7 +2060,27 @@
     "attributes": []
   },
   {
+    "lemma": "Ecz.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ed. F.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Edat",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Emn.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Emn. Md.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1515,12 +2090,32 @@
     "attributes": []
   },
   {
+    "lemma": "Ens.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Erm",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
+    "lemma": "Erm.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "EuGH",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Euratom",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Europol",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1531,6 +2126,11 @@
   },
   {
     "lemma": "EÜAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "EĞİT-DER",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1555,6 +2155,16 @@
     "attributes": []
   },
   {
+    "lemma": "F",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "F.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "FAB",
     "pos": "ProperNoun",
     "attributes": []
@@ -1570,12 +2180,22 @@
     "attributes": []
   },
   {
+    "lemma": "FB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "FBA",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
     "lemma": "FBI",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "FDD",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1615,12 +2235,32 @@
     "attributes": []
   },
   {
+    "lemma": "FKÖ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "FM",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
     "lemma": "FMVİÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "FOA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "FOB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "FOW",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1650,7 +2290,32 @@
     "attributes": []
   },
   {
+    "lemma": "Fak-Fuk Fon",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Fak-Fuk-Fon",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Fak.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Far",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Far.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Fels.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1665,12 +2330,32 @@
     "attributes": []
   },
   {
+    "lemma": "Fr.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "FÜ",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
     "lemma": "FİSKOBİRLİK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "G",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "G.B.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "G.D.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1691,6 +2376,11 @@
   },
   {
     "lemma": "GATA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "GATT",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1725,7 +2415,22 @@
     "attributes": []
   },
   {
+    "lemma": "GDO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "GESAM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "GOÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "GS",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1750,12 +2455,22 @@
     "attributes": []
   },
   {
+    "lemma": "GSYİH",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "GSÜ",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
     "lemma": "GTÖ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "GUAM",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1785,7 +2500,32 @@
     "attributes": []
   },
   {
+    "lemma": "Gen.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Gmr.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Gn. Md.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Gn.Kur.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Gnkur",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Gnkur.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1805,6 +2545,11 @@
     "attributes": []
   },
   {
+    "lemma": "Gön.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Gör",
     "pos": "ProperNoun",
     "attributes": []
@@ -1820,12 +2565,32 @@
     "attributes": []
   },
   {
+    "lemma": "H",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "H-Bomb",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "H.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "HA",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
     "lemma": "HABITAT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "HABİTAT",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1840,7 +2605,17 @@
     "attributes": []
   },
   {
+    "lemma": "HAVELSAN",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "HDD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "HF",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1885,7 +2660,17 @@
     "attributes": []
   },
   {
+    "lemma": "HSK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "HSSGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "HSYK",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1895,7 +2680,42 @@
     "attributes": []
   },
   {
+    "lemma": "Haz",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hrk. Başk.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hrp. Ak.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hrp. TD. Başk.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Hs",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hs. Uz.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hs. Uzm.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hst.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1905,7 +2725,32 @@
     "attributes": []
   },
   {
+    "lemma": "Hv.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hv. Kuv.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hv. Kuv. K.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Hz",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hz.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Hz. öz.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1930,7 +2775,17 @@
     "attributes": []
   },
   {
+    "lemma": "IAO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "IATA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "IBAN",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1940,7 +2795,17 @@
     "attributes": []
   },
   {
+    "lemma": "IBM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "IBRD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ICA",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -1955,12 +2820,22 @@
     "attributes": []
   },
   {
+    "lemma": "ICCROM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "ICIC",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
     "lemma": "ICJ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ICOMOS",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2010,7 +2885,17 @@
     "attributes": []
   },
   {
+    "lemma": "ILC",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "ILO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ILSA",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2025,6 +2910,11 @@
     "attributes": []
   },
   {
+    "lemma": "INS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "INTERPOL",
     "pos": "ProperNoun",
     "attributes": []
@@ -2035,7 +2925,32 @@
     "attributes": []
   },
   {
+    "lemma": "IOM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "IPA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "IPI",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "IPRA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "IQ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "IRA",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2075,7 +2990,17 @@
     "attributes": []
   },
   {
+    "lemma": "ITI",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "ITO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ITU",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2085,7 +3010,27 @@
     "attributes": []
   },
   {
+    "lemma": "Interpol",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "IĞDÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "J",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "J.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "J. Gn. K.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2106,6 +3051,41 @@
   },
   {
     "lemma": "Jap",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Jap.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "K",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "K.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "K. Kuv.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "K.B.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "K.D.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "KAMUSEN",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2156,6 +3136,11 @@
   },
   {
     "lemma": "KEGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "KESK",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2260,12 +3245,22 @@
     "attributes": []
   },
   {
+    "lemma": "KS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "KSDB",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
     "lemma": "KSGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "KSK",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2305,6 +3300,11 @@
     "attributes": []
   },
   {
+    "lemma": "KVKK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "KVMGM",
     "pos": "ProperNoun",
     "attributes": []
@@ -2315,7 +3315,37 @@
     "attributes": []
   },
   {
+    "lemma": "KYK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Kd.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Kol. Şti.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Kom.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Kom. Şti.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Kor",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Kor.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2325,7 +3355,17 @@
     "attributes": []
   },
   {
+    "lemma": "Kora.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Korg",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Korg.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2335,7 +3375,22 @@
     "attributes": []
   },
   {
+    "lemma": "Kur.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Kur. Bşk.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Kuv",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Kuv.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2400,6 +3455,16 @@
     "attributes": []
   },
   {
+    "lemma": "LGS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "LNG",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "LP",
     "pos": "ProperNoun",
     "attributes": []
@@ -2410,7 +3475,17 @@
     "attributes": []
   },
   {
+    "lemma": "LSD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "LYS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "LYV",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2420,7 +3495,27 @@
     "attributes": []
   },
   {
+    "lemma": "Lat.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Ltd",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ltd.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ltd. Şti.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "M",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2455,6 +3550,11 @@
     "attributes": []
   },
   {
+    "lemma": "MEGSB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "MEÜ",
     "pos": "ProperNoun",
     "attributes": []
@@ -2475,6 +3575,11 @@
     "attributes": []
   },
   {
+    "lemma": "MHP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "MHz",
     "pos": "ProperNoun",
     "attributes": []
@@ -2491,6 +3596,11 @@
   },
   {
     "lemma": "MKE",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "MKEK",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2516,6 +3626,11 @@
   },
   {
     "lemma": "MOSSAD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "MP",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2550,6 +3665,11 @@
     "attributes": []
   },
   {
+    "lemma": "MSÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "MTA",
     "pos": "ProperNoun",
     "attributes": []
@@ -2565,12 +3685,37 @@
     "attributes": []
   },
   {
+    "lemma": "Mac.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Mah",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
+    "lemma": "Mah.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Md",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Md.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Mim.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Mrşl.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2585,12 +3730,32 @@
     "attributes": []
   },
   {
+    "lemma": "MÜSİAD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Müd.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Müh",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
+    "lemma": "Müh.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Mür",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Mür.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2630,7 +3795,17 @@
     "attributes": []
   },
   {
+    "lemma": "NBA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "NEÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "NGO",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2645,6 +3820,16 @@
     "attributes": []
   },
   {
+    "lemma": "NSB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "NUTS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "NVİGM",
     "pos": "ProperNoun",
     "attributes": []
@@ -2655,7 +3840,32 @@
     "attributes": []
   },
   {
+    "lemma": "No.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Nö",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Nö.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Nö. Amr.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Nö. Sb.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Nöb.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2730,7 +3940,17 @@
     "attributes": []
   },
   {
+    "lemma": "OEED",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "OGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "OHAL",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2815,7 +4035,17 @@
     "attributes": []
   },
   {
+    "lemma": "Odt.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Okt",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Okt.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2825,7 +4055,17 @@
     "attributes": []
   },
   {
+    "lemma": "Onb.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Opr",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Opr.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2835,7 +4075,22 @@
     "attributes": []
   },
   {
+    "lemma": "Or.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Or. Gn. Kh.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Ora",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ora.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2845,7 +4100,17 @@
     "attributes": []
   },
   {
+    "lemma": "Ord.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Org",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Org.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2855,7 +4120,27 @@
     "attributes": []
   },
   {
+    "lemma": "Ort.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Osm",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Osm.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Osm. T.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "P",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2875,6 +4160,11 @@
     "attributes": []
   },
   {
+    "lemma": "PH",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "PK",
     "pos": "ProperNoun",
     "attributes": []
@@ -2890,7 +4180,37 @@
     "attributes": []
   },
   {
+    "lemma": "PP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "PR",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "PTT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "PVC",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "PhD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Plt.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Por.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2900,7 +4220,17 @@
     "attributes": []
   },
   {
+    "lemma": "Port.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Prof",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Prof.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2920,12 +4250,27 @@
     "attributes": []
   },
   {
+    "lemma": "R",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "RAM",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
+    "lemma": "RC",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "RCD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "RG",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2936,6 +4281,11 @@
   },
   {
     "lemma": "RNA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ROKETSAN",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -2955,6 +4305,16 @@
     "attributes": []
   },
   {
+    "lemma": "RYD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Rekt.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Ro-Ro",
     "pos": "ProperNoun",
     "attributes": []
@@ -2965,12 +4325,32 @@
     "attributes": []
   },
   {
+    "lemma": "Rum.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Rus",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
+    "lemma": "Rus.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "RÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "S",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "SALT",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3010,6 +4390,11 @@
     "attributes": []
   },
   {
+    "lemma": "SCOPE",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "SDIF",
     "pos": "ProperNoun",
     "attributes": []
@@ -3020,7 +4405,17 @@
     "attributes": []
   },
   {
+    "lemma": "SEA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "SEFD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "SEFD Bşk.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3031,6 +4426,11 @@
   },
   {
     "lemma": "SEKA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "SES-DER",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3055,6 +4455,11 @@
     "attributes": []
   },
   {
+    "lemma": "SHP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "SHÇEK",
     "pos": "ProperNoun",
     "attributes": []
@@ -3065,12 +4470,27 @@
     "attributes": []
   },
   {
+    "lemma": "SIU",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "SKT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "SMWK",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
     "lemma": "SNÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "SODER",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3150,7 +4570,22 @@
     "attributes": []
   },
   {
+    "lemma": "Sb.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Sl.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Sn",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Sn.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3160,7 +4595,22 @@
     "attributes": []
   },
   {
+    "lemma": "Sok.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Sr.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Srp",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Srp.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3175,7 +4625,17 @@
     "attributes": []
   },
   {
+    "lemma": "T.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "T.C",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "T.C.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3200,12 +4660,1412 @@
     "attributes": []
   },
   {
+    "lemma": "TAO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TAPDK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TARİŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TASS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TAU",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TBA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TBB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TBL",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TBMM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TC",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TCCB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TCDD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TCK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TCKN",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TCMB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TCTİ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TCZB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TDK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TDÇİ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TDİ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TEAE",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TEAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TED",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TEDAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TEDGEM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TEFE",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TEK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TELEKOM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TEM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TEMA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TEMSAN",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TESK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TETAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TEV",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TEİAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TFF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TGC",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TGS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "THA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "THK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "THS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "THSGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "THY",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TIR",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TKAE",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TKB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TKF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TKGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TKP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TKİ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TL",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TMK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TMMOB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TMO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TMSF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TMSK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TNCÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TNT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TOBB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TOBB ETÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TODAİE",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TOEFL",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TOKİ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TPAO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TPE",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TR",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TRGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TRKGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TRS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TRT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TSE",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TSEK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TSK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TSKB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TSKGV",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TSİ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TSİP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TTB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TTK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TTKB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TTOK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TUBİM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TURKSTAT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TUS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TV",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TYDTA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TZDK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TZOB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tb.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tbp.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tel.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Telg.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tic.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Top.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tug.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tuğa.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tuğg.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÇEK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÇEV",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÖMER",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜBA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜBİTAK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜDEMSAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜFE",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜGEM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜLOMSAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜPRAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜRDOK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜRKAK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜRKKOOP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜRKSAT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜRKİYE KOOP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜRKŞEKER",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜRSAB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜTAV",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜVASAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜİK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tüm.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tüma.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tümg.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tğm.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TİGEM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TİHV",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TİKA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TİM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TİP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TİSK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TŞOF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UAAF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UAD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UAEA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UAGF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UAT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UBAK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UBAM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UBB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UBE",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UBF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UBOK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UDÖ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UE",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UEA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UEFA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UETHF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UEİBB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UFF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UFK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UFO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UHF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UHTB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UHİK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UKA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UKK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UMT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UN",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNAC",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNCTAD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNCTC",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNDCP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNDP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNEO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNEP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNESCO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNFPA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNHCR",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNIC",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNICEF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNIDO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNITAR",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNRISO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UNRRA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UOK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UPB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UPF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UPI",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UPU",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "US",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "USA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "USAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "USF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "USHÖ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "USIS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "USÖ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UTKF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UTM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UTO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UV",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UYAÇM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UYB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ulus.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Uz. J.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Uzm",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
+    "lemma": "Uzm.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Uzm. Dr.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UÇÖ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UÖB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UİKB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UİİBÖ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "UŞM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "VCD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "VD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "VDMK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "VGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "VHF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "VIP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "VJ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "VKN",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Vet.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WACH",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WADB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WAP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WC",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WCO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WFC",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WHO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WIPO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WMO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WTO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WWF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Y. Mim.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Y. Mimar",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Y. Müh.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YDK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YDS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YEÖGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YGS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YKS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YKr",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YPK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YSE",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YSK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YTL",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YTÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YURTKUR",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YYÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yard.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yard. Doç.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yargıtay",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yay-Kur",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yay.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yb.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yd.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yd. Sb.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yrb.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yrd. Doç.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yun.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Yzb.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YÖGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YÖK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YÖS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YİBF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "YİGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ZF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ZKÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ZMO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Zir.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Zool.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "a.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "a.g.e.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "a.g.m.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "a.g.t.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "age",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "age.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3215,7 +6075,22 @@
     "attributes": []
   },
   {
+    "lemma": "agm.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "agy",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "agy.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "am",
     "pos": "Noun",
     "attributes": []
   },
@@ -3225,7 +6100,17 @@
     "attributes": []
   },
   {
+    "lemma": "anat.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "ant",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "ant.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3235,7 +6120,17 @@
     "attributes": []
   },
   {
+    "lemma": "ark.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "astr",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "astr.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3245,7 +6140,27 @@
     "attributes": []
   },
   {
+    "lemma": "astrol.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "atm",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "atm.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "bak.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "bas.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3255,7 +6170,27 @@
     "attributes": []
   },
   {
+    "lemma": "bağ.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "belgeç",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "bit. b.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "biy",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "biy.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3265,7 +6200,22 @@
     "attributes": []
   },
   {
+    "lemma": "bk.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "bkz.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "bl",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "bl.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3275,7 +6225,47 @@
     "attributes": []
   },
   {
+    "lemma": "bot.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "bs",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "bs.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "böl.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "c.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "c/o",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "cal.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "cbd",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "cif",
     "pos": "Noun",
     "attributes": []
   },
@@ -3295,6 +6285,16 @@
     "attributes": []
   },
   {
+    "lemma": "coğ.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "dak.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "dal",
     "pos": "Noun",
     "attributes": []
@@ -3310,6 +6310,11 @@
     "attributes": []
   },
   {
+    "lemma": "db.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "dg",
     "pos": "Noun",
     "attributes": []
@@ -3320,7 +6325,22 @@
     "attributes": []
   },
   {
+    "lemma": "dil b.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "dilb.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "dk",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "dk.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3340,7 +6360,17 @@
     "attributes": []
   },
   {
+    "lemma": "doğ.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "drl",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "drl.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3350,7 +6380,22 @@
     "attributes": []
   },
   {
+    "lemma": "dzl.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "e-posta",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "ed",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "ed.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3360,7 +6405,22 @@
     "attributes": []
   },
   {
+    "lemma": "ekon.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "f.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "fel",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "fel.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3370,7 +6430,17 @@
     "attributes": []
   },
   {
+    "lemma": "fil.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "fiz",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "fiz.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3380,7 +6450,37 @@
     "attributes": []
   },
   {
+    "lemma": "fizy.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "fob",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "folk.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "foto.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "fow",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "ft",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "g",
     "pos": "Noun",
     "attributes": []
   },
@@ -3390,7 +6490,17 @@
     "attributes": []
   },
   {
+    "lemma": "geom.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "gn",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "gn.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3400,7 +6510,22 @@
     "attributes": []
   },
   {
+    "lemma": "gr.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "gön.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "hay",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "hay. b.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3410,7 +6535,17 @@
     "attributes": []
   },
   {
+    "lemma": "haz.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "hek",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "hek.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3425,7 +6560,17 @@
     "attributes": []
   },
   {
+    "lemma": "hlk.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "hm",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "hp",
     "pos": "Noun",
     "attributes": []
   },
@@ -3435,7 +6580,22 @@
     "attributes": []
   },
   {
+    "lemma": "huk.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "i.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "is",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "is.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3450,7 +6610,27 @@
     "attributes": []
   },
   {
+    "lemma": "jeol.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kHz",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "kal",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kcal",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kg",
     "pos": "Noun",
     "attributes": []
   },
@@ -3460,7 +6640,17 @@
     "attributes": []
   },
   {
+    "lemma": "kim.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "km",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "km2",
     "pos": "Noun",
     "attributes": []
   },
@@ -3470,7 +6660,17 @@
     "attributes": []
   },
   {
+    "lemma": "koor.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "kr",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kr.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3480,7 +6680,52 @@
     "attributes": []
   },
   {
+    "lemma": "krş.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kw",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "l",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "lt.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "m",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "m2",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "m3",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "mad.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "man",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "man.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3490,7 +6735,22 @@
     "attributes": []
   },
   {
+    "lemma": "mat.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "mec",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "mec.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "mey.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3500,7 +6760,17 @@
     "attributes": []
   },
   {
+    "lemma": "mim.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "min",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "min.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3515,7 +6785,27 @@
     "attributes": []
   },
   {
+    "lemma": "müz.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "oto.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "ped",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "ped.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "pm",
     "pos": "Noun",
     "attributes": []
   },
@@ -3525,7 +6815,27 @@
     "attributes": []
   },
   {
+    "lemma": "psikol.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "s.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "sa",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "sa.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "sat.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3535,7 +6845,22 @@
     "attributes": []
   },
   {
+    "lemma": "sf.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "sm",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "sn",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "sn.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3545,7 +6870,17 @@
     "attributes": []
   },
   {
+    "lemma": "snt.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "sos",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "sos.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3555,7 +6890,142 @@
     "attributes": []
   },
   {
+    "lemma": "sp.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "süt.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "t",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "tar.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "tek.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "tel.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "telg.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "tic.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "tiy.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "tlks.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "tls.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "ui.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "um:ag",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "v.d.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "vb.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "vd.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "vs.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "vö.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "w",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "yay. haz.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "yy.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "zf.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "zm.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "zool.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "©",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "®",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "ÇASGEM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ÇAY-KUR",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3570,12 +7040,37 @@
     "attributes": []
   },
   {
+    "lemma": "ÇAĞ ÜNİ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "ÇED",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
+    "lemma": "ÇELİK-İŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ÇELİKSEN",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ÇGD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "ÇGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ÇHD",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3605,7 +7100,17 @@
     "attributes": []
   },
   {
+    "lemma": "ÇYDD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "ÇYGM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Çev.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3615,7 +7120,27 @@
     "attributes": []
   },
   {
+    "lemma": "Çvş.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "ÇÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ÇİMSE-İŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ÖABT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ÖDP",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3665,6 +7190,11 @@
     "attributes": []
   },
   {
+    "lemma": "Ög. Gör.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "ÖÇKKB",
     "pos": "ProperNoun",
     "attributes": []
@@ -3675,7 +7205,37 @@
     "attributes": []
   },
   {
+    "lemma": "Öğr.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Öğr. Gör.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "ÖİB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ü",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ÜAK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ÜDS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ÜFE",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3685,7 +7245,37 @@
     "attributes": []
   },
   {
+    "lemma": "ÜT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Üni.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ütğm.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Üçvş.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "çev",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "çev.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "çoğ.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3695,7 +7285,27 @@
     "attributes": []
   },
   {
+    "lemma": "öl.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "ölm.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "ör",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "ör.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "örn.",
     "pos": "Noun",
     "attributes": []
   },
@@ -3705,7 +7315,22 @@
     "attributes": []
   },
   {
+    "lemma": "öz.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "ünl.",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "İAÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İBB",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3721,6 +7346,11 @@
   },
   {
     "lemma": "İDBÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İDO",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3745,7 +7375,17 @@
     "attributes": []
   },
   {
+    "lemma": "İF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "İGB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İGDAŞ",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3761,6 +7401,21 @@
   },
   {
     "lemma": "İHB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İHD",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İHF",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İK",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3795,7 +7450,27 @@
     "attributes": []
   },
   {
+    "lemma": "İLESAM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "İMKB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İS",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3835,6 +7510,11 @@
     "attributes": []
   },
   {
+    "lemma": "İTG",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "İTO",
     "pos": "ProperNoun",
     "attributes": []
@@ -3870,7 +7550,37 @@
     "attributes": []
   },
   {
+    "lemma": "İbr.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İmp.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İng.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İrt. Sb.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "İsp",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İsp.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İst.",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3880,7 +7590,22 @@
     "attributes": []
   },
   {
+    "lemma": "İt.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "İz",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İzm.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İÖ",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -3900,6 +7625,16 @@
     "attributes": []
   },
   {
+    "lemma": "İşl.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ş",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "ŞEHİR",
     "pos": "ProperNoun",
     "attributes": []
@@ -3910,118 +7645,23 @@
     "attributes": []
   },
   {
+    "lemma": "Şb.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Şrt.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Şti.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "ŞÜ",
     "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "TDK",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "TBMM",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "TRT",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "THY",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "TSK",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "CHP",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "MHP",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "AKP",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "YÖK",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "LGS",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "YKS",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "TÜBİTAK",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "HAVELSAN",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "ROKETSAN",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "TÜRKSAT",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "TCDD",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "TÜİK",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "YSK",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "HSYK",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "Yargıtay",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "Danıştay",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "örn.",
-    "pos": "Noun",
     "attributes": []
   }
 ]
