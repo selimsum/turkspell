@@ -13,7 +13,7 @@ __pycache__/
 !lexicons/zemberek_lexicon.json
 !lexicons/custom_abbreviations.json
 !lexicons/custom_names.json
-!raw_data/tdk_pdf_words.txt
+!raw_data/tdk_words.txt
 !raw_data/dil_dernegi_words.txt
 !firefox-addon/manifest.json
 !update.json
