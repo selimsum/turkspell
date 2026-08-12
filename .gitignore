@@ -16,6 +16,7 @@ __pycache__/
 !raw_data/tdk_pdf_words.txt
 !raw_data/dil_dernegi_words.txt
 !firefox-addon/manifest.json
+!update.json
 
 # Generated build outputs (kept out of source control)
 turkspell-addon.xpi
