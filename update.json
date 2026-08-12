@@ -1,0 +1,12 @@
+{
+  "addons": {
+    "tr-TR@dic.turkspell": {
+      "updates": [
+        {
+          "version": "0.1.0",
+          "update_link": "https://github.com/selimsum/turkspell/releases/download/v0.1.0/turkspell-addon.xpi"
+        }
+      ]
+    }
+  }
+}
