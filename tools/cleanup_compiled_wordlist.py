@@ -30,7 +30,11 @@ DIL_DERNEGI_FILE = RAW_DATA_DIR / 'dil_dernegi_words.txt'
 TR_DIC = TURKSPELL_DIR / 'tr.dic'
 REPORT_FILE = RAW_DATA_DIR / 'wordlist_cleanup_report.txt'
 
-NOUN_FULL_CHAIN = "∙∂≢∦≊∫∢≈∹≂∲∶∽≄≧∧∨≌∌≋∗∘∖⊎⊏⊐⊑⊒⊓⊔⊕"
+import sys
+sys.path.insert(0, str(TURKSPELL_DIR / 'build'))
+from utf8_flag_mapping import remap_flag_string
+
+NOUN_FULL_CHAIN = remap_flag_string("F1A3Y2L2R2N3I2Q2PFPUP3P7PPPWclLILKSZCISLDLDTDEpONpOLpORpOYpOApOIpOPpOC")
 
 def turkish_lowercase(text):
     return text.replace('I', 'ı').replace('İ', 'i').lower()
