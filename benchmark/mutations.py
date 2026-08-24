@@ -26,15 +26,22 @@ for _row in _ROWS:
         if _i < len(_row) - 1:
             _nbrs.append(_row[_i + 1])
         # vertical neighbors: same index in row above/below when exists
-        KEY_NEIGHBORS.setdefault(_ch, set()).update(_nbrs)
+        KEY_NEIGHBORS.setdefault(_ch, [])
+        for _n in _nbrs:
+            if _n not in KEY_NEIGHBORS[_ch]:
+                KEY_NEIGHBORS[_ch].append(_n)
 
 for _ri in range(len(_ROWS) - 1):
     _upper, _lower = _ROWS[_ri], _ROWS[_ri + 1]
     for _i, _ch in enumerate(_upper):
         for _j in (_i - 1, _i, _i + 1):
             if 0 <= _j < len(_lower):
-                KEY_NEIGHBORS[_ch].add(_lower[_j])
-                KEY_NEIGHBORS.setdefault(_lower[_j], set()).add(_ch)
+                if _lower[_j] not in KEY_NEIGHBORS[_ch]:
+                    KEY_NEIGHBORS[_ch].append(_lower[_j])
+                KEY_NEIGHBORS.setdefault(_lower[_j], [])
+                if _ch not in KEY_NEIGHBORS[_lower[_j]]:
+                    KEY_NEIGHBORS[_lower[_j]].append(_ch)
+
 
 # --- ASCII-typing folds ---
 DIACRITIC_FOLDS = {
