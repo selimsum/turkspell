@@ -44,7 +44,9 @@ def test_load_authority_index_tracks_hats():
         idx = load_authority_index([f.name])
         assert idx["exact"] >= {"kar", "ekmek", "kâr", "neftîleşmek"}
         assert idx["hatted"] == {"kâr", "neftîleşmek"}
-        assert idx["dehatted_aliases"] == {"neftileşmek"}
+        # 'kar' appears because 'kâr' de-hats to it; 'neftileşmek' from 'neftîleşmek'
+        assert idx["dehatted_aliases"] == {"kar", "neftileşmek"}
+
 
     finally:
         os.unlink(f.name)
