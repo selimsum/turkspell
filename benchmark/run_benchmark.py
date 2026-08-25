@@ -138,17 +138,22 @@ def evaluate(clean, misspelled, dict_dir):
                 text=True, capture_output=True, encoding="utf-8",
                 errors="replace",
             )
+            current = None
             for line in p.stdout.splitlines():
                 if not line or line.startswith("@"):
                     continue
-                if line.startswith("&"):
+                if line.startswith(("&", "?")):
                     head, _, tail = line.partition(":")
-                    word = head.split()[1]
-                    sugs = [s.strip() for s in tail.split(",") if s.strip()]
+                    fields = head.split()
+                    word = fields[1]
+                    sugs = ([s.strip() for s in tail.split(",") if s.strip()]
+                            if line.startswith("&") else [])
+                    # keep the FIRST suggestion block per word; later blocks
+                    # (e.g. from ngram/phonet channels) are lower-ranked
                     sug_map.setdefault(word, sugs)
-                elif line.startswith("?"):
-                    word = line.split()[1]
-                    sug_map.setdefault(word, [])
+                elif line.startswith("+") and current:
+                    # '+' lines extend the previous suggestion set — ignore
+                    continue
 
 
     total_clean = len(clean)
