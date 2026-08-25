@@ -17,6 +17,7 @@ import hashlib
 import json
 import os
 import random
+import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -36,10 +37,25 @@ def _sha256(path: str) -> str:
     return h.hexdigest()
 
 
+def _hunspell_flags(words: list) -> set:
+    """Ask the reference hunspell dict which words it flags (batch)."""
+    dname = os.path.join(config.BASE_DIR, "tr")
+    p = subprocess.run(
+        ["hunspell", "-d", dname.replace("\\", "/"), "-l"],
+        input="\n".join(words) + "\n",
+        text=True, capture_output=True, encoding="utf-8", errors="replace",
+    )
+    return set(l.strip() for l in p.stdout.splitlines() if l.strip())
+
+
 def _authority_words() -> list:
-    """Pool of valid authority words for mutation slices."""
+    """Pool of valid authority words for mutation slices.
+
+    Single tokens only: hunspell flags words individually, so multi-word
+    entries ("meyve dışı") can't be evaluated as one misspelling.
+    """
     idx = load_authority_index(config.AUTHORITY_FILES)
-    return sorted(idx["exact"])
+    return sorted(w for w in idx["exact"] if " " not in w)
 
 
 def _fill_slice(target: int, mutator, pool: list, rng, cf, taken: set,
@@ -87,18 +103,28 @@ def generate(full: bool = False) -> None:
     taken = set()
 
     # --- corpus_real ---
+    # The corpus rejects many VALID inflected forms (tanesidir, yapanları)
+    # simply because the raw lemma wasn't listed. A rejection is only a real
+    # error if the reference dictionary ALSO flags it. Use Turkspell here as
+    # a negative filter — documented openly in benchmark/README.md as the one
+    # place the home dictionary touches dataset construction.
     print("Mining corpus-real slice...")
-    for w, freq in mine_corpus_slice(quotas["corpus_real"] * 3, set()):
-        if len(misspelled) >= quotas["corpus_real"]:
+    candidates = mine_corpus_slice(quotas["corpus_real"] * 3, set())
+    cand_words = [w for w, _ in candidates]
+    ref_flagged = _hunspell_flags(cand_words)
+    kept = 0
+    for w, freq in candidates:
+        if kept >= quotas["corpus_real"]:
             break
         key = tlc(w)
-        if key in taken or cf.is_valid_anywhere(w):
+        if key in taken or w not in ref_flagged:
             continue
         taken.add(key)
+        kept += 1
         misspelled.append({
             "slice": "corpus_real",
             "input": w,
-            "gold": "",          # gold unknown for real errors; filled by evaluator
+            "gold": "",
             "frequency_tier": frequency_tier(freq),
             "notes": f"corpus_freq={freq}",
         })
