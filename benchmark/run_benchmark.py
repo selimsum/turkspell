@@ -161,7 +161,7 @@ def evaluate(clean, misspelled, dict_dir):
     precision = (total_clean - fp) / total_clean * 100 if total_clean else 100.0
     recall = len(flagged & {w["input"] for w in misspelled}) / len(misspelled) * 100
 
-    corr1_ok = 0; corr3_ok = 0; corr_total = 0
+    corr1_ok = 0; corr3_ok = 0; corr_total = 0; gold_total = 0
     per_slice = {}
     for w in misspelled:
         if w["input"] not in flagged:
@@ -172,6 +172,7 @@ def evaluate(clean, misspelled, dict_dir):
         top = [norm(s) for s in sugs[:3]]
         hit1 = hit3 = False
         if gold is not None:
+            gold_total += 1
             hit1 = bool(top) and top[0] == gold
             hit3 = gold in top
         elif top:
@@ -183,6 +184,7 @@ def evaluate(clean, misspelled, dict_dir):
         st = per_slice.setdefault(sl, {"n": 0, "c1": 0})
         st["n"] += 1; st["c1"] += hit1
 
+    # c@3 is only meaningful for rows WITH a known gold correction
     result = {
         "dictionary": os.path.basename(dict_dir.rstrip("/\\")),
         "precision": round(precision, 2),
@@ -192,15 +194,17 @@ def evaluate(clean, misspelled, dict_dir):
         "f1": round(2 * precision * recall / (precision + recall), 2)
               if precision + recall else 0.0,
         "correction_total": corr_total,
+        "gold_correction_total": gold_total,
         "correction_at_1": round(corr1_ok / corr_total * 100, 2)
                            if corr_total else None,
-        "correction_at_3": round(corr3_ok / corr_total * 100, 2)
-                           if corr_total else None,
+        "correction_at_3": round(corr3_ok / gold_total * 100, 2)
+                           if gold_total else None,
         "per_slice_correction_at_1": {
             sl: f"{st['c1']}/{st['n']}" for sl, st in sorted(per_slice.items())
         },
-        "note": ("corpus_real slice has no gold; c1 counts 'any different "
-                 "suggestion' for those rows" if any(
+        "note": ("c@1 includes corpus_real rows without gold ('any different "
+                 "suggestion' counts); c@3 is computed over gold-bearing rows "
+                 "only" if any(
                      w["slice"] == "corpus_real" for w in misspelled) else ""),
     }
     return result
