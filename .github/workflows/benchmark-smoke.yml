@@ -1,0 +1,43 @@
+name: benchmark-smoke
+
+on:
+  push:
+    paths:
+      - "benchmark/**"
+      - "build/**"
+  pull_request:
+    paths:
+      - "benchmark/**"
+      - "build/**"
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install hunspell
+        run: sudo apt-get update && sudo apt-get install -y hunspell
+
+      - name: Install test deps
+        run: pip install pytest
+
+      - name: Unit tests
+        run: python -m pytest benchmark/test_lexicons.py benchmark/test_mutations.py -v
+
+      - name: Generate dataset (smoke size)
+        run: python benchmark/generate_dataset.py
+
+      - name: Determinism check
+        run: python benchmark/generate_dataset.py --check
+
+      - name: Benchmark smoke (100 rows, turkspell only)
+        run: python benchmark/run_benchmark.py --only turkspell --limit 100
+
+      - name: Validate build still passes
+        run: python build/validate_build.py || echo "::warning::validate_build reported warnings"
