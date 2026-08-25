@@ -8,6 +8,7 @@ ALL_FLAGS = sorted([
     "NX", "PX",
     # Noun morphological classes (cases, plurals, possessives, copula, ki, derivations)
     "A1", "A2", "A3", "A4", "Y1", "Y2", "L1", "L2", "R1", "R2", "N1", "N2", "N3", "N4", "I1", "I2", "Q1", "Q2",
+    "K1", "K2",
     "a1", "a2", "a3", "a4", "y1", "y2", "n1", "n2", "n3", "n4", "i1", "i2",
     "PB", "PF",
     "PS", "PT", "PU", "PV", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "PM", "PO", "PP", "PQ", "PN", "PR", "PW", "PZ",

@@ -31,7 +31,7 @@ def compare():
     spelling_words = set()
     original_casing = {}
     
-    with open('Dil_Dernegi_spelling_dictionary.txt', 'r', encoding='utf-8') as f:
+    with open('raw_data/dil_dernegi_words.txt', 'r', encoding='utf-8') as f:
         for line in f:
             word = clean_spelling_word(line)
             if word:
