@@ -69,9 +69,17 @@ Results land in `results/<date>_<dict>.json` plus a combined `summary.md`.
 - `corpus_real` slice has no gold correction (real observed errors); its rows
   contribute to detection recall only, and c@1 counts "any different
   suggestion" weakly there. Gold-bearing slices drive correction@1/@3.
-- Provenance honesty: `rejected_words.csv` derives from the generic OSCAR
-  corpus (not from Turkspell's own decisions), but it was curated in this
-  repository. Independent replication should re-mine from raw OSCAR.
+- **Provenance (important):** the `corpus_real` slice is mined from
+  `raw_data/rejected_words.csv`, an OSCAR-derived error list that *was*
+  curated in this repository. The mining itself (`mine_corpus_slice.py`)
+  applies only objective rules (frequency, Turkish alphabet, authority/
+  English exclusion), and the collision filter removes anything any compared
+  dictionary accepts — but the underlying curation happened here. An
+  experimental fully-independent miner (`mine_oscar.py`) validates raw OSCAR
+  frequencies through Zemberek morphology; in testing it yields mostly web
+  junk and proper nouns rather than spelling errors, which is exactly why
+  curation existed. For full independence, a third party should re-mine raw
+  OSCAR with their own screening and rerun `run_benchmark.py`.
 - Competitor dictionaries are pinned at download time; record versions when
   publishing results.
 
