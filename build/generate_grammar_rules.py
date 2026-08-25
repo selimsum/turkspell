@@ -79,10 +79,63 @@ def unique(seq):
             result.append(x)
     return result
 
+import re
+
 def make_flag_block(flag: str, rules: list[str]) -> str:
     unique_rules = unique(rules)
-    header = f"SFX {flag} Y {len(unique_rules)}"
-    return header + '\n' + '\n'.join(unique_rules)
+    
+    grouped = {}
+    for r in unique_rules:
+        parts = r.split(' ', 4)
+        if len(parts) == 5:
+            prefix = tuple(parts[:4])
+            cond = parts[4]
+            if prefix not in grouped:
+                grouped[prefix] = []
+            grouped[prefix].append(cond)
+        else:
+            if () not in grouped:
+                grouped[()] = []
+            grouped[()].append(r)
+            
+    consolidated = []
+    for prefix, conds in grouped.items():
+        if not prefix:
+            consolidated.extend(conds)
+            continue
+            
+        single_brackets = []
+        others = []
+        for c in conds:
+            if re.fullmatch(r'\[([^\]]+)\]', c):
+                single_brackets.append(c)
+            else:
+                others.append(c)
+                
+        if single_brackets:
+            chars = set()
+            is_negated = False
+            for c in single_brackets:
+                m = re.match(r'\[([^\]]+)\]', c)
+                inner = m.group(1)
+                if inner.startswith('^'):
+                    is_negated = True
+                    chars.update(list(inner[1:]))
+                else:
+                    chars.update(list(inner))
+            
+            sorted_chars = ''.join(sorted(chars))
+            if is_negated:
+                new_cond = '[^' + sorted_chars + ']'
+            else:
+                new_cond = '[' + sorted_chars + ']'
+            consolidated.append(' '.join(prefix) + ' ' + new_cond)
+            
+        for c in others:
+            consolidated.append(' '.join(prefix) + ' ' + c)
+            
+    header = f"SFX {flag} Y {len(consolidated)}"
+    return header + '\n' + '\n'.join(consolidated)
 
 UNVOICED_RE = "[çfhkpsşt]"
 VOICED_RE   = "[^çfhkpsşt]"
@@ -99,7 +152,6 @@ def sfx_copula(flag: str, strip: str, add: str, cond: str, rules: list):
             lv = c.lower()
             break
     if not lv:
-        # Determine fallback last vowel from the flag name
         back_flags = {
             "P1", "P2", "P5", "P6", "PM", "PO", "PN", "PR", "CL", "PS", "PT",
             "R1", "I1", "i1", "Q1", "PB", "VC", "C1", "C2", "B1", "B2", "B3", "B4",
@@ -111,99 +163,32 @@ def sfx_copula(flag: str, strip: str, add: str, cond: str, rules: list):
             is_back_flag = flag in back_flags
         lv = 'a' if is_back_flag else 'e'
         
-    is_vowel = add[-1] in 'aeıioöuüâîû' if add else False
-    is_unvoiced = add[-1] in 'pçtksşhf' if add else False
+    cop_flag = "CL" if lv in 'aıouâû' else "cl"
     
-    if lv in 'aı':
-        if is_vowel:
-            sim_stem = "oda"
-        elif is_unvoiced:
-            sim_stem = "bak"
-        else:
-            sim_stem = "bal"
-    elif lv in 'ei':
-        if is_vowel:
-            sim_stem = "kedi"
-        elif is_unvoiced:
-            sim_stem = "tek"
-        else:
-            sim_stem = "ev"
-    elif lv in 'ou':
-        if is_vowel:
-            sim_stem = "kutu"
-        elif is_unvoiced:
-            sim_stem = "uç"
-        else:
-            sim_stem = "yol"
+    if add == "0":
+        new_add = f"0/{cop_flag}"
+    elif "/" in add:
+        new_add = add + cop_flag
     else:
-        if is_vowel:
-            sim_stem = "ütü"
-        elif is_unvoiced:
-            sim_stem = "düş"
-        else:
-            sim_stem = "gör"
+        new_add = f"{add}/{cop_flag}"
 
-    
-    if is_vowel:
-        copulas = [
-            "ydI", "ydIm", "ydIn", "ydIk", "ydInIz", "ydIlAr",
-            "ymIş", "ymIşIm", "ymIşsIn", "ymIşIz", "ymIşsInIz", "ymIşlAr",
-            "ysA", "ysAm", "ysAn", "ysAk", "ysAnIz", "ysAlAr",
-            "yIm", "sIn", "yIz", "sInIz", "lAr",
-            "dIr", "dIrlAr", "lArdIr", "yken",
-            "yImdIr", "sIndIr", "yIzdIr", "sInIzdIr",
-        ]
-    else:
-        # Filter COPULAS_CONS by the voicing of the suffix's last consonant
-        last_char = add[-1] if add else ''
-        is_unvoiced_suffix = last_char in UNVOICED
-        if is_unvoiced_suffix:
-            # Exclude templates starting with 'd'
-            copulas = [
-                "tI", "tIm", "tIn", "tIk", "tInIz", "tIlAr",
-                "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
-                "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
-                "Im", "sIn", "Iz", "sInIz", "lAr",
-                "tIr", "tIrlAr", "lArdIr", "ken",
-                "ImdIr", "sIndIr", "IzdIr", "sInIzdIr",
-            ]
-        else:
-            # Exclude templates starting with 't'
-            copulas = [
-                "dI", "dIm", "dIn", "dIk", "dInIz", "dIlAr",
-                "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
-                "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
-                "Im", "sIn", "Iz", "sInIz", "lAr",
-                "dIr", "dIrlAr", "lArdIr", "ken",
-                "ImdIr", "sIndIr", "IzdIr", "sInIzdIr",
-            ]
-        
-    is_suffix_flag = flag in {
-        "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "PM", "PO", "PP", "PQ", "PN", "PR", "PW", "PZ", "PS", "PT", "PU", "PV"
-    } or (len(flag) >= 1 and flag[0] in "YyRIiNnAaQ")
-    if is_suffix_flag:
-        copulas = [c for c in copulas if c not in ("lAr", "lArdIr")]
-
-    rules.append(sfx(flag, strip, add, cond))
-    for cop in copulas:
-        resolved = harmonize(sim_stem, cop)
-        if resolved:
-            rules.append(sfx(flag, strip, add + resolved, cond))
+    rules.append(sfx(flag, strip, new_add, cond))
 
 def sfx_ki(flag: str, strip: str, add: str, cond: str, rules: list, chain_copula: bool = True):
+    ki_inflections = [
+        '', 'ler', 'lerin', 'lere', 'lerde', 'lerden', 'lerle', 'lerce',
+        'leri', 'lerini', 'lerine', 'lerinde', 'lerinden', 'leriyle', 'lerinin',
+        'ni', 'ne', 'nde', 'nden', 'nin', 'yle', 'yse', 'dir', 'ydi', 'ymiş', 'yken',
+    ]
+    
     if chain_copula:
         sfx_copula(flag, strip, add, cond, rules)
     else:
         rules.append(sfx(flag, strip, add, cond))
-    is_loc = any(add.endswith(x) for x in ['da', 'de', 'ta', 'te', 'nda', 'nde'])
-    is_gen = any(add.endswith(x) for x in ['ın', 'in', 'un', 'ün', 'nın', 'nin', 'nun', 'nün'])
-    ki_suffixes = [
-        'ki', 'kiler', 'kilerin', 'kilere', 'kilerde', 'kilerden', 'kilerle', 'kilerce',
-        'kileri', 'kilerini', 'kilerine', 'kilerinde', 'kilerinden', 'kileriyle', 'kilerinin',
-        'kini', 'kine', 'kinde', 'kinden', 'kinin', 'kiyle', 'kiyse', 'kidir', 'kiydi', 'kiymiş', 'kiyken'
-    ]
-    for ks in ki_suffixes:
-        rules.append(sfx(flag, strip, add + ks, cond))
+        
+    for infl in ki_inflections:
+        # -ki rules don't typically take nominal copulas directly (except -dir etc handled in infl)
+        rules.append(sfx(flag, strip, add + "ki" + infl, cond))
 
 def get_noun_chain(stem_flag: str, only_vowel: bool = False, only_consonant: bool = False) -> str:
     if stem_flag in ("PX", "NX"):
@@ -277,15 +262,15 @@ def get_noun_chain(stem_flag: str, only_vowel: bool = False, only_consonant: boo
         cases = f"{loc_f}{abl_f}{ins_f}{eq_f}"
         possessives = ""
         copula_flag = "CL" if is_back else "cl"
-        derivs = "LILKSZCISLDLDTDE"
+        derivs = "LILKSZCICKSLDLDTDE"
     else:
         cases = f"{acc_f}{dat_f}{loc_f}{abl_f}{gen_f}{ins_f}{eq_f}"
         possessives = f"{p3}{p1}{p2s}{p1pl}{p2pl}"
         copula_flag = "CL" if is_back else "cl"
-        derivs = "LILKSZCISLDLDTDE"
+        derivs = "LILKSZCICKSLDLDTDE"
 
     if only_vowel:
-        return f"{cases}{possessives}{copula_flag}"
+        return f"{cases}{possessives}{copula_flag}NE"
     else:
         return f"{stem_flag}{cases}{plural}{possessives}{copula_flag}{derivs}"
 
@@ -381,6 +366,22 @@ def gen_stem_flag(flag: str) -> str:
             f"{pl}yl{loc}",
             f"{pl}nc{loc}",
         ]
+        # Plural possessive endings: e.g. demiryollarımız, demiryollarımıza, demiryollarınız...
+        for p_suf in [
+            f"{pl[:-1]}{pl_acc}m",
+            f"{pl[:-1]}{pl_acc}n",
+            f"{pl[:-1]}{pl_acc}m{pl_acc}z",
+            f"{pl[:-1]}{pl_acc}n{pl_acc}z",
+        ]:
+            plural_suffixes.extend([
+                p_suf,
+                f"{p_suf}{loc}",
+                f"{p_suf}d{loc}",
+                f"{p_suf}d{loc}n",
+                f"{p_suf}{pl_acc}",
+                f"{p_suf}{pl_acc}n",
+                f"{p_suf}l{loc}",
+            ])
         # Voicing transitions and buffer-s stripping for compound plurals:
         # e.g. buzdolabı + ları -> buzdolapları (b -> p)
         # ipucu + ları -> ipuçları (c -> ç)
@@ -526,6 +527,19 @@ def gen_in_flags() -> list[str]:
     rules_i2_v = []; sfx_copula("i2", "0", "yle", ".", rules_i2_v); blocks.append(make_flag_block("i2", unique(rules_i2_v)))
     return blocks
 
+def gen_ki_flags() -> list[str]:
+    """Relative -ki flags for time nouns: K1 (-ki), K2 (-kü)"""
+    blocks = []
+    # K1
+    rules = []
+    sfx_ki("K1", "0", "ki", ".", rules, chain_copula=True)
+    blocks.append(make_flag_block("K1", unique(rules)))
+    # K2
+    rules = []
+    sfx_ki("K2", "0", "kü", ".", rules, chain_copula=True)
+    blocks.append(make_flag_block("K2", unique(rules)))
+    return blocks
+
 def gen_eq_flags() -> list[str]:
     """Equative flags: Q1 (back), Q2 (front)"""
     blocks = []
@@ -550,135 +564,43 @@ def _plural_cases(pl_vowel: str, harmony: str) -> list[str]:
     """
     Return ALL suffixes that can follow a plural -lar/-ler stem.
     harmony: 'back' or 'front'
-    pl_vowel: 'a' (back) or 'e' (front)
     """
-    # Plural base: 'lar' for back, 'ler' for front
     pl = 'lar' if harmony == 'back' else 'ler'
     acc_v  = 'ı' if harmony == 'back' else 'i'
     dat_v  = 'a' if harmony == 'back' else 'e'
     gen_v  = 'ın' if harmony == 'back' else 'in'
-    ins_v  = 'a' if harmony == 'back' else 'e'
     eq_v   = 'ca' if harmony == 'back' else 'ce'
-    cop_d  = 'dır' if harmony == 'back' else 'dir'
-    cop_di = 'dı' if harmony == 'back' else 'di'
-    cop_m  = 'mış' if harmony == 'back' else 'miş'
-    cop_sa = 'sa' if harmony == 'back' else 'se'
-    cop_p1sg  = 'ım' if harmony == 'back' else 'im'
-    cop_p2sg  = 'sın' if harmony == 'back' else 'sin'
-    cop_p1pl  = 'ız' if harmony == 'back' else 'iz'
-    cop_p2pl  = 'sınız' if harmony == 'back' else 'siniz'
+
+    cop = "CP" if harmony == 'back' else "CV"
+    ki = "KI"
 
     suffixes = [
-        # accusative
         f"{pl}{acc_v}",
-        # dative
-        f"{pl}{dat_v}",
-        # locative
-        f"{pl}d{dat_v}",
-        # ablative
-        f"{pl}d{dat_v}n",
-        # genitive
-        f"{pl}{gen_v}",
-        # instrumental
-        f"{pl}l{dat_v}",
-        # equative
-        f"{pl}{eq_v}",
-        # copula present
-        f"{pl}{cop_d}",
-        # copula past
-        f"{pl}{cop_di}",
-        # copula narrative
-        f"{pl}{cop_m}",
-        # copula conditional
-        f"{pl}{cop_sa}",
-        # -ken
-        f"{pl}ken",
-        # personal copulas
-        f"{pl}{cop_p1sg}",
-        f"{pl}{cop_p2sg}",
-        f"{pl}{cop_p1pl}",
-        f"{pl}{cop_p2pl}",
+        f"{pl}{dat_v}/{cop}",
+        f"{pl}d{dat_v}/{cop}{ki}",
+        f"{pl}d{dat_v}n/{cop}",
+        f"{pl}{gen_v}/{cop}{ki}",
+        f"{pl}l{dat_v}/{cop}",
+        f"{pl}{eq_v}/{cop}",
     ]
     
-    # 3sg/3pl possessive of plural cases (with pre-combined copulas)
     poss_cases = [
-        f"{pl}{acc_v}",           # ları/leri (bare possessive)
-        f"{pl}{acc_v}yl{dat_v}",  # larıyla/leriyle
-        f"{pl}n{eq_v}",           # larınca/lerince
-        f"{pl}n{acc_v}n",         # larının/lerinin
+        f"{pl}{acc_v}/{cop}",
+        f"{pl}{acc_v}n{dat_v}/{cop}",
+        f"{pl}{acc_v}nd{dat_v}/{cop}{ki}",
+        f"{pl}{acc_v}nd{dat_v}n/{cop}",
+        f"{pl}{acc_v}yl{dat_v}/{cop}",
+        f"{pl}{acc_v}n{eq_v}/{cop}",
+        f"{pl}{acc_v}n{acc_v}n/{cop}{ki}",
     ]
-    for pc in poss_cases:
-        suffixes.append(pc)
-        is_vow = pc[-1] in 'aeıioöuü'
-        sim_s = "oda" if harmony == 'back' else "ev"
-        copulas = [
-            "ydI", "ydIm", "ydIn", "ydIk", "ydInIz", "ydIlAr",
-            "ymIş", "ymIşIm", "ymIşsIn", "ymIşIz", "ymIşsInIz", "ymIşlAr",
-            "ysA", "ysAm", "ysAn", "ysAk", "ysAnIz", "ysAlAr",
-            "yIm", "sIn", "yIz", "sInIz", "lAr",
-            "dIr", "dIrlAr", "lArdIr", "yken",
-            "yImdIr", "sIndIr", "yIzdIr", "sInIzdIr",
-        ] if is_vow else [
-            "dI", "dIm", "dIn", "dIk", "dInIz", "dIlAr",
-            "tI", "tIm", "tIn", "tIk", "tInIz", "tIlAr",
-            "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
-            "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
-            "Im", "sIn", "Iz", "sInIz", "lAr",
-            "dIr", "tIr", "dIrlAr", "tIrlAr", "lArdIr", "ken",
-            "ImdIr", "sIndIr", "IzdIr", "sInIzdIr",
-        ]
-        for cop in copulas:
-            resolved = harmonize(sim_s, cop)
-            if resolved:
-                suffixes.append(pc + resolved)
-    # Also relative-ki on genitive and locative
-    gen_form = f"{pl}{gen_v}"
-    loc_form = f"{pl}d{dat_v}"
-    suffixes.append(gen_form + 'ki')
-    suffixes.append(loc_form + 'ki')
-    for ks in ['ler', 'leri', 'lere', 'lerde', 'lerden', 'ni', 'ne', 'nde', 'nden', 'nin', 'dir', 'ydi']:
-        suffixes.append(gen_form + 'ki' + ks)
-        suffixes.append(loc_form + 'ki' + ks)
-
-    # Plural locative copulas (e.g. lardaysa, lerdeyse, lardayken, lerdeyken)
-    # Since loc_form ends in a vowel, we use the vowel-ending copulas.
-    sim_s = "oda" if harmony == 'back' else "ev"
-    copulas_vow = [
-        "ydI", "ydIm", "ydIn", "ydIk", "ydInIz", "ydIlAr",
-        "ymIş", "ymIşIm", "ymIşsIn", "ymIşIz", "ymIşsInIz", "ymIşlAr",
-        "ysA", "ysAm", "ysAn", "ysAk", "ysAnIz", "ysAlAr",
-        "yIm", "sIn", "yIz", "sInIz", "lAr",
-        "dIr", "dIrlAr", "lArdIr", "yken",
-    ]
-    for cop in copulas_vow:
-        resolved = harmonize(sim_s, cop)
-        if resolved:
-            suffixes.append(loc_form + resolved)
-
-    # Plural ablative and genitive copulas (e.g. lerdense, lerdendir, lerdendirler, lerindendir, lerindense)
-    # Since abl_form and gen_form end in a consonant, we use the consonant-ending copulas.
-    abl_form = f"{pl}d{dat_v}n"
-    copulas_cons = [
-        "dI", "dIm", "dIn", "dIk", "dInIz", "dIlAr",
-        "tI", "tIm", "tIn", "tIk", "tInIz", "tIlAr",
-        "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
-        "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
-        "Im", "sIn", "Iz", "sInIz", "lAr",
-        "dIr", "tIr", "dIrlAr", "tIrlAr", "lArdIr", "ken",
-    ]
-    for cop in copulas_cons:
-        resolved = harmonize(sim_s, cop)
-        if resolved:
-            suffixes.append(abl_form + resolved)
-            suffixes.append(gen_form + resolved)
-
+    suffixes.extend(poss_cases)
     return suffixes
 
 
 def gen_plural_back(flag: str = "PB") -> str:
     """Back plural: -lar + all plural case forms"""
     rules = []
-    rules.append(sfx(flag, "0", "lar", "."))  # base plural
+    rules.append(sfx(flag, "0", "lar/CP", "."))  # base plural (takes plural copula CP, not CL, preventing double plurals)
     for sfx_str in _plural_cases('a', 'back'):
         rules.append(sfx(flag, "0", sfx_str, "."))
     # 1sg/2sg/1pl/2pl possessive of plural (back harmony)
@@ -701,7 +623,7 @@ def gen_plural_back(flag: str = "PB") -> str:
 def gen_plural_front(flag: str = "PF") -> str:
     """Front plural: -ler + all plural case forms"""
     rules = []
-    rules.append(sfx(flag, "0", "ler", "."))  # base plural
+    rules.append(sfx(flag, "0", "ler/CV", "."))  # base plural (takes plural copula CV, not cl, preventing double plurals)
     for sfx_str in _plural_cases('e', 'front'):
         rules.append(sfx(flag, "0", sfx_str, "."))
     # 1sg/2sg/1pl/2pl possessive of plural (front harmony)
@@ -762,20 +684,21 @@ def gen_all_possessive_flags() -> list[str]:
 def gen_3sg_poss_flags() -> list[str]:
     """3sg possessive -I/-sI for all 4 harmony classes."""
     blocks = []
-    for flag, back, rounded in [
-        ("PS", True, False),   # back unrounded: -ı/-sı
-        ("PT", True, True),    # back rounded:   -u/-su
-        ("PU", False, False),  # front unrounded: -i/-si
-        ("PV", False, True),   # front rounded:   -ü/-sü
+    for flag, back, rounded, v_cond in [
+        ("PS", True, False, "[aıâ]"),   # back unrounded: -ı/-sı
+        ("PT", True, True,  "[ouû]"),   # back rounded:   -u/-su
+        ("PU", False, False, "[eiî]"),  # front unrounded: -i/-si
+        ("PV", False, True,  "[öü]"),   # front rounded:   -ü/-sü
     ]:
         acc_v = "ı" if back and not rounded else ("u" if rounded and back else ("i" if not back and not rounded else "ü"))
         loc_v = "a" if back else "e"
+        eq_v = "ca" if back else "ce"
 
         rules = []
         # After consonant: just -[vowel]
         sfx_copula(flag, "0", acc_v,            CONS_RE, rules)
         # After vowel: -s[vowel] (buffer s)
-        sfx_copula(flag, "0", f"s{acc_v}",          VOWEL_RE, rules)
+        sfx_copula(flag, "0", f"s{acc_v}",          v_cond, rules)
 
         # Cases after poss (n-buffer before all cases)
         # 1. Consonant ending stems (condition: CONS_RE)
@@ -785,15 +708,37 @@ def gen_3sg_poss_flags() -> list[str]:
         sfx_copula(flag, "0", acc_v + "nd" + loc_v + "n",  CONS_RE, rules) # abl
         sfx_ki(flag, "0", acc_v + "n" + acc_v + "n",   CONS_RE, rules)      # gen
         sfx_copula(flag, "0", acc_v + "yl" + loc_v,        CONS_RE, rules) # ins
+        sfx_copula(flag, "0", acc_v + "n" + eq_v,          CONS_RE, rules) # eq
 
-        # 2. Vowel ending stems (condition: VOWEL_RE)
+        # 2. Vowel ending stems (condition: v_cond)
         poss_s = f"s{acc_v}"
-        rules.append(sfx(flag, "0", poss_s + "n" + acc_v,         VOWEL_RE)) # acc
-        sfx_copula(flag, "0", poss_s + "n" + loc_v,         VOWEL_RE, rules) # dat
-        sfx_ki(flag, "0", poss_s + "nd" + loc_v,        VOWEL_RE, rules)      # loc
-        sfx_copula(flag, "0", poss_s + "nd" + loc_v + "n",  VOWEL_RE, rules) # abl
-        sfx_ki(flag, "0", poss_s + "n" + acc_v + "n",   VOWEL_RE, rules)      # gen
-        sfx_copula(flag, "0", poss_s + "yl" + loc_v,        VOWEL_RE, rules) # ins
+        rules.append(sfx(flag, "0", poss_s + "n" + acc_v,         v_cond)) # acc
+        sfx_copula(flag, "0", poss_s + "n" + loc_v,         v_cond, rules) # dat
+        sfx_ki(flag, "0", poss_s + "nd" + loc_v,        v_cond, rules)      # loc
+        sfx_copula(flag, "0", poss_s + "nd" + loc_v + "n",  v_cond, rules) # abl
+        sfx_ki(flag, "0", poss_s + "n" + acc_v + "n",   v_cond, rules)      # gen
+        sfx_copula(flag, "0", poss_s + "yl" + loc_v,        v_cond, rules) # ins
+        sfx_copula(flag, "0", poss_s + "n" + eq_v,          v_cond, rules) # eq
+
+        # 3. Direct copula inflections on 3sg possessive (bypasses 2-level affix limits for G/D/V alternant stems)
+        for cop_base in [
+            f"{acc_v}d{acc_v}r", f"{acc_v}yd{acc_v}", f"{acc_v}ym{acc_v}ş", f"{acc_v}ys{loc_v}", f"{acc_v}yken",
+            f"{acc_v}yd{acc_v}m", f"{acc_v}yd{acc_v}n", f"{acc_v}yd{acc_v}k", f"{acc_v}yd{acc_v}n{acc_v}z", f"{acc_v}yd{loc_v}l{loc_v}r",
+            f"{acc_v}ym{acc_v}ş{acc_v}m", f"{acc_v}ym{acc_v}şs{acc_v}n", f"{acc_v}ym{acc_v}ş{acc_v}z", f"{acc_v}ym{acc_v}şs{acc_v}n{acc_v}z", f"{acc_v}ym{acc_v}şl{loc_v}r",
+            f"s{acc_v}d{acc_v}r", f"s{acc_v}yd{acc_v}", f"s{acc_v}ym{acc_v}ş", f"s{acc_v}ys{loc_v}", f"s{acc_v}yken",
+            f"s{acc_v}yd{acc_v}m", f"s{acc_v}yd{acc_v}n", f"s{acc_v}yd{acc_v}k", f"s{acc_v}yd{acc_v}n{acc_v}z", f"s{acc_v}yd{loc_v}l{loc_v}r",
+            f"s{acc_v}ym{acc_v}ş{acc_v}m", f"s{acc_v}ym{acc_v}şs{acc_v}n", f"s{acc_v}ym{acc_v}ş{acc_v}z", f"s{acc_v}ym{acc_v}şs{acc_v}n{acc_v}z", f"s{acc_v}ym{acc_v}şl{loc_v}r",
+        ]:
+            cond = v_cond if cop_base.startswith('s') else CONS_RE
+            rules.append(sfx(flag, "0", cop_base, cond))
+
+        # Direct copulas on locative/ablative after 3sg possessive (e.g. emrindeymiş, hattındaydı)
+        for case_cop in [
+            f"{acc_v}nd{loc_v}yd{acc_v}", f"{acc_v}nd{loc_v}ym{acc_v}ş", f"{acc_v}nd{loc_v}ys{loc_v}", f"{acc_v}nd{loc_v}yken",
+            f"s{acc_v}nd{loc_v}yd{acc_v}", f"s{acc_v}nd{loc_v}ym{acc_v}ş", f"s{acc_v}nd{loc_v}ys{loc_v}", f"s{acc_v}nd{loc_v}yken",
+        ]:
+            cond = VOWEL_RE if case_cop.startswith('s') else CONS_RE
+            rules.append(sfx(flag, "0", case_cop, cond))
 
         blocks.append(make_flag_block(flag, unique(rules)))
     return blocks
@@ -916,8 +861,10 @@ def gen_copula_flag_back(flag: str = "CL") -> str:
     for cop_tmpl in COPULAS_VOWEL:
         r_flat = harmonize("oda", cop_tmpl)
         r_round = harmonize("kutu", cop_tmpl)
-        if r_flat: rules.append(sfx(flag, "0", r_flat, "[aıâ]"))
-        if r_round: rules.append(sfx(flag, "0", r_round, "[ouû]"))
+        if r_flat:
+            rules.append(sfx(flag, "0", r_flat, "[aıâ]"))
+        if r_round:
+            rules.append(sfx(flag, "0", r_round, "[ouû]"))
     for cop_tmpl in COPULAS_CONS:
         r_flat = harmonize("bak", cop_tmpl)
         r_round = harmonize("uç", cop_tmpl)
@@ -959,8 +906,10 @@ def gen_copula_flag_front(flag: str = "cl") -> str:
     for cop_tmpl in COPULAS_VOWEL:
         r_flat = harmonize("kedi", cop_tmpl)
         r_round = harmonize("ütü", cop_tmpl)
-        if r_flat: rules.append(sfx(flag, "0", r_flat, "[eiaâî]"))
-        if r_round: rules.append(sfx(flag, "0", r_round, "[öüouû]"))
+        if r_flat:
+            rules.append(sfx(flag, "0", r_flat, "[eiî]"))
+        if r_round:
+            rules.append(sfx(flag, "0", r_round, "[öü]"))
     for cop_tmpl in COPULAS_CONS:
         r_flat = harmonize("ev", cop_tmpl)
         r_round = harmonize("gör", cop_tmpl)
@@ -976,8 +925,94 @@ def gen_copula_flag_front(flag: str = "cl") -> str:
             rules.append(sfx(flag, "0", r_flat, f"[eiaâî]{cond_suffix}"))
             rules.append(sfx(flag, "0", r_flat, f"[eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
         if r_round:
-            rules.append(sfx(flag, "0", r_round, f"[öüouû]{cond_suffix}"))
-            rules.append(sfx(flag, "0", r_round, f"[öüouû][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_round, f"[öü]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_round, f"[öü][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
+    return make_flag_block(flag, unique(rules))
+
+
+def gen_copula_plural_back(flag: str = "CP") -> str:
+    """Copula suffixes for back-harmony plural stems (-lar). Excludes bare -lar to prevent double-plural over-generation."""
+    COPULAS_VOWEL = [
+        "ydI", "ydIm", "ydIn", "ydIk", "ydInIz", "ydIlAr",
+        "ymIş", "ymIşIm", "ymIşsIn", "ymIşIz", "ymIşsInIz", "ymIşlAr",
+        "ysA", "ysAm", "ysAn", "ysAk", "ysAnIz", "ysAlAr",
+        "yIm", "sIn", "yIz", "sInIz",
+        "dIr", "dIrlAr", "yken",
+        "yImdIr", "sIndIr", "yIzdIr", "sInIzdIr",
+    ]
+    COPULAS_CONS = [
+        "dI", "dIm", "dIn", "dIk", "dInIz", "dIlAr",
+        "tI", "tIm", "tIn", "tIk", "tInIz", "tIlAr",
+        "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
+        "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
+        "Im", "sIn", "Iz", "sInIz",
+        "dIr", "tIr", "dIrlAr", "tIrlAr", "ken",
+        "ImdIr", "sIndIr", "IzdIr", "sInIzdIr",
+    ]
+    rules = []
+    for cop_tmpl in COPULAS_VOWEL:
+        r_flat = harmonize("oda", cop_tmpl)
+        r_round = harmonize("kutu", cop_tmpl)
+        if r_flat: rules.append(sfx(flag, "0", r_flat, "[aıâ]"))
+        if r_round: rules.append(sfx(flag, "0", r_round, "[ouû]"))
+    for cop_tmpl in COPULAS_CONS:
+        r_flat = harmonize("bak", cop_tmpl)
+        r_round = harmonize("uç", cop_tmpl)
+        if cop_tmpl.startswith('d'):
+            cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛçfhkpsşt]"
+        elif cop_tmpl.startswith('t'):
+            cond_suffix = "[çfhkpsşt]"
+        else:
+            cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛ]"
+        if r_flat:
+            rules.append(sfx(flag, "0", r_flat, f"[aıâ]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_flat, f"[aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
+        if r_round:
+            rules.append(sfx(flag, "0", r_round, f"[ouû]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_round, f"[ouû][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
+    return make_flag_block(flag, unique(rules))
+
+
+def gen_copula_plural_front(flag: str = "CV") -> str:
+    """Copula suffixes for front-harmony plural stems (-ler). Excludes bare -ler to prevent double-plural over-generation."""
+    COPULAS_VOWEL = [
+        "ydI", "ydIm", "ydIn", "ydIk", "ydInIz", "ydIlAr",
+        "ymIş", "ymIşIm", "ymIşsIn", "ymIşIz", "ymIşsInIz", "ymIşlAr",
+        "ysA", "ysAm", "ysAn", "ysAk", "ysAnIz", "ysAlAr",
+        "yIm", "sIn", "yIz", "sInIz",
+        "dIr", "dIrlAr", "yken",
+        "yImdIr", "sIndIr", "yIzdIr", "sInIzdIr",
+    ]
+    COPULAS_CONS = [
+        "dI", "dIm", "dIn", "dIk", "dInIz", "dIlAr",
+        "tI", "tIm", "tIn", "tIk", "tInIz", "tIlAr",
+        "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
+        "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
+        "Im", "sIn", "Iz", "sInIz",
+        "dIr", "tIr", "dIrlAr", "tIrlAr", "ken",
+        "ImdIr", "sIndIr", "IzdIr", "sInIzdIr",
+    ]
+    rules = []
+    for cop_tmpl in COPULAS_VOWEL:
+        r_flat = harmonize("kedi", cop_tmpl)
+        r_round = harmonize("ütü", cop_tmpl)
+        if r_flat: rules.append(sfx(flag, "0", r_flat, "[eiaâî]"))
+        if r_round: rules.append(sfx(flag, "0", r_round, "[öüouû]"))
+    for cop_tmpl in COPULAS_CONS:
+        r_flat = harmonize("ev", cop_tmpl)
+        r_round = harmonize("gör", cop_tmpl)
+        if cop_tmpl.startswith('d'):
+            cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛçfhkpsşt]"
+        elif cop_tmpl.startswith('t'):
+            cond_suffix = "[çfhkpsşt]"
+        else:
+            cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛ]"
+        if r_flat:
+            rules.append(sfx(flag, "0", r_flat, f"[eiaâî]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_flat, f"[eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
+        if r_round:
+            rules.append(sfx(flag, "0", r_round, f"[öü]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_round, f"[öü][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
     return make_flag_block(flag, unique(rules))
 
 
@@ -1192,7 +1227,7 @@ def gen_deriv_ci2(flag: str = "LCI") -> str:
 
 
 def gen_deriv_ck(flag: str = "CK") -> str:
-    """-cIk diminutive"""
+    """-cIk diminutive & -cIm affection suffixes"""
     rules = []
     for cond, suf in [
         ("[aıâ][^çfhkpsşt]", "cık"), ("[ouû][^çfhkpsşt]", "cuk"),
@@ -1206,7 +1241,20 @@ def gen_deriv_ck(flag: str = "CK") -> str:
         ("[aıâ][^aeıioöuüâîû][çfhkpsşt]",  "çık"), ("[ouû][^aeıioöuüâîû][çfhkpsşt]",  "çuk"),
         ("[eiîâ][^aeıioöuüâîû][çfhkpsşt]",  "çik"), ("[öüû][^aeıioöuüâîû][çfhkpsşt]",  "çük"),
     ]:
+        sc = "B1" if suf.endswith(('cık', 'cuk', 'çık', 'çuk')) else "F1"
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
         rules.append(sfx(flag, "0", suf, cond))
+        
+    # Affection suffixes (-cIm, e.g. doktorcum, ninecim, ziyacığım)
+    for cond, suf, cop in [
+        ("[aıâ]", "cım", "CL"), ("[ouû]", "cum", "CL"), ("[eiîâ]", "cim", "cl"), ("[öüû]", "cüm", "cl"),
+        ("[aıâ][^aeıioöuüâîû]", "cım", "CL"), ("[ouû][^aeıioöuüâîû]", "cum", "CL"),
+        ("[eiîâ][^aeıioöuüâîû]", "cim", "cl"), ("[öüû][^aeıioöuüâîû]", "cüm", "cl"),
+        ("[aıâ]", "cığım", "CL"), ("[ouû]", "cuğum", "CL"), ("[eiîâ]", "ciğim", "cl"), ("[öüû]", "cüğüm", "cl"),
+    ]:
+        rules.append(sfx(flag, "0", f"{suf}/{cop}", cond))
+        rules.append(sfx(flag, "0", suf, cond))
+
     return make_flag_block(flag, unique(rules))
 
 
@@ -1331,7 +1379,31 @@ def gen_prefix_flag(flag: str = "PX") -> str:
 # ---------------------------------------------------------------------------
 
 def generate_rep_rules() -> list[tuple[str, str]]:
-    rep_list = []
+    rep_list = [
+        # --- High-frequency whole-word typo corrections (rejected_words.csv) ---
+        # REP forces these to rank FIRST in suggestions, ahead of ngram candidates.
+        ("yanliz", "yalnız"), ("yanlız", "yalnız"),      # ~1.3k metathesis class
+        ("deil", "değil"), ("diil", "değil"),
+        ("degil", "değil"),                              # 40k silent-ğ class
+        ("tesekkur", "teşekkür"), ("tesekkür", "teşekkür"),
+        ("teşekkur", "teşekkür"),                        # ~12k
+        ("hersey", "her şey"), ("herşey", "her şey"),    # ~7.7k
+        ("birsey", "bir şey"), ("birşey", "bir şey"),    # ~15k
+        ("geliyo", "geliyor"), ("gelior", "geliyor"),    # speech elision
+        ("olucak", "olacak"), ("olcak", "olacak"),
+        ("olicak", "olacak"),                            # ~7.7k vowel reduction
+        ("oldugunu", "olduğunu"),                        # 31k
+        ("yanlis", "yanlış"), ("yanlıs", "yanlış"),      # ~1.3k
+        ("mumkun", "mümkün"), ("mümkun", "mümkün"),
+        ("0", "o"), ("0", "O"),
+        ("1", "i"), ("1", "I"), ("1", "ı"),
+        ("3", "e"), ("3", "E"),
+        ("4", "a"), ("4", "A"),
+        ("5", "s"), ("5", "r"),
+        ("6", "y"), ("6", "g"), ("6", "t"),
+        ("7", "y"), ("7", "t"),
+        ("8", "u"), ("8", "ü"),
+        ("9", "o"), ("9", "u"),]
     
     # 1. Base typographic & phonological character substitutions
     char_reps = [
@@ -1408,6 +1480,71 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("yk", "k"),
         ("yb", "b"),
         ("oligo", "oligar"),
+        # High-frequency TDK & modern Turkish compound/split and orthographic typos
+        ("herşey", "her_şey"),
+        ("birşey", "bir_şey"),
+        ("pekçok", "pek_çok"),
+        ("herbiri", "her_biri"),
+        ("hiçkimse", "hiç_kimse"),
+        ("hergün", "her_gün"),
+        ("şuan", "şu_an"),
+        ("sağol", "sağ_ol"),
+        ("hoşçakal", "hoşça_kal"),
+        ("hoşgeldin", "hoş_geldin"),
+        ("hoşgeldiniz", "hoş_geldiniz"),
+        ("farketmek", "fark_etmek"),
+        ("terketmek", "terk_etmek"),
+        ("ayırdetmek", "ayırt_etmek"),
+        ("arzetmek", "arz_etmek"),
+        ("başbaşa", "baş_başa"),
+        ("gözgöze", "göz_göze"),
+        ("yüzyüze", "yüz_yüze"),
+        ("yanyana", "yan_yana"),
+        ("artarda", "art_arda"),
+        ("ardıardına", "ardı_ardına"),
+        ("ard_arda", "art_arda"),
+        ("peşpeşe", "peş_peşe"),
+        ("elele", "el_ele"),
+        ("heran", "her_an"),
+        ("tabiki", "tabii_ki"),
+        ("tabi", "tabii"),
+        ("müsade", "müsaade"),
+        ("muaffakiyet", "muvaffakiyet"),
+        ("müteahit", "müteahhit"),
+        ("laboratuar", "laboratuvar"),
+        ("konsensus", "konsensüs"),
+        ("antreman", "antrenman"),
+        ("ünvan", "unvan"),
+        ("döküman", "doküman"),
+        ("tesbih", "tespih"),
+        ("rasgele", "rastgele"),
+        ("şurda", "şurada"),
+        ("burda", "burada"),
+        ("orda", "orada"),
+        ("nerde", "nerede"),
+        ("gardolap", "gardırop"),
+        ("asvalt", "asfalt"),
+        ("karnıbahar", "karnabahar"),
+        ("komidin", "komodin"),
+        ("kiprik", "kirpik"),
+        ("parlemento", "parlamento"),
+        ("sandöviç", "sandviç"),
+        ("silahşör", "silahşor"),
+        ("tahamül", "tahammül"),
+        ("üniverste", "üniversite"),
+        ("zerafet", "zarafet"),
+        ("ahçı", "aşçı"),
+        ("matba", "matbaa"),
+        ("mütevazi", "mütevazı"),
+        ("traş", "tıraş"),
+        ("egsos", "egzoz"),
+        ("eksoz", "egzoz"),
+        ("egzos", "egzoz"),
+        ("w", "v"),
+        ("v", "w"),
+        ("q", "k"),
+        ("k", "q"),
+        ("x", "ks"),
     ]
     for src, dst in lexical_typos:
         rep_list.append((src, dst))
@@ -1460,6 +1597,58 @@ def generate_rep_rules() -> list[tuple[str, str]]:
                 if corr_s == front_s:
                     rep_list.append((f"{stem}{back_s}", f"{stem}{corr_s}"))
                     
+    digit_replacements = [
+        ("0", "o"), ("0", "ö"),
+        ("1", "ı"), ("1", "i"), ("1", "l"),
+        ("3", "e"),
+        ("4", "a"), ("4", "r"), ("4", "e"),
+        ("5", "s"), ("5", "t"),
+        ("6", "y"), ("6", "t"),
+        ("7", "u"), ("7", "y"),
+        ("8", "b"), ("8", "i"),
+        ("9", "o"), ("9", "u")
+    ]
+    for src, dst in digit_replacements:
+        rep_list.append((src, dst))
+
+    phonetic_reps = [
+        ("ı", "i"), ("i", "ı"),
+        ("ğ", "g"), ("g", "ğ"),
+        ("ü", "u"), ("u", "ü"),
+        ("ş", "s"), ("s", "ş"),
+        ("ö", "o"), ("o", "ö"),
+        ("ç", "c"), ("c", "ç"),
+        ("â", "a"), ("a", "â"),
+        ("î", "i"), ("i", "î"),
+        ("û", "u"), ("u", "û"),
+        ("y", "ğ"), ("ğ", "y"),
+        ("v", "b"), ("b", "v"),
+        ("d", "t"), ("t", "d"),
+        ("tt", "t"), ("t", "tt"),
+        ("ll", "l"), ("l", "ll"),
+        ("ss", "s"), ("s", "ss"),
+        ("nn", "n"), ("n", "nn"),
+        ("mm", "m"), ("m", "mm"),
+        ("rr", "r"), ("r", "rr"),
+        ("kk", "k"), ("k", "kk"),
+        ("pp", "p"), ("p", "pp"),
+        ("bb", "b"), ("b", "bb"),
+        ("dd", "d"), ("d", "dd"),
+        ("cc", "c"), ("c", "cc"),
+        ("zz", "z"), ("z", "zz")
+    ]
+    for src, dst in [
+        ("a", "â"), ("â", "a"),
+        ("A", "Â"), ("Â", "A"),
+        ("i", "î"), ("î", "i"),
+        ("İ", "Î"), ("Î", "İ"), ("I", "Î"),
+        ("u", "û"), ("û", "u"),
+        ("U", "Û"), ("Û", "U"),
+    ]:
+        rep_list.append((src, dst))
+    for src, dst in phonetic_reps:
+        rep_list.append((src, dst))
+
     circumflex_typos = [
         ("hal", "hâl"), ("hala", "hâlâ"), ("adet", "âdet"), ("alem", "âlem"),
         ("dahi", "dâhi"), ("sura", "şûra"), ("kagit", "kâğıt"), ("kağıt", "kâğıt"),
@@ -1488,28 +1677,244 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("halet", "hâlet"), ("haletiruhiye", "hâletiruhiye"), ("halihazır", "hâlihazır"),
         ("halihazırda", "hâlihazırda"), ("haliyle", "hâliyle"), ("hallenmek", "hâllenmek"),
         ("hallice", "hâllice"), ("halsiz", "hâlsiz"), ("halsizce", "hâlsizce"),
-        ("halsizleşmek", "hâlsizleşmek"), ("halsizlik", "hâlsizlik"), ("harbi", "harbî"),
-        ("harcıalem", "harcıâlem"), ("hayalilik", "hayalîlik"), ("hayasız", "hayâsız"),
-        ("hayasızca", "hayâsızca"), ("hayasızcasına", "hayâsızcasına"), ("hemhallik", "hemhâllik"),
-        ("hikemi", "hikemî"), ("hüsnühal", "hüsnühâl"), ("ilmi", "ilmî"), ("ilmihal", "ilmihâl"),
-        ("ilmilik", "ilmîlik"), ("irsi", "irsî"), ("isyankarlık", "isyankârlık"), ("kabe", "Kâbe"),
-        ("kameri", "kamerî"), ("karlı", "kârlı"), ("karlıca", "kârlıca"), ("karlılık", "kârlılık"),
-        ("karsızca", "kârsızca"), ("karsızlık", "kârsızlık"), ("kavmi", "kavmî"), ("kesbi", "kesbî"),
-        ("keyfi", "keyfî"), ("keyfilik", "keyfîlik"), ("kündekari", "kündekâri"), ("laciverdi", "laciverdî"),
-        ("ladini", "ladinî"), ("lam", "lâm"), ("mahallilik", "mahallîlik"), ("mahkumane", "mahkûmane"),
-        ("mani", "mâni"), ("maniasız", "mâniasız"), ("mefkure", "mefkûre"), ("mefkureci", "mefkûreci"),
-        ("melekut", "melekût"), ("merkezileşme", "merkezîleşme"), ("merkezileşmek", "merkezîleşmek"),
-        ("merkezileştirme", "merkezîleştirme"), ("merkezileştirmek", "merkezîleştirmek"),
-        ("merkezilik", "merkezîlik"), ("metin", "metîn"), ("metinlik", "metînlik"), ("meşkuk", "meşkûk"),
-        ("milli", "millî"), ("millicilik", "millîcilik"), ("millileşme", "millîleşme"),
-        ("millileştirilmek", "millîleştirilmek"), ("millileştirmek", "millîleştirmek"), ("millilik", "millîlik"),
-        ("mirici", "mirîci"), ("misakımilli", "Misakımillî"), ("muhammedi", "Muhammedî"), ("nakli", "naklî"),
-        ("narıbeyza", "nârıbeyza"), ("nazım", "nâzım"), ("neftileşmek", "neftîleşmek"),
-        ("neftileştirme", "neftîleştirme"), ("neftileştirmek", "neftîleştirmek"), ("reddihakim", "reddihâkim"),
-        ("resmileşme", "resmîleşme"), ("resmileştirebilmek", "resmîleştirebilmek"),
-        ("resmileştirme", "resmîleştirme"), ("resmileştirmek", "resmîleştirmek"), ("rüku", "rükû"),
-        ("sadır", "sâdır"), ("sari", "sâri"), ("sükun", "sükûn"), ("sükunetli", "sükûnetli"),
-        ("sükut", "sükût"), ("sükuti", "sükûti"), ("tahmini", "tahminî"), ("tarihi", "tarihî"),
+        ("adem", "âdem"), ("ademci", "âdemci"), ("ademiyet", "âdemiyet"), ("ademoğlu", "âdemoğlu"),
+        ("adet", "âdet"), ("aciz", "âciz"), ("acizlik", "âcizlik"), ("ahdi", "ahdî"),
+        ("alem", "âlem"), ("alemi", "âlemi"), ("alemşümul", "âlemşümul"), ("ali", "âlî"),
+        ("alim", "âlim"), ("alimane", "âlimane"), ("alimlik", "âlimlik"), ("aliyyülala", "aliyyülâlâ"),
+        ("amade", "âmâde"), ("amalık", "âmâlık"), ("amil", "âmil"), ("amin", "âmin"),
+        ("amiran", "âmiran"), ("amirane", "âmirane"), ("amme", "âmme"), ("araz", "âraz"),
+        ("arzu", "ârzû"), ("arzuhal", "arzuhâl"), ("arzuhalci", "arzuhâlci"), ("arzuhalcilik", "arzuhâlcilik"),
+        ("asakir", "asâkir"), ("asude", "âsûde"), ("aşık", "âşık"), ("aşıkane", "âşıkane"),
+        ("aşıklı", "âşıklı"), ("aşıklık", "âşıklık"), ("aşikar", "âşikâr"), ("aşikare", "âşikâre"),
+        ("aşikarlık", "âşikârlık"), ("avam", "avâm"), ("ayan", "âyan"), ("ayende", "âyende"),
+        ("azap", "azâp"), ("baki", "bâki"), ("balig", "bâliğ"), ("bari", "bâri"),
+        ("barika", "bârika"), ("basiret", "basîret"), ("batın", "bâtın"), ("batıni", "bâtınî"),
+        ("bedeni", "bedenî"), ("bekar", "bekâr"), ("bekarlık", "bekârlık"), ("berdevam", "berdevâm"),
+        ("berkarar", "berkarâr"), ("berkemal", "berkemâl"), ("berkela", "berkelâ"), ("bermutat", "bermutât"),
+        ("berveçhe", "berveçh-i"), ("berzaht", "berzâh"), ("beşeri", "beşerî"), ("biilaç", "bîilâç"),
+        ("bikare", "bîkâre"), ("biperva", "bîpervâ"), ("bitaraf", "bîtaraf"), ("bivefa", "bîvefâ"),
+        ("canan", "cânan"), ("cavidan", "câvidan"), ("cazip", "câzip"), ("cebri", "cebrî"),
+        ("cehennemi", "cehennemî"), ("celali", "celâli"), ("celalilik", "celâlilik"), ("cellat", "cellât"),
+        ("ceman", "cemân"), ("cenup", "cenûp"), ("cezri", "cezrî"), ("cihan", "cihân"),
+        ("cinsi", "cinsî"), ("civar", "civâr"), ("dahi", "dâhi"), ("dahice", "dâhice"),
+        ("dahilen", "dâhilen"), ("dahili", "dâhilî"), ("dahilik", "dâhilik"), ("dahiliye", "dâhiliye"),
+        ("dahiliyeci", "dâhiliyeci"), ("dahl", "dâhl"), ("daim", "dâim"), ("daima", "dâima"),
+        ("daimi", "daimî"), ("daimilik", "daimîlik"), ("darulaceze", "dârülaceze"), ("darulfunun", "dârülfünun"),
+        ("darussafaka", "dârüşşafaka"), ("dava", "dâva"), ("davalı", "dâvalı"), ("davar", "davâr"),
+        ("divan", "divân"), ("dini", "dinî"), ("ebedi", "ebedî"), ("ebedilik", "ebedîlik"),
+        ("ebedileşme", "ebedîleşme"), ("ebedileşmek", "ebedîleşmek"), ("ebedileştirme", "ebedîleştirme"),
+        ("ebedileştirmek", "ebedîleştirmek"), ("edebi", "edebî"), ("edebiyat", "edebiyât"),
+        ("ehli", "ehlî"), ("ehlileşme", "ehlîleşme"), ("ehlileşmek", "ehlîleşmek"),
+        ("ehlileştirilme", "ehlîleştirilme"), ("ehlileştirilmek", "ehlîleştirilmek"),
+        ("ehlileştirme", "ehlîleştirme"), ("ehlileştirmek", "ehlîleştirmek"), ("elhasıl", "elhâsıl"),
+        ("elifi", "elifî"), ("elzem", "elzêm"), ("emare", "emâre"), ("enam", "enâm"),
+        ("esatir", "esâtir"), ("esatiri", "esatirî"), ("esham", "eshâm"), ("esnaf", "esnâf"),
+        ("esrar", "esrâr"), ("esvap", "esvâp"), ("etfal", "etfâl"), ("etraf", "etrâf"),
+        ("evkaf", "evkâf"), ("evlat", "evlât"), ("evrak", "evrâk"), ("evsaf", "evsâf"),
+        ("evvel", "evvêl"), ("ezeli", "ezelî"), ("ezelilik", "ezelîlik"), ("fani", "fâni"),
+        ("fanilik", "fânilik"), ("farazi", "farazî"), ("fasık", "fâsık"), ("fasıla", "fâsıla"),
+        ("fasılalı", "fâsılalı"), ("fasih", "fasîh"), ("fatih", "fâtih"), ("fatiha", "fâtiha"),
+        ("fecaat", "fecâat"), ("fedakar", "fedakâr"), ("fedakarlık", "fedakârlık"), ("felah", "felâh"),
+        ("felaket", "felâket"), ("felsefi", "felsefî"), ("fenn", "fênn"), ("fenni", "fennî"),
+        ("feragat", "ferâgat"), ("ferah", "ferâh"), ("feraset", "ferâset"), ("ferdi", "ferdî"),
+        ("ferdilik", "ferdîlik"), ("feri", "ferî"), ("ferman", "fermân"), ("fesahat", "fesâhat"),
+        ("fesh", "fêsh"), ("fevkalade", "fevkalâde"), ("feylesof", "feylesôf"), ("feyz", "fêyz"),
+        ("fiili", "fiilî"), ("fikri", "fikrî"), ("fuzuli", "fuzulî"), ("gafil", "gâfil"),
+        ("gaip", "gâip"), ("galip", "gâlip"), ("gasp", "gâsp"), ("gaye", "gâye"),
+        ("gayet", "gâyet"), ("gayr", "gâyr"), ("gayri", "gayrî"), ("gavur", "gâvur"),
+        ("gazap", "gazâp"), ("gazi", "gâzi"), ("gıyap", "gıyâp"), ("gıyabi", "gıyabî"),
+        ("gudde", "gûdde"), ("gulam", "gulâm"), ("gulyabani", "gulyabânî"), ("habeşi", "habeşî"),
+        ("hacamat", "hacâmat"), ("hacet", "hâcet"), ("haciz", "hâciz"), ("hadise", "hâdise"),
+        ("hafaza", "hafâza"), ("hafız", "hâfız"), ("hafıza", "hâfıza"), ("hafif", "hafîf"),
+        ("hain", "hâin"), ("hak", "hâk"), ("hakani", "hakanî"), ("hakaret", "hakâret"),
+        ("hakikat", "hakîkat"), ("hakiki", "hakikî"), ("hakim", "hâkim"), ("hakimane", "hâkimane"),
+        ("hakimiyet", "hâkimiyet"), ("hakimlik", "hâkimlik"), ("hakir", "hakîr"), ("hala", "hâlâ"),
+        ("halas", "halâs"), ("halavet", "halâvet"), ("hale", "hâle"), ("halef", "hâlef"),
+        ("halen", "hâlen"), ("halet", "hâlet"), ("haletiruhiye", "hâletiruhiye"), ("halfa", "halfâ"),
+        ("halı", "hâlî"), ("halihazır", "hâlihazır"), ("halihazırda", "hâlihazırda"), ("halik", "hâlik"),
+        ("halim", "halîm"), ("halis", "hâlis"), ("haliyle", "hâliyle"), ("halk", "hâlk"),
+        ("halka", "halkâ"), ("halleşme", "hâlleşme"), ("halleşmek", "hâlleşmek"), ("hallice", "hâllice"),
+        ("halsiz", "hâlsiz"), ("halsizce", "hâlsizce"), ("halsizleşme", "halsizleşme"), ("halsizleşmek", "hâlsizleşmek"),
+        ("halsizlik", "hâlsizlik"), ("hamakat", "hamâkat"), ("hamal", "hamâl"), ("hamam", "hamâm"),
+        ("hamarat", "hamârat"), ("hamaset", "hamâset"), ("hamd", "hâmd"), ("hamil", "hâmil"),
+        ("hamile", "hâmile"), ("hamis", "hâmis"), ("hami", "hâmî"), ("hamle", "hâmle"),
+        ("harab", "harâp"), ("harabe", "harâbe"), ("hararet", "harâret"), ("harb", "hârp"),
+        ("harbi", "harbî"), ("harbiyeli", "harbiyelî"), ("harcan", "harcân"), ("harcırah", "harcırâh"),
+        ("hareke", "hâreke"), ("hareket", "harekêt"), ("harem", "harêm"), ("harf", "hârf"),
+        ("harici", "haricî"), ("hariciye", "hariciyê"), ("harita", "harîtâ"), ("hasar", "hasâr"),
+        ("hasat", "hasât"), ("hasb", "hâsb"), ("hasbi", "hasbî"), ("hasbihal", "hasbihâl"),
+        ("hasıl", "hâsıl"), ("hasılat", "hâsılat"), ("hasret", "hasrêt"), ("hassa", "hâssa"),
+        ("hasta", "hâsta"), ("hastane", "hastânê"), ("haşa", "hâşâ"), ("haşarat", "haşarât"),
+        ("haşari", "haşarî"), ("haşin", "haşîn"), ("haşir", "haşîr"), ("haşiv", "hâşiv"),
+        ("haşmet", "haşmêt"), ("hat", "hât"), ("hata", "hatâ"), ("hatip", "hatîp"),
+        ("hatıra", "hâtıra"), ("hatır", "hâtır"), ("hava", "havâ"), ("havale", "havâle"),
+        ("havali", "havâlî"), ("havas", "havâs"), ("havza", "havzâ"), ("hayal", "hayâl"),
+        ("hayalperest", "hayâlperest"), ("hayasız", "hayâsız"), ("hayasızca", "hayâsızca"),
+        ("hayasızlık", "hayâsızlık"), ("hayat", "hayât"), ("hayır", "hâyır"), ("haysiyet", "haysiyêt"),
+        ("haza", "hâzâ"), ("hazan", "hazân"), ("hazar", "hazâr"), ("hazen", "hazên"),
+        ("hazık", "hâzık"), ("hazım", "hâzım"), ("hazin", "hazîn"), ("hazinedar", "hazînedâr"),
+        ("haziran", "hazîran"), ("hazne", "hâzne"), ("hazret", "hazrêt"), ("hicap", "hicâp"),
+        ("hicaz", "hicâz"), ("hicret", "hicrêt"), ("hicri", "hicrî"), ("hidayet", "hidâyet"),
+        ("hikaye", "hikâye"), ("hikem", "hikêm"), ("hikemi", "hikemî"), ("hikmet", "hikmêt"),
+        ("hilaf", "hilâf"), ("hilal", "hilâl"), ("hile", "hîle"), ("hilkat", "hilkât"),
+        ("himaye", "himâye"), ("himmet", "himmêt"), ("hisar", "hisâr"), ("hitab", "hitâp"),
+        ("hitabet", "hitâbet"), ("hitam", "hitâm"), ("hiyerarşi", "hiyerarşî"), ("hizmet", "hizmêt"),
+        ("hoca", "hôca"), ("hudut", "hudût"), ("hukuk", "hukûk"), ("hukuki", "hukukî"),
+        ("hulle", "hûlle"), ("hulyalı", "hulyâlî"), ("hurafe", "hurâfe"), ("hurda", "hurdâ"),
+        ("huri", "hûrî"), ("hurma", "hurmâ"), ("hurra", "hurrâ"), ("huruf", "hurûf"),
+        ("husul", "husûl"), ("husus", "husûs"), ("hususi", "hususî"), ("husumet", "husûmet"),
+        ("huzur", "huzûr"), ("hüccet", "hüccêt"), ("hücre", "hûcre"), ("hükmi", "hükmî"),
+        ("hükmet", "hükmêt"), ("hükm", "hüküm"), ("hükran", "şükrân"), ("hükum", "hükûm"),
+        ("hükumet", "hükûmet"), ("hüküm", "hükûm"), ("hükümdar", "hükümdâr"), ("hükümet", "hükûmet"),
+        ("hülasa", "hülâsa"), ("hülya", "hülyâ"), ("hüner", "hünêr"), ("hürmet", "hürmêt"),
+        ("hürriyet", "hürriyêt"), ("hüsn", "hüsn"), ("hüsnühat", "hüsnühat"), ("hüsnühal", "hüsnühâl"),
+        ("hüsnüyusuf", "hüsnüyûsuf"), ("hüsran", "hüsrân"), ("hüviyet", "hüviyêt"), ("hüzün", "hüzûn"),
+        ("icabat", "icâbât"), ("icabet", "icâbet"), ("icap", "icâp"), ("icbar", "icbâr"),
+        ("icra", "icrâ"), ("icraat", "icraât"), ("ictihat", "ictihât"), ("ictimai", "ictimaî"),
+        ("ictima", "ictimâ"), ("içtimai", "içtimaî"), ("idare", "idâre"), ("idari", "idarî"),
+        ("iddia", "iddiâ"), ("idman", "idmân"), ("idrak", "idrâk"), ("ifade", "ifâde"),
+        ("iflah", "iflâh"), ("iflas", "iflâs"), ("ifrat", "ifrât"), ("ifraz", "ifrâz"),
+        ("ifrazat", "ifrazât"), ("ifrit", "ifrît"), ("ifşa", "ifşâ"), ("ifşaat", "ifşaât"),
+        ("iftar", "iftâr"), ("iftira", "iftirâ"), ("ihale", "ihâle"), ("iham", "ihâm"),
+        ("ihanet", "ihânet"), ("ihata", "ihâta"), ("ihdas", "ihdâs"), ("ihlas", "ihlâs"),
+        ("ihmal", "ihmâl"), ("ihracat", "ihracât"), ("ihram", "ihrâm"), ("ihraz", "ihrâz"),
+        ("ihsan", "ihsân"), ("ihtar", "ihtâr"), ("ihtida", "ihtidâ"), ("ihtilaf", "ihtilâf"),
+        ("ihtilal", "ihtilâl"), ("ihtilam", "ihtilâm"), ("ihtilas", "ihtilâs"), ("ihtilat", "ihtilât"),
+        ("ihtiram", "ihtirâm"), ("ihtiras", "ihtirâs"), ("ihtiraz", "ihtirâz"), ("ihtisas", "ihtisâs"),
+        ("ihtisar", "ihtisâr"), ("ihtişam", "ihtişâm"), ("ihtiyaç", "ihtiyâç"), ("ihtiyar", "ihtiyâr"),
+        ("ihtiyari", "ihtiyarî"), ("ihtiyat", "ihtiyât"), ("ihvan", "ihvân"), ("ihya", "ihyâ"),
+        ("ikamet", "ikâmet"), ("ikametgah", "ikametgâh"), ("ikaz", "ikâz"), ("ikbal", "ikbâl"),
+        ("ikdam", "ikdâm"), ("iklim", "iklîm"), ("ikmal", "ikmâl"), ("ikrah", "ikrâh"),
+        ("ikram", "ikrâm"), ("ikramiye", "ikrâmiye"), ("ikrar", "ikrâr"), ("ikraz", "ikrâz"),
+        ("iktibas", "iktibâs"), ("iktidar", "iktidâr"), ("iktisap", "iktisâp"), ("iktisat", "iktisât"),
+        ("iktisadi", "iktisadî"), ("ila", "ilâ"), ("ilahe", "ilâhe"), ("ilahiyat", "ilahiyât"),
+        ("ilahi", "ilahî"), ("ilam", "ilâm"), ("ilan", "ilân"), ("ilave", "ilâve"),
+        ("ilham", "ilhâm"), ("ilhak", "ilhâk"), ("illiyet", "illiyêt"), ("iltifat", "iltifât"),
+        ("iltihap", "iltihâp"), ("iltica", "ilticâ"), ("iltimas", "iltimâs"), ("iltisak", "iltisâk"),
+        ("ilzam", "ilzâm"), ("imad", "imâd"), ("imale", "imâle"), ("imal", "imâl"),
+        ("imalat", "imalât"), ("imame", "imâme"), ("imamet", "imâmet"), ("iman", "imân"),
+        ("imar", "imâr"), ("imarat", "imarât"), ("imarethane", "imârethâne"), ("imbat", "imbât"),
+        ("imbi", "imbî"), ("imdat", "imdât"), ("imha", "imhâ"), ("imkan", "imkân"),
+        ("imla", "imlâ"), ("imparator", "imparâtôr"), ("imtiyaz", "imtiyâz"), ("imza", "imzâ"),
+        ("inad", "inâd"), ("inayet", "inâyet"), ("inbisat", "inbisât"), ("incil", "incîl"),
+        ("indifa", "indifâ"), ("infilak", "infilâk"), ("infaz", "infâz"), ("inikas", "inikâs"),
+        ("inkar", "inkâr"), ("inkılap", "inkılâp"), ("inkisar", "inkisâr"), ("inkiyad", "inkiyâd"),
+        ("inorganik", "inorgânik"), ("insaf", "insâf"), ("insan", "insân"), ("insani", "insanî"),
+        ("insaniyet", "insaniyêt"), ("inşad", "inşâd"), ("inşa", "inşâ"), ("inşaat", "inşaât"),
+        ("intac", "intâc"), ("intiba", "intibâ"), ("intibak", "intibâk"), ("intifa", "intifâ"),
+        ("intifada", "intifâda"), ("intihal", "intihâl"), ("intihar", "intihâr"), ("intihap", "intihâp"),
+        ("intikal", "intikâl"), ("intikam", "intikâm"), ("intisap", "intisâp"), ("intizam", "intizâm"),
+        ("intizar", "intizâr"), ("inzibat", "inzibât"), ("inziva", "inzivâ"), ("irad", "irâd"),
+        ("irade", "irâde"), ("iradi", "iradî"), ("irfan", "irfân"), ("irsal", "irsâl"),
+        ("irsaliye", "irsâliye"), ("irtibat", "irtibât"), ("irtica", "irticâ"), ("irticai", "irticaî"),
+        ("irtifa", "irtifâ"), ("irtihal", "irtihâl"), ("irtikap", "irtikâp"), ("irtisal", "irtisâl"),
+        ("isabet", "isâbet"), ("isale", "isâle"), ("isbat", "isbât"), ("isfehan", "isfehân"),
+        ("iskan", "iskân"), ("iskat", "iskât"), ("islam", "islâm"), ("islami", "islamî"),
+        ("isnat", "isnât"), ("ispat", "ispât"), ("ispirto", "ispîrto"), ("israf", "isrâf"),
+        ("istibdat", "istibdât"), ("istidat", "istidât"), ("istifa", "istifâ"), ("istifade", "istifâde"),
+        ("istifham", "istifhâm"), ("istihbarat", "istihbarât"), ("istihdam", "istihdâm"),
+        ("istihkak", "istihkâk"), ("istihkam", "istihkâm"), ("istihkar", "istihkâr"),
+        ("istihlas", "istihlâs"), ("istihrac", "istihrâc"), ("istihza", "istihzâ"),
+        ("istikamet", "istikâmet"), ("istikbal", "istikbâl"), ("istiklal", "istiklâl"),
+        ("istikra", "istikrâ"), ("istikrar", "istikrâr"), ("iktisat", "iktisât"),
+        ("istila", "istilâ"), ("istima", "istimâ"), ("istimlak", "istimlâk"),
+        ("istinat", "istinât"), ("istintak", "istintâk"), ("istirat", "istirât"),
+        ("istirdat", "istirdât"), ("istirham", "istirhâm"), ("istisna", "istisnâ"),
+        ("istisnai", "istisnaî"), ("istitar", "istitâr"), ("istiab", "istiâp"),
+        ("istizan", "istizân"), ("isyan", "isyân"), ("isyankar", "isyankâr"),
+        ("isyankarlık", "isyankârlık"), ("itaat", "itaât"), ("itfa", "itfâ"),
+        ("itfaiye", "itfâiye"), ("ithaf", "ithâf"), ("ithal", "ithâl"),
+        ("ithalat", "ithalât"), ("itham", "ithâm"), ("itimat", "itimât"),
+        ("itiraf", "itirâf"), ("itiraz", "itirâz"), ("itisaf", "itisâf"),
+        ("ittifak", "ittifâk"), ("ittihad", "ittihâd"), ("ittiham", "ittihâm"),
+        ("ittihaz", "ittihâz"), ("ivaz", "ivâz"), ("izafe", "izâfe"),
+        ("izafet", "izâfet"), ("izafi", "izafî"), ("izafiyet", "izafiyêt"),
+        ("izah", "izâh"), ("izahat", "izahât"), ("izale", "izâle"),
+        ("izam", "izâm"), ("izan", "izân"), ("izaz", "izâz"),
+        ("izdivac", "izdivâc"), ("izhar", "izhâr"), ("izin", "izîn"),
+        ("izolasyon", "izolâsyon"), ("izzet", "izzêt"), ("kabil", "kâbil"),
+        ("kabile", "kabîle"), ("kabiliyet", "kabiliyêt"), ("kabir", "kabîr"),
+        ("kabus", "kâbus"), ("kadeh", "kadêh"), ("kadem", "kadêm"),
+        ("kader", "kadêr"), ("kadife", "kadîfe"), ("kadim", "kadîm"),
+        ("kadimi", "kadimî"), ("kadir", "kadîr"), ("kadirşinas", "kadirşinâs"),
+        ("kafe", "kâfe"), ("kafi", "kâfi"), ("kafile", "kâfile"),
+        ("kafiye", "kâfiye"), ("kafur", "kâfur"), ("kagir", "kâgir"),
+        ("kahin", "kâhin"), ("kahir", "kâhir"), ("kahkaha", "kahkahâ"),
+        ("kahraman", "kahramân"), ("kahve", "kâhve"), ("kahveci", "kâhveci"),
+        ("kahvehan", "kâhvehâne"), ("kaide", "kâide"), ("kail", "kâil"),
+        ("kaim", "kâim"), ("kaime", "kâime"), ("kainat", "kâinat"),
+        ("kakule", "kâkule"), ("kalbur", "kalbûr"), ("kalem", "kalêm"),
+        ("kalp", "kâlp"), ("kamet", "kâmet"), ("kamil", "kâmil"),
+        ("kamus", "kâmûs"), ("kanat", "kanât"), ("kanepe", "kanepê"),
+        ("kanun", "kânun"), ("kanunen", "kânunen"), ("kanuni", "kanunî"),
+        ("kaos", "kâos"), ("kapasite", "kapasitê"), ("kapital", "kapitâl"),
+        ("kar", "kâr"), ("kara", "karâ"), ("karabet", "karâbet"),
+        ("karakter", "karaktêr"), ("karar", "karâr"), ("karargah", "karargâh"),
+        ("kardan", "kârdan"), ("kargaşa", "kargaşâ"), ("kari", "kârî"),
+        ("karine", "karîne"), ("karlı", "kârlı"), ("karlıca", "kârlıca"),
+        ("karlılık", "kârlılık"), ("karsız", "kârsız"), ("karsızca", "kârsızca"),
+        ("karsızlık", "kârsızlık"), ("karyola", "kâryola"), ("kasa", "kasâ"),
+        ("kasaba", "kasabâ"), ("kasap", "kasâp"), ("kasave", "kasâvet"),
+        ("kase", "kâse"), ("kaside", "kasîde"), ("kasık", "kasîk"),
+        ("kasır", "kasîr"), ("kasırga", "kasırgâ"), ("kasıt", "kâsıt"),
+        ("katakulli", "katakullî"), ("katar", "katâr"), ("kategori", "kategôrî"),
+        ("kati", "katî"), ("katip", "kâtip"), ("katliam", "katliâm"),
+        ("kavga", "kavgâ"), ("kavim", "kavîm"), ("kavmi", "kavmî"),
+        ("kavram", "kavrâm"), ("kayda", "kâide"), ("kayık", "kayîk"),
+        ("kayın", "kâyın"), ("kayıp", "kayîp"), ("kayır", "kayîr"),
+        ("kayıt", "kayît"), ("kaza", "kazâ"), ("kazaen", "kazâen"),
+        ("kazan", "kazân"), ("kazanç", "kazânç"), ("kaziye", "kazîye"),
+        ("kefalet", "kefâlet"), ("kefil", "kefîl"), ("kelam", "kelâm"),
+        ("kelepir", "kelepîr"), ("kemal", "kemâl"), ("keman", "kemân"),
+        ("kemane", "kemâne"), ("kenar", "kenâr"), ("keramet", "kerâmet"),
+        ("kerata", "keratâ"), ("kerem", "kerêm"), ("kerhane", "kerhâne"),
+        ("kerim", "kerîm"), ("kesafet", "kesâfet"), ("kesat", "kesât"),
+        ("kesbi", "kesbî"), ("kesif", "kesîf"), ("kesir", "kesîr"),
+        ("keşfet", "keşfêt"), ("keşf", "keşif"), ("keşide", "keşîde"),
+        ("keşif", "keşîf"), ("kıble", "kıblê"), ("kıdem", "kıdêm"),
+        ("kıraat", "kırâat"), ("kısas", "kısâs"), ("kısmet", "kısmêt"),
+        ("kıssa", "kıssâ"), ("kıtal", "kıtâl"), ("kıyafet", "kıyâfet"),
+        ("kıyam", "kıyâm"), ("kıyamet", "kıyâmet"), ("kıyas", "kıyâs"),
+        ("kıyasi", "kıyasî"), ("kibar", "kibâr"), ("kifayet", "kifâyet"),
+        ("kik", "kîk"), ("kilise", "kilîse"), ("kimya", "kimyâ"),
+        ("kimyevi", "kimyevî"), ("kinaye", "kinâye"), ("kira", "kirâ"),
+        ("kitap", "kitâp"), ("kitabe", "kitâbe"), ("klasik", "klâsik"),
+        ("klima", "klîma"), ("klinik", "klînîk"), ("klor", "klôr"),
+        ("kolluk", "kollûk"), ("kolon", "kolôn"), ("koloni", "kolonî"),
+        ("komedi", "komedî"), ("komik", "komîk"), ("komiser", "komisêr"),
+        ("komite", "komitê"), ("komplo", "komplô"), ("kompres", "komprês"),
+        ("komut", "komût"), ("komuta", "komutâ"), ("komutan", "komutân"),
+        ("konak", "konâk"), ("konferans", "konferâns"), ("kongre", "kôngre"),
+        ("konser", "konsêr"), ("kontrat", "kontrât"), ("kontrol", "kontrôl"),
+        ("konvoy", "konvôy"), ("kopya", "kopyâ"), ("kordiplomatik", "kordiplomâtik"),
+        ("koridor", "koridôr"), ("korku", "korkû"), ("korse", "korsê"),
+        ("kostüm", "kostûm"), ("koza", "kozâ"), ("köle", "kölê"),
+        ("kömür", "kömûr"), ("köprü", "köprû"), ("körfez", "körfêz"),
+        ("kral", "krâl"), ("kraliçe", "kraliçê"), ("kredi", "kredî"),
+        ("krem", "krêm"), ("krema", "kremâ"), ("kriz", "krîz"),
+        ("kronik", "kronîk"), ("kroki", "krôkî"), ("kudret", "kudrêt"),
+        ("kudsi", "kudsî"), ("kul", "kûl"), ("kule", "kulê"),
+        ("kullan", "kullân"), ("kulup", "kulûp"), ("kumar", "kumâr"),
+        ("kumas", "kumâş"), ("kundak", "kundâk"), ("kupa", "kupâ"),
+        ("kupon", "kupôn"), ("kuram", "kurâm"), ("kurban", "kurbân"),
+        ("kurşun", "kurşûn"), ("kurtul", "kurtûl"), ("kuru", "kurû"),
+        ("kurul", "kurûl"), ("kurum", "kurûm"), ("kusur", "kusûr"),
+        ("kutup", "kutûp"), ("kutsal", "kutsâl"), ("kuvvet", "kuvvêt"),
+        ("kuyu", "kuyû"), ("kuzen", "kuzên"), ("kuzey", "kuzêy"),
+        ("küçük", "küçûk"), ("küf", "kûf"), ("küfür", "küfûr"),
+        ("kül", "kûl"), ("külfet", "külfêt"), ("külot", "külôt"),
+        ("kültür", "kültûr"), ("küme", "kümê"), ("kümes", "kümês"),
+        ("künde", "kündê"), ("küp", "kûp"), ("küpe", "küpê"),
+        ("kürsü", "kürsû"), ("küstah", "küstâh"), ("kütle", "kütlê"),
+        ("kütüphane", "kütüphâne"),
+        ("derhal", "derhâl"), ("halbuki", "hâlbuki"), ("behemehal", "behemehâl"),
+        ("ilmihal", "ilmihâl"), ("hüsnühal", "hüsnühâl"), ("narıbeyza", "nârıbeyza"),
+        ("ceylanpınar", "ceylânpınar"), ("misakımilli", "Misakımillî"),
+        ("ezelilik", "ezelîlik"), ("keyfilik", "keyfîlik"), ("millicilik", "millîcilik"),
+        ("neftileşmek", "neftîleşmek"), ("neftileştirme", "neftîleştirme"),
+        ("neftileştirmek", "neftîleştirmek"), ("resmileşme", "resmîleşme"),
+        ("zati", "zatî"), ("İlahi", "İlahî"), ("şekli", "şeklî"),
+        ("şemsi", "şemsî"), ("şimali", "şimalî"),
         ("tatbiki", "tatbikî"), ("tedrici", "tedricî"), ("tekasül", "tekâsül"), ("temsili", "temsilî"),
         ("tenkidi", "tenkidî"), ("topyekun", "topyekûn"), ("vakıa", "vâkıâ"), ("vakıf", "vâkıf"),
         ("varis", "vâris"), ("varislik", "vârislik"), ("varissiz", "vârissiz"), ("yad", "yâd"),
@@ -1521,7 +1926,62 @@ def generate_rep_rules() -> list[tuple[str, str]]:
     for src, dst in circumflex_typos:
         rep_list.append((src, dst))
         
-    return rep_list
+    # Deduplicate while preserving order and removing self-replacements
+    seen = set()
+    unique_reps = []
+    for src, dst in rep_list:
+        if src != dst and (src, dst) not in seen:
+            seen.add((src, dst))
+            unique_reps.append((src, dst))
+            
+    return unique_reps
+
+
+def generate_phone_rules() -> list[tuple[str, str]]:
+    """Phonetic (metaphone) table for the suggestion engine.
+
+    Hunspell's PHONE is NOT a typo->correction pair list: it is an Aspell-style
+    metaphone table. Every dictionary stem and the mistyped input are converted
+    to a phonetic code via these rules, and candidates whose code matches the
+    input's code are ranked higher. Rules are matched case-insensitively
+    (input is uppercased first) and by first-letter groups; multi-character
+    rules MUST precede any rule whose search string is their prefix.
+
+    Design:
+      1. Multi-char merges for Turkey's top typo classes (rejected_words.csv
+         frequencies): deil/diil->değil (40k), yanliz->yalnız metathesis
+         (~1.3k), geliyo->geliyor elision (2.2k).
+      2. Diacritic folds: ğ==g, ş==s, ç==c, â==a, î==i, û==u so ASCII-typed
+         errors converge with correctly hatted candidates.
+
+    NOTE: Hunspell lowercases the word before applying PHONE rules (verified
+    against hunspell 1.7.0 CLI); the writer emits rules in lowercase. Keep the
+    table NARROW — broad letter merges were empirically shown to degrade
+    suggestion lists by displacing good ngram candidates.
+    """
+    phone_rules = [
+        # --- multi-char merges first (they shadow their single-char prefixes) ---
+        ("DEIL", "TEGIL"),   # deil  -> değil  (40k occurrences in rejected corpus)
+        ("DIIL", "TEGIL"),   # diil  -> değil
+        ("LN", "NL"),        # YANLIZ -> YALNIZ metathesis class
+        ("IYO", "IYOR"),     # geliyo/gelio -> geliyor speech elision
+        # --- diacritic folds only (broad consonant/vowel merges like D->T were
+        #     tested and found to CROWD OUT good ngram suggestions in real
+        #     Hunspell's phonet channel, so they are intentionally omitted) ---
+        ("Ğ", "G"),
+        ("Ş", "S"),
+        ("Ç", "C"),
+        ("Â", "A"), ("Î", "I"), ("Û", "U"),
+    ]
+    # Identity rules ("A"->"A") are REQUIRED here: they declare that a letter
+    # passes through to the phonetic code unchanged. Unlike REP, do NOT drop them.
+    seen = set()
+    unique_rules = []
+    for src, dst in phone_rules:
+        if (src, dst) not in seen:
+            seen.add((src, dst))
+            unique_rules.append((src, dst))
+    return unique_rules
 
 
 def generate_header() -> str:
@@ -1530,6 +1990,35 @@ def generate_header() -> str:
     for src, dst in rep_pairs:
         rep_lines.append(f"REP {src} {dst}")
     rep_block = "\n".join(rep_lines)
+
+    phone_pairs = generate_phone_rules()
+    phone_lines = [f"PHONE {len(phone_pairs)}"]
+    for src, dst in phone_pairs:
+        # Hunspell lowercases input before phonet matching -> emit lowercase.
+        # "_" is the canonical Hunspell encoding for an empty replacement.
+        dst_aff = dst if dst else "_"
+        phone_lines.append(f"PHONE {src.lower()} {dst_aff.lower()}")
+    phone_block = "\n".join(phone_lines)
+
+    map_groups = [
+        "aâAÂ",
+        "uûUÛ",
+        "iîİÎ",
+        "eêEÊ",
+        "cçCÇ",
+        "gğGĞ",
+        "sşSŞ",
+        "oöOÖ",
+        "uüUÜ",
+        "ıiIİ",
+        "vwyVWY",
+        "qkQK",
+        "'’‘",
+    ]
+    map_lines = [f"MAP {len(map_groups)}"]
+    for g in map_groups:
+        map_lines.append(f"MAP {g}")
+    map_block = "\n".join(map_lines)
 
     return f"""# Türkçe Yazım Denetimi Sözlüğü - Chained Flags Architecture
 SET UTF-8
@@ -1540,7 +2029,7 @@ NEEDAFFIX NE
 LANG tr
 NOSPLITSUGS
 NOPOLYSUGS
-WORDCHARS '’‘.
+WORDCHARS '’‘.0123456789
 
 # Break characters (allow breaking at hyphens, en-dashes, and em-dashes)
 BREAK 5
@@ -1553,30 +2042,16 @@ BREAK —
 
 # Suggestion parameters
 KEY qwertyuıopğü|asdfghjklşi|zxcvbnmçö|QWERTYUIOPĞÜ|ASDFGHJKLŞİ|ZXCVBNMÇÖ|fgğıodrnhpqw|uıevazyktsx|jövcçzsb|FGĞIODRNHPQW|UIEVAZYKTSX|JÖVCÇZSB|qaz|wsx|edc|rfv|tgb|yhn|ujm|ıkö|olç|pş|QAZ|WSX|EDC|RFV|TGB|YHN|UJM|IKÖ|OLÇ|PŞ
-TRY aeilrıtdknsmyuböuşzcgçhpvğfjAEİLRITDKNSMYUBÖUŞZCGÇHPVĞFJ
-MAP 18
-MAP aâAÂ
-MAP uûUÛ
-MAP iîİÎ
-MAP cçCÇ
-MAP gğGĞ
-MAP sşSŞ
-MAP oöOÖ
-MAP uüUÜ
-MAP ıiIİ
-MAP '’‘
-MAP 0o0ö0O0Ö
-MAP 3e3E
-MAP 4r4e4R4E
-MAP 5t5r5T5R
-MAP 6y6t6Y6T
-MAP 7u7y7U7Y
-MAP 8i8u8İ8U
-MAP 9o9i9O9İ
-MAXDIFF 3
-MAXNGRAMSUGS 4
+TRY aeinrlıdkmutsboüşzcgçhpvğfjâîûAEİRLNIDKMUTSBOÜŞZCGÇHPVĞFJÂÎÛ'’
+{map_block}
+MAXDIFF 5
+MAXNGRAMSUGS 8
 
 {rep_block}
+
+# Phonetic equivalence rules: lower edit-distance penalty between mistyped and
+# correct candidates that sound alike (silent ğ, metathesis, suffix reduction).
+{phone_block}
 """
 
 
@@ -1625,6 +2100,8 @@ def generate_grammar():
         content += block + "\n"
     for block in gen_eq_flags():
         content += block + "\n"
+    for block in gen_ki_flags():
+        content += block + "\n"
 
     # --- Plural flags ---
     print("Generating plural flags (PB, PF)...")
@@ -1663,10 +2140,12 @@ def generate_grammar():
         content += block + "\n"
 
     # --- Copula flags ---
-    print("Generating copula flags (CL, cl)...")
+    print("Generating copula flags (CL, cl, CP, CV)...")
     content += "\n# COPULA FLAGS\n"
     content += gen_copula_flag_back() + "\n"
     content += gen_copula_flag_front() + "\n"
+    content += gen_copula_plural_back() + "\n"
+    content += gen_copula_plural_front() + "\n"
 
     # --- Relative -ki flag ---
     print("Generating relative -ki flag (KI)...")
@@ -1857,17 +2336,94 @@ def gen_proper_flags() -> list[str]:
             rules_I.append(sfx(f"{flag_prefix}I", "0", f"'y{ins_suf}/cl", cond_pattern))
         blocks.append(make_flag_block(f"{flag_prefix}I", unique(rules_I)))
 
-        # --- 3sg possessive flag ---
+        # --- 3sg possessive flag (supports institutional/compound proper nouns e.g. Mahallesi'nde, Meclisi'nin, Bankası'na, Bakanlığı'na) ---
+        poss3_v_gen = "s" + poss3_gen  # si'nin / sı'nın / su'nun / sü'nün
+        poss3_v_dat = "s" + poss3_dat  # si'ne / sı'na / su'na / sü'ne
+        poss3_v_loc = "s" + poss3_loc  # si'nde / sı'nda / su'nda / sü'nde
+        poss3_v_abl = "s" + poss3_abl  # si'nden / sı'ndan / su'ndan / sü'nden
+        v_acc_suf = "s" + ("ını" if poss3_cons == "ı" else ("ini" if poss3_cons == "i" else ("unu" if poss3_cons == "u" else "ünü")))
+        c_acc_suf = ("ını" if poss3_cons == "ı" else ("ini" if poss3_cons == "i" else ("unu" if poss3_cons == "u" else "ünü")))
+        poss3_v_ins = "s" + ("ıyla" if ins_suf == "la" else "iyle")
+        poss3_c_ins = ("ıyla" if ins_suf == "la" else "iyle")
+
+        # In Turkish orthography, institutional compounds place the apostrophe AFTER the possessive
+        # and require the pronominal 'n' (zamir n'si) before case suffixes:
+        # e.g., Meclis -> Meclisi'nin, Mahalle -> Mahallesi'nde, Bakanlık -> Bakanlığı'na
+        dat_vowel = "e" if loc_soft == "de" else "a"
+        c_gen_suf = poss3_cons + "'n" + gen_cons   # i'nin / ı'nın / u'nun / ü'nün
+        c_dat_suf = poss3_cons + "'n" + dat_vowel  # i'ne / ı'na / u'na / ü'ne
+        c_loc_suf = poss3_cons + "'n" + loc_soft   # i'nde / ı'nda / u'nda / ü'nde
+        c_abl_suf = poss3_cons + "'n" + abl_soft   # i'nden / ı'ndan / u'ndan / ü'nden
+        c_acc_suf_inst = poss3_cons + "'n" + acc_cons # i'ni / ı'nı / u'nu / ü'nü
+        c_ins_suf_inst = poss3_cons + "'" + ("yle" if ins_suf == "le" else "yla") # i'yle / ı'yla
+
+        v_gen_suf_inst = "s" + poss3_cons + "'n" + gen_cons  # si'nin / sı'nın
+        v_dat_suf_inst = "s" + poss3_cons + "'n" + dat_vowel  # si'ne / sı'na
+        v_loc_suf_inst = "s" + poss3_cons + "'n" + loc_soft  # si'nde / sı'nda
+        v_abl_suf_inst = "s" + poss3_cons + "'n" + abl_soft  # si'nden / sı'ndan
+        v_acc_suf_inst = "s" + poss3_cons + "'n" + acc_cons  # si'ni / sı'nı
+        v_ins_suf_inst = "s" + poss3_cons + "'" + ("yle" if ins_suf == "le" else "yla") # si'yle / sı'yla
+
         rules_P = [
+            # Consonant ending base - apostrophe before possessive (e.g. Meclis'i, Kanun'u)
             sfx(f"{flag_prefix}P", "0", f"'{poss3_cons}/cl",  CONS_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_gen}",      CONS_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_dat}",      CONS_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_loc}",      CONS_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_abl}/cl",   CONS_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{c_acc_suf}",      CONS_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_c_ins}/cl", CONS_RE),
+
+            # Consonant ending base - institutional compounds (apostrophe after possessive: Meclisi'nin, Ligi'nde)
+            sfx(f"{flag_prefix}P", "0", c_gen_suf,            CONS_RE),
+            sfx(f"{flag_prefix}P", "0", c_dat_suf,            CONS_RE),
+            sfx(f"{flag_prefix}P", "0", c_loc_suf,            CONS_RE),
+            sfx(f"{flag_prefix}P", "0", f"{c_abl_suf}/cl",    CONS_RE),
+            sfx(f"{flag_prefix}P", "0", c_acc_suf_inst,       CONS_RE),
+            sfx(f"{flag_prefix}P", "0", f"{c_ins_suf_inst}/cl", CONS_RE),
+
+            # Vowel ending base - apostrophe before possessive (e.g. Mahalle'si)
             sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/cl", VOWEL_RE),
-            sfx(f"{flag_prefix}P", "0", f"'{poss3_gen}",  CONS_RE),
-            sfx(f"{flag_prefix}P", "0", f"'{poss3_dat}",  CONS_RE),
-            sfx(f"{flag_prefix}P", "0", f"'{poss3_loc}",  CONS_RE),
-            sfx(f"{flag_prefix}P", "0", f"'{poss3_abl}/cl", CONS_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_v_gen}",    VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_v_dat}",    VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_v_loc}",    VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_v_abl}/cl", VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{v_acc_suf}",      VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_v_ins}/cl", VOWEL_RE),
+
+            # Vowel ending base - institutional compounds (apostrophe after possessive: Mahallesi'nde, Partisi'nin, Bankası'nda)
+            sfx(f"{flag_prefix}P", "0", v_gen_suf_inst,       VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", v_dat_suf_inst,       VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", v_loc_suf_inst,       VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", f"{v_abl_suf_inst}/cl", VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", v_acc_suf_inst,       VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", f"{v_ins_suf_inst}/cl", VOWEL_RE),
+
+            # Voiced consonant stems (k -> ğ, t -> d, p -> b): Bakanlık -> Bakanlığı'na, Stat -> Stadı'nda, Grup -> Grubu'nda
+            sfx(f"{flag_prefix}P", "k", f"ğ{c_gen_suf}",      "k"),
+            sfx(f"{flag_prefix}P", "k", f"ğ{c_dat_suf}",      "k"),
+            sfx(f"{flag_prefix}P", "k", f"ğ{c_loc_suf}",      "k"),
+            sfx(f"{flag_prefix}P", "k", f"ğ{c_abl_suf}/cl",   "k"),
+            sfx(f"{flag_prefix}P", "k", f"ğ{c_acc_suf_inst}",  "k"),
+            sfx(f"{flag_prefix}P", "k", f"ğ{c_ins_suf_inst}/cl","k"),
+
+            sfx(f"{flag_prefix}P", "t", f"d{c_gen_suf}",      "t"),
+            sfx(f"{flag_prefix}P", "t", f"d{c_dat_suf}",      "t"),
+            sfx(f"{flag_prefix}P", "t", f"d{c_loc_suf}",      "t"),
+            sfx(f"{flag_prefix}P", "t", f"d{c_abl_suf}/cl",   "t"),
+
+            sfx(f"{flag_prefix}P", "p", f"b{c_gen_suf}",      "p"),
+            sfx(f"{flag_prefix}P", "p", f"b{c_dat_suf}",      "p"),
+            sfx(f"{flag_prefix}P", "p", f"b{c_loc_suf}",      "p"),
+            sfx(f"{flag_prefix}P", "p", f"b{c_abl_suf}/cl",   "p"),
         ]
-        sfx_ki(f"{flag_prefix}P", "0", f"'{poss3_loc}",  CONS_RE, rules_P)
-        sfx_ki(f"{flag_prefix}P", "0", f"'{poss3_gen}",  CONS_RE, rules_P)
+        sfx_ki(f"{flag_prefix}P", "0", f"'{poss3_loc}",    CONS_RE, rules_P)
+        sfx_ki(f"{flag_prefix}P", "0", f"'{poss3_gen}",    CONS_RE, rules_P)
+        sfx_ki(f"{flag_prefix}P", "0", f"'{poss3_v_loc}",  VOWEL_RE, rules_P)
+        sfx_ki(f"{flag_prefix}P", "0", f"'{poss3_v_gen}",  VOWEL_RE, rules_P)
+        sfx_ki(f"{flag_prefix}P", "0", c_loc_suf,          CONS_RE, rules_P)
+        sfx_ki(f"{flag_prefix}P", "0", v_loc_suf_inst,     VOWEL_RE, rules_P)
+        sfx_ki(f"{flag_prefix}P", "k", f"ğ{c_loc_suf}",    "k", rules_P)
         if flag_prefix == "pF":
             rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/cl", "tl"))
             rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/cl", "TL"))
@@ -1906,7 +2462,17 @@ def gen_proper_flags() -> list[str]:
             # 1pl possessives (vowel-ending stem)
             "'mIz", "'mIzIn", "'mIzA", "'mIzI", "'mIzdA", "'mIzdAn", "'mIzlA",
             # 2pl possessives (vowel-ending stem)
-            "'nIz", "'nIzIn", "'nIzA", "'nIzI", "'nIzdA", "'nIzdAn", "'nIzlA"
+            "'nIz", "'nIzIn", "'nIzA", "'nIzI", "'nIzdA", "'nIzdAn", "'nIzlA",
+            # Productive proper noun compounding forms (-spor and -oğlu)
+            "spor", "spor'un", "spor'a", "spor'da", "spor'dan", "spor'u", "spor'la",
+            "spor'lu", "spor'lular", "spor'lunun", "spor'luların", "spor'lulara", "spor'lularda", "spor'lulardan",
+            "oğlu", "oğlu'nun", "oğlu'na", "oğlu'nda", "oğlu'ndan", "oğlu'nu", "oğlu'yla",
+            "oğulları", "oğullarının", "oğullarına", "oğullarında", "oğullarından",
+            # Plural institutional proper noun forms (e.g. Tesisleri'nde, Ödülleri'nde, Elemeleri'nde)
+            "lArI'nIn", "lArI'nA", "lArI'ndA", "lArI'ndAn", "lArI'nI", "lArI'ylA",
+            "lArI'ndAki", "lArI'ndAkiler",
+            # Unit / Abbreviation derivation suffixes (e.g. TL'lik, cm'lik, kg'lık)
+            "'lIk", "'lIklAr", "'lIğI", "'lIğIn", "'lIğA", "'lIktA", "'lIktAn"
         ]
         rules_C = []
         for cop_tmpl in COPULAS_PROP:
@@ -2187,77 +2753,458 @@ def _generate_verb_flags_from_v1() -> str:
                         #   2) all other consonant stems → keep double-t suffix
                         import re as _re
                         is_tt_suffix = suf_base.startswith('tt')
-                        # The 't' check: if condition includes 't' in a char class OR
-                        # the condition is a bare 'mak'/'mek' (which matches all consonant
-                        # endings including 't'-ending stems like lağvetmek, atmak, etc.)
                         cond_has_t = (
                             ('t' in cond_field and ('mak' in cond_field or 'mek' in cond_field))
                             or cond_field in ('mak', 'mek')
                         )
                         is_relevant_flag = long_flag in ("VF", "VG", "VM", "VN", "VB", "VR", "VK", "VL")
 
-                        if is_tt_suffix and cond_has_t and is_relevant_flag:
-                            # Rule 1: stems ending in tmak/tmek → drop the first 't'
-                            t_part = suf_base[1:]  # 'ttik'→'tik', 'ttır'→'tır', 'ttuğu'→'tuğu'
+                        if is_tt_suffix and is_relevant_flag:
+                            # Stems must never produce double-tt suffixes (ttik, ttı, ttuk...)
+                            # Single-t form must always be used
+                            t_part = suf_base[1:]
                             t_parts = list(parts)
                             t_parts[3] = (t_part + '/' + suf_field.split('/')[1]) if '/' in suf_field else t_part
-                            t_parts[4] = 'tmak' if 'mak' in cond_field else 'tmek'
-                            verb_flags_rules[new_flag_char][1].append(t_parts)
-
-                            # Rule 2: all other consonant-ending stems → keep double-t
-                            # Remove 't' from the character class in the condition
-                            new_cond = _re.sub(r'\[([^\]]*?)t([^\]]*?)\]',
-                                               lambda m: '[' + m.group(1) + m.group(2) + ']',
-                                               cond_field)
-                            if new_cond and new_cond != cond_field:
-                                restricted_parts = list(parts)
-                                restricted_parts[4] = new_cond
-                                verb_flags_rules[new_flag_char][1].append(restricted_parts)
-                            elif cond_field in ('mak', 'mek'):
-                                # Bare 'mak'/'mek' condition: restrict to non-t endings
-                                non_t = '[çfhkpsşbcdğjlmnrvyz]'
-                                non_t_cond = non_t + 'mak' if 'mak' in cond_field else non_t + 'mek'
-                                restricted_parts = list(parts)
-                                restricted_parts[4] = non_t_cond
-                                verb_flags_rules[new_flag_char][1].append(restricted_parts)
-                            else:
-                                verb_flags_rules[new_flag_char][1].append(parts)
+                            parts_to_process = [t_parts]
                         else:
-                            verb_flags_rules[new_flag_char][1].append(parts)
-                        
-                        # Clone VB and VF rules to new Aorist-specific flags
-                        suf = parts[3].split('/')[0] if len(parts) >= 4 else ""
-                        
+                            parts_to_process = [parts]
+
                         def is_aorist_a_suf(s, is_back):
                             return s.startswith('ar' if is_back else 'er') and not s.startswith('arak' if is_back else 'erek')
                             
                         def is_aorist_i_suf(s, is_back):
                             v = ('ır', 'ur') if is_back else ('ir', 'ür')
                             return s.startswith(v) and not s.startswith(tuple(x + 'mak' if is_back else x + 'mek' for x in v))
-                            
-                        if new_flag_char == LONG_TO_UTF8["VB"]:
-                            if not any(x in suf for x in ('ırmak', 'irmek', 'urmak', 'ürmek')):
-                                verb_flags_rules[new_vb_char][1].append(list(parts))
-                            verb_flags_rules[new_wa_char][1].append(list(parts))
-                            if not is_aorist_a_suf(suf, True):
-                                verb_flags_rules[new_wi_char][1].append(list(parts))
-                        elif new_flag_char == LONG_TO_UTF8["VF"]:
-                            if not any(x in suf for x in ('ırmak', 'irmek', 'urmak', 'ürmek')):
-                                verb_flags_rules[new_vf_char][1].append(list(parts))
-                            verb_flags_rules[new_we_char][1].append(list(parts))
-                            if not is_aorist_a_suf(suf, False):
-                                verb_flags_rules[new_wj_char][1].append(list(parts))
-                        elif new_flag_char == LONG_TO_UTF8["VR"]:
-                            verb_flags_rules[new_wr_char][1].append(list(parts))
-                            if not is_aorist_a_suf(suf, True):
-                                verb_flags_rules[new_wu_char][1].append(list(parts))
-                        elif new_flag_char == LONG_TO_UTF8["VG"]:
-                            verb_flags_rules[new_wg_char][1].append(list(parts))
-                            if not is_aorist_a_suf(suf, False):
-                                verb_flags_rules[new_wh_char][1].append(list(parts))
+
+                        for cur_parts in parts_to_process:
+                            cur_suf = cur_parts[3].split('/')[0] if len(cur_parts) >= 4 else ""
+                            if new_flag_char == LONG_TO_UTF8["VB"]:
+                                is_a_aorist = is_aorist_a_suf(cur_suf, True)
+                                is_i_aorist = is_aorist_i_suf(cur_suf, True)
+                                if not is_a_aorist and not is_i_aorist:
+                                    verb_flags_rules[new_flag_char][1].append(list(cur_parts))
+                                if is_a_aorist:
+                                    verb_flags_rules[new_wa_char][1].append(list(cur_parts))
+                                if is_i_aorist:
+                                    verb_flags_rules[new_wi_char][1].append(list(cur_parts))
+                            elif new_flag_char == LONG_TO_UTF8["VF"]:
+                                is_a_aorist = is_aorist_a_suf(cur_suf, False)
+                                is_i_aorist = is_aorist_i_suf(cur_suf, False)
+                                if not is_a_aorist and not is_i_aorist:
+                                    verb_flags_rules[new_flag_char][1].append(list(cur_parts))
+                                if is_a_aorist:
+                                    verb_flags_rules[new_we_char][1].append(list(cur_parts))
+                                if is_i_aorist:
+                                    verb_flags_rules[new_wj_char][1].append(list(cur_parts))
+                            elif new_flag_char == LONG_TO_UTF8["VR"]:
+                                is_a_aorist = is_aorist_a_suf(cur_suf, True)
+                                is_i_aorist = is_aorist_i_suf(cur_suf, True)
+                                if not is_a_aorist and not is_i_aorist:
+                                    verb_flags_rules[new_flag_char][1].append(list(cur_parts))
+                                if is_a_aorist:
+                                    verb_flags_rules[new_wu_char][1].append(list(cur_parts))
+                                if is_i_aorist:
+                                    verb_flags_rules[new_wu_char][1].append(list(cur_parts))
+                            elif new_flag_char == LONG_TO_UTF8["VG"]:
+                                is_a_aorist = is_aorist_a_suf(cur_suf, False)
+                                is_i_aorist = is_aorist_i_suf(cur_suf, False)
+                                if not is_a_aorist and not is_i_aorist:
+                                    verb_flags_rules[new_flag_char][1].append(list(cur_parts))
+                                if is_a_aorist:
+                                    verb_flags_rules[new_wh_char][1].append(list(cur_parts))
+                                if is_i_aorist:
+                                    verb_flags_rules[new_wh_char][1].append(list(cur_parts))
+                            else:
+                                verb_flags_rules[new_flag_char][1].append(cur_parts)
 
     # Append new flags to order
     verb_flags_order.extend([new_vb_char, new_vf_char, new_wa_char, new_wi_char, new_wr_char, new_wu_char, new_we_char, new_wj_char, new_wg_char, new_wh_char])
+
+    # ---------------------------------------------------------------------------
+    # INJECT COMPOUND PARTICIPLE & VERBAL NOUN SUFFIX RULES (Strategy 1)
+    # ---------------------------------------------------------------------------
+    verb_configs = {
+        # Back unrounded consonant (yapmak, bakmak, çıkmak, almak, vb.)
+        "VB": (True, False, False, False, "mak"),
+        "Vb": (True, False, False, False, "mak"),
+        "wa": (True, False, False, False, "mak"),
+        "wi": (True, False, False, False, "mak"),
+        "VK": (True, False, False, False, "mak"),
+        # Back rounded consonant (olmak, koşmak, uçmak, bulmak, vb.)
+        "VR": (True, True, False, False, "mak"),
+        "wr": (True, True, False, False, "mak"),
+        "wu": (True, True, False, False, "mak"),
+        "VL": (True, True, False, False, "mak"),
+        # Front unrounded consonant (gelmek, bilmek, gitmek, etmek, vb.)
+        "VF": (False, False, False, False, "mek"),
+        "Vf": (False, False, False, False, "mek"),
+        "we": (False, False, False, False, "mek"),
+        "wj": (False, False, False, False, "mek"),
+        "VM": (False, False, False, False, "mek"),
+        # Front rounded consonant (görmek, dönmek, ölmek, gülmek, sürmek, vb.)
+        "VG": (False, True, False, False, "mek"),
+        "wg": (False, True, False, False, "mek"),
+        "wh": (False, True, False, False, "mek"),
+        "VN": (False, True, False, False, "mek"),
+        # Back unrounded vowel (anlamak, başlamak, yaşamak, vb.)
+        "VA": (True, False, True, False, "mak"),
+        # Back rounded vowel (okumak, korumak, vb.)
+        "VS": (True, True, True, False, "mak"),
+        # Front unrounded vowel (beklemek, dinlemek, istemek, söylemek, vb.)
+        "VE": (False, False, True, False, "mek"),
+        # Front rounded vowel (yürümek, büyümek, vb.)
+        "VH": (False, True, True, False, "mek"),
+        # Narrowing (demek, yemek)
+        "VY": (False, False, False, True, "emek"),
+    }
+
+    for flag_name, (back, round_v, is_vowel_stem, is_narrow, strip) in verb_configs.items():
+        if flag_name not in LONG_TO_UTF8:
+            continue
+        flag_char = LONG_TO_UTF8[flag_name]
+        if flag_char not in verb_flags_rules:
+            verb_flags_rules[flag_char] = ('Y', [])
+            if flag_char not in verb_flags_order:
+                verb_flags_order.append(flag_char)
+
+        # Handle sub-harmonies for vowel-ending verb stems (e.g. söylemek vs yürümek, oynamak vs okumak)
+        sub_configs = []
+        if is_vowel_stem and flag_name in ("VH", "VS"):
+            if flag_name == "VH":
+                # Front: -e ending verbs (söylemek, özlemek) use 'i', -ü ending verbs (yürümek, büyümek) use 'ü'
+                sub_configs.append((False, "i", "e", "emek"))
+                sub_configs.append((True, "ü", "e", "ümek"))
+            elif flag_name == "VS":
+                # Back: -a ending verbs (oynamak, yollamak) use 'ı', -u ending verbs (okumak, korumak) use 'u'
+                sub_configs.append((False, "ı", "a", "amak"))
+                sub_configs.append((True, "u", "a", "umak"))
+        else:
+            v_high = "u" if (back and round_v) else ("ı" if back else ("ü" if round_v else "i"))
+            v_low = "a" if back else "e"
+            cond_default = f"{strip}" if is_vowel_stem else ("[dy]emek" if is_narrow else None)
+            sub_configs.append((round_v, v_high, v_low, cond_default))
+
+        for sub_round, v_high, v_low, specific_cond in sub_configs:
+            v_pl_poss = "ı" if back else "i"
+
+            variants = []
+            if is_vowel_stem:
+                variants = [("d", specific_cond if specific_cond else f"{strip}")]
+            elif is_narrow:
+                variants = [("d", "[dy]emek")]
+            else:
+                variants = [
+                    ("d", f"[^çfhkpsşt]{strip}"),
+                    ("t", f"[çfhkpsşt]{strip}")
+                ]
+
+            for d_char, cond in variants:
+                # 1. 3sg Past Participle: -dığı / -tığı
+                base_3sg = f"{d_char}{v_high}ğ{v_high}"
+                cop_3sg_pres = "dur" if (back and sub_round) else ("dür" if (not back and sub_round) else ("dır" if back else "dir"))
+                cop_3sg_past = "ydu" if (back and sub_round) else ("ydü" if (not back and sub_round) else ("ydı" if back else "ydi"))
+                cop_3sg_rep = "ymuş" if (back and sub_round) else ("ymüş" if (not back and sub_round) else ("ymış" if back else "ymiş"))
+                cases_3sg = [
+                    "", "nda", "ndan", "nı" if back else "ni", "na" if back else "ne", "nın" if back else "nin", "yla" if back else "yle",
+                    cop_3sg_pres, cop_3sg_past, cop_3sg_rep, "ysa" if back else "yse"
+                ]
+                for c in cases_3sg:
+                    suf = f"{base_3sg}{c}" if c else base_3sg
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond])
+
+                # 2. 1sg Participle: -dığım / -tığım
+                base_1sg = f"{d_char}{v_high}ğ{v_high}m"
+                for c in ["", "da" if back else "de", "dan" if back else "den", f"{v_high}", f"{v_low}", f"{v_high}n", f"l{v_low}", "dır" if back else "dir"]:
+                    suf = f"{base_1sg}{c}" if c else base_1sg
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond])
+
+                # 3. 2sg Participle: -dığın / -tığın
+                base_2sg = f"{d_char}{v_high}ğ{v_high}n"
+                for c in ["", "da" if back else "de", "dan" if back else "den", f"{v_high}", f"{v_low}", f"{v_high}n", f"l{v_low}", "dır" if back else "dir"]:
+                    suf = f"{base_2sg}{c}" if c else base_2sg
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond])
+
+                # 4. 1pl Participle: -dığımız / -tığımız
+                base_1pl = f"{d_char}{v_high}ğ{v_high}m{v_high}z"
+                for c in ["", "da" if back else "de", "dan" if back else "den", f"{v_high}", f"{v_low}", f"{v_high}n", f"l{v_low}", "dır" if back else "dir"]:
+                    suf = f"{base_1pl}{c}" if c else base_1pl
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond])
+
+                # 5. 2pl Participle: -dığınız / -tığınız
+                base_2pl = f"{d_char}{v_high}ğ{v_high}n{v_high}z"
+                for c in ["", "da" if back else "de", "dan" if back else "den", f"{v_high}", f"{v_low}", f"{v_high}n", f"l{v_low}", "dır" if back else "dir"]:
+                    suf = f"{base_2pl}{c}" if c else base_2pl
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond])
+
+                # 6. Plural Participle: -dıkları / -tıkları (-dIklArI / -tIklArI)
+                base_pl = f"{d_char}{v_high}kl{v_low}r{v_pl_poss}"
+                for c in [
+                    "", "nda", "ndan", "nı" if back else "ni", "na" if back else "ne", "nın" if back else "nin", "yla" if back else "yle",
+                    "dır" if back else "dir", "ydı" if back else "ydi", "ymış" if back else "ymiş", "ysa" if back else "yse"
+                ]:
+                    suf = f"{base_pl}{c}" if c else base_pl
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond])
+
+            # 7. Verbal Noun 3sg: -ması / -mesi
+            m_vowel = "ma" if back else "me"
+            base_vn = f"{m_vowel}s{v_high}"
+            cond_vn = specific_cond if specific_cond else f"{strip}"
+            for c in [
+                "", "nda", "ndan", "nı" if back else "ni", "na" if back else "ne", "nın" if back else "nin", "yla" if back else "yle",
+                "dır" if back else "dir", "ydı" if back else "ydi", "ymış" if back else "ymiş", "ysa" if back else "yse"
+            ]:
+                suf = f"{base_vn}{c}" if c else base_vn
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+
+            # 8. Verbal Noun Plural: -maları / -meleri
+            base_vn_pl = f"{m_vowel}l{v_low}r{v_pl_poss}"
+            for c in [
+                "", "nda", "ndan", "nı" if back else "ni", "na" if back else "ne", "nın" if back else "nin", "yla" if back else "yle",
+                "dır" if back else "dir", "ydı" if back else "ydi"
+            ]:
+                suf = f"{base_vn_pl}{c}" if c else base_vn_pl
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+
+            # 9. Future Participle 3sg: -acağı / -eceği / -yacağı / -yeceği
+            fut_base = ("yac" if is_vowel_stem else "ac") if back else (("yec" if is_vowel_stem else "ec"))
+            if is_narrow:
+                fut_base = "yic" if back else "yec"
+            base_fut = f"{fut_base}{v_low}ğ{v_high}"
+            cond_fut = specific_cond if specific_cond else f"{strip}"
+            for c in [
+                "", "nda", "ndan", "nı" if back else "ni", "na" if back else "ne", "nın" if back else "nin", "yla" if back else "yle",
+                "dır" if back else "dir", "ydı" if back else "ydi"
+            ]:
+                suf = f"{base_fut}{c}" if c else base_fut
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
+
+            # Harmony variables for cases and copulas
+            loc_c = "nda" if back else "nde"
+            abl_c = "ndan" if back else "nden"
+            acc_c = "nı" if back else "ni"
+            dat_c = "na" if back else "ne"
+            gen_c = "nın" if back else "nin"
+            ins_c = "yla" if back else "yle"
+            cop_c = "dır" if back else "dir"
+            cop_p = "ydı" if back else "ydi"
+            cop_r = "ymış" if back else "ymiş"
+            cop_s = "ysa" if back else "yse"
+            all_cases_3sg = ["", loc_c, abl_c, acc_c, dat_c, gen_c, ins_c, cop_c, cop_p, cop_r, cop_s]
+
+            # 10. Future Participle Plural: -acakları / -ecekleri
+            fut_pl = ("yacak" if is_vowel_stem else "acak") if back else (("yecek" if is_vowel_stem else "ecek"))
+            if is_narrow:
+                fut_pl = "yicak" if back else "yecek"
+            base_fut_pl = f"{fut_pl}l{v_low}r{v_pl_poss}"
+            for c in ["", loc_c, abl_c, acc_c, dat_c, gen_c, ins_c, cop_c, cop_p]:
+                suf = f"{base_fut_pl}{c}" if c else base_fut_pl
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
+
+            # 11. Verbal Noun 1pl Possessive: -mamız / -memiz & Negative: -mamamız / -mememiz (vermememizdir, yapmamamızdır)
+            for vn_prefix in [m_vowel, f"{m_vowel}{m_vowel}"]:
+                base_vn_1pl = f"{vn_prefix}m{v_high}z"
+                for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "ın" if back else "in", "la" if back else "le", cop_c, "dı" if back else "di", "mış" if back else "miş", "sa" if back else "se"]:
+                    suf = f"{base_vn_1pl}{c}" if c else base_vn_1pl
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+
+            # 12. Verbal Noun 1sg Possessive: -mam / -mem & Negative: -mamam / -memem
+            for vn_prefix in [m_vowel, f"{m_vowel}{m_vowel}"]:
+                base_vn_1sg = f"{vn_prefix}m"
+                for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "ın" if back else "in", "la" if back else "le", cop_c, "dı" if back else "di"]:
+                    suf = f"{base_vn_1sg}{c}" if c else base_vn_1sg
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+
+            # 13. Negative Verbal Noun 3sg & Plural: -maması / -memesi, -mamaları / -memeleri (uğramamasıdır, görmemeleridir)
+            base_neg_vn_3sg = f"{m_vowel}{m_vowel}s{v_high}"
+            for c in all_cases_3sg:
+                suf = f"{base_neg_vn_3sg}{c}" if c else base_neg_vn_3sg
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+
+            base_neg_vn_pl = f"{m_vowel}{m_vowel}l{v_low}r{v_pl_poss}"
+            for c in ["", loc_c, abl_c, acc_c, dat_c, gen_c, ins_c, cop_c, cop_p]:
+                suf = f"{base_neg_vn_pl}{c}" if c else base_neg_vn_pl
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+
+            # 14. Progressive -makta / -mekte + Copulas (bildirilememektedir, gelişememektedir, yapılmaktadır)
+            base_prog = "makta" if back else "mekte"
+            cond_prog = specific_cond if specific_cond else f"{strip}"
+            for c in ["", cop_c, cop_p, cop_r, cop_s, "yım" if back else "yim", "sın" if back else "sin", "yız" if back else "yiz", "sınız" if back else "siniz", "lar" if back else "ler"]:
+                suf = f"{base_prog}{c}" if c else base_prog
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_prog])
+
+            # 15. Negative Potential Progressive: -ememekte / -amamamakta
+            pot_neg_prog = ("yamamakta" if is_vowel_stem else "amamakta") if back else (("yememekte" if is_vowel_stem else "ememekte"))
+            cond_pot = specific_cond if specific_cond else f"{strip}"
+            for c in ["", cop_c, cop_p, cop_r, cop_s]:
+                suf = f"{pot_neg_prog}{c}" if c else pot_neg_prog
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            # 16. Negative Potential Verbal Noun 3sg & Plural: -ememesi / -amamasından / -ememeleri / -amamalarıdır (yönetememesinden)
+            pot_neg_vn = ("yamama" if is_vowel_stem else "amama") if back else (("yememe" if is_vowel_stem else "ememe"))
+            base_pot_vn_3sg = f"{pot_neg_vn}s{v_high}"
+            for c in all_cases_3sg:
+                suf = f"{base_pot_vn_3sg}{c}" if c else base_pot_vn_3sg
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            base_pot_vn_pl = f"{pot_neg_vn}l{v_low}r{v_pl_poss}"
+            for c in ["", loc_c, abl_c, acc_c, dat_c, gen_c, ins_c, cop_c, cop_p]:
+                suf = f"{base_pot_vn_pl}{c}" if c else base_pot_vn_pl
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            # 17. Negative Potential Future Plural: -emeyecekleri / -amayacakları (yönetemeyecekleri)
+            pot_neg_fut_pl = ("yamayacak" if is_vowel_stem else "amayacak") if back else (("yemeyecek" if is_vowel_stem else "emeyecek"))
+            base_pot_fut_pl = f"{pot_neg_fut_pl}l{v_low}r{v_pl_poss}"
+            for c in ["", loc_c, abl_c, acc_c, dat_c, gen_c, ins_c, cop_c, cop_p]:
+                suf = f"{base_pot_fut_pl}{c}" if c else base_pot_fut_pl
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            # 18. Negative Past Participle All Persons: -madığı / -mediği (3sg), -madığım (1sg), -madığın (2sg), -madığımız (1pl), -madığınız (2pl), -madıkları (3pl)
+            neg_past_base_3sg = f"{m_vowel}d{v_high}ğ{v_high}"
+            for c in all_cases_3sg:
+                suf = f"{neg_past_base_3sg}{c}" if c else neg_past_base_3sg
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+
+            for p_tag, p_suf in [
+                ("1sg", f"{m_vowel}d{v_high}ğ{v_high}m"),
+                ("2sg", f"{m_vowel}d{v_high}ğ{v_high}n"),
+                ("1pl", f"{m_vowel}d{v_high}ğ{v_high}m{v_high}z"),
+                ("2pl", f"{m_vowel}d{v_high}ğ{v_high}n{v_high}z"),
+            ]:
+                for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "la" if back else "le", cop_c, "dı" if back else "di", "sa" if back else "se"]:
+                    suf = f"{p_suf}{c}" if c else p_suf
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+
+            base_neg_past_pl = f"{m_vowel}d{v_high}kl{v_low}r{v_pl_poss}"
+            for c in ["", loc_c, abl_c, acc_c, dat_c, gen_c, ins_c, cop_c, cop_p, cop_r, cop_s]:
+                suf = f"{base_neg_past_pl}{c}" if c else base_neg_past_pl
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+
+            # 19. Negative Potential Past Participle All Persons: -amadığı / -emediği (alınamadığı, sevemediğin, bulamadığımız...)
+            pot_neg_past = ("yamad" if is_vowel_stem else "amad") if back else (("yemed" if is_vowel_stem else "emed"))
+            base_pot_past_3sg = f"{pot_neg_past}{v_high}ğ{v_high}"
+            for c in all_cases_3sg:
+                suf = f"{base_pot_past_3sg}{c}" if c else base_pot_past_3sg
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            for p_tag, p_suf in [
+                ("1sg", f"{pot_neg_past}{v_high}ğ{v_high}m"),
+                ("2sg", f"{pot_neg_past}{v_high}ğ{v_high}n"),
+                ("1pl", f"{pot_neg_past}{v_high}ğ{v_high}m{v_high}z"),
+                ("2pl", f"{pot_neg_past}{v_high}ğ{v_high}n{v_high}z"),
+            ]:
+                for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "la" if back else "le", cop_c, "dı" if back else "di", "sa" if back else "se"]:
+                    suf = f"{p_suf}{c}" if c else p_suf
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            base_pot_past_pl = f"{pot_neg_past}{v_high}kl{v_low}r{v_pl_poss}"
+            for c in ["", loc_c, abl_c, acc_c, dat_c, gen_c, ins_c, cop_c, cop_p, cop_r, cop_s]:
+                suf = f"{base_pot_past_pl}{c}" if c else base_pot_past_pl
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            # 20. Negative Potential Future Participle All Persons: -amayacağı / -emeyeceği (anlaşılamayacağını, bulamayacağımı...)
+            base_pot_fut_stem = ("yamayac" if is_vowel_stem else "amayac") if back else (("yemeyec" if is_vowel_stem else "emeyec"))
+            base_pot_fut_3sg = f"{base_pot_fut_stem}{v_low}ğ{v_high}"
+            for c in all_cases_3sg:
+                suf = f"{base_pot_fut_3sg}{c}" if c else base_pot_fut_3sg
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            for p_tag, p_suf in [
+                ("1sg", f"{base_pot_fut_stem}{v_low}ğ{v_high}m"),
+                ("2sg", f"{base_pot_fut_stem}{v_low}ğ{v_high}n"),
+                ("1pl", f"{base_pot_fut_stem}{v_low}ğ{v_high}m{v_high}z"),
+                ("2pl", f"{base_pot_fut_stem}{v_low}ğ{v_high}n{v_high}z"),
+            ]:
+                for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "la" if back else "le", cop_c, "dı" if back else "di", "sa" if back else "se"]:
+                    suf = f"{p_suf}{c}" if c else p_suf
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            # 21. Future Participle Persons: -acağım (1sg), -acağın (2sg), -acağımız (1pl), -acağınız (2pl) (göreceğime, atacağın, anlaşacağınızı...)
+            for p_tag, p_suf in [
+                ("1sg", f"{fut_base}{v_low}ğ{v_high}m"),
+                ("2sg", f"{fut_base}{v_low}ğ{v_high}n"),
+                ("1pl", f"{fut_base}{v_low}ğ{v_high}m{v_high}z"),
+                ("2pl", f"{fut_base}{v_low}ğ{v_high}n{v_high}z"),
+            ]:
+                for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "la" if back else "le", cop_c, "dı" if back else "di", "sa" if back else "se"]:
+                    suf = f"{p_suf}{c}" if c else p_suf
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
+
+            # 22. Positive Ability Future Participles: -abileceği / -ebileceği (hazırlayabileceğimi, halledilebileceğine...)
+            abil_base = ("yabil" if is_vowel_stem else "abil") if back else (("yebil" if is_vowel_stem else "ebil"))
+            base_abil_fut_3sg = f"{abil_base}eceği"
+            for c in ["", "nde", "nden", "ni", "ne", "nin", "yle", "dir", "ydi", "ymiş", "yse"]:
+                suf = f"{base_abil_fut_3sg}{c}" if c else base_abil_fut_3sg
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            for p_tag, p_suf in [
+                ("1sg", f"{abil_base}eceğim"),
+                ("2sg", f"{abil_base}eceğin"),
+                ("1pl", f"{abil_base}eceğimiz"),
+                ("2pl", f"{abil_base}eceğiniz"),
+            ]:
+                for c in ["", "e", "i", "de", "den", "le", "dir", "di", "se"]:
+                    suf = f"{p_suf}{c}" if c else p_suf
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            base_abil_fut_pl = f"{abil_base}ecekleri"
+            for c in ["", "nde", "nden", "ni", "ne", "nin", "yle", "dir", "ydi"]:
+                suf = f"{base_abil_fut_pl}{c}" if c else base_abil_fut_pl
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            # Positive Ability Progressive: -abilmekte / -ebilmekte (karıştırılabilmektedir, yapılabilmektedir)
+            abil_prog = f"{abil_base}mekte"
+            for c in ["", "dir", "ydi", "ymiş", "yse", "dirler"]:
+                suf = f"{abil_prog}{c}" if c else abil_prog
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            # 23. Nominalized Participle Plurals: -anlar / -enler (adlandıranların, faydalananlarla, getirenlerden...)
+            an_suf = "iyen" if is_narrow else (("yan" if is_vowel_stem else "an") if back else (("yen" if is_vowel_stem else "en")))
+            base_an_pl = f"{an_suf}l{v_low}r"
+            for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "ın" if back else "in", "la" if back else "le", "ca" if back else "ce", "dandı" if back else "dendi", "dendir" if back else "dendir", cop_c, cop_p, cop_r, cop_s]:
+                suf = f"{base_an_pl}{c}" if c else base_an_pl
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
+
+            # -anları / -enleri (3sg possessive of plural participle: sevenlerimizi, yapanları)
+            for c in ["", "na" if back else "ne", "nı" if back else "ni", "nda" if back else "nde", "ndan" if back else "nden", "nın" if back else "nin", "yla" if back else "yle", cop_c, cop_p]:
+                suf = f"{base_an_pl}{v_pl_poss}{c}" if c else f"{base_an_pl}{v_pl_poss}"
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
+
+            # -anlarımız / -enlerimiz (1pl possessive of plural participle: sevenlerimizi)
+            for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "la" if back else "le"]:
+                suf = f"{base_an_pl}{v_pl_poss}m{v_pl_poss}z{c}" if c else f"{base_an_pl}{v_pl_poss}m{v_pl_poss}z"
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
+
+            # Singular -anı / -eni (inananı, bakanı)
+            base_an_3sg = f"{an_suf}{v_pl_poss}"
+            for c in ["", "na" if back else "ne", "nı" if back else "ni", "nda" if back else "nde", "ndan" if back else "nden", "nın" if back else "nin", "yla" if back else "yle", cop_c, cop_p]:
+                suf = f"{base_an_3sg}{c}" if c else base_an_3sg
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
+
+            # 24. Past Person + Conditional Copula: -dımsa / -dimse / -dıksa / -dikse (aldımsa, öğrendimse)
+            for d_c, cond_v in (variants if not is_vowel_stem else [("d", cond_fut)]):
+                di_prefix = ("ydı" if is_vowel_stem else d_c) + v_high
+                for p_cond_suf in [
+                    f"{di_prefix}ms{v_low}",      # -dımsa / -dimse
+                    f"{di_prefix}ns{v_low}",      # -dınsa / -dinse
+                    f"{di_prefix}ks{v_low}",      # -dıksa / -dikse
+                    f"{di_prefix}n{v_high}zs{v_low}", # -dınızsa / -dinizse
+                ]:
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, p_cond_suf, cond_v])
+
+                # Participle Locative + Conditional Copula: -dığında / -dığımızda / -dıklarında + ysa
+                suf_1pl_cond = f"{di_prefix}ğ{v_high}m{v_high}zd{v_low}ys{v_low}"
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf_1pl_cond, cond_v])
+                suf_3sg_cond = f"{di_prefix}ğ{v_high}nd{v_low}ys{v_low}"
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf_3sg_cond, cond_v])
+                suf_3pl_cond = f"{di_prefix}kl{v_low}r{v_pl_poss}nd{v_low}ys{v_low}"
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf_3pl_cond, cond_v])
+
+            # 25. Negative Ability Necessitative: -amamalı / -ememeli (çıkamamalı, yapamamalı)
+            pot_neg_nec = ("yamama" if is_vowel_stem else "amama") if back else (("yememe" if is_vowel_stem else "ememe"))
+            base_nec = f"{pot_neg_nec}l{v_high}"
+            for c in ["", "yım" if back else "yim", "sın" if back else "sin", "yız" if back else "yiz", "sınız" if back else "siniz", "lar" if back else "ler", "dır" if back else "dir", "ydı" if back else "ydi", "ymış" if back else "ymiş", "ysa" if back else "yse"]:
+                suf = f"{base_nec}{c}" if c else base_nec
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
 
     out_lines = []
     for flag_char in verb_flags_order:
@@ -2272,21 +3219,29 @@ def _generate_verb_flags_from_v1() -> str:
 
 
 def gen_voicing_copula_flags() -> list[str]:
-    # VC (back voicing copulas)
+    # VC (back voicing copulas: unrounded + rounded)
     rules_VC = [
         sfx("VC", "0", "ım", "."),
         sfx("VC", "0", "ız", "."),
         sfx("VC", "0", "ımdır", "."),
-        sfx("VC", "0", "ızdır", ".")
+        sfx("VC", "0", "ızdır", "."),
+        sfx("VC", "0", "um", "."),
+        sfx("VC", "0", "uz", "."),
+        sfx("VC", "0", "umdur", "."),
+        sfx("VC", "0", "uzdur", ".")
     ]
     block_VC = make_flag_block("VC", unique(rules_VC))
 
-    # vc (front voicing copulas)
+    # vc (front voicing copulas: unrounded + rounded)
     rules_vc = [
         sfx("vc", "0", "im", "."),
         sfx("vc", "0", "iz", "."),
         sfx("vc", "0", "imdir", "."),
-        sfx("vc", "0", "izdir", ".")
+        sfx("vc", "0", "izdir", "."),
+        sfx("vc", "0", "üm", "."),
+        sfx("vc", "0", "üz", "."),
+        sfx("vc", "0", "ümdür", "."),
+        sfx("vc", "0", "üzdür", ".")
     ]
     block_vc = make_flag_block("vc", unique(rules_vc))
 

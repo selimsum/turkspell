@@ -69,6 +69,25 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'build'))
 from utf8_flag_mapping import remap_flag_string
 
 
+
+CORPUS_FREQ = set()
+pickle_path = os.path.join(os.path.dirname(__file__), '..', 'scripts', 'phase1', 'data', 'corpus_words_clean.pickle')
+if os.path.exists(pickle_path):
+    try:
+        import pickle
+        with open(pickle_path, 'rb') as f:
+            CORPUS_FREQ = pickle.load(f)
+    except:
+        pass
+if not CORPUS_FREQ:
+    freq_path = os.path.join(os.path.dirname(__file__), '..', 'raw_data', 'oscar_10m_corpus_frequencies.json')
+    if os.path.exists(freq_path):
+        try:
+            with open(freq_path, 'r', encoding='utf-8') as f:
+                CORPUS_FREQ = set(json.load(f).keys())
+        except:
+            pass
+
 # ---------------------------------------------------------------------------
 # Flag mapping
 # ---------------------------------------------------------------------------
@@ -184,18 +203,19 @@ def noun_chain(stem_flag: str, only_vowel: bool = False) -> str:
         cases = f"{loc_f}{abl_f}{ins_f}{eq_f}"
         possessives = ""
         copula_flag = "CL" if is_back else "cl"
-        derivs = "LILKSZCISL" + "DLDTDE"
+        derivs = "LILKSZCICKSL" + "DLDTDE"
     else:
         cases = f"{acc_f}{dat_f}{loc_f}{abl_f}{gen_f}{ins_f}{eq_f}"
         possessives = f"{p3}{p1}{p2s}{p1pl}{p2pl}"
         copula_flag = "CL" if is_back else "cl"
-        derivs = "LILKSZCISL" + "DLDTDE"
+        derivs = "LILKSZCICKSL" + "DLDTDE"
 
     if only_vowel:
         return (
             f"{cases}"
             f"{possessives}"
             f"{copula_flag}"
+            f"NE"
         )
     else:
         return (
@@ -213,16 +233,17 @@ def noun_chain(stem_flag: str, only_vowel: bool = False) -> str:
 # Parser
 # ---------------------------------------------------------------------------
 
-def parse_flags(flag_str: str) -> list[int]:
-    """Parse comma-separated integer flags from a dic entry flag field."""
+def parse_flags(flag_str: str) -> list[int | str]:
+    """Parse comma-separated flags from a dic entry flag field."""
     parts = flag_str.split(',')
     result = []
     for p in parts:
         p = p.strip()
         if p.isdigit():
             result.append(int(p))
+        elif p in ('K1', 'K2'):
+            result.append(p)
     return result
-
 
 def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_vowel: bool = False) -> tuple[str, str]:
     """
@@ -239,6 +260,8 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
         word = line[:slash_pos]
         flag_part = line[slash_pos+1:].split()[0]  # flags only (ignore trailing whitespace/comments)
         flags = parse_flags(flag_part)
+        if 'only_vowel' in flag_part:
+            only_vowel = True
     else:
         # No flags — check if word is obsolete
         word = line
@@ -261,13 +284,12 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
     noun_flags_set = set(flags) & set(NOUN_FLAG_MAP.keys())
     # Flag 90 = PX prefix — can legitimately appear alongside a noun stem flag
     has_prefix = 90 in noun_flags_set
-    # Flag 91 = inverse-harmony marker — swaps the -lI/-lIk/-sIz/-cI
-    # derivations for their front-only variants (LF/LFK/LSZ/LCI blocks, see
-    # gen_deriv_li2/gen_deriv_lk2/gen_deriv_sz2/gen_deriv_ci2 in
-    # generate_grammar_rules.py)
+    # Flag 91 = inverse-harmony marker
     has_inverse = 91 in flags
+    has_k1 = 'K1' in flags
+    has_k2 = 'K2' in flags
     pure_noun_flags = noun_flags_set - {90}  # noun stem flags (not prefix)
-    other_flags = set(flags) - set(ALL_FLAG_MAP.keys()) - {91}
+    other_flags = set(flags) - set(ALL_FLAG_MAP.keys()) - {91, 'K1', 'K2'}
 
     warnings = []
     if other_flags:
@@ -305,12 +327,42 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
                 chain = chain.replace("LK", "LFK")
                 chain = chain.replace("SZ", "LSZ")
                 chain = chain.replace("CI", "LCI")
+            
+            if CORPUS_FREQ:
+                new_chain = chain
+                for flag, suffixes in [
+                    ("CI", ["ci", "cı", "cu", "cü", "çi", "çı", "çu", "çü"]),
+                    ("LCI", ["ci", "cı", "cu", "cü", "çi", "çı", "çu", "çü"]),
+                    ("LI", ["li", "lı", "lu", "lü"]),
+                    ("LF", ["li", "lı", "lu", "lü"]),
+                    ("LK", ["lik", "lık", "luk", "lük"]),
+                    ("LFK", ["lik", "lık", "luk", "lük"]),
+                    ("SZ", ["siz", "sız", "suz", "süz"]),
+                    ("LSZ", ["siz", "sız", "suz", "süz"]),
+                    ("SL", ["sal", "sel"]),
+                    ("DL", ["laş", "leş"]),
+                    ("DT", ["laştır", "leştir"]),
+                    ("DE", ["len", "leş"])
+                ]:
+                    if flag in new_chain:
+                        valid = False
+                        for suf in suffixes:
+                            if (word + suf).lower() in CORPUS_FREQ:
+                                valid = True
+                                break
+                        if not valid:
+                            new_chain = new_chain.replace(flag, "")
+                chain = new_chain
             if len(word) == 1:
                 for deriv in ["LI", "SZ", "LK", "CI", "SL", "DL", "DT", "DE"]:
                     chain = chain.replace(deriv, "")
         new_parts = [chain]
         if has_prefix:
             new_parts.append("PX")  # also takes metric prefixes
+        if has_k1:
+            new_parts.append("K1")  # -ki
+        if has_k2:
+            new_parts.append("K2")  # -kü
         raw_parts = [p.strip() for p in flag_part.split(',')]
         if 'NE' in raw_parts:
             new_parts.append("NE")

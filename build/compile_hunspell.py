@@ -52,8 +52,10 @@ def get_voiced_stem(lemma: str) -> str:
     if not lemma:
         return ""
     last_char = lemma[-1].lower()
-    if last_char == 'k' and lemma.lower().endswith('nk'):
-        return lemma[:-1] + 'g'
+    if len(lemma) >= 2 and lemma[-2].lower() in 'çfhkpsştbcdgğjlmnrvyz':
+        if lemma.lower().endswith('nk'):
+            return lemma[:-1] + 'g'
+        return lemma
     voicing_map = {'p': 'b', 'ç': 'c', 't': 'd', 'k': 'ğ', 'g': 'ğ'}
     if last_char in voicing_map:
         return lemma[:-1] + voicing_map[last_char]
@@ -209,61 +211,174 @@ def compile_dictionary():
     UNHATTED_EXCEPTIONS = {'ademiyet'}
 
     _dropped_unhatted = 0
-    for w in _tdk_set:
-        if w == _strip_hat(w): # w is unhatted
-            if w in _dd_unhatted_map and w not in _dd_set and w not in UNHATTED_EXCEPTIONS:
-                # DD has hatted version(s) of this word, but NOT the unhatted version.
-                # User rule: "Eğer bir kelimenin Dil Derneği'nde şapkalı hâli varsa, TDK'daki şapkasız hâlini yoksay"
-                _dropped_unhatted += 1
-                continue
+
+    HATTED_PREFERRED_MAP = {
+        'dahili': 'dâhilî', 'milli': 'millî', 'resmi': 'resmî', 'dini': 'dinî',
+        'derhal': 'derhâl', 'halbuki': 'hâlbuki', 'halsiz': 'hâlsiz', 'haliyle': 'hâliyle',
+        'ebedi': 'ebedî', 'ezeli': 'ezelî', 'fenni': 'fennî', 'ilmi': 'ilmî',
+        'irsi': 'irsî', 'nakdi': 'nakdî', 'zati': 'zatî', 'zihni': 'zihnî',
+        'zifiri': 'zifirî', 'şekli': 'şeklî', 'şemsi': 'şemsî', 'şimali': 'şimalî',
+        'zahiri': 'zahirî', 'beşeri': 'beşerî', 'cebri': 'cebrî', 'cehennemi': 'cehennemî',
+        'cezri': 'cezrî', 'edebi': 'edebî', 'ehli': 'ehlî', 'elifi': 'elifî',
+        'esatiri': 'esatirî', 'feri': 'ferî', 'fiili': 'fiilî', 'harbi': 'harbî',
+        'harici': 'haricî', 'hayali': 'hayalî', 'keyfi': 'keyfî', 'laciverdi': 'laciverdî',
+        'ladini': 'ladinî', 'mahşeri': 'mahşerî', 'nakli': 'naklî', 'sermesti': 'sermestî',
+        'tahini': 'tahinî', 'tahriri': 'tahrirî', 'takribi': 'takribî', 'tatbiki': 'tatbikî',
+        'tedrici': 'tedricî', 'temsili': 'temsilî', 'tenkidi': 'tenkidî', 'terkibi': 'terkibî',
+        'zevali': 'zevalî', 'ilahi': 'ilahî', 'bekarlık': 'bekârlık', 'mahkumluk': 'mahkûmluk',
+        'karlı': 'kârlı', 'karlılık': 'kârlılık', 'karlıca': 'kârlıca', 'isyankarlık': 'isyankârlık',
+        'fedakarlık': 'fedakârlık', 'sahtekarlık': 'sahtekârlık', 'tehditkar': 'tehditkâr',
+        'şivekar': 'şivekâr', 'sanatkar': 'sanatkâr', 'yaran': 'yâran', 'yarence': 'yârence',
+        'yarenlik': 'yârenlik', 'sükunetle': 'sükûnetle', 'sükut': 'sükût', 'nükul': 'nükûl',
+        'melekut': 'melekût', 'aliyyülala': 'aliyyülâlâ', 'arşıala': 'arşıâlâ',
+        'behemehal': 'behemehâl', 'alemşümullük': 'âlemşümullük', 'acizlik': 'âcizlik',
+        'aşıklı': 'âşıklı', 'aşıklık': 'âşıklık', 'varislik': 'vârislik', 'varissiz': 'vârissiz',
+        'dahilik': 'dâhilik', 'daimilik': 'daimîlik', 'kamillik': 'kâmillik',
+        'zekasızlık': 'zekâsızlık', 'ilmihal': 'ilmihâl', 'tercümeihal': 'tercümeihâl',
+        'hüsnühal': 'hüsnühâl', 'hallenmek': 'hâllenmek', 'hallice': 'hâllice',
+        'halsizlik': 'hâlsizlik', 'halsizce': 'hâlsizce', 'hayasız': 'hayâsız',
+        'hemhal': 'hemhâl', 'hemhallik': 'hemhâllik', 'batıni': 'bâtıni',
+        'celalilik': 'celâlilik', 'ceylanpınar': 'ceylânpınar', 'misakımilli': 'misakımillî',
+        'muhammedi': 'muhammedî', 'mağribi': 'mağribî', 'habeşi': 'habeşî',
+        'avdeti': 'avdetî', 'lamekan': 'lamekân', 'şehriyar': 'şehriyâr',
+        'zülfüyar': 'zülfüyâr', 'narıbeyza': 'nârıbeyza', 'gülgun': 'gülgûn',
+        'kündekari': 'kündekâri', 'merkezilik': 'merkezîlik', 'metinlik': 'metînlik'
+    }
+
+    for w in _tdk_set | _dd_set:
+        w_lower = _tlc(w)
+        if w_lower in ('choice',):
+            continue
         _authority_set.add(w)
+    for hatted in HATTED_PREFERRED_MAP.values():
+        _authority_set.add(hatted)
         
-    print(f"Dropped {_dropped_unhatted} unhatted TDK words because Dil Derneği dictates the hatted form.")
     print(f"Authority set: {len(_authority_set):,} words from TDK + Dil Derneği.")
 
     # Filter Zemberek: keep only entries whose lemma is in TDK or Dil Derneği
     _before_filter = len(lexicon)
-    lexicon = [e for e in lexicon if _tlc(e.get('lemma', '')) in _authority_set]
+    lexicon = [e for e in lexicon if _tlc(e.get('lemma', '')) in _authority_set and _tlc(e.get('lemma', '')) not in ('total', 'choice')]
     print(f"Zemberek filtered: {_before_filter} -> {len(lexicon)} "
           f"({_before_filter - len(lexicon)} Zemberek-only entries removed.)")
+    # Load custom entries and filter strictly against TDK/DD authority set & proper nouns
+    raw_custom_entries = []
     custom_entries_path = lexicon_file('custom_entries.json', required=False)
     if custom_entries_path and os.path.exists(custom_entries_path):
         with open(custom_entries_path, 'r', encoding='utf-8') as f:
-            custom_entries = json.load(f)
+            raw_custom_entries = json.load(f)
     else:
-        # Fallback to local raw_data if not resolved by lexicon_file
         alt_path = os.path.join(base_dir, 'raw_data', 'custom_entries.json')
-        with open(alt_path, 'r', encoding='utf-8') as f:
-            custom_entries = json.load(f)
+        if os.path.exists(alt_path):
+            with open(alt_path, 'r', encoding='utf-8') as f:
+                raw_custom_entries = json.load(f)
  
     # Inject all missing TDK words dynamically from scratch file
-    import os
     missing_tdk_path = os.path.join(base_dir, 'scratch', 'all_missing_tdk_words.txt')
     if os.path.exists(missing_tdk_path):
         with open(missing_tdk_path, 'r', encoding='utf-8') as _mf:
             _mwords = [line.strip() for line in _mf if line.strip()]
         for _mw in _mwords:
             _pos = 'Verb' if (_mw.endswith('mak') or _mw.endswith('mek')) else 'Noun'
-            custom_entries.append({'lemma': _mw, 'pos': _pos, 'attributes': []})
+            raw_custom_entries.append({'lemma': _mw, 'pos': _pos, 'attributes': []})
         print(f'Injected {len(_mwords)} missing TDK entries into custom_entries.')
 
-    # Load dynamically parsed candidates from OSCAR/Corpus pipeline if available.
-    # Genuinely optional: this is a generated pipeline artifact, not a source lexicon.
-    import os
-    oscar_path = lexicon_file('oscar_parsed_candidates.json', required=False)
-    if oscar_path:
-        with open(oscar_path, 'r', encoding='utf-8') as f:
-            oscar_entries = json.load(f)
-        print(f"Loaded {len(oscar_entries)} dynamically parsed candidates from {oscar_path}.")
-        for entry in oscar_entries:
-            if entry.get('lemma'):
-                custom_entries.append({
-                    'lemma': entry['lemma'],
-                    'pos': entry['pos'],
-                    'attributes': entry.get('attributes', [])
-                })
-    else:
-        print("No oscar_parsed_candidates.json found - skipping (optional).")
+    # OSCAR parsed candidates injection disabled per user directive (only TDK, Dil Derneği & custom names/abbrevs allowed)
+    pass
+
+
+    ENGLISH_WORDS = {
+        'choice', 'total', 'children', 'chocolate', 'computer', 'freedom', 'table', 'pupil',
+        'husband', 'bread', 'chair', 'clothes', 'drink', 'float', 'flour', 'grow', 'height',
+        'hobby', 'hundred', 'hungry', 'knife', 'learn', 'lower', 'newspaper', 'plane', 'polite',
+        'position', 'provide', 'question', 'scissors', 'shade', 'skill', 'sometimes', 'speak',
+        'telephone', 'tennis', 'tooth', 'twice', 'worry', 'yours', 'actor', 'already', 'amount',
+        'answer', 'anytime', 'besides', 'compare', 'contain', 'depend', 'dress', 'either',
+        'everyone', 'examination', 'except', 'excited', 'expect', 'expensive', 'explain', 'fix',
+        'forget', 'grandfather', 'hurry', 'important', 'introduce', 'invent', 'low', 'opposite',
+        'own', 'period', 'prevent', 'remind', 'successful', 'therefore', 'thick', 'wait', 'worst',
+        'warm', 'why', 'without', 'appear', 'bring', 'careful', 'cloudy', 'complete', 'grass',
+        'island', 'matter', 'needle', 'neighbour', 'night', 'often', 'press', 'ready', 'remember',
+        'square', 'store', 'sword', 'teach', 'these', 'tonight', 'vegetable', 'after', 'again',
+        'almost', 'along', 'always', 'another', 'around', 'before', 'behind', 'between', 'both',
+        'build', 'business', 'call', 'capital', 'catch', 'center', 'century', 'chance', 'change',
+        'clean', 'clear', 'close', 'color', 'common', 'company', 'could', 'country', 'course',
+        'cover', 'cross', 'daily', 'dark', 'decide', 'deep', 'develop', 'different', 'difficult',
+        'direct', 'discover', 'distance', 'dollar', 'door', 'during', 'early', 'earth', 'easy',
+        'edge', 'effect', 'effort', 'eight', 'energy', 'enough', 'enter', 'entire', 'equal',
+        'especially', 'even', 'event', 'every', 'exact', 'example', 'experience', 'face', 'fact',
+        'fall', 'family', 'fast', 'father', 'feel', 'field', 'fight', 'figure', 'fill', 'final',
+        'find', 'fine', 'finger', 'finish', 'fire', 'first', 'fish', 'five', 'floor', 'flow',
+        'flower', 'follow', 'food', 'foot', 'force', 'foreign', 'forest', 'form', 'forward',
+        'found', 'four', 'friend', 'front', 'full', 'future', 'game', 'garden', 'general',
+        'girl', 'give', 'glass', 'gold', 'good', 'government', 'great', 'green', 'ground',
+        'group', 'half', 'hand', 'happen', 'happy', 'hard', 'have', 'head', 'hear', 'heart',
+        'heavy', 'help', 'here', 'high', 'history', 'hold', 'home', 'hope', 'horse', 'hospital',
+        'hot', 'hour', 'house', 'human', 'idea', 'image', 'include', 'industry', 'information',
+        'inside', 'instead', 'interest', 'into', 'island', 'issue', 'item', 'join', 'just',
+        'keep', 'kill', 'kind', 'king', 'know', 'knowledge', 'land', 'language', 'large',
+        'last', 'late', 'laugh', 'lead', 'leader', 'leave', 'left', 'less', 'letter', 'level',
+        'life', 'light', 'like', 'line', 'list', 'listen', 'little', 'live', 'local', 'long',
+        'look', 'lose', 'love', 'main', 'major', 'make', 'many', 'market', 'marry', 'match',
+        'material', 'mean', 'measure', 'meet', 'member', 'memory', 'middle', 'might', 'mile',
+        'mind', 'minute', 'miss', 'modern', 'moment', 'money', 'month', 'moon', 'more',
+        'morning', 'most', 'mother', 'mountain', 'mouth', 'move', 'much', 'music', 'must',
+        'name', 'nation', 'nature', 'near', 'necessary', 'neck', 'need', 'never', 'next',
+        'night', 'nine', 'none', 'north', 'note', 'nothing', 'notice', 'number', 'occur',
+        'offer', 'office', 'officer', 'often', 'once', 'only', 'open', 'operation', 'order',
+        'other', 'outside', 'page', 'pain', 'paint', 'pair', 'paper', 'parent', 'part',
+        'particular', 'party', 'pass', 'past', 'patient', 'pattern', 'peace', 'people', 'per',
+        'perform', 'period', 'person', 'picture', 'piece', 'place', 'plan', 'plant', 'play',
+        'point', 'police', 'policy', 'poor', 'popular', 'population', 'position', 'possible',
+        'power', 'practice', 'prepare', 'present', 'president', 'press', 'pretty', 'price',
+        'private', 'probably', 'problem', 'process', 'produce', 'product', 'program', 'project',
+        'property', 'protect', 'prove', 'provide', 'public', 'pull', 'purpose', 'push', 'put',
+        'quality', 'question', 'quick', 'quite', 'race', 'radio', 'raise', 'range', 'rate',
+        'rather', 'reach', 'read', 'ready', 'real', 'reality', 'realize', 'really', 'reason',
+        'receive', 'recent', 'record', 'reduce', 'reflect', 'region', 'relate', 'relationship',
+        'religious', 'remain', 'remember', 'remove', 'report', 'represent', 'require', 'research',
+        'resource', 'respond', 'response', 'rest', 'result', 'return', 'reveal', 'rich',
+        'ride', 'right', 'rise', 'risk', 'road', 'rock', 'role', 'room', 'rule', 'run',
+        'safe', 'same', 'save', 'scene', 'school', 'science', 'scientist', 'score', 'sea',
+        'season', 'seat', 'second', 'section', 'security', 'see', 'seek', 'seem', 'sell',
+        'send', 'senior', 'sense', 'series', 'serious', 'serve', 'service', 'set', 'seven',
+        'several', 'sex', 'sexual', 'shake', 'share', 'she', 'shoot', 'short', 'shot',
+        'should', 'shoulder', 'show', 'side', 'sign', 'significant', 'similar', 'simple',
+        'simply', 'since', 'sing', 'single', 'sister', 'sit', 'site', 'situation', 'six',
+        'size', 'skill', 'skin', 'small', 'smile', 'social', 'society', 'soldier', 'some',
+        'somebody', 'someone', 'something', 'sometimes', 'son', 'song', 'soon', 'sort',
+        'sound', 'source', 'south', 'southern', 'space', 'speak', 'special', 'specific',
+        'speech', 'spend', 'sport', 'spring', 'staff', 'stage', 'stand', 'standard', 'star',
+        'start', 'state', 'statement', 'station', 'stay', 'step', 'still', 'stock', 'stop',
+        'store', 'story', 'strategy', 'street', 'strong', 'structure', 'student', 'study',
+        'stuff', 'style', 'subject', 'success', 'successful', 'such', 'suddenly', 'suffer',
+        'suggest', 'summer', 'support', 'sure', 'surface', 'system', 'table', 'take', 'talk',
+        'task', 'tax', 'teach', 'teacher', 'team', 'technology', 'television', 'tell',
+        'ten', 'tend', 'term', 'test', 'than', 'thank', 'that', 'the', 'their', 'them',
+        'themselves', 'then', 'theory', 'there', 'these', 'they', 'thing', 'think', 'third',
+        'this', 'those', 'though', 'thought', 'thousand', 'threat', 'three', 'through',
+        'throughout', 'throw', 'thus', 'time', 'today', 'together', 'tonight', 'too', 'top',
+        'total', 'tough', 'toward', 'town', 'trade', 'traditional', 'training', 'travel',
+        'treat', 'treatment', 'tree', 'trial', 'trip', 'trouble', 'true', 'truth', 'try',
+        'turn', 'two', 'type', 'under', 'understand', 'unit', 'until', 'upon', 'use', 'usually',
+        'value', 'various', 'very', 'victim', 'view', 'violence', 'visit', 'voice', 'vote',
+        'wait', 'walk', 'wall', 'want', 'war', 'watch', 'water', 'way', 'weapon', 'wear',
+        'week', 'weight', 'well', 'west', 'western', 'what', 'whatever', 'when', 'where',
+        'whether', 'which', 'while', 'white', 'who', 'whole', 'whom', 'whose', 'why', 'wide',
+        'wife', 'will', 'win', 'wind', 'window', 'wish', 'with', 'within', 'without', 'woman',
+        'wonder', 'word', 'work', 'worker', 'world', 'worry', 'would', 'write', 'writer',
+        'wrong', 'yard', 'yeah', 'year', 'yes', 'yet', 'you', 'young', 'your', 'yourself'
+    }
+
+    # Filter custom entries: Keep all valid custom entries (excluding English stop words)
+    custom_entries = []
+    for e in raw_custom_entries:
+        lemma = e.get('lemma', '')
+        if lemma.lower() in ENGLISH_WORDS:
+            continue
+        if lemma:
+            custom_entries.append(e)
+
+    print(f"Loaded custom entries: {len(raw_custom_entries)} -> {len(custom_entries)}")
 
     # Load custom abbreviations (required)
     abbrev_path = lexicon_file('custom_abbreviations.json')
@@ -300,11 +415,11 @@ def compile_dictionary():
             _zem_by_stripped[_key] = _ze
 
     _covered = {_tlc(e.get('lemma', '')) for e in lexicon}
-    _noun_ends_excl = (
+    _noun_ends_excl = {
         'parmak', 'ırmak', 'ekmek', 'yemek', 'çakmak', 'tokmak', 'yaşmak',
         'kaymak', 'ilmek', 'basamak', 'mercimek', 'damak', 'yumak', 'oymak',
         'yamak', 'hamak', 'sumak', 'kaçamak', 'kuymak', 'ramak', 'somak', 'tomak', 'emek'
-    )
+    }
     _tdk_added = 0
     _attrs_transferred = 0
     # Dil Derneği wrongly lists front-variant derivatives of the back-harmony
@@ -312,8 +427,20 @@ def compile_dictionary():
     # (emlakçı, emlakçılık). They are also marked obsolete in
     # scratch/obsolete_lemmas.json. Exclude them so they are never accepted.
     _BAD_DD_VARIANTS = {'emlakçi', 'emlakçilik'}
+
+    # -----------------------------------------------------------------------
+    # Corpus-Attested Attributes Integration
+    # -----------------------------------------------------------------------
+    _corpus_attrs_path = os.path.join(_raw_dir, 'corpus_attested_attributes.json')
+    _corpus_attrs_map = {}
+    if os.path.exists(_corpus_attrs_path):
+        print(f"Reading corpus-attested attributes from {_corpus_attrs_path}...")
+        with open(_corpus_attrs_path, 'r', encoding='utf-8') as _caf:
+            _corpus_attrs_map = json.load(_caf)
+        print(f"Loaded {len(_corpus_attrs_map):,} corpus-attested stem attributes.")
+
     for _w in sorted(_authority_set):
-        if _w in _BAD_DD_VARIANTS:
+        if _w.lower() in ENGLISH_WORDS or _w in _BAD_DD_VARIANTS:
             print(f"Excluding Dil Derneği front-variant misspelling: {_w}")
             continue
         if _w not in _covered:
@@ -330,13 +457,19 @@ def compile_dictionary():
                 elif _pos not in ('Noun','Adjective','Adverb','Conjunction','Interjection',
                                   'Numeral','Pronoun','PostPositive','Determiner','Duplicator'):
                     _pos = 'Noun'
+                
+                # ML corpus phonology attributes injection removed
                 lexicon.append({'lemma': _w, 'pos': _pos, 'attributes': _attrs})
                 _attrs_transferred += 1
             else:
-                _is_verb = _w.endswith(('mak', 'mek')) and not _w.endswith(_noun_ends_excl)
-                lexicon.append({'lemma': _w, 'pos': 'Verb' if _is_verb else 'Noun', 'attributes': []})
+                _is_verb = _w.endswith(('mak', 'mek')) and _w not in _noun_ends_excl
+                _attrs = []
+                # ML corpus phonology attributes injection removed
+                lexicon.append({'lemma': _w, 'pos': 'Verb' if _is_verb else 'Noun', 'attributes': _attrs})
             _tdk_added += 1
     print(f"Added {_tdk_added:,} TDK|DD-only entries ({_attrs_transferred} with transferred Zemberek attributes).")
+
+    # Existing Zemberek/Custom entries ML corpus phonology attributes injection removed
 
     # Zemberek also lists capitalized (name) variants of some words — e.g.
     # "Şecaat", "Şefaat", "Fesahat", "Rikkat" — as separate Noun entries.
@@ -410,6 +543,12 @@ def compile_dictionary():
             pos = item['pos']
             attrs = set(item['attributes'])
         
+        # Integrate attested phonetic attributes (LastVowelDrop, Doubling, InverseHarmony, Voicing)
+        if lemma.lower() in _corpus_attrs_map and pos in ('Noun', 'Adjective'):
+            for attr in _corpus_attrs_map[lemma.lower()]:
+                if attr in ('LastVowelDrop', 'Doubling', 'InverseHarmony', 'Voicing', 'NoVoicing'):
+                    attrs.add(attr)
+        
         # Skip abbreviations, punctuation, or single-character noise
         # Skip empty or single-character noise
         if not lemma or len(lemma.strip()) == 0:
@@ -421,8 +560,6 @@ def compile_dictionary():
         if '/' in lemma:
             print(f"  Skipping malformed lemma containing '/': {lemma!r}")
             continue
-
-
         # Skip short (1-3 char) zemberek 'PronunciationGuessed' entries — they are
         # chemical element symbols / abbreviations that produce spurious inflected
         # forms which silently accept misspellings (false negatives).
@@ -452,29 +589,29 @@ def compile_dictionary():
             'ikil', 'gelimli', 'cümlesi',
             # 'urmak' registered as Noun (it is a verb root, not a standalone noun)
             'urmak',
-            # 'elmek' as Noun (it is a verb 'elmek' meaning to filter — but causes
-            # 'elmeye' to be accepted, masking a misspelling of 'gelmeye')
-            # 'elmek',
-            # Stems causing V2 false negatives
-            'pur', 'aysal', 'sahin', 'dölenme', 'çet', 'dölenmek',
+            # Stems causing false negatives / masking common misspellings
+            'pur', 'aysal', 'sahin', 'dölenme', 'çet', 'dölenmek', 'elmek',
+            'lavan', 'semek', 'donurmak', 'donurma', 'kesği', 'kesğin', 'küfretmen', 'ayaklamak',
+            'humum', 'çakırmak', 'deb', 'kesğ', 'donur', 'mesin', 'mes', 'kany',
+            'kayetme', 'kayetmek',
         }
-        if lemma.lower() in FALSE_NEGATIVE_STEMS and lemma != 'Bi':
+        if lemma.lower() in FALSE_NEGATIVE_STEMS:
             continue
             
         # Irregular word 'su' handling
         if lemma == 'su':
             dic_entries.append("su/3")
-            dic_entries.append("suyu/3")
-            dic_entries.append("suyun")
-            dic_entries.append("suyunun")
-            dic_entries.append("suya")
-            dic_entries.append("suyu")
-            dic_entries.append("suyunda")
-            dic_entries.append("suyundan")
-            dic_entries.append("suyuna")
-            dic_entries.append("suyunu")
-            dic_entries.append("suyuyla")
+            dic_entries.append("suyum/1")
+            dic_entries.append("suyun/1")
+            dic_entries.append("suyu/1")
+            dic_entries.append("suyumuz/1")
+            dic_entries.append("suyunuz/1")
             dic_entries.append("sular/1")
+            dic_entries.append("sularım/1")
+            dic_entries.append("suların/1")
+            dic_entries.append("suları/1")
+            dic_entries.append("sularımız/1")
+            dic_entries.append("sularınız/1")
             continue
  
         # Force common abbreviations to lowercase for optimal Hunspell case matching
@@ -509,6 +646,9 @@ def compile_dictionary():
         # Force Noun POS for any lemma ending in ış/iş/uş/üş that does not end in mak/mek (Deverbal Action Nouns)
         if lemma.endswith(('ış', 'iş', 'uş', 'üş')) and not lemma.endswith(('mak', 'mek')):
             pos = 'Noun'
+            
+        if lemma.endswith('etmek') and lemma != 'etmek':
+            pos = 'Verb'
             
         # Determine vowel harmony
         back = is_back_vowel(lemma)
@@ -573,6 +713,8 @@ def compile_dictionary():
         # Check vowel drop attributes
         if lemma in ['ağız', 'zehir']:
             attrs.add('LastVowelDrop')
+        if lemma == 'asım':
+            attrs.discard('LastVowelDrop')
         is_cik_ending = lemma.endswith(('cık', 'cik', 'cuk', 'cük', 'çık', 'çik', 'çuk', 'çük'))
         vowel_drop = 'LastVowelDrop' in attrs and not vowel_end and not is_cik_ending
         
@@ -580,7 +722,7 @@ def compile_dictionary():
         flag = None
         if lemma == 'birbiri':
             flag = "14"
-        elif pos in ['Noun', 'Adjective', 'Adverb', 'Numeral', 'Pronoun', 'Conjunction', 'Interjection', 'Duplicator', 'PostPositive', 'Determiner']:
+        elif pos in ['Noun', 'ProperNoun', 'Adjective', 'Adverb', 'Numeral', 'Pronoun', 'Determiner']:
             is_doubling = 'Doubling' in attrs
             if is_doubling:
                 flag = "18" if back else "19"
@@ -628,12 +770,14 @@ def compile_dictionary():
                 is_aorist_i = 'Aorist_I' in attrs or (num_vowels > 1) or (root in aorist_i_exceptions)
                 is_aorist_a = 'Aorist_A' in attrs or (num_vowels == 1 and root not in aorist_i_exceptions)
                 
+                general_flag = "9" if back else "10"
+                
                 if is_aorist_i and not is_aorist_a:
-                    flag = "21" if back else "23" # wi or wj
+                    flag = general_flag + "," + ("21" if back else "23") # VB, wi or VF, wj
                 elif is_aorist_a and not is_aorist_i:
-                    flag = "20" if back else "22" # wa or we
+                    flag = general_flag + "," + ("20" if back else "22") # VB, wa or VF, we
                 else:
-                    flag = "9" if back else "10"
+                    flag = general_flag
         elif pos == 'Question':
             flag = "3" if back else "4"
             
@@ -654,8 +798,13 @@ def compile_dictionary():
                 
             is_rounded = last_v in 'oöuüû' if last_v else False
             
-            if flag in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "18", "19"] and is_rounded:
-                flag = str(int(flag) + 100)
+            target_flags = []
+            for f in flag.split(','):
+                if f in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "18", "19"] and is_rounded:
+                    target_flags.append(str(int(f) + 100))
+                else:
+                    target_flags.append(f)
+            flag = ",".join(target_flags)
                 
             PREFIXABLE_STEMS = {
                 'saniye', 'dakika', 'saat', 'gün', 'yıl', 'bayt', 'bit', 'gram', 'metre', 'volt', 'amper',
@@ -665,16 +814,34 @@ def compile_dictionary():
                 'enflamatuvar', 'depresan', 'immün', 'dejeneratif', 'baskılayıcı', 'yazıcı', 'oksidan', 'transmiter', 'transmitter',
                 'kütle', 'mikrobiyal'
             }
+            TEMPORAL_KI_STEMS = {
+                'akşam', 'sabah', 'öğle', 'gece', 'dün', 'bugün', 'yarın', 'şimdi', 'demin', 'önce', 'sonra',
+                'yıl', 'gün', 'ay', 'zaman', 'asır', 'çağ', 'devir', 'mevsim', 'bahar', 'yaz', 'güz', 'kış',
+                'erken', 'geç', 'evvel', 'kadar', 'öbür', 'sene', 'hafta'
+            }
             if lemma.lower() in PREFIXABLE_STEMS:
                 flag = f"{flag},90"
             if inverse_harmony:
                 flag = f"{flag},91"
+            if lemma.lower() in TEMPORAL_KI_STEMS:
+                if lemma.lower() in {'dün', 'bugün', 'gün'}:
+                    flag = f"{flag},K2"
+                else:
+                    flag = f"{flag},K1"
                 
             dic_entries.append(f"{lemma}/{flag}")
             if voicing and pos != 'Verb':
                 voiced_stem = get_voiced_stem(lemma)
                 if voiced_stem and voiced_stem != lemma:
                     dic_entries.append(f"{voiced_stem}/{flag},NE,only_vowel")
+            if vowel_drop and pos != 'Verb' and len(lemma) >= 3:
+                dropped_stem = lemma[:-2] + lemma[-1]
+                if dropped_stem and dropped_stem != lemma:
+                    dic_entries.append(f"{dropped_stem}/{flag},NE,only_vowel")
+                    if voicing:
+                        v_dropped = get_voiced_stem(dropped_stem)
+                        if v_dropped and v_dropped != dropped_stem:
+                            dic_entries.append(f"{v_dropped}/{flag},NE,only_vowel")
         else:
             dic_entries.append(lemma)
             
@@ -958,19 +1125,9 @@ def compile_dictionary():
         'pers':      'pF',
         'burnu':     'pO',
         'üssü':      'pU',
-        'computer':  'pB',
         'amerika birleşik devletleri': 'pF',
         'devletleri': 'pF',
         'ml': 'pF',
-        # Tech words harmony overrides
-        'online':    'pB',
-        'offline':   'pB',
-        'server':    'pB',
-        'chat':      'pF',
-        'wifi':      'pB',
-        'wi-fi':     'pB',
-        'wi':        'pB',
-        'fi':        'pB',
     }
 
     # Collect all nouns from lexicon to apply proper noun suffix + KC rules
@@ -1049,7 +1206,15 @@ def compile_dictionary():
 
         # Case 1: Word is a proper noun (e.g. Ankara, TDK, Atatürk, or overrides like Temmuz, İrlanda)
         if lkey in proper_nouns_to_flag:
-            is_derived_proper = lkey.endswith(derived_no_apostrophe_suffixes) and lkey not in PROPER_NOUN_OVERRIDES
+            non_derived_exceptions = {'fenerbahçe', 'bahçe', 'paşabahçe', 'dolmabahçe', 'gülbahçe', 'karabağ', 'karadağ', 'akça', 'gökçe', 'gülce', 'selçuklu', 'osmanlı', 'türkiye'}
+            is_derived_proper = (
+                lkey not in non_derived_exceptions 
+                and lkey not in PROPER_NOUN_OVERRIDES 
+                and (
+                    lkey.endswith(('lı', 'li', 'lu', 'lü', 'lık', 'lik', 'luk', 'lük'))
+                    or lkey in {'türkçe', 'ingilizce', 'almanca', 'fransızca', 'rusça', 'arapça', 'farsça', 'çince', 'japonca', 'italyanca', 'ispanyolca', 'yunanca', 'kürtçe', 'sırpça', 'lehçe', 'çekçe', 'flemenkçe', 'bulgarca', 'rumence', 'ibranice', 'korece', 'osmanlıca', 'uygurca', 'kazakça', 'özbekçe', 'tatarca', 'azerice'}
+                )
+            )
             if is_derived_proper:
                 # Derived proper noun (e.g. Türkçe, Ankaralı, Türklük): takes standard case flags WITHOUT apostrophes
                 cap_lemma = capitalize_word(lkey, lkey)
