@@ -35,13 +35,14 @@ def remap_aff_file(input_path: str = 'tr.aff', output_path: str = 'tr_utf8.aff',
             continue
 
         parts = line.split()
-        
-        # Match NOSUGGEST line
-        if len(parts) == 2 and parts[0] == 'NOSUGGEST':
+        # Match header directives with flags
+        if len(parts) == 2 and parts[0] in ('NOSUGGEST', 'NEEDAFFIX', 'KEEPCASE'):
             flag = parts[1]
             if flag in LONG_TO_UTF8:
                 parts[1] = LONG_TO_UTF8[flag]
             new_lines.append(" ".join(parts))
+        elif len(parts) == 2 and parts[0] == 'FLAG':
+            new_lines.append("FLAG UTF-8")
             
         # SFX/PFX headers: SFX <flag> <Y/N> <count>
         elif len(parts) >= 4 and parts[0] in ('SFX', 'PFX') and parts[2] in ('Y', 'N'):

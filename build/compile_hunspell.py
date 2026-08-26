@@ -52,11 +52,13 @@ def get_voiced_stem(lemma: str) -> str:
     if not lemma:
         return ""
     last_char = lemma[-1].lower()
-    if len(lemma) >= 2 and lemma[-2].lower() in 'çfhkpsştbcdgğjlmnrvyz':
+    if last_char == 'k':
         if lemma.lower().endswith('nk'):
             return lemma[:-1] + 'g'
-        return lemma
-    voicing_map = {'p': 'b', 'ç': 'c', 't': 'd', 'k': 'ğ', 'g': 'ğ'}
+        if len(lemma) >= 2 and lemma[-2].lower() in 'çfhkpsştbcdgğjlmnrvyz':
+            return lemma  # e.g. kesk, kask, park do not voice to ğ
+        return lemma[:-1] + 'ğ'
+    voicing_map = {'p': 'b', 'ç': 'c', 't': 'd', 'g': 'ğ'}
     if last_char in voicing_map:
         return lemma[:-1] + voicing_map[last_char]
     return lemma
@@ -337,12 +339,12 @@ def compile_dictionary():
         'receive', 'recent', 'record', 'reduce', 'reflect', 'region', 'relate', 'relationship',
         'religious', 'remain', 'remember', 'remove', 'report', 'represent', 'require', 'research',
         'resource', 'respond', 'response', 'rest', 'result', 'return', 'reveal', 'rich',
-        'ride', 'right', 'rise', 'risk', 'road', 'rock', 'role', 'room', 'rule', 'run',
+        'ride', 'right', 'rise', 'risk', 'road', 'role', 'room', 'rule', 'run',
         'safe', 'same', 'save', 'scene', 'school', 'science', 'scientist', 'score', 'sea',
         'season', 'seat', 'second', 'section', 'security', 'see', 'seek', 'seem', 'sell',
         'send', 'senior', 'sense', 'series', 'serious', 'serve', 'service', 'set', 'seven',
         'several', 'sex', 'sexual', 'shake', 'share', 'she', 'shoot', 'short', 'shot',
-        'should', 'shoulder', 'show', 'side', 'sign', 'significant', 'similar', 'simple',
+        'should', 'shoulder', 'side', 'sign', 'significant', 'similar', 'simple',
         'simply', 'since', 'sing', 'single', 'sister', 'sit', 'site', 'situation', 'six',
         'size', 'skill', 'skin', 'small', 'smile', 'social', 'society', 'soldier', 'some',
         'somebody', 'someone', 'something', 'sometimes', 'son', 'song', 'soon', 'sort',
@@ -352,12 +354,12 @@ def compile_dictionary():
         'store', 'story', 'strategy', 'street', 'strong', 'structure', 'student', 'study',
         'stuff', 'style', 'subject', 'success', 'successful', 'such', 'suddenly', 'suffer',
         'suggest', 'summer', 'support', 'sure', 'surface', 'system', 'table', 'take', 'talk',
-        'task', 'tax', 'teach', 'teacher', 'team', 'technology', 'television', 'tell',
+        'task', 'tax', 'teach', 'teacher', 'team', 'technology', 'television',
         'ten', 'tend', 'term', 'test', 'than', 'thank', 'that', 'the', 'their', 'them',
         'themselves', 'then', 'theory', 'there', 'these', 'they', 'thing', 'think', 'third',
         'this', 'those', 'though', 'thought', 'thousand', 'threat', 'three', 'through',
         'throughout', 'throw', 'thus', 'time', 'today', 'together', 'tonight', 'too', 'top',
-        'total', 'tough', 'toward', 'town', 'trade', 'traditional', 'training', 'travel',
+        'tough', 'toward', 'town', 'trade', 'traditional', 'training', 'travel',
         'treat', 'treatment', 'tree', 'trial', 'trip', 'trouble', 'true', 'truth', 'try',
         'turn', 'two', 'type', 'under', 'understand', 'unit', 'until', 'upon', 'use', 'usually',
         'value', 'various', 'very', 'victim', 'view', 'violence', 'visit', 'voice', 'vote',
@@ -369,11 +371,21 @@ def compile_dictionary():
         'wrong', 'yard', 'yeah', 'year', 'yes', 'yet', 'you', 'young', 'your', 'yourself'
     }
 
+    FALSE_NEGATIVE_STEMS = {
+        'ü', 'bi', 'hu', 'ole', 'be', 'enç', 'havşa', 'ikil', 'gelimli', 'cümlesi',
+        'urmak', 'pur', 'aysal', 'sahin', 'dölenme', 'çet', 'dölenmek',
+        'lavan', 'semek', 'donurmak', 'donurma', 'kesği', 'kesğin', 'küfretmen', 'ayaklamak',
+        'humum', 'çakırmak', 'deb', 'kesğ', 'donur', 'mesin', 'mes', 'kany',
+        'kayetme', 'kayetmek', 'choice', 'wide', 'biin', 'gog',
+        'mebsim', 'ornegin', 'osmanlica', 'sehir', 'yada', 'memik', 'dokum', 'effe',
+        'icada', 'ica', 'icad', 'wid', 'choi', 'turunun', 'yasanan', 'zarfi', 'boynız', 'yasamazken', 'çalışılabileceğ'
+    }
+
     # Filter custom entries: Keep all valid custom entries (excluding English stop words)
     custom_entries = []
     for e in raw_custom_entries:
         lemma = e.get('lemma', '')
-        if lemma.lower() in ENGLISH_WORDS:
+        if lemma.lower() in ENGLISH_WORDS or lemma.lower() in FALSE_NEGATIVE_STEMS:
             continue
         if lemma:
             custom_entries.append(e)
@@ -384,14 +396,26 @@ def compile_dictionary():
     abbrev_path = lexicon_file('custom_abbreviations.json')
     with open(abbrev_path, 'r', encoding='utf-8') as f:
         abbrev_list = json.load(f)
-    custom_entries.extend(abbrev_list)
+    for a in abbrev_list:
+        lemma = a.get('lemma', '')
+        if lemma.lower() not in ENGLISH_WORDS and lemma.lower() not in FALSE_NEGATIVE_STEMS:
+            custom_entries.append(a)
+            lemma_lc = lemma.lower()
+            if lemma_lc:
+                custom_entries.append({'lemma': lemma_lc, 'pos': 'Noun', 'attributes': list(a.get('attributes', []))})
     print(f"Loaded {len(abbrev_list)} custom abbreviations.")
 
     # Load custom names (required)
     names_path = lexicon_file('custom_names.json')
     with open(names_path, 'r', encoding='utf-8') as f:
         names_list = json.load(f)
-    custom_entries.extend(names_list)
+    for n in names_list:
+        lemma = n.get('lemma', '')
+        if lemma not in ENGLISH_WORDS and lemma.lower() not in FALSE_NEGATIVE_STEMS:
+            custom_entries.append(n)
+            lemma_lc = lemma.lower()
+            if lemma_lc and lemma_lc not in ENGLISH_WORDS and lemma_lc not in FALSE_NEGATIVE_STEMS:
+                custom_entries.append({'lemma': lemma_lc, 'pos': 'Noun', 'attributes': list(n.get('attributes', []))})
     print(f"Loaded {len(names_list)} custom names.")
 
     lexicon.extend(custom_entries)
@@ -440,8 +464,7 @@ def compile_dictionary():
         print(f"Loaded {len(_corpus_attrs_map):,} corpus-attested stem attributes.")
 
     for _w in sorted(_authority_set):
-        if _w.lower() in ENGLISH_WORDS or _w in _BAD_DD_VARIANTS:
-            print(f"Excluding Dil Derneği front-variant misspelling: {_w}")
+        if _w.lower() in ENGLISH_WORDS or _w in _BAD_DD_VARIANTS or _w.lower() in FALSE_NEGATIVE_STEMS:
             continue
         if _w not in _covered:
             # Check for a circumflex-spelling match in Zemberek
@@ -572,29 +595,6 @@ def compile_dictionary():
         ):
             continue
 
-        # Skip dubious nouns/interjections that cause false negatives by accepting
-        # fragment-inflections of misspelled words. These stems are either very rare,
-        # not standard Turkish, or their morphological forms collide with common typos.
-        FALSE_NEGATIVE_STEMS = {
-            # Single/two-letter nouns that over-generate (caught by PronunciationGuessed
-            # filter above for most, but these are in zemberek as normal entries)
-            'ü',
-            # 'bi' in zemberek as element Bismuth (no PronunciationGuessed) but causes
-            # 'bideki' and similar to be accepted as misspellings of 'bindeki'
-            'bi',
-            # Short interjections being over-inflected  
-            'hu', 'ole', 'be',
-            # Dubious nouns whose inflected forms match misspellings
-            'enç', 'havşa',
-            'ikil', 'gelimli', 'cümlesi',
-            # 'urmak' registered as Noun (it is a verb root, not a standalone noun)
-            'urmak',
-            # Stems causing false negatives / masking common misspellings
-            'pur', 'aysal', 'sahin', 'dölenme', 'çet', 'dölenmek', 'elmek',
-            'lavan', 'semek', 'donurmak', 'donurma', 'kesği', 'kesğin', 'küfretmen', 'ayaklamak',
-            'humum', 'çakırmak', 'deb', 'kesğ', 'donur', 'mesin', 'mes', 'kany',
-            'kayetme', 'kayetmek',
-        }
         if lemma.lower() in FALSE_NEGATIVE_STEMS:
             continue
             
@@ -660,7 +660,7 @@ def compile_dictionary():
         # take back suffixes in standard Turkish (TDK): emlak -> "emlakçı",
         # istihraç -> "maden istihracı". Force back harmony for them, and mark
         # emlak NoVoicing (it keeps the final k: "emlaka", "emlakın").
-        if lemma.lower() in ('emlak', 'istihraç'):
+        if lemma.lower() in ('emlak', 'istihraç', 'araz', 'turp', 'mısır'):
             attrs.discard('InverseHarmony')
             attrs.discard('LastVowelFrontal')
             attrs.discard('FrontVowelHarmony')
@@ -673,7 +673,11 @@ def compile_dictionary():
                 back = False
             
         # Inverse harmony overrides
-        inverse_harmony_words = {'kalp', 'saat', 'harf', 'rol', 'alkol', 'hâl', 'hal', 'metal', 'normal', 'ideal', 'gol', 'kontrol', 'petrol', 'sembol', 'şefkat', 'dikkat', 'polifenol', 'flavanol', 'kortizol', 'istirahat'}
+        inverse_harmony_words = {
+            'kalp', 'saat', 'harf', 'rol', 'alkol', 'hâl', 'hal', 'metal', 'normal', 'ideal',
+            'gol', 'kontrol', 'petrol', 'sembol', 'şefkat', 'dikkat', 'polifenol', 'flavanol',
+            'kortizol', 'istirahat', 'istimlak', 'istimlâk', 'güzergâh', 'tatil', 'varil'
+        }
         if lemma.lower() in inverse_harmony_words or (pos != 'Verb' and (lemma.lower().endswith('âl') or lemma.lower().endswith('ûl'))):
             back = False
 
@@ -685,8 +689,9 @@ def compile_dictionary():
         inverse_harmony = (not back) and (get_last_vowel(lemma) or '') in 'aıouâû'
 
         vowel_end = ends_with_vowel(lemma)
-        if lemma.lower() in ('vb.', 't.c.'):
+        if lemma.lower() in ('vb.', 't.c.', 'dvd', 'sarkozy'):
             vowel_end = True
+            back = False
         if lemma.lower() in ('online', 'offline', 'wifi', 'wi-fi', 'wi', 'fi'):
             vowel_end = False
         
@@ -713,8 +718,12 @@ def compile_dictionary():
         # Check vowel drop attributes
         if lemma in ['ağız', 'zehir']:
             attrs.add('LastVowelDrop')
-        if lemma == 'asım':
+        if lemma.lower() in ('asım', 'mısır', 'varil', 'tatil', 'gönderim'):
             attrs.discard('LastVowelDrop')
+        if lemma.lower() in ('araz', 'turp', 'mısır'):
+            attrs.discard('InverseHarmony')
+            attrs.discard('LastVowelFrontal')
+            attrs.discard('FrontVowelHarmony')
         is_cik_ending = lemma.endswith(('cık', 'cik', 'cuk', 'cük', 'çık', 'çik', 'çuk', 'çük'))
         vowel_drop = 'LastVowelDrop' in attrs and not vowel_end and not is_cik_ending
         
@@ -722,6 +731,10 @@ def compile_dictionary():
         flag = None
         if lemma == 'birbiri':
             flag = "14"
+        elif lemma.lower() == 'dvd':
+            flag = "4"
+        elif lemma.lower() in ('sarkozy', 'kentkart'):
+            flag = "1"
         elif pos in ['Noun', 'ProperNoun', 'Adjective', 'Adverb', 'Numeral', 'Pronoun', 'Determiner']:
             is_doubling = 'Doubling' in attrs
             if is_doubling:
@@ -800,7 +813,7 @@ def compile_dictionary():
             
             target_flags = []
             for f in flag.split(','):
-                if f in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "18", "19"] and is_rounded:
+                if f in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "18", "19", "20", "21", "22", "23"] and is_rounded:
                     target_flags.append(str(int(f) + 100))
                 else:
                     target_flags.append(f)
@@ -1240,13 +1253,8 @@ def compile_dictionary():
             if lkey in PROPER_NOUN_OVERRIDES:
                 seen_overrides.add(lkey)
             
-            # If it also functions as a common word (e.g. Temmuz, akut, ram),
-            # keep the lowercase entry alongside the proper-noun one.
-            if lkey in common_lemmas:
-                if lkey in {'km', 'cm', 'mm', 'kg', 'gr', 'şii'}:
-                    pass
-                else:
-                    new_dic_entries.append(f"{lkey}/{flags_part}" if flags_part else lkey)
+            if lkey not in {'km', 'cm', 'mm', 'kg', 'gr', 'şii'}:
+                new_dic_entries.append(f"{lkey}/{flags_part}" if flags_part else lkey)
 
         # Case 2: Word is a common noun (but not explicitly tagged as proper noun/override)
         elif lkey in noun_lemmas:
