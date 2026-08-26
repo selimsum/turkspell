@@ -166,13 +166,13 @@ def sfx_copula(flag: str, strip: str, add: str, cond: str, rules: list):
     cop_flag = "CL" if lv in 'aıouâû' else "cl"
     
     if add == "0":
-        new_add = f"0/{cop_flag}"
+        rules.append(sfx(flag, strip, f"0/{cop_flag}", cond))
     elif "/" in add:
-        new_add = add + cop_flag
+        rules.append(sfx(flag, strip, add, cond))
+        rules.append(sfx(flag, strip, add + cop_flag, cond))
     else:
-        new_add = f"{add}/{cop_flag}"
-
-    rules.append(sfx(flag, strip, new_add, cond))
+        rules.append(sfx(flag, strip, add, cond))
+        rules.append(sfx(flag, strip, f"{add}/{cop_flag}", cond))
 
 def sfx_ki(flag: str, strip: str, add: str, cond: str, rules: list, chain_copula: bool = True):
     ki_inflections = [
@@ -576,22 +576,22 @@ def _plural_cases(pl_vowel: str, harmony: str) -> list[str]:
 
     suffixes = [
         f"{pl}{acc_v}",
-        f"{pl}{dat_v}/{cop}",
-        f"{pl}d{dat_v}/{cop}{ki}",
-        f"{pl}d{dat_v}n/{cop}",
-        f"{pl}{gen_v}/{cop}{ki}",
-        f"{pl}l{dat_v}/{cop}",
-        f"{pl}{eq_v}/{cop}",
+        f"{pl}{dat_v}", f"{pl}{dat_v}/{cop}",
+        f"{pl}d{dat_v}", f"{pl}d{dat_v}/{cop}", f"{pl}d{dat_v}/{cop}{ki}",
+        f"{pl}d{dat_v}n", f"{pl}d{dat_v}n/{cop}",
+        f"{pl}{gen_v}", f"{pl}{gen_v}/{cop}", f"{pl}{gen_v}/{cop}{ki}",
+        f"{pl}l{dat_v}", f"{pl}l{dat_v}/{cop}",
+        f"{pl}{eq_v}", f"{pl}{eq_v}/{cop}",
     ]
     
     poss_cases = [
-        f"{pl}{acc_v}/{cop}",
-        f"{pl}{acc_v}n{dat_v}/{cop}",
-        f"{pl}{acc_v}nd{dat_v}/{cop}{ki}",
-        f"{pl}{acc_v}nd{dat_v}n/{cop}",
-        f"{pl}{acc_v}yl{dat_v}/{cop}",
-        f"{pl}{acc_v}n{eq_v}/{cop}",
-        f"{pl}{acc_v}n{acc_v}n/{cop}{ki}",
+        f"{pl}{acc_v}", f"{pl}{acc_v}/{cop}",
+        f"{pl}{acc_v}n{dat_v}", f"{pl}{acc_v}n{dat_v}/{cop}",
+        f"{pl}{acc_v}nd{dat_v}", f"{pl}{acc_v}nd{dat_v}/{cop}", f"{pl}{acc_v}nd{dat_v}/{cop}{ki}",
+        f"{pl}{acc_v}nd{dat_v}n", f"{pl}{acc_v}nd{dat_v}n/{cop}",
+        f"{pl}{acc_v}yl{dat_v}", f"{pl}{acc_v}yl{dat_v}/{cop}",
+        f"{pl}{acc_v}n{eq_v}", f"{pl}{acc_v}n{eq_v}/{cop}",
+        f"{pl}{acc_v}n{acc_v}n", f"{pl}{acc_v}n{acc_v}n/{cop}", f"{pl}{acc_v}n{acc_v}n/{cop}{ki}",
     ]
     suffixes.extend(poss_cases)
     return suffixes
@@ -600,6 +600,7 @@ def _plural_cases(pl_vowel: str, harmony: str) -> list[str]:
 def gen_plural_back(flag: str = "PB") -> str:
     """Back plural: -lar + all plural case forms"""
     rules = []
+    rules.append(sfx(flag, "0", "lar", "."))
     rules.append(sfx(flag, "0", "lar/CP", "."))  # base plural (takes plural copula CP, not CL, preventing double plurals)
     for sfx_str in _plural_cases('a', 'back'):
         rules.append(sfx(flag, "0", sfx_str, "."))
@@ -623,6 +624,7 @@ def gen_plural_back(flag: str = "PB") -> str:
 def gen_plural_front(flag: str = "PF") -> str:
     """Front plural: -ler + all plural case forms"""
     rules = []
+    rules.append(sfx(flag, "0", "ler", "."))
     rules.append(sfx(flag, "0", "ler/CV", "."))  # base plural (takes plural copula CV, not cl, preventing double plurals)
     for sfx_str in _plural_cases('e', 'front'):
         rules.append(sfx(flag, "0", sfx_str, "."))
@@ -687,7 +689,7 @@ def gen_3sg_poss_flags() -> list[str]:
     for flag, back, rounded, v_cond in [
         ("PS", True, False, "[aıâ]"),   # back unrounded: -ı/-sı
         ("PT", True, True,  "[ouû]"),   # back rounded:   -u/-su
-        ("PU", False, False, "[eiî]"),  # front unrounded: -i/-si
+        ("PU", False, False, "[eiîdD]"),  # front unrounded: -i/-si (includes d for DVD)
         ("PV", False, True,  "[öü]"),   # front rounded:   -ü/-sü
     ]:
         acc_v = "ı" if back and not rounded else ("u" if rounded and back else ("i" if not back and not rounded else "ü"))
@@ -1961,20 +1963,19 @@ def generate_phone_rules() -> list[tuple[str, str]]:
     """
     phone_rules = [
         # --- multi-char merges first (they shadow their single-char prefixes) ---
-        ("DEIL", "TEGIL"),   # deil  -> değil  (40k occurrences in rejected corpus)
-        ("DIIL", "TEGIL"),   # diil  -> değil
-        ("LN", "NL"),        # YANLIZ -> YALNIZ metathesis class
-        ("IYO", "IYOR"),     # geliyo/gelio -> geliyor speech elision
-        # --- diacritic folds only (broad consonant/vowel merges like D->T were
-        #     tested and found to CROWD OUT good ngram suggestions in real
-        #     Hunspell's phonet channel, so they are intentionally omitted) ---
-        ("Ğ", "G"),
-        ("Ş", "S"),
-        ("Ç", "C"),
-        ("Â", "A"), ("Î", "I"), ("Û", "U"),
+        ("deil", "tegil"),   # deil  -> değil  (40k occurrences in rejected corpus)
+        ("diil", "tegil"),   # diil  -> değil
+        ("ln", "nl"),        # YANLIZ -> YALNIZ metathesis class
+        ("iyo", "iyor"),     # geliyo/gelio -> geliyor speech elision
+        # --- diacritic folds only ---
+        ("ğ", "g"),
+        ("ş", "s"),
+        ("ç", "c"),
+        ("ö", "o"),
+        ("ü", "u"),
+        ("ı", "i"),
+        ("â", "a"), ("î", "i"), ("û", "u"),
     ]
-    # Identity rules ("A"->"A") are REQUIRED here: they declare that a letter
-    # passes through to the phonetic code unchanged. Unlike REP, do NOT drop them.
     seen = set()
     unique_rules = []
     for src, dst in phone_rules:
@@ -1994,23 +1995,19 @@ def generate_header() -> str:
     phone_pairs = generate_phone_rules()
     phone_lines = [f"PHONE {len(phone_pairs)}"]
     for src, dst in phone_pairs:
-        # Hunspell lowercases input before phonet matching -> emit lowercase.
-        # "_" is the canonical Hunspell encoding for an empty replacement.
         dst_aff = dst if dst else "_"
-        phone_lines.append(f"PHONE {src.lower()} {dst_aff.lower()}")
+        phone_lines.append(f"PHONE {src} {dst_aff}")
     phone_block = "\n".join(phone_lines)
 
     map_groups = [
         "aâAÂ",
-        "uûUÛ",
-        "iîİÎ",
+        "uûüUÛÜ",
+        "iîıİÎI",
+        "oöOÖ",
         "eêEÊ",
         "cçCÇ",
         "gğGĞ",
         "sşSŞ",
-        "oöOÖ",
-        "uüUÜ",
-        "ıiIİ",
         "vwyVWY",
         "qkQK",
         "'’‘",
@@ -3205,6 +3202,42 @@ def _generate_verb_flags_from_v1() -> str:
             for c in ["", "yım" if back else "yim", "sın" if back else "sin", "yız" if back else "yiz", "sınız" if back else "siniz", "lar" if back else "ler", "dır" if back else "dir", "ydı" if back else "ydi", "ymış" if back else "ymiş", "ysa" if back else "yse"]:
                 suf = f"{base_nec}{c}" if c else base_nec
                 verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            # 26. Negative Present Participle: -mayanlar / -meyenler (geçmeyenlerden, bilmeyenlerin)
+            mayan_suf = f"{m_vowel}y{v_low}n"
+            base_neg_an_pl = f"{mayan_suf}l{v_low}r"
+            for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "ın" if back else "in", "la" if back else "le", "ca" if back else "ce", "dandır" if back else "dendir", cop_c, cop_p, cop_r, cop_s]:
+                suf = f"{base_neg_an_pl}{c}" if c else base_neg_an_pl
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+
+            for c in ["", "na" if back else "ne", "nı" if back else "ni", "nda" if back else "nde", "ndan" if back else "nden", "nın" if back else "nin", "yla" if back else "yle", cop_c, cop_p]:
+                suf = f"{base_neg_an_pl}{v_pl_poss}{c}" if c else f"{base_neg_an_pl}{v_pl_poss}"
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+
+            base_neg_an_3sg = f"{mayan_suf}{v_pl_poss}"
+            for c in ["", "na" if back else "ne", "nı" if back else "ni", "nda" if back else "nde", "ndan" if back else "nden", "nın" if back else "nin", "yla" if back else "yle", cop_c, cop_p]:
+                suf = f"{base_neg_an_3sg}{c}" if c else base_neg_an_3sg
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+
+            # 27. Negative Potential Present Participle: -amayanlar / -emeyenler (sindiremeyenlere, gelemeyenlerin)
+            pot_neg_an = ("yamay" if is_vowel_stem else "amay") if back else (("yemey" if is_vowel_stem else "emey"))
+            base_pot_an_pl = f"{pot_neg_an}{v_low}nl{v_low}r"
+            for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "ın" if back else "in", "la" if back else "le", "ca" if back else "ce", "dandır" if back else "dendir", cop_c, cop_p, cop_r, cop_s]:
+                suf = f"{base_pot_an_pl}{c}" if c else base_pot_an_pl
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            for c in ["", "na" if back else "ne", "nı" if back else "ni", "nda" if back else "nde", "ndan" if back else "nden", "nın" if back else "nin", "yla" if back else "yle", cop_c, cop_p]:
+                suf = f"{base_pot_an_pl}{v_pl_poss}{c}" if c else f"{base_pot_an_pl}{v_pl_poss}"
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            base_pot_an_3sg = f"{pot_neg_an}{v_low}n{v_pl_poss}"
+            for c in ["", "na" if back else "ne", "nı" if back else "ni", "nda" if back else "nde", "ndan" if back else "nden", "nın" if back else "nin", "yla" if back else "yle", cop_c, cop_p]:
+                suf = f"{base_pot_an_3sg}{c}" if c else base_pot_an_3sg
+                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+
+            # 28. Infinitive Verbal Noun Cases: -makla / -mekle, -maktan / -mekten
+            verb_flags_rules[flag_char][1].append(["SFX", flag_char, "0", "la" if back else "le", f"{strip}"])
+            verb_flags_rules[flag_char][1].append(["SFX", flag_char, "0", "tan" if back else "ten", f"{strip}"])
 
     out_lines = []
     for flag_char in verb_flags_order:
