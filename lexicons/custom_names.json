@@ -83713,5 +83713,165 @@
     "lemma": "Tell",
     "pos": "ProperNoun",
     "attributes": []
+  },
+  {
+    "lemma": "SpaceX",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "PlayStation",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Anthropic",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "DeepMind",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Palantir",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "SeaOrbiter",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Midjourney",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Mistral",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "GitLab",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Discord",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Wikipedia",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "IBM",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Baidu",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Alibaba",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Tencent",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "ByteDance",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Apple",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Perseverance",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Curiosity",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "James Webb",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Artemis",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Starship",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Falcon",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Dragon",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Starlink",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Voyager",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "InSight",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "New Horizons",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Kepler",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TESS",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "JUICE",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Europa Clipper",
+    "pos": "ProperNoun",
+    "attributes": []
   }
 ]

@@ -670,7 +670,7 @@ def gen_all_possessive_flags() -> list[str]:
         eq_v = "ca" if back else "ce"
         rules = []
         for base_poss, after_vowel in [(sg, False), (m, True)]:
-            cond = VOWEL_RE if after_vowel else CONS_RE
+            cond = VOWEL_RE if after_vowel else "."
             sfx_copula(flag, "0", base_poss, cond, rules)
             rules.append(sfx(flag, "0", base_poss + acc,       cond))
             rules.append(sfx(flag, "0", base_poss + loc,       cond))
@@ -703,14 +703,14 @@ def gen_3sg_poss_flags() -> list[str]:
         sfx_copula(flag, "0", f"s{acc_v}",          v_cond, rules)
 
         # Cases after poss (n-buffer before all cases)
-        # 1. Consonant ending stems (condition: CONS_RE)
-        rules.append(sfx(flag, "0", acc_v + "n" + acc_v,         CONS_RE)) # acc
-        sfx_copula(flag, "0", acc_v + "n" + loc_v,         CONS_RE, rules) # dat
-        sfx_ki(flag, "0", acc_v + "nd" + loc_v,        CONS_RE, rules)      # loc
-        sfx_copula(flag, "0", acc_v + "nd" + loc_v + "n",  CONS_RE, rules) # abl
-        sfx_ki(flag, "0", acc_v + "n" + acc_v + "n",   CONS_RE, rules)      # gen
-        sfx_copula(flag, "0", acc_v + "yl" + loc_v,        CONS_RE, rules) # ins
-        sfx_copula(flag, "0", acc_v + "n" + eq_v,          CONS_RE, rules) # eq
+        # 1. Consonant ending stems (condition: CONS_RE and any unvoiced/voiced consonants)
+        rules.append(sfx(flag, "0", acc_v + "n" + acc_v,         ".")) # acc
+        sfx_copula(flag, "0", acc_v + "n" + loc_v,         ".", rules) # dat
+        sfx_ki(flag, "0", acc_v + "nd" + loc_v,        ".", rules)      # loc
+        sfx_copula(flag, "0", acc_v + "nd" + loc_v + "n",  ".", rules) # abl
+        sfx_ki(flag, "0", acc_v + "n" + acc_v + "n",   ".", rules)      # gen
+        sfx_copula(flag, "0", acc_v + "yl" + loc_v,        ".", rules) # ins
+        sfx_copula(flag, "0", acc_v + "n" + eq_v,          ".", rules) # eq
 
         # 2. Vowel ending stems (condition: v_cond)
         poss_s = f"s{acc_v}"
@@ -731,7 +731,7 @@ def gen_3sg_poss_flags() -> list[str]:
             f"s{acc_v}yd{acc_v}m", f"s{acc_v}yd{acc_v}n", f"s{acc_v}yd{acc_v}k", f"s{acc_v}yd{acc_v}n{acc_v}z", f"s{acc_v}yd{loc_v}l{loc_v}r",
             f"s{acc_v}ym{acc_v}ş{acc_v}m", f"s{acc_v}ym{acc_v}şs{acc_v}n", f"s{acc_v}ym{acc_v}ş{acc_v}z", f"s{acc_v}ym{acc_v}şs{acc_v}n{acc_v}z", f"s{acc_v}ym{acc_v}şl{loc_v}r",
         ]:
-            cond = v_cond if cop_base.startswith('s') else CONS_RE
+            cond = v_cond if cop_base.startswith('s') else "."
             rules.append(sfx(flag, "0", cop_base, cond))
 
         # Direct copulas on locative/ablative after 3sg possessive (e.g. emrindeymiş, hattındaydı)
@@ -739,7 +739,7 @@ def gen_3sg_poss_flags() -> list[str]:
             f"{acc_v}nd{loc_v}yd{acc_v}", f"{acc_v}nd{loc_v}ym{acc_v}ş", f"{acc_v}nd{loc_v}ys{loc_v}", f"{acc_v}nd{loc_v}yken",
             f"s{acc_v}nd{loc_v}yd{acc_v}", f"s{acc_v}nd{loc_v}ym{acc_v}ş", f"s{acc_v}nd{loc_v}ys{loc_v}", f"s{acc_v}nd{loc_v}yken",
         ]:
-            cond = VOWEL_RE if case_cop.startswith('s') else CONS_RE
+            cond = VOWEL_RE if case_cop.startswith('s') else "."
             rules.append(sfx(flag, "0", case_cop, cond))
 
         blocks.append(make_flag_block(flag, unique(rules)))
@@ -762,7 +762,7 @@ def gen_2sg_poss_flags() -> list[str]:
 
         eq_v = "ca" if back else "ce"
         rules = []
-        for base_poss, cond in [(sg, CONS_RE), (m, VOWEL_RE)]:
+        for base_poss, cond in [(sg, "."), (m, VOWEL_RE)]:
             sfx_copula(flag, "0", base_poss, cond, rules)
             rules.append(sfx(flag, "0", base_poss + acc_v,        cond))
             sfx_copula(flag, "0", base_poss + loc_v,        cond, rules)
@@ -793,7 +793,7 @@ def gen_1pl_poss_flags() -> list[str]:
 
         eq_v = "ca" if back else "ce"
         rules = []
-        for base_poss, cond in [(sg, CONS_RE), (m, VOWEL_RE)]:
+        for base_poss, cond in [(sg, "."), (m, VOWEL_RE)]:
             sfx_copula(flag, "0", base_poss, cond, rules)
             rules.append(sfx(flag, "0", base_poss + acc_v,        cond))
             sfx_copula(flag, "0", base_poss + loc_v,        cond, rules)
@@ -824,7 +824,7 @@ def gen_2pl_poss_flags() -> list[str]:
 
         eq_v = "ca" if back else "ce"
         rules = []
-        for base_poss, cond in [(sg, CONS_RE), (m, VOWEL_RE)]:
+        for base_poss, cond in [(sg, "."), (m, VOWEL_RE)]:
             sfx_copula(flag, "0", base_poss, cond, rules)
             rules.append(sfx(flag, "0", base_poss + acc_v,        cond))
             sfx_copula(flag, "0", base_poss + loc_v,        cond, rules)
@@ -927,8 +927,8 @@ def gen_copula_flag_front(flag: str = "cl") -> str:
             rules.append(sfx(flag, "0", r_flat, f"[eiaâî]{cond_suffix}"))
             rules.append(sfx(flag, "0", r_flat, f"[eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
         if r_round:
-            rules.append(sfx(flag, "0", r_round, f"[öü]{cond_suffix}"))
-            rules.append(sfx(flag, "0", r_round, f"[öü][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_round, f"[öüoöuüû]{cond_suffix}"))
+            rules.append(sfx(flag, "0", r_round, f"[öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ]{cond_suffix}"))
     return make_flag_block(flag, unique(rules))
 
 
@@ -2799,7 +2799,7 @@ def _generate_verb_flags_from_v1() -> str:
                                 if not is_a_aorist and not is_i_aorist:
                                     verb_flags_rules[new_flag_char][1].append(list(cur_parts))
                                 if is_a_aorist:
-                                    verb_flags_rules[new_wu_char][1].append(list(cur_parts))
+                                    verb_flags_rules[new_wr_char][1].append(list(cur_parts))
                                 if is_i_aorist:
                                     verb_flags_rules[new_wu_char][1].append(list(cur_parts))
                             elif new_flag_char == LONG_TO_UTF8["VG"]:
@@ -2808,7 +2808,7 @@ def _generate_verb_flags_from_v1() -> str:
                                 if not is_a_aorist and not is_i_aorist:
                                     verb_flags_rules[new_flag_char][1].append(list(cur_parts))
                                 if is_a_aorist:
-                                    verb_flags_rules[new_wh_char][1].append(list(cur_parts))
+                                    verb_flags_rules[new_wg_char][1].append(list(cur_parts))
                                 if is_i_aorist:
                                     verb_flags_rules[new_wh_char][1].append(list(cur_parts))
                             else:
@@ -3126,24 +3126,35 @@ def _generate_verb_flags_from_v1() -> str:
                     suf = f"{p_suf}{c}" if c else p_suf
                     verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
 
-            # 22. Positive Ability Future Participles: -abileceği / -ebileceği (hazırlayabileceğimi, halledilebileceğine...)
+            # 22. Positive Ability Future Participles & Person Forms: -abileceği / -ebileceği, -abileceğim, -abileceğiz (hazırlayabileceğimi, dönüştürebileceğiz...)
             abil_base = ("yabil" if is_vowel_stem else "abil") if back else (("yebil" if is_vowel_stem else "ebil"))
-            base_abil_fut_3sg = f"{abil_base}eceği"
+            fut_vow = "acak" if back else "ecek"
+            fut_voiced = "acağ" if back else "eceğ"
+            
+            # Direct ability future tense persons (e.g. dönüştür + ebileceğ + iz -> dönüştürebileceğiz)
+            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"{abil_base}{fut_voiced}{'ım' if back else 'im'}", cond_pot])
+            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"{abil_base}{fut_vow}{'sın' if back else 'sin'}", cond_pot])
+            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"{abil_base}{fut_vow}", cond_pot])
+            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"{abil_base}{fut_voiced}{'ız' if back else 'iz'}", cond_pot])
+            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"{abil_base}{fut_vow}{'sınız' if back else 'siniz'}", cond_pot])
+            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"{abil_base}{fut_vow}{'lar' if back else 'ler'}", cond_pot])
+
+            base_abil_fut_3sg = f"{abil_base}{fut_voiced}{'ı' if back else 'i'}"
             for c in ["", "nde", "nden", "ni", "ne", "nin", "yle", "dir", "ydi", "ymiş", "yse"]:
                 suf = f"{base_abil_fut_3sg}{c}" if c else base_abil_fut_3sg
                 verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
 
             for p_tag, p_suf in [
-                ("1sg", f"{abil_base}eceğim"),
-                ("2sg", f"{abil_base}eceğin"),
-                ("1pl", f"{abil_base}eceğimiz"),
-                ("2pl", f"{abil_base}eceğiniz"),
+                ("1sg", f"{abil_base}{fut_voiced}{'ım' if back else 'im'}"),
+                ("2sg", f"{abil_base}{fut_voiced}{'ın' if back else 'in'}"),
+                ("1pl", f"{abil_base}{fut_voiced}{'ımız' if back else 'imiz'}"),
+                ("2pl", f"{abil_base}{fut_voiced}{'ınız' if back else 'iniz'}"),
             ]:
-                for c in ["", "e", "i", "de", "den", "le", "dir", "di", "se"]:
+                for c in ["", "e" if not back else "a", "i" if not back else "ı", "de" if not back else "da", "den" if not back else "dan", "le" if not back else "la", "dir" if not back else "dır", "di" if not back else "dı", "se" if not back else "sa"]:
                     suf = f"{p_suf}{c}" if c else p_suf
                     verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
 
-            base_abil_fut_pl = f"{abil_base}ecekleri"
+            base_abil_fut_pl = f"{abil_base}{fut_vow}{'leri' if not back else 'ları'}"
             for c in ["", "nde", "nden", "ni", "ne", "nin", "yle", "dir", "ydi"]:
                 suf = f"{base_abil_fut_pl}{c}" if c else base_abil_fut_pl
                 verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
@@ -3235,9 +3246,22 @@ def _generate_verb_flags_from_v1() -> str:
                 suf = f"{base_pot_an_3sg}{c}" if c else base_pot_an_3sg
                 verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
 
-            # 28. Infinitive Verbal Noun Cases: -makla / -mekle, -maktan / -mekten
+            # 28. Infinitive Verbal Noun Cases: -makla / -mekle, -maktan / -mekten, -maksızın / -meksizin, -masızın / -mesizin
             verb_flags_rules[flag_char][1].append(["SFX", flag_char, "0", "la" if back else "le", f"{strip}"])
             verb_flags_rules[flag_char][1].append(["SFX", flag_char, "0", "tan" if back else "ten", f"{strip}"])
+            verb_flags_rules[flag_char][1].append(["SFX", flag_char, "0", "sık" if back else "sik", f"{strip}"])
+            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"maksızın" if back else f"meksizin", "."])
+            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"masızın" if back else f"mesizin", "."])
+
+            # 29. Aorist Person Locative / Conditional Copulas: -arımda / -erimde, -arımdaysa / -erimdeyse
+            # e.g. bakar + ım + da -> bakarımda; görür + üm + de -> görürümde
+            aor_vow = "ar" if back else "er"
+            if flag_name in ("wa", "we", "wr", "wg", "VB", "VF", "VR", "VG"):
+                aor_1sg = f"{aor_vow}{v_high}m"
+                for c in ["da" if back else "de", "dan" if back else "den", "daysa" if back else "deyse"]:
+                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"{aor_1sg}{c}", "."])
+
+
 
     out_lines = []
     for flag_char in verb_flags_order:
