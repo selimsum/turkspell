@@ -43,6 +43,21 @@ CASE_PRESERVED_OVERRIDES = {
     'eugh': 'EuGH',
     'amerika birleşik devletleri': 'Amerika Birleşik Devletleri',
     'wi-fi': 'Wi-Fi',
+    'spacex': 'SpaceX',
+    'chatgpt': 'ChatGPT',
+    'openai': 'OpenAI',
+    'playstation': 'PlayStation',
+    'deepmind': 'DeepMind',
+    'midjourney': 'Midjourney',
+    'github': 'GitHub',
+    'gitlab': 'GitLab',
+    'tiktok': 'TikTok',
+    'youtube': 'YouTube',
+    'seaorbiter': 'SeaOrbiter',
+    'bytedance': 'ByteDance',
+    'palantir': 'Palantir',
+    'whatsapp': 'WhatsApp',
+    'linkedin': 'LinkedIn',
 }
 
 def turkish_upper(s: str) -> str:
@@ -566,12 +581,6 @@ def compile_dictionary():
             pos = item['pos']
             attrs = set(item['attributes'])
         
-        # Integrate attested phonetic attributes (LastVowelDrop, Doubling, InverseHarmony, Voicing)
-        if lemma.lower() in _corpus_attrs_map and pos in ('Noun', 'Adjective'):
-            for attr in _corpus_attrs_map[lemma.lower()]:
-                if attr in ('LastVowelDrop', 'Doubling', 'InverseHarmony', 'Voicing', 'NoVoicing'):
-                    attrs.add(attr)
-        
         # Skip abbreviations, punctuation, or single-character noise
         # Skip empty or single-character noise
         if not lemma or len(lemma.strip()) == 0:
@@ -624,7 +633,7 @@ def compile_dictionary():
             'kaymak', 'ilmek', 'basamak', 'mercimek', 'damak', 'yumak', 'oymak', 
             'yamak', 'hamak', 'sumak', 'kaçamak', 'kuymak', 'ramak', 'somak', 'tomak', 'emek'
         )
-        if lemma.endswith(('mak', 'mek')) and (pos != 'Noun' or not lemma.endswith(noun_endings) or (lemma.endswith(('ilmek', 'inmek', 'ilmak', 'inmak', 'tırmak', 'tirmek', 'ırmak', 'irmek')) and lemma not in ['ilmek', 'ırmak'])):
+        if lemma.endswith(('mak', 'mek')) and (pos != 'Noun' or not lemma.endswith(noun_endings) or lemma.endswith(('lanmak', 'lenmek', 'laşmak', 'leşmek', 'tırmak', 'tirmek', 'ılmak', 'ilmek', 'ulmak', 'ülmek', 'ınmak', 'inmek', 'unmak', 'ünmek'))):
             pos = 'Verb'
             
         # Force Noun POS and Voicing for any lemma ending in lık/lik/luk/lük
@@ -676,7 +685,7 @@ def compile_dictionary():
         inverse_harmony_words = {
             'kalp', 'saat', 'harf', 'rol', 'alkol', 'hâl', 'hal', 'metal', 'normal', 'ideal',
             'gol', 'kontrol', 'petrol', 'sembol', 'şefkat', 'dikkat', 'polifenol', 'flavanol',
-            'kortizol', 'istirahat', 'istimlak', 'istimlâk', 'güzergâh', 'tatil', 'varil'
+            'kortizol', 'istirahat', 'istimlak', 'istimlâk', 'tatil', 'varil'
         }
         if lemma.lower() in inverse_harmony_words or (pos != 'Verb' and (lemma.lower().endswith('âl') or lemma.lower().endswith('ûl'))):
             back = False
@@ -711,14 +720,14 @@ def compile_dictionary():
             # vaat -> vaadi) voice.
             if 'Voicing' in attrs or 'VoicingOpt' in attrs or 'VoicingSelf' in attrs or (not inverse_harmony and num_vowels >= 2) or lemma in ['teleskop', 'radyoteleskop', 'asteroit', 'eşlik', 'karbondioksit']:
                 # Exclude explicitly marked NoVoicing and a few manual exceptions
-                if ('NoVoicing' not in attrs or lemma in ['teleskop', 'radyoteleskop', 'eşlik', 'karbondioksit']) and lemma not in ['dikkat', 'sepet', 'paket', 'bilet', 'kaset', 'anket', 'davet', 'menfaat']:
+                if ('NoVoicing' not in attrs or lemma in ['teleskop', 'radyoteleskop', 'eşlik', 'karbondioksit']) and lemma not in ['dikkat', 'sepet', 'paket', 'bilet', 'kaset', 'anket', 'davet', 'menfaat', 'kübit', 'kuark']:
                     voicing = True
         
         voicing_map[lemma.lower()] = voicing
         # Check vowel drop attributes
-        if lemma in ['ağız', 'zehir']:
+        if lemma in ['ağız']:
             attrs.add('LastVowelDrop')
-        if lemma.lower() in ('asım', 'mısır', 'varil', 'tatil', 'gönderim'):
+        if lemma.lower() in ('asım', 'mısır', 'varil', 'tatil', 'gönderim', 'zehir'):
             attrs.discard('LastVowelDrop')
         if lemma.lower() in ('araz', 'turp', 'mısır'):
             attrs.discard('InverseHarmony')
@@ -784,13 +793,14 @@ def compile_dictionary():
                 is_aorist_a = 'Aorist_A' in attrs or (num_vowels == 1 and root not in aorist_i_exceptions)
                 
                 general_flag = "9" if back else "10"
-                
                 if is_aorist_i and not is_aorist_a:
-                    flag = general_flag + "," + ("21" if back else "23") # VB, wi or VF, wj
+                    flag = general_flag + "," + ("21" if back else "23") # VB, wi or VF, wj (or VR, wu / VG, wh)
                 elif is_aorist_a and not is_aorist_i:
-                    flag = general_flag + "," + ("20" if back else "22") # VB, wa or VF, we
+                    flag = general_flag + "," + ("20" if back else "22") # VB, wa or VF, we (or VR, wr / VG, wg)
+                elif is_aorist_i:
+                    flag = general_flag + "," + ("21" if back else "23")
                 else:
-                    flag = general_flag
+                    flag = general_flag + "," + ("20" if back else "22")
         elif pos == 'Question':
             flag = "3" if back else "4"
             
@@ -809,7 +819,12 @@ def compile_dictionary():
             else:
                 last_v = get_last_vowel(target_word)
                 
-            is_rounded = last_v in 'oöuüû' if last_v else False
+            is_rounded = bool(last_v and last_v in 'oöuüû')
+            if inverse_harmony or not back:
+                if last_v and last_v in 'oöuüû' and back:
+                    is_rounded = True
+                elif not back:
+                    is_rounded = bool(last_v and last_v in 'öü')
             
             target_flags = []
             for f in flag.split(','):
@@ -1141,6 +1156,22 @@ def compile_dictionary():
         'amerika birleşik devletleri': 'pF',
         'devletleri': 'pF',
         'ml': 'pF',
+        'spacex': 'pF',
+        'chatgpt': 'pF',
+        'openai': 'pF',
+        'playstation': 'pF',
+        'deepmind': 'pF',
+        'anthropic': 'pF',
+        'midjourney': 'pF',
+        'github': 'pF',
+        'gitlab': 'pF',
+        'tiktok': 'pF',
+        'youtube': 'pF',
+        'seaorbiter': 'pF',
+        'palantir': 'pF',
+        'bytedance': 'pF',
+        'whatsapp': 'pB',
+        'linkedin': 'pF',
     }
 
     # Collect all nouns from lexicon to apply proper noun suffix + KC rules
