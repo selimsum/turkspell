@@ -17,10 +17,15 @@ TURKISH_VOWELS_LOWER = 'aeıioöuüâîû'
 FRONT_VOWELS = set('eioüîiöEİÖÜÎ')
 BACK_VOWELS  = set('aıouâûAIOUÂÛ')
 
+def _tlc(s: str) -> str:
+    if not s:
+        return ''
+    return s.replace('I', 'ı').replace('İ', 'i').lower()
+
 def get_last_vowel(word):
     for ch in reversed(word):
         if ch in TURKISH_VOWELS:
-            return ch.lower()
+            return _tlc(ch)
     return None
 
 def turkish_capitalize(s: str) -> str:
@@ -393,16 +398,20 @@ def compile_dictionary():
         'humum', 'çakırmak', 'deb', 'kesğ', 'donur', 'mesin', 'mes', 'kany',
         'kayetme', 'kayetmek', 'choice', 'wide', 'biin', 'gog',
         'mebsim', 'ornegin', 'osmanlica', 'sehir', 'yada', 'memik', 'dokum', 'effe',
-        'icada', 'ica', 'icad', 'wid', 'choi', 'turunun', 'yasanan', 'zarfi', 'boynız', 'yasamazken', 'çalışılabileceğ'
+        'icada', 'ica', 'icad', 'wid', 'choi', 'turunun', 'yasanan', 'zarfi', 'boynız', 'yasamazken', 'çalışılabileceğ',
+        'yili', 'yilin', 'yil', 'yillik', 'yildir', 'hiz', 'hizli', 'hurriyet', 'ozel', 'lutfen', 'gun', 'bır',
+        'dis', 'tsl', 'eim', 'aız', 'ihı', 'diger', 'icinde', 'icine', 'icin', 'guvenligi', 'insanlarin',
+        'ozaman', 'ıcın', 'pluton', 'gura', 'uaz', 'ee', 'disi', 'gunu', 'ozellikle'
     }
 
-    # Filter custom entries: Keep all valid custom entries (excluding English stop words)
+    # Filter custom entries: Keep only entries that are in TDK / Dil Derneği authority set
     custom_entries = []
     for e in raw_custom_entries:
         lemma = e.get('lemma', '')
-        if lemma.lower() in ENGLISH_WORDS or lemma.lower() in FALSE_NEGATIVE_STEMS:
+        lemma_lc = _tlc(lemma)
+        if lemma_lc in ENGLISH_WORDS or lemma_lc in FALSE_NEGATIVE_STEMS:
             continue
-        if lemma:
+        if lemma_lc in _authority_set:
             custom_entries.append(e)
 
     print(f"Loaded custom entries: {len(raw_custom_entries)} -> {len(custom_entries)}")
@@ -413,11 +422,12 @@ def compile_dictionary():
         abbrev_list = json.load(f)
     for a in abbrev_list:
         lemma = a.get('lemma', '')
-        if lemma.lower() not in ENGLISH_WORDS and lemma.lower() not in FALSE_NEGATIVE_STEMS:
-            custom_entries.append(a)
-            lemma_lc = lemma.lower()
-            if lemma_lc:
-                custom_entries.append({'lemma': lemma_lc, 'pos': 'Noun', 'attributes': list(a.get('attributes', []))})
+        lemma_lc = _tlc(lemma)
+        if lemma_lc in ENGLISH_WORDS or lemma_lc in FALSE_NEGATIVE_STEMS:
+            continue
+        if (lemma_lc in _dd_unhatted_map and lemma_lc not in _authority_set):
+            continue
+        custom_entries.append(a)
     print(f"Loaded {len(abbrev_list)} custom abbreviations.")
 
     # Load custom names (required)
@@ -426,11 +436,13 @@ def compile_dictionary():
         names_list = json.load(f)
     for n in names_list:
         lemma = n.get('lemma', '')
-        if lemma not in ENGLISH_WORDS and lemma.lower() not in FALSE_NEGATIVE_STEMS:
-            custom_entries.append(n)
-            lemma_lc = lemma.lower()
-            if lemma_lc and lemma_lc not in ENGLISH_WORDS and lemma_lc not in FALSE_NEGATIVE_STEMS:
-                custom_entries.append({'lemma': lemma_lc, 'pos': 'Noun', 'attributes': list(n.get('attributes', []))})
+        lemma_lc = _tlc(lemma)
+        unhatted = _strip_hat(lemma_lc)
+        if lemma_lc in ENGLISH_WORDS or lemma_lc in FALSE_NEGATIVE_STEMS:
+            continue
+        if (lemma_lc in _dd_unhatted_map and lemma_lc not in _authority_set) or (unhatted in _dd_unhatted_map and lemma_lc not in _authority_set):
+            continue
+        custom_entries.append(n)
     print(f"Loaded {len(names_list)} custom names.")
 
     lexicon.extend(custom_entries)
@@ -1242,7 +1254,9 @@ def compile_dictionary():
             new_dic_entries.append(entry)
             continue
 
-        lkey = lemma_part.lower()
+        lkey = _tlc(lemma_part)
+        if lkey in FALSE_NEGATIVE_STEMS:
+            continue
 
         if lkey == 't.c.':
             new_dic_entries.append(f"T.C./{flags_part},KC" if flags_part else "T.C./KC")
