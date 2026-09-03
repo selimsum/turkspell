@@ -241,5 +241,37 @@ class TestMandatoryCircumflex(unittest.TestCase):
         self.assertEqual(accepted, [], f"Illegal unhatted words incorrectly accepted: {accepted}")
 
 
+class TestFalseRejectRescues(unittest.TestCase):
+    """Verifies legitimate morphological inflections rescued from rejected_words.csv."""
+
+    def test_loanword_voicing_rescues(self):
+        """Validates blok and tedarik loanword voicing inflections while rejecting bare virtual stems."""
+        valid_words = [
+            "blok", "bloku", "bloğu", "bloğunda", "bloğundan", "bloğunu", "bloğumuz",
+            "tedarik", "tedariki", "tedariği", "tedariğinde", "tedariğini", "tedariğinden"
+        ]
+        accepted, rejected = check_words(valid_words)
+        self.assertEqual(rejected, [], f"Failing loanword voicing forms: {rejected}")
+
+    def test_arabic_loanword_possessive_rescues(self):
+        """Validates irregular 3rd-person possessive chains on mevki, sanayi, nezdinde."""
+        valid_words = [
+            "mevki", "mevkisi", "mevkii", "mevkiinde", "mevkiinden", "mevkiindeki", "mevkiinin",
+            "sanayi", "sanayisi", "sanayii", "sanayiinde", "sanayiinden", "sanayiindeki",
+            "nezdinde", "nezdindeki", "nezdindekiler"
+        ]
+        accepted, rejected = check_words(valid_words)
+        self.assertEqual(rejected, [], f"Failing Arabic loanword possessive forms: {rejected}")
+
+    def test_authoritative_root_rescues(self):
+        """Validates rescued TDK/DD roots mut and ayaklamak."""
+        valid_words = [
+            "mut", "muttan", "mutun", "mutu", "mutlar",
+            "ayaklamak", "ayakladı", "ayaklar"
+        ]
+        accepted, rejected = check_words(valid_words)
+        self.assertEqual(rejected, [], f"Failing authoritative root forms: {rejected}")
+
+
 if __name__ == "__main__":
     unittest.main()

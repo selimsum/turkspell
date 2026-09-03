@@ -81,7 +81,13 @@ class TestOvergenerationProtection(unittest.TestCase):
             "arabadaın", "çocukdaden", "masadanler"
         ]
         leaked = check_illegal_words(illegal)
-        self.assertEqual(leaked, [], f"Impossible suffix chains leaked: {leaked}")
+    def test_bare_virtual_stems(self):
+        """Virtual stems guarded by NEEDAFFIX X must never be recognized as bare words."""
+        illegal = [
+            "bloğ", "tedariğ", "imalad", "cenned", "cehd", "kulb"
+        ]
+        leaked = check_illegal_words(illegal)
+        self.assertEqual(leaked, [], f"Bare virtual stems leaked into dictionary: {leaked}")
 
 
 if __name__ == "__main__":
