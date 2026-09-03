@@ -1727,8 +1727,8 @@ alemci
 alemcilik
 alemdar
 alemdarlık
-alemşümul
-alemşümullük
+âlemşümul
+âlemşümullük
 alenen
 alengir
 alengirli
@@ -1916,8 +1916,8 @@ alışveriş
 alıverme
 alıvermek
 ali
-alicenap
-alicenaplık
+âlicenap
+âlicenaplık
 alidat
 alifatik
 alil
@@ -3628,10 +3628,10 @@ aşı
 aşıcı
 aşıcılık
 aşık
-aşıkane
+âşıkane
 aşıklık
-aşıktaş
-aşıktaşlık
+âşıktaş
+âşıktaşlık
 aşılabilme
 aşılabilmek
 aşılama
@@ -4651,7 +4651,7 @@ Adapazarı
 Adıyaman
 Adıyamanlı
 Adıyamanlılık
-Adilcevaz
+Âdilcevaz
 Afgan
 Afganlı
 Afrika
@@ -4872,7 +4872,7 @@ Atakum
 Ataşehir
 Atatürkçü
 Atatürkçülük
-Atınekin
+Altınekin
 Atkaracalar
 Au
 Avanos
@@ -6016,7 +6016,6 @@ başbekçi
 başbekçilik
 başbuğ
 başçavuş
-başçavuş
 başçavuşluk
 başçı
 başçık
@@ -6959,7 +6958,7 @@ bengileşmek
 bengileştirme
 bengileştirmek
 bengilik
-beniadem
+beniâdem
 benibeşer
 beniçinci
 beniçincilik
@@ -7842,7 +7841,6 @@ bilgisayarlı
 bilgisayarsız
 bilgisayarsızlık
 bilgisi
-bilgisi
 bilgisiz
 bilgisizce
 bilgisizleşme
@@ -7856,8 +7854,6 @@ bililtizam
 bilim
 bilimci
 bilimcilik
-bilimi
-bilimi
 bilimi
 bilimleştirme
 bilimleştirmek
@@ -9000,7 +8996,6 @@ bölebilme
 bölebilmek
 bölen
 bölge
-bölge
 bölgeci
 bölgecilik
 bölgeleme
@@ -9942,7 +9937,7 @@ Babai
 Babailik
 Babalar
 Babayan
-Babıali
+Babıâli
 Babi
 Babilik
 Bafra
@@ -11090,7 +11085,6 @@ cumburtu
 cumhur
 cumhurbaşkanı
 cumhurbaşkanlığı
-cumhurbaşkanlığı
 cumhurca
 cumhuriyet
 cumhuriyetçi
@@ -11133,7 +11127,6 @@ cümbüş
 cümbüşçü
 cümbüşçülük
 cümbüşlü
-cümle
 cümle
 cümlecik
 cümlelik
@@ -11972,7 +11965,6 @@ Cumayeri
 çavşır
 çavun
 çavuş
-çavuş
 çavuşluk
 çay
 çayağacı
@@ -12087,7 +12079,6 @@ Cumayeri
 çekilivermek
 çekilme
 çekilmek
-çekim
 çekim
 çekimci
 çekimleme
@@ -13891,11 +13882,11 @@ dah
 daha
 dahası
 dahi
-dahice
+dâhice
 dahil
 dahilen
 dahiliye
-dahiyane
+dâhiyane
 dahletme
 dahletmek
 daim
@@ -15646,7 +15637,7 @@ devrediş
 devren
 devretme
 devretmek
-devrialem
+devriâlem
 devridaim
 devrihindi
 devrik
@@ -16629,7 +16620,6 @@ doğrulabilmek
 doğrulama
 doğrulamak
 doğrulanabilirlik
-doğrulanabilirlik
 doğrulanma
 doğrulanmak
 doğrulatabilme
@@ -16698,7 +16688,6 @@ doksanarlı
 doksanıncı
 doksanlı
 doksanlık
-doktor
 doktor
 doktora
 doktoralı
@@ -18698,7 +18687,6 @@ elektrokardiyogram
 elektrokimya
 elektrolit
 elektroliz
-elektromanyetik
 elektromanyetik
 elektromanyetizma
 elektromekanik
@@ -21602,7 +21590,7 @@ Fatiha
 Fatsa
 Fe
 Feke
-Felahiye
+Felâhiye
 Felemenk
 Felemenkçe
 Felemenkli
@@ -23306,7 +23294,6 @@ görünmez
 görünmezlik
 görüntü
 görüntüleme
-görüntüleme
 görüntülemek
 görüntülenme
 görüntülenmek
@@ -23894,7 +23881,7 @@ günahlılık
 günahsız
 günahsızca
 günahsızlık
-günaşık
+günâşık
 günaşırı
 günaydın
 günbegün
@@ -24432,7 +24419,7 @@ hakkıhıyar
 hakkıhuzur
 hakkımüktesep
 hakkında
-hakkısükut
+hakkısükût
 hakkıyla
 haklama
 haklamak
@@ -24822,7 +24809,7 @@ harcayıverme
 harcayıvermek
 harcetme
 harcetmek
-harcıalem
+harcıâlem
 harcırah
 harç
 harçlı
@@ -24966,10 +24953,10 @@ hasetlenmek
 hasetli
 hasetlik
 hasıl
-hasıla
-hasılat
-hasılatlı
-hasılı
+hâsıla
+hâsılat
+hâsılatlı
+hâsılı
 hasılıkelam
 hasım
 hasımca
@@ -25030,7 +25017,7 @@ hastane
 hastanelik
 hasut
 hasutluk
-haşa
+hâşâ
 haşarı
 haşarıca
 haşarılaşma
@@ -25240,9 +25227,9 @@ hayalperestlik
 hayalperver
 hayalperverlik
 hayalsiz
-hayasız
+hayâsız
 hayâsızcasına
-hayasızlık
+hayâsızlık
 hayat
 hayatağacı
 hayati
@@ -27789,7 +27776,6 @@ ilkelleştirmek
 ilkellik
 ilkesel
 ilkesellik
-ilkesi
 ilkesi
 ilkgüz
 ilkin
@@ -30930,7 +30916,6 @@ kararlılık
 kararma
 kararmak
 kararname
-kararname
 kararsız
 kararsızca
 kararsızlık
@@ -32565,7 +32550,6 @@ keremli
 kerempe
 keres
 kereste
-kereste
 keresteci
 kerestecilik
 keresteli
@@ -33924,7 +33908,6 @@ kitabe
 kitabet
 kitabevi
 kitabi
-kitap
 kitap
 kitapça
 kitapçı
@@ -35562,7 +35545,7 @@ kuduzluk
 kudüm
 kudümzen
 kudümzenlik
-kufi
+kûfi
 kuğu
 kuğurdama
 kuğurdamak
@@ -36535,7 +36518,6 @@ kütük
 kütükleşme
 kütükleşmek
 kütüklük
-kütüphane
 kütüphane
 kütüphaneci
 kütüphanecilik
@@ -37741,10 +37723,10 @@ mahkemeleşmek
 mahkemeli
 mahkemelik
 mahkemesi
-mahkuk
-mahkum
+mahkûk
+mahkûm
 mahkumane
-mahkumiyet
+mahkûmiyet
 mahkumluk
 mahkûkât
 mahlas
@@ -37916,7 +37898,7 @@ maktul
 makul
 makule
 makullük
-makus
+makûs
 makyaj
 makyajcı
 makyajcılık
@@ -38068,10 +38050,10 @@ mangırsız
 mangiz
 mango
 mani
-mania
-manialı
-maniasız
-manidar
+mânia
+mânialı
+mâniasız
+mânidar
 manidarlık
 manifatura
 manifaturacı
@@ -38679,7 +38661,7 @@ mefharet
 mefhum
 mefhumcu
 mefhumculuk
-mefkure
+mefkûre
 mefkûrecilik
 mefkuresizlik
 mefkûreci
@@ -38847,7 +38829,6 @@ memurin
 memuriyet
 memurluğu
 memurluk
-memuru
 memuru
 men
 menafi
@@ -39098,7 +39079,7 @@ mesire
 mesirelik
 mesken
 meskenet
-meskun
+meskûn
 meskût
 meslek
 mesleki
@@ -39154,8 +39135,8 @@ meşihat
 meşime
 meşin
 meşk
-meşkuk
-meşkur
+meşkûk
+meşkûr
 meşkûkât
 meşrep
 meşru
@@ -39409,7 +39390,7 @@ meziyetli
 meziyetlilik
 meziyetsiz
 meziyetsizlik
-mezkur
+mezkûr
 mezmur
 mezoderm
 mezon
@@ -40823,7 +40804,6 @@ mükellefiyet
 mükelleflik
 mükemmel
 mükemmelen
-mükemmeliyet
 mükemmeliyet
 mükemmeliyetçi
 mükemmeliyetçilik
@@ -47696,7 +47676,7 @@ rücu
 rüçhan
 rüesa
 rüfeka
-rüku
+rükû
 rükün
 rüküş
 rüküşleşme
@@ -49640,7 +49620,6 @@ seneikebise
 senek
 senelerce
 senelik
-senet
 senet
 senetleşme
 senetleşmek
@@ -52290,12 +52269,12 @@ süheyl
 süit
 süje
 sükse
-sükun
-sükunet
+sükûn
+sükûnet
 sükunetle
-sükunetli
-sükut
-sükuti
+sükûnetli
+sükût
+sükûti
 sükûtilik
 sülale
 sülf
@@ -57234,7 +57213,7 @@ topur
 toput
 topuz
 topuzlu
-topyekun
+topyekûn
 tor
 torak
 torakçı
@@ -58202,7 +58181,6 @@ Türkçeleştirilmek
 Türkçeleştiriş
 Türkçeleştirme
 Türkçeleştirmek
-Türkçesi
 Türkçesi
 Türkçesizlik
 Türkçü
@@ -59445,7 +59423,6 @@ Uzunköprü
 üstat
 üstatça
 üstatlık
-üstçavuş
 üstçavuş
 üstçavuşluk
 üste
@@ -60959,7 +60936,6 @@ yanlışlamacı
 yanlışlamacılık
 yanlışlamak
 yanlışlanabilirlik
-yanlışlanabilirlik
 yanlışlanma
 yanlışlanmak
 yanlışlık
@@ -61168,7 +61144,7 @@ yaramazca
 yaramazlaşma
 yaramazlaşmak
 yaramazlık
-yaran
+yâran
 yaranabilme
 yaranabilmek
 yarandırma
@@ -61848,7 +61824,7 @@ yekparelik
 yeksan
 yekta
 yekten
-yekun
+yekûn
 yekvücut
 yel
 yeldirme
@@ -63358,10 +63334,6 @@ zalimleşmek
 zalimlik
 zam
 zaman
-zaman
-zaman
-zaman
-zaman
 zamandaş
 zamandaşlık
 zamane
@@ -63575,7 +63547,6 @@ zenginleşme
 zenginleşmek
 zenginleştirilme
 zenginleştirilmek
-zenginleştirilmiş
 zenginleştirilmiş
 zenginleştirme
 zenginleştirmek
