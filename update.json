@@ -3,8 +3,8 @@
     "tr-TR@dic.turkspell": {
       "updates": [
         {
-          "version": "0.1.2",
-          "update_link": "https://github.com/selimsum/turkspell/releases/download/v0.1.2/turkspell-addon.xpi"
+          "version": "0.6.0",
+          "update_link": "https://github.com/selimsum/turkspell/releases/download/v0.6.0/turkspell-addon.xpi"
         }
       ]
     }
