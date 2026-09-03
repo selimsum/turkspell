@@ -330,6 +330,8 @@ HEAD_FLAG_OVERRIDES = {
     "teşkilat": remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
     # nezt: huzur/kat/yan (nezdinde, nezdindeki)
     "nezt": remap_flag_string("A3 CK F1 I2 L2 N3 P3 P7 PF PP PU PW Q2 R2 Y2 cl KI".replace(" ", "")),
+    # nezdinde: (nezdindeki, nezdindekiler)
+    "nezdinde": remap_flag_string("CI CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 KI".replace(" ", "")),
 }
 
 # Standard regular non-voicing inflection flags
@@ -412,6 +414,10 @@ VIRTUAL_STEMS = [
     "kulb/X∁∬∳∷∾≁≃≕≣",
     # ceht (ceht -> cehd-i, cehd-i-n-de, cehd-i-n-den, cehd-i-n-i, cehd-e, cehd-i-m)
     "cehd/X∂∭∴∸∿≄≆≤≽",
+    # bloğ (blok -> bloğ-u, bloğ-u-n-da, bloğ-u-n-dan, bloğ-u-n-u, bloğ-a, bloğ-u-m, bloğ-u-n, bloğ-u-muz, bloğ-u-nuz)
+    "bloğ/X∁∬∳∷∾≁≃≕≣",
+    # tedariğ (tedarik -> tedariğ-i, tedariğ-i-n-de, tedariğ-i-n-den, tedariğ-i-n-i, tedariğ-e, tedariğ-i-m, tedariğ-i-n)
+    "tedariğ/X∂∭∴∸∿≄≆≤≽",
 ]
 
 EXTRA_AUTHORITY_HEADWORDS = [
@@ -419,9 +425,16 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "idi/∴∸≆∻≩",
     "idik",
     "imiş/∂∌∍∖∗∘∙∢∨∩∪∭∴∸∻∿≄≆≊≌≤≩",
-    # Cami compound & possessive forms:
+    # Cami, Mevki & Sanayi compound & possessive forms (P7 chain -nde, -nden, -ndeki, -nin):
     "camii/∸",
     "Camii/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mevkii/∸",
+    "Mevkii/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "sanayii/∸",
+    "Sanayii/⊘⊙⊚⊛⊜⊝⊞⊟",
+    # Authoritative TDK/DD missed common roots:
+    "mut/" + remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SZ Y1".replace(" ", "")),
+    "ayaklamak/≟",
     # TDK / DD regular derived or compound words
     "çıtır/" + remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SZ Y1".replace(" ", "")),
     "çerçöp/∃∌∍∖√∢∨∩∪∮∵∹∻≀≅≈≊≌≍≎≤≩",
