@@ -73,9 +73,77 @@ EXTRA_REP_RULES = [
     "REP baskatip başkâtip",
     "REP basmekan başmekân",
     "REP agah agâh",
-    "REP adedi adedî",
     "REP aliyyulala aliyyülâlâ",
-    "REP aliyyülala aliyyülâlâ"
+    "REP aliyyülala aliyyülâlâ",
+    # Common orthographic & consonant error corrections
+    "REP klavuz kılavuz",
+    "REP traş tıraş",
+    "REP ünvan unvan",
+    "REP tesbih tespih",
+    "REP sayili sayılı",
+    "REP numarali numaralı",
+    "REP buradasiniz buradasınız",
+    "REP büyüksehir büyükşehir",
+    "REP herkez herkes",
+    "REP herkeze herkese",
+    "REP herkezin herkesin",
+    "REP kiprik kirpik",
+    "REP eşki ekşi",
+    "REP kirbit kibrit",
+    "REP şarz şarj",
+    "REP şarzı şarjı",
+    "REP şarzda şarjda",
+    "REP egsoz egzoz",
+    "REP eksoz egzoz",
+    "REP tabildot tabldot",
+    "REP muhattap muhatap",
+    "REP kareografi koreografi",
+    # Circumflex canonical inflections
+    "REP imkani imkânı",
+    "REP imkan imkân",
+    "REP imkanlar imkânlar",
+    "REP imkanları imkânları",
+    "REP imkansız imkânsız",
+    "REP mekani mekânı",
+    "REP mekanlar mekânlar",
+    "REP mekanları mekânları",
+    "REP hikayesi hikâyesi",
+    "REP hikayeler hikâyeler",
+    "REP hikayeleri hikâyeleri",
+    "REP şikayeti şikâyeti",
+    "REP şikayetçi şikâyetçi",
+    "REP şikayetler şikâyetler",
+    "REP zekası zekâsı",
+    "REP zekalı zekâlı",
+    "REP rüzgarı rüzgârı",
+    "REP rüzgarlar rüzgârlar",
+    "REP rüzgarlı rüzgârlı",
+    "REP kağıt kâğıt",
+    "REP kağıdı kâğıdı",
+    "REP kağıtlar kâğıtlar",
+    "REP dükkan dükkân",
+    "REP dükkanı dükkânı",
+    "REP dükkanlar dükkânlar",
+    "REP ahlak ahlâk",
+    "REP ahlakı ahlâkı",
+    "REP ahlaklı ahlâklı",
+    # Compound & separate word rules
+    "REP yanısıra yanı_sıra",
+    "REP peşisıra peşi_sıra",
+    "REP ardısıra ardı_sıra",
+    "REP farketmek fark_etmek",
+    "REP terketmek terk_etmek",
+    "REP ayırdetmek ayırt_etmek",
+    "REP haketmek hak_etmek",
+    "REP yokolmak yok_olmak",
+    "REP varolmak var_olmak",
+    "REP sağol sağ_ol",
+    "REP hoşçakal hoşça_kal",
+    "REP hoşgeldin hoş_geldin",
+    "REP hoşgeldiniz hoş_geldiniz",
+    "REP herşey her_şey",
+    "REP birşey bir_şey",
+    "REP hiçbirşey hiçbir_şey"
 ]
 
 MANDATORY_HATTED_WORDS = {
@@ -260,6 +328,8 @@ HEAD_FLAG_OVERRIDES = {
     "hakim": remap_flag_string("A3 CK F1 I2 L2 N3 P3 P7 PF PP PU PW Q2 R2 SZ Y2 cl".replace(" ", "")),
     # teşkilat: unvoiced back noun (A1, B1, N1, P1, etc. instead of verb flags V1)
     "teşkilat": remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
+    # nezt: huzur/kat/yan (nezdinde, nezdindeki)
+    "nezt": remap_flag_string("A3 CK F1 I2 L2 N3 P3 P7 PF PP PU PW Q2 R2 Y2 cl KI".replace(" ", "")),
 }
 
 # Standard regular non-voicing inflection flags
@@ -638,7 +708,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         "gorev", "ozet", "bahceci", "goren", "gore", "msde", "cocuklar",
         "calon", "keefe", "jfet",
         "mebs", "ornegi", "ıcad", "icad", "ıkisi", "ikisi", "felaked", "stoğ",
-        "topyekun", "alemşümul", "alemşümullük", "ademci", "kai"
+        "topyekun", "alemşümul", "alemşümullük", "ademci", "kai", "klavuz"
     }
     
     with open(DIC_SRC, "r", encoding="utf-8") as f:
