@@ -1,0 +1,1 @@
+# Turkspell automated test suite

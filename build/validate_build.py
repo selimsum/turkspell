@@ -182,6 +182,7 @@ def validate(dic_path='tr.dic', aff_path='tr.aff', verbose=True):
     body = check_dic(dic_path, errors, warnings)
     check_aff(aff_path, errors, warnings)
     check_presence(body, errors, warnings)
+    check_regression_tests(errors)
 
     if verbose:
         dic_mb = os.path.getsize(dic_path) / 1048576
@@ -191,6 +192,23 @@ def validate(dic_path='tr.dic', aff_path='tr.aff', verbose=True):
         print(f"  total footprint: {dic_mb + aff_mb:.2f} MB")
 
     return errors, warnings
+
+
+def check_regression_tests(errors):
+    test_script = os.path.join(BASE_DIR, "tests", "test_morphology.py")
+    if os.path.exists(test_script):
+        import subprocess
+        res = subprocess.run(
+            [sys.executable, "-m", "unittest", "discover", "tests"],
+            cwd=BASE_DIR,
+            capture_output=True,
+            text=True,
+            encoding="utf-8"
+        )
+        if res.returncode != 0:
+            errors.append(f"Morphology regression tests failed:\n{res.stdout}\n{res.stderr}")
+        else:
+            print("  morphological regression tests: PASSED (100% OK)")
 
 
 def main():
