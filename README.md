@@ -20,7 +20,7 @@
 
 ---
 
-## 📊 Resmi Benchmark Başarıları
+## 📊 Benchmark Başarıları
 
 | Test Paketi | Kelime Sayısı | Precision (%) | Recall (%) | F1 Skoru (%) | Top-1 Doğruluğu (%) | MRR |
 |---|:---:|:---:|:---:|:---:|:---:|
