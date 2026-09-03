@@ -104,7 +104,37 @@ MANDATORY_HATTED_WORDS = {
     "mahkûmiyet": "mahkumiyet",
     "hilalî": "hilali",
     "muhammedî": "muhammedi",
-    "misakımillî": "misakımilli"
+    "misakımillî": "misakımilli",
+    # Mandatory hatted words where unhatted forms are illegal in both TDK and DD
+    "topyekûn": "topyekun",
+    "âlemşümul": "alemşümul",
+    "âlemşümullük": "alemşümullük",
+    "âdemci": "ademci",
+    "âcizlik": "acizlik",
+    "hâkimlik": "hakimlik",
+    "âlimlik": "alimlik",
+    "aliyyülâlâ": "aliyyülala",
+    "âmâlık": "amalık",
+    "âşıkane": "aşıkane",
+    "âşıklı": "aşıklı",
+    "âşıklık": "aşıklık",
+    "âşıktaş": "aşıktaş",
+    "bâtıni": "batıni",
+    "beniâdem": "beniadem",
+    "dâhiyane": "dahiyane",
+    "gülgûn": "gülgun",
+    "günâşık": "günaşık",
+    "hakkısükût": "hakkısükut",
+    "hâlsizleşmek": "halsizleşmek",
+    "hayâsız": "hayasız",
+    "hayâsızca": "hayasızca",
+    "hemhâllik": "hemhallik",
+    "kârsızca": "karsızca",
+    "melekût": "melekut",
+    "meşkûk": "meşkuk",
+    "vârislik": "varislik",
+    "yâran": "yaran",
+    "Elâzığlılık": "Elazığlılık"
 }
 
 # Extensive whitelist of Turkish compound-forming nouns (geographical, architectural, institutional)
@@ -222,63 +252,14 @@ HEAD_FLAG_OVERRIDES = {
     "stok": remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1".replace(" ", "")),
     # ilmek: both noun and verb flags
     "ilmek": remap_flag_string("CI CK DE I2 L2 LI LK PF Q2 R2 SL SZ cl F1 A3 N3 P3 P7 PP PU PW Y2 VF wj".replace(" ", "")),
-}
-
-PALATAL_L_HEADS = {
-    "alkol", "ampul", "kontrol", "otokontrol", "rol", "başrol",
-    "sembol", "petrol", "protokol", "kolesterol", "metropol",
-    "usul", "mahsul", "alveol"
-}
-PALATAL_L_FLAGS = remap_flag_string("A4 N4 PV P8 Y2 L2 CK cl LF LSZ LFK LCI CI SZ".replace(" ", ""))
-
-VIRTUAL_STEMS = [
-    # ard (art -> ard-ı, ard-ı-n-da, ard-ı-n-dan, ard-ı-n-a)
-    "ard/X∀∫∲∶∼∽≂≣",
-    # icad (icat -> icad-ı, icad-ı-n-da, icad-ı-n-dan, icad-ı-n-ı)
-    "icad/X∀∫∲∶∼∽≂≣",
-    # kab (kap -> kab-ı, kab-ı-n-da, kab-ı-n-dan, kab-ı-n-ı)
-    "kab/X∀∫∲∶∼∽≂≣",
-    # kayd (kayıt -> kayd-ı, kayd-ı-n-da, kayd-ı-n-dan, kayd-ı-n-ı)
-    "kayd/X∀∫∲∶∼∽≂≣",
-    # lob (lop -> lob-u, lob-u-n-da, lob-u-n-dan, lob-lar, lob-lar-da)
-    "lob/X∁∬∳∷∾≁≃≕≣" + remap_flag_string("I1 L1 PB Q1 R1 SZ".replace(" ", "")),
-    # ilmeğ (ilmek -> ilmeğ-i, ilmeğ-i-n-e, ilmeğ-i-m)
-    "ilmeğ/X∂∭∴∸∿≄≆≤≽",
-]
-
-EXTRA_AUTHORITY_HEADWORDS = [
-    # TDK / DD regular derived or compound words
-    "çıtır/" + remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SZ Y1".replace(" ", "")),
-    "çerçöp/" + remap_flag_string("CI CK CL I2 L2 LI LK PF Q2 R2 SZ V3".replace(" ", "")),
-    "serçeparmak/" + remap_flag_string("CI CK CL I1 L1 LI LK PB Q1 R1 SZ V1".replace(" ", "")),
-    "tutamak/" + remap_flag_string("CI CK CL I1 L1 LI LK PB Q1 R1 SZ V1".replace(" ", "")),
-    "sürücüsüz/" + remap_flag_string("CI CK I2 L2 LI LK PF Q2 R2 SL SZ cl F1 A3 N3 P3 P7 PP PU PW Y2".replace(" ", "")),
-    "statüsüz/" + remap_flag_string("CI CK I2 L2 LI LK PF Q2 R2 SL SZ cl F1 A3 N3 P3 P7 PP PU PW Y2".replace(" ", "")),
-    "kovuksuz/" + remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SZ Y1".replace(" ", "")),
-    "temsilen",
-    "sanayiinde",
-    "buzdağı/∀∈∍∎∡∧∫∲∶∺∼∽≂≉≋≍≣",
-    "buzdağ/∁∅∌∍∎∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≣",
-    "gökcismi/∂∊∍∢∨∭∴∸∻∿≄≆≊≌≤≩",
-    "gökcisim/∌∍∖∢∨∩∪∻≊≌≍≎≑≩",
-    "fas", "go", "hut", "çad",
-    # Chemical element symbols & letter names from TDK:
-    "ac", "bi", "ca", "cl", "co", "cu", "ga", "li", "lu", "me", "mn", "mo", "n", "na",
-    "ni", "pa", "pu", "ra", "rh", "sc", "u", "v", "y", "ö", "ı", "ın", "ır", "ke", "isa"
-]
-
-
-HEAD_FLAG_OVERRIDES = {
-    # değil: copular/predicate flags
-    "değil": remap_flag_string("A3 CI CK DE DL DT F1 I2 L2 LI LK N3 P3 P7 PF PP PU PW Q2 R2 Y2 cl".replace(" ", "")),
-    # ait: copular/predicate flags
-    "ait": remap_flag_string("A3 CI CK DE DL DT F1 I2 L2 LI LK N3 P3 P7 PF PP PU PW Q2 R2 Y2 cl".replace(" ", "")),
-    # felaket: unvoiced front noun (F1, no voicing V3)
-    "felaket": remap_flag_string("A3 CK F1 I2 L2 N3 P3 P7 PF PP PU PW Q2 R2 SL Y2 cl CI LI LK SZ".replace(" ", "")),
-    # stok: unvoiced back rounded noun (B2, no voicing V2)
-    "stok": remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1".replace(" ", "")),
-    # ilmek: both noun and verb flags
-    "ilmek": remap_flag_string("CI CK DE I2 L2 LI LK PF Q2 R2 SL SZ cl F1 A3 N3 P3 P7 PP PU PW Y2 VF wj".replace(" ", "")),
+    # adem: yokluk (no CI flag, preventing illegal *ademci / *Ademci while preserving legit cases)
+    "adem": remap_flag_string("A3 CK F1 I2 L2 LK N3 P3 P7 PF PP PU PW Q2 R2 SZ Y2 cl".replace(" ", "")),
+    # aciz: unhatted (no LK flag, so unhatted *acizlik cannot be generated; only âcizlik exists)
+    "aciz": remap_flag_string("A3 CK F1 I2 L2 N3 P3 P7 PF PP PU PW Q2 R2 SZ Y2 cl".replace(" ", "")),
+    # hakim: unhatted bilge/hekim (no LK flag, so *hakimlik cannot be generated; only hâkimlik exists)
+    "hakim": remap_flag_string("A3 CK F1 I2 L2 N3 P3 P7 PF PP PU PW Q2 R2 SZ Y2 cl".replace(" ", "")),
+    # teşkilat: unvoiced back noun (A1, B1, N1, P1, etc. instead of verb flags V1)
+    "teşkilat": remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
 }
 
 PALATAL_L_HEADS = {
@@ -287,7 +268,7 @@ PALATAL_L_HEADS = {
     "usul", "mahsul", "alveol"
 }
 # Pure palatal l flags: front rounded vowels, NO regular back-vowel SZ/CI
-PALATAL_L_FLAGS = remap_flag_string("A4 N4 PV P8 Y2 L2 CK cl LF LSZ LFK LCI".replace(" ", ""))
+PALATAL_L_FLAGS = remap_flag_string("A4 N4 PV P8 Y2 L2 CK cl LF LSZ LFK LCI PF".replace(" ", ""))
 
 VIRTUAL_STEMS = [
     # ard (art -> ard-ı, ard-ı-n-da, ard-ı-n-dan, ard-ı-n-a)
@@ -304,9 +285,35 @@ VIRTUAL_STEMS = [
     "ilmeğ/X∂∭∴∸∿≄≆≤≽",
     # serçeparmağ (serçeparmak -> serçeparmağ-a, serçeparmağ-ı)
     "serçeparmağ/X∀∫∲∶∼∽≂≕≣",
+    # Short nouns with stem voicing:
+    # tat (tat -> tad-ı, tad-ı-n-da, tad-ı-n-dan, tad-ı-n-ı, tad-a, tad-ı-m, tad-ı-n)
+    "tad/X∀∫∲∶∼∽≂≕≣",
+    # uç (uç -> uc-u, uc-u-n-da, uc-u-n-dan, uc-u-n-u, uc-a, uc-u-m, uc-u-n)
+    "uc/X∁∬∳∷∾≁≃≕≣",
+    # cep (cep -> ceb-i, ceb-i-n-de, ceb-i-n-den, ceb-i-n-i, ceb-e, ceb-i-m, ceb-i-n)
+    "ceb/X∂∭∴∸∿≄≆≤≽",
+    # gök (gök -> göğ-ü, göğ-ü-n-de, göğ-ü-n-den, göğ-ü-n-ü, göğ-e, göğ-ü-m, göğ-ü-n)
+    "göğ/X∃∮∵∹≀≅≈≤≽",
+    # öç (öç -> öc-ü, öc-ü-n-de, öc-ü-n-den, öc-ü-n-ü, öc-e, öc-ü-m, öc-ü-n)
+    "öc/X∃∮∵∹≀≅≈≤≽",
+    # but (but -> bud-u, bud-u-n-da, bud-u-n-dan, bud-u-n-u, bud-a, bud-u-m, bud-u-n)
+    "bud/X∁∬∳∷∾≁≃≕≣",
+    # ut (ut -> ud-u, ud-u-n-da, ud-u-n-dan, ud-u-n-u, ud-a, ud-u-m, ud-u-n)
+    "ud/X∁∬∳∷∾≁≃≕≣",
+    # kulp (kulp -> kulb-u, kulb-u-n-da, kulb-u-n-dan, kulb-u-n-u, kulb-a, kulb-u-m)
+    "kulb/X∁∬∳∷∾≁≃≕≣",
+    # ceht (ceht -> cehd-i, cehd-i-n-de, cehd-i-n-den, cehd-i-n-i, cehd-e, cehd-i-m)
+    "cehd/X∂∭∴∸∿≄≆≤≽",
 ]
 
 EXTRA_AUTHORITY_HEADWORDS = [
+    # Copula & predicate defective verbs:
+    "idi/∴∸≆∻≩",
+    "idik",
+    "imiş/∂∌∍∖∗∘∙∢∨∩∪∭∴∸∻∿≄≆≊≌≤≩",
+    # Cami compound & possessive forms:
+    "camii/∸",
+    "Camii/⊘⊙⊚⊛⊜⊝⊞⊟",
     # TDK / DD regular derived or compound words
     "çıtır/" + remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SZ Y1".replace(" ", "")),
     "çerçöp/∃∌∍∖√∢∨∩∪∮∵∹∻≀≅≈≊≌≍≎≤≩",
@@ -554,17 +561,18 @@ MAP '’‘"""
 
 def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig, profile="tdk"):
     print(f"Sanitizing .dic file for profile [{profile}]...")
-    all_ref = tdk_words | dd_words
-    whitelist = all_ref | custom_abbrevs | custom_names | {tr_lower(c) for c in COMPOUND_SET}
     
-    unhatted_to_purge = set(MANDATORY_HATTED_WORDS.values())
+    unhatted_to_purge = {tr_lower(v) for v in MANDATORY_HATTED_WORDS.values()}
     unhat_map = str.maketrans('âîûÂÎÛ', 'aiuAIU')
     for h in tdk_words:
         if any(c in h for c in 'âîû'):
             u = h.translate(unhat_map)
             if u not in dd_words and u not in tdk_words:
-                unhatted_to_purge.add(u)
+                unhatted_to_purge.add(tr_lower(u))
     print(f"  Unhatted clones targeted for purge: {len(unhatted_to_purge)}")
+
+    all_ref = tdk_words | dd_words
+    whitelist = (all_ref - unhatted_to_purge) | custom_abbrevs | custom_names | {tr_lower(c) for c in COMPOUND_SET}
     
     BAD_STEMS = {
         "istasyonu", "televizyonu", "dma", "ce", "hum", "a101",
@@ -572,7 +580,8 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         "gorkem", "bahce", "cocuk", "catal", "ornek", "gorevli", "bakici",
         "gorev", "ozet", "bahceci", "goren", "gore", "msde", "cocuklar",
         "calon", "keefe", "jfet",
-        "mebs", "ornegi", "ıcad", "icad", "ıkisi", "ikisi", "felaked", "stoğ"
+        "mebs", "ornegi", "ıcad", "icad", "ıkisi", "ikisi", "felaked", "stoğ",
+        "topyekun", "alemşümul", "alemşümullük", "ademci", "kai"
     }
     
     with open(DIC_SRC, "r", encoding="utf-8") as f:
@@ -616,7 +625,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             continue
             
         # 2. Purge unhatted duplicates for mandatory hatted words
-        if head in unhatted_to_purge:
+        if head in unhatted_to_purge or head_lower in unhatted_to_purge:
             removed_unhatted_dups += 1
             continue
             
@@ -688,16 +697,6 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                     cleaned_common_noun_flags += 1
                     flags = common_flags
                     
-        # Morphological flag overrides for core stems:
-        if head_lower in HEAD_FLAG_OVERRIDES:
-            flags = HEAD_FLAG_OVERRIDES[head_lower]
-        elif head_lower in PALATAL_L_HEADS:
-            flags = PALATAL_L_FLAGS
-        elif head_lower in ("zehir", "emir"):
-            d3_flag = LONG_TO_UTF8.get("D3", "")
-            if d3_flag and d3_flag not in flags:
-                flags += d3_flag
-
         # Morphological flag overrides for core stems:
         if head_lower in HEAD_FLAG_OVERRIDES:
             flags = HEAD_FLAG_OVERRIDES[head_lower]
@@ -838,14 +837,12 @@ def compile_v06_gold():
         shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.aff", addon_dict_dir / "tr.aff")
         shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.dic", addon_dict_dir / "tr.dic")
         
-    for selimsum_dir in [
-        TURKSPELL_DIR / "external_dictionaries" / "selimsum",
-        BASE_DIR / "external_dictionaries" / "selimsum"
-    ]:
-        if selimsum_dir.exists():
-            shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.aff", selimsum_dir / "tr.aff")
-            shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.dic", selimsum_dir / "tr.dic")
-            
+    # Deploy to benchmark external dictionaries if present
+    bench_dict_dir = BASE_DIR / "external_dictionaries" / "selimsum"
+    if bench_dict_dir.exists():
+        shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.aff", bench_dict_dir / "tr.aff")
+        shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.dic", bench_dict_dir / "tr.dic")
+        
     print("Deployment complete!")
 
 if __name__ == "__main__":

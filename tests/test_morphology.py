@@ -46,6 +46,14 @@ class TestCopularAndPredicates(unittest.TestCase):
         accepted, rejected = check_words(words)
         self.assertEqual(rejected, [], f"Failing ait forms: {rejected}")
 
+    def test_idi_imis_inflections(self):
+        words = [
+            "idi", "idim", "idin", "idik", "idiniz", "idiler", "idiyse",
+            "imiş", "imişim", "imişsin", "imişiz", "imişsiniz", "imişler", "imişse", "imiştir"
+        ]
+        accepted, rejected = check_words(words)
+        self.assertEqual(rejected, [], f"Failing idi/imiş forms: {rejected}")
+
 
 class TestPalatalL(unittest.TestCase):
     """Verifies thin /l/ loanwords take front-rounded vowel suffixes (-ü, -ün, -e, -süz)."""
@@ -145,7 +153,25 @@ class TestVirtualStems(unittest.TestCase):
             # ilmek -> ilmeğ
             "ilmek", "ilmeği", "ilmeğin", "ilmeğine", "ilmekler", "ilmekleri", "ilmeklerin", "ilmeklerden",
             # serçeparmak -> serçeparmağ
-            "serçeparmak", "serçeparmağa", "serçeparmağı", "serçeparmağın", "serçeparmakta", "serçeparmaklar"
+            "serçeparmak", "serçeparmağa", "serçeparmağı", "serçeparmağın", "serçeparmakta", "serçeparmaklar",
+            # tat -> tad
+            "tat", "tadı", "tada", "tadın", "tadım", "tadımız", "tadınız", "tadında", "tadından", "tadını", "tadına", "tadıyla", "tatlar", "tatsız", "tatlı",
+            # uç -> uc
+            "uç", "ucu", "uca", "ucun", "ucum", "ucumuz", "ucunuz", "ucunda", "ucundan", "ucunu", "ucuna", "ucuyla", "uçlar", "uçsuz", "uçlu",
+            # cep -> ceb
+            "cep", "cebi", "cebe", "cebin", "cebim", "cebimiz", "cebiniz", "cebinde", "cebinden", "cebini", "cebine", "cebiyle", "cepler", "cepsiz", "cepli",
+            # gök -> göğ
+            "gök", "göğü", "göğe", "göğün", "göğüm", "göğümüz", "göğünüz", "göğünde", "göğünden", "göğünü", "göğüne", "göğüyle", "gökler", "göksüz",
+            # öç -> öc
+            "öç", "öcüm", "öcü", "öce", "öcün", "öcümüz", "öcünüz", "öcünde", "öcünden", "öcünü", "öcüne", "öcüyle",
+            # but -> bud
+            "but", "budu", "buda", "budun", "budum", "budumuz", "budunda", "budunu", "butlar",
+            # ut -> ud
+            "ut", "udu", "uda", "udun", "udum", "udunda", "udunu", "utlar",
+            # kulp -> kulb
+            "kulp", "kulbu", "kulba", "kulbun", "kulbum", "kulbunda", "kulbunu", "kulplar",
+            # ceht -> cehd
+            "ceht", "cehdi", "cehde", "cehdin", "cehdim", "cehdinde", "cehdini"
         ]
         accepted, rejected = check_words(words)
         self.assertEqual(rejected, [], f"Failing virtual stem inflections: {rejected}")
@@ -164,6 +190,55 @@ class TestAuthorityHeadwords(unittest.TestCase):
         ]
         accepted, rejected = check_words(words)
         self.assertEqual(rejected, [], f"Failing authority words: {rejected}")
+
+    def test_camii_and_compound_terms(self):
+        words = [
+            "cami", "camiler", "camisi", "camide", "camiden", "camiye",
+            "camii", "camiine", "camiinde", "camiinden", "camiini", "camiinin"
+        ]
+        accepted, rejected = check_words(words)
+        self.assertEqual(rejected, [], f"Failing cami/camii forms: {rejected}")
+
+    def test_teskilat_inflections(self):
+        words = [
+            "teşkilat", "teşkilatı", "teşkilatın", "teşkilata", "teşkilatta",
+            "teşkilattan", "teşkilatlar", "teşkilatları", "teşkilatlarında"
+        ]
+        accepted, rejected = check_words(words)
+        self.assertEqual(rejected, [], f"Failing teşkilat forms: {rejected}")
+
+
+class TestMandatoryCircumflex(unittest.TestCase):
+    """Verifies that words with mandatory circumflex in TDK/DD reject unhatted clones."""
+
+    def test_circumflex_enforcement(self):
+        # Pairs: (valid_hatted, invalid_unhatted)
+        pairs = [
+            ("topyekûn", "topyekun"),
+            ("âlemşümul", "alemşümul"),
+            ("âlemşümullük", "alemşümullük"),
+            ("Âdemci", "Ademci"),
+            ("âdemci", "ademci"),
+            ("sükût", "sükut"),
+            ("mahkûm", "mahkum"),
+            ("rükû", "rüku"),
+            ("sükûn", "sükun"),
+            ("sükûnet", "sükunet"),
+            ("kâin", "kain"),
+            ("meskûn", "meskun"),
+            ("melekût", "melekut"),
+            ("gülgûn", "gülgun"),
+            ("âcizlik", "acizlik"),
+            ("hâkimlik", "hakimlik"),
+        ]
+        valid_words = [p[0] for p in pairs]
+        invalid_words = [p[1] for p in pairs]
+
+        accepted, rejected = check_words(valid_words)
+        self.assertEqual(rejected, [], f"Valid circumflex words rejected: {rejected}")
+
+        accepted, rejected = check_words(invalid_words)
+        self.assertEqual(accepted, [], f"Illegal unhatted words incorrectly accepted: {accepted}")
 
 
 if __name__ == "__main__":

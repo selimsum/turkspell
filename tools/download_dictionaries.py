@@ -30,7 +30,11 @@ DICTIONARIES = {
     }
 }
 
-BASE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "external_dictionaries")
+DEFAULT_BENCHMARK_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "turkspell-benchmarks", "external_dictionaries")
+BASE_DIR = os.environ.get(
+    "EXTERNAL_DICTS_DIR",
+    DEFAULT_BENCHMARK_DIR if os.path.isdir(os.path.dirname(DEFAULT_BENCHMARK_DIR)) else os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "external_dictionaries")
+)
 
 def download_file(name, file_name, urls, target_dir):
     os.makedirs(target_dir, exist_ok=True)
