@@ -262,13 +262,51 @@ HEAD_FLAG_OVERRIDES = {
     "teşkilat": remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
 }
 
+# Standard regular non-voicing inflection flags
+BACK_UNVOICED_FLAGS = remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", ""))
+FRONT_UNVOICED_FLAGS = remap_flag_string("A3 CI CK DE F1 I2 L2 LI LK N3 P3 P7 PF PP PU PW Q2 R2 SL SZ Y2 cl".replace(" ", ""))
+
+# Stems attested in corpus as non-voicing that erroneously had V1/V3 or missing nominal flags
+BACK_NOVOICING_STEMS = [
+    "imalat", "tahsilat", "harekat", "tatbikat", "tadilat", "salat", "bürokrat",
+    "kâinat", "belagat", "arktik", "boydak", "istihbarat", "muamelat", "müfredat",
+    "mefruşat", "nebatat", "haşarat", "barikat", "nasihat", "kabahat", "mükafat",
+    "pasaport", "rahat", "bask", "mark", "bank", "fırsat", "ark", "park", "şok"
+]
+
+# Front-vowel non-voicing stems (including Arabic/Persian loanwords ending in -at and -al taking front harmony)
+FRONT_NOVOICING_STEMS = [
+    "seyahat", "hakikat", "cemaat", "menfaat", "sadakat", "dikkat", "şefkat",
+    "ihtimal", "hilal", "helal", "hayal", "ithal", "ihlal", "işgal", "ihmal",
+    "zeval", "intikal", "infial", "istiklal", "santral", "moral",
+    "cennet", "beraat", "akıbet", "aktivist", "ahret", "adalat", "dakik",
+    "politik", "antik", "melik", "malik", "patik", "vilayet", "bereket",
+    "dehşet", "edremit", "ehlisünnet", "elbet", "ensefalit", "eternit",
+    "faset", "brifing", "damping", "doping", "bumerang", "aysberg",
+    "dramaturg", "andezit", "babet", "bangkok", "beyrut", "dargeçit",
+    "derik", "despot", "doğubeyazıt", "ehlibeyt", "çöp", "met", "çet"
+]
+
+for _w in BACK_NOVOICING_STEMS:
+    if _w not in HEAD_FLAG_OVERRIDES:
+        HEAD_FLAG_OVERRIDES[_w] = BACK_UNVOICED_FLAGS
+for _w in FRONT_NOVOICING_STEMS:
+    if _w not in HEAD_FLAG_OVERRIDES:
+        HEAD_FLAG_OVERRIDES[_w] = FRONT_UNVOICED_FLAGS
+
+_voicing_table = {"p": "b", "ç": "c", "t": "d", "k": "ğ", "g": "ğ"}
+PURGE_VIRTUAL_STEMS = {"felaked", "stoğ"}
+for _w in BACK_NOVOICING_STEMS + FRONT_NOVOICING_STEMS:
+    if _w and _w[-1] in _voicing_table:
+        PURGE_VIRTUAL_STEMS.add(_w[:-1] + _voicing_table[_w[-1]])
+
 PALATAL_L_HEADS = {
     "alkol", "ampul", "kontrol", "otokontrol", "rol", "başrol",
     "sembol", "petrol", "protokol", "kolesterol", "metropol",
-    "usul", "mahsul", "alveol"
+    "usul", "mahsul", "alveol", "kabul", "makbul", "faul", "hol"
 }
-# Pure palatal l flags: front rounded vowels, NO regular back-vowel SZ/CI
-PALATAL_L_FLAGS = remap_flag_string("A4 N4 PV P8 Y2 L2 CK cl LF LSZ LFK LCI PF".replace(" ", ""))
+# Pure palatal l flags: front rounded vowels, NO regular back-vowel SZ/CI, includes R2 (ablative -den), I2 (-le), PQ (-ümüz), PZ (-ünüz)
+PALATAL_L_FLAGS = remap_flag_string("A4 N4 PV P8 Y2 L2 R2 I2 PQ PZ CK cl LF LSZ LFK LCI PF".replace(" ", ""))
 
 VIRTUAL_STEMS = [
     # ard (art -> ard-ı, ard-ı-n-da, ard-ı-n-dan, ard-ı-n-a)
@@ -541,21 +579,40 @@ MAP vwyVWY
 MAP '’‘"""
     aff_text = re.sub(r'MAP \d+\n(?:MAP [^\n]+\n)+', new_map + '\n', aff_text, count=1)
     
-    # Extra REP rules
-    rules_to_add = list(EXTRA_REP_RULES)
+    # Extra REP rules: clean any leading "REP " prefixes
+    clean_extra = []
+    for r in EXTRA_REP_RULES:
+        rule_str = r.strip()
+        while rule_str.startswith("REP "):
+            rule_str = rule_str[4:].strip()
+        if rule_str:
+            clean_extra.append(rule_str)
+
     if profile == "dd":
-        rules_to_add.extend([
-            "REP î i",
-            "REP resmî resmi",
-            "REP askerî askeri",
-            "REP dinî dini",
-            "REP millî milli"
+        clean_extra.extend([
+            "î i",
+            "resmî resmi",
+            "askerî askeri",
+            "dinî dini",
+            "millî milli"
         ])
         
-    base_rep = re.findall(r'^REP (.+)$', aff_text, re.MULTILINE)
-    all_rep = list(dict.fromkeys(rules_to_add + base_rep))
+    # Extract only genuine replacement pairs from base aff, ignoring digit counts like "1265"
+    base_rep = []
+    for m in re.findall(r'^REP\s+(.+)$', aff_text, re.MULTILINE):
+        rule_str = m.strip()
+        while rule_str.startswith("REP "):
+            rule_str = rule_str[4:].strip()
+        parts = rule_str.split()
+        if len(parts) >= 2 and not (len(parts) == 1 and parts[0].isdigit()):
+            base_rep.append(rule_str)
+
+    all_rep = list(dict.fromkeys(clean_extra + base_rep))
     rep_block = f"REP {len(all_rep)}\n" + "\n".join(f"REP {r}" for r in all_rep) + "\n"
-    aff_text = re.sub(r'REP \d+\n(?:REP [^\n]+\n)+', rep_block, aff_text, count=1)
+
+    # Remove all existing REP lines and replace cleanly after MAXNGRAMSUGS
+    aff_text = re.sub(r'^REP.*$\n?', '', aff_text, flags=re.MULTILINE)
+    aff_text = re.sub(r'(MAXNGRAMSUGS \d+\n+)', r'\1' + rep_block + '\n', aff_text, count=1)
     
     return aff_text
 
@@ -616,8 +673,8 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         flags = parts[1] if len(parts) > 1 else ""
         head_lower = tr_lower(head)
         
-        # 1. Purge known bad stems
-        if head_lower in ("felaked", "stoğ"):
+        # 1. Purge known bad stems and bogus voiced virtual stems
+        if head_lower in PURGE_VIRTUAL_STEMS or head_lower in ("felaked", "stoğ"):
             removed_bad_stems += 1
             continue
         if head_lower in BAD_STEMS and "X" not in flags and not flags.startswith("X"):

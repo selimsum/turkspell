@@ -39,60 +39,60 @@ MAP '’‘
 MAXDIFF 5
 MAXNGRAMSUGS 8
 
-REP 1318
-REP REP dem den
-REP REP dam dan
-REP REP dej den
-REP REP daj dan
-REP REP tem ten
-REP REP tam tan
-REP REP rim rin
-REP REP larz lara
-REP REP lerz lere
-REP REP lardan lardan
-REP REP sükut sükût
-REP REP mahkum mahkûm
-REP REP mefkure mefkûre
-REP REP rüku rükû
-REP REP sükun sükûn
-REP REP sükunet sükûnet
-REP REP sükunetli sükûnetli
-REP REP sükunetle sükûnetle
-REP REP sükuti sükûti
-REP REP yekun yekûn
-REP REP kain kâin
-REP REP kufi kûfi
-REP REP meskun meskûn
-REP REP meşkur meşkûr
-REP REP celali celâli
-REP REP eflani eflâni
-REP REP batıniye bâtıniye
-REP REP ademcilik âdemcilik
-REP REP maniasız mâniasız
-REP REP harcıalem harcıâlem
-REP REP mahkumane mahkûmane
-REP REP mahkuk mahkûk
-REP REP mahkumiyet mahkûmiyet
-REP REP hilali hilalî
-REP REP muhammedi muhammedî
-REP REP misakımilli misakımillî
-REP REP elazig Elâzığ
-REP REP ruku rükû
-REP REP gayrimeskun gayrimeskûn
-REP REP asikar aşikâr
-REP REP ahkam ahkâm
-REP REP baskatip başkâtip
-REP REP basmekan başmekân
-REP REP agah agâh
-REP REP adedi adedî
-REP REP aliyyulala aliyyülâlâ
-REP REP aliyyülala aliyyülâlâ
-REP REP î i
-REP REP resmî resmi
-REP REP askerî askeri
-REP REP dinî dini
-REP REP millî milli
-REP 1265
+
+REP 1312
+REP dem den
+REP dam dan
+REP dej den
+REP daj dan
+REP tem ten
+REP tam tan
+REP rim rin
+REP larz lara
+REP lerz lere
+REP lardan lardan
+REP sükut sükût
+REP mahkum mahkûm
+REP mefkure mefkûre
+REP rüku rükû
+REP sükun sükûn
+REP sükunet sükûnet
+REP sükunetli sükûnetli
+REP sükunetle sükûnetle
+REP sükuti sükûti
+REP yekun yekûn
+REP kain kâin
+REP kufi kûfi
+REP meskun meskûn
+REP meşkur meşkûr
+REP celali celâli
+REP eflani eflâni
+REP batıniye bâtıniye
+REP ademcilik âdemcilik
+REP maniasız mâniasız
+REP harcıalem harcıâlem
+REP mahkumane mahkûmane
+REP mahkuk mahkûk
+REP mahkumiyet mahkûmiyet
+REP hilali hilalî
+REP muhammedi muhammedî
+REP misakımilli misakımillî
+REP elazig Elâzığ
+REP ruku rükû
+REP gayrimeskun gayrimeskûn
+REP asikar aşikâr
+REP ahkam ahkâm
+REP baskatip başkâtip
+REP basmekan başmekân
+REP agah agâh
+REP adedi adedî
+REP aliyyulala aliyyülâlâ
+REP aliyyülala aliyyülâlâ
+REP î i
+REP resmî resmi
+REP askerî askeri
+REP dinî dini
+REP millî milli
 REP yanliz yalnız
 REP yanlız yalnız
 REP deil değil
@@ -140,7 +140,6 @@ REP â a
 REP u û
 REP û u
 REP i î
-REP î i
 REP A Â
 REP Â A
 REP U Û
@@ -489,7 +488,6 @@ REP ruzgar rüzgâr
 REP rüzgar rüzgâr
 REP tezgah tezgâh
 REP dukkan dükkân
-REP mahkum mahkûm
 REP alim âlim
 REP hakimevi hâkimevi
 REP aciz âciz
@@ -499,7 +497,6 @@ REP adem âdem
 REP ademci Âdemci
 REP alemşümullük âlemşümullük
 REP alimlik âlimlik
-REP aliyyülala aliyyülâlâ
 REP amalık âmâlık
 REP amin âmin
 REP araz âraz
@@ -617,7 +614,6 @@ REP canan cânan
 REP cavidan câvidan
 REP cazip câzip
 REP cehennemi cehennemî
-REP celali celâli
 REP celalilik celâlilik
 REP cellat cellât
 REP ceman cemân
@@ -1353,7 +1349,6 @@ REP yar yâr
 REP yaran yâran
 REP yarence yârence
 REP yarenlik yârenlik
-REP yekun yekûn
 REP zahiri zahirî
 REP zecri zecrî
 REP zifiri zifirî

@@ -41,6 +41,14 @@ def discover_corpus_affixes():
     else:
         print(f"  Warning: {freq_path} not found.")
 
+    oscar_path = os.path.join(base_dir, 'raw_data', 'oscar_10m_corpus_frequencies.json')
+    if os.path.exists(oscar_path):
+        with open(oscar_path, 'r', encoding='utf-8') as f:
+            oscar_freq = json.load(f)
+        for k, v in oscar_freq.items():
+            k_low = _tlc(k)
+            freq_map[k_low] = freq_map.get(k_low, 0) + v
+        print(f"  Loaded {len(oscar_freq):,} frequency entries from oscar_10m_corpus_frequencies.json.")
     clean_corpus = set()
     if os.path.exists(clean_pickle_path):
         with open(clean_pickle_path, 'rb') as f:
@@ -130,25 +138,31 @@ def discover_corpus_affixes():
         else:
             # 1. Noun Voicing / NoVoicing
             if word[-1] in 'pçtkg':
-                v_char = voicing_table[word[-1]]
-                if word.endswith('nk'):
-                    v_char = 'g'
-                v_stem = word[:-1] + v_char
-
-                # Suffix probes with vowel
-                v_probes = ['ı', 'i', 'u', 'ü', 'a', 'e', 'ın', 'in', 'un', 'ün', 'ım', 'im', 'um', 'üm', 'ımız', 'imiz', 'umuz', 'ümüz', 'ınız', 'iniz', 'unuz', 'ünüz', 'e', 'a']
-                v_cands = [f"{v_stem}{s}" for s in v_probes]
-                uv_cands = [f"{word}{s}" for s in v_probes]
-
-                fv = sum(freq_map.get(c, 0) for c in v_cands) + sum(1 for c in v_cands if c in clean_corpus)
-                fuv = sum(freq_map.get(c, 0) for c in uv_cands) + sum(1 for c in uv_cands if c in clean_corpus)
-
-                if fv >= 20 or (fv > fuv and fv >= 3):
-                    attrs.add('Voicing')
-                    stats['voicing'] += 1
-                elif fuv > fv * 5 and fuv >= 10 and fv == 0:
+                # In Turkish, monosyllabic native nouns generally do not voice (e.g. at, ot, ak, alt, kat, bat, saç, koç, haç)
+                # except for a small closed set of native words: tat, but, cep, dip, kap, uç, öç, gök, kök, çok, ek, dük
+                if v_count == 1 and word not in ('tat', 'but', 'cep', 'dip', 'kap', 'uç', 'öç', 'gök', 'kök', 'çok', 'ek', 'dük'):
                     attrs.add('NoVoicing')
                     stats['novoicing'] += 1
+                else:
+                    v_char = voicing_table[word[-1]]
+                    if word.endswith('nk'):
+                        v_char = 'g'
+                    v_stem = word[:-1] + v_char
+
+                    # Suffix probes with vowel
+                    v_probes = ['ı', 'i', 'u', 'ü', 'a', 'e', 'ın', 'in', 'un', 'ün', 'ım', 'im', 'um', 'üm', 'ımız', 'imiz', 'umuz', 'ümüz', 'ınız', 'iniz', 'unuz', 'ünüz', 'e', 'a']
+                    v_cands = [f"{v_stem}{s}" for s in v_probes]
+                    uv_cands = [f"{word}{s}" for s in v_probes]
+
+                    fv = sum(freq_map.get(c, 0) for c in v_cands) + sum(1 for c in v_cands if c in clean_corpus)
+                    fuv = sum(freq_map.get(c, 0) for c in uv_cands) + sum(1 for c in uv_cands if c in clean_corpus)
+
+                    if fv >= 20 or (fv > fuv and fv >= 3):
+                        attrs.add('Voicing')
+                        stats['voicing'] += 1
+                    elif fuv > fv * 5 and fuv >= 10 and fv == 0:
+                        attrs.add('NoVoicing')
+                        stats['novoicing'] += 1
 
             # 2. Last Vowel Drop (e.g. akıl -> aklı, şehir -> şehri, burun -> burnu)
             if v_count >= 2 and len(word) >= 4 and word[-1] not in vowels:
