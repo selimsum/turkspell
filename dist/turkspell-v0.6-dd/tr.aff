@@ -39,7 +39,7 @@ MAP '’‘
 MAXDIFF 5
 MAXNGRAMSUGS 8
 
-REP 1313
+REP 1318
 REP REP dem den
 REP REP dam dan
 REP REP dej den
@@ -87,6 +87,11 @@ REP REP agah agâh
 REP REP adedi adedî
 REP REP aliyyulala aliyyülâlâ
 REP REP aliyyülala aliyyülâlâ
+REP REP î i
+REP REP resmî resmi
+REP REP askerî askeri
+REP REP dinî dini
+REP REP millî milli
 REP 1265
 REP yanliz yalnız
 REP yanlız yalnız
