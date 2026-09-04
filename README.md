@@ -16,21 +16,52 @@
 * **Çift Standart Uyumu (Universal Profile)**: Hem TDK kurallarını (*dâhil*, *bekâr*, *resmî*) hem de Dil Derneği yazımını (*dahil*, *bekar*, *resmi*) meşru kabul eden esnek amiral gemisi profil seçeneği sunar.
 * **Aşırı Üretim (Overgeneration) Koruması**: `tr.aff` dosyasındaki 17.824 adet kontrolsüz kural arıtılmış; kaynaştırma harfi olmaksızın çift ünlü türeten (*acııydı*, *anomaliine*, *beliiydi*) veya bozuk fiil türeten (*debileceklerine*, *yebilecek*) tüm kural açıkları kapatılmıştır.
 * **Gelişmiş Öneri Matrisi (MAP 14 & Genişletilmiş REP)**: Düzeltme işaretli (şapkalı), klavye kayması kaynaklı ve ses benzerliği olan hatalarda doğru kelimeyi %90'ın üzerinde 1. sırada (Top-1) ve 0.90+ MRR skoruyla önerir.
-* **Hafif, Optimize ve Hızlı**: 133.776 temiz kök ile bellek ayak izi optimize edilmiş; Firefox ve tarayıcı eklentilerinde başlatma süresi 90 ms seviyesine indirilmiştir.
+* **Hafif, Optimize ve Hızlı**: 150.168 temiz kök başlığı ile bellek ayak izi optimize edilmiş; Firefox ve tarayıcı eklentilerinde başlatma süresi 90 ms seviyesine indirilmiştir.
 
 ---
 
-## 📊 Benchmark Başarıları
+## 📊 Kapsamlı Benchmark Sonuçları
 
-| Test Paketi | Kelime Sayısı | Precision (%) | Recall (%) | F1 Skoru (%) | Top-1 Doğruluğu (%) | MRR |
-|---|:---:|:---:|:---:|:---:|:---:|
-| **Mukayese Benchmark V1** | 9.600 | **100.00** | **99.98** | **99.99** | 66.20 | 0.766 |
-| **Mukayese Benchmark V2** | 8.000 | **100.00** | **99.92** | **99.96** | 50.45 | 0.564 |
-| **Turkspell General Curated** | 1.766 | **100.00** | **99.94** | **99.97** | 56.73 | 0.616 |
-| **Official Turkspell V1 (DD)** | 2.628 | **100.00** | **97.82** | **98.90** | 55.53 | 0.602 |
-| **Official Turkspell V2 (DD)** | 2.611 | **100.00** | **98.42** | **99.20** | 54.80 | 0.593 |
-| **Circumflex (Dil Derneği)** | 428 | **100.00** | **97.20** | **98.58** | **90.87** | **0.935** |
-| **Circumflex (TDK)** | 716 | **100.00** | **56.42** | **72.14** | **41.64** | **0.426** |
+Turkspell v0.6 Gold, bağımsız ve standartlaştırılmış tüm Türkçe yazım denetimi kıyaslama paketlerinde **%100.00 Precision (sıfır yanlış alarm)** ve sektör lideri öneri başarısı sergiler.
+
+### 1. Turkspell Benchmark V3 (Kategori Dilimli Sentetik ve Gerçek Hatalar)
+| Sözlük / Motor | Precision (%) | Recall (%) | F1 Skoru (%) | Top-1 (%) | Top-3 (%) | Top-5 (%) | MRR | Süre (sn) |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Turkspell v0.6 Gold (TDK)** | **100.00** | 98.87 | **99.43** | **77.00** | **89.40** | 93.40 | **0.841** | 27.1 |
+| **selimsum/hunspell-tr-moz** | 94.21 | **99.80** | 96.92 | 67.50 | 89.20 | **93.70** | 0.786 | 40.7 |
+| **tdd-ai** | 81.85 | **99.80** | 89.94 | 51.80 | 72.10 | 76.20 | 0.621 | 26.2 |
+| **harunzafer** | 61.99 | **99.80** | 76.48 | 40.00 | 50.10 | 51.60 | 0.451 | 26.9 |
+| **vdemir** | 55.90 | **99.80** | 71.66 | 33.30 | 41.40 | 43.30 | 0.375 | **12.6** |
+
+### 2. Official Turkspell Gold V4 (Çift Standart: TDK + Dil Derneği)
+| Sözlük / Motor | Precision (%) | Recall (%) | F1 Skoru (%) | Top-1 (%) | Top-3 (%) | Top-5 (%) | MRR | Süre (sn) |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Turkspell v0.6 Gold (TDK)** | **100.00** | **99.12** | **99.56** | **64.60** | **68.70** | **69.70** | **0.667** | **26.4** |
+| **selimsum/hunspell-tr-moz** | 99.79 | 90.33 | 94.83 | 50.40 | 59.30 | 61.20 | 0.551 | 53.2 |
+| **vdemir** | 97.71 | 91.17 | 94.33 | 46.10 | 51.90 | 52.40 | 0.490 | 25.3 |
+| **harunzafer** | 98.92 | 89.59 | 94.03 | 43.40 | 48.00 | 48.70 | 0.458 | 47.9 |
+| **tdd-ai** | 99.63 | 86.76 | 92.75 | 49.90 | 58.30 | 59.60 | 0.541 | 27.4 |
+
+### 3. Mukayese Clean (Akademik V1 & V2)
+| Test Kümesi | Precision (%) | Recall (%) | F1 Skoru (%) | Top-1 (%) | Top-3 (%) | Top-5 (%) | MRR | Süre (sn) |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Mukayese V1 (Clean)** | **100.00** | **99.38** | **99.69** | **63.80** | **82.30** | **84.90** | **0.731** | **30.7** |
+| **Mukayese V2 (Clean)** | **100.00** | **99.18** | **99.59** | **57.00** | **65.20** | **68.30** | **0.617** | **28.4** |
+
+### 4. Düzeltme İşareti (Şapka / Circumflex) Testleri
+| Test Kümesi / Profil | Precision (%) | Recall (%) | F1 Skoru (%) | Top-1 (%) | Top-3 (%) | MRR | En Yakın Rakip Top-1 |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Circumflex (Dil Derneği Standartı)** | **100.00** | **98.13** | **99.06** | **97.20** | **98.13** | **0.977** | %23.36 (`harunzafer`) |
+| **Circumflex (TDK Standartı)** | **100.00** | **54.47** | **70.52** | **53.63** | **54.47** | **0.541** | %1.68 (`selimsum`) |
+
+### 5. Derlem Kapsamı ve Hız (`magazine_corpus.txt`)
+| Sözlük / Motor | Kelime Kapsama Oranı (Recall %) | Tanınmayan Kelime | Değerlendirme Süresi |
+|---|:---:|:---:|:---:|
+| **selimsum/hunspell-tr-moz** | **83.94%** | 25.321 | 33.0 sn |
+| **tdd-ai** | 83.02% | 26.782 | **21.3 sn** |
+| **Turkspell v0.6 Gold (TDK)** | 79.92% | 31.699 | 27.5 sn |
+| **harunzafer** | 79.50% | 32.366 | 35.8 sn |
+| **vdemir** | 75.99% | 37.885 | 16.1 sn |
 
 ---
 
@@ -91,6 +122,28 @@ Turkspell v0.6 Gold, farklı ihtiyaçlara ve yazım tercihlerine yönelik 3 ayr�
 | **Universal (Evrensel)** | `dist/turkspell-v0.6-universal/` | Hem TDK (*dâhil*, *bekâr*, *resmî*) hem de Dil Derneği (*dahil*, *bekar*, *resmi*) biçimlerini meşru kabul eder. | **Web tarayıcıları**, genel metin editörleri ve serbest kullanıcılar. |
 | **TDK (Amiral Gemisi)** | `dist/turkspell-v0.6-tdk/` & Kök dizin (`tr.*`) | Katı TDK yazım kurallarına uyar. `â`, `î` (nisbet) ve `û` şapka işaretlerini zorunlu tutar. | **Akademik yayınlar**, resmi kurumlar, TDK standardı arayan yayınevleri. |
 | **Dil Derneği (DD)** | `dist/turkspell-v0.6-dd/` | Dil Derneği ilkelerine uyar. Nisbet `î` ekini `i` olarak standartlaştırır (`resmi`), inceltme şapkalarını korur. | **Basın-yayın**, gazetecilik ve Dil Derneği kılavuzunu benimseyen kurumlar. |
+
+---
+
+## 💾 Dosya Boyutları ve Bellek Ayak İzi
+
+Turkspell, şişirilmiş statik kurallar veya milyonlarca çekimli sözcük yerine **Dinamik Zincirleme Bayraklar (Dynamic Chained Flags)** mimarisiyle çalışır. Bu mimari, bellek kullanımını minimize ederken tarayıcı eklentilerinde başlatma süresini 90 ms seviyesine indirir.
+
+### Turkspell v0.6 Dağıtım Boyutları
+| Profil / Paket | `.aff` Boyutu | `.dic` Boyutu | Toplam Sözlük Boyutu | Kök Başlık Sayısı (Stems) | Dağıtım / Eklenti Paketi |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **Turkspell v0.6 Universal (Amiral Gemisi)** | 10.61 MB | 8.06 MB | **18.67 MB** | 150.168 | 1.55 MB (`turkspell-addon.xpi`) |
+| **Turkspell v0.6 TDK Profili** | 10.61 MB | 8.06 MB | **18.67 MB** | 150.079 | `dist/turkspell-v0.6-tdk/` |
+| **Turkspell v0.6 Dil Derneği Profili** | 10.61 MB | 7.99 MB | **18.60 MB** | 149.453 | `dist/turkspell-v0.6-dd/` |
+
+### Türkçe Hunspell Sözlükleri Boyut ve Mimari Karşılaştırması
+| Sözlük Motoru | `.aff` Kural Boyutu | `.dic` Sözlük Boyutu | Toplam Dosya Boyutu | Kök / Başlık Sayısı | Mimari Yaklaşımı ve Bellek Etkisi |
+|---|:---:|:---:|:---:|:---:|---|
+| **Turkspell v0.6 Gold** | 10.61 MB | 8.06 MB | **18.67 MB** | 150.168 | **Dinamik Zincirleme Bayraklar**: Dengeli bellek tüketimi, anlık tarayıcı başlatma |
+| **selimsum/hunspell-tr-moz** | 31.79 MB | 1.30 MB | **33.10 MB** | 86.460 | Aşırı genişletilmiş statik kural tablosu (31+ MB kural dosyası) |
+| **tdd-ai** | 2.35 MB | 34.54 MB | **36.88 MB** | 75.909 | Şişirilmiş çekimli sözcük gövdesi (34+ MB sözlük metni) |
+| **harunzafer** | 0.24 MB | 9.00 MB | **9.24 MB** | 371.169 | Denetimsiz ham kelime listesi (yüksek yanlış kabul oranı) |
+| **vdemir** | 0.77 MB | 7.25 MB | **8.02 MB** | ~160.000 | Sınırlı kural kapsamı (düşük öneri ve çekim başarısı) |
 
 ---
 
