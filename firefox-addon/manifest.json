@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Turkspell - Türkçe Yazım Denetimi",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "High-performance, lightweight Turkish spell-checking dictionary. Uses a Dynamic Chained Flags architecture, preserving state-of-the-art accuracy on benchmark suites.",
   "author": "Selim Şumlu",
   "homepage_url": "https://github.com/selimsum/turkspell",
