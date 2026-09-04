@@ -143,7 +143,8 @@ EXTRA_REP_RULES = [
     "REP hoşgeldiniz hoş_geldiniz",
     "REP herşey her_şey",
     "REP birşey bir_şey",
-    "REP hiçbirşey hiçbir_şey"
+    "REP hiçbirşey hiçbir_şey",
+    "REP icatı icadı"
 ]
 
 MANDATORY_HATTED_WORDS = {
@@ -305,7 +306,9 @@ LEGITIMATE_MISSED_WORDS = [
     # Valid passive verb derivations
     "uçulmak/≞⊅", "uçularak",
     # TDK loanword adjective
-    "total"
+    "total",
+    # Added legitimate stems
+    "hasılat", "ihlalci"
 ]
 
 
@@ -332,6 +335,10 @@ HEAD_FLAG_OVERRIDES = {
     "nezt": remap_flag_string("A3 CK F1 I2 L2 N3 P3 P7 PF PP PU PW Q2 R2 Y2 cl KI".replace(" ", "")),
     # nezdinde: (nezdindeki, nezdindekiler)
     "nezdinde": remap_flag_string("CI CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 KI".replace(" ", "")),
+    # despot: unvoiced back rounded noun (B2, no voicing V2)
+    "despot": remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1 DL DT DE".replace(" ", "")),
+    # ihlalci: front vowel unrounded noun (F3)
+    "ihlalci": remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl LI LK SZ CI CK SL DL DT DE".replace(" ", "")),
 }
 
 # Standard regular non-voicing inflection flags
@@ -341,9 +348,10 @@ FRONT_UNVOICED_FLAGS = remap_flag_string("A3 CI CK DE F1 I2 L2 LI LK N3 P3 P7 PF
 # Stems attested in corpus as non-voicing that erroneously had V1/V3 or missing nominal flags
 BACK_NOVOICING_STEMS = [
     "imalat", "tahsilat", "harekat", "tatbikat", "tadilat", "salat", "bürokrat",
-    "kâinat", "belagat", "arktik", "boydak", "istihbarat", "muamelat", "müfredat",
+    "kâinat", "belagat", "boydak", "istihbarat", "muamelat", "müfredat",
     "mefruşat", "nebatat", "haşarat", "barikat", "nasihat", "kabahat", "mükafat",
-    "pasaport", "rahat", "bask", "mark", "bank", "fırsat", "ark", "park", "şok"
+    "pasaport", "rahat", "bask", "mark", "bank", "fırsat", "ark", "park", "şok",
+    "hasılat"
 ]
 
 # Front-vowel non-voicing stems (including Arabic/Persian loanwords ending in -at and -al taking front harmony)
@@ -356,7 +364,8 @@ FRONT_NOVOICING_STEMS = [
     "dehşet", "edremit", "ehlisünnet", "elbet", "ensefalit", "eternit",
     "faset", "brifing", "damping", "doping", "bumerang", "aysberg",
     "dramaturg", "andezit", "babet", "bangkok", "beyrut", "dargeçit",
-    "derik", "despot", "doğubeyazıt", "ehlibeyt", "çöp", "met", "çet"
+    "derik", "doğubeyazıt", "ehlibeyt", "çöp", "met", "çet",
+    "arktik"
 ]
 
 for _w in BACK_NOVOICING_STEMS:
@@ -656,8 +665,8 @@ MAP eêEÊ
 MAP cçCÇ
 MAP gğGĞ
 MAP sşSŞ
-MAP ddtDDT
-MAP bbpBBP
+MAP dtDT
+MAP bpBP
 MAP vwyVWY
 MAP '’‘"""
     aff_text = re.sub(r'MAP \d+\n(?:MAP [^\n]+\n)+', new_map + '\n', aff_text, count=1)
@@ -885,8 +894,12 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         if profile == "dd" and "î" in w:
             w = w.replace("î", "i")
         head_w = w.split("/")[0]
+        fl_w = w.split("/")[1] if "/" in w else ""
+        if head_w.lower() in HEAD_FLAG_OVERRIDES and not fl_w:
+            fl_w = HEAD_FLAG_OVERRIDES[head_w.lower()]
+        entry_w = f"{head_w}/{fl_w}" if fl_w else head_w
         if (head_w, "") not in seen_heads and (head_w.lower(), "") not in seen_heads:
-            clean_entries.append(w)
+            clean_entries.append(entry_w)
             seen_heads.add((head_w, ""))
             added_legit += 1
             
@@ -924,17 +937,14 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
 
     deduped_entries = []
     for h in sorted(merged_heads.keys()):
-        fl_combined = "".join(sorted(merged_heads[h]))
+        fl_set = merged_heads[h]
+        fl_combined = "".join(sorted(fl_set))
         deduped_entries.append(f"{h}/{fl_combined}" if fl_combined else h)
 
     print(f"  Clean entries before dedup: {len(clean_entries):,} -> after dedup: {len(deduped_entries):,}")
     return deduped_entries
 
 def compile_v06_gold():
-    import subprocess
-    print("Resetting source files to pristine master template (commit 1bfce15)...")
-    subprocess.run(['git', 'checkout', '1bfce15', '--', 'tr.aff', 'tr.dic'], cwd=str(TURKSPELL_DIR), capture_output=True)
-    
     tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig = load_lexicons()
     
     profiles = ["tdk", "dd", "universal"]
@@ -971,17 +981,11 @@ def compile_v06_gold():
     shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.aff", TURKSPELL_DIR / "tr.aff")
     shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.dic", TURKSPELL_DIR / "tr.dic")
     
-    # Deploy to Firefox addon and external dictionaries
+    # Deploy to Firefox addon
     addon_dict_dir = TURKSPELL_DIR / "firefox-addon" / "dictionaries"
     if addon_dict_dir.exists():
         shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.aff", addon_dict_dir / "tr.aff")
         shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.dic", addon_dict_dir / "tr.dic")
-        
-    # Deploy to benchmark external dictionaries if present
-    bench_dict_dir = BASE_DIR / "external_dictionaries" / "selimsum"
-    if bench_dict_dir.exists():
-        shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.aff", bench_dict_dir / "tr.aff")
-        shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.dic", bench_dict_dir / "tr.dic")
         
     print("Deployment complete!")
 

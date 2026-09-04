@@ -203,7 +203,8 @@ def check_regression_tests(errors):
             cwd=BASE_DIR,
             capture_output=True,
             text=True,
-            encoding="utf-8"
+            encoding="utf-8",
+            errors="replace"
         )
         if res.returncode != 0:
             errors.append(f"Morphology regression tests failed:\n{res.stdout}\n{res.stderr}")
