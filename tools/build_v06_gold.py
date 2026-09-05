@@ -25,6 +25,11 @@ consonant_cond = "[^AEIOUaeiouÂÎÖÛÜâîöûüİı]"
 
 DEAD_FLAG_CHARS = {LONG_TO_UTF8[f] for f in ['G2', 'NX', 'Vb', 'Vf'] if f in LONG_TO_UTF8}
 PROPER_SUB_UTF8 = {k for k, v in UTF8_TO_LONG.items() if v.startswith("p") and len(v) == 3}
+KC_FLAG = LONG_TO_UTF8.get("KC", "")
+
+RE_OCR_FRAGMENT = re.compile(r'^[rlmny][b-df-hj-np-tv-z]')
+RE_REPEATED_CHARS = re.compile(r'(.)\1\1')
+RE_CONSONANT_CLUSTER = re.compile(r'^[b-df-hj-np-tv-z]{4,}')
 
 EXTRA_REP_RULES = [
     # Keyboard & affix boundary substitutions (m/n, j/d, z/a)
@@ -376,7 +381,7 @@ for _w in FRONT_NOVOICING_STEMS:
         HEAD_FLAG_OVERRIDES[_w] = FRONT_UNVOICED_FLAGS
 
 _voicing_table = {"p": "b", "ç": "c", "t": "d", "k": "ğ", "g": "ğ"}
-PURGE_VIRTUAL_STEMS = {"felaked", "stoğ"}
+PURGE_VIRTUAL_STEMS = {"felaked", "stoğ", "yahudiliğ"}
 for _w in BACK_NOVOICING_STEMS + FRONT_NOVOICING_STEMS:
     if _w and _w[-1] in _voicing_table:
         PURGE_VIRTUAL_STEMS.add(_w[:-1] + _voicing_table[_w[-1]])
@@ -444,6 +449,11 @@ EXTRA_AUTHORITY_HEADWORDS = [
     # Authoritative TDK/DD missed common roots:
     "mut/" + remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SZ Y1".replace(" ", "")),
     "ayaklamak/≟",
+    # Yahudi Proper Noun Orthography (TDK standard: capitalized, apostrophe for case, no apostrophe for -ce / -lik / plural)
+    "Yahudi/" + remap_flag_string("pFN pFL pFR pFY pFA pFI pFP pFC PF cl KC".replace(" ", "")),
+    "Yahudice/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 KC".replace(" ", "")),
+    "Yahudilik/" + remap_flag_string("CK I2 L2 PF Q2 R2 V3 cl KC".replace(" ", "")),
+    "Yahudiliğ/" + remap_flag_string("NE A3 N3 P3 P7 PP PU PW Y2 vc KC".replace(" ", "")),
     # TDK / DD regular derived or compound words
     "çıtır/" + remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SZ Y1".replace(" ", "")),
     "çerçöp/∃∌∍∖√∢∨∩∪∮∵∹∻≀≅≈≊≌≍≎≤≩",
@@ -492,22 +502,25 @@ def load_lexicons():
     if CUSTOM_ABBREV_PATH.exists():
         with open(CUSTOM_ABBREV_PATH, encoding="utf-8") as f:
             for item in json.load(f):
-                lem = item.get("lemma", "")
+                lem = item.get("lemma", "").strip()
                 if lem:
-                    custom_abbrevs.add(tr_lower(lem))
+                    # Do NOT lowercase abbreviations: preserve exact casing
                     custom_abbrevs_orig.add(lem)
+                    if lem.islower():
+                        custom_abbrevs.add(lem)
                     
     custom_names = set()
     custom_names_orig = set()
     if CUSTOM_NAMES_PATH.exists():
         with open(CUSTOM_NAMES_PATH, encoding="utf-8") as f:
             for item in json.load(f):
-                lem = item.get("lemma", "")
+                lem = item.get("lemma", "").strip()
                 if lem:
-                    custom_names.add(tr_lower(lem))
                     custom_names_orig.add(lem)
+                    if lem.islower():
+                        custom_names.add(lem)
                     
-    print(f"  TDK: {len(tdk_words):,}, DD: {len(dd_words):,}, Abbrevs: {len(custom_abbrevs):,}, Names: {len(custom_names):,}")
+    print(f"  TDK: {len(tdk_words):,}, DD: {len(dd_words):,}, Abbrevs: {len(custom_abbrevs_orig):,}, Names: {len(custom_names_orig):,}")
     return tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig
 
 def build_hardened_aff(profile="tdk"):
@@ -720,7 +733,12 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 unhatted_to_purge.add(tr_lower(u))
     print(f"  Unhatted clones targeted for purge: {len(unhatted_to_purge)}")
 
-    all_ref = tdk_words | dd_words
+    if profile == "tdk":
+        all_ref = tdk_words
+    elif profile == "dd":
+        all_ref = dd_words
+    else:
+        all_ref = tdk_words | dd_words
     whitelist = (all_ref - unhatted_to_purge) | custom_abbrevs | custom_names | {tr_lower(c) for c in COMPOUND_SET}
     
     BAD_STEMS = {
@@ -730,8 +748,14 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         "gorev", "ozet", "bahceci", "goren", "gore", "msde", "cocuklar",
         "calon", "keefe", "jfet",
         "mebs", "ornegi", "ıcad", "icad", "ıkisi", "ikisi", "felaked", "stoğ",
-        "topyekun", "alemşümul", "alemşümullük", "ademci", "kai", "klavuz"
+        "topyekun", "alemşümul", "alemşümullük", "ademci", "kai", "klavuz",
+        # Purge legacy noise stems, false abbreviations, and uncapitalized proper nouns
+        "aı", "baı", "baıc", "gur", "pluto",
+        "yahudi", "yahudice", "yahudilik", "yahudiliğ", "yahudibaklası",
+        "fata", "çe"
     }
+    if profile == "tdk":
+        BAD_STEMS.update({"fata", "çe"})
     
     with open(DIC_SRC, "r", encoding="utf-8") as f:
         f.readline()
@@ -747,22 +771,25 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     removed_redundant_upper = 0
     cleaned_common_noun_flags = 0
     
-    # Pre-scan lowercase heads present in dictionary
+    # Single-pass parse and pre-scan lowercase heads
     existing_lower_heads = set()
-    for line in raw_lines:
-        line_clean = line.strip()
-        if line_clean:
-            h = line_clean.split("/")[0]
-            if h.islower():
-                existing_lower_heads.add(h)
-                
+    parsed_lines = []
     for line in raw_lines:
         line_clean = line.strip()
         if not line_clean:
             continue
-        parts = line_clean.split("/")
-        head = parts[0]
-        flags = parts[1] if len(parts) > 1 else ""
+        idx = line_clean.find("/")
+        if idx != -1:
+            head = line_clean[:idx]
+            flags = line_clean[idx+1:]
+        else:
+            head = line_clean
+            flags = ""
+        parsed_lines.append((head, flags))
+        if head.islower():
+            existing_lower_heads.add(head)
+
+    for head, flags in parsed_lines:
         head_lower = tr_lower(head)
         
         # 1. Purge known bad stems and bogus voiced virtual stems
@@ -787,11 +814,11 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 removed_permutations += 1
                 continue
             # Chopped OCR fragments
-            if head.isalpha() and re.match(r'^[rlmny][b-df-hj-np-tv-z]', head_lower):
+            if head.isalpha() and RE_OCR_FRAGMENT.match(head_lower):
                 removed_crawler_spam += 1
                 continue
             # Crawler spam / repeated clusters
-            if re.search(r'(.)\1\1', head) or re.search(r'^[b-df-hj-np-tv-z]{4,}', head_lower):
+            if RE_REPEATED_CHARS.search(head) or RE_CONSONANT_CLUSTER.search(head_lower):
                 removed_crawler_spam += 1
                 continue
             if head.islower() and len(head) >= 4:
@@ -801,8 +828,14 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                     
         # 4. Common noun vs proper noun compound separation
         is_compound_term = head_lower in COMPOUND_SET
-        proper_flags = "".join(c for c in flags if c in PROPER_SUB_UTF8)
-        common_flags = "".join(c for c in flags if c not in PROPER_SUB_UTF8)
+
+        # Fast path: only partition flags if any PROPER_SUB_UTF8 flag character is present
+        if any(c in PROPER_SUB_UTF8 for c in flags):
+            proper_flags = "".join(c for c in flags if c in PROPER_SUB_UTF8)
+            common_flags = "".join(c for c in flags if c not in PROPER_SUB_UTF8)
+        else:
+            proper_flags = ""
+            common_flags = flags
         
         if head[0].isupper():
             # Check if this capitalized entry is legitimate:
@@ -816,7 +849,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 or head in custom_abbrevs_orig
                 or head_lower in custom_abbrevs
                 or is_compound_term
-                or "KC" in [UTF8_TO_LONG.get(c) for c in flags]
+                or (KC_FLAG and KC_FLAG in flags)
                 or len(head) <= 4
                 or bool(proper_flags)
             )
@@ -927,9 +960,13 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     # 7. Deduplicate multi-line heads in .dic
     merged_heads = {}
     for entry in clean_entries:
-        parts = entry.split("/", 1)
-        h = parts[0]
-        fl = parts[1] if len(parts) > 1 else ""
+        idx = entry.find("/")
+        if idx != -1:
+            h = entry[:idx]
+            fl = entry[idx+1:]
+        else:
+            h = entry
+            fl = ""
         if h not in merged_heads:
             merged_heads[h] = set(fl)
         else:
@@ -976,10 +1013,10 @@ def compile_v06_gold():
                 
         print(f"Successfully compiled: {prof_dir / 'tr.aff'} and {prof_dir / 'tr.dic'}")
         
-    # Deploy flagship Universal profile to repository root
-    print("\nDeploying flagship Turkspell v0.6 Gold (Universal) to repository root (c:\\gemini\\turkspell\\tr.*)...")
-    shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.aff", TURKSPELL_DIR / "tr.aff")
-    shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.dic", TURKSPELL_DIR / "tr.dic")
+    # Deploy flagship TDK profile to repository root
+    print("\nDeploying flagship Turkspell v0.6 Gold (TDK) to repository root (c:\\gemini\\turkspell\\tr.*)...")
+    shutil.copy2(DIST_DIR / "turkspell-v0.6-tdk" / "tr.aff", TURKSPELL_DIR / "tr.aff")
+    shutil.copy2(DIST_DIR / "turkspell-v0.6-tdk" / "tr.dic", TURKSPELL_DIR / "tr.dic")
     
     # Deploy to Firefox addon
     addon_dict_dir = TURKSPELL_DIR / "firefox-addon" / "dictionaries"

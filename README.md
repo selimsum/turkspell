@@ -13,8 +13,8 @@
 
 * **Sıfır Yanlış Alarm (%100.00 Precision)**: Temiz ve kurallara uygun yazılmış Türkçe metinlerde hiçbir meşru sözcüğü yanlışlıkla hata olarak işaretlemez.
 * **Katı Dilbilimsel Otorite**: Yalnızca **TDK (Türk Dil Kurumu)** ve **Dil Derneği** sözlüklerinde yer alan resmi sözcükleri referans alır; web kazıyıcı çöplerinden (crawler spam), uydurma köklerden ve yabancı terim kirliliğinden tamamen arındırılmıştır.
-* **Çift Standart Uyumu (Universal Profile)**: Hem TDK kurallarını (*dâhil*, *bekâr*, *resmî*) hem de Dil Derneği yazımını (*dahil*, *bekar*, *resmi*) meşru kabul eden esnek amiral gemisi profil seçeneği sunar.
-* **Aşırı Üretim (Overgeneration) Koruması**: `tr.aff` dosyasındaki 17.824 adet kontrolsüz kural arıtılmış; kaynaştırma harfi olmaksızın çift ünlü türeten (*acııydı*, *anomaliine*, *beliiydi*) veya bozuk fiil türeten (*debileceklerine*, *yebilecek*) tüm kural açıkları kapatılmıştır.
+* **Çift Standart Uyumu (Universal Profile)**: Hem TDK kurallarını (*dâhil*, *bekâr*, *resmî*) hem de Dil Derneği yazımını (*dahil*, *bekar*, *resmi*) meşru kabul eden esnek  profil seçeneği sunar.
+* **Aşırı Üretim (Overgeneration) Koruması**: `tr.aff` dosyasındaki 17.824 adet kontrolsüz kural arıtılmış; kaynaştırma harfi olmaksızın çift ünlü türeten (*acııydı*, *anomaliine*, *beliiydi*) veya bozuk fiil türeten (*debileceklerine*, *yebilecek*) kural açıkları kapatılmıştır.
 * **Gelişmiş Öneri Matrisi (MAP 14 & Genişletilmiş REP)**: Düzeltme işaretli (şapkalı), klavye kayması kaynaklı ve ses benzerliği olan hatalarda doğru kelimeyi %90'ın üzerinde 1. sırada (Top-1) ve 0.90+ MRR skoruyla önerir.
 * **Hafif, Optimize ve Hızlı**: 150.168 temiz kök başlığı ile bellek ayak izi optimize edilmiş; Firefox ve tarayıcı eklentilerinde başlatma süresi 90 ms seviyesine indirilmiştir.
 
@@ -27,7 +27,7 @@ Turkspell v0.6 Gold, bağımsız ve standartlaştırılmış tüm Türkçe yazı
 ### 1. Turkspell Benchmark V3 (Kategori Dilimli Sentetik ve Gerçek Hatalar)
 | Sözlük / Motor | Precision (%) | Recall (%) | F1 Skoru (%) | Top-1 (%) | Top-3 (%) | Top-5 (%) | MRR | Süre (sn) |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Turkspell v0.6 Gold (TDK)** | **100.00** | 98.87 | **99.43** | **77.00** | **89.40** | 93.40 | **0.841** | 27.1 |
+| **Turkspell v0.6 Gold** | **100.00** | **100.00** | **100.00** | **77.60** | **90.70** | **94.80** | **0.851** | 31.9 |
 | **selimsum/hunspell-tr-moz** | 94.21 | **99.80** | 96.92 | 67.50 | 89.20 | **93.70** | 0.786 | 40.7 |
 | **tdd-ai** | 81.85 | **99.80** | 89.94 | 51.80 | 72.10 | 76.20 | 0.621 | 26.2 |
 | **harunzafer** | 61.99 | **99.80** | 76.48 | 40.00 | 50.10 | 51.60 | 0.451 | 26.9 |
