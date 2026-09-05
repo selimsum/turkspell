@@ -60,24 +60,7 @@ jobs:
           AMO_KEY: ${{ secrets.AMO_JWT_ISSUER }}
           AMO_SECRET: ${{ secrets.AMO_JWT_SECRET }}
         run: |
-          if [ -n "$AMO_KEY" ] && [ -n "$AMO_SECRET" ]; then
-            echo "Signing extension with Mozilla web-ext..."
-            mkdir -p ./signed_dist
-            npx web-ext sign \
-              --source-dir ./firefox-addon \
-              --api-key "$AMO_KEY" \
-              --api-secret "$AMO_SECRET" \
-              --channel unlisted \
-              --artifacts-dir ./signed_dist
-            
-            SIGNED_FILE=$(ls ./signed_dist/*.xpi | head -n 1)
-            if [ -f "$SIGNED_FILE" ]; then
-              cp "$SIGNED_FILE" ./turkspell-addon.xpi
-              echo "Successfully signed .xpi"
-            fi
-          else
-            echo "AMO secrets not configured. Proceeding with unsigned .xpi package."
-          fi
+          python tools/sign_addon.py --version "${{ steps.bump.outputs.version }}"
 
       - name: Commit & Tag New Version
         run: |
@@ -93,8 +76,12 @@ jobs:
             git push origin HEAD
           fi
           
-          git tag "v${VERSION}"
-          git push origin "v${VERSION}"
+          if git rev-parse "v${VERSION}" >/dev/null 2>&1; then
+            echo "Tag v${VERSION} already exists locally."
+          else
+            git tag "v${VERSION}"
+            git push origin "v${VERSION}" || echo "Tag v${VERSION} already pushed or exists on remote."
+          fi
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
