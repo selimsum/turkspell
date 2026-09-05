@@ -5,23 +5,53 @@ import sys
 import subprocess
 import argparse
 
-def get_git_diff_version():
-    """Checks if firefox-addon/manifest.json version was manually changed in the latest git commit."""
+def tag_exists(version):
+    """Checks if a git tag v{version} already exists locally."""
     try:
+        tag_name = f"v{version}"
         res = subprocess.run(
-            ["git", "diff", "HEAD~1", "HEAD", "--", "firefox-addon/manifest.json"],
+            ["git", "rev-parse", "-q", "--verify", f"refs/tags/{tag_name}"],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False
+        )
+        return res.returncode == 0
+    except Exception:
+        return False
+
+def is_merge_commit():
+    """Checks if the HEAD commit is a merge commit (has more than 1 parent)."""
+    try:
+        res = subprocess.run(
+            ["git", "rev-parse", "-q", "--verify", "HEAD^2"],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False
+        )
+        return res.returncode == 0
+    except Exception:
+        return False
+
+def get_previous_commit_version():
+    """Gets the version in firefox-addon/manifest.json from the parent commit (HEAD~1)."""
+    try:
+        res = subprocess.run(
+            ["git", "show", "HEAD~1:firefox-addon/manifest.json"],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
             check=False
         )
         if res.returncode == 0 and res.stdout:
-            for line in res.stdout.splitlines():
-                if line.startswith("+") and not line.startswith("+++"):
-                    match = re.search(r'"version":\s*"([^"]+)"', line)
-                    if match:
-                        return match.group(1)
+            data = json.loads(res.stdout)
+            return data.get("version")
     except Exception as e:
-        print(f"Warning checking git diff: {e}")
+        print(f"Warning checking previous git version: {e}")
     return None
 
 def bump_version_string(current_ver, bump_type):
@@ -62,17 +92,25 @@ def main():
         manifest = json.load(f)
 
     current_ver = manifest.get("version", "0.1.0")
+    prev_ver = get_previous_commit_version()
 
-    # 1. Check if user manually changed version in git commit
-    manual_ver = get_git_diff_version()
-    if manual_ver and manual_ver != current_ver:
-        new_ver = manual_ver
-        print(f"Detected manual version change in manifest.json: {current_ver} -> {new_ver}")
-    elif args.bump_type != "auto" or manual_ver is None:
+    # 1. Determine new version
+    # If the user manually changed the manifest version in a non-merge commit to a new, unreleased tag, keep it.
+    if not is_merge_commit() and prev_ver and current_ver != prev_ver and not tag_exists(current_ver):
+        new_ver = current_ver
+        print(f"Detected manual unreleased version change in manifest.json: {prev_ver} -> {new_ver}")
+    elif args.bump_type != "auto":
         new_ver = bump_version_string(current_ver, args.bump_type)
         print(f"Bumping version ({args.bump_type}): {current_ver} -> {new_ver}")
     else:
-        new_ver = manual_ver
+        new_ver = bump_version_string(current_ver, "patch")
+        print(f"Auto-bumping version (patch): {current_ver} -> {new_ver}")
+
+    # Ensure new_ver does not collide with any already released tag
+    while tag_exists(new_ver):
+        bumped = bump_version_string(new_ver, "patch")
+        print(f"Tag v{new_ver} already exists! Advancing to v{bumped}")
+        new_ver = bumped
 
     # 2. Update manifest.json
     manifest["version"] = new_ver
@@ -108,3 +146,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
