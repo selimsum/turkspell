@@ -32,7 +32,6 @@ if sys.platform == "win32":
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AUTHORITY_FILES = [
     os.path.join(BASE_DIR, "raw_data", "tdk_words.txt"),
-    os.path.join(BASE_DIR, "raw_data", "tdk_words_new.txt"),
     os.path.join(BASE_DIR, "raw_data", "dil_dernegi_words.txt"),
 ]
 HATS = str.maketrans("âîûÂÎÛ", "aiuAIU")
