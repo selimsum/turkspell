@@ -47,7 +47,6 @@ def load_all_resources():
     
     auth_files = [
         os.path.join(RAW_DIR, "tdk_words.txt"),
-        os.path.join(RAW_DIR, "tdk_words_new.txt"),
         os.path.join(RAW_DIR, "dil_dernegi_words.txt"),
     ]
     for af in auth_files:

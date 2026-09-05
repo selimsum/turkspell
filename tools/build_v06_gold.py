@@ -432,6 +432,8 @@ VIRTUAL_STEMS = [
     "bloğ/X∁∬∳∷∾≁≃≕≣",
     # tedariğ (tedarik -> tedariğ-i, tedariğ-i-n-de, tedariğ-i-n-den, tedariğ-i-n-i, tedariğ-e, tedariğ-i-m, tedariğ-i-n)
     "tedariğ/X∂∭∴∸∿≄≆≤≽",
+    # zıdd (zıt -> zıdd-ı, zıdd-ı-n-a, zıdd-ı-n-da, zıdd-ı-n-dan)
+    "zıdd/X∀∫∲∶∼∽≂≕≣",
 ]
 
 EXTRA_AUTHORITY_HEADWORDS = [
@@ -448,6 +450,79 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "Sanayii/⊘⊙⊚⊛⊜⊝⊞⊟",
     # Authoritative TDK/DD missed common roots & question particles (TS Corpus discovery):
     "zor/∁∅∌∍∎∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≎≣",
+    "aga/∆≥⊆∧≋≬≪≉∺≂∲∶∼∽∎∩∪∌∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "atu/∇≦⊆∧≋≭≪≉∺≃∳∷∾≁∎∌∍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "ağu/∇≦⊆∧≋≭≪≉∺≃∳∷∾≁∎∩∍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "bos/∅∁≣∧≋∬∡≉∺≃∳∷∾≁∎∩∪∌∍≍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "bö/∜≨⊇∨≌≯≫≊∻≅∵∹≀≈≩∩∪∌∍∖⊠⊡⊢⊣⊤⊥⊦⊧",
+    "dak/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "düo/∇≦⊆∧≋≭≪≉∺≃∳∷∾≁∎∍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "düt",
+    "fi/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∖⊘⊙⊚⊛⊜⊝⊞⊟",
+    "fış/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎≎∍",
+    "gag/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "hâd/∟∨≌∢≊∻≩K⊩L∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "hâr/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "höl/√∃≤∨≌∮∢≊∻≅∵∹≀≈≩∪∍⊠⊡⊢⊣⊤⊥⊦⊧",
+    "hüt/√∃≤∨≌∮∢≊∻≅∵∹≀≈≩∩∍⊠⊡⊢⊣⊤⊥⊦⊧",
+    "je/∛≧⊇∨≌≮≫≊∻≄∴∸∿≆≩∩≎∌∍∖⊘⊙⊚⊛⊜⊝⊞⊟",
+    "jüp/√∃≤∨≌∮∢≊∻≅∵∹≀≈≩∩∍⊠⊡⊢⊣⊤⊥⊦⊧",
+    "kam/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∖⊈⊉⊊⊋⊌⊍⊎⊏",
+    "keh/∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪∌∍∖⊘⊙⊚⊛⊜⊝⊞⊟",
+    "kis/∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪∍≍⊘⊙⊚⊛⊜⊝⊞⊟",
+    "kiş/∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪∌∍≍⊘⊙⊚⊛⊜⊝⊞⊟",
+    "kle/∛≧⊇∨≌≮≫≊∻≄∴∸∿≆≩∍⊘⊙⊚⊛⊜⊝⊞⊟",
+    "koh/∅∁≣∧≋∬∡≉∺≃∳∷∾≁∎∩∍∖⊐⊑⊒⊓⊔⊕⊖⊗",
+    "köp/√∃≤∨≌∮∢≊∻≅∵∹≀≈≩∩∌∍⊠⊡⊢⊣⊤⊥⊦⊧",
+    "küm/√∃≤∨≌∮∢≊∻≅∵∹≀≈≩∩∪∍⊠⊡⊢⊣⊤⊥⊦⊧",
+    "küv/√∃≤∨≌∮∢≊∻≅∵∹≀≈≩∍⊠⊡⊢⊣⊤⊥⊦⊧",
+    "küğ/√∃≤∨≌∮∢≊∻≅∵∹≀≈≩∩∌∍≍⊠⊡⊢⊣⊤⊥⊦⊧",
+    "kıh/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "kım/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "kıv/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∌∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "lik/≑∨≌∢≊∻≩∩≎∌∍≍⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mağ/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "mok/∅∁≣∧≋∬∡≉∺≃∳∷∾≁∎∩∪∍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "mol/∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩⊨⊪L⊫∍∖⊐⊑⊒⊓⊔⊕⊖⊗",
+    "nar/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "naş/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "neo/∇≦⊆∧≋≭≪≉∺≃∳∷∾≁∎∩∌∍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "nil/∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩≎∍≍⊘⊙⊚⊛⊜⊝⊞⊟",
+    "oto/∇≦⊆∧≋≭≪≉∺≃∳∷∾≁∎∩∪≎∌∍≍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "pe/∛≧⊇∨≌≮≫≊∻≄∴∸∿≆≩∩∪∌∍∗∖⊘⊙⊚⊛⊜⊝⊞⊟",
+    "pin/∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∍≍⊘⊙⊚⊛⊜⊝⊞⊟",
+    "por/∅∁≣∧≋∬∡≉∺≃∳∷∾≁∎∩≎∌∍≍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "rep/∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪∌∍⊘⊙⊚⊛⊜⊝⊞⊟",
+    "rie/∛≧⊇∨≌≮≫≊∻≄∴∸∿≆≩∩∍≍⊘⊙⊚⊛⊜⊝⊞⊟",
+    "rok/∅∁≣∧≋∬∡≉∺≃∳∷∾≁∎∪∌∍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "seğ/∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩∍⊘⊙⊚⊛⊜⊝⊞⊟",
+    "sop/∅∁≣∧≋∬∡≉∺≃∳∷∾≁∎∩≎∌∍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "tüs/√∃≤∨≌∮∢≊∻≅∵∹≀≈≩∍⊠⊡⊢⊣⊤⊥⊦⊧",
+    "urk/∅∁≣∧≋∬∡≉∺≃∳∷∾≁∎∍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "uğu/∇≦⊆∧≋≭≪≉∺≃∳∷∾≁∎∩∍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "yuğ/∅∁≣∧≋∬∡≉∺≃∳∷∾≁∎∩∌∍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "yâd/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "ze/∛≧⊇∨≌≮≫≊∻≄∴∸∿≆≩∩∪∌∍∖⊘⊙⊚⊛⊜⊝⊞⊟",
+    "zil/∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍∖⊘⊙⊚⊛⊜⊝⊞⊟",
+    "zom/∅∁≣∧≋∬∡≉∺≃∳∷∾≁∎∩∍",
+    "zum/∅∁≣∧≋∬∡≉∺≃∳∷∾≁∎∩≎∍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "zül/∠∨≌∢≊∻≩∩∍⊠⊡⊢⊣⊤⊥⊦⊧",
+    "zıh/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "zıp/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∌∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "zıt/∝∧≋∡≉∺∎∩∪≎∍∗⊈⊉⊊⊋⊌⊍⊎⊏",
+    "âli/∛≧⊇∨≌≮≫≊∻≄∴∸∿≆≩∌∍",
+    "âlâ/∆≥⊆∧≋≬≪≉∺≂∲∶∼∽∎∍",
+    "âm/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∪∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "âmâ/∆≥⊆∧≋≬≪≉∺≂∲∶∼∽∎∩∪≎∌∍",
+    "çe/∛≧⊇∨≌≮≫≊∻≄∴∸∿≆≩∩∪∌∍≍∖⊘⊙⊚⊛⊜⊝⊞⊟",
+    "çer",
+    "çot/∅∁≣∧≋∬∡≉∺≃∳∷∾≁∎∩∍⊐⊑⊒⊓⊔⊕⊖⊗",
+    "öğe/∛≧⊇∨≌≮≫≊∻≄∴∸∿≆≩∩∪≎∌∍≍⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ıhı/∆≥⊆∧≋≬≪≉∺≂∲∶∼∽∎∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "ıs/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "şe/∛≧⊇∨≌≮≫≊∻≄∴∸∿≆≩∩∪≎∌∍∗∖⊘⊙⊚⊛⊜⊝⊞⊟",
+    "şeh/∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪∍⊘⊙⊚⊛⊜⊝⊞⊟",
+    "şol/∅∁≣∧≋∬∡≉∺≃∳∷∾≁∎∍⊐⊑⊒⊓⊔⊕⊖⊗",
     "mı/∆∌∍∎∧∩∪∲∶∺∼∽≂≉≋≍≎≥≪≬⊆",
     "mu/∇∌∍∎∖∧∩∪∳∷∺∾≁≃≉≋≍≎≦≪≭⊆",
     "mü/∌∍∖∜∨∩∪∵∹∻≀≅≈≊≌≍≎≨≩≫≯⊇",
@@ -737,12 +812,13 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 unhatted_to_purge.add(tr_lower(u))
     print(f"  Unhatted clones targeted for purge: {len(unhatted_to_purge)}")
 
+    authority_all = tdk_words | dd_words
     if profile == "tdk":
         all_ref = tdk_words
     elif profile == "dd":
         all_ref = dd_words
     else:
-        all_ref = tdk_words | dd_words
+        all_ref = authority_all
     whitelist = (all_ref - unhatted_to_purge) | custom_abbrevs | custom_names | {tr_lower(c) for c in COMPOUND_SET}
     
     BAD_STEMS = {
@@ -810,7 +886,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             continue
             
         # 3. Whitelist check (protects all custom abbreviations, custom names, compound terms, TDK/DD)
-        is_whitelisted = head_lower in whitelist or head in custom_abbrevs_orig or head in custom_names_orig
+        is_whitelisted = head_lower in whitelist or head in custom_abbrevs_orig or head in custom_names_orig or head_lower in authority_all
         
         if not is_whitelisted:
             # 1-3 letter permutation noise not in whitelist
