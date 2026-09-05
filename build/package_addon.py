@@ -16,10 +16,20 @@ def package_addon():
     # 1. Ensure directories exist (don't wipe them — manifest.json is kept in source control)
     os.makedirs(dictionaries_dir, exist_ok=True)
 
-    # 2. Copy dictionary files
-    print("Copying tr.dic and tr.aff...")
-    shutil.copy(os.path.join(_root_dir, "tr.dic"), os.path.join(dictionaries_dir, "tr.dic"))
-    shutil.copy(os.path.join(_root_dir, "tr.aff"), os.path.join(dictionaries_dir, "tr.aff"))
+    # 2. Ensure dictionary files are in place (prefer universal profile, fallback to root)
+    universal_dic = os.path.join(_root_dir, "dist", "turkspell-v0.6-universal", "tr.dic")
+    universal_aff = os.path.join(_root_dir, "dist", "turkspell-v0.6-universal", "tr.aff")
+    addon_dic = os.path.join(dictionaries_dir, "tr.dic")
+    addon_aff = os.path.join(dictionaries_dir, "tr.aff")
+
+    if os.path.exists(universal_dic) and os.path.exists(universal_aff):
+        print("Using universal profile tr.dic and tr.aff for Firefox extension...")
+        shutil.copy(universal_dic, addon_dic)
+        shutil.copy(universal_aff, addon_aff)
+    elif not (os.path.exists(addon_dic) and os.path.exists(addon_aff)):
+        print("Copying root tr.dic and tr.aff...")
+        shutil.copy(os.path.join(_root_dir, "tr.dic"), addon_dic)
+        shutil.copy(os.path.join(_root_dir, "tr.aff"), addon_aff)
 
     # 3. Verify manifest.json is present
     manifest_path = os.path.join(addon_dir, "manifest.json")
