@@ -446,7 +446,11 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "Mevkii/⊘⊙⊚⊛⊜⊝⊞⊟",
     "sanayii/∸",
     "Sanayii/⊘⊙⊚⊛⊜⊝⊞⊟",
-    # Authoritative TDK/DD missed common roots:
+    # Authoritative TDK/DD missed common roots & question particles (TS Corpus discovery):
+    "zor/∁∅∌∍∎∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≎≣",
+    "mı/∆∌∍∎∧∩∪∲∶∺∼∽≂≉≋≍≎≥≪≬⊆",
+    "mu/∇∌∍∎∖∧∩∪∳∷∺∾≁≃≉≋≍≎≦≪≭⊆",
+    "mü/∌∍∖∜∨∩∪∵∹∻≀≅≈≊≌≍≎≨≩≫≯⊇",
     "mut/" + remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SZ Y1".replace(" ", "")),
     "ayaklamak/≟",
     # Yahudi Proper Noun Orthography (TDK standard: capitalized, apostrophe for case, no apostrophe for -ce / -lik / plural)
@@ -951,7 +955,27 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     added_names = 0
     for n in custom_names_orig:
         if (n, "") not in seen_heads and (n.lower(), "") not in seen_heads:
-            clean_entries.append(n)
+            # Assign harmonic proper noun apostrophe inflection flags for capitalized proper names
+            if n and n[0].isupper() and not any(c in n for c in "0123456789."):
+                last_vowel = ""
+                for ch in reversed(n):
+                    if ch in "aıâouûeiîöüAIÂOUÛEİÎÖÜ":
+                        last_vowel = ch.lower()
+                        break
+                if last_vowel in "aıâ":
+                    proper_flags = remap_flag_string("CK CL L1 pBN pBL pBR pBY pBA pBI pBP pBC".replace(" ", ""))
+                elif last_vowel in "ouû":
+                    proper_flags = remap_flag_string("CK CL L1 pON pOL pOR pOY pOA pOI pOP pOC".replace(" ", ""))
+                elif last_vowel in "eiî":
+                    proper_flags = remap_flag_string("CK cl L2 pFN pFL pFR pFY pFA pFI pFP pFC".replace(" ", ""))
+                elif last_vowel in "öü":
+                    proper_flags = remap_flag_string("CK cl L2 pUN pUL pUR pUY pUA pUI pUP pUC".replace(" ", ""))
+                else:
+                    proper_flags = ""
+                entry_n = f"{n}/{proper_flags}" if proper_flags else n
+            else:
+                entry_n = n
+            clean_entries.append(entry_n)
             seen_heads.add((n, ""))
             added_names += 1
             
