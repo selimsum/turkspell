@@ -51,7 +51,9 @@ MAXNGRAMSUGS 8
 
 
 
-REP 1356
+
+
+REP 1405
 REP dem den
 REP dam dan
 REP dej den
@@ -165,11 +167,60 @@ REP herşey her_şey
 REP birşey bir_şey
 REP hiçbirşey hiçbir_şey
 REP icatı icadı
+REP yoz yoruz
+REP yom yorum
+REP yosun yorsun
+REP yozlar yorlar
+REP icem eceğim
+REP ucam acağım
+REP yecem yeceğim
+REP yacam yacağım
+REP cem ceğim
+REP cam cağım
+REP aa ağa
+REP ee eğe
+REP aı ağı
+REP ıı ığı
+REP ii iği
+REP oa oğa
+REP ou oğu
+REP ua uğa
+REP uu uğu
+REP ao ağo
+REP yamur yağmur
+REP yamurlu yağmurlu
+REP yamurdan yağmurdan
+REP kaıt kâğıt
+REP doa doğa
+REP dou doğu
+REP uçaım uçağım
+REP uçaımız uçağımız
+REP uçuumuz uçuğumuz
+REP alçaa alçağa
+REP kopuumuz kopuğumuz
+REP balgamımz balgamımız
+REP maltımz maltımız
+REP abtık batık
+REP aşkama akşama
+REP doramacı doğramacı
+REP dorudan doğrudan
+REP deirmene değirmene
+REP sendikacılıa sendikacılığa
+REP uykusuzlua uykusuzluğa
+REP aydınlıa aydınlığa
+REP dayor diyor
+REP anıyo anıyor
+REP duruyo duruyor
+REP aldatıyo aldatıyor
+REP yanıltıyo yanıltıyor
+REP oynıyo oynuyor
+REP yapartken yaparken
 REP î i
 REP resmî resmi
 REP askerî askeri
 REP dinî dini
 REP millî milli
+REP kaıt kağıt
 REP yanliz yalnız
 REP yanlız yalnız
 REP deil değil
