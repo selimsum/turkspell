@@ -416,7 +416,7 @@ def generate_report(clean_words, removed_english, removed_proper, removed_redund
         "",
         f"- **Execution Timestamp**: {time.strftime('%Y-%m-%d %H:%M:%S')}",
         f"- **Corpus Source**: `raw_data/oscar_10m_corpus_frequencies.json`",
-        f"- **Active Dictionary Tested**: Turkspell v0.6 Gold (`tr.aff` / `tr.dic`)",
+        f"- **Active Dictionary Tested**: Turkspell v0.6 (`tr.aff` / `tr.dic`)",
         "",
         "---",
         "",

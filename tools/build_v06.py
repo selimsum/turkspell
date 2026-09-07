@@ -1081,7 +1081,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     print(f"  Clean entries before dedup: {len(clean_entries):,} -> after dedup: {len(deduped_entries):,}")
     return deduped_entries
 
-def compile_v06_gold():
+def compile_v06():
     tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig = load_lexicons()
     
     profiles = ["tdk", "dd", "universal"]
@@ -1089,7 +1089,7 @@ def compile_v06_gold():
     
     for prof in profiles:
         print(f"\n=======================================================")
-        print(f"Compiling Turkspell v0.6 Gold - Profile: [{prof.upper()}]")
+        print(f"Compiling Turkspell v0.6 - Profile: [{prof.upper()}]")
         print(f"=======================================================")
         
         prof_dir = DIST_DIR / f"turkspell-v0.6-{prof}"
@@ -1114,7 +1114,7 @@ def compile_v06_gold():
         print(f"Successfully compiled: {prof_dir / 'tr.aff'} and {prof_dir / 'tr.dic'}")
         
     # Deploy flagship TDK profile to repository root
-    print("\nDeploying flagship Turkspell v0.6 Gold (TDK) to repository root (c:\\gemini\\turkspell\\tr.*)...")
+    print("\nDeploying flagship Turkspell v0.6 (TDK) to repository root (c:\\gemini\\turkspell\\tr.*)...")
     shutil.copy2(DIST_DIR / "turkspell-v0.6-tdk" / "tr.aff", TURKSPELL_DIR / "tr.aff")
     shutil.copy2(DIST_DIR / "turkspell-v0.6-tdk" / "tr.dic", TURKSPELL_DIR / "tr.dic")
     
@@ -1127,4 +1127,4 @@ def compile_v06_gold():
     print("Deployment complete!")
 
 if __name__ == "__main__":
-    compile_v06_gold()
+    compile_v06()
