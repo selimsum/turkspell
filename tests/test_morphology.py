@@ -273,5 +273,38 @@ class TestFalseRejectRescues(unittest.TestCase):
         self.assertEqual(rejected, [], f"Failing authoritative root forms: {rejected}")
 
 
+class TestReportedWordsAndUnits(unittest.TestCase):
+    """Verifies positive acceptance of reported words and unit symbols, and negative rejection of double-ki artifacts."""
+
+    def test_reported_fifteen_words(self):
+        """All 15 reported words must be accepted by Turkspell."""
+        words = [
+            "anki", "Stadı'nda", "trendlerine", "Sahili'ni", "zamankinden",
+            "batımını", "Kolombiya'nın", "tescillenmiş", "Ligi'nde", "Takımı'nın",
+            "nm", "mAh", "ml", "kW", "kWh"
+        ]
+        accepted, rejected = check_words(words)
+        self.assertEqual(rejected, [], f"Reported words failing: {rejected}")
+
+    def test_unit_symbols(self):
+        """Extended scientific and technical unit symbols must be accepted."""
+        units = [
+            "kHz", "THz", "fps", "kbps", "Mbps", "dpi", "ppi",
+            "mV", "mA", "kA", "mW", "MW", "GW", "Wh", "mWh", "MWh", "GWh",
+            "pF", "nF", "uF", "µF", "mF", "mH", "hPa", "kPa", "mbar", "psi",
+            "kN", "kJ", "MJ", "GJ", "cal", "eV", "keV", "MeV", "GeV",
+            "dB", "dBA", "dBm", "lm", "lx", "mmol", "ppm", "ppb",
+            "ms", "ns", "ps", "µs", "µm", "cl", "dl"
+        ]
+        accepted, rejected = check_words(units)
+        self.assertEqual(rejected, [], f"Unit symbols failing: {rejected}")
+
+    def test_double_ki_negative_rejection(self):
+        """Typo/artifact forms with duplicated kiki must be rejected."""
+        wrong_words = ["zamankikinden", "ndakikinden", "nınkikiler", "nunkikilerden"]
+        accepted, rejected = check_words(wrong_words)
+        self.assertEqual(accepted, [], f"Illegal double-ki artifacts leaked: {accepted}")
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -216,7 +216,7 @@ COMPOUND_PROPER_TERMS = [
     # Yer şekilleri & sular
     'dağ', 'dağı', 'dağları', 'tepe', 'tepesi', 'ova', 'ovası', 'vadi', 'vadisi', 'kanyon', 'kanyonu', 'plato', 'platosu',
     'göl', 'gölü', 'gölleri', 'baraj', 'barajı', 'gölet', 'göleti', 'lagün', 'lagünü',
-    'deniz', 'denizi', 'okyanus', 'okyanusu', 'körfez', 'körfezi', 'koy', 'koyu', 'boğaz', 'boğazı', 'kanal', 'kanalı', 'burun', 'burnu', 'yarımada', 'yarımadası', 'ada', 'adası', 'adaları',
+    'deniz', 'denizi', 'okyanus', 'okyanusu', 'körfez', 'körfezi', 'koy', 'koyu', 'boğaz', 'boğazı', 'kanal', 'kanalı', 'burun', 'burnu', 'yarımada', 'yarımadası', 'ada', 'adası', 'adaları', 'sahil', 'sahili',
     'nehir', 'nehri', 'ırmak', 'ırmağı', 'çay', 'çayı', 'dere', 'deresi', 'şelale', 'şelalesi', 'geçit', 'geçidi',
     # Yapılar
     'saray', 'sarayı', 'köşk', 'köşkü', 'konak', 'konağı', 'kasır', 'kasrı', 'han', 'hanı', 'kervansaray', 'kervansarayı', 'hamam', 'hamamı',
@@ -233,7 +233,7 @@ COMPOUND_PROPER_TERMS = [
     'mahkeme', 'mahkemesi', 'savcılık', 'savcılığı', 'başsavcılık', 'başsavcılığı', 'baro', 'barosu',
     'üniversite', 'üniversitesi', 'fakülte', 'fakültesi', 'enstitü', 'enstitüsü', 'yüksekokul', 'yüksekokulu', 'okul', 'okulu', 'lise', 'lisesi', 'kolej', 'koleji', 'akademi', 'akademisi', 'dershane', 'dershanesi', 'anaokulu', 'ilkokul', 'ilkokulu', 'ortaokul', 'ortaokulu', 'rasathane', 'rasathanesi',
     'hastane', 'hastanesi', 'dispanser', 'dispanseri', 'poliklinik', 'polikliniği', 'ocak', 'ocağı', 'klinik', 'kliniği',
-    'dernek', 'derneği', 'vakıf', 'vakfı', 'birlik', 'birliği', 'federasyon', 'federasyonu', 'konfederasyon', 'konfederasyonu', 'oda', 'odası', 'borsa', 'borsası', 'sendika', 'sendikası', 'kooperatif', 'kooperatifi', 'kulüp', 'kulübü', 'cemiyet', 'cemiyeti', 'komisyon', 'komisyonu', 'kurul', 'kurulu', 'ajans', 'ajansı', 'banka', 'bankası', 'merkez', 'merkezi', 'laboratuvar', 'laboratuvarı', 'kütüphane', 'kütüphanesi', 'müze', 'müzesi', 'tiyatro', 'tiyatrosu', 'opera', 'operası', 'bale', 'balesi', 'orkestra', 'orkestrası'
+    'dernek', 'derneği', 'vakıf', 'vakfı', 'birlik', 'birliği', 'federasyon', 'federasyonu', 'konfederasyon', 'konfederasyonu', 'oda', 'odası', 'borsa', 'borsası', 'sendika', 'sendikası', 'kooperatif', 'kooperatifi', 'kulüp', 'kulübü', 'cemiyet', 'cemiyeti', 'komisyon', 'komisyonu', 'kurul', 'kurulu', 'ajans', 'ajansı', 'banka', 'bankası', 'merkez', 'merkezi', 'laboratuvar', 'laboratuvarı', 'kütüphane', 'kütüphanesi', 'müze', 'müzesi', 'tiyatro', 'tiyatrosu', 'opera', 'operası', 'bale', 'balesi', 'orkestra', 'orkestrası', 'lig', 'ligi', 'takım', 'takımı'
 ]
 COMPOUND_SET = set(COMPOUND_PROPER_TERMS)
 
@@ -344,6 +344,8 @@ HEAD_FLAG_OVERRIDES = {
     "despot": remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1 DL DT DE".replace(" ", "")),
     # ihlalci: front vowel unrounded noun (F3)
     "ihlalci": remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl LI LK SZ CI CK SL DL DT DE".replace(" ", "")),
+    # an: relative -ki flag K1 (∣) for anki, ankinin, ankinden, etc.
+    "an": "∀∄∌∍∎∖∗∘∡∣∧∩∪∫∲∶∺∼∽≂≉≋≍≎≣",
 }
 
 # Standard regular non-voicing inflection flags
@@ -448,6 +450,87 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "Mevkii/⊘⊙⊚⊛⊜⊝⊞⊟",
     "sanayii/∸",
     "Sanayii/⊘⊙⊚⊛⊜⊝⊞⊟",
+    # Proper compound nouns with 3rd-person possessive taking apostrophe case inflections:
+    "Stadı/⊈⊉⊊⊋⊌⊍⊎⊏",
+    "stadı/∲",
+    "Takımı/⊈⊉⊊⊋⊌⊍⊎⊏",
+    "takımı/∲",
+    "Sahili/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "sahili/∸",
+    "Ligi/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ligi/∸",
+    # World countries with proper noun apostrophe inflection flags:
+    "Kolombiya/∆∍∎∧∩∲∶∺∼∽≂≉≋≥≪≬⊆⊈⊉⊊⊋⊌⊍⊎⊏",
+    "Şili/∍∛∨∩∴∸∻∿≄≆≊≌≧≩≫≮⊇⊘⊙⊚⊛⊜⊝⊞⊟",
+    "Peru/∇∍∎∧∩∳∷∺∾≁≃≉≋≍≦≪≭⊆⊐⊑⊒⊓⊔⊕⊖⊗",
+    "Uruguay/∀∄∍∎∡∧∩∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
+    "Paraguay/∀∄∍∎∡∧∩∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
+    "Venezuela/∆∍∎∧∩∲∶∺∼∽≂≉≋≥≪≬⊆⊈⊉⊊⊋⊌⊍⊎⊏",
+    # Legitimate TDK stems & verb inflections:
+    "trend/∂∌∍∙∢∨∩∭∴∸∻∿≄≆≊≌≍≎≤≩",
+    "batım/∀∄∌∍∎∡∧∩∪∫∲∶∺∼∽≂≉≋≍≣",
+    "tescillenmek/≗⊃",
+    "tescillenme/∍∛∨∩∴∸∻∿≄≆≊≌≧≩≫≮⊇",
+    # Scientific, technical, and everyday measurement unit symbols:
+    "nm/∀∄∍∎∡∧∩∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ml/∀∄∍∎∡∧∩∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mL/∀∄∍∎∡∧∩∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "kW/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
+    "kWh/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mAh/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mWh/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "MWh/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "GWh/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "Wh/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "kHz/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "THz/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "kbps/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
+    "Mbps/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
+    "mV/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mA/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
+    "kA/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
+    "mW/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "MW/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "GW/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "pF/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "nF/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "uF/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "µF/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mF/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mH/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "hPa/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
+    "kPa/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
+    "mbar/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
+    "psi/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "kN/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "kJ/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "MJ/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "GJ/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "cal/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
+    "eV/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "keV/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "MeV/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "GeV/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "dB/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "dBA/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
+    "dBm/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "lm/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "lx/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mmol/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ppm/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ppb/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "fps/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "dpi/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ppi/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ms/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ns/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ps/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "µs/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "us/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "µm/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "um/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "cl/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "dl/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
     # Authoritative TDK/DD missed common roots & question particles (TS Corpus discovery):
     "zor/∁∅∌∍∎∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≎≣",
     "aga/∆≥⊆∧≋≬≪≉∺≂∲∶∼∽∎∩∪∌∍⊈⊉⊊⊋⊌⊍⊎⊏",
@@ -1023,14 +1106,15 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     # 6. Inject all missing custom abbreviations and names from lexicons
     added_abbrevs = 0
     for a in custom_abbrevs_orig:
-        if (a, "") not in seen_heads and (a.lower(), "") not in seen_heads:
-            clean_entries.append(a)
-            seen_heads.add((a, ""))
-            added_abbrevs += 1
+        if (a, "") not in seen_heads:
+            if (a.lower(), "") not in seen_heads or a != a.lower():
+                clean_entries.append(a)
+                seen_heads.add((a, ""))
+                added_abbrevs += 1
             
     added_names = 0
     for n in custom_names_orig:
-        if (n, "") not in seen_heads and (n.lower(), "") not in seen_heads:
+        if (n, "") not in seen_heads and ((n.lower(), "") not in seen_heads or (n and n[0].isupper())):
             # Assign harmonic proper noun apostrophe inflection flags for capitalized proper names
             if n and n[0].isupper() and not any(c in n for c in "0123456789."):
                 last_vowel = ""
