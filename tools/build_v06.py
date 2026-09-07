@@ -1248,10 +1248,10 @@ def compile_v06():
                 
         print(f"Successfully compiled: {prof_dir / 'tr.aff'} and {prof_dir / 'tr.dic'}")
         
-    # Deploy flagship TDK profile to repository root
-    print("\nDeploying flagship Turkspell v0.6 (TDK) to repository root (c:\\gemini\\turkspell\\tr.*)...")
-    shutil.copy2(DIST_DIR / "turkspell-v0.6-tdk" / "tr.aff", TURKSPELL_DIR / "tr.aff")
-    shutil.copy2(DIST_DIR / "turkspell-v0.6-tdk" / "tr.dic", TURKSPELL_DIR / "tr.dic")
+    # Deploy default Universal profile to repository root
+    print("\nDeploying default Turkspell v0.6 (Universal) to repository root (c:\\gemini\\turkspell\\tr.*)...")
+    shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.aff", TURKSPELL_DIR / "tr.aff")
+    shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.dic", TURKSPELL_DIR / "tr.dic")
     
     # Deploy to Firefox addon
     addon_dict_dir = TURKSPELL_DIR / "firefox-addon" / "dictionaries"
