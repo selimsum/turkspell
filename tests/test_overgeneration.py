@@ -89,6 +89,23 @@ class TestOvergenerationProtection(unittest.TestCase):
         leaked = check_illegal_words(illegal)
         self.assertEqual(leaked, [], f"Bare virtual stems leaked into dictionary: {leaked}")
 
+    def test_passive_l_stem_overgeneration(self):
+        """Verb stems ending in 'l' must never take passive -Il- suffixes."""
+        illegal = [
+            "çoğalıldı", "alıldı", "çalıldı", "bululdu", "bilildi", "ölüldü", "kalıldı"
+        ]
+        leaked = check_illegal_words(illegal)
+        self.assertEqual(leaked, [], f"Passive l-stems overgenerated: {leaked}")
+
+    def test_plural_copula_overgeneration(self):
+        """Plural nouns and plural possessives must never take 2sg/1sg copulas (-sen/-san)."""
+        illegal = [
+            "misafirlersen", "teknolojilerinsen", "topraklarınsan", "görüntülerinsen", "çiftliklersen"
+        ]
+        leaked = check_illegal_words(illegal)
+        self.assertEqual(leaked, [], f"Plural singular copulas overgenerated: {leaked}")
+
 
 if __name__ == "__main__":
     unittest.main()
+

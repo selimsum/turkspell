@@ -620,7 +620,8 @@ def gen_plural_back(flag: str = "PB") -> str:
             elif c in ("ı", "a", "ca"):
                 rules.append(sfx(flag, "0", poss + c, "."))
             else:
-                sfx_copula(flag, "0", poss + c, ".", rules)
+                rules.append(sfx(flag, "0", poss + c, "."))
+                rules.append(sfx(flag, "0", f"{poss + c}/CP", "."))
     return make_flag_block(flag, unique(rules))
 
 
@@ -644,7 +645,8 @@ def gen_plural_front(flag: str = "PF") -> str:
             elif c in ("i", "e", "ce"):
                 rules.append(sfx(flag, "0", poss + c, "."))
             else:
-                sfx_copula(flag, "0", poss + c, ".", rules)
+                rules.append(sfx(flag, "0", poss + c, "."))
+                rules.append(sfx(flag, "0", f"{poss + c}/CV", "."))
     return make_flag_block(flag, unique(rules))
 
 
@@ -963,23 +965,24 @@ def gen_copula_flag_front(flag: str = "cl") -> str:
 
 
 def gen_copula_plural_back(flag: str = "CP") -> str:
-    """Copula suffixes for back-harmony plural stems (-lar). Excludes bare -lar to prevent double-plural over-generation."""
+    """Copula suffixes for back-harmony plural stems (-lar). Excludes bare -lar to prevent double-plural over-generation.
+    Excludes singular copulas (1sg/2sg like -sen, -san, -sın, -sin, -ım, -dım, -dın) which are ungrammatical on plurals."""
     COPULAS_VOWEL = [
-        "ydI", "ydIm", "ydIn", "ydIk", "ydInIz", "ydIlAr",
-        "ymIş", "ymIşIm", "ymIşsIn", "ymIşIz", "ymIşsInIz", "ymIşlAr",
-        "ysA", "ysAm", "ysAn", "ysAk", "ysAnIz", "ysAlAr",
-        "yIm", "sIn", "yIz", "sInIz",
+        "ydI", "ydIk", "ydInIz", "ydIlAr",
+        "ymIş", "ymIşIz", "ymIşsInIz", "ymIşlAr",
+        "ysA", "ysAk", "ysAnIz", "ysAlAr",
+        "yIz", "sInIz",
         "dIr", "dIrlAr", "yken",
-        "yImdIr", "sIndIr", "yIzdIr", "sInIzdIr",
+        "yIzdIr", "sInIzdIr",
     ]
     COPULAS_CONS = [
-        "dI", "dIm", "dIn", "dIk", "dInIz", "dIlAr",
-        "tI", "tIm", "tIn", "tIk", "tInIz", "tIlAr",
-        "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
-        "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
-        "Im", "sIn", "Iz", "sInIz",
+        "dI", "dIk", "dInIz", "dIlAr",
+        "tI", "tIk", "tInIz", "tIlAr",
+        "mIş", "mIşIz", "mIşsInIz", "mIşlAr",
+        "sA", "sAk", "sAnIz", "sAlAr",
+        "Iz", "sInIz",
         "dIr", "tIr", "dIrlAr", "tIrlAr", "ken",
-        "ImdIr", "sIndIr", "IzdIr", "sInIzdIr",
+        "IzdIr", "sInIzdIr",
     ]
     rules = []
     for cop_tmpl in COPULAS_VOWEL:
@@ -1006,23 +1009,24 @@ def gen_copula_plural_back(flag: str = "CP") -> str:
 
 
 def gen_copula_plural_front(flag: str = "CV") -> str:
-    """Copula suffixes for front-harmony plural stems (-ler). Excludes bare -ler to prevent double-plural over-generation."""
+    """Copula suffixes for front-harmony plural stems (-ler). Excludes bare -ler to prevent double-plural over-generation.
+    Excludes singular copulas (1sg/2sg like -sen, -san, -sın, -sin, -im, -dim, -din) which are ungrammatical on plurals."""
     COPULAS_VOWEL = [
-        "ydI", "ydIm", "ydIn", "ydIk", "ydInIz", "ydIlAr",
-        "ymIş", "ymIşIm", "ymIşsIn", "ymIşIz", "ymIşsInIz", "ymIşlAr",
-        "ysA", "ysAm", "ysAn", "ysAk", "ysAnIz", "ysAlAr",
-        "yIm", "sIn", "yIz", "sInIz",
+        "ydI", "ydIk", "ydInIz", "ydIlAr",
+        "ymIş", "ymIşIz", "ymIşsInIz", "ymIşlAr",
+        "ysA", "ysAk", "ysAnIz", "ysAlAr",
+        "yIz", "sInIz",
         "dIr", "dIrlAr", "yken",
-        "yImdIr", "sIndIr", "yIzdIr", "sInIzdIr",
+        "yIzdIr", "sInIzdIr",
     ]
     COPULAS_CONS = [
-        "dI", "dIm", "dIn", "dIk", "dInIz", "dIlAr",
-        "tI", "tIm", "tIn", "tIk", "tInIz", "tIlAr",
-        "mIş", "mIşIm", "mIşsIn", "mIşIz", "mIşsInIz", "mIşlAr",
-        "sA", "sAm", "sAn", "sAk", "sAnIz", "sAlAr",
-        "Im", "sIn", "Iz", "sInIz",
+        "dI", "dIk", "dInIz", "dIlAr",
+        "tI", "tIk", "tInIz", "tIlAr",
+        "mIş", "mIşIz", "mIşsInIz", "mIşlAr",
+        "sA", "sAk", "sAnIz", "sAlAr",
+        "Iz", "sInIz",
         "dIr", "tIr", "dIrlAr", "tIrlAr", "ken",
-        "ImdIr", "sIndIr", "IzdIr", "sInIzdIr",
+        "IzdIr", "sInIzdIr",
     ]
     rules = []
     for cop_tmpl in COPULAS_VOWEL:
@@ -1423,6 +1427,13 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("ayakladırmaya", "ayaklandırmaya"),
         ("mlla", "malla"),
         ("yakalamanmışız", "yakalamamışız"),
+        ("çoğalıldı", "çoğaltıldı"),
+        ("misafirlersen", "misafirlerden"),
+        ("teknolojilerinsen", "teknolojilerinden"),
+        ("topraklarınsan", "topraklarından"),
+        ("görüntülerinsen", "görüntülerinden"),
+        ("çiftliklersen", "çiftliklerden"),
+        ("goya", "boya"),
         # --- High-frequency whole-word typo corrections (rejected_words.csv) ---
         # REP forces these to rank FIRST in suggestions, ahead of ngram candidates.
         ("yanliz", "yalnız"), ("yanlız", "yalnız"),      # ~1.3k metathesis class
@@ -2791,6 +2802,15 @@ def _generate_verb_flags_from_v1() -> str:
                         suf_field = parts[3] if len(parts) >= 4 else ""
                         suf_base = suf_field.split('/')[0]
                         cond_field = parts[4] if len(parts) >= 5 else "."
+
+                        # Ensure passive -Il- suffixes on mak/mek exclude consonant 'l' and vowels
+                        if len(parts) >= 5 and parts[2] in ('mak', 'mek') and suf_base.startswith(('ıl', 'il', 'ul', 'ül')):
+                            if cond_field == '.' or cond_field.startswith('[^AEIOU'):
+                                parts[4] = f"[^lAEIOUaeiouÂÎÖÛÜâîöûüİı]{parts[2]}"
+                                cond_field = parts[4]
+                        elif len(parts) >= 5 and parts[2] in ('mak', 'mek') and cond_field == '.' and suf_base and suf_base[0] in 'aeıioöuüâîû':
+                            parts[4] = f"[^AEIOUaeiouÂÎÖÛÜâîöûüİı]{parts[2]}"
+                            cond_field = parts[4]
 
                         # Fix: When a suffix starts with 'tt' (double-t) and the
                         # condition includes 't' before 'mak'/'mek', verbs whose stems

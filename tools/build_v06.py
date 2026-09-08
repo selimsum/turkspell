@@ -44,6 +44,13 @@ EXTRA_REP_RULES = [
     "REP ayakladırmaya ayaklandırmaya",
     "REP mlla malla",
     "REP yakalamanmışız yakalamamışız",
+    "REP çoğalıldı çoğaltıldı",
+    "REP misafirlersen misafirlerden",
+    "REP teknolojilerinsen teknolojilerinden",
+    "REP topraklarınsan topraklarından",
+    "REP görüntülerinsen görüntülerinden",
+    "REP çiftliklersen çiftliklerden",
+    "REP goya boya",
     # Keyboard & affix boundary substitutions (m/n, j/d, z/a)
     "REP dem den",
     "REP dam dan",
@@ -782,7 +789,6 @@ def build_hardened_aff(profile="tdk"):
             elif line_s in ("SFX ⊁ mek mesü mek", "SFX ≘ mek mesü mek"): line = line.replace("mek\n", "X\n")
             elif line_s.startswith("SFX ≟") and "masunı" in line_s:
                 parts[-1] = "X"; line = " ".join(parts) + "\n"
-            elif line_s.startswith("SFX ≔ mak ıldı"): line = "SFX ≔ mak ıldı [^l]mak\n"
             elif line_s.startswith("SFX ⊂ mak ırm"):
                 parts[-1] = "X"; line = " ".join(parts) + "\n"
             elif line_s.startswith("SFX ⊁ mek üre"):
@@ -798,7 +804,16 @@ def build_hardened_aff(profile="tdk"):
                     line = " ".join(parts) + "\n"
             if len(parts) >= 5:
                 clean_add = parts[3].split("/")[0]
-                if parts[4] == "." and clean_add and clean_add[0] in vowels:
+                if parts[2] in ("mak", "mek"):
+                    if clean_add.startswith(("ıl", "il", "ul", "ül")):
+                        parts[4] = f"[^lAEIOUaeiouÂÎÖÛÜâîöûüİı]{parts[2]}"
+                        line = " ".join(parts) + "\n"
+                        fixed_wildcards += 1
+                    elif parts[4] in (".", consonant_cond) and clean_add and clean_add[0] in vowels:
+                        parts[4] = f"[^AEIOUaeiouÂÎÖÛÜâîöûüİı]{parts[2]}"
+                        line = " ".join(parts) + "\n"
+                        fixed_wildcards += 1
+                elif parts[4] == "." and clean_add and clean_add[0] in vowels:
                     parts[4] = consonant_cond
                     line = " ".join(parts) + "\n"
                     fixed_wildcards += 1

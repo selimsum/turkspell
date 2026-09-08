@@ -103,6 +103,13 @@ class TestSuggestionRanking(unittest.TestCase):
             ("ayakladırmaya", "ayaklandırmaya", 1),
             ("mlla", "malla", 1),
             ("yakalamanmışız", "yakalamamışız", 1),
+            ("çoğalıldı", "çoğaltıldı", 1),
+            ("misafirlersen", "misafirlerden", 1),
+            ("teknolojilerinsen", "teknolojilerinden", 1),
+            ("topraklarınsan", "topraklarından", 1),
+            ("görüntülerinsen", "görüntülerinden", 1),
+            ("çiftliklersen", "çiftliklerden", 1),
+            ("goya", "boya", 1),
         ]
         for typo, target, max_rank in test_pairs:
             with self.subTest(typo=typo, target=target):
