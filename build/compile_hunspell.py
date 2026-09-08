@@ -3,6 +3,11 @@ import json
 import re
 import sys
 
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+if hasattr(sys.stderr, 'reconfigure'):
+    sys.stderr.reconfigure(encoding='utf-8')
+
 # utf8_flag_mapping and generate_grammar_rules are siblings in build/. Python only
 # adds this directory to sys.path when the file is run as a script, so importing
 # compile_dictionary from elsewhere (e.g. tools/) would otherwise fail.
@@ -398,6 +403,7 @@ def compile_dictionary():
         'humum', 'çakırmak', 'deb', 'kesğ', 'donur', 'mesin', 'mes', 'kany',
         'kayetme', 'kayetmek', 'choice', 'wide', 'biin', 'gog',
         'mebsim', 'ornegin', 'osmanlica', 'sehir', 'yada', 'memik', 'dokum', 'effe',
+        'öl', 'mezhebi',
         'icada', 'ica', 'icad', 'wid', 'choi', 'turunun', 'yasanan', 'zarfi', 'boynız', 'yasamazken', 'çalışılabileceğ',
         'yili', 'yilin', 'yil', 'yillik', 'yildir', 'hiz', 'hizli', 'hurriyet', 'ozel', 'lutfen', 'gun', 'bır',
         'dis', 'tsl', 'eim', 'aız', 'ihı', 'diger', 'icinde', 'icine', 'icin', 'guvenligi', 'insanlarin',
@@ -1282,8 +1288,8 @@ def compile_dictionary():
                 item_attrs = proper_nouns_attrs_map.get(lkey, set())
                 pfx = _proper_flag_for(lkey, item_attrs)
                 proper_flags = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
-                # For lowercase abbreviations/units (like km, cm, mm, kg, gr), keep them lowercase and add proper noun flags
-                if lkey in {'km', 'cm', 'mm', 'kg', 'gr'}:
+                # For lowercase abbreviations/units (like km, cm, mm, kg, gr, ml, mg, dl, cl), keep them lowercase and add proper noun flags
+                if lkey in {'km', 'cm', 'mm', 'kg', 'gr', 'ml', 'mg', 'dl', 'cl'}:
                     new_entry = f"{lkey}/{proper_flags}"
                     new_dic_entries.append(new_entry)
                 else:
@@ -1298,7 +1304,7 @@ def compile_dictionary():
             if lkey in PROPER_NOUN_OVERRIDES:
                 seen_overrides.add(lkey)
             
-            if lkey not in {'km', 'cm', 'mm', 'kg', 'gr', 'şii'}:
+            if lkey not in {'km', 'cm', 'mm', 'kg', 'gr', 'ml', 'mg', 'dl', 'cl', 'şii'}:
                 new_dic_entries.append(f"{lkey}/{flags_part}" if flags_part else lkey)
 
         # Case 2: Word is a common noun (but not explicitly tagged as proper noun/override)
@@ -1505,7 +1511,7 @@ def compile_dictionary():
     # incomplete dictionary must not report success.
     print("\nValidating output...")
     from validate_build import validate
-    errors, warnings = validate(os.path.join(base_dir, 'tr.dic'), os.path.join(base_dir, 'tr.aff'))
+    errors, warnings = validate(os.path.join(base_dir, 'tr.dic'), os.path.join(base_dir, 'tr.aff'), run_tests=False)
     for w in warnings:
         print(f"  WARNING: {w}")
     for e in errors:

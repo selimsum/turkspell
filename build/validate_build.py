@@ -15,6 +15,11 @@ import os
 import sys
 from collections import Counter
 
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+if hasattr(sys.stderr, 'reconfigure'):
+    sys.stderr.reconfigure(encoding='utf-8')
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Floor, not a target — guards against a truncated or half-written dictionary.
@@ -169,7 +174,7 @@ def check_presence(body, errors, warnings):
             warnings.append(f"{len(missing)}/{len(lemmas)} {label} missing, e.g. {missing[:5]}")
 
 
-def validate(dic_path='tr.dic', aff_path='tr.aff', verbose=True):
+def validate(dic_path='tr.dic', aff_path='tr.aff', verbose=True, run_tests=True):
     """Validate a built dictionary pair. Returns (errors, warnings)."""
     errors, warnings = [], []
 
@@ -182,7 +187,8 @@ def validate(dic_path='tr.dic', aff_path='tr.aff', verbose=True):
     body = check_dic(dic_path, errors, warnings)
     check_aff(aff_path, errors, warnings)
     check_presence(body, errors, warnings)
-    check_regression_tests(errors)
+    if run_tests:
+        check_regression_tests(errors)
 
     if verbose:
         dic_mb = os.path.getsize(dic_path) / 1048576

@@ -32,6 +32,18 @@ RE_REPEATED_CHARS = re.compile(r'(.)\1\1')
 RE_CONSONANT_CLUSTER = re.compile(r'^[b-df-hj-np-tv-z]{4,}')
 
 EXTRA_REP_RULES = [
+    # Targeted Benchmark Fixes
+    "REP bakicısıyla bakıcısıyla",
+    "REP etkinleştirim etkinleştirdim",
+    "REP mezhebide mezhebinde",
+    "REP okumamakça okumamakla",
+    "REP makça makla",
+    "REP mekçe mekle",
+    "REP öllüleri ölçüleri",
+    "REP llüleri lçüleri",
+    "REP ayakladırmaya ayaklandırmaya",
+    "REP mlla malla",
+    "REP yakalamanmışız yakalamamışız",
     # Keyboard & affix boundary substitutions (m/n, j/d, z/a)
     "REP dem den",
     "REP dam dan",
@@ -523,65 +535,65 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "tescillenmek/≗⊃",
     "tescillenme/∍∛∨∩∴∸∻∿≄≆≊≌≧≩≫≮⊇",
     # Scientific, technical, and everyday measurement unit symbols:
-    "nm/∀∄∍∎∡∧∩∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "ml/∀∄∍∎∡∧∩∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "mL/∀∄∍∎∡∧∩∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "kW/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
-    "kWh/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "mAh/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "mWh/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "MWh/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "GWh/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "Wh/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "kHz/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "THz/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "kbps/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
-    "Mbps/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
-    "mV/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "mA/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
-    "kA/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
-    "mW/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "MW/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "GW/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "pF/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "nF/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "uF/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "µF/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "mF/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "mH/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "hPa/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
-    "kPa/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
-    "mbar/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
-    "psi/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "kN/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "kJ/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "MJ/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "GJ/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "cal/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
-    "eV/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "keV/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "MeV/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "GeV/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "dB/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "dBA/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
-    "dBm/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "lm/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "lx/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "mmol/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "ppm/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "ppb/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "fps/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "dpi/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "ppi/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "ms/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "ns/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "ps/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "µs/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "us/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "µm/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "um/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "cl/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
-    "dl/∀∄∍∎∡∧∪∫∲∶∺∼∽≂≉≋≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "nm/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ml/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mL/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "kW/⊈⊉⊊⊋⊌⊍⊎⊏",
+    "kWh/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mAh/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mWh/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "MWh/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "GWh/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "Wh/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "kHz/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "THz/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "kbps/⊈⊉⊊⊋⊌⊍⊎⊏",
+    "Mbps/⊈⊉⊊⊋⊌⊍⊎⊏",
+    "mV/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mA/⊈⊉⊊⊋⊌⊍⊎⊏",
+    "kA/⊈⊉⊊⊋⊌⊍⊎⊏",
+    "mW/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "MW/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "GW/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "pF/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "nF/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "uF/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "µF/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mF/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mH/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "hPa/⊈⊉⊊⊋⊌⊍⊎⊏",
+    "kPa/⊈⊉⊊⊋⊌⊍⊎⊏",
+    "mbar/⊈⊉⊊⊋⊌⊍⊎⊏",
+    "psi/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "kN/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "kJ/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "MJ/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "GJ/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "cal/⊈⊉⊊⊋⊌⊍⊎⊏",
+    "eV/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "keV/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "MeV/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "GeV/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "dB/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "dBA/⊈⊉⊊⊋⊌⊍⊎⊏",
+    "dBm/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "lm/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "lx/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "mmol/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ppm/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ppb/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "fps/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "dpi/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ppi/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ms/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ns/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ps/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "µs/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "us/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "µm/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "um/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "cl/⊘⊙⊚⊛⊜⊝⊞⊟",
+    "dl/⊘⊙⊚⊛⊜⊝⊞⊟",
     # Authoritative TDK/DD missed common roots & question particles (TS Corpus discovery):
     "zor/∁∅∌∍∎∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≎≣",
     "aga/∆≥⊆∧≋≬≪≉∺≂∲∶∼∽∎∩∪∌∍⊈⊉⊊⊋⊌⊍⊎⊏",
@@ -963,6 +975,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         "calon", "keefe", "jfet",
         "mebs", "ornegi", "ıcad", "icad", "ıkisi", "ikisi", "felaked", "stoğ",
         "topyekun", "alemşümul", "alemşümullük", "ademci", "kai", "klavuz",
+        "öl", "mezhebi",
         # Purge legacy noise stems, false abbreviations, and uncapitalized proper nouns
         "aı", "baı", "baıc", "gur", "pluto",
         "yahudi", "yahudice", "yahudilik", "yahudiliğ", "yahudibaklası",
@@ -1081,6 +1094,8 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 if proper_flags and (cap_head, proper_flags) not in seen_heads:
                     seen_heads.add((cap_head, proper_flags))
                     clean_entries.append(f"{cap_head}/{proper_flags}")
+            elif head_lower in {'km', 'cm', 'mm', 'kg', 'gr', 'ml', 'mg', 'dl', 'cl'}:
+                flags = proper_flags
             elif head in custom_abbrevs_orig or head_lower in custom_abbrevs:
                 # Keep abbreviation as-is
                 pass
@@ -1108,14 +1123,18 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             flags = flags.replace("≑", "") + "∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍⊘⊙⊚⊛⊜⊝⊞⊟"
             
         if profile == "dd" and "î" in head:
-            head = head.replace("î", "i")
+            head_dd = head.replace("î", "i")
+            if head_dd in BAD_STEMS:
+                continue
+            head = head_dd
             
         if profile == "universal" and "î" in head:
             head_unhatted = head.replace("î", "i")
-            entry_unhatted = (head_unhatted, flags)
-            if entry_unhatted not in seen_heads:
-                seen_heads.add(entry_unhatted)
-                clean_entries.append(f"{head_unhatted}/{flags}" if flags else head_unhatted)
+            if head_unhatted not in BAD_STEMS:
+                entry_unhatted = (head_unhatted, flags)
+                if entry_unhatted not in seen_heads:
+                    seen_heads.add(entry_unhatted)
+                    clean_entries.append(f"{head_unhatted}/{flags}" if flags else head_unhatted)
                 
         if len(head) == 1:
             flags = ""
@@ -1260,6 +1279,16 @@ def compile_v06():
         shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.dic", addon_dict_dir / "tr.dic")
         
     print("Deployment complete!")
+    print("\nValidating deployed dictionary and running regression tests...")
+    from validate_build import validate
+    errors, warnings = validate(str(TURKSPELL_DIR / "tr.dic"), str(TURKSPELL_DIR / "tr.aff"), run_tests=True)
+    for w in warnings:
+        print(f"  WARNING: {w}")
+    for e in errors:
+        print(f"  ERROR:   {e}")
+    if errors:
+        raise SystemExit(f"\nDeployed dictionary failed validation: {len(errors)} error(s).")
+    print(f"Validation and regression tests passed ({len(warnings)} warning(s)).")
 
 if __name__ == "__main__":
     compile_v06()

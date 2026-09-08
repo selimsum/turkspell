@@ -92,6 +92,22 @@ class TestSuggestionRanking(unittest.TestCase):
             with self.subTest(typo=typo, target=target):
                 self.assertSuggestedInTopN(typo, target, n=max_rank)
 
+    def test_false_negative_fixes(self):
+        """Verifies that reported false negative typo inputs are rejected and gold targets ranked at top."""
+        test_pairs = [
+            ("bakicısıyla", "bakıcısıyla", 1),
+            ("etkinleştirim", "etkinleştirdim", 1),
+            ("mezhebide", "mezhebinde", 1),
+            ("okumamakça", "okumamakla", 1),
+            ("öllüleri", "ölçüleri", 1),
+            ("ayakladırmaya", "ayaklandırmaya", 1),
+            ("mlla", "malla", 1),
+            ("yakalamanmışız", "yakalamamışız", 1),
+        ]
+        for typo, target, max_rank in test_pairs:
+            with self.subTest(typo=typo, target=target):
+                self.assertSuggestedInTopN(typo, target, n=max_rank)
+
     def test_mrr_benchmark(self):
         """Evaluates Mean Reciprocal Rank (MRR) across a comprehensive 25-word evaluation battery."""
         battery = [
