@@ -62,7 +62,40 @@ EXTRA_REP_RULES = [
     "REP larz lara",
     "REP lerz lere",
     "REP lardan lardan",
+    # Targeted Acronym Inflections
+    "REP HDMI'ya HDMI'a",
+    "REP USB'e USB'ye",
     # Circumflex canonical rules
+    "REP mekan mekân",
+    "REP mekani mekânı",
+    "REP zeka zekâ",
+    "REP zekasi zekâsı",
+    "REP zekası zekâsı",
+    "REP ruzgar rüzgâr",
+    "REP rüzgar rüzgâr",
+    "REP hikaye hikâye",
+    "REP hikayesi hikâyesi",
+    "REP sikayet şikâyet",
+    "REP şikayet şikâyet",
+    "REP adeta âdeta",
+    "REP kagit kâğıt",
+    "REP kağıt kâğıt",
+    "REP dukkan dükkân",
+    "REP dükkan dükkân",
+    "REP ahlak ahlâk",
+    "REP teala teâlâ",
+    "REP mesela meselâ",
+    "REP ilan ilân",
+    "REP selam selâm",
+    "REP resul resûl",
+    "REP lazim lâzım",
+    "REP lazım lâzım",
+    "REP lakin lâkin",
+    "REP kainat kâinat",
+    "REP katip kâtip",
+    "REP halukarda hâlükârda",
+    "REP herhalde herhâlde",
+    "REP istimlak istimlâk",
     "REP sükut sükût",
     "REP mahkum mahkûm",
     "REP mefkure mefkûre",
@@ -240,7 +273,6 @@ MANDATORY_HATTED_WORDS = {
     "harcıâlem": "harcıalem",
     "eflâni": "eflani",
     "celâli": "celali",
-    "bâtıniye": "batıniye",
     "âdemcilik": "ademcilik",
     "mâniasız": "maniasız",
     "mahkûmane": "mahkumane",
@@ -263,7 +295,6 @@ MANDATORY_HATTED_WORDS = {
     "âşıklı": "aşıklı",
     "âşıklık": "aşıklık",
     "âşıktaş": "aşıktaş",
-    "bâtıni": "batıni",
     "beniâdem": "beniadem",
     "dâhiyane": "dahiyane",
     "gülgûn": "gülgun",
@@ -383,11 +414,20 @@ LEGITIMATE_MISSED_WORDS = [
     # TDK loanword adjective
     "total",
     # Added legitimate stems
-    "hasılat", "ihlalci"
+    "hasılat", "ihlalci", "isek", "HDMI'a", "USB'ye"
 ]
 
 
 HEAD_FLAG_OVERRIDES = {
+    # gibi: nominal copula flags (gibidir, gibiydi, gibiymiş, gibiyse, gibiyken, gibiyim, gibisin, gibiyiz, gibisiniz, gibiler)
+    "gibi": remap_flag_string("cl".replace(" ", "")),
+    # USB: uppercase tech abbreviation (u-es-be: USB'nin, USB'de, USB'den; Dative is strictly USB'ye, excluding USB'e)
+    "usb": remap_flag_string("KC CK cl L2 pFN pFL pFR pFA pFI pFP pFC".replace(" ", "")),
+    # HDMI: uppercase tech abbreviation (HDMI'nın, HDMI'da, HDMI'dan; Dative is strictly HDMI'a, excluding HDMI'ya)
+    "hdmi": remap_flag_string("B3 CK CL L1 P1 P5 PB PM PN PS Q1 R1 a1 i1 n1 y1 pBN pBL pBR pBA pBI pBP pBC".replace(" ", "")),
+    "hdmı": remap_flag_string("B3 CK CL L1 P1 P5 PB PM PN PS Q1 R1 a1 i1 n1 y1 pBN pBL pBR pBA pBI pBP pBC".replace(" ", "")),
+    # iPhone: mixed-case tech brand with proper apostrophe inflections (Turkish back-vowel /ayfon/ and front-vowel reading)
+    "iphone": remap_flag_string("KC CK CL cl L1 L2 pON pOL pOR pOY pOA pOI pOP pOC pFN pFL pFR pFY pFA pFI pFP pFC".replace(" ", "")),
     # değil: copular/predicate flags
     "değil": remap_flag_string("A3 CI CK DE DL DT F1 I2 L2 LI LK N3 P3 P7 PF PP PU PW Q2 R2 Y2 cl".replace(" ", "")),
     # ait: copular/predicate flags
@@ -1150,6 +1190,17 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 if entry_unhatted not in seen_heads:
                     seen_heads.add(entry_unhatted)
                     clean_entries.append(f"{head_unhatted}/{flags}" if flags else head_unhatted)
+
+        # Dil Derneği accepts unhatted forms for certain words like batıni, batıniye
+        if head.lower() in ("bâtıni", "bâtıniye"):
+            head_unhatted = head.replace("â", "a")
+            if profile == "dd":
+                head = head_unhatted
+            elif profile == "universal":
+                entry_unhatted = (head_unhatted, flags)
+                if entry_unhatted not in seen_heads:
+                    seen_heads.add(entry_unhatted)
+                    clean_entries.append(f"{head_unhatted}/{flags}" if flags else head_unhatted)
                 
         if len(head) == 1:
             flags = ""
@@ -1193,15 +1244,20 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     for a in custom_abbrevs_orig:
         if (a, "") not in seen_heads:
             if (a.lower(), "") not in seen_heads or a != a.lower():
-                clean_entries.append(a)
+                if a.lower() in HEAD_FLAG_OVERRIDES:
+                    clean_entries.append(f"{a}/{HEAD_FLAG_OVERRIDES[a.lower()]}")
+                else:
+                    clean_entries.append(a)
                 seen_heads.add((a, ""))
                 added_abbrevs += 1
             
     added_names = 0
     for n in custom_names_orig:
-        if (n, "") not in seen_heads and ((n.lower(), "") not in seen_heads or (n and n[0].isupper())):
+        if (n, "") not in seen_heads and ((n.lower(), "") not in seen_heads or (n and (n[0].isupper() or any(c.isupper() for c in n)))):
             # Assign harmonic proper noun apostrophe inflection flags for capitalized proper names
-            if n and n[0].isupper() and not any(c in n for c in "0123456789."):
+            if n.lower() in HEAD_FLAG_OVERRIDES:
+                entry_n = f"{n}/{HEAD_FLAG_OVERRIDES[n.lower()]}"
+            elif n and (n[0].isupper() or any(c.isupper() for c in n)) and not any(c in n for c in "0123456789."):
                 last_vowel = ""
                 for ch in reversed(n):
                     if ch in "aıâouûeiîöüAIÂOUÛEİÎÖÜ":
