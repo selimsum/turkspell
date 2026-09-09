@@ -3,7 +3,7 @@
 [![Sürüm](https://img.shields.io/badge/sürüm-v0.6.0-blue.svg)](https://github.com/selimsum/turkspell/releases)
 [![Lisans](https://img.shields.io/badge/lisans-MIT-green.svg)](LICENSE)
 [![Uyumluluk](https://img.shields.io/badge/hunspell-1.7%2B-orange.svg)](https://github.com/hunspell/hunspell)
-[![Kalite Güvencesi](https://img.shields.io/badge/kalite%20kapısı-28%2F28%20geçti-success.svg)](tests/)
+[![Kalite Güvencesi](https://img.shields.io/badge/kalite%20kapısı-34%2F34%20geçti-success.svg)](tests/)
 
 [🇹🇷 Türkçe](#turkspell-yüksek-performanslı-türkçe-hunspell-sözlüğü-v06) | [🇬🇧 English](#turkspell-high-performance-turkish-hunspell-dictionary-v06)
 
@@ -18,7 +18,7 @@
 * **Çift Standart Uyumu (Universal Profile)**: Hem TDK kurallarını (*dâhil*, *bekâr*, *resmî*) hem de Dil Derneği yazımını (*dahil*, *bekar*, *resmi*) meşru kabul eden esnek profil seçeneği sunar.
 * **Aşırı Üretim (Overgeneration) Koruması**: `tr.aff` dosyasındaki 17.824 adet kontrolsüz kural arıtılmış; kaynaştırma harfi olmaksızın çift ünlü türeten (*acııydı*, *anomaliine*, *beliiydi*) veya bozuk fiil türeten (*debileceklerine*, *yebilecek*) kural açıkları kapatılmıştır.
 * **Gelişmiş Öneri Matrisi (MAP 14 & Genişletilmiş REP)**: Düzeltme işaretli (şapkalı), klavye kayması kaynaklı ve ses benzerliği olan hatalarda doğru kelimeyi %90'ın üzerinde 1. sırada (Top-1) ve 0.90+ MRR skoruyla önerir.
-* **Hafif, Optimize ve Hızlı**: 150.168 temiz kök başlığı ile bellek ayak izi optimize edilmiş; Firefox ve tarayıcı eklentilerinde başlatma süresi 90 ms seviyesine indirilmiştir.
+* **Hafif, Optimize ve Hızlı**: 112.268 temiz kök başlığı ile bellek ayak izi optimize edilmiş; Firefox ve tarayıcı eklentilerinde başlatma süresi 90 ms seviyesine indirilmiştir.
 
 ---
 
@@ -59,15 +59,6 @@ Turkspell v0.6, bağımsız ve standartlaştırılmış tüm Türkçe yazım den
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | **Circumflex (Dil Derneği Standartı)** | **100.00** | **98.13** | **99.06** | **97.20** | **98.13** | **0.977** | %23.36 (`harunzafer`) |
 | **Circumflex (TDK Standartı)** | **100.00** | **54.47** | **70.52** | **53.63** | **54.47** | **0.541** | %1.68 (`selimsum`) |
-
-### 5. Derlem Kapsamı ve Hız (`magazine_corpus.txt`)
-| Sözlük / Motor | Kelime Kapsama Oranı (Recall %) | Tanınmayan Kelime | Değerlendirme Süresi |
-|---|:---:|:---:|:---:|
-| **selimsum/hunspell-tr-moz** | **83.94%** | 25.321 | 33.0 sn |
-| **tdd-ai** | 83.02% | 26.782 | **21.3 sn** |
-| **Turkspell v0.6 (TDK)** | 79.92% | 31.699 | 27.5 sn |
-| **harunzafer** | 79.50% | 32.366 | 35.8 sn |
-| **vdemir** | 75.99% | 37.885 | 16.1 sn |
 
 ---
 
@@ -138,18 +129,9 @@ Turkspell, şişirilmiş statik kurallar veya milyonlarca çekimli sözcük yeri
 ### Turkspell v0.6 Dağıtım Boyutları
 | Profil / Paket | `.aff` Boyutu | `.dic` Boyutu | Toplam Sözlük Boyutu | Kök Başlık Sayısı (Stems) | Dağıtım / Eklenti Paketi |
 |---|:---:|:---:|:---:|:---:|:---:|
-| **Turkspell v0.6 Universal (Amiral Gemisi)** | 10.61 MB | 8.06 MB | **18.67 MB** | 150.168 | 1.55 MB (`turkspell-addon.xpi`) |
-| **Turkspell v0.6 TDK Profili** | 10.61 MB | 8.06 MB | **18.67 MB** | 150.079 | `dist/turkspell-v0.6-tdk/` |
-| **Turkspell v0.6 Dil Derneği Profili** | 10.61 MB | 7.99 MB | **18.60 MB** | 149.453 | `dist/turkspell-v0.6-dd/` |
-
-### Türkçe Hunspell Sözlükleri Boyut ve Mimari Karşılaştırması
-| Sözlük Motoru | `.aff` Kural Boyutu | `.dic` Sözlük Boyutu | Toplam Dosya Boyutu | Kök / Başlık Sayısı | Mimari Yaklaşımı ve Bellek Etkisi |
-|---|:---:|:---:|:---:|:---:|---|
-| **Turkspell v0.6** | 10.61 MB | 8.06 MB | **18.67 MB** | 150.168 | **Dinamik Zincirleme Bayraklar**: Dengeli bellek tüketimi, anlık tarayıcı başlatma |
-| **selimsum/hunspell-tr-moz** | 31.79 MB | 1.30 MB | **33.10 MB** | 86.460 | Aşırı genişletilmiş statik kural tablosu (31+ MB kural dosyası) |
-| **tdd-ai** | 2.35 MB | 34.54 MB | **36.88 MB** | 75.909 | Şişirilmiş çekimli sözcük gövdesi (34+ MB sözlük metni) |
-| **harunzafer** | 0.24 MB | 9.00 MB | **9.24 MB** | 371.169 | Denetimsiz ham kelime listesi (yüksek yanlış kabul oranı) |
-| **vdemir** | 0.77 MB | 7.25 MB | **8.02 MB** | ~160.000 | Sınırlı kural kapsamı (düşük öneri ve çekim başarısı) |
+| **Turkspell v0.6 Universal (Amiral Gemisi)** | 9.68 MB | 5.73 MB | **15.41 MB** | 112.268 | 1.30 MB (`turkspell-addon.xpi`) |
+| **Turkspell v0.6 TDK Profili** | 9.68 MB | 5.73 MB | **15.41 MB** | 112.210 | `dist/turkspell-v0.6-tdk/` |
+| **Turkspell v0.6 Dil Derneği Profili** | 9.68 MB | 5.72 MB | **15.40 MB** | 112.074 | `dist/turkspell-v0.6-dd/` |
 
 ---
 
@@ -474,7 +456,7 @@ Bu proje **MIT Lisansı** altında özgür bir yazılım olarak sunulmaktadır. 
 [![Version](https://img.shields.io/badge/version-v0.6.0-blue.svg)](https://github.com/selimsum/turkspell/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Compatibility](https://img.shields.io/badge/hunspell-1.7%2B-orange.svg)](https://github.com/hunspell/hunspell)
-[![Quality Gate](https://img.shields.io/badge/quality%20gate-28%2F28%20passed-success.svg)](tests/)
+[![Quality Gate](https://img.shields.io/badge/quality%20gate-34%2F34%20passed-success.svg)](tests/)
 
 [🇹🇷 Türkçe](#turkspell-yüksek-performanslı-türkçe-hunspell-sözlüğü-v06) | [🇬🇧 English](#turkspell-high-performance-turkish-hunspell-dictionary-v06)
 
@@ -489,7 +471,7 @@ Bu proje **MIT Lisansı** altında özgür bir yazılım olarak sunulmaktadır. 
 * **Dual-Standard Compatibility (Universal Profile)**: Offers a flexible profile option accepting both TDK orthography (*dâhil*, *bekâr*, *resmî*) and Dil Derneği conventions (*dahil*, *bekar*, *resmi*).
 * **Overgeneration Protection**: Purged 17,824 uncontrolled rules from `tr.aff`; closed morphological vulnerabilities that generated ungrammatical double vowels (*acııydı*, *anomaliine*, *beliiydi*) without buffer consonants or illegal verb derivations (*debileceklerine*, *yebilecek*).
 * **Advanced Suggestion Matrix (MAP 14 & Extended REP)**: Corrects circumflex (accent marks), keyboard slip, and phonetic errors with over 90% accuracy at Rank 1 (Top-1) and a 0.90+ MRR score.
-* **Lightweight, Optimized & Fast**: 150,168 sanitized root stems optimize memory footprint, lowering browser add-on startup latency down to ~90 ms.
+* **Lightweight, Optimized & Fast**: 112,268 sanitized root stems optimize memory footprint, lowering browser add-on startup latency down to ~90 ms.
 
 ---
 
@@ -530,15 +512,6 @@ Turkspell v0.6 delivers **100% Precision (zero false alarms)** and industry-lead
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | **Circumflex (Dil Derneği Standard)** | **100.00** | **98.13** | **99.06** | **97.20** | **98.13** | **0.977** | 23.36% (`harunzafer`) |
 | **Circumflex (TDK Standard)** | **100.00** | **54.47** | **70.52** | **53.63** | **54.47** | **0.541** | 1.68% (`selimsum`) |
-
-### 5. Corpus Vocabulary Coverage and Speed (`magazine_corpus.txt`)
-| Dictionary / Engine | Word Coverage (Recall %) | Unrecognized Words | Evaluation Duration |
-|---|:---:|:---:|:---:|
-| **selimsum/hunspell-tr-moz** | **83.94%** | 25,321 | 33.0 s |
-| **tdd-ai** | 83.02% | 26,782 | **21.3 s** |
-| **Turkspell v0.6 (TDK)** | 79.92% | 31,699 | 27.5 s |
-| **harunzafer** | 79.50% | 32,366 | 35.8 s |
-| **vdemir** | 75.99% | 37,885 | 16.1 s |
 
 ---
 
@@ -609,18 +582,9 @@ Rather than bloated static rule sets or millions of pre-inflected words, Turkspe
 ### Turkspell v0.6 Distribution Sizes
 | Profile / Package | `.aff` Size | `.dic` Size | Total Dictionary Size | Root Stems Count | Distribution / Package |
 |---|:---:|:---:|:---:|:---:|:---:|
-| **Turkspell v0.6 Universal (Flagship)** | 10.61 MB | 8.06 MB | **18.67 MB** | 150,168 | 1.55 MB (`turkspell-addon.xpi`) |
-| **Turkspell v0.6 TDK Profile** | 10.61 MB | 8.06 MB | **18.67 MB** | 150,079 | `dist/turkspell-v0.6-tdk/` |
-| **Turkspell v0.6 Dil Derneği Profile** | 10.61 MB | 7.99 MB | **18.60 MB** | 149,453 | `dist/turkspell-v0.6-dd/` |
-
-### Comparison Across Turkish Hunspell Dictionaries
-| Dictionary Engine | `.aff` Rules Size | `.dic` Wordlist Size | Total File Size | Root / Stem Count | Architectural Strategy & Memory Impact |
-|---|:---:|:---:|:---:|:---:|---|
-| **Turkspell v0.6** | 10.61 MB | 8.06 MB | **18.67 MB** | 150,168 | **Dynamic Chained Flags**: Balanced memory footprint, instantaneous browser launch |
-| **selimsum/hunspell-tr-moz** | 31.79 MB | 1.30 MB | **33.10 MB** | 86,460 | Over-expanded static rule matrix (31+ MB rule file) |
-| **tdd-ai** | 2.35 MB | 34.54 MB | **36.88 MB** | 75,909 | Bloated pre-inflected wordlist corpus (34+ MB dictionary text) |
-| **harunzafer** | 0.24 MB | 9.00 MB | **9.24 MB** | 371,169 | Uncurated raw wordlist (high false-positive acceptance rate) |
-| **vdemir** | 0.77 MB | 7.25 MB | **8.02 MB** | ~160,000 | Limited rule coverage (lower inflection and suggestion success) |
+| **Turkspell v0.6 Universal (Flagship)** | 9.68 MB | 5.73 MB | **15.41 MB** | 112,268 | 1.30 MB (`turkspell-addon.xpi`) |
+| **Turkspell v0.6 TDK Profile** | 9.68 MB | 5.73 MB | **15.41 MB** | 112,210 | `dist/turkspell-v0.6-tdk/` |
+| **Turkspell v0.6 Dil Derneği Profile** | 9.68 MB | 5.72 MB | **15.40 MB** | 112,074 | `dist/turkspell-v0.6-dd/` |
 
 ---
 
