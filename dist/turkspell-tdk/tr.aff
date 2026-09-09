@@ -45,7 +45,8 @@ MAXNGRAMSUGS 8
 
 
 
-REP 1435
+
+REP 1437
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -131,7 +132,9 @@ REP mahkuk mahkûk
 REP mahkumiyet mahkûmiyet
 REP hilali hilalî
 REP muhammedi muhammedî
-REP misakımilli misakımillî
+REP misakımilli Misakımillî
+REP Misakımilli Misakımillî
+REP misakımillî Misakımillî
 REP elazig Elâzığ
 REP ruku rükû
 REP gayrimeskun gayrimeskûn
@@ -251,6 +254,7 @@ REP aldatıyo aldatıyor
 REP yanıltıyo yanıltıyor
 REP oynıyo oynuyor
 REP yapartken yaparken
+REP misakımilli misakımillî
 REP yanliz yalnız
 REP yanlız yalnız
 REP deil değil
@@ -1449,7 +1453,6 @@ REP kütüphane kütüphâne
 REP ilmihal ilmihâl
 REP narıbeyza nârıbeyza
 REP ceylanpınar ceylânpınar
-REP misakımilli Misakımillî
 REP keyfilik keyfîlik
 REP millicilik millîcilik
 REP neftileşmek neftîleşmek

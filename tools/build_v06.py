@@ -121,7 +121,9 @@ EXTRA_REP_RULES = [
     "REP mahkumiyet mahkûmiyet",
     "REP hilali hilalî",
     "REP muhammedi muhammedî",
-    "REP misakımilli misakımillî",
+    "REP misakımilli Misakımillî",
+    "REP Misakımilli Misakımillî",
+    "REP misakımillî Misakımillî",
     "REP elazig Elâzığ",
     "REP ruku rükû",
     "REP gayrimeskun gayrimeskûn",
@@ -281,6 +283,7 @@ MANDATORY_HATTED_WORDS = {
     "hilalî": "hilali",
     "muhammedî": "muhammedi",
     "misakımillî": "misakımilli",
+    "Misakımillî": "Misakımilli",
     # Mandatory hatted words where unhatted forms are illegal in both TDK and DD
     "topyekûn": "topyekun",
     "âlemşümul": "alemşümul",
@@ -726,6 +729,9 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "Yahudice/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 KC".replace(" ", "")),
     "Yahudilik/" + remap_flag_string("CK I2 L2 PF Q2 R2 V3 cl KC".replace(" ", "")),
     "Yahudiliğ/" + remap_flag_string("NE A3 N3 P3 P7 PP PU PW Y2 vc KC".replace(" ", "")),
+    # Misakımilli / Misakımillî Proper Noun Orthography (capitalized, with proper noun apostrophe flags)
+    "Misakımilli/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 pFN pFL pFR pFY pFA pFI pFP pFC".replace(" ", "")),
+    "Misakımillî/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 pFN pFL pFR pFY pFA pFI pFP pFC".replace(" ", "")),
     # TDK / DD regular derived or compound words
     "çıtır/" + remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SZ Y1".replace(" ", "")),
     "çerçöp/∃∌∍∖√∢∨∩∪∮∵∹∻≀≅≈≊≌≍≎≤≩",
@@ -979,7 +985,10 @@ MAP '’‘"""
             "resmî resmi",
             "askerî askeri",
             "dinî dini",
-            "millî milli"
+            "millî milli",
+            "misakımilli Misakımilli",
+            "misakımillî Misakımilli",
+            "Misakımillî Misakımilli"
         ])
         
     # Extract only genuine replacement pairs from base aff, ignoring digit counts like "1265"
@@ -1034,6 +1043,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         # Purge legacy noise stems, false abbreviations, and uncapitalized proper nouns
         "aı", "baı", "baıc", "gur", "pluto",
         "yahudi", "yahudice", "yahudilik", "yahudiliğ", "yahudibaklası",
+        "misakımilli", "misakımillî",
         "fata", "çe"
     }
     if profile == "tdk":
@@ -1236,6 +1246,12 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             added_legit += 1
             
     for w in VIRTUAL_STEMS + EXTRA_AUTHORITY_HEADWORDS:
+        head_w = w.split("/")[0]
+        head_lower = tr_lower(head_w)
+        if profile == "tdk" and (head_w in unhatted_to_purge or head_lower in unhatted_to_purge):
+            continue
+        if profile == "dd" and "î" in head_w:
+            continue
         clean_entries.append(w)
         added_legit += 1
             
@@ -1314,10 +1330,10 @@ def compile_v06():
     
     for prof in profiles:
         print(f"\n=======================================================")
-        print(f"Compiling Turkspell v0.6 - Profile: [{prof.upper()}]")
+        print(f"Compiling Turkspell - Profile: [{prof.upper()}]")
         print(f"=======================================================")
         
-        prof_dir = DIST_DIR / f"turkspell-v0.6-{prof}"
+        prof_dir = DIST_DIR / f"turkspell-{prof}"
         prof_dir.mkdir(parents=True, exist_ok=True)
         
         # Build aff
@@ -1339,15 +1355,15 @@ def compile_v06():
         print(f"Successfully compiled: {prof_dir / 'tr.aff'} and {prof_dir / 'tr.dic'}")
         
     # Deploy default Universal profile to repository root
-    print("\nDeploying default Turkspell v0.6 (Universal) to repository root (c:\\gemini\\turkspell\\tr.*)...")
-    shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.aff", TURKSPELL_DIR / "tr.aff")
-    shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.dic", TURKSPELL_DIR / "tr.dic")
+    print("\nDeploying default Turkspell (Universal) to repository root (c:\\gemini\\turkspell\\tr.*)...")
+    shutil.copy2(DIST_DIR / "turkspell-universal" / "tr.aff", TURKSPELL_DIR / "tr.aff")
+    shutil.copy2(DIST_DIR / "turkspell-universal" / "tr.dic", TURKSPELL_DIR / "tr.dic")
     
     # Deploy to Firefox addon
     addon_dict_dir = TURKSPELL_DIR / "firefox-addon" / "dictionaries"
     if addon_dict_dir.exists():
-        shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.aff", addon_dict_dir / "tr.aff")
-        shutil.copy2(DIST_DIR / "turkspell-v0.6-universal" / "tr.dic", addon_dict_dir / "tr.dic")
+        shutil.copy2(DIST_DIR / "turkspell-universal" / "tr.aff", addon_dict_dir / "tr.aff")
+        shutil.copy2(DIST_DIR / "turkspell-universal" / "tr.dic", addon_dict_dir / "tr.dic")
         
     print("Deployment complete!")
     print("\nValidating deployed dictionary and running regression tests...")

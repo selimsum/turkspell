@@ -17,8 +17,11 @@ def package_addon():
     os.makedirs(dictionaries_dir, exist_ok=True)
 
     # 2. Ensure dictionary files are in place (prefer universal profile, fallback to root)
-    universal_dic = os.path.join(_root_dir, "dist", "turkspell-v0.6-universal", "tr.dic")
-    universal_aff = os.path.join(_root_dir, "dist", "turkspell-v0.6-universal", "tr.aff")
+    universal_dic = os.path.join(_root_dir, "dist", "turkspell-universal", "tr.dic")
+    universal_aff = os.path.join(_root_dir, "dist", "turkspell-universal", "tr.aff")
+    if not (os.path.exists(universal_dic) and os.path.exists(universal_aff)):
+        universal_dic = os.path.join(_root_dir, "dist", "turkspell-v0.6-universal", "tr.dic")
+        universal_aff = os.path.join(_root_dir, "dist", "turkspell-v0.6-universal", "tr.aff")
     addon_dic = os.path.join(dictionaries_dir, "tr.dic")
     addon_aff = os.path.join(dictionaries_dir, "tr.aff")
 
