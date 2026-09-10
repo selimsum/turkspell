@@ -165,19 +165,19 @@ def try_fetch_signed_xpi(addon_id: str, version: str, issuer: str, secret: str, 
 
     return download_signed_file(file_url, output_path, issuer, secret)
 
-def run_web_ext_sign(source_dir: str, issuer: str, secret: str, artifacts_dir: str) -> subprocess.CompletedProcess:
+def run_web_ext_sign(source_dir: str, issuer: str, secret: str, artifacts_dir: str, channel: str = "listed") -> subprocess.CompletedProcess:
     """Run `npx web-ext sign` with generous approval and request timeouts."""
     cmd = [
         "npx", "web-ext", "sign",
         "--source-dir", source_dir,
         "--api-key", issuer,
         "--api-secret", secret,
-        "--channel", "unlisted",
+        "--channel", channel,
         "--artifacts-dir", artifacts_dir,
         "--approval-timeout", "600000",
         "--timeout", "600000",
     ]
-    print(f"Running: npx web-ext sign --source-dir {source_dir} --channel unlisted --approval-timeout 600000...")
+    print(f"Running: npx web-ext sign --source-dir {source_dir} --channel {channel} --approval-timeout 600000...")
     # On Windows, npx is a cmd script
     shell = os.name == "nt"
     return subprocess.run(cmd, capture_output=True, text=True, shell=shell)
@@ -186,6 +186,7 @@ def main():
     parser = argparse.ArgumentParser(description="Sign Firefox Add-on with Mozilla AMO and automatic retry resilience")
     parser.add_argument("--version", help="Extension version (default: from manifest.json)")
     parser.add_argument("--addon-id", help="Gecko Addon ID (default: from manifest.json)")
+    parser.add_argument("--channel", default=os.getenv("AMO_CHANNEL", "listed"), choices=["listed", "unlisted"], help="Release channel on AMO (default: listed)")
     parser.add_argument("--source-dir", default="./firefox-addon", help="Source directory")
     parser.add_argument("--output", default="./turkspell-addon.xpi", help="Output signed .xpi destination path")
     parser.add_argument("--artifacts-dir", default="./signed_dist", help="web-ext artifacts directory")
@@ -214,10 +215,10 @@ def main():
     with open(manifest_path, "r", encoding="utf-8") as f:
         manifest = json.load(f)
 
-    addon_id = args.addon_id or manifest.get("browser_specific_settings", {}).get("gecko", {}).get("id") or "tr-TR@dic.turkspell"
+    addon_id = args.addon_id or manifest.get("browser_specific_settings", {}).get("gecko", {}).get("id") or "turkspell@mozilla.org.tr"
     version = args.version or manifest.get("version", "0.1.0")
 
-    print(f"=== AMO Signing Pipeline for {addon_id} v{version} ===")
+    print(f"=== AMO Signing Pipeline for {addon_id} v{version} (channel: {args.channel}) ===")
 
     # 1. Pre-check: Check if this version is ALREADY approved and signed on AMO
     print(f"Pre-checking if v{version} is already signed and available on AMO...")
@@ -227,7 +228,7 @@ def main():
 
     # 2. Run web-ext sign
     os.makedirs(artifacts_dir, exist_ok=True)
-    sign_res = run_web_ext_sign(source_dir, issuer, secret, artifacts_dir)
+    sign_res = run_web_ext_sign(source_dir, issuer, secret, artifacts_dir, channel=args.channel)
 
     print("--- web-ext stdout ---")
     print(sign_res.stdout)
