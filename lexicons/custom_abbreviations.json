@@ -52458,5 +52458,55 @@
     "lemma": "USB",
     "pos": "ProperNoun",
     "attributes": []
+  },
+  {
+    "lemma": "Dg",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Dl",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Dm",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "e.",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "FMVIÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "G",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "KHz",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "M",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "MHz",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WHO",
+    "pos": "ProperNoun",
+    "attributes": []
   }
 ]

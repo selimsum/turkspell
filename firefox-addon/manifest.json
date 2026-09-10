@@ -11,12 +11,6 @@
       "strict_min_version": "109.0"
     }
   },
-  "icons": {
-    "32": "icons/icon-32.png",
-    "48": "icons/icon-48.png",
-    "96": "icons/icon-96.png",
-    "128": "icons/icon-128.png"
-  },
   "dictionaries": {
     "tr": "dictionaries/tr.dic"
   }

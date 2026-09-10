@@ -165,6 +165,13 @@ def try_fetch_signed_xpi(addon_id: str, version: str, issuer: str, secret: str, 
 
     return download_signed_file(file_url, output_path, issuer, secret)
 
+def run_web_ext_lint(source_dir: str) -> subprocess.CompletedProcess:
+    """Run `npx web-ext lint` to validate addon package locally before signing."""
+    cmd = ["npx", "web-ext", "lint", "--source-dir", source_dir]
+    print(f"Pre-validating extension with web-ext lint (--source-dir {source_dir})...")
+    shell = os.name == "nt"
+    return subprocess.run(cmd, capture_output=True, text=True, shell=shell)
+
 def run_web_ext_sign(source_dir: str, issuer: str, secret: str, artifacts_dir: str, channel: str = "listed") -> subprocess.CompletedProcess:
     """Run `npx web-ext sign` with generous approval and request timeouts."""
     cmd = [
@@ -226,7 +233,20 @@ def main():
         print(f"Success! Version {version} was already signed on AMO. Downloaded signed .xpi.")
         sys.exit(0)
 
-    # 2. Run web-ext sign
+    # 2. Pre-validate extension locally using web-ext lint
+    lint_res = run_web_ext_lint(source_dir)
+    if lint_res.returncode != 0:
+        print("--- web-ext lint error ---", file=sys.stderr)
+        if lint_res.stdout:
+            print(lint_res.stdout, file=sys.stderr)
+        if lint_res.stderr:
+            print(lint_res.stderr, file=sys.stderr)
+        print("Error: web-ext lint detected validation errors in the extension. Aborting before upload.", file=sys.stderr)
+        sys.exit(1)
+    else:
+        print("Extension passed local web-ext lint validation.")
+
+    # 3. Run web-ext sign
     os.makedirs(artifacts_dir, exist_ok=True)
     sign_res = run_web_ext_sign(source_dir, issuer, secret, artifacts_dir, channel=args.channel)
 
@@ -249,7 +269,13 @@ def main():
         print(f"Successfully signed .xpi with web-ext: {output_path}")
         sys.exit(0)
 
-    # 3. Resilience Fallback:
+    # Fail fast if AMO rejected the upload due to validation failure
+    combined_output = (sign_res.stdout or "") + "\n" + (sign_res.stderr or "")
+    if "Validation failed" in combined_output or "WebExtError: Validation failed" in combined_output or "JSON_INVALID" in combined_output:
+        print("\nError: Extension validation failed on AMO. See validation error messages above.", file=sys.stderr)
+        sys.exit(1)
+
+    # 4. Resilience Fallback:
     # If web-ext failed (e.g. 502 Bad Gateway during polling, timeout, or 409 Conflict),
     # the addon may have been uploaded and is currently being processed or already approved!
     print(f"\nweb-ext sign exited with code {sign_res.returncode}.")
