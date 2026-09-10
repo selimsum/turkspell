@@ -119,10 +119,11 @@ def main():
         f.write("\n")
 
     # 3. Update update.json
+    addon_id = manifest.get("browser_specific_settings", {}).get("gecko", {}).get("id", "turkspell@mozilla.org.tr")
     update_link = f"https://github.com/{args.repo_owner}/{args.repo_name}/releases/download/v{new_ver}/turkspell-addon.xpi"
     update_data = {
         "addons": {
-            "tr-TR@dic.turkspell": {
+            addon_id: {
                 "updates": [
                     {
                         "version": new_ver,

@@ -117,8 +117,8 @@ Turkspell, farklı ihtiyaçlara ve yazım tercihlerine yönelik 3 ayrı profilde
 | Profil | Dağıtım Dizini | Özellikler | Tercih Edilen Kullanım Alanı |
 |---|---|---|---|
 | **Universal (Evrensel)** | `dist/turkspell-universal/` | Hem TDK (*dâhil*, *bekâr*, *resmî*) hem de Dil Derneği (*dahil*, *bekar*, *resmi*) biçimlerini meşru kabul eder. | **Web tarayıcıları**, genel metin editörleri ve serbest kullanıcılar. |
-| **TDK (Amiral Gemisi)** | `dist/turkspell-tdk/` & Kök dizin (`tr.*`) | Katı TDK yazım kurallarına uyar. `â`, `î` (nisbet) ve `û` şapka işaretlerini zorunlu tutar. | **Akademik yayınlar**, resmi kurumlar, TDK standardını benimseyen yayınevleri için uygundur. |
-| **Dil Derneği (DD)** | `dist/turkspell-dd/` | Dil Derneği ilkelerine uyar. Nisbet `î` ekini `i` olarak standartlaştırır (`resmi`), inceltme işaretlerini korur. | **Basın-yayın**, gazetecilik ve Dil Derneği kılavuzunu benimseyen kurumlar için uygundur. |
+| **TDK (Amiral Gemisi)** | `dist/turkspell-tdk/` & Kök dizin (`tr.*`) | Katı TDK yazım kurallarına uyar. `â`, `î` (nispet) ve `û` şapka işaretlerini zorunlu tutar. | **Akademik yayınlar**, resmi kurumlar, TDK standardını benimseyen yayınevleri için uygundur. |
+| **Dil Derneği (DD)** | `dist/turkspell-dd/` | Dil Derneği ilkelerine uyar. Nispet `î` ekini `i` olarak standartlaştırır (`resmi`), inceltme işaretlerini korur. | **Basın-yayın**, gazetecilik ve Dil Derneği kılavuzunu benimseyen kurumlar için uygundur. |
 
 ---
 
@@ -211,7 +211,7 @@ Turkspell, modern Türkçenin zengin morfolojik çekim yapısını minimum belle
 
 Derleme hattı, web kazıyıcı veya filtrelenmemiş kullanıcı verileri yerine yalnızca doğrulanmış otorite kaynaklarını kabul eder:
 * **TDK Güncel Türkçe Sözlük ([`raw_data/tdk_words.txt`](file:///c:/gemini/turkspell/raw_data/tdk_words.txt))**: Katı TDK yazım standartlarının ve zorunlu düzeltme işaretli (şapkalı) sözcüklerin ana omurgası.
-* **Dil Derneği Yazım Kılavuzu ([`raw_data/dil_dernegi_words.txt`](file:///c:/gemini/turkspell/raw_data/dil_dernegi_words.txt))**: Nisbet eki `î` yerine `i` kullanımını standartlaştıran alternatif resmî lügat.
+* **Dil Derneği Yazım Kılavuzu ([`raw_data/dil_dernegi_words.txt`](file:///c:/gemini/turkspell/raw_data/dil_dernegi_words.txt))**: Nispet eki `î` yerine `i` kullanımını standartlaştıran alternatif resmî lügat.
 * **Özel Adlar ve Yer İsimleri ([`lexicons/custom_names.json`](file:///c:/gemini/turkspell/lexicons/custom_names.json))**: Türkiye mülki idare birimleri, dünya ülkeleri, tarihi şahsiyetler ve doğrulanmış özel isimler.
 * **Resmî Kısaltmalar ([`lexicons/custom_abbreviations.json`](file:///c:/gemini/turkspell/lexicons/custom_abbreviations.json))**: Büyük/küçük harf duyarlılığı korunan ulusal ve uluslararası kısaltmalar (`TBMM`, `TÜBİTAK`, `KHz`, `Wi-Fi`).
 * **Zemberek Morfolojik Referansı ([`lexicons/zemberek_lexicon.json`](file:///c:/gemini/turkspell/lexicons/zemberek_lexicon.json))**: Kök başlıkları, sözcük türleri (POS) ve morfotaktik özelliklerin çapraz doğrulaması.
@@ -356,7 +356,7 @@ MAP 14
 MAP aâAÂ       # Düzeltme işaretli 'a' ve varyantları
 MAP uûUÛ       # Düzeltme işaretli 'u' varyantları
 MAP uüUÜ       # İnce/kalın yuvarlak ünlü kaymaları
-MAP iîİÎ       # Nisbet ve inceltme 'i' varyantları
+MAP iîİÎ       # Nispet ve inceltme 'i' varyantları
 MAP ıiIİ       # Türkçe noktalı/noktasız 'ı/i' eşlemesi
 MAP oöOÖ       # Yuvarlak ünlü yakınlığı
 MAP eêEÊ       # İnceltme ve transkripsiyon 'e' varyantları

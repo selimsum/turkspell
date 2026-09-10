@@ -7,10 +7,15 @@
   "homepage_url": "https://github.com/selimsum/turkspell",
   "browser_specific_settings": {
     "gecko": {
-      "id": "tr-TR@dic.turkspell",
-      "strict_min_version": "109.0",
-      "update_url": "https://selimsum.github.io/turkspell/update.json"
+      "id": "turkspell@mozilla.org.tr",
+      "strict_min_version": "109.0"
     }
+  },
+  "icons": {
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
   },
   "dictionaries": {
     "tr": "dictionaries/tr.dic"

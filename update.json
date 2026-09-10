@@ -1,6 +1,6 @@
 {
   "addons": {
-    "tr-TR@dic.turkspell": {
+    "turkspell@mozilla.org.tr": {
       "updates": [
         {
           "version": "0.6.7",
