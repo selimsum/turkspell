@@ -44,18 +44,22 @@ def get_suggestions(word: str, dict_path: str = DICT_PATH) -> list[str]:
 class TestSuggestionRanking(unittest.TestCase):
     """Tests suggestion quality for typical typos across morphological classes."""
 
-    def assertSuggestedInTopN(self, typo: str, target: str, n: int = 3):
-        suggestions = get_suggestions(typo)
-        self.assertTrue(
-            len(suggestions) > 0,
-            f"No suggestions generated for typo '{typo}' (expected '{target}')"
-        )
-        top_n = suggestions[:n]
-        self.assertIn(
-            target,
-            top_n,
-            f"Target '{target}' not in Top-{n} suggestions for '{typo}'. Suggestions: {suggestions[:5]}"
-        )
+    def assertPairsSuggested(self, test_pairs: list[tuple]):
+        words = [p[0] for p in test_pairs]
+        all_sugs = get_batch_suggestions(words)
+        for typo, target, max_rank in test_pairs:
+            with self.subTest(typo=typo, target=target):
+                sugs = all_sugs.get(typo, [])
+                self.assertTrue(
+                    len(sugs) > 0,
+                    f"No suggestions generated for typo '{typo}' (expected '{target}')"
+                )
+                top_n = sugs[:max_rank]
+                self.assertIn(
+                    target,
+                    top_n,
+                    f"Target '{target}' not in Top-{max_rank} suggestions for '{typo}'. Suggestions: {sugs[:5]}"
+                )
 
     def test_palatal_l_suggestions(self):
         """Typos with illegal back vowels must suggest thin /l/ front-rounded vowels."""
@@ -65,9 +69,7 @@ class TestSuggestionRanking(unittest.TestCase):
             ("kontrolsuz", "kontrolsüz", 1),
             ("alkolu", "alkolü", 1),
         ]
-        for typo, target, max_rank in test_pairs:
-            with self.subTest(typo=typo, target=target):
-                self.assertSuggestedInTopN(typo, target, n=max_rank)
+        self.assertPairsSuggested(test_pairs)
 
     def test_non_softening_loanwords_suggestions(self):
         """Voiced typos for non-softening roots must suggest unvoiced forms."""
@@ -75,9 +77,7 @@ class TestSuggestionRanking(unittest.TestCase):
             ("felakedi", "felaketi", 1),
             ("icatı", "icadı", 1),
         ]
-        for typo, target, max_rank in test_pairs:
-            with self.subTest(typo=typo, target=target):
-                self.assertSuggestedInTopN(typo, target, n=max_rank)
+        self.assertPairsSuggested(test_pairs)
 
     def test_circumflex_suggestions(self):
         """Unhatted typos must suggest circumflex forms at Top-1."""
@@ -88,9 +88,7 @@ class TestSuggestionRanking(unittest.TestCase):
             ("hikaye", "hikâye", 1),
             ("imkani", "imkânı", 1),
         ]
-        for typo, target, max_rank in test_pairs:
-            with self.subTest(typo=typo, target=target):
-                self.assertSuggestedInTopN(typo, target, n=max_rank)
+        self.assertPairsSuggested(test_pairs)
 
     def test_false_negative_fixes(self):
         """Verifies that reported false negative typo inputs are rejected and gold targets ranked at top."""
@@ -111,9 +109,7 @@ class TestSuggestionRanking(unittest.TestCase):
             ("çiftliklersen", "çiftliklerden", 1),
             ("goya", "boya", 1),
         ]
-        for typo, target, max_rank in test_pairs:
-            with self.subTest(typo=typo, target=target):
-                self.assertSuggestedInTopN(typo, target, n=max_rank)
+        self.assertPairsSuggested(test_pairs)
 
     def test_mrr_benchmark(self):
         """Evaluates Mean Reciprocal Rank (MRR) across a comprehensive 25-word evaluation battery."""

@@ -137,7 +137,7 @@ EXTRA_REP_RULES = [
     # Common orthographic & consonant error corrections
     "REP klavuz kılavuz",
     "REP traş tıraş",
-    "REP ünvan unvan",
+    "REP unvan ünvan",
     "REP tesbih tespih",
     "REP sayili sayılı",
     "REP numarali numaralı",
@@ -749,7 +749,10 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "fas", "go", "hut", "çad",
     # Chemical element symbols & letter names from TDK:
     "ac", "bi", "ca", "cl", "co", "cu", "ga", "li", "lu", "me", "mn", "mo", "n", "na",
-    "ni", "pa", "pu", "ra", "rh", "sc", "u", "v", "y", "ö", "ı", "ın", "ır", "ke", "isa"
+    "ni", "pa", "pu", "ra", "rh", "sc", "u", "v", "y", "ö", "ı", "ın", "ır", "ke", "isa",
+    "ag", "Ag", "ba", "Ba", "be", "Be", "br", "Br", "ce", "Ce", "cr", "Cr", "dy", "Dy",
+    "hg", "Hg", "nb", "Nb", "nd", "Nd", "th", "Th", "zr", "Zr", "ph", "pH",
+    "vâkıfane", "vâle", "hâletinez", "neftîmsi", "zengûle", "zımparamsı"
 ]
 
 def tr_lower(s: str) -> str:

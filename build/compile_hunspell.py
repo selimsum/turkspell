@@ -397,11 +397,11 @@ def compile_dictionary():
     }
 
     FALSE_NEGATIVE_STEMS = {
-        'ü', 'bi', 'hu', 'ole', 'be', 'enç', 'havşa', 'ikil', 'gelimli', 'cümlesi',
+        'ü', 'bi', 'enç', 'havşa', 'ikil', 'gelimli', 'cümlesi',
         'urmak', 'pur', 'aysal', 'sahin', 'dölenme', 'çet', 'dölenmek',
         'lavan', 'semek', 'donurmak', 'donurma', 'kesği', 'kesğin', 'küfretmen', 'ayaklamak',
         'humum', 'çakırmak', 'deb', 'kesğ', 'donur', 'mesin', 'mes', 'kany',
-        'kayetme', 'kayetmek', 'choice', 'wide', 'biin', 'gog',
+        'choice', 'wide', 'biin', 'gog',
         'mebsim', 'ornegin', 'osmanlica', 'sehir', 'yada', 'memik', 'dokum', 'effe',
         'öl', 'mezhebi',
         'icada', 'ica', 'icad', 'wid', 'choi', 'turunun', 'yasanan', 'zarfi', 'boynız', 'yasamazken', 'çalışılabileceğ',
