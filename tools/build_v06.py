@@ -58,6 +58,12 @@ EXTRA_REP_RULES = [
     "REP daj dan",
     "REP tem ten",
     "REP tam tan",
+    # Editorial & publication common substitutions
+    "REP yayınlanan yayımlanan",
+    "REP yayınladı yayımlandı",
+    "REP yayınlandı yayımlandı",
+    "REP yayınlamak yayımlamak",
+    "REP yayınlanmak yayımlanmak",
     "REP rim rin",
     "REP larz lara",
     "REP lerz lere",
@@ -514,6 +520,12 @@ NON_VERB_MAK_NOUNS = ["ahmak", "çomak", "madımak", "tutamak", "başmak"]
 for _w in NON_VERB_MAK_NOUNS:
     HEAD_FLAG_OVERRIDES[_w] = BACK_UNVOICED_FLAGS
 
+# Irregular possessive stem suyu: C2 flag generates suyunu, suyunun, suyuna, suyunda, suyundan, suyuyla
+HEAD_FLAG_OVERRIDES["suyu"] = LONG_TO_UTF8.get("C2", "")
+for _su_stem in ["suyum", "suyun", "suyumuz", "suyunuz"]:
+    HEAD_FLAG_OVERRIDES[_su_stem] = BACK_ROUNDED_UNVOICED_FLAGS
+
+
 # Stems requiring vowel-drop (hece düşmesi) flags
 VOWEL_DROP_D1_HEADS = {"hısım", "atıf", "kayın", "kabız", "ıtır", "açıkağız", "sarıağız", "bedasıl"}
 VOWEL_DROP_D2_HEADS = {"koyun", "buğuz", "kababurun", "kepçeburun"}
@@ -529,10 +541,11 @@ for _w in BACK_NOVOICING_STEMS + FRONT_NOVOICING_STEMS:
 PALATAL_L_HEADS = {
     "alkol", "ampul", "kontrol", "otokontrol", "rol", "başrol",
     "sembol", "petrol", "protokol", "kolesterol", "metropol",
-    "usul", "mahsul", "alveol", "kabul", "makbul", "faul", "hol"
+    "usul", "mahsul", "alveol", "kabul", "makbul", "faul", "hol",
+    "gol", "idol", "karambol", "bandrol", "ekol", "meçhul", "menkul", "resul"
 }
-# Pure palatal l flags: front rounded vowels, NO regular back-vowel SZ/CI, includes R2 (ablative -den), I2 (-le), PQ (-ümüz), PZ (-ünüz)
-PALATAL_L_FLAGS = remap_flag_string("A4 N4 PV P8 Y2 L2 R2 I2 PQ PZ CK cl LF LSZ LFK LCI PF".replace(" ", ""))
+# Pure palatal l flags: front rounded vowels, includes P4 (-üm), P8 (-ün), PV (-ü), PQ (-ümüz), PZ (-ünüz)
+PALATAL_L_FLAGS = remap_flag_string("A4 N4 P4 PV P8 Y2 L2 R2 I2 PQ PZ CK cl LF LSZ LFK LCI PF".replace(" ", ""))
 
 VIRTUAL_STEMS = [
     # ard (art -> ard-ı, ard-ı-n-da, ard-ı-n-dan, ard-ı-n-a)
@@ -618,6 +631,8 @@ VIRTUAL_STEMS = [
 ]
 
 EXTRA_AUTHORITY_HEADWORDS = [
+    # Pronoun copula forms:
+    "odur/∆∍∎∧∲∶∺∼∽≂≉≋≥≪≬⊆",
     # Copula & predicate defective verbs:
     "idi/∴∸≆∻≩",
     "idik",
@@ -1265,6 +1280,12 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             d_flag = LONG_TO_UTF8.get("D4", "")
             if d_flag and d_flag not in flags:
                 flags += d_flag
+
+        # Temporal relative -ki for sezon (sezonki, sezonkinin, sezonkiler)
+        if head_lower == "sezon":
+            k1_flag = LONG_TO_UTF8.get("K1", "")
+            if k1_flag and k1_flag not in flags:
+                flags += k1_flag
 
         # Loanwords ending in 'ing' must take front-vowel noun suffixes
         if head.lower().endswith("ing") and ("≑" in flags or not flags):

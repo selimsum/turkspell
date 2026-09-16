@@ -409,6 +409,20 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         accepted, rejected = check_words(valid)
         self.assertEqual(rejected, [], f"Valid short noun / doubling forms failing: {rejected}")
 
+    def test_timeline_corpus_rescues(self):
+        """Verifies high-frequency rescues discovered via Turkish News Timeline corpus."""
+        valid = [
+            "gol", "golü", "gole", "golün", "golünü", "golüyle", "golüm", "golümüz", "golünüz", "goller", "golsüz", "gollü",
+            "suyu", "suyunu", "suyunun", "suyuna", "suyunda", "suyundan", "suyuyla",
+            "odur", "sezonki", "sezonkiler", "sezonkinin", "sezonkinden"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Timeline rescues failing: {rejected}")
+
+        invalid = ["golin", "goli", "golsuz", "suyuda", "suyunı"]
+        accepted, rejected = check_words(invalid)
+        self.assertEqual(accepted, [], f"Illegal palatal/suyu forms leaked: {accepted}")
+
 
 if __name__ == "__main__":
     unittest.main()
