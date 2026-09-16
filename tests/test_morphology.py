@@ -107,6 +107,20 @@ class TestNonSofteningLoanwords(unittest.TestCase):
         accepted, rejected = check_words(wrong_words)
         self.assertEqual(accepted, [], f"Voiced felaket forms leaked: {accepted}")
 
+    def test_zanaat_positive(self):
+        words = [
+            "zanaat", "zanaatı", "zanaata", "zanaatın", "zanaatında",
+            "zanaatından", "zanaatını", "zanaatının", "zanaatıyla",
+            "zanaatlar", "zanaatları", "zanaatlarında"
+        ]
+        accepted, rejected = check_words(words)
+        self.assertEqual(rejected, [], f"Failing zanaat forms: {rejected}")
+
+    def test_zanaat_negative_rejection(self):
+        wrong_words = ["zanaate", "zanaati", "zanaatler", "zanaatiyle", "zanaadı"]
+        accepted, rejected = check_words(wrong_words)
+        self.assertEqual(accepted, [], f"Illegal front-vowel/voiced zanaat forms leaked: {accepted}")
+
     def test_stok_positive(self):
         words = [
             "stok", "stoku", "stokun", "stokuna", "stokunun",

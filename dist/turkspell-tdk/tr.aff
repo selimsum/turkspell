@@ -40,7 +40,7 @@ MAXDIFF 5
 MAXNGRAMSUGS 8
 
 
-REP 1437
+REP 1441
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -139,6 +139,10 @@ REP basmekan başmekân
 REP agah agâh
 REP aliyyulala aliyyülâlâ
 REP aliyyülala aliyyülâlâ
+REP zanaatkar zanaatkâr
+REP zanaatkarlık zanaatkârlık
+REP zanaatkarlığı zanaatkârlığı
+REP zanaatkarlar zanaatkârlar
 REP klavuz kılavuz
 REP traş tıraş
 REP unvan ünvan

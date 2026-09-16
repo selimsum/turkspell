@@ -134,6 +134,10 @@ EXTRA_REP_RULES = [
     "REP agah agâh",
     "REP aliyyulala aliyyülâlâ",
     "REP aliyyülala aliyyülâlâ",
+    "REP zanaatkar zanaatkâr",
+    "REP zanaatkarlık zanaatkârlık",
+    "REP zanaatkarlığı zanaatkârlığı",
+    "REP zanaatkarlar zanaatkârlar",
     # Common orthographic & consonant error corrections
     "REP klavuz kılavuz",
     "REP traş tıraş",
@@ -471,7 +475,7 @@ BACK_NOVOICING_STEMS = [
     "kâinat", "belagat", "boydak", "istihbarat", "muamelat", "müfredat",
     "mefruşat", "nebatat", "haşarat", "barikat", "nasihat", "kabahat", "mükafat",
     "pasaport", "rahat", "bask", "mark", "bank", "fırsat", "ark", "park", "şok",
-    "hasılat"
+    "hasılat", "zanaat"
 ]
 
 # Front-vowel non-voicing stems (including Arabic/Persian loanwords ending in -at and -al taking front harmony)
@@ -1357,16 +1361,23 @@ def compile_v06():
                 
         print(f"Successfully compiled: {prof_dir / 'tr.aff'} and {prof_dir / 'tr.dic'}")
         
+    def _copy_file(src, dst):
+        try:
+            shutil.copy2(src, dst)
+        except OSError:
+            with open(src, "rb") as f_in, open(dst, "wb") as f_out:
+                shutil.copyfileobj(f_in, f_out)
+
     # Deploy default Universal profile to repository root
     print("\nDeploying default Turkspell (Universal) to repository root (c:\\gemini\\turkspell\\tr.*)...")
-    shutil.copy2(DIST_DIR / "turkspell-universal" / "tr.aff", TURKSPELL_DIR / "tr.aff")
-    shutil.copy2(DIST_DIR / "turkspell-universal" / "tr.dic", TURKSPELL_DIR / "tr.dic")
+    _copy_file(DIST_DIR / "turkspell-universal" / "tr.aff", TURKSPELL_DIR / "tr.aff")
+    _copy_file(DIST_DIR / "turkspell-universal" / "tr.dic", TURKSPELL_DIR / "tr.dic")
     
     # Deploy to Firefox addon
     addon_dict_dir = TURKSPELL_DIR / "firefox-addon" / "dictionaries"
     if addon_dict_dir.exists():
-        shutil.copy2(DIST_DIR / "turkspell-universal" / "tr.aff", addon_dict_dir / "tr.aff")
-        shutil.copy2(DIST_DIR / "turkspell-universal" / "tr.dic", addon_dict_dir / "tr.dic")
+        _copy_file(DIST_DIR / "turkspell-universal" / "tr.aff", addon_dict_dir / "tr.aff")
+        _copy_file(DIST_DIR / "turkspell-universal" / "tr.dic", addon_dict_dir / "tr.dic")
         
     print("Deployment complete!")
     print("\nValidating deployed dictionary and running regression tests...")
