@@ -630,11 +630,11 @@ def compile_dictionary():
         # Irregular word 'su' handling
         if lemma == 'su':
             dic_entries.append("su/3")
-            dic_entries.append("suyum/1")
-            dic_entries.append("suyun/1")
-            dic_entries.append("suyu/1")
-            dic_entries.append("suyumuz/1")
-            dic_entries.append("suyunuz/1")
+            dic_entries.append("suyum/2")
+            dic_entries.append("suyun/2")
+            dic_entries.append("suyu/113")
+            dic_entries.append("suyumuz/2")
+            dic_entries.append("suyunuz/2")
             dic_entries.append("sular/1")
             dic_entries.append("sularım/1")
             dic_entries.append("suların/1")
@@ -871,7 +871,7 @@ def compile_dictionary():
             TEMPORAL_KI_STEMS = {
                 'akşam', 'sabah', 'öğle', 'gece', 'dün', 'bugün', 'yarın', 'şimdi', 'demin', 'önce', 'sonra',
                 'yıl', 'gün', 'ay', 'zaman', 'asır', 'çağ', 'devir', 'mevsim', 'bahar', 'yaz', 'güz', 'kış',
-                'erken', 'geç', 'evvel', 'kadar', 'öbür', 'sene', 'hafta'
+                'erken', 'geç', 'evvel', 'kadar', 'öbür', 'sene', 'hafta', 'sezon'
             }
             if lemma.lower() in PREFIXABLE_STEMS:
                 flag = f"{flag},90"
