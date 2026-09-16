@@ -685,13 +685,13 @@ def compile_dictionary():
             back = True
         # A few Arabic borrowings that Zemberek tags as inverse-harmony actually
         # take back suffixes in standard Turkish (TDK): emlak -> "emlakçı",
-        # istihraç -> "maden istihracı". Force back harmony for them, and mark
-        # emlak NoVoicing (it keeps the final k: "emlaka", "emlakın").
-        if lemma.lower() in ('emlak', 'istihraç', 'araz', 'turp', 'mısır'):
+        # istihraç -> "maden istihracı", zanaat -> "zanaatı", "zanaatıyla".
+        # Force back harmony for them, and mark emlak/zanaat NoVoicing (keeps final consonant: "emlaka", "zanaatı").
+        if lemma.lower() in ('emlak', 'istihraç', 'araz', 'turp', 'mısır', 'zanaat'):
             attrs.discard('InverseHarmony')
             attrs.discard('LastVowelFrontal')
             attrs.discard('FrontVowelHarmony')
-            if lemma.lower() == 'emlak':
+            if lemma.lower() in ('emlak', 'zanaat'):
                 attrs.add('NoVoicing')
 
         # Check Zemberek vowel exceptions
@@ -747,7 +747,7 @@ def compile_dictionary():
             attrs.add('LastVowelDrop')
         if lemma.lower() in ('asım', 'mısır', 'varil', 'tatil', 'gönderim', 'zehir'):
             attrs.discard('LastVowelDrop')
-        if lemma.lower() in ('araz', 'turp', 'mısır'):
+        if lemma.lower() in ('araz', 'turp', 'mısır', 'zanaat'):
             attrs.discard('InverseHarmony')
             attrs.discard('LastVowelFrontal')
             attrs.discard('FrontVowelHarmony')
