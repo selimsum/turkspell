@@ -70,6 +70,8 @@ CASE_PRESERVED_OVERRIDES = {
     'linkedin': 'LinkedIn',
 }
 
+DUAL_VOICING_NOUNS = {'teleskop', 'radyoteleskop', 'stereoskop', 'bergamot', 'baç'}
+
 def turkish_upper(s: str) -> str:
     return s.replace('i', 'İ').replace('ı', 'I').upper()
 
@@ -649,9 +651,10 @@ def compile_dictionary():
         noun_endings = (
             'parmak', 'ırmak', 'ekmek', 'yemek', 'çakmak', 'tokmak', 'yaşmak', 
             'kaymak', 'ilmek', 'basamak', 'mercimek', 'damak', 'yumak', 'oymak', 
-            'yamak', 'hamak', 'sumak', 'kaçamak', 'kuymak', 'ramak', 'somak', 'tomak', 'emek'
+            'yamak', 'hamak', 'sumak', 'kaçamak', 'kuymak', 'ramak', 'somak', 'tomak', 'emek',
+            'ahmak', 'çomak', 'madımak', 'tutamak', 'başmak'
         )
-        if lemma.endswith(('mak', 'mek')) and (pos != 'Noun' or not lemma.endswith(noun_endings) or lemma.endswith(('lanmak', 'lenmek', 'laşmak', 'leşmek', 'tırmak', 'tirmek', 'ılmak', 'ilmek', 'ulmak', 'ülmek', 'ınmak', 'inmek', 'unmak', 'ünmek'))):
+        if lemma.endswith(('mak', 'mek')) and (pos not in ('Noun', 'Adjective') or not lemma.endswith(noun_endings) or lemma.endswith(('lanmak', 'lenmek', 'laşmak', 'leşmek', 'tırmak', 'tirmek', 'ılmak', 'ilmek', 'ulmak', 'ülmek', 'ınmak', 'inmek', 'unmak', 'ünmek'))):
             pos = 'Verb'
             
         # Force Noun POS and Voicing for any lemma ending in lık/lik/luk/lük
@@ -736,14 +739,19 @@ def compile_dictionary():
             # the multi-syllable heuristic is skipped for them; only stems with
             # an explicit Voicing attribute (kalp -> kalbi, harp -> harbi,
             # vaat -> vaadi) voice.
-            if 'Voicing' in attrs or 'VoicingOpt' in attrs or 'VoicingSelf' in attrs or (not inverse_harmony and num_vowels >= 2) or lemma in ['teleskop', 'radyoteleskop', 'asteroit', 'eşlik', 'karbondioksit']:
+            if 'Voicing' in attrs or 'VoicingOpt' in attrs or 'VoicingSelf' in attrs or (not inverse_harmony and num_vowels >= 2) or lemma in ['asteroit', 'eşlik', 'karbondioksit']:
                 # Exclude explicitly marked NoVoicing and a few manual exceptions
-                if ('NoVoicing' not in attrs or lemma in ['teleskop', 'radyoteleskop', 'eşlik', 'karbondioksit']) and lemma not in ['dikkat', 'sepet', 'paket', 'bilet', 'kaset', 'anket', 'davet', 'menfaat', 'kübit', 'kuark']:
+                if ('NoVoicing' not in attrs or lemma in ['eşlik', 'karbondioksit']) and lemma not in ['dikkat', 'sepet', 'paket', 'bilet', 'kaset', 'anket', 'davet', 'menfaat', 'kübit', 'kuark']:
                     voicing = True
         
         voicing_map[lemma.lower()] = voicing
         # Check vowel drop attributes
-        if lemma in ['ağız']:
+        VOWEL_DROP_ADDITIONS = {
+            'mühür', 'hısım', 'atıf', 'koyun', 'kayın', 'kabız', 'ıtır', 'fülüs',
+            'aşir', 'fehim', 'nesih', 'rekiz', 'buğuz', 'büyükşehir', 'açıkağız',
+            'sarıağız', 'kababurun', 'kepçeburun', 'metcezir', 'bedasıl', 'sılayırahim'
+        }
+        if lemma in ['ağız'] or lemma.lower() in VOWEL_DROP_ADDITIONS:
             attrs.add('LastVowelDrop')
         if lemma.lower() in ('asım', 'mısır', 'varil', 'tatil', 'gönderim', 'zehir'):
             attrs.discard('LastVowelDrop')
@@ -876,10 +884,11 @@ def compile_dictionary():
                     flag = f"{flag},K1"
                 
             dic_entries.append(f"{lemma}/{flag}")
-            if voicing and pos != 'Verb':
+            if (voicing or lemma.lower() in DUAL_VOICING_NOUNS) and pos != 'Verb':
                 voiced_stem = get_voiced_stem(lemma)
                 if voiced_stem and voiced_stem != lemma:
-                    dic_entries.append(f"{voiced_stem}/{flag},NE,only_vowel")
+                    v_flag = "105" if flag == "101" else ("5" if flag == "1" else flag)
+                    dic_entries.append(f"{voiced_stem}/{v_flag},NE,only_vowel")
             if vowel_drop and pos != 'Verb' and len(lemma) >= 3:
                 dropped_stem = lemma[:-2] + lemma[-1]
                 if dropped_stem and dropped_stem != lemma:

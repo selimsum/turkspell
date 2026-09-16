@@ -320,5 +320,95 @@ class TestReportedWordsAndUnits(unittest.TestCase):
         self.assertEqual(accepted, [], f"Illegal double-ki artifacts leaked: {accepted}")
 
 
+class TestDualVoicing(unittest.TestCase):
+    """
+    Verifies dual-voicing words where Dil Derneği specifies unvoiced inflections
+    and TDK specifies voiced inflections (e.g. stereoskop, teleskop, bergamot, baç).
+    Both variants must be accepted, while bare virtual stems must be rejected.
+    """
+
+    def test_stereoskop_dual_voicing(self):
+        valid = [
+            "stereoskop", "stereoskopu", "stereoskobu", "stereoskopa", "stereoskoba",
+            "stereoskopun", "stereoskobun", "stereoskopum", "stereoskobum",
+            "stereoskopumuz", "stereoskobumuz", "stereoskoplar", "stereoskopta", "stereoskoptan"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid stereoskop forms failing: {rejected}")
+
+    def test_teleskop_dual_voicing(self):
+        valid = [
+            "teleskop", "teleskopu", "teleskobu", "teleskopa", "teleskoba",
+            "teleskopun", "teleskobun", "teleskopum", "teleskobum",
+            "teleskopumuz", "teleskobumuz", "teleskoplar", "teleskopta", "teleskoptan",
+            "radyoteleskop", "radyoteleskopu", "radyoteleskobu"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid teleskop forms failing: {rejected}")
+
+    def test_bergamot_dual_voicing(self):
+        valid = [
+            "bergamot", "bergamotu", "bergamodu", "bergamota", "bergamoda",
+            "bergamotun", "bergamodun", "bergamotum", "bergamodum",
+            "bergamotumuz", "bergamodumuz", "bergamotlar", "bergamotta", "bergamottan"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid bergamot forms failing: {rejected}")
+
+    def test_bac_dual_voicing(self):
+        valid = [
+            "baç", "baçı", "bacı", "baça", "baca", "baçın", "bacın",
+            "baçım", "bacım", "baçımız", "bacımız", "baçlar", "baçta", "baçtan"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid baç forms failing: {rejected}")
+
+    def test_dual_voicing_bare_virtual_stems_rejected(self):
+        """Bare virtual stems without required affixes must be rejected."""
+        invalid = ["stereoskob", "teleskob", "bergamod", "bac", "stereoskoblar", "teleskoblar", "bergamodlar", "baclar"]
+        accepted, rejected = check_words(invalid)
+        self.assertEqual(accepted, [], f"Illegal bare or mismatched virtual stems leaked: {accepted}")
+
+
+class TestZemberekAnomalyRescues(unittest.TestCase):
+    """
+    Verifies systematic fixes for Zemberek omissions:
+    - Missing LastVowelDrop (mühür->mührü, hısım->hısmı, koyun->koynu, etc.)
+    - Monosyllabic / short noun voicing (dip->dibi, smaç->smacı, step->stebi, etc.)
+    - Misclassified non-verb -mak words (ahmak->ahmağı, çomak->çomağı, madımak->madımağı)
+    - Consonant doubling (müstahak->müstahakkı, serhat->serhaddi, teletıp->teletıbbı)
+    """
+
+    def test_vowel_drop_rescues(self):
+        valid = [
+            "mühür", "mührü", "mühre", "mührün", "mührüm", "mührümüz", "mührünüz",
+            "hısım", "hısmı", "hısma", "hısmın", "hısmım", "hısmımız",
+            "atıf", "atfı", "atfa", "atfın", "atfım",
+            "koyun", "koynu", "koyna", "koynun", "koynum", "koynunda", "koynundan", "koynuna",
+            "kayın", "kaynı", "kayna", "kaynın", "kaynım",
+            "kabız", "kabzı", "kabza", "kabzın", "kabzında"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid vowel-drop forms failing: {rejected}")
+
+    def test_short_noun_and_doubling_rescues(self):
+        valid = [
+            "dip", "dibi", "dibe", "dibin", "dibim", "dibimiz", "dibiniz", "dibinde", "dibinden", "dibine", "dibini",
+            "ahmak", "ahmağı", "ahmağa", "ahmağın", "ahmaklar", "ahmakça", "ahmaklık",
+            "çomak", "çomağı", "çomağa", "çomağın", "çomaklar",
+            "madımak", "madımağı", "madımağın",
+            "tutamak", "tutamağı",
+            "aşık", "aşığı", "aşığına",
+            "müstahak", "müstahakkı", "müstahakkını",
+            "serhat", "serhaddi", "serhaddinde",
+            "teletıp", "teletıbbı",
+            "smaç", "smacı", "smacında",
+            "step", "stebi",
+            "trip", "tribi"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid short noun / doubling forms failing: {rejected}")
+
+
 if __name__ == "__main__":
     unittest.main()

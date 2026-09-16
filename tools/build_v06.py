@@ -468,6 +468,7 @@ HEAD_FLAG_OVERRIDES = {
 # Standard regular non-voicing inflection flags
 BACK_UNVOICED_FLAGS = remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", ""))
 FRONT_UNVOICED_FLAGS = remap_flag_string("A3 CI CK DE F1 I2 L2 LI LK N3 P3 P7 PF PP PU PW Q2 R2 SL SZ Y2 cl".replace(" ", ""))
+BACK_ROUNDED_UNVOICED_FLAGS = remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1".replace(" ", ""))
 
 # Stems attested in corpus as non-voicing that erroneously had V1/V3 or missing nominal flags
 BACK_NOVOICING_STEMS = [
@@ -498,6 +499,26 @@ for _w in BACK_NOVOICING_STEMS:
 for _w in FRONT_NOVOICING_STEMS:
     if _w not in HEAD_FLAG_OVERRIDES:
         HEAD_FLAG_OVERRIDES[_w] = FRONT_UNVOICED_FLAGS
+
+# Dual-voicing stems: unvoiced per Dil Derneği, voiced per TDK
+DUAL_VOICING_BACK_ROUNDED = ["teleskop", "radyoteleskop", "stereoskop", "bergamot"]
+DUAL_VOICING_BACK_UNROUNDED = ["baç"]
+
+for _w in DUAL_VOICING_BACK_ROUNDED:
+    HEAD_FLAG_OVERRIDES[_w] = BACK_ROUNDED_UNVOICED_FLAGS
+for _w in DUAL_VOICING_BACK_UNROUNDED:
+    HEAD_FLAG_OVERRIDES[_w] = BACK_UNVOICED_FLAGS
+
+# Erroneous verb stems that are genuine nouns/adjectives:
+NON_VERB_MAK_NOUNS = ["ahmak", "çomak", "madımak", "tutamak", "başmak"]
+for _w in NON_VERB_MAK_NOUNS:
+    HEAD_FLAG_OVERRIDES[_w] = BACK_UNVOICED_FLAGS
+
+# Stems requiring vowel-drop (hece düşmesi) flags
+VOWEL_DROP_D1_HEADS = {"hısım", "atıf", "kayın", "kabız", "ıtır", "açıkağız", "sarıağız", "bedasıl"}
+VOWEL_DROP_D2_HEADS = {"koyun", "buğuz", "kababurun", "kepçeburun"}
+VOWEL_DROP_D3_HEADS = {"zehir", "emir", "aşir", "fehim", "nesih", "rekiz", "büyükşehir", "metcezir", "sılayırahim"}
+VOWEL_DROP_D4_HEADS = {"mühür", "fülüs"}
 
 _voicing_table = {"p": "b", "ç": "c", "t": "d", "k": "ğ", "g": "ğ"}
 PURGE_VIRTUAL_STEMS = {"felaked", "stoğ", "yahudiliğ"}
@@ -553,6 +574,47 @@ VIRTUAL_STEMS = [
     "tedariğ/X∂∭∴∸∿≄≆≤≽",
     # zıdd (zıt -> zıdd-ı, zıdd-ı-n-a, zıdd-ı-n-da, zıdd-ı-n-dan)
     "zıdd/X∀∫∲∶∼∽≂≕≣",
+    # Dual-voicing stems (TDK voiced inflections alongside Dil Derneği unvoiced inflections):
+    # teleskop -> teleskob-u, teleskob-a, teleskob-un, teleskob-um, teleskob-umuz, teleskob-unuz
+    "teleskob/X∁∬∳∷∾≁≃≕≣",
+    # radyoteleskop -> radyoteleskob-u, radyoteleskob-a, etc.
+    "radyoteleskob/X∁∬∳∷∾≁≃≕≣",
+    # stereoskop -> stereoskob-u, stereoskob-a, stereoskob-un, stereoskob-um, stereoskob-umuz
+    "stereoskob/X∁∬∳∷∾≁≃≕≣",
+    # bergamot -> bergamod-u, bergamod-a, bergamod-un, bergamod-um, bergamod-umuz
+    "bergamod/X∁∬∳∷∾≁≃≕≣",
+    # baç -> bac-ı, bac-a, bac-ın, bac-ım, bac-ımız, bac-ınız
+    "bac/X∀∫∲∶∼∽≂≕≣",
+    # Short nouns with stem voicing (TDK -bi, -ci, -di, -ği):
+    "dib/X∂∭∴∸∿≄≆≤≽",
+    "bab/X∀∫∲∶∼∽≂≕≣",
+    "rob/X∁∬∳∷∾≁≃≕≣",
+    "steb/X∂∭∴∸∿≄≆≤≽",
+    "trib/X∂∭∴∸∿≄≆≤≽",
+    "smac/X∀∫∲∶∼∽≂≕≣",
+    "strec/X∂∭∴∸∿≄≆≤≽",
+    "zac/X∀∫∲∶∼∽≂≕≣",
+    "drec/X∂∭∴∸∿≄≆≤≽",
+    "penc/X∂∭∴∸∿≄≆≤≽",
+    "trüğ/X∃∮∵∹≀≅≈≤≽",
+    "sulb/X∃∮∵∹≀≅≈≤≽",
+    "handikab/X∀∫∲∶∼∽≂≕≣",
+    "erkânıharb/X∂∭∴∸∿≄≆≤≽",
+    "sekteikalb/X∂∭∴∸∿≄≆≤≽",
+    "aşığ/X∀∫∲∶∼∽≂≕≣",
+    "ahmağ/X∀∫∲∶∼∽≂≕≣",
+    "çomağ/X∀∫∲∶∼∽≂≕≣",
+    "madımağ/X∀∫∲∶∼∽≂≕≣",
+    "tutamağ/X∀∫∲∶∼∽≂≕≣",
+    "başmağ/X∀∫∲∶∼∽≂≕≣",
+    # Consonant doubling stems (TDK -ddi, -kki, -bbi, -rri, -nni):
+    "müstahakk/X∀∫∲∶∼∽≂≕≣",
+    "müştakk/X∀∫∲∶∼∽≂≕≣",
+    "teletıbb/X∀∫∲∶∼∽≂≕≣",
+    "serhadd/X∂∭∴∸∿≄≆≤≽",
+    "medd/X∂∭∴∸∿≄≆≤≽",
+    "ehvenişerr/X∂∭∴∸∿≄≆≤≽",
+    "sinn/X∂∭∴∸∿≄≆≤≽",
 ]
 
 EXTRA_AUTHORITY_HEADWORDS = [
@@ -1185,10 +1247,24 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             flags = HEAD_FLAG_OVERRIDES[head_lower]
         elif head_lower in PALATAL_L_HEADS:
             flags = PALATAL_L_FLAGS
-        elif head_lower in ("zehir", "emir"):
-            d3_flag = LONG_TO_UTF8.get("D3", "")
-            if d3_flag and d3_flag not in flags:
-                flags += d3_flag
+        
+        # Inject vowel drop flags (D1, D2, D3, D4)
+        if head_lower in VOWEL_DROP_D1_HEADS:
+            d_flag = LONG_TO_UTF8.get("D1", "")
+            if d_flag and d_flag not in flags:
+                flags += d_flag
+        elif head_lower in VOWEL_DROP_D2_HEADS:
+            d_flag = LONG_TO_UTF8.get("D2", "")
+            if d_flag and d_flag not in flags:
+                flags += d_flag
+        elif head_lower in VOWEL_DROP_D3_HEADS:
+            d_flag = LONG_TO_UTF8.get("D3", "")
+            if d_flag and d_flag not in flags:
+                flags += d_flag
+        elif head_lower in VOWEL_DROP_D4_HEADS:
+            d_flag = LONG_TO_UTF8.get("D4", "")
+            if d_flag and d_flag not in flags:
+                flags += d_flag
 
         # Loanwords ending in 'ing' must take front-vowel noun suffixes
         if head.lower().endswith("ing") and ("≑" in flags or not flags):
