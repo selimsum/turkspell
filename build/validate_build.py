@@ -203,6 +203,10 @@ def validate(dic_path='tr.dic', aff_path='tr.aff', verbose=True, run_tests=True)
 def check_regression_tests(errors):
     test_script = os.path.join(BASE_DIR, "tests", "test_morphology.py")
     if os.path.exists(test_script):
+        import shutil
+        if shutil.which("hunspell") is None:
+            print("  morphological regression tests: SKIPPED (hunspell binary not found in PATH)")
+            return
         import subprocess
         res = subprocess.run(
             [sys.executable, "-m", "unittest", "discover", "tests"],
