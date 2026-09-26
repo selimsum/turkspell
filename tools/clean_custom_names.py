@@ -419,6 +419,52 @@ ATTR_OVERRIDES = {
     "Şok": ["NoVoicing"],
 }
 
+# ---------------------------------------------------------------------------
+# 6. CONTINENTS & MAJOR REGIONS
+# ---------------------------------------------------------------------------
+CONTINENTS_AND_REGIONS = [
+    "Avrupa", "Asya", "Afrika", "Antarktika", "Avustralya", "Avrasya", "Okyanusya",
+    "Anadolu", "Trakya", "Balkanlar", "Ortadoğu", "Orta Doğu", "Kafkaslar", "İskandinavya",
+    "Kuzey Amerika", "Güney Amerika", "Orta Asya", "Uzak Doğu", "Ön Asya"
+]
+
+# ---------------------------------------------------------------------------
+# 7. GEOGRAPHIC FEATURES (Seas, Oceans, Rivers, Mountains, Straits)
+# ---------------------------------------------------------------------------
+GEOGRAPHIC_FEATURES = [
+    "Akdeniz", "Karadeniz", "Ege", "Ege Denizi", "Marmara", "Marmara Denizi",
+    "Baltık", "Baltık Denizi", "Hazar", "Hazar Denizi", "Kızıldeniz", "Boğaziçi",
+    "Çanakkale Boğazı", "İstanbul Boğazı", "Cebelitarık", "Süveyş", "Panama",
+    "Fırat", "Dicle", "Kızılırmak", "Yeşilırmak", "Meriç", "Sakarya", "Tuna", "Nil",
+    "Amazon", "Ganj", "Volga", "Ağrı Dağı", "Erciyes", "Uludağ", "Toroslar", "Alpler", "Everest"
+]
+
+# ---------------------------------------------------------------------------
+# 8. DAYS OF THE WEEK
+# ---------------------------------------------------------------------------
+DAYS_OF_WEEK = [
+    "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"
+]
+
+# ---------------------------------------------------------------------------
+# 9. POPULAR TURKISH GIVEN NAMES (Curated top NVİ/TÜİK names)
+# ---------------------------------------------------------------------------
+POPULAR_FIRST_NAMES = [
+    "Ahmet", "Mehmet", "Mustafa", "Ali", "Ayşe", "Fatma", "Zeynep", "Elif", "Emine", "Hatice",
+    "Hasan", "Hüseyin", "İbrahim", "Yusuf", "Ömer", "Osman", "Murat", "Burak", "Emre", "Can",
+    "Merve", "Büşra", "Esra", "Seda", "Selin", "Ece", "Gizem", "Gamze", "Ceren", "Ebru",
+    "Derya", "Deniz", "Eren", "Kaan", "Kerem", "Arda", "Barış", "Berk", "Berkay", "Doruk",
+    "Alp", "Mert", "Oğuz", "Oğuzhan", "Onur", "Serkan", "Tolga", "Tugay", "Uğur",
+    "Volkan", "Yasin", "Kemal", "Cem", "Sinan", "Okan", "Tayfun", "Harun", "Halil", "İsmail",
+    "Süleyman", "Bekir", "Salih", "Tarık", "Fatih", "Selim", "Gökhan", "Hakan", "Erhan", "Serdar",
+    "Bülent", "Levent", "Metin", "Çetin", "Ramazan", "Kadir", "Enes", "Furkan", "Yunus", "Ercan",
+    "Orhan", "Recep", "Şaban", "Lokman", "Hamza", "Bilal", "Yakup", "İlyas", "İshak", "Davut",
+    "Musa", "İsa", "Yahya"
+]
+
+TDK_PATH = BASE_DIR / "raw_data" / "tdk_words.txt"
+DD_PATH = BASE_DIR / "raw_data" / "dil_dernegi_words.txt"
+
 # Explicit blacklist of noisy strings to guarantee they never enter
 EXPLICIT_BLACKLIST = {
     "COCUKLARI", "COCUKLAR", "Cagatay", "Goya", "Orban", "Lele", "Sylvia",
@@ -438,6 +484,22 @@ def build_curated_names():
     all_names.update(WORLD_CITIES)
     all_names.update(GLOBAL_BRANDS)
     all_names.update(TURKISH_BRANDS)
+    all_names.update(CONTINENTS_AND_REGIONS)
+    all_names.update(GEOGRAPHIC_FEATURES)
+    all_names.update(DAYS_OF_WEEK)
+    all_names.update(POPULAR_FIRST_NAMES)
+
+    # Ingest all authoritative capitalized proper nouns from TDK and Dil Derneği source wordlists
+    for src_path in (TDK_PATH, DD_PATH):
+        if src_path.exists():
+            with open(src_path, encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    w = line.split("/")[0].strip()
+                    if w and w[0].isupper() and w not in EXPLICIT_BLACKLIST:
+                        all_names.add(w)
 
     # Filter out blacklisted or empty
     cleaned_entries = []
@@ -463,7 +525,7 @@ def build_curated_names():
 
 def main():
     entries = build_curated_names()
-    print(f"Generated {len(entries)} curated proper nouns (countries, cities, popular brands).")
+    print(f"Generated {len(entries)} curated proper nouns (countries, cities, popular brands, continents, authorities).")
 
     # Verify no blacklisted items present
     lemmas = {e["lemma"] for e in entries}
@@ -481,6 +543,13 @@ def main():
     assert "Arçelik" in lemmas
     assert "Trendyol" in lemmas
     assert "BİM" in lemmas
+    assert "Avrupa" in lemmas
+    assert "Akdeniz" in lemmas
+    assert "Alman" in lemmas
+    assert "Türkçe" in lemmas
+    assert "İslam" in lemmas
+    assert "Ahmet" in lemmas
+    assert "Pazartesi" in lemmas
 
     # Ensure backup exists
     if not BACKUP_PATH.exists() and NAMES_PATH.exists():

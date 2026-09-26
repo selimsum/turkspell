@@ -1371,9 +1371,15 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 seen_heads.add((a, ""))
                 added_abbrevs += 1
             
+    lower_to_flags = {}
+    for h, fl in parsed_lines:
+        if h.islower():
+            lower_to_flags[h] = fl
+
     added_names = 0
     for n in custom_names_orig:
         if (n, "") not in seen_heads and ((n.lower(), "") not in seen_heads or (n and (n[0].isupper() or any(c.isupper() for c in n)))):
+            base_fl = lower_to_flags.get(n.lower(), "")
             # Assign harmonic proper noun apostrophe inflection flags for capitalized proper names
             if n.lower() in HEAD_FLAG_OVERRIDES:
                 entry_n = f"{n}/{HEAD_FLAG_OVERRIDES[n.lower()]}"
@@ -1393,9 +1399,10 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                     proper_flags = remap_flag_string("CK cl L2 pUN pUL pUR pUY pUA pUI pUP pUC".replace(" ", ""))
                 else:
                     proper_flags = ""
-                entry_n = f"{n}/{proper_flags}" if proper_flags else n
+                combined_fl = "".join(sorted(set(base_fl + proper_flags)))
+                entry_n = f"{n}/{combined_fl}" if combined_fl else n
             else:
-                entry_n = n
+                entry_n = f"{n}/{base_fl}" if base_fl else n
             clean_entries.append(entry_n)
             seen_heads.add((n, ""))
             added_names += 1
