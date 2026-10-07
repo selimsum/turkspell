@@ -259,7 +259,6 @@ def main():
             metadata_file = candidate_meta
             with open(metadata_file, "w", encoding="utf-8") as mf:
                 json.dump({
-                    "categories": ["language-support"],
                     "version": {
                         "license": "MIT"
                     }
