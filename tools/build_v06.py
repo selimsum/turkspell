@@ -265,7 +265,31 @@ EXTRA_REP_RULES = [
     "REP aldatıyo aldatıyor",
     "REP yanıltıyo yanıltıyor",
     "REP oynıyo oynuyor",
-    "REP yapartken yaparken"
+    "REP yapartken yaparken",
+    # Targeted benchmark & keyboard typo fixes
+    "REP almakya almakta",
+    "REP akvaryumbu akvaryumcu",
+    "REP aranöışsa aranmışsa",
+    "REP basöışlardır basmışlardır",
+    "REP acıyorshn acıyorsun",
+    "REP tersyüzün tersyüzüne",
+    "REP cirakligi çıraklığı",
+    "REP cuvalliyorsun çuvallıyorsun",
+    "REP adanalilik adanalılık",
+    "REP fedakarcasina fedakârcasına",
+    "REP arastirmalarimla araştırmalarımla",
+    "REP beyinucgeni beyinüçgeni",
+    "REP firdolayi fırdolayı",
+    "REP cagatayca çağatayca",
+    "REP dovulgen dövülgen",
+    "REP gunesli güneşli",
+    "REP bagirma bağırma",
+    "REP cevablagabilme cevaplayabilme",
+    "REP döküman doküman",
+    "REP labaratuar laboratuvar",
+    "REP ligi lığı",
+    "REP lilik lılık",
+    "REP likler lıklar"
 ]
 
 MANDATORY_HATTED_WORDS = {
