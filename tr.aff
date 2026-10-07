@@ -40,7 +40,7 @@ MAXDIFF 5
 MAXNGRAMSUGS 8
 
 
-REP 1650
+REP 1669
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -412,6 +412,41 @@ REP labaratuar laboratuvar
 REP ligi lığı
 REP lilik lılık
 REP likler lıklar
+REP resmi resmî
+REP milli millî
+REP dini dinî
+REP askeri askerî
+REP tarihi tarihî
+REP ahlaki ahlâkî
+REP dahili dâhilî
+REP ilmi ilmî
+REP edebi edebî
+REP ebedi ebedî
+REP insani insanî
+REP ruhi ruhî
+REP siyasi siyasî
+REP hukuki hukukî
+REP iktisadi iktisadî
+REP felsefi felsefî
+REP zihni zihnî
+REP hayali hayalî
+REP manevi manevî
+REP maddi maddî
+REP harbi harbî
+REP kısmi kısmî
+REP şahsi şahsî
+REP vicdani vicdanî
+REP dahiliye dâhiliye
+REP dahil dâhil
+REP bekar bekâr
+REP kagıt kâğıt
+REP tezgah tezgâh
+REP sukun sükûn
+REP sukut sükût
+REP batini bâtıni
+REP teleskopu teleskobu
+REP bergamotu bergamodu
+REP baçı bacı
 REP yanliz yalnız
 REP yanlız yalnız
 REP deil değil
@@ -921,7 +956,6 @@ REP adet âdet
 REP alem âlem
 REP dahi dâhi
 REP sura şûra
-REP tezgah tezgâh
 REP alim âlim
 REP hakimevi hâkimevi
 REP acizleşebilme âcizleşebilme
@@ -956,17 +990,13 @@ REP cebri cebrî
 REP cevizi cevizî
 REP cinsi cinsî
 REP dahilik dâhilik
-REP dahiliye dâhiliye
 REP dahiliyeci dâhiliyeci
 REP dahiyane dâhiyane
 REP derhal derhâl
-REP dini dinî
-REP ebedi ebedî
 REP ebedileşmek ebedîleşmek
 REP ebedileştirme ebedîleştirme
 REP ebedileştirmek ebedîleştirmek
 REP ebedilik ebedîlik
-REP edebi edebî
 REP ehli ehlî
 REP ehlileşmek ehlîleşmek
 REP ehlileştirilme ehlîleştirilme
@@ -1005,7 +1035,6 @@ REP ahdi ahdî
 REP alemşümul âlemşümul
 REP alimane âlimane
 REP arzuhal arzuhâl
-REP bekar bekâr
 REP bekarlık bekârlık
 REP berveçhe berveçh-i
 REP cehennemi cehennemî
@@ -1013,7 +1042,6 @@ REP celalilik celâlilik
 REP cezri cezrî
 REP dahice dâhice
 REP dahilen dâhilen
-REP dahili dâhilî
 REP daimi daimî
 REP daimilik daimîlik
 REP ebedileşme ebedîleşme
@@ -1033,7 +1061,6 @@ REP halleşme hâlleşme
 REP halleşmek hâlleşmek
 REP halsizleşmek hâlsizleşmek
 REP halsizlik hâlsizlik
-REP harbi harbî
 REP harici haricî
 REP hasbihal hasbihâl
 REP hayasız hayâsız
@@ -1105,7 +1132,6 @@ REP yarenlik yârenlik
 REP zahiri zahirî
 REP zecri zecrî
 REP zifiri zifirî
-REP zihni zihnî
 REP Babagan Babagân
 REP Bala Balâ
 REP Batıni Bâtıni
@@ -1146,7 +1172,6 @@ REP agahlık agâhlık
 REP ameli amelî
 REP amelilik amelîlik
 REP arşıala arşıâlâ
-REP askeri askerî
 REP askerileştirilmek askerîleştirilmek
 REP askerileştirme askerîleştirme
 REP avdeti avdetî
@@ -1194,7 +1219,6 @@ REP devrialem devriâlem
 REP devri devrî
 REP diğerkam diğerkâm
 REP diğerkamlık diğerkâmlık
-REP dahil dâhil
 REP dügah dügâh
 REP dükkancı dükkâncı
 REP dükkancılık dükkâncılık
@@ -1251,7 +1275,6 @@ REP halaskarlık halaskârlık
 REP hamurkar hamurkâr
 REP hamurkarlık hamurkârlık
 REP harekat harekât
-REP hayali hayalî
 REP hayalileşme hayalîleşme
 REP hayalileşmek hayalîleşmek
 REP hayalilik hayalîlik
@@ -1313,7 +1336,6 @@ REP ihtiyatkar ihtiyatkâr
 REP ihtiyatkarlık ihtiyatkârlık
 REP ikametgahsız ikametgâhsız
 REP illi illî
-REP ilmi ilmî
 REP ilmilik ilmîlik
 REP iltifatkar iltifatkâr
 REP imkansızca imkânsızca
@@ -1445,7 +1467,6 @@ REP mezhebi mezhebî
 REP mezkur mezkûr
 REP meşkuk meşkûk
 REP mikap mikâp
-REP milli millî
 REP millici millîci
 REP millileşme millîleşme
 REP millileşmek millîleşmek
@@ -1518,7 +1539,6 @@ REP rekaket rekâket
 REP rekat rekât
 REP remzi remzî
 REP rengarenk rengârenk
-REP resmi resmî
 REP resmileşmek resmîleşmek
 REP resmileştirebilme resmîleştirebilme
 REP resmileştirebilmek resmîleştirebilmek
@@ -1586,7 +1606,6 @@ REP talepkarlık talepkârlık
 REP talimgah talimgâh
 REP tamahkar tamahkâr
 REP tamahkarlık tamahkârlık
-REP tarihi tarihî
 REP tarihilik tarihîlik
 REP tasviri tasvirî
 REP tatminkar tatminkâr
