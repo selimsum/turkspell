@@ -111,6 +111,27 @@ class TestSuggestionRanking(unittest.TestCase):
         ]
         self.assertPairsSuggested(test_pairs)
 
+    def test_compound_and_separate_suggestions(self):
+        """Verifies that commonly conjoined phrases are split and suggested at Top-1."""
+        test_pairs = [
+            ("farketti", "fark etti", 1),
+            ("terketti", "terk etti", 1),
+            ("ayırdetmek", "ayırt etmek", 1),
+            ("yanyana", "yan yana", 1),
+            ("artarda", "art arda", 1),
+            ("dizdize", "diz dize", 1),
+            ("haftasonu", "hafta sonu", 1),
+            ("haftaiçi", "hafta içi", 1),
+            ("herşey", "her şey", 1),
+            ("birşey", "bir şey", 1),
+            ("hiçbirşey", "hiçbir şey", 1),
+            ("pekçok", "pek çok", 1),
+            ("tabiki", "tabii ki", 1),
+            ("iyiki", "iyi ki", 1),
+            ("hoşçakal", "hoşça kal", 1),
+        ]
+        self.assertPairsSuggested(test_pairs)
+
     def test_mrr_benchmark(self):
         """Evaluates Mean Reciprocal Rank (MRR) across a comprehensive 25-word evaluation battery."""
         battery = [
