@@ -1,13 +1,20 @@
-# Turkspell: Yüksek Performanslı Türkçe Hunspell Sözlüğü
+# Turkspell: Yüksek Performanslı Türkçe Hunspell Sözlüğü (TDK 2026 Sürümü)
 
 [![Sürüm](https://img.shields.io/github/v/release/selimsum/turkspell?label=s%C3%BCr%C3%BCm)](https://github.com/selimsum/turkspell/releases)
 [![Lisans](https://img.shields.io/badge/lisans-MIT-green.svg)](LICENSE)
 [![Uyumluluk](https://img.shields.io/badge/hunspell-1.7%2B-orange.svg)](https://github.com/hunspell/hunspell)
-[![Kalite Güvencesi](https://img.shields.io/badge/kalite%20kapısı-34%2F34%20geçti-success.svg)](tests/)
+[![Mozilla Add-on](https://img.shields.io/badge/Mozilla%20Add--on-TDK%202026-blue.svg)](https://addons.mozilla.org/tr/firefox/addon/turkspell-tdk/)
 
-[🇹🇷 Türkçe](#turkspell-yüksek-performanslı-türkçe-hunspell-sözlüğü) | [🇬🇧 English](#turkspell-high-performance-turkish-hunspell-dictionary)
+> [!IMPORTANT]
+> **Bu branch (`tdk`) Turkspell'in yalnızca Türk Dil Kurumu (TDK 2026) resmî kurallarını ve söz varlığını esas alan sürümüdür.**
+> - **Mozilla Eklenti Adı**: `Turkspell - Türkçe Yazım Denetimi (TDK 2026)`
+> - **Gecko ID**: `turkspell-tdk@mozilla.org.tr`
+> - Dil Derneği'ne özgü sözcükler elenmiş; TDK'nin düzeltme işaretleri (*dâhil*, *bekâr*, *rüzgâr*) ve sıfat yapan nispet 'î' kuralları (*resmî*, *millî*, *dinî*, *askerî*) tavizsiz uygulanmıştır.
+> - Hem TDK hem Dil Derneği yazımlarını geçerli sayan **çift standartlı (Universal) sürüm**, [`master`](https://github.com/selimsum/turkspell/tree/master) branch'inde ayrı bir eklenti (`turkspell@mozilla.org.tr`) olarak yönetilmektedir.
 
-**Turkspell**, modern Türkçe için geliştirilmiş, doğruluk oranı yüksek, dilbilimsel otoriteye dayalı, hafif bir Hunspell yazım denetim sözlüğüdür (`tr.aff` ve `tr.dic`). **Dinamik Zincirleme Bayrak (Dynamic Chained Flags)** mimarisi üzerine inşa edilmiş olup, tüm Türkçe yazım denetimi kıyaslamalarında (Mukayese, Turkspell Official, Circumflex) **%100 Precision (sıfır yanlış alarm)** ve **%99,99'a varan F1 doğruluğu** ile en üst sırada yer alır.
+[🇹🇷 Türkçe](#turkspell-yüksek-performanslı-türkçe-hunspell-sözlüğü-tdk-2026-sürümü) | [🇬🇧 English](#turkspell-high-performance-turkish-hunspell-dictionary)
+
+**Turkspell (TDK 2026)**, modern Türkçe için geliştirilmiş, doğruluk oranı yüksek, resmi TDK kılavuzunu referans alan hafif bir Hunspell yazım denetim sözlüğüdür (`tr.aff` ve `tr.dic`). **Dinamik Zincirleme Bayrak (Dynamic Chained Flags)** mimarisi üzerine inşa edilmiş olup, akademik metinler, resmî yazışmalar ve yayıncılar için en katı TDK standartlarını sağlar.
 
 ---
 

@@ -45,8 +45,22 @@ PROPER_NOUN_FLAGS_3 = [
 #   LCI = front-only -cI   (kontrolcü, not kontrolcu)
 INVERSE_DERIV_FLAGS = ["LF", "LSZ", "LFK", "LCI"]
 
+# Stage 2 secondary verb flags (copulas and participle case affixes)
+# Kept OUT of ALL_FLAGS and assigned codepoints AFTER inverse deriv flags
+# so that all existing noun, proper noun, and primary verb flags retain
+# their exact codepoints between builds.
+STAGE2_VERB_FLAGS = [
+    "cA", "cE", "cU", "cI",
+    "uE",
+    "vA", "vE",
+    "pA", "pE",
+    "qA", "qE",
+    "sA", "sE",
+]
+
 # Map each flag to a unique Mathematical Operator codepoint starting at \u2200 (8704)
-# 2-char flags come first, then 3-char flags, then the inverse-harmony deriv flags.
+# 2-char flags come first, then 3-char flags, then inverse-harmony deriv flags,
+# and finally stage-2 verb secondary flags.
 LONG_TO_UTF8 = {}
 for idx, flag in enumerate(ALL_FLAGS):
     LONG_TO_UTF8[flag] = chr(8704 + idx)
@@ -54,6 +68,9 @@ for idx, flag in enumerate(PROPER_NOUN_FLAGS_3):
     LONG_TO_UTF8[flag] = chr(8704 + len(ALL_FLAGS) + idx)
 for idx, flag in enumerate(INVERSE_DERIV_FLAGS):
     LONG_TO_UTF8[flag] = chr(8704 + len(ALL_FLAGS) + len(PROPER_NOUN_FLAGS_3) + idx)
+_offset_s2 = len(ALL_FLAGS) + len(PROPER_NOUN_FLAGS_3) + len(INVERSE_DERIV_FLAGS)
+for idx, flag in enumerate(STAGE2_VERB_FLAGS):
+    LONG_TO_UTF8[flag] = chr(8704 + _offset_s2 + idx)
 
 # Override NE to ASCII 'X' to guarantee correct NEEDAFFIX parsing by Hunspell
 LONG_TO_UTF8["NE"] = "X"
