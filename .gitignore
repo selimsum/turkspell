@@ -15,11 +15,13 @@ __pycache__/
 !lexicons/custom_abbreviations.json
 !lexicons/custom_names.json
 !firefox-addon/manifest.json
+!firefox-addon-tdk/manifest.json
 !update.json
 !amo-metadata.json
 
 # Generated build outputs (kept out of source control)
 turkspell-addon.xpi
+turkspell-tdk-addon.xpi
 tr_test.*
 
 # Temporary/Experimental build outputs
