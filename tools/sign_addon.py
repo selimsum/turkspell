@@ -172,7 +172,7 @@ def run_web_ext_lint(source_dir: str) -> subprocess.CompletedProcess:
     shell = os.name == "nt"
     return subprocess.run(cmd, capture_output=True, text=True, shell=shell)
 
-def run_web_ext_sign(source_dir: str, issuer: str, secret: str, artifacts_dir: str, channel: str = "listed") -> subprocess.CompletedProcess:
+def run_web_ext_sign(source_dir: str, issuer: str, secret: str, artifacts_dir: str, channel: str = "listed", metadata_file: str = None) -> subprocess.CompletedProcess:
     """Run `npx web-ext sign` with generous approval and request timeouts."""
     cmd = [
         "npx", "web-ext", "sign",
@@ -184,6 +184,8 @@ def run_web_ext_sign(source_dir: str, issuer: str, secret: str, artifacts_dir: s
         "--approval-timeout", "600000",
         "--timeout", "600000",
     ]
+    if metadata_file and os.path.exists(metadata_file):
+        cmd.extend(["--amo-metadata", metadata_file])
     print(f"Running: npx web-ext sign --source-dir {source_dir} --channel {channel} --approval-timeout 600000...")
     # On Windows, npx is a cmd script
     shell = os.name == "nt"
@@ -197,6 +199,7 @@ def main():
     parser.add_argument("--source-dir", default="./firefox-addon", help="Source directory")
     parser.add_argument("--output", default="./turkspell-addon.xpi", help="Output signed .xpi destination path")
     parser.add_argument("--artifacts-dir", default="./signed_dist", help="web-ext artifacts directory")
+    parser.add_argument("--amo-metadata", help="Path to AMO metadata JSON file")
     args = parser.parse_args()
 
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -246,9 +249,24 @@ def main():
     else:
         print("Extension passed local web-ext lint validation.")
 
-    # 3. Run web-ext sign
+    # 3. Resolve AMO metadata (license & category requirements for listed releases)
+    metadata_file = args.amo_metadata
+    if not metadata_file:
+        candidate_meta = os.path.normpath(os.path.join(root_dir, "amo-metadata.json"))
+        if os.path.exists(candidate_meta):
+            metadata_file = candidate_meta
+        else:
+            metadata_file = candidate_meta
+            with open(metadata_file, "w", encoding="utf-8") as mf:
+                json.dump({
+                    "categories": ["language-support"],
+                    "version": {
+                        "license": "MIT"
+                    }
+                }, mf, indent=2)
+
     os.makedirs(artifacts_dir, exist_ok=True)
-    sign_res = run_web_ext_sign(source_dir, issuer, secret, artifacts_dir, channel=args.channel)
+    sign_res = run_web_ext_sign(source_dir, issuer, secret, artifacts_dir, channel=args.channel, metadata_file=metadata_file)
 
     print("--- web-ext stdout ---")
     print(sign_res.stdout)
@@ -269,10 +287,16 @@ def main():
         print(f"Successfully signed .xpi with web-ext: {output_path}")
         sys.exit(0)
 
-    # Fail fast if AMO rejected the upload due to validation failure
+    # Fail fast if AMO rejected the upload due to validation or bad request submission failure
     combined_output = (sign_res.stdout or "") + "\n" + (sign_res.stderr or "")
-    if "Validation failed" in combined_output or "WebExtError: Validation failed" in combined_output or "JSON_INVALID" in combined_output:
-        print("\nError: Extension validation failed on AMO. See validation error messages above.", file=sys.stderr)
+    if any(keyword in combined_output for keyword in [
+        "Validation failed",
+        "WebExtError: Validation failed",
+        "JSON_INVALID",
+        "Submission failed (2): Bad Request",
+        "This field, or custom_license, is required",
+    ]):
+        print("\nError: Extension submission/validation failed on AMO. See validation error messages above.", file=sys.stderr)
         sys.exit(1)
 
     # 4. Resilience Fallback:
