@@ -16,6 +16,7 @@ __pycache__/
 !lexicons/custom_names.json
 !firefox-addon/manifest.json
 !update.json
+!amo-metadata.json
 
 # Generated build outputs (kept out of source control)
 turkspell-addon.xpi
