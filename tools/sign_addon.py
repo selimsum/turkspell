@@ -191,50 +191,18 @@ def run_web_ext_sign(source_dir: str, issuer: str, secret: str, artifacts_dir: s
     shell = os.name == "nt"
     return subprocess.run(cmd, capture_output=True, text=True, shell=shell)
 
-def main():
-    parser = argparse.ArgumentParser(description="Sign Firefox Add-on with Mozilla AMO and automatic retry resilience")
-    parser.add_argument("--version", help="Extension version (default: from manifest.json)")
-    parser.add_argument("--addon-id", help="Gecko Addon ID (default: from manifest.json)")
-    parser.add_argument("--channel", default=os.getenv("AMO_CHANNEL", "listed"), choices=["listed", "unlisted"], help="Release channel on AMO (default: listed)")
-    parser.add_argument("--source-dir", default="./firefox-addon", help="Source directory")
-    parser.add_argument("--output", default="./turkspell-addon.xpi", help="Output signed .xpi destination path")
-    parser.add_argument("--artifacts-dir", default="./signed_dist", help="web-ext artifacts directory")
-    parser.add_argument("--amo-metadata", help="Path to AMO metadata JSON file")
-    args = parser.parse_args()
-
-    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    source_dir = os.path.normpath(os.path.join(root_dir, args.source_dir))
-    output_path = os.path.normpath(os.path.join(root_dir, args.output))
-    artifacts_dir = os.path.normpath(os.path.join(root_dir, args.artifacts_dir))
-
-    # Read credentials
-    issuer = os.getenv("AMO_KEY") or os.getenv("AMO_JWT_ISSUER")
-    secret = os.getenv("AMO_SECRET") or os.getenv("AMO_JWT_SECRET")
-
-    if not issuer or not secret:
-        print("AMO credentials not configured (AMO_KEY/AMO_SECRET missing).")
-        print("Proceeding with unsigned .xpi package.")
-        sys.exit(0)
-
-    # Determine Addon ID & Version from manifest.json if not provided
-    manifest_path = os.path.join(source_dir, "manifest.json")
-    if not os.path.exists(manifest_path):
-        print(f"Error: manifest.json not found at {manifest_path}", file=sys.stderr)
-        sys.exit(1)
-
-    with open(manifest_path, "r", encoding="utf-8") as f:
-        manifest = json.load(f)
-
-    addon_id = args.addon_id or manifest.get("browser_specific_settings", {}).get("gecko", {}).get("id") or "turkspell@mozilla.org.tr"
-    version = args.version or manifest.get("version", "0.1.0")
-
-    print(f"=== AMO Signing Pipeline for {addon_id} v{version} (channel: {args.channel}) ===")
+def sign_addon_profile(source_dir: str, output_path: str, addon_id: str, version: str, channel: str, issuer: str, secret: str, root_dir: str, artifacts_dir: str, metadata_file: str = None) -> bool:
+    print(f"\n========================================================")
+    print(f"=== AMO Signing Pipeline for {addon_id} v{version} (channel: {channel}) ===")
+    print(f"Source dir: {source_dir}")
+    print(f"Output path: {output_path}")
+    print(f"========================================================")
 
     # 1. Pre-check: Check if this version is ALREADY approved and signed on AMO
     print(f"Pre-checking if v{version} is already signed and available on AMO...")
     if try_fetch_signed_xpi(addon_id, version, issuer, secret, output_path):
         print(f"Success! Version {version} was already signed on AMO. Downloaded signed .xpi.")
-        sys.exit(0)
+        return True
 
     # 2. Pre-validate extension locally using web-ext lint
     lint_res = run_web_ext_lint(source_dir)
@@ -245,12 +213,11 @@ def main():
         if lint_res.stderr:
             print(lint_res.stderr, file=sys.stderr)
         print("Error: web-ext lint detected validation errors in the extension. Aborting before upload.", file=sys.stderr)
-        sys.exit(1)
+        return False
     else:
         print("Extension passed local web-ext lint validation.")
 
     # 3. Resolve AMO metadata (license & category requirements for listed releases)
-    metadata_file = args.amo_metadata
     if not metadata_file:
         candidate_meta = os.path.normpath(os.path.join(root_dir, "amo-metadata.json"))
         if os.path.exists(candidate_meta):
@@ -266,7 +233,7 @@ def main():
                 }, mf, indent=2)
 
     os.makedirs(artifacts_dir, exist_ok=True)
-    sign_res = run_web_ext_sign(source_dir, issuer, secret, artifacts_dir, channel=args.channel, metadata_file=metadata_file)
+    sign_res = run_web_ext_sign(source_dir, issuer, secret, artifacts_dir, channel=channel, metadata_file=metadata_file)
 
     print("--- web-ext stdout ---")
     print(sign_res.stdout)
@@ -285,7 +252,7 @@ def main():
         latest_file = max(signed_candidates, key=os.path.getmtime)
         shutil.copyfile(latest_file, output_path)
         print(f"Successfully signed .xpi with web-ext: {output_path}")
-        sys.exit(0)
+        return True
 
     # Fail fast if AMO rejected the upload due to validation or bad request submission failure
     combined_output = (sign_res.stdout or "") + "\n" + (sign_res.stderr or "")
@@ -296,14 +263,12 @@ def main():
         "Submission failed (2): Bad Request",
         "This field, or custom_license, is required",
     ]):
-        print("\nError: Extension submission/validation failed on AMO. See validation error messages above.", file=sys.stderr)
-        sys.exit(1)
+        print(f"\nError: Extension submission/validation failed on AMO for {addon_id}. See validation error messages above.", file=sys.stderr)
+        return False
 
     # 4. Resilience Fallback:
-    # If web-ext failed (e.g. 502 Bad Gateway during polling, timeout, or 409 Conflict),
-    # the addon may have been uploaded and is currently being processed or already approved!
     print(f"\nweb-ext sign exited with code {sign_res.returncode}.")
-    print("Initiating resilient status polling via Mozilla AMO API directly...")
+    print(f"Initiating resilient status polling via Mozilla AMO API directly for {addon_id}...")
 
     max_poll_seconds = 360  # 6 minutes
     poll_interval = 15
@@ -314,13 +279,90 @@ def main():
         print(f"Polling AMO API for signed .xpi (Attempt {attempt}, elapsed {int(time.time() - start_time)}s)...")
         if try_fetch_signed_xpi(addon_id, version, issuer, secret, output_path):
             print(f"Resilient recovery succeeded! Downloaded signed .xpi for v{version}.")
-            sys.exit(0)
+            return True
         
         attempt += 1
         time.sleep(poll_interval)
 
-    print(f"Error: Unable to obtain signed .xpi for v{version} after {max_poll_seconds} seconds.", file=sys.stderr)
-    sys.exit(1)
+    print(f"Error: Unable to obtain signed .xpi for {addon_id} v{version} after {max_poll_seconds} seconds.", file=sys.stderr)
+    return False
+
+def main():
+    parser = argparse.ArgumentParser(description="Sign Firefox Add-on with Mozilla AMO and automatic retry resilience")
+    parser.add_argument("--profile", choices=["universal", "tdk", "all"], default=None, help="Profile to sign: 'universal', 'tdk', or 'all'")
+    parser.add_argument("--version", help="Extension version (default: from manifest.json)")
+    parser.add_argument("--addon-id", help="Gecko Addon ID (default: from manifest.json)")
+    parser.add_argument("--channel", default=os.getenv("AMO_CHANNEL", "listed"), choices=["listed", "unlisted"], help="Release channel on AMO (default: listed)")
+    parser.add_argument("--source-dir", default=None, help="Source directory")
+    parser.add_argument("--output", default=None, help="Output signed .xpi destination path")
+    parser.add_argument("--artifacts-dir", default="./signed_dist", help="web-ext artifacts directory")
+    parser.add_argument("--amo-metadata", help="Path to AMO metadata JSON file")
+    args = parser.parse_args()
+
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    artifacts_dir = os.path.normpath(os.path.join(root_dir, args.artifacts_dir))
+
+    # Read credentials
+    issuer = os.getenv("AMO_KEY") or os.getenv("AMO_JWT_ISSUER")
+    secret = os.getenv("AMO_SECRET") or os.getenv("AMO_JWT_SECRET")
+
+    if not issuer or not secret:
+        print("AMO credentials not configured (AMO_KEY/AMO_SECRET missing).")
+        print("Proceeding with unsigned .xpi package(s).")
+        sys.exit(0)
+
+    # Determine targets to sign
+    targets = []
+    if args.profile == "all":
+        targets = [
+            ("universal", "./firefox-addon", "./turkspell-addon.xpi"),
+            ("tdk", "./firefox-addon-tdk", "./turkspell-tdk-addon.xpi"),
+        ]
+    elif args.profile == "universal":
+        targets = [("universal", "./firefox-addon", "./turkspell-addon.xpi")]
+    elif args.profile == "tdk":
+        targets = [("tdk", "./firefox-addon-tdk", "./turkspell-tdk-addon.xpi")]
+    else:
+        s_dir = args.source_dir or "./firefox-addon"
+        o_path = args.output or "./turkspell-addon.xpi"
+        targets = [("custom", s_dir, o_path)]
+
+    overall_success = True
+    for prof_name, s_dir, o_path in targets:
+        full_source = os.path.normpath(os.path.join(root_dir, s_dir))
+        full_output = os.path.normpath(os.path.join(root_dir, o_path))
+
+        manifest_path = os.path.join(full_source, "manifest.json")
+        if not os.path.exists(manifest_path):
+            print(f"Error: manifest.json not found at {manifest_path}", file=sys.stderr)
+            overall_success = False
+            continue
+
+        with open(manifest_path, "r", encoding="utf-8") as f:
+            manifest = json.load(f)
+
+        addon_id = (args.addon_id if len(targets) == 1 else None) or manifest.get("browser_specific_settings", {}).get("gecko", {}).get("id") or "turkspell@mozilla.org.tr"
+        version = args.version or manifest.get("version", "0.1.0")
+
+        success = sign_addon_profile(
+            source_dir=full_source,
+            output_path=full_output,
+            addon_id=addon_id,
+            version=version,
+            channel=args.channel,
+            issuer=issuer,
+            secret=secret,
+            root_dir=root_dir,
+            artifacts_dir=artifacts_dir,
+            metadata_file=args.amo_metadata
+        )
+
+        if not success:
+            overall_success = False
+            print(f"Warning: Signing failed for profile '{prof_name}' ({addon_id}).", file=sys.stderr)
+
+    if not overall_success:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
