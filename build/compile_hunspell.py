@@ -498,6 +498,61 @@ def compile_dictionary():
             _corpus_attrs_map = json.load(_caf)
         print(f"Loaded {len(_corpus_attrs_map):,} corpus-attested stem attributes.")
 
+    # -----------------------------------------------------------------------
+    # TDK 2026 Dizin Official Morphological Attributes Extraction
+    # -----------------------------------------------------------------------
+    _tdk_dizin_path = os.path.join(_raw_dir, 'tdk_dizin_2026.json')
+    _tdk_morph_map = {}
+    if os.path.exists(_tdk_dizin_path):
+        print(f"Reading TDK 2026 official morphological attributes from {_tdk_dizin_path}...")
+        with open(_tdk_dizin_path, 'r', encoding='utf-8') as _tdf:
+            _dizin_data = json.load(_tdf)
+        for _entry in _dizin_data:
+            _m = _entry.get('m', '').strip()
+            _e = _entry.get('e', '').strip()
+            if not _m or not _e or ' ' in _m:
+                continue
+            _e_clean = _e.lstrip('-')
+            _mattrs = set()
+            
+            # Doubling: e.g. -ddi, -ffı, -bbi, -lli, -ssi, -mmi
+            if len(_e_clean) >= 3 and _e_clean[0] == _e_clean[1] and _e_clean[0] in 'bcdfghjklmnprstvyz':
+                _mattrs.add('Doubling')
+                
+            # LastVowelDrop: inner vowel drops (e.g. -kli, -hri, -kri, -czi)
+            if len(_e_clean) >= 3 and _e_clean[0] in 'bcdfghjklmnprsştvyz' and _e_clean[1] in 'bcdfghjklmnprsştvyz' and len(_m) >= 3:
+                _mattrs.add('LastVowelDrop')
+                
+            # Voicing:
+            if _e_clean.startswith(('der', 'diler', 'derler')):
+                _mattrs.add('Voicing')
+            if _m[-1] in 'pçtk' and _e_clean[0] in ('b', 'c', 'd', 'ğ'):
+                _mattrs.add('Voicing')
+                
+            # Aorist:
+            if _e_clean.startswith(('ar', 'er')):
+                _mattrs.add('Aorist_A')
+            elif _e_clean.startswith(('ır', 'ir', 'ur', 'ür')):
+                _mattrs.add('Aorist_I')
+                
+            # InverseHarmony: thin suffixes on back-vowel stems ending in l, t, f
+            _back_vowels = 'aıouâû'
+            _last_v = None
+            for _ch in reversed(_m):
+                if _ch.lower() in 'aeıioöuüâîû':
+                    _last_v = _ch.lower()
+                    break
+            if _last_v and _last_v in _back_vowels and _m[-1] in 'ltf' and 'Doubling' not in _mattrs:
+                if any(_fv in _e_clean for _fv in ('e', 'i', 'ö', 'ü')):
+                    _mattrs.add('InverseHarmony')
+                    
+            if _mattrs:
+                _m_key = _tlc(_m)
+                if _m_key not in _tdk_morph_map:
+                    _tdk_morph_map[_m_key] = set()
+                _tdk_morph_map[_m_key].update(_mattrs)
+        print(f"Loaded {len(_tdk_morph_map):,} stem morphological attributes directly from TDK 2026 dizin.")
+
     for _w in sorted(_authority_set):
         if _w.lower() in ENGLISH_WORDS or _w in _BAD_DD_VARIANTS or _w.lower() in FALSE_NEGATIVE_STEMS:
             continue
@@ -516,18 +571,29 @@ def compile_dictionary():
                                   'Numeral','Pronoun','PostPositive','Determiner','Duplicator'):
                     _pos = 'Noun'
                 
-                # ML corpus phonology attributes injection removed
+                # Merge TDK attributes if present
+                _w_tdk_attrs = _tdk_morph_map.get(_tlc(_w), set())
+                _attrs = list(set(_attrs) | _w_tdk_attrs)
                 lexicon.append({'lemma': _w, 'pos': _pos, 'attributes': _attrs})
                 _attrs_transferred += 1
             else:
                 _is_verb = _w.endswith(('mak', 'mek')) and _w not in _noun_ends_excl
-                _attrs = []
-                # ML corpus phonology attributes injection removed
+                _attrs = list(_tdk_morph_map.get(_tlc(_w), []))
                 lexicon.append({'lemma': _w, 'pos': 'Verb' if _is_verb else 'Noun', 'attributes': _attrs})
             _tdk_added += 1
     print(f"Added {_tdk_added:,} TDK|DD-only entries ({_attrs_transferred} with transferred Zemberek attributes).")
 
-    # Existing Zemberek/Custom entries ML corpus phonology attributes injection removed
+    # Enhance existing Zemberek/custom entries with official TDK 2026 morphological attributes
+    _tdk_enhanced_count = 0
+    for _it in lexicon:
+        _l_key = _tlc(_it.get('lemma', ''))
+        if _l_key in _tdk_morph_map:
+            _cur_attrs = set(_it.get('attributes', []))
+            _tdk_attrs_to_add = _tdk_morph_map[_l_key] - _cur_attrs
+            if _tdk_attrs_to_add:
+                _it['attributes'] = list(_cur_attrs | _tdk_attrs_to_add)
+                _tdk_enhanced_count += 1
+    print(f"Enhanced {_tdk_enhanced_count:,} existing lexicon entries with official TDK 2026 attributes.")
 
     # Zemberek also lists capitalized (name) variants of some words — e.g.
     # "Şecaat", "Şefaat", "Fesahat", "Rikkat" — as separate Noun entries.
