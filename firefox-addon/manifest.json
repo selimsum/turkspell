@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Turkspell - Türkçe Yazım Denetimi (TDK 2026)",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Sadece Türk Dil Kurumu (TDK 2026) yazım kurallarını ve güncel sözlüğünü referans alan resmî Türkçe yazım denetimi eklentisi. Düzeltme işaretleri ve nispet 'î' kurallarını katı bir şekilde uygular.",
   "author": "Selim Şumlu",
   "homepage_url": "https://github.com/selimsum/turkspell/tree/tdk",

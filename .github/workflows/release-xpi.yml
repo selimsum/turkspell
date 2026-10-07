@@ -10,6 +10,9 @@ on:
       - 'tr.aff'
       - 'tr.dic'
       - 'firefox-addon/manifest.json'
+      - 'amo-metadata.json'
+      - 'tools/sign_addon.py'
+      - '.github/workflows/release-xpi.yml'
   workflow_dispatch:
     inputs:
       bump_type:
