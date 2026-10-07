@@ -205,6 +205,13 @@ def check_regression_tests(errors):
     if os.path.exists(test_script):
         import shutil
         if shutil.which("hunspell") is None:
+            winget_pkg_dir = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages")
+            for root, dirs, files in os.walk(winget_pkg_dir):
+                if "hunspell.exe" in files:
+                    if root not in os.environ.get("PATH", ""):
+                        os.environ["PATH"] = root + os.pathsep + os.environ["PATH"]
+                    break
+        if shutil.which("hunspell") is None:
             print("  morphological regression tests: SKIPPED (hunspell binary not found in PATH)")
             return
         import subprocess

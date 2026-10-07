@@ -2222,10 +2222,10 @@ def generate_grammar():
     content += gen_deriv_las_tir() + "\n"
     content += gen_deriv_len() + "\n"
 
-    # --- Verb flags (patched from v1) ---
-    print("Generating verb paradigm flags (VB, VR, VF, VG, VA, VS, VE, VH, VK, VL, VM, VN, VY)...")
-    content += "\n# VERB PARADIGM FLAGS\n"
-    content += _generate_verb_flags_from_v1() + "\n"
+    # --- Verb flags (2-macro-stage factorized) ---
+    print("Generating factorized verb paradigm flags...")
+    content += "\n# FACTORIZED VERB PARADIGM FLAGS\n"
+    content += generate_factorized_verb_rules() + "\n"
 
     # --- Prefix flag ---
     print("Generating prefix flag (PX)...")
@@ -2612,738 +2612,1185 @@ def get_verbal_noun_chain(stem_flag: str) -> str:
         chain = chain.replace(deriv, "")
     return chain
 
-def _generate_verb_flags_from_v1() -> str:
-    """
-    Extract verb sections from data/tr_reference.aff and remap their flags
-    from the old UTF-8 block positions to the current LONG_TO_UTF8 map.
-    """
-    import os
-    _build_dir = os.path.dirname(os.path.abspath(__file__))
-    _root_dir = os.path.dirname(_build_dir)
+# ---------------------------------------------------------------------------
+# FACTORIZED VERB AFFIX GENERATOR (2-MACRO-STAGE ARCHITECTURE)
+# ---------------------------------------------------------------------------
 
-    from utf8_flag_mapping import LONG_TO_UTF8
+def make_verb_flag_block(flag: str, rules: list[str]) -> str:
+    from collections import OrderedDict
+    seen = OrderedDict()
+    for r in rules:
+        seen[r] = None
+    u_rules = list(seen.keys())
+    return f"SFX {flag} Y {len(u_rules)}\n" + "\n".join(u_rules)
 
-    # Reconstruct the OLD flag mapping (before KC was added)
-    ALL_FLAGS_OLD = sorted([
-        "B1", "B2", "B3", "B4", "F1", "F2", "F3", "F4", 
-        "V1", "V2", "V3", "V4", "D1", "D2", "D3", "D4", 
-        "C1", "C2", "C3", "C4", "G1", "G2", "G3", "G4", 
-        "NX", "PX",
-        "A1", "A2", "A3", "A4", "Y1", "Y2", "L1", "L2", "R1", "R2", "N1", "N2", "N3", "N4", "I1", "I2", "Q1", "Q2",
-        "a1", "a2", "a3", "a4", "y1", "y2", "n1", "n2", "n3", "n4", "i1", "i2",
-        "PB", "PF",
-        "PS", "PT", "PU", "PV", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "PM", "PO", "PP", "PQ", "PN", "PR", "PW", "PZ",
-        "CL", "cl", "CP", "CV", "CO", "KI", "LI", "SZ", "LK", "CI", "CK", "DL", "DT", "DE",
-        "uA", "uY", "uL", "uR", "uN", "uI", "uQ", "uP", "u1", "u2", "u3", "u4", "uC",
-        "VB", "VR", "VF", "VG", "VA", "VS", "VE", "VH", "VK", "VL", "VM", "VN", "VY",
-        "NS"
-    ])
-    PROPER_NOUN_FLAGS_3 = [
-        f"p{fam}{sub}"
-        for fam in "BOFU"
-        for sub in "NLRYAIPC"
+
+def generate_stage2_flags() -> list[str]:
+    blocks = []
+    
+    # 1. cA: Consonant Back Unrounded Copulas (for -ar, -maz)
+    rules_cA = [
+        sfx("cA", "0", "dı", "."), sfx("cA", "0", "dım", "."), sfx("cA", "0", "dın", "."),
+        sfx("cA", "0", "dık", "."), sfx("cA", "0", "dınız", "."), sfx("cA", "0", "dılar", "."),
+        sfx("cA", "0", "mış", "."), sfx("cA", "0", "mışım", "."), sfx("cA", "0", "mışsın", "."),
+        sfx("cA", "0", "mışız", "."), sfx("cA", "0", "mışsınız", "."), sfx("cA", "0", "mışlar", "."),
+        sfx("cA", "0", "sa", "."), sfx("cA", "0", "sam", "."), sfx("cA", "0", "san", "."),
+        sfx("cA", "0", "sak", "."), sfx("cA", "0", "sanız", "."), sfx("cA", "0", "salar", "."),
+        sfx("cA", "0", "dır", "."), sfx("cA", "0", "dırlar", "."),
+        sfx("cA", "0", "larmış", "."), sfx("cA", "0", "lardı", "."), sfx("cA", "0", "larsa", "."),
+        sfx("cA", "0", "larken", ".")
     ]
-    OLD_LONG_TO_UTF8 = {}
-    for idx, flag in enumerate(ALL_FLAGS_OLD):
-        OLD_LONG_TO_UTF8[flag] = chr(1024 + idx)
-    for idx, flag in enumerate(PROPER_NOUN_FLAGS_3):
-        OLD_LONG_TO_UTF8[flag] = chr(1024 + len(ALL_FLAGS_OLD) + idx)
-    OLD_UTF8_TO_LONG = {v: k for k, v in OLD_LONG_TO_UTF8.items()}
+    blocks.append(make_verb_flag_block("cA", rules_cA))
 
-    # The long flag names for verbs
-    VERB_FLAGS = {"VB", "VR", "VF", "VG", "VA", "VS", "VE", "VH", "VK", "VL", "VM", "VN", "VY"}
+    # 2. cE: Consonant Front Unrounded Copulas (for -er, -mez)
+    rules_cE = [
+        sfx("cE", "0", "di", "."), sfx("cE", "0", "dim", "."), sfx("cE", "0", "din", "."),
+        sfx("cE", "0", "dik", "."), sfx("cE", "0", "diniz", "."), sfx("cE", "0", "diler", "."),
+        sfx("cE", "0", "miş", "."), sfx("cE", "0", "mişim", "."), sfx("cE", "0", "mişsin", "."),
+        sfx("cE", "0", "mişiz", "."), sfx("cE", "0", "mişsiniz", "."), sfx("cE", "0", "mişler", "."),
+        sfx("cE", "0", "se", "."), sfx("cE", "0", "sem", "."), sfx("cE", "0", "sen", "."),
+        sfx("cE", "0", "sek", "."), sfx("cE", "0", "seniz", "."), sfx("cE", "0", "seler", "."),
+        sfx("cE", "0", "dir", "."), sfx("cE", "0", "dirler", "."),
+        sfx("cE", "0", "lermiş", "."), sfx("cE", "0", "lerdi", "."), sfx("cE", "0", "lerse", "."),
+        sfx("cE", "0", "lerken", ".")
+    ]
+    blocks.append(make_verb_flag_block("cE", rules_cE))
+
+    # 3. cU: Rounded Consonant Back Copulas (for -ıyor, -uyor, -ur)
+    rules_cU = [
+        sfx("cU", "0", "du", "."), sfx("cU", "0", "dum", "."), sfx("cU", "0", "dun", "."),
+        sfx("cU", "0", "duk", "."), sfx("cU", "0", "dunuz", "."), sfx("cU", "0", "dular", "."),
+        sfx("cU", "0", "muş", "."), sfx("cU", "0", "muşum", "."), sfx("cU", "0", "muşsun", "."),
+        sfx("cU", "0", "muşuz", "."), sfx("cU", "0", "muşsunuz", "."), sfx("cU", "0", "muşlar", "."),
+        sfx("cU", "0", "sa", "."), sfx("cU", "0", "sam", "."), sfx("cU", "0", "san", "."),
+        sfx("cU", "0", "sak", "."), sfx("cU", "0", "sanız", "."), sfx("cU", "0", "salar", "."),
+        sfx("cU", "0", "dur", "."), sfx("cU", "0", "durlar", "."),
+        sfx("cU", "0", "larmış", "."), sfx("cU", "0", "lardı", "."), sfx("cU", "0", "larsa", "."),
+        sfx("cU", "0", "larken", ".")
+    ]
+    blocks.append(make_verb_flag_block("cU", rules_cU))
+
+    # 4. cI: Rounded Consonant Front Copulas (for -iyor, -üyor, -ür)
+    rules_cI = [
+        sfx("cI", "0", "dü", "."), sfx("cI", "0", "düm", "."), sfx("cI", "0", "dün", "."),
+        sfx("cI", "0", "dük", "."), sfx("cI", "0", "dünüz", "."), sfx("cI", "0", "düler", "."),
+        sfx("cI", "0", "müş", "."), sfx("cI", "0", "müşüm", "."), sfx("cI", "0", "müşsün", "."),
+        sfx("cI", "0", "müşüz", "."), sfx("cI", "0", "müşsünüz", "."), sfx("cI", "0", "müşler", "."),
+        sfx("cI", "0", "se", "."), sfx("cI", "0", "sem", "."), sfx("cI", "0", "sen", "."),
+        sfx("cI", "0", "sek", "."), sfx("cI", "0", "seniz", "."), sfx("cI", "0", "seler", "."),
+        sfx("cI", "0", "dür", "."), sfx("cI", "0", "dürler", "."),
+        sfx("cI", "0", "lermiş", "."), sfx("cI", "0", "lerdi", "."), sfx("cI", "0", "lerse", "."),
+        sfx("cI", "0", "lerken", ".")
+    ]
+    blocks.append(make_verb_flag_block("cI", rules_cI))
+
+    # 5. uA: Unvoiced Consonant Back Copulas (for -acak, -mış)
+    rules_uA = [
+        sfx("uA", "0", "tı", "."), sfx("uA", "0", "tım", "."), sfx("uA", "0", "tın", "."),
+        sfx("uA", "0", "tık", "."), sfx("uA", "0", "tınız", "."), sfx("uA", "0", "tılar", "."),
+        sfx("uA", "0", "mış", "."), sfx("uA", "0", "mışım", "."), sfx("uA", "0", "mışsın", "."),
+        sfx("uA", "0", "mışız", "."), sfx("uA", "0", "mışsınız", "."), sfx("uA", "0", "mışlar", "."),
+        sfx("uA", "0", "sa", "."), sfx("uA", "0", "sam", "."), sfx("uA", "0", "san", "."),
+        sfx("uA", "0", "sak", "."), sfx("uA", "0", "sanız", "."), sfx("uA", "0", "salar", "."),
+        sfx("uA", "0", "tır", "."), sfx("uA", "0", "tırlar", "."),
+        sfx("uA", "0", "larmış", "."), sfx("uA", "0", "lardı", "."), sfx("uA", "0", "larsa", "."),
+        sfx("uA", "0", "ken", ".")
+    ]
+    blocks.append(make_verb_flag_block("uA", rules_uA))
+
+    # 6. uE: Unvoiced Consonant Front Copulas (for -ecek, -miş)
+    rules_uE = [
+        sfx("uE", "0", "ti", "."), sfx("uE", "0", "tim", "."), sfx("uE", "0", "tin", "."),
+        sfx("uE", "0", "tik", "."), sfx("uE", "0", "tiniz", "."), sfx("uE", "0", "tiler", "."),
+        sfx("uE", "0", "miş", "."), sfx("uE", "0", "mişim", "."), sfx("uE", "0", "mişsin", "."),
+        sfx("uE", "0", "mişiz", "."), sfx("uE", "0", "mişsiniz", "."), sfx("uE", "0", "mişler", "."),
+        sfx("uE", "0", "se", "."), sfx("uE", "0", "sem", "."), sfx("uE", "0", "sen", "."),
+        sfx("uE", "0", "sek", "."), sfx("uE", "0", "seniz", "."), sfx("uE", "0", "seler", "."),
+        sfx("uE", "0", "tir", "."), sfx("uE", "0", "tirler", "."),
+        sfx("uE", "0", "lermiş", "."), sfx("uE", "0", "lerdi", "."), sfx("uE", "0", "lerse", "."),
+        sfx("uE", "0", "ken", ".")
+    ]
+    blocks.append(make_verb_flag_block("uE", rules_uE))
+
+    # 7. vA: Vowel-ending Back Copulas (for -malı, -sa, -makta, -dıysa)
+    rules_vA = [
+        sfx("vA", "0", "ydı", "."), sfx("vA", "0", "ydım", "."), sfx("vA", "0", "ydın", "."),
+        sfx("vA", "0", "ydık", "."), sfx("vA", "0", "ydınız", "."), sfx("vA", "0", "ydılar", "."),
+        sfx("vA", "0", "ymış", "."), sfx("vA", "0", "ymışım", "."), sfx("vA", "0", "ymışsın", "."),
+        sfx("vA", "0", "ymışız", "."), sfx("vA", "0", "ymışsınız", "."), sfx("vA", "0", "ymışlar", "."),
+        sfx("vA", "0", "ysa", "."), sfx("vA", "0", "ysam", "."), sfx("vA", "0", "ysan", "."),
+        sfx("vA", "0", "ysak", "."), sfx("vA", "0", "ysanız", "."), sfx("vA", "0", "ysalar", "."),
+        sfx("vA", "0", "dır", "."), sfx("vA", "0", "dırlar", "."),
+        sfx("vA", "0", "larmış", "."), sfx("vA", "0", "lardı", "."), sfx("vA", "0", "larsa", "."),
+        sfx("vA", "0", "yken", ".")
+    ]
+    blocks.append(make_verb_flag_block("vA", rules_vA))
+
+    # 8. vE: Vowel-ending Front Copulas (for -meli, -se, -mekte, -diyse)
+    rules_vE = [
+        sfx("vE", "0", "ydi", "."), sfx("vE", "0", "ydim", "."), sfx("vE", "0", "ydin", "."),
+        sfx("vE", "0", "ydik", "."), sfx("vE", "0", "ydiniz", "."), sfx("vE", "0", "ydiler", "."),
+        sfx("vE", "0", "ymiş", "."), sfx("vE", "0", "ymişim", "."), sfx("vE", "0", "ymişsin", "."),
+        sfx("vE", "0", "ymişiz", "."), sfx("vE", "0", "ymişsiniz", "."), sfx("vE", "0", "ymişler", "."),
+        sfx("vE", "0", "yse", "."), sfx("vE", "0", "ysem", "."), sfx("vE", "0", "ysen", "."),
+        sfx("vE", "0", "ysek", "."), sfx("vE", "0", "yseniz", "."), sfx("vE", "0", "yseler", "."),
+        sfx("vE", "0", "dir", "."), sfx("vE", "0", "dirler", "."),
+        sfx("vE", "0", "lermiş", "."), sfx("vE", "0", "lerdi", "."), sfx("vE", "0", "lerse", "."),
+        sfx("vE", "0", "yken", ".")
+    ]
+    blocks.append(make_verb_flag_block("vE", rules_vE))
+
+    # 9. pA: Participle 3sg Back Cases (for -dığı, -acağı, -ması, -tıkları)
+    rules_pA = [
+        sfx("pA", "0", "nda", "."), sfx("pA", "0", "ndan", "."), sfx("pA", "0", "nı", "."),
+        sfx("pA", "0", "na", "."), sfx("pA", "0", "nın", "."), sfx("pA", "0", "yla", "."),
+        sfx("pA", "0", "dır", "."), sfx("pA", "0", "ydı", "."), sfx("pA", "0", "ymış", "."), sfx("pA", "0", "ysa", ".")
+    ]
+    blocks.append(make_verb_flag_block("pA", rules_pA))
+
+    # 10. pE: Participle 3sg Front Cases (for -diği, -eceği, -mesi, -tikleri)
+    rules_pE = [
+        sfx("pE", "0", "nde", "."), sfx("pE", "0", "nden", "."), sfx("pE", "0", "ni", "."),
+        sfx("pE", "0", "ne", "."), sfx("pE", "0", "nin", "."), sfx("pE", "0", "yle", "."),
+        sfx("pE", "0", "dir", "."), sfx("pE", "0", "ydi", "."), sfx("pE", "0", "ymış", "."), sfx("pE", "0", "yse", ".")
+    ]
+    blocks.append(make_verb_flag_block("pE", rules_pE))
+
+    # 11. qA: Participle 1/2 Person Back Cases (for -dığım, -dığın, -dığımız, -dığınız, -mam, -mamız)
+    rules_qA = [
+        sfx("qA", "0", "da", "."), sfx("qA", "0", "dan", "."), sfx("qA", "0", "ı", "."),
+        sfx("qA", "0", "a", "."), sfx("qA", "0", "ın", "."), sfx("qA", "0", "la", "."),
+        sfx("qA", "0", "dır", "."), sfx("qA", "0", "dı", "."), sfx("qA", "0", "sa", ".")
+    ]
+    blocks.append(make_verb_flag_block("qA", rules_qA))
+
+    # 12. qE: Participle 1/2 Person Front Cases (for -diğim, -diğin, -diğimiz, -diğiniz, -mem, -memiz)
+    rules_qE = [
+        sfx("qE", "0", "de", "."), sfx("qE", "0", "den", "."), sfx("qE", "0", "i", "."),
+        sfx("qE", "0", "e", "."), sfx("qE", "0", "in", "."), sfx("qE", "0", "le", "."),
+        sfx("qE", "0", "dir", "."), sfx("qE", "0", "di", "."), sfx("qE", "0", "se", ".")
+    ]
+    blocks.append(make_verb_flag_block("qE", rules_qE))
+
+    # 13. sA: Past Back Copulas (only conditional and narrative past, no ymış)
+    rules_sA = [
+        sfx("sA", "0", "ysa", "."), sfx("sA", "0", "ysam", "."), sfx("sA", "0", "ysan", "."),
+        sfx("sA", "0", "ysak", "."), sfx("sA", "0", "ysanız", "."), sfx("sA", "0", "ysalar", "."),
+        sfx("sA", "0", "ydı", "."), sfx("sA", "0", "ydım", "."), sfx("sA", "0", "ydın", "."),
+        sfx("sA", "0", "ydık", "."), sfx("sA", "0", "ydınız", "."), sfx("sA", "0", "ydılar", "."),
+    ]
+    blocks.append(make_verb_flag_block("sA", rules_sA))
+
+    # 14. sE: Past Front Copulas (only conditional and narrative past, no ymiş)
+    rules_sE = [
+        sfx("sE", "0", "yse", "."), sfx("sE", "0", "ysem", "."), sfx("sE", "0", "ysen", "."),
+        sfx("sE", "0", "ysek", "."), sfx("sE", "0", "yseniz", "."), sfx("sE", "0", "yseler", "."),
+        sfx("sE", "0", "ydi", "."), sfx("sE", "0", "ydim", "."), sfx("sE", "0", "ydin", "."),
+        sfx("sE", "0", "ydik", "."), sfx("sE", "0", "ydiniz", "."), sfx("sE", "0", "ydiler", "."),
+    ]
+    blocks.append(make_verb_flag_block("sE", rules_sE))
+
+    return blocks
+
+
+def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_stem: bool, is_narrow: bool, strip: str) -> str:
+    rules = []
     
-    # Map them to their OLD Cyrillic characters to locate them in tr_reference.aff
-    OLD_VERB_CYRILLIC = {OLD_LONG_TO_UTF8[f] for f in VERB_FLAGS}
-
-    def remap_old_to_new_flag_string(old_flag_str: str, prefix_str: str = "") -> str:
-        if not old_flag_str:
-            return ""
-        old_decoded = []
-        for char in old_flag_str:
-            if char in OLD_UTF8_TO_LONG:
-                old_decoded.append(OLD_UTF8_TO_LONG[char])
-            else:
-                old_decoded.append(char)
-                
-        if prefix_str.endswith(('mak', 'mek')):
-            bad_flags = {
-                'A1', 'A2', 'A3', 'A4', 'Y1', 'Y2', 'N1', 'N2', 'N3', 'N4',
-                'PB', 'PF',
-                'PS', 'PT', 'PU', 'PV', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8',
-                'PM', 'PO', 'PP', 'PQ', 'PN', 'PR', 'PW', 'PZ',
-                'Q1', 'Q2',
-            }
-            old_decoded = [f for f in old_decoded if f not in bad_flags]
-            
-        if 'yor' in prefix_str:
-            old_decoded = ['CL' if f == 'cl' else f for f in old_decoded]
-            
-        if prefix_str.endswith(('mam', 'mem', 'man', 'men', 'masi', 'mesi', 'ması', 'mamız', 'memiz', 'manız', 'meniz', 'maları', 'meleri')):
-            poss_flags = {
-                'PS', 'PT', 'PU', 'PV', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8',
-                'PM', 'PO', 'PP', 'PQ', 'PN', 'PR', 'PW', 'PZ'
-            }
-            old_decoded = [f for f in old_decoded if f not in poss_flags]
-            
-        new_chars = []
-        for f in old_decoded:
-            if f in LONG_TO_UTF8:
-                new_chars.append(LONG_TO_UTF8[f])
-            else:
-                new_chars.append(f)
-        return "".join(new_chars)
-
-    print("  Reading data/tr_reference.aff to extract and remap verb sections...")
-    _ref_aff = os.path.join(_root_dir, 'data', 'tr_reference.aff')
-    with open(_ref_aff, 'r', encoding='utf-8') as f:
-        content = f.read()
-
-    lines = content.split('\n')
-    verb_flags_rules = {} # new_flag_char -> (combine_char, list of rules)
-    verb_flags_order = []
-
-    new_vb_char = LONG_TO_UTF8["Vb"]
-    new_vf_char = LONG_TO_UTF8["Vf"]
-    new_wa_char = LONG_TO_UTF8["wa"]
-    new_wi_char = LONG_TO_UTF8["wi"]
-    new_wr_char = LONG_TO_UTF8["wr"]
-    new_wu_char = LONG_TO_UTF8["wu"]
-    new_we_char = LONG_TO_UTF8["we"]
-    new_wj_char = LONG_TO_UTF8["wj"]
-    new_wg_char = LONG_TO_UTF8["wg"]
-    new_wh_char = LONG_TO_UTF8["wh"]
+    # Harmony variables
+    v_low = "a" if back else "e"
+    v_high = "u" if (back and round_v) else ("ı" if back else ("ü" if round_v else "i"))
+    unrounded_high = "ı" if back else "i"
     
-    for c in [new_vb_char, new_vf_char, new_wa_char, new_wi_char, new_wr_char, new_wu_char, new_we_char, new_wj_char, new_wg_char, new_wh_char]:
-        verb_flags_rules[c] = ('Y', [])
+    # Secondary flags
+    cop_pres = "cU"
+    cop_unv = "uA" if back else "uE"
+    cop_vow = "vA" if back else "vE"
+    part_3sg = "pA" if back else "pE"
+    part_pers = "qA" if back else "qE"
+    cop_past = "sA" if back else "sE"
+    cop_aor = "cA" if back else "cE"
+    
+    is_voicing = flag in ("VK", "VL", "VM", "VN")
+    
+    def add_r(strip_str, add_str, cond_str):
+        rules.append(sfx(flag, strip_str, add_str, cond_str))
 
-    for line in lines:
-        line_strip = line.strip()
-        if not line_strip or line_strip.startswith('#'):
-            continue
-        parts = line_strip.split()
-        if len(parts) >= 3 and parts[0] == 'SFX':
-            flag_char = parts[1]
-            if flag_char in OLD_VERB_CYRILLIC:
-                long_flag = OLD_UTF8_TO_LONG[flag_char]
-                new_flag_char = LONG_TO_UTF8[long_flag]
-                
-                if parts[2] in ('Y', 'N'):
-                    # Header line
-                    combine_char = parts[2]
-                    if new_flag_char not in verb_flags_rules:
-                        verb_flags_rules[new_flag_char] = (combine_char, [])
-                        verb_flags_order.append(new_flag_char)
-                else:
-                    # Rule line
-                    if len(parts) >= 4:
-                        suf = parts[3].split('/')[0]
-                        # Skip grammatically incorrect potential suffixes starting with 'tebil', 'tabil', 'tici', etc.
-                        if suf.startswith(('tebil', 'tabil', 'tici', 'tıcı', 'tucu', 'tücü')):
-                            continue
-                        # Skip suffix rules with ar/er typos instead of lar/ler
-                        if suf.endswith(('ırar', 'irer', 'urar', 'ürer', 'arar', 'erer',
-                                         'dırar', 'direr', 'durar', 'dürer',
-                                         'tırar', 'tirer', 'turar', 'türer',
-                                         'ttırar', 'ttirer', 'tturar', 'ttürer',
-                                         'yırar', 'yirer', 'yurar', 'yürer')):
-                            continue
-                        # Skip suffix rules with duplicate/typo 'ir'/'ır'/'ur'/'ür'
-                        if suf.startswith(('iriy', 'ırıy', 'uruy', 'ürüy',
-                                           'ireb', 'ırab', 'urab', 'üreb',
-                                           'iric', 'ırıc', 'uruc', 'ürüc',
-                                           'iril', 'ırıl', 'urul', 'ürül',
-                                           'irin', 'ırın', 'urun', 'ürün',
-                                           'iriş', 'ırış', 'uruş', 'ürüş',
-                                           'itir', 'ıtır', 'utur', 'ütür')):
-                            continue
-                        # Skip suffix rules with missing r typos (e.g. ular, üler instead of urlar, ürler)
-                        if suf.startswith(('ular', 'üler', 'ulard', 'ülerd', 'ulark', 'ülerk', 'ularl', 'ülerl', 'ularm', 'ülerm', 'ulars', 'ülers')):
-                            continue
-                        # Skip erroneous causative + 1sg person endings without tense (e.g. tirim, tirimdir, tırım, etc.)
-                        if suf.endswith(('tirim', 'tirimdir', 'tırım', 'tırımdır', 'turum', 'turumdur', 'türüm', 'türümdür',
-                                         'dirim', 'dirimdir', 'dırım', 'dırımdır', 'durum', 'durumdur', 'dürüm', 'dürümdür',
-                                         'etirim', 'etirimdir', 'itirim', 'itirimdir', 'atırım', 'atırımdır',
-                                         'uturum', 'uturumdur', 'ütürüm', 'ütürümdür', 'ıtırım', 'ıtırımdır')):
-                            continue
-                        # Skip erroneous causative -dır/-dir on vowel-ending verb infinitive rules (e.g. amak -> adır..., emek -> edir...)
-                        if parts[2] in ('amak', 'emek', 'umak', 'ümek', 'ımak', 'imek') and suf.startswith(('adır', 'edir', 'udur', 'üdür', 'ıdır', 'idir')):
-                            continue
+    p_pres = ["", "um", "sun", "uz", "sunuz", "lar", "lardır"]
 
-                    # Skip reflexive/passive -n rules on consonant-ending verb flags
-                    if long_flag in ("VB", "VR", "VF", "VG"):
-                        if len(parts) >= 4:
-                            suf = parts[3].split('/')[0]
-                            if suf.startswith('n'):
-                                continue
-                    
-                    # Remap other flags on the suffix if any (e.g. add/flags)
-                    if len(parts) >= 4:
-                        add_field = parts[3]
-                        prefix_str = add_field.split('/', 1)[0]
-                        if prefix_str.endswith(('lar', 'ler')):
-                            if 'yor' in prefix_str:
-                                cop_flag_char = LONG_TO_UTF8["CL"]
-                            else:
-                                cop_flag_char = LONG_TO_UTF8["CL"] if long_flag in ("VB", "VR", "VA", "VS", "VK", "VL") else LONG_TO_UTF8["cl"]
-                            if '/' in add_field:
-                                prefix_str, flags_str = add_field.split('/', 1)
-                                remapped_flags = remap_old_to_new_flag_string(flags_str, prefix_str)
-                                parts[3] = f"{prefix_str}/{remapped_flags}{cop_flag_char}"
-                            else:
-                                parts[3] = f"{prefix_str}/{cop_flag_char}"
-                        else:
-                            if '/' in add_field:
-                                prefix_str, flags_str = add_field.split('/', 1)
-                                remapped_flags = remap_old_to_new_flag_string(flags_str, prefix_str)
-                                parts[3] = f"{prefix_str}/{remapped_flags}"
+    # 1. PRESENT CONTINUOUS: -ıyor / -iyor / -uyor / -üyor
+    if is_narrow:
+        add_r("emek", f"iyor/{cop_pres}", "[dy]emek")
+        add_r("emek", "iyorken", "[dy]emek")
+        for p in p_pres:
+            add_r("emek", f"iyor{p}", "[dy]emek")
+    elif flag == "VH":
+        for v_s in ["emek", "ümek"]:
+            add_r(v_s, f"üyor/{cop_pres}", v_s)
+            add_r(v_s, "üyorken", v_s)
+            for p in p_pres:
+                add_r(v_s, f"üyor{p}", v_s)
+    elif flag == "VS":
+        for v_s in ["amak", "umak"]:
+            add_r(v_s, f"uyor/{cop_pres}", v_s)
+            add_r(v_s, "uyorken", v_s)
+            for p in p_pres:
+                add_r(v_s, f"uyor{p}", v_s)
+    elif is_vowel_stem:
+        v_strip_list = ["amak"] if flag == "VA" else ["emek"]
+        for v_s in v_strip_list:
+            v_h = "ı" if v_s == "amak" else "i"
+            add_r(v_s, f"{v_h}yor/{cop_pres}", v_s)
+            add_r(v_s, f"{v_h}yorken", v_s)
+            for p in p_pres:
+                add_r(v_s, f"{v_h}yor{p}", v_s)
+    elif is_voicing:
+        add_r(f"t{strip}", f"d{v_high}yor/{cop_pres}", f"t{strip}")
+        add_r(f"t{strip}", f"d{v_high}yorken", f"t{strip}")
+        for p in p_pres:
+            add_r(f"t{strip}", f"d{v_high}yor{p}", f"t{strip}")
+    else:
+        add_r(strip, f"{v_high}yor/{cop_pres}", strip)
+        add_r(strip, f"{v_high}yorken", strip)
+        for p in p_pres:
+            add_r(strip, f"{v_high}yor{p}", strip)
 
-                    if new_flag_char in verb_flags_rules:
-                        suf_field = parts[3] if len(parts) >= 4 else ""
-                        suf_base = suf_field.split('/')[0]
-                        cond_field = parts[4] if len(parts) >= 5 else "."
+    # 2. FUTURE: -acak / -ecek
+    fut_suf = ("yac" if is_vowel_stem else "ac") if back else (("yec" if is_vowel_stem else "ec"))
+    if is_narrow:
+        add_r("emek", f"iyecek/{cop_unv}", "[dy]emek")
+        add_r("emek", f"iyecek", "[dy]emek")
+        add_r("emek", f"iyeceğim", "[dy]emek")
+        add_r("emek", f"iyeceksin", "[dy]emek")
+        add_r("emek", f"iyeceğiz", "[dy]emek")
+        add_r("emek", f"iyeceksiniz", "[dy]emek")
+        add_r("emek", f"iyecekler", "[dy]emek")
+        add_r("emek", f"iyeceklerdir", "[dy]emek")
+    elif flag in ("VH", "VS"):
+        add_r(strip, f"{fut_suf}{v_low}k/{cop_unv}", strip)
+        add_r(strip, f"{fut_suf}{v_low}k", strip)
+        add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}m", strip)
+        add_r(strip, f"{fut_suf}{v_low}ks{unrounded_high}n", strip)
+        add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}z", strip)
+        add_r(strip, f"{fut_suf}{v_low}ks{unrounded_high}n{unrounded_high}z", strip)
+        add_r(strip, f"{fut_suf}{v_low}kl{v_low}r", strip)
+        add_r(strip, f"{fut_suf}{v_low}kl{v_low}rd{unrounded_high}r", strip)
+    elif is_voicing:
+        add_r(f"t{strip}", f"d{fut_suf}{v_low}k/{cop_unv}", f"t{strip}")
+        add_r(f"t{strip}", f"d{fut_suf}{v_low}k", f"t{strip}")
+        add_r(f"t{strip}", f"d{fut_suf}{v_low}ğ{unrounded_high}m", f"t{strip}")
+        add_r(f"t{strip}", f"d{fut_suf}{v_low}ks{unrounded_high}n", f"t{strip}")
+        add_r(f"t{strip}", f"d{fut_suf}{v_low}ğ{unrounded_high}z", f"t{strip}")
+        add_r(f"t{strip}", f"d{fut_suf}{v_low}ks{unrounded_high}n{unrounded_high}z", f"t{strip}")
+        add_r(f"t{strip}", f"d{fut_suf}{v_low}kl{v_low}r", f"t{strip}")
+        add_r(f"t{strip}", f"d{fut_suf}{v_low}kl{v_low}rd{unrounded_high}r", f"t{strip}")
+        if round_v:
+            add_r(f"t{strip}", f"d{fut_suf}{v_low}ğ{v_high}m", f"t{strip}")
+    else:
+        add_r(strip, f"{fut_suf}{v_low}k/{cop_unv}", strip)
+        add_r(strip, f"{fut_suf}{v_low}k", strip)
+        add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}m", strip)
+        add_r(strip, f"{fut_suf}{v_low}ks{unrounded_high}n", strip)
+        add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}z", strip)
+        add_r(strip, f"{fut_suf}{v_low}ks{unrounded_high}n{unrounded_high}z", strip)
+        add_r(strip, f"{fut_suf}{v_low}kl{v_low}r", strip)
+        add_r(strip, f"{fut_suf}{v_low}kl{v_low}rd{unrounded_high}r", strip)
+        if round_v:
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_high}m", strip)
 
-                        # Ensure passive -Il- suffixes on mak/mek exclude consonant 'l' and vowels
-                        if len(parts) >= 5 and parts[2] in ('mak', 'mek') and suf_base.startswith(('ıl', 'il', 'ul', 'ül')):
-                            if cond_field == '.' or cond_field.startswith('[^AEIOU'):
-                                parts[4] = f"[^lAEIOUaeiouÂÎÖÛÜâîöûüİı]{parts[2]}"
-                                cond_field = parts[4]
-                        elif len(parts) >= 5 and parts[2] in ('mak', 'mek') and cond_field == '.' and suf_base and suf_base[0] in 'aeıioöuüâîû':
-                            parts[4] = f"[^AEIOUaeiouÂÎÖÛÜâîöûüİı]{parts[2]}"
-                            cond_field = parts[4]
+    # 3. DEFINITE PAST: -dı / -di / -tı / -ti
+    if flag == "VH":
+        for v_h_curr, cond_curr in [("i", "emek"), ("ü", "ümek")]:
+            add_r(strip, f"d{v_h_curr}/{cop_past}", cond_curr)
+            add_r(strip, f"d{v_h_curr}", cond_curr)
+            for p in ["m", "n", "k", f"n{v_h_curr}z", f"l{v_low}r"]:
+                add_r(strip, f"d{v_h_curr}{p}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ms{v_low}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ns{v_low}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ks{v_low}", cond_curr)
+            add_r(strip, f"d{v_h_curr}n{v_h_curr}zs{v_low}", cond_curr)
+            add_r(strip, f"d{v_h_curr}l{v_low}rs{v_low}", cond_curr)
+    elif flag == "VS":
+        for v_h_curr, cond_curr in [("ı", "amak"), ("u", "umak")]:
+            add_r(strip, f"d{v_h_curr}/{cop_past}", cond_curr)
+            add_r(strip, f"d{v_h_curr}", cond_curr)
+            for p in ["m", "n", "k", f"n{v_h_curr}z", f"l{v_low}r"]:
+                add_r(strip, f"d{v_h_curr}{p}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ms{v_low}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ns{v_low}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ks{v_low}", cond_curr)
+            add_r(strip, f"d{v_h_curr}n{v_h_curr}zs{v_low}", cond_curr)
+            add_r(strip, f"d{v_h_curr}l{v_low}rs{v_low}", cond_curr)
+    elif is_vowel_stem or is_narrow:
+        add_r(strip, f"d{v_high}/{cop_past}", strip)
+        add_r(strip, f"d{v_high}", strip)
+        for p in ["m", "n", "k", f"n{v_high}z", f"l{v_low}r"]:
+            add_r(strip, f"d{v_high}{p}", strip)
+        add_r(strip, f"d{v_high}ms{v_low}", strip)
+        add_r(strip, f"d{v_high}ns{v_low}", strip)
+        add_r(strip, f"d{v_high}ks{v_low}", strip)
+        add_r(strip, f"d{v_high}n{v_high}zs{v_low}", strip)
+        add_r(strip, f"d{v_high}l{v_low}rs{v_low}", strip)
+    else:
+        cond_cons = f"[^çfhkpsşt]{strip}"
+        cond_unv = f"[çfhkpsşt]{strip}"
+        for d_c, cond_s in [("d", cond_cons if not is_voicing else f"[çt]{strip}"), ("t", cond_unv if not is_voicing else f"[çt]{strip}")]:
+            add_r(strip, f"{d_c}{v_high}/{cop_past}", cond_s)
+            add_r(strip, f"{d_c}{v_high}", cond_s)
+            for p in ["m", "n", "k", f"n{v_high}z", f"l{v_low}r"]:
+                add_r(strip, f"{d_c}{v_high}{p}", cond_s)
+            add_r(strip, f"{d_c}{v_high}ms{v_low}", cond_s)
+            add_r(strip, f"{d_c}{v_high}ns{v_low}", cond_s)
+            add_r(strip, f"{d_c}{v_high}ks{v_low}", cond_s)
+            add_r(strip, f"{d_c}{v_high}n{v_high}zs{v_low}", cond_s)
+            add_r(strip, f"{d_c}{v_high}l{v_low}rs{v_low}", cond_s)
 
-                        # Fix: When a suffix starts with 'tt' (double-t) and the
-                        # condition includes 't' before 'mak'/'mek', verbs whose stems
-                        # end in 't' would get triple-t forms (e.g. tutmak → tutttuğu,
-                        # sıkışmak → sıkışttırma, lağvetmek → lağvetttik).
-                        # Split each such rule into:
-                        #   1) stems ending in tmak/tmek → single-t suffix
-                        #   2) all other consonant stems → keep double-t suffix
-                        import re as _re
-                        is_tt_suffix = suf_base.startswith('tt')
-                        cond_has_t = (
-                            ('t' in cond_field and ('mak' in cond_field or 'mek' in cond_field))
-                            or cond_field in ('mak', 'mek')
-                        )
-                        is_relevant_flag = long_flag in ("VF", "VG", "VM", "VN", "VB", "VR", "VK", "VL")
+    # 4. EVIDENTIAL PAST: -mış / -miş / -muş / -müş
+    if flag == "VH":
+        for v_h_curr, cond_curr in [("i", "emek"), ("ü", "ümek")]:
+            add_r(strip, f"m{v_h_curr}ş/{cop_unv}", cond_curr)
+            for p in ["", f"{v_h_curr}m", f"s{v_h_curr}n", f"{v_h_curr}z", f"s{v_h_curr}n{v_h_curr}z", f"l{v_low}r"]:
+                add_r(strip, f"m{v_h_curr}ş{p}", cond_curr)
+            add_r(strip, f"m{v_h_curr}ş{v_h_curr}md{v_h_curr}r", cond_curr)
+            add_r(strip, f"m{v_h_curr}ş{v_h_curr}zd{v_h_curr}r", cond_curr)
+            add_r(strip, f"m{v_h_curr}şs{v_h_curr}nd{v_h_curr}r", cond_curr)
+            add_r(strip, f"m{v_h_curr}şs{v_h_curr}n{v_h_curr}zd{v_h_curr}r", cond_curr)
+            add_r(strip, f"m{v_h_curr}şl{v_low}rd{unrounded_high}r", cond_curr)
+            add_r(strip, f"m{v_h_curr}şç{v_low}s{unrounded_high}n{v_low}", cond_curr)
+            add_r(strip, f"m{v_h_curr}şl{unrounded_high}k", cond_curr)
+            add_r(strip, f"m{v_h_curr}şl{unrounded_high}ğ{unrounded_high}", cond_curr)
+            add_r(strip, f"m{v_h_curr}şl{unrounded_high}ğ{unrounded_high}n", cond_curr)
+            add_r(strip, f"m{v_h_curr}şl{unrounded_high}kt{unrounded_high}r", cond_curr)
+    elif flag == "VS":
+        for v_h_curr, cond_curr in [("ı", "amak"), ("u", "umak")]:
+            add_r(strip, f"m{v_h_curr}ş/{cop_unv}", cond_curr)
+            for p in ["", f"{v_h_curr}m", f"s{v_h_curr}n", f"{v_h_curr}z", f"s{v_h_curr}n{v_h_curr}z", f"l{v_low}r"]:
+                add_r(strip, f"m{v_h_curr}ş{p}", cond_curr)
+            add_r(strip, f"m{v_h_curr}ş{v_h_curr}md{v_h_curr}r", cond_curr)
+            add_r(strip, f"m{v_h_curr}ş{v_h_curr}zd{v_h_curr}r", cond_curr)
+            add_r(strip, f"m{v_h_curr}şs{v_h_curr}nd{v_h_curr}r", cond_curr)
+            add_r(strip, f"m{v_h_curr}şs{v_h_curr}n{v_h_curr}zd{v_h_curr}r", cond_curr)
+            add_r(strip, f"m{v_h_curr}şl{v_low}rd{unrounded_high}r", cond_curr)
+            add_r(strip, f"m{v_h_curr}şç{v_low}s{unrounded_high}n{v_low}", cond_curr)
+            add_r(strip, f"m{v_h_curr}şl{unrounded_high}k", cond_curr)
+            add_r(strip, f"m{v_h_curr}şl{unrounded_high}ğ{unrounded_high}", cond_curr)
+            add_r(strip, f"m{v_h_curr}şl{unrounded_high}ğ{unrounded_high}n", cond_curr)
+            add_r(strip, f"m{v_h_curr}şl{unrounded_high}kt{unrounded_high}r", cond_curr)
+    else:
+        add_r(strip, f"m{v_high}ş/{cop_unv}", strip)
+        for p in ["", f"{v_high}m", f"s{v_high}n", f"{v_high}z", f"s{v_high}n{v_high}z", f"l{v_low}r"]:
+            add_r(strip, f"m{v_high}ş{p}", strip)
+        add_r(strip, f"m{v_high}ş{v_high}md{v_high}r", strip)
+        add_r(strip, f"m{v_high}ş{v_high}zd{v_high}r", strip)
+        add_r(strip, f"m{v_high}şs{v_high}nd{v_high}r", strip)
+        add_r(strip, f"m{v_high}şs{v_high}n{v_high}zd{v_high}r", strip)
+        add_r(strip, f"m{v_high}şl{v_low}rd{unrounded_high}r", strip)
+        add_r(strip, f"m{v_high}şç{v_low}s{unrounded_high}n{v_low}", strip)
+        add_r(strip, f"m{v_high}şl{unrounded_high}k", strip)
+        add_r(strip, f"m{v_high}şl{unrounded_high}ğ{unrounded_high}", strip)
+        add_r(strip, f"m{v_high}şl{unrounded_high}ğ{unrounded_high}n", strip)
+        add_r(strip, f"m{v_high}şl{unrounded_high}kt{unrounded_high}r", strip)
 
-                        if is_tt_suffix and is_relevant_flag:
-                            # Stems must never produce double-tt suffixes (ttik, ttı, ttuk...)
-                            # Single-t form must always be used
-                            t_part = suf_base[1:]
-                            t_parts = list(parts)
-                            t_parts[3] = (t_part + '/' + suf_field.split('/')[1]) if '/' in suf_field else t_part
-                            parts_to_process = [t_parts]
-                        else:
-                            parts_to_process = [parts]
+    # 5. NECESSITATIVE: -malı / -meli
+    add_r(strip, f"m{v_low}l{unrounded_high}/{cop_vow}", strip)
+    for p in ["", f"y{unrounded_high}m", f"s{unrounded_high}n", f"y{unrounded_high}z", f"s{unrounded_high}n{unrounded_high}z", f"l{v_low}r"]:
+        add_r(strip, f"m{v_low}l{unrounded_high}{p}", strip)
 
-                        def is_aorist_a_suf(s, is_back):
-                            return s.startswith('ar' if is_back else 'er') and not s.startswith('arak' if is_back else 'erek')
-                            
-                        def is_aorist_i_suf(s, is_back):
-                            v = ('ır', 'ur') if is_back else ('ir', 'ür')
-                            return s.startswith(v) and not s.startswith(tuple(x + 'mak' if is_back else x + 'mek' for x in v))
+    # 6. CONDITIONAL: -sa / -se
+    add_r(strip, f"s{v_low}/{cop_vow}", strip)
+    for p in ["", "m", "n", "k", f"n{unrounded_high}z", f"l{v_low}r", f"n{v_low}", f"n{unrounded_high}z{v_low}"]:
+        add_r(strip, f"s{v_low}{p}", strip)
 
-                        for cur_parts in parts_to_process:
-                            cur_suf = cur_parts[3].split('/')[0] if len(cur_parts) >= 4 else ""
-                            if new_flag_char == LONG_TO_UTF8["VB"]:
-                                is_a_aorist = is_aorist_a_suf(cur_suf, True)
-                                is_i_aorist = is_aorist_i_suf(cur_suf, True)
-                                if not is_a_aorist and not is_i_aorist:
-                                    verb_flags_rules[new_flag_char][1].append(list(cur_parts))
-                                if is_a_aorist:
-                                    verb_flags_rules[new_wa_char][1].append(list(cur_parts))
-                                if is_i_aorist:
-                                    verb_flags_rules[new_wi_char][1].append(list(cur_parts))
-                            elif new_flag_char == LONG_TO_UTF8["VF"]:
-                                is_a_aorist = is_aorist_a_suf(cur_suf, False)
-                                is_i_aorist = is_aorist_i_suf(cur_suf, False)
-                                if not is_a_aorist and not is_i_aorist:
-                                    verb_flags_rules[new_flag_char][1].append(list(cur_parts))
-                                if is_a_aorist:
-                                    verb_flags_rules[new_we_char][1].append(list(cur_parts))
-                                if is_i_aorist:
-                                    verb_flags_rules[new_wj_char][1].append(list(cur_parts))
-                            elif new_flag_char == LONG_TO_UTF8["VR"]:
-                                is_a_aorist = is_aorist_a_suf(cur_suf, True)
-                                is_i_aorist = is_aorist_i_suf(cur_suf, True)
-                                if not is_a_aorist and not is_i_aorist:
-                                    verb_flags_rules[new_flag_char][1].append(list(cur_parts))
-                                if is_a_aorist:
-                                    verb_flags_rules[new_wr_char][1].append(list(cur_parts))
-                                if is_i_aorist:
-                                    verb_flags_rules[new_wu_char][1].append(list(cur_parts))
-                            elif new_flag_char == LONG_TO_UTF8["VG"]:
-                                is_a_aorist = is_aorist_a_suf(cur_suf, False)
-                                is_i_aorist = is_aorist_i_suf(cur_suf, False)
-                                if not is_a_aorist and not is_i_aorist:
-                                    verb_flags_rules[new_flag_char][1].append(list(cur_parts))
-                                if is_a_aorist:
-                                    verb_flags_rules[new_wg_char][1].append(list(cur_parts))
-                                if is_i_aorist:
-                                    verb_flags_rules[new_wh_char][1].append(list(cur_parts))
-                            else:
-                                verb_flags_rules[new_flag_char][1].append(cur_parts)
+    # 7. PROGRESSIVE & INFINITIVES: -makta, -maktan, -makla, -maktı, -maktır, -maktansa
+    add_r(strip, f"m{v_low}kt{v_low}/{cop_vow}", strip)
+    add_r(strip, f"m{v_low}kt{v_low}n", strip)
+    add_r(strip, f"m{v_low}kl{v_low}", strip)
+    add_r(strip, f"m{v_low}kt{unrounded_high}", strip)
+    add_r(strip, f"m{v_low}kt{unrounded_high}r", strip)
+    add_r(strip, f"m{v_low}kt{v_low}ns{v_low}", strip)
+    for p in ["", f"y{unrounded_high}m", f"s{unrounded_high}n", f"y{unrounded_high}z", f"s{unrounded_high}n{unrounded_high}z", f"l{v_low}r"]:
+        add_r(strip, f"m{v_low}kt{v_low}{p}", strip)
 
-    # Append new flags to order
-    verb_flags_order.extend([new_vb_char, new_vf_char, new_wa_char, new_wi_char, new_wr_char, new_wu_char, new_we_char, new_wj_char, new_wg_char, new_wh_char])
+    # 8. IMPERATIVE & OPTATIVE
+    if is_narrow:
+        add_r(strip, "0", strip)
+        add_r(strip, "sin", strip)
+        add_r(strip, "sinler", strip)
+        for y_pref in ["i", "e"]:
+            add_r("emek", f"{y_pref}ye", "[dy]emek")
+            add_r("emek", f"{y_pref}yeyim", "[dy]emek")
+            add_r("emek", f"{y_pref}yelim", "[dy]emek")
+            add_r("emek", f"{y_pref}yin", "[dy]emek")
+            add_r("emek", f"{y_pref}yiniz", "[dy]emek")
+    elif flag in ("VH", "VS"):
+        sub_h = [("i", "emek"), ("ü", "ümek")] if flag == "VH" else [("ı", "amak"), ("u", "umak")]
+        add_r(strip, f"y{v_low}", strip)
+        add_r(strip, "0", strip)
+        for v_h_curr, cond_curr in sub_h:
+            add_r(strip, f"y{v_low}y{v_h_curr}m", cond_curr)
+            add_r(strip, f"y{v_low}l{v_h_curr}m", cond_curr)
+            add_r(strip, f"s{v_h_curr}n", cond_curr)
+            add_r(strip, f"y{v_h_curr}n", cond_curr)
+            add_r(strip, f"y{v_h_curr}n{v_h_curr}z", cond_curr)
+            add_r(strip, f"s{v_h_curr}nl{v_low}r", cond_curr)
+    elif is_vowel_stem:
+        add_r(strip, f"y{v_low}", strip)
+        add_r(strip, f"y{v_low}y{v_high}m", strip)
+        add_r(strip, f"y{v_low}l{v_high}m", strip)
+        add_r(strip, "0", strip)
+        add_r(strip, f"s{v_high}n", strip)
+        add_r(strip, f"y{v_high}n", strip)
+        add_r(strip, f"y{v_high}n{v_high}z", strip)
+        add_r(strip, f"s{v_high}nl{v_low}r", strip)
+    elif is_voicing:
+        add_r(f"t{strip}", f"d{v_low}", f"t{strip}")
+        add_r(f"t{strip}", f"d{v_low}y{v_high}m", f"t{strip}")
+        add_r(f"t{strip}", f"d{v_low}l{v_high}m", f"t{strip}")
+        add_r(strip, "0", strip)
+        add_r(strip, f"s{v_high}n", strip)
+        add_r(f"t{strip}", f"d{v_high}n", f"t{strip}")
+        add_r(f"t{strip}", f"d{v_high}n{v_high}z", f"t{strip}")
+        add_r(strip, f"s{v_high}nl{v_low}r", strip)
+    else:
+        add_r(strip, f"{v_low}", strip)
+        add_r(strip, f"{v_low}y{v_high}m", strip)
+        add_r(strip, f"{v_low}l{v_high}m", strip)
+        add_r(strip, "0", strip)
+        add_r(strip, f"s{v_high}n", strip)
+        add_r(strip, f"{v_high}n", strip)
+        add_r(strip, f"{v_high}n{v_high}z", strip)
+        add_r(strip, f"s{v_high}nl{v_low}r", strip)
 
-    # ---------------------------------------------------------------------------
-    # INJECT COMPOUND PARTICIPLE & VERBAL NOUN SUFFIX RULES (Strategy 1)
-    # ---------------------------------------------------------------------------
-    verb_configs = {
-        # Back unrounded consonant (yapmak, bakmak, çıkmak, almak, vb.)
-        "VB": (True, False, False, False, "mak"),
-        "Vb": (True, False, False, False, "mak"),
-        "wa": (True, False, False, False, "mak"),
-        "wi": (True, False, False, False, "mak"),
-        "VK": (True, False, False, False, "mak"),
-        # Back rounded consonant (olmak, koşmak, uçmak, bulmak, vb.)
-        "VR": (True, True, False, False, "mak"),
-        "wr": (True, True, False, False, "mak"),
-        "wu": (True, True, False, False, "mak"),
-        "VL": (True, True, False, False, "mak"),
-        # Front unrounded consonant (gelmek, bilmek, gitmek, etmek, vb.)
-        "VF": (False, False, False, False, "mek"),
-        "Vf": (False, False, False, False, "mek"),
-        "we": (False, False, False, False, "mek"),
-        "wj": (False, False, False, False, "mek"),
-        "VM": (False, False, False, False, "mek"),
-        # Front rounded consonant (görmek, dönmek, ölmek, gülmek, sürmek, vb.)
-        "VG": (False, True, False, False, "mek"),
-        "wg": (False, True, False, False, "mek"),
-        "wh": (False, True, False, False, "mek"),
-        "VN": (False, True, False, False, "mek"),
-        # Back unrounded vowel (anlamak, başlamak, yaşamak, vb.)
-        "VA": (True, False, True, False, "mak"),
-        # Back rounded vowel (okumak, korumak, vb.)
-        "VS": (True, True, True, False, "mak"),
-        # Front unrounded vowel (beklemek, dinlemek, istemek, söylemek, vb.)
-        "VE": (False, False, True, False, "mek"),
-        # Front rounded vowel (yürümek, büyümek, vb.)
-        "VH": (False, True, True, False, "mek"),
-        # Narrowing (demek, yemek)
-        "VY": (False, False, False, True, "emek"),
-    }
+    # 9. AORIST (for vowel stems, narrow verbs, and voicing stems)
+    if is_narrow:
+        add_r(strip, f"r/{cop_aor}", strip)
+        add_r(strip, "rken", strip)
+        for p in ["", "im", "sin", "iz", "siniz", "ler"]:
+            add_r(strip, f"r{p}", strip)
+    elif flag in ("VH", "VS"):
+        sub_h = [("i", "emek"), ("ü", "ümek")] if flag == "VH" else [("ı", "amak"), ("u", "umak")]
+        add_r(strip, f"r/{cop_aor}", strip)
+        add_r(strip, "r", strip)
+        add_r(strip, f"rl{v_low}r", strip)
+        add_r(strip, "rken", strip)
+        for v_h_curr, cond_curr in sub_h:
+            add_r(strip, f"r{v_h_curr}m", cond_curr)
+            add_r(strip, f"rs{v_h_curr}n", cond_curr)
+            add_r(strip, f"r{v_h_curr}z", cond_curr)
+            add_r(strip, f"rs{v_h_curr}n{v_h_curr}z", cond_curr)
+    elif is_vowel_stem:
+        add_r(strip, f"r/{cop_aor}", strip)
+        add_r(strip, "rken", strip)
+        for p in ["", f"{v_high}m", f"s{v_high}n", f"{v_high}z", f"s{v_high}n{v_high}z", f"l{v_low}r"]:
+            add_r(strip, f"r{p}", strip)
+    elif is_voicing:
+        aor_c_vow = "a" if back else "e"
+        add_r(f"t{strip}", f"d{aor_c_vow}r/{cop_aor}", f"t{strip}")
+        add_r(f"t{strip}", f"d{aor_c_vow}r", f"t{strip}")
+        add_r(f"t{strip}", f"d{aor_c_vow}rken", f"t{strip}")
+        add_r(f"t{strip}", f"d{aor_c_vow}r{unrounded_high}m", f"t{strip}")
+        add_r(f"t{strip}", f"d{aor_c_vow}rs{unrounded_high}n", f"t{strip}")
+        add_r(f"t{strip}", f"d{aor_c_vow}r{unrounded_high}z", f"t{strip}")
+        add_r(f"t{strip}", f"d{aor_c_vow}rs{unrounded_high}n{unrounded_high}z", f"t{strip}")
+        add_r(f"t{strip}", f"d{aor_c_vow}rl{v_low}r", f"t{strip}")
 
-    for flag_name, (back, round_v, is_vowel_stem, is_narrow, strip) in verb_configs.items():
-        if flag_name not in LONG_TO_UTF8:
-            continue
-        flag_char = LONG_TO_UTF8[flag_name]
-        if flag_char not in verb_flags_rules:
-            verb_flags_rules[flag_char] = ('Y', [])
-            if flag_char not in verb_flags_order:
-                verb_flags_order.append(flag_char)
+    # 10. PARTICIPLES & VERBAL NOUNS (Positive)
+    part_endings = [
+        "", f"l{v_low}r", f"l{v_low}r{unrounded_high}", f"l{v_low}r{v_low}",
+        f"l{v_low}rd{v_low}", f"l{v_low}rd{v_low}n", f"l{v_low}r{unrounded_high}n",
+        f"l{v_low}ryl{v_low}", f"{unrounded_high}", f"{v_low}", f"d{v_low}",
+        f"d{v_low}n", f"{unrounded_high}n", f"yl{v_low}"
+    ]
 
-        # Handle sub-harmonies for vowel-ending verb stems (e.g. söylemek vs yürümek, oynamak vs okumak)
-        sub_configs = []
-        if is_vowel_stem and flag_name in ("VH", "VS"):
-            if flag_name == "VH":
-                # Front: -e ending verbs (söylemek, özlemek) use 'i', -ü ending verbs (yürümek, büyümek) use 'ü'
-                sub_configs.append((False, "i", "e", "emek"))
-                sub_configs.append((True, "ü", "e", "ümek"))
-            elif flag_name == "VS":
-                # Back: -a ending verbs (oynamak, yollamak) use 'ı', -u ending verbs (okumak, korumak) use 'u'
-                sub_configs.append((False, "ı", "a", "amak"))
-                sub_configs.append((True, "u", "a", "umak"))
+    # Subject Participle (-an / -en)
+    if is_narrow:
+        for pe in part_endings:
+            add_r("emek", f"iyen{pe}", "[dy]emek")
+    elif is_vowel_stem:
+        for pe in part_endings:
+            add_r(strip, f"y{v_low}n{pe}", strip)
+    elif is_voicing:
+        for pe in part_endings:
+            add_r(f"t{strip}", f"d{v_low}n{pe}", f"t{strip}")
+    else:
+        for pe in part_endings:
+            add_r(strip, f"{v_low}n{pe}", strip)
+
+    # Object Participles & Verbal Nouns
+    if flag == "VH":
+        for v_h_curr, cond_curr in [("i", "emek"), ("ü", "ümek")]:
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}/{part_3sg}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}m/{part_pers}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}m", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}n/{part_pers}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}n", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}m{v_h_curr}z/{part_pers}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}m{v_h_curr}z", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}n{v_h_curr}z/{part_pers}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}n{v_h_curr}z", cond_curr)
+            add_r(strip, f"d{v_h_curr}kl{v_low}r{unrounded_high}/{part_3sg}", cond_curr)
+            add_r(strip, f"d{v_h_curr}kl{v_low}r{unrounded_high}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}/{part_3sg}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}m/{part_pers}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}m", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}n/{part_pers}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}n", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}m{v_h_curr}z/{part_pers}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}m{v_h_curr}z", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}n{v_h_curr}z/{part_pers}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}n{v_h_curr}z", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}kl{v_low}r{unrounded_high}/{part_3sg}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}kl{v_low}r{unrounded_high}", cond_curr)
+            add_r(strip, f"m{v_low}s{v_h_curr}/{part_3sg}", cond_curr)
+            add_r(strip, f"m{v_low}s{v_h_curr}", cond_curr)
+            add_r(strip, f"m{v_low}m/{part_pers}", cond_curr)
+            add_r(strip, f"m{v_low}m", cond_curr)
+            add_r(strip, f"m{v_low}n/{part_pers}", cond_curr)
+            add_r(strip, f"m{v_low}n", cond_curr)
+            add_r(strip, f"m{v_low}m{v_h_curr}z/{part_pers}", cond_curr)
+            add_r(strip, f"m{v_low}m{v_h_curr}z", cond_curr)
+            add_r(strip, f"m{v_low}n{v_h_curr}z/{part_pers}", cond_curr)
+            add_r(strip, f"m{v_low}n{v_h_curr}z", cond_curr)
+            add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}/{part_3sg}", cond_curr)
+            add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}", cond_curr)
+    elif flag == "VS":
+        for v_h_curr, cond_curr in [("ı", "amak"), ("u", "umak")]:
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}/{part_3sg}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}m/{part_pers}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}m", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}n/{part_pers}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}n", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}m{v_h_curr}z/{part_pers}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}m{v_h_curr}z", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}n{v_h_curr}z/{part_pers}", cond_curr)
+            add_r(strip, f"d{v_h_curr}ğ{v_h_curr}n{v_h_curr}z", cond_curr)
+            add_r(strip, f"d{v_h_curr}kl{v_low}r{unrounded_high}/{part_3sg}", cond_curr)
+            add_r(strip, f"d{v_h_curr}kl{v_low}r{unrounded_high}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}/{part_3sg}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}m/{part_pers}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}m", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}n/{part_pers}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}n", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}m{v_h_curr}z/{part_pers}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}m{v_h_curr}z", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}n{v_h_curr}z/{part_pers}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}ğ{v_h_curr}n{v_h_curr}z", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}kl{v_low}r{unrounded_high}/{part_3sg}", cond_curr)
+            add_r(strip, f"{fut_suf}{v_low}kl{v_low}r{unrounded_high}", cond_curr)
+            add_r(strip, f"m{v_low}s{v_h_curr}/{part_3sg}", cond_curr)
+            add_r(strip, f"m{v_low}s{v_h_curr}", cond_curr)
+            add_r(strip, f"m{v_low}m/{part_pers}", cond_curr)
+            add_r(strip, f"m{v_low}m", cond_curr)
+            add_r(strip, f"m{v_low}n/{part_pers}", cond_curr)
+            add_r(strip, f"m{v_low}n", cond_curr)
+            add_r(strip, f"m{v_low}m{v_h_curr}z/{part_pers}", cond_curr)
+            add_r(strip, f"m{v_low}m{v_h_curr}z", cond_curr)
+            add_r(strip, f"m{v_low}n{v_h_curr}z/{part_pers}", cond_curr)
+            add_r(strip, f"m{v_low}n{v_h_curr}z", cond_curr)
+            add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}/{part_3sg}", cond_curr)
+            add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}", cond_curr)
+    elif is_vowel_stem or is_narrow:
+        add_r(strip, f"d{v_high}ğ{v_high}/{part_3sg}", strip)
+        add_r(strip, f"d{v_high}ğ{v_high}", strip)
+        add_r(strip, f"d{v_high}ğ{v_high}m/{part_pers}", strip)
+        add_r(strip, f"d{v_high}ğ{v_high}m", strip)
+        add_r(strip, f"d{v_high}ğ{v_high}n/{part_pers}", strip)
+        add_r(strip, f"d{v_high}ğ{v_high}n", strip)
+        add_r(strip, f"d{v_high}ğ{v_high}m{v_high}z/{part_pers}", strip)
+        add_r(strip, f"d{v_high}ğ{v_high}m{v_high}z", strip)
+        add_r(strip, f"d{v_high}ğ{v_high}n{v_high}z/{part_pers}", strip)
+        add_r(strip, f"d{v_high}ğ{v_high}n{v_high}z", strip)
+        add_r(strip, f"d{v_high}kl{v_low}r{unrounded_high}/{part_3sg}", strip)
+        add_r(strip, f"d{v_high}kl{v_low}r{unrounded_high}", strip)
+        add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}/{part_3sg}", strip)
+        add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}", strip)
+        add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}m/{part_pers}", strip)
+        add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}m", strip)
+        add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}n/{part_pers}", strip)
+        add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}n", strip)
+        add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}m{unrounded_high}z/{part_pers}", strip)
+        add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}m{unrounded_high}z", strip)
+        add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}n{unrounded_high}z/{part_pers}", strip)
+        add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}n{unrounded_high}z", strip)
+        add_r(strip, f"{fut_suf}{v_low}kl{v_low}r{unrounded_high}/{part_3sg}", strip)
+        add_r(strip, f"{fut_suf}{v_low}kl{v_low}r{unrounded_high}", strip)
+        add_r(strip, f"m{v_low}s{v_high}/{part_3sg}", strip)
+        add_r(strip, f"m{v_low}s{v_high}", strip)
+        add_r(strip, f"m{v_low}m/{part_pers}", strip)
+        add_r(strip, f"m{v_low}m", strip)
+        add_r(strip, f"m{v_low}n/{part_pers}", strip)
+        add_r(strip, f"m{v_low}n", strip)
+        add_r(strip, f"m{v_low}m{v_high}z/{part_pers}", strip)
+        add_r(strip, f"m{v_low}m{v_high}z", strip)
+        add_r(strip, f"m{v_low}n{v_high}z/{part_pers}", strip)
+        add_r(strip, f"m{v_low}n{v_high}z", strip)
+        add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}/{part_3sg}", strip)
+        add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}", strip)
+    else:
+        cond_cons = f"[^çfhkpsşt]{strip}"
+        cond_unv = f"[çfhkpsşt]{strip}"
+        for d_c, cond_s in [("d", cond_cons if not is_voicing else f"[çt]{strip}"), ("t", cond_unv if not is_voicing else f"[çt]{strip}")]:
+            add_r(strip, f"{d_c}{v_high}ğ{v_high}/{part_3sg}", cond_s)
+            add_r(strip, f"{d_c}{v_high}ğ{v_high}", cond_s)
+            add_r(strip, f"{d_c}{v_high}ğ{v_high}m/{part_pers}", cond_s)
+            add_r(strip, f"{d_c}{v_high}ğ{v_high}m", cond_s)
+            add_r(strip, f"{d_c}{v_high}ğ{v_high}n/{part_pers}", cond_s)
+            add_r(strip, f"{d_c}{v_high}ğ{v_high}n", cond_s)
+            add_r(strip, f"{d_c}{v_high}ğ{v_high}m{v_high}z/{part_pers}", cond_s)
+            add_r(strip, f"{d_c}{v_high}ğ{v_high}m{v_high}z", cond_s)
+            add_r(strip, f"{d_c}{v_high}ğ{v_high}n{v_high}z/{part_pers}", cond_s)
+            add_r(strip, f"{d_c}{v_high}ğ{v_high}n{v_high}z", cond_s)
+            add_r(strip, f"{d_c}{v_high}kl{v_low}r{unrounded_high}/{part_3sg}", cond_s)
+            add_r(strip, f"{d_c}{v_high}kl{v_low}r{unrounded_high}", cond_s)
+            
+        if is_voicing:
+            add_r(f"t{strip}", f"d{fut_suf}{v_low}ğ{unrounded_high}/{part_3sg}", f"t{strip}")
+            add_r(f"t{strip}", f"d{fut_suf}{v_low}ğ{unrounded_high}", f"t{strip}")
+            add_r(f"t{strip}", f"d{fut_suf}{v_low}ğ{unrounded_high}m/{part_pers}", f"t{strip}")
+            add_r(f"t{strip}", f"d{fut_suf}{v_low}ğ{unrounded_high}m", f"t{strip}")
+            add_r(f"t{strip}", f"d{fut_suf}{v_low}ğ{unrounded_high}n/{part_pers}", f"t{strip}")
+            add_r(f"t{strip}", f"d{fut_suf}{v_low}ğ{unrounded_high}n", f"t{strip}")
+            add_r(f"t{strip}", f"d{fut_suf}{v_low}ğ{unrounded_high}m{unrounded_high}z/{part_pers}", f"t{strip}")
+            add_r(f"t{strip}", f"d{fut_suf}{v_low}ğ{unrounded_high}m{unrounded_high}z", f"t{strip}")
+            add_r(f"t{strip}", f"d{fut_suf}{v_low}ğ{unrounded_high}n{unrounded_high}z/{part_pers}", f"t{strip}")
+            add_r(f"t{strip}", f"d{fut_suf}{v_low}ğ{unrounded_high}n{unrounded_high}z", f"t{strip}")
+            add_r(f"t{strip}", f"d{fut_suf}{v_low}kl{v_low}r{unrounded_high}/{part_3sg}", f"t{strip}")
+            add_r(f"t{strip}", f"d{fut_suf}{v_low}kl{v_low}r{unrounded_high}", f"t{strip}")
         else:
-            v_high = "u" if (back and round_v) else ("ı" if back else ("ü" if round_v else "i"))
-            v_low = "a" if back else "e"
-            cond_default = f"{strip}" if is_vowel_stem else ("[dy]emek" if is_narrow else None)
-            sub_configs.append((round_v, v_high, v_low, cond_default))
-
-        for sub_round, v_high, v_low, specific_cond in sub_configs:
-            v_pl_poss = "ı" if back else "i"
-
-            variants = []
-            if is_vowel_stem:
-                variants = [("d", specific_cond if specific_cond else f"{strip}")]
-            elif is_narrow:
-                variants = [("d", "[dy]emek")]
-            else:
-                variants = [
-                    ("d", f"[^çfhkpsşt]{strip}"),
-                    ("t", f"[çfhkpsşt]{strip}")
-                ]
-
-            for d_char, cond in variants:
-                # 1. 3sg Past Participle: -dığı / -tığı
-                base_3sg = f"{d_char}{v_high}ğ{v_high}"
-                cop_3sg_pres = "dur" if (back and sub_round) else ("dür" if (not back and sub_round) else ("dır" if back else "dir"))
-                cop_3sg_past = "ydu" if (back and sub_round) else ("ydü" if (not back and sub_round) else ("ydı" if back else "ydi"))
-                cop_3sg_rep = "ymuş" if (back and sub_round) else ("ymüş" if (not back and sub_round) else ("ymış" if back else "ymiş"))
-                cases_3sg = [
-                    "", "nda", "ndan", "nı" if back else "ni", "na" if back else "ne", "nın" if back else "nin", "yla" if back else "yle",
-                    cop_3sg_pres, cop_3sg_past, cop_3sg_rep, "ysa" if back else "yse"
-                ]
-                for c in cases_3sg:
-                    suf = f"{base_3sg}{c}" if c else base_3sg
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond])
-
-                # 2. 1sg Participle: -dığım / -tığım
-                base_1sg = f"{d_char}{v_high}ğ{v_high}m"
-                for c in ["", "da" if back else "de", "dan" if back else "den", f"{v_high}", f"{v_low}", f"{v_high}n", f"l{v_low}", "dır" if back else "dir"]:
-                    suf = f"{base_1sg}{c}" if c else base_1sg
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond])
-
-                # 3. 2sg Participle: -dığın / -tığın
-                base_2sg = f"{d_char}{v_high}ğ{v_high}n"
-                for c in ["", "da" if back else "de", "dan" if back else "den", f"{v_high}", f"{v_low}", f"{v_high}n", f"l{v_low}", "dır" if back else "dir"]:
-                    suf = f"{base_2sg}{c}" if c else base_2sg
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond])
-
-                # 4. 1pl Participle: -dığımız / -tığımız
-                base_1pl = f"{d_char}{v_high}ğ{v_high}m{v_high}z"
-                for c in ["", "da" if back else "de", "dan" if back else "den", f"{v_high}", f"{v_low}", f"{v_high}n", f"l{v_low}", "dır" if back else "dir"]:
-                    suf = f"{base_1pl}{c}" if c else base_1pl
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond])
-
-                # 5. 2pl Participle: -dığınız / -tığınız
-                base_2pl = f"{d_char}{v_high}ğ{v_high}n{v_high}z"
-                for c in ["", "da" if back else "de", "dan" if back else "den", f"{v_high}", f"{v_low}", f"{v_high}n", f"l{v_low}", "dır" if back else "dir"]:
-                    suf = f"{base_2pl}{c}" if c else base_2pl
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond])
-
-                # 6. Plural Participle: -dıkları / -tıkları (-dIklArI / -tIklArI)
-                base_pl = f"{d_char}{v_high}kl{v_low}r{v_pl_poss}"
-                for c in [
-                    "", "nda", "ndan", "nı" if back else "ni", "na" if back else "ne", "nın" if back else "nin", "yla" if back else "yle",
-                    "dır" if back else "dir", "ydı" if back else "ydi", "ymış" if back else "ymiş", "ysa" if back else "yse"
-                ]:
-                    suf = f"{base_pl}{c}" if c else base_pl
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond])
-
-            # 7. Verbal Noun 3sg: -ması / -mesi
-            m_vowel = "ma" if back else "me"
-            base_vn = f"{m_vowel}s{v_high}"
-            cond_vn = specific_cond if specific_cond else f"{strip}"
-            for c in [
-                "", "nda", "ndan", "nı" if back else "ni", "na" if back else "ne", "nın" if back else "nin", "yla" if back else "yle",
-                "dır" if back else "dir", "ydı" if back else "ydi", "ymış" if back else "ymiş", "ysa" if back else "yse"
-            ]:
-                suf = f"{base_vn}{c}" if c else base_vn
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
-
-            # 8. Verbal Noun Plural: -maları / -meleri
-            base_vn_pl = f"{m_vowel}l{v_low}r{v_pl_poss}"
-            for c in [
-                "", "nda", "ndan", "nı" if back else "ni", "na" if back else "ne", "nın" if back else "nin", "yla" if back else "yle",
-                "dır" if back else "dir", "ydı" if back else "ydi"
-            ]:
-                suf = f"{base_vn_pl}{c}" if c else base_vn_pl
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
-
-            # 9. Future Participle 3sg: -acağı / -eceği / -yacağı / -yeceği
-            fut_base = ("yac" if is_vowel_stem else "ac") if back else (("yec" if is_vowel_stem else "ec"))
-            if is_narrow:
-                fut_base = "yic" if back else "yec"
-            base_fut = f"{fut_base}{v_low}ğ{v_high}"
-            cond_fut = specific_cond if specific_cond else f"{strip}"
-            for c in [
-                "", "nda", "ndan", "nı" if back else "ni", "na" if back else "ne", "nın" if back else "nin", "yla" if back else "yle",
-                "dır" if back else "dir", "ydı" if back else "ydi"
-            ]:
-                suf = f"{base_fut}{c}" if c else base_fut
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
-
-            # Harmony variables for cases and copulas
-            loc_c = "nda" if back else "nde"
-            abl_c = "ndan" if back else "nden"
-            acc_c = "nı" if back else "ni"
-            dat_c = "na" if back else "ne"
-            gen_c = "nın" if back else "nin"
-            ins_c = "yla" if back else "yle"
-            cop_c = "dır" if back else "dir"
-            cop_p = "ydı" if back else "ydi"
-            cop_r = "ymış" if back else "ymiş"
-            cop_s = "ysa" if back else "yse"
-            all_cases_3sg = ["", loc_c, abl_c, acc_c, dat_c, gen_c, ins_c, cop_c, cop_p, cop_r, cop_s]
-
-            # 10. Future Participle Plural: -acakları / -ecekleri
-            fut_pl = ("yacak" if is_vowel_stem else "acak") if back else (("yecek" if is_vowel_stem else "ecek"))
-            if is_narrow:
-                fut_pl = "yicak" if back else "yecek"
-            base_fut_pl = f"{fut_pl}l{v_low}r{v_pl_poss}"
-            for c in ["", loc_c, abl_c, acc_c, dat_c, gen_c, ins_c, cop_c, cop_p]:
-                suf = f"{base_fut_pl}{c}" if c else base_fut_pl
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
-
-            # 11. Verbal Noun 1pl Possessive: -mamız / -memiz & Negative: -mamamız / -mememiz (vermememizdir, yapmamamızdır)
-            for vn_prefix in [m_vowel, f"{m_vowel}{m_vowel}"]:
-                base_vn_1pl = f"{vn_prefix}m{v_high}z"
-                for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "ın" if back else "in", "la" if back else "le", cop_c, "dı" if back else "di", "mış" if back else "miş", "sa" if back else "se"]:
-                    suf = f"{base_vn_1pl}{c}" if c else base_vn_1pl
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
-
-            # 12. Verbal Noun 1sg Possessive: -mam / -mem & Negative: -mamam / -memem
-            for vn_prefix in [m_vowel, f"{m_vowel}{m_vowel}"]:
-                base_vn_1sg = f"{vn_prefix}m"
-                for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "ın" if back else "in", "la" if back else "le", cop_c, "dı" if back else "di"]:
-                    suf = f"{base_vn_1sg}{c}" if c else base_vn_1sg
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
-
-            # 13. Negative Verbal Noun 3sg & Plural: -maması / -memesi, -mamaları / -memeleri (uğramamasıdır, görmemeleridir)
-            base_neg_vn_3sg = f"{m_vowel}{m_vowel}s{v_high}"
-            for c in all_cases_3sg:
-                suf = f"{base_neg_vn_3sg}{c}" if c else base_neg_vn_3sg
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
-
-            base_neg_vn_pl = f"{m_vowel}{m_vowel}l{v_low}r{v_pl_poss}"
-            for c in ["", loc_c, abl_c, acc_c, dat_c, gen_c, ins_c, cop_c, cop_p]:
-                suf = f"{base_neg_vn_pl}{c}" if c else base_neg_vn_pl
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
-
-            # 14. Progressive -makta / -mekte + Copulas (bildirilememektedir, gelişememektedir, yapılmaktadır)
-            base_prog = "makta" if back else "mekte"
-            cond_prog = specific_cond if specific_cond else f"{strip}"
-            for c in ["", cop_c, cop_p, cop_r, cop_s, "yım" if back else "yim", "sın" if back else "sin", "yız" if back else "yiz", "sınız" if back else "siniz", "lar" if back else "ler"]:
-                suf = f"{base_prog}{c}" if c else base_prog
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_prog])
-
-            # 15. Negative Potential Progressive: -ememekte / -amamamakta
-            pot_neg_prog = ("yamamakta" if is_vowel_stem else "amamakta") if back else (("yememekte" if is_vowel_stem else "ememekte"))
-            cond_pot = specific_cond if specific_cond else f"{strip}"
-            for c in ["", cop_c, cop_p, cop_r, cop_s]:
-                suf = f"{pot_neg_prog}{c}" if c else pot_neg_prog
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
-
-            # 16. Negative Potential Verbal Noun 3sg & Plural: -ememesi / -amamasından / -ememeleri / -amamalarıdır (yönetememesinden)
-            pot_neg_vn = ("yamama" if is_vowel_stem else "amama") if back else (("yememe" if is_vowel_stem else "ememe"))
-            base_pot_vn_3sg = f"{pot_neg_vn}s{v_high}"
-            for c in all_cases_3sg:
-                suf = f"{base_pot_vn_3sg}{c}" if c else base_pot_vn_3sg
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
-
-            base_pot_vn_pl = f"{pot_neg_vn}l{v_low}r{v_pl_poss}"
-            for c in ["", loc_c, abl_c, acc_c, dat_c, gen_c, ins_c, cop_c, cop_p]:
-                suf = f"{base_pot_vn_pl}{c}" if c else base_pot_vn_pl
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
-
-            # 17. Negative Potential Future Plural: -emeyecekleri / -amayacakları (yönetemeyecekleri)
-            pot_neg_fut_pl = ("yamayacak" if is_vowel_stem else "amayacak") if back else (("yemeyecek" if is_vowel_stem else "emeyecek"))
-            base_pot_fut_pl = f"{pot_neg_fut_pl}l{v_low}r{v_pl_poss}"
-            for c in ["", loc_c, abl_c, acc_c, dat_c, gen_c, ins_c, cop_c, cop_p]:
-                suf = f"{base_pot_fut_pl}{c}" if c else base_pot_fut_pl
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
-
-            # 18. Negative Past Participle All Persons: -madığı / -mediği (3sg), -madığım (1sg), -madığın (2sg), -madığımız (1pl), -madığınız (2pl), -madıkları (3pl)
-            neg_past_base_3sg = f"{m_vowel}d{v_high}ğ{v_high}"
-            for c in all_cases_3sg:
-                suf = f"{neg_past_base_3sg}{c}" if c else neg_past_base_3sg
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
-
-            for p_tag, p_suf in [
-                ("1sg", f"{m_vowel}d{v_high}ğ{v_high}m"),
-                ("2sg", f"{m_vowel}d{v_high}ğ{v_high}n"),
-                ("1pl", f"{m_vowel}d{v_high}ğ{v_high}m{v_high}z"),
-                ("2pl", f"{m_vowel}d{v_high}ğ{v_high}n{v_high}z"),
-            ]:
-                for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "la" if back else "le", cop_c, "dı" if back else "di", "sa" if back else "se"]:
-                    suf = f"{p_suf}{c}" if c else p_suf
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
-
-            base_neg_past_pl = f"{m_vowel}d{v_high}kl{v_low}r{v_pl_poss}"
-            for c in ["", loc_c, abl_c, acc_c, dat_c, gen_c, ins_c, cop_c, cop_p, cop_r, cop_s]:
-                suf = f"{base_neg_past_pl}{c}" if c else base_neg_past_pl
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
-
-            # 19. Negative Potential Past Participle All Persons: -amadığı / -emediği (alınamadığı, sevemediğin, bulamadığımız...)
-            pot_neg_past = ("yamad" if is_vowel_stem else "amad") if back else (("yemed" if is_vowel_stem else "emed"))
-            base_pot_past_3sg = f"{pot_neg_past}{v_high}ğ{v_high}"
-            for c in all_cases_3sg:
-                suf = f"{base_pot_past_3sg}{c}" if c else base_pot_past_3sg
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
-
-            for p_tag, p_suf in [
-                ("1sg", f"{pot_neg_past}{v_high}ğ{v_high}m"),
-                ("2sg", f"{pot_neg_past}{v_high}ğ{v_high}n"),
-                ("1pl", f"{pot_neg_past}{v_high}ğ{v_high}m{v_high}z"),
-                ("2pl", f"{pot_neg_past}{v_high}ğ{v_high}n{v_high}z"),
-            ]:
-                for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "la" if back else "le", cop_c, "dı" if back else "di", "sa" if back else "se"]:
-                    suf = f"{p_suf}{c}" if c else p_suf
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
-
-            base_pot_past_pl = f"{pot_neg_past}{v_high}kl{v_low}r{v_pl_poss}"
-            for c in ["", loc_c, abl_c, acc_c, dat_c, gen_c, ins_c, cop_c, cop_p, cop_r, cop_s]:
-                suf = f"{base_pot_past_pl}{c}" if c else base_pot_past_pl
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
-
-            # 20. Negative Potential Future Participle All Persons: -amayacağı / -emeyeceği (anlaşılamayacağını, bulamayacağımı...)
-            base_pot_fut_stem = ("yamayac" if is_vowel_stem else "amayac") if back else (("yemeyec" if is_vowel_stem else "emeyec"))
-            base_pot_fut_3sg = f"{base_pot_fut_stem}{v_low}ğ{v_high}"
-            for c in all_cases_3sg:
-                suf = f"{base_pot_fut_3sg}{c}" if c else base_pot_fut_3sg
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
-
-            for p_tag, p_suf in [
-                ("1sg", f"{base_pot_fut_stem}{v_low}ğ{v_high}m"),
-                ("2sg", f"{base_pot_fut_stem}{v_low}ğ{v_high}n"),
-                ("1pl", f"{base_pot_fut_stem}{v_low}ğ{v_high}m{v_high}z"),
-                ("2pl", f"{base_pot_fut_stem}{v_low}ğ{v_high}n{v_high}z"),
-            ]:
-                for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "la" if back else "le", cop_c, "dı" if back else "di", "sa" if back else "se"]:
-                    suf = f"{p_suf}{c}" if c else p_suf
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
-
-            # 21. Future Participle Persons: -acağım (1sg), -acağın (2sg), -acağımız (1pl), -acağınız (2pl) (göreceğime, atacağın, anlaşacağınızı...)
-            for p_tag, p_suf in [
-                ("1sg", f"{fut_base}{v_low}ğ{v_high}m"),
-                ("2sg", f"{fut_base}{v_low}ğ{v_high}n"),
-                ("1pl", f"{fut_base}{v_low}ğ{v_high}m{v_high}z"),
-                ("2pl", f"{fut_base}{v_low}ğ{v_high}n{v_high}z"),
-            ]:
-                for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "la" if back else "le", cop_c, "dı" if back else "di", "sa" if back else "se"]:
-                    suf = f"{p_suf}{c}" if c else p_suf
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
-
-            # 22. Positive Ability Future Participles & Person Forms: -abileceği / -ebileceği, -abileceğim, -abileceğiz (hazırlayabileceğimi, dönüştürebileceğiz...)
-            abil_base = ("yabil" if is_vowel_stem else "abil") if back else (("yebil" if is_vowel_stem else "ebil"))
-            fut_vow = "acak" if back else "ecek"
-            fut_voiced = "acağ" if back else "eceğ"
+            add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}/{part_3sg}", strip)
+            add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}", strip)
+            add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}m/{part_pers}", strip)
+            add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}m", strip)
+            add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}n/{part_pers}", strip)
+            add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}n", strip)
+            add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}m{unrounded_high}z/{part_pers}", strip)
+            add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}m{unrounded_high}z", strip)
+            add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}n{unrounded_high}z/{part_pers}", strip)
+            add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}n{unrounded_high}z", strip)
+            add_r(strip, f"{fut_suf}{v_low}kl{v_low}r{unrounded_high}/{part_3sg}", strip)
+            add_r(strip, f"{fut_suf}{v_low}kl{v_low}r{unrounded_high}", strip)
             
-            # Direct ability future tense persons (e.g. dönüştür + ebileceğ + iz -> dönüştürebileceğiz)
-            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"{abil_base}{fut_voiced}{'ım' if back else 'im'}", cond_pot])
-            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"{abil_base}{fut_vow}{'sın' if back else 'sin'}", cond_pot])
-            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"{abil_base}{fut_vow}", cond_pot])
-            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"{abil_base}{fut_voiced}{'ız' if back else 'iz'}", cond_pot])
-            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"{abil_base}{fut_vow}{'sınız' if back else 'siniz'}", cond_pot])
-            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"{abil_base}{fut_vow}{'lar' if back else 'ler'}", cond_pot])
+        add_r(strip, f"m{v_low}s{v_high}/{part_3sg}", strip)
+        add_r(strip, f"m{v_low}s{v_high}", strip)
+        add_r(strip, f"m{v_low}m/{part_pers}", strip)
+        add_r(strip, f"m{v_low}m", strip)
+        add_r(strip, f"m{v_low}n/{part_pers}", strip)
+        add_r(strip, f"m{v_low}n", strip)
+        add_r(strip, f"m{v_low}m{v_high}z/{part_pers}", strip)
+        add_r(strip, f"m{v_low}m{v_high}z", strip)
+        add_r(strip, f"m{v_low}n{v_high}z/{part_pers}", strip)
+        add_r(strip, f"m{v_low}n{v_high}z", strip)
+        add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}/{part_3sg}", strip)
+        add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}", strip)
 
-            base_abil_fut_3sg = f"{abil_base}{fut_voiced}{'ı' if back else 'i'}"
-            for c in ["", "nde", "nden", "ni", "ne", "nin", "yle", "dir", "ydi", "ymiş", "yse"]:
-                suf = f"{base_abil_fut_3sg}{c}" if c else base_abil_fut_3sg
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+    # 11. GERUNDS / CONVERBS
+    if is_narrow:
+        for y_pref in ["i", "e"]:
+            add_r("emek", f"{y_pref}yerek", "[dy]emek")
+            add_r("emek", f"{y_pref}yip", "[dy]emek")
+            add_r("emek", f"{y_pref}yince", "[dy]emek")
+            add_r("emek", f"{y_pref}yinceye", "[dy]emek")
+        add_r("emek", "idikten", "[dy]emek")
+        add_r("emek", "iyeli", "[dy]emek")
+        add_r("emek", "iyesim", "[dy]emek")
+        add_r(strip, "dikçe", strip)
+        add_r(strip, "meden", strip)
+    elif flag in ("VH", "VS"):
+        sub_h = [("i", "emek"), ("ü", "ümek")] if flag == "VH" else [("ı", "amak"), ("u", "umak")]
+        add_r(strip, f"y{v_low}r{v_low}k", strip)
+        add_r(strip, f"m{v_low}d{v_low}n", strip)
+        add_r(strip, f"y{v_low}s{unrounded_high}m", strip)
+        for v_h_curr, cond_curr in sub_h:
+            add_r(strip, f"y{v_h_curr}p", cond_curr)
+            add_r(strip, f"y{v_h_curr}nc{v_low}", cond_curr)
+            add_r(strip, f"y{v_h_curr}nc{v_low}y{v_low}", cond_curr)
+            add_r(strip, f"d{v_h_curr}kç{v_low}", cond_curr)
+            add_r(strip, f"d{v_h_curr}kt{v_low}n", cond_curr)
+            add_r(strip, f"y{v_h_curr}l{unrounded_high}", cond_curr)
+    elif is_vowel_stem:
+        add_r(strip, f"y{v_low}r{v_low}k", strip)
+        add_r(strip, f"y{v_high}p", strip)
+        add_r(strip, f"y{v_high}nc{v_low}", strip)
+        add_r(strip, f"y{v_high}nc{v_low}y{v_low}", strip)
+        add_r(strip, f"d{v_high}kç{v_low}", strip)
+        add_r(strip, f"d{v_high}kt{v_low}n", strip)
+        add_r(strip, f"y{v_low}l{unrounded_high}", strip)
+        add_r(strip, f"y{v_low}s{unrounded_high}m", strip)
+        add_r(strip, f"m{v_low}d{v_low}n", strip)
+    elif is_voicing:
+        add_r(f"t{strip}", f"d{v_low}r{v_low}k", f"t{strip}")
+        add_r(f"t{strip}", f"d{v_high}p", f"t{strip}")
+        add_r(f"t{strip}", f"d{v_high}nc{v_low}", f"t{strip}")
+        add_r(f"t{strip}", f"d{v_high}nc{v_low}y{v_low}", f"t{strip}")
+        add_r(strip, f"t{v_high}kç{v_low}", strip)
+        add_r(f"t{strip}", f"d{v_high}kt{v_low}n", f"t{strip}")
+        add_r(f"t{strip}", f"d{v_low}l{unrounded_high}", f"t{strip}")
+        add_r(f"t{strip}", f"d{v_low}s{unrounded_high}m", f"t{strip}")
+        add_r(strip, f"m{v_low}d{v_low}n", strip)
+    else:
+        add_r(strip, f"{v_low}r{v_low}k", strip)
+        add_r(strip, f"{v_high}p", strip)
+        add_r(strip, f"{v_high}nc{v_low}", strip)
+        add_r(strip, f"{v_high}nc{v_low}y{v_low}", strip)
+        cond_cons = f"[^çfhkpsşt]{strip}"
+        cond_unv = f"[çfhkpsşt]{strip}"
+        for d_c, cond_s in [("d", cond_cons), ("t", cond_unv)]:
+            add_r(strip, f"{d_c}{v_high}kç{v_low}", cond_s)
+            add_r(strip, f"{d_c}{v_high}kt{v_low}n", cond_s)
+        add_r(strip, f"{v_low}l{unrounded_high}", strip)
+        add_r(strip, f"{v_low}s{unrounded_high}m", strip)
+        add_r(strip, f"m{v_low}d{v_low}n", strip)
 
-            for p_tag, p_suf in [
-                ("1sg", f"{abil_base}{fut_voiced}{'ım' if back else 'im'}"),
-                ("2sg", f"{abil_base}{fut_voiced}{'ın' if back else 'in'}"),
-                ("1pl", f"{abil_base}{fut_voiced}{'ımız' if back else 'imiz'}"),
-                ("2pl", f"{abil_base}{fut_voiced}{'ınız' if back else 'iniz'}"),
-            ]:
-                for c in ["", "e" if not back else "a", "i" if not back else "ı", "de" if not back else "da", "den" if not back else "dan", "le" if not back else "la", "dir" if not back else "dır", "di" if not back else "dı", "se" if not back else "sa"]:
-                    suf = f"{p_suf}{c}" if c else p_suf
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+    # 12. NEGATIVE FORMS
+    neg_suf = f"m{v_low}"
+    # Neg Pres Cont: yapmıyor, tutmuyor, tutmıyor
+    add_r(strip, f"m{unrounded_high}yor/{cop_pres}", strip)
+    add_r(strip, f"m{unrounded_high}yorken", strip)
+    for p in p_pres:
+        add_r(strip, f"m{unrounded_high}yor{p}", strip)
 
-            base_abil_fut_pl = f"{abil_base}{fut_vow}{'leri' if not back else 'ları'}"
-            for c in ["", "nde", "nden", "ni", "ne", "nin", "yle", "dir", "ydi"]:
-                suf = f"{base_abil_fut_pl}{c}" if c else base_abil_fut_pl
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+    if round_v:
+        add_r(strip, f"m{v_high}yor/{cop_pres}", strip)
+        add_r(strip, f"m{v_high}yorken", strip)
+        for p in p_pres:
+            add_r(strip, f"m{v_high}yor{p}", strip)
+        
+    # Neg Past: yapmadı
+    add_r(strip, f"{neg_suf}d{unrounded_high}/{cop_vow}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}", strip)
+    for p in ["m", "n", "k", f"n{unrounded_high}z", f"l{v_low}r"]:
+        add_r(strip, f"{neg_suf}d{unrounded_high}{p}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}ms{v_low}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}ns{v_low}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}ks{v_low}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}n{unrounded_high}zs{v_low}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}l{v_low}rs{v_low}", strip)
+        
+    # Neg Evidential: yapmamış
+    add_r(strip, f"{neg_suf}m{unrounded_high}ş/{cop_unv}", strip)
+    for p in ["", f"{unrounded_high}m", f"s{unrounded_high}n", f"{unrounded_high}z", f"s{unrounded_high}n{unrounded_high}z", f"l{v_low}r"]:
+        add_r(strip, f"{neg_suf}m{unrounded_high}ş{p}", strip)
+    add_r(strip, f"{neg_suf}m{unrounded_high}ş{unrounded_high}md{unrounded_high}r", strip)
+    add_r(strip, f"{neg_suf}m{unrounded_high}ş{unrounded_high}zd{unrounded_high}r", strip)
+    add_r(strip, f"{neg_suf}m{unrounded_high}şs{unrounded_high}nd{unrounded_high}r", strip)
+    add_r(strip, f"{neg_suf}m{unrounded_high}şs{unrounded_high}n{unrounded_high}zd{unrounded_high}r", strip)
+    add_r(strip, f"{neg_suf}m{unrounded_high}şl{v_low}rd{unrounded_high}r", strip)
+        
+    # Neg Future: yapmayacak
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}k/{cop_unv}", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}k", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}ğ{unrounded_high}m", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}ks{unrounded_high}n", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}ğ{unrounded_high}z", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}ks{unrounded_high}n{unrounded_high}z", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}kl{v_low}r", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}kl{v_low}rd{unrounded_high}r", strip)
 
-            # Positive Ability Progressive: -abilmekte / -ebilmekte (karıştırılabilmektedir, yapılabilmektedir)
-            abil_prog = f"{abil_base}mekte"
-            for c in ["", "dir", "ydi", "ymiş", "yse", "dirler"]:
-                suf = f"{abil_prog}{c}" if c else abil_prog
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+    # Neg Necessitative: yapmamalı
+    add_r(strip, f"{neg_suf}m{v_low}l{unrounded_high}/{cop_vow}", strip)
+    for p in ["", f"y{unrounded_high}m", f"s{unrounded_high}n", f"y{unrounded_high}z", f"s{unrounded_high}n{unrounded_high}z", f"l{v_low}r"]:
+        add_r(strip, f"{neg_suf}m{v_low}l{unrounded_high}{p}", strip)
+        
+    # Neg Conditional: yapmasa
+    add_r(strip, f"{neg_suf}s{v_low}/{cop_vow}", strip)
+    for p in ["", "m", "n", "k", f"n{unrounded_high}z", f"l{v_low}r", f"n{v_low}", f"n{unrounded_high}z{v_low}"]:
+        add_r(strip, f"{neg_suf}s{v_low}{p}", strip)
 
-            # 23. Nominalized Participle Plurals: -anlar / -enler (adlandıranların, faydalananlarla, getirenlerden...)
-            an_suf = "iyen" if is_narrow else (("yan" if is_vowel_stem else "an") if back else (("yen" if is_vowel_stem else "en")))
-            base_an_pl = f"{an_suf}l{v_low}r"
-            for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "ın" if back else "in", "la" if back else "le", "ca" if back else "ce", "dandı" if back else "dendi", "dendir" if back else "dendir", cop_c, cop_p, cop_r, cop_s]:
-                suf = f"{base_an_pl}{c}" if c else base_an_pl
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
+    # Neg Optative & Imperative
+    add_r(strip, f"{neg_suf}y{v_low}y{unrounded_high}m", strip)
+    add_r(strip, f"{neg_suf}y{v_low}s{unrounded_high}n", strip)
+    add_r(strip, f"{neg_suf}y{v_low}", strip)
+    add_r(strip, f"{neg_suf}y{v_low}l{unrounded_high}m", strip)
+    add_r(strip, f"{neg_suf}y{v_low}s{unrounded_high}n{unrounded_high}z", strip)
+    add_r(strip, f"{neg_suf}y{v_low}l{v_low}r", strip)
+    add_r(strip, f"{neg_suf}s{unrounded_high}n", strip)
+    add_r(strip, f"{neg_suf}y{unrounded_high}n", strip)
+    add_r(strip, f"{neg_suf}y{unrounded_high}n{unrounded_high}z", strip)
+    add_r(strip, f"{neg_suf}s{unrounded_high}nl{v_low}r", strip)
 
-            # -anları / -enleri (3sg possessive of plural participle: sevenlerimizi, yapanları)
-            for c in ["", "na" if back else "ne", "nı" if back else "ni", "nda" if back else "nde", "ndan" if back else "nden", "nın" if back else "nin", "yla" if back else "yle", cop_c, cop_p]:
-                suf = f"{base_an_pl}{v_pl_poss}{c}" if c else f"{base_an_pl}{v_pl_poss}"
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
+    # Neg Converbs
+    add_r(strip, f"{neg_suf}y{v_low}r{v_low}k", strip)
+    add_r(strip, f"{neg_suf}y{unrounded_high}p", strip)
+    add_r(strip, f"{neg_suf}y{unrounded_high}nc{v_low}", strip)
+    add_r(strip, f"{neg_suf}y{unrounded_high}nc{v_low}y{v_low}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}kç{v_low}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}kt{v_low}n", strip)
+    add_r(strip, f"{neg_suf}y{v_low}l{unrounded_high}", strip)
+    add_r(strip, f"{neg_suf}ks{unrounded_high}z{unrounded_high}n", strip)
+    add_r(strip, f"{neg_suf}zken", strip)
 
-            # -anlarımız / -enlerimiz (1pl possessive of plural participle: sevenlerimizi)
-            for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "la" if back else "le"]:
-                suf = f"{base_an_pl}{v_pl_poss}m{v_pl_poss}z{c}" if c else f"{base_an_pl}{v_pl_poss}m{v_pl_poss}z"
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
+    # Neg Progressive & Infinitives
+    add_r(strip, f"{neg_suf}m{v_low}k", strip)
+    add_r(strip, f"{neg_suf}m{v_low}kt{v_low}/{cop_vow}", strip)
+    add_r(strip, f"{neg_suf}m{v_low}kt{v_low}n", strip)
+    add_r(strip, f"{neg_suf}m{v_low}kl{v_low}", strip)
+    add_r(strip, f"{neg_suf}m{v_low}y{unrounded_high}", strip)
+    add_r(strip, f"{neg_suf}m{v_low}y{v_low}", strip)
+    add_r(strip, f"{neg_suf}m{v_low}n{unrounded_high}n", strip)
+    add_r(strip, f"{neg_suf}m{v_low}kt{unrounded_high}", strip)
+    add_r(strip, f"{neg_suf}m{v_low}kt{unrounded_high}r", strip)
+    add_r(strip, f"{neg_suf}m{v_low}kt{v_low}ns{v_low}", strip)
+    for p in ["", f"y{unrounded_high}m", f"s{unrounded_high}n", f"y{unrounded_high}z", f"s{unrounded_high}n{unrounded_high}z", f"l{v_low}r"]:
+        add_r(strip, f"{neg_suf}m{v_low}kt{v_low}{p}", strip)
 
-            # Singular -anı / -eni (inananı, bakanı)
-            base_an_3sg = f"{an_suf}{v_pl_poss}"
-            for c in ["", "na" if back else "ne", "nı" if back else "ni", "nda" if back else "nde", "ndan" if back else "nden", "nın" if back else "nin", "yla" if back else "yle", cop_c, cop_p]:
-                suf = f"{base_an_3sg}{c}" if c else base_an_3sg
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_fut])
+    # Neg Aorist (for vowel stems, narrow verbs, and voicing stems)
+    if is_vowel_stem or is_narrow or is_voicing:
+        add_r(strip, f"{neg_suf}z/{cop_aor}", strip)
+        add_r(strip, f"{neg_suf}m", strip)
+        add_r(strip, f"{neg_suf}zs{unrounded_high}n", strip)
+        add_r(strip, f"{neg_suf}z", strip)
+        add_r(strip, f"{neg_suf}y{unrounded_high}z", strip)
+        add_r(strip, f"{neg_suf}zs{unrounded_high}n{unrounded_high}z", strip)
+        add_r(strip, f"{neg_suf}zl{v_low}r", strip)
 
-            # 24. Past Person + Conditional Copula: -dımsa / -dimse / -dıksa / -dikse (aldımsa, öğrendimse)
-            for d_c, cond_v in (variants if not is_vowel_stem else [("d", cond_fut)]):
-                di_prefix = ("ydı" if is_vowel_stem else d_c) + v_high
-                for p_cond_suf in [
-                    f"{di_prefix}ms{v_low}",      # -dımsa / -dimse
-                    f"{di_prefix}ns{v_low}",      # -dınsa / -dinse
-                    f"{di_prefix}ks{v_low}",      # -dıksa / -dikse
-                    f"{di_prefix}n{v_high}zs{v_low}", # -dınızsa / -dinizse
-                ]:
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, p_cond_suf, cond_v])
+    # Neg Subject Participle (-mayan / -meyen with noun cases)
+    for pe in part_endings:
+        add_r(strip, f"{neg_suf}y{v_low}n{pe}", strip)
 
-                # Participle Locative + Conditional Copula: -dığında / -dığımızda / -dıklarında + ysa
-                suf_1pl_cond = f"{di_prefix}ğ{v_high}m{v_high}zd{v_low}ys{v_low}"
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf_1pl_cond, cond_v])
-                suf_3sg_cond = f"{di_prefix}ğ{v_high}nd{v_low}ys{v_low}"
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf_3sg_cond, cond_v])
-                suf_3pl_cond = f"{di_prefix}kl{v_low}r{v_pl_poss}nd{v_low}ys{v_low}"
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf_3pl_cond, cond_v])
+    # Neg Verbal Nouns with Full Person Agreement (küçümsemememiz, vb.)
+    add_r(strip, f"{neg_suf}m{v_low}s{unrounded_high}/{part_3sg}", strip)
+    add_r(strip, f"{neg_suf}m{v_low}s{unrounded_high}", strip)
+    add_r(strip, f"{neg_suf}m{v_low}m/{part_pers}", strip)
+    add_r(strip, f"{neg_suf}m{v_low}m", strip)
+    add_r(strip, f"{neg_suf}m{v_low}n/{part_pers}", strip)
+    add_r(strip, f"{neg_suf}m{v_low}n", strip)
+    add_r(strip, f"{neg_suf}m{v_low}m{unrounded_high}z/{part_pers}", strip)
+    add_r(strip, f"{neg_suf}m{v_low}m{unrounded_high}z", strip)
+    add_r(strip, f"{neg_suf}m{v_low}n{unrounded_high}z/{part_pers}", strip)
+    add_r(strip, f"{neg_suf}m{v_low}n{unrounded_high}z", strip)
+    add_r(strip, f"{neg_suf}m{v_low}l{v_low}r{unrounded_high}/{part_3sg}", strip)
+    add_r(strip, f"{neg_suf}m{v_low}l{v_low}r{unrounded_high}", strip)
 
-            # 25. Negative Ability Necessitative: -amamalı / -ememeli (çıkamamalı, yapamamalı)
-            pot_neg_nec = ("yamama" if is_vowel_stem else "amama") if back else (("yememe" if is_vowel_stem else "ememe"))
-            base_nec = f"{pot_neg_nec}l{v_high}"
-            for c in ["", "yım" if back else "yim", "sın" if back else "sin", "yız" if back else "yiz", "sınız" if back else "siniz", "lar" if back else "ler", "dır" if back else "dir", "ydı" if back else "ydi", "ymış" if back else "ymiş", "ysa" if back else "yse"]:
-                suf = f"{base_nec}{c}" if c else base_nec
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+    # Neg Object Participles with Full Person Agreement (bakmadığınız, vb.)
+    add_r(strip, f"{neg_suf}d{unrounded_high}ğ{unrounded_high}/{part_3sg}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}ğ{unrounded_high}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}ğ{unrounded_high}m/{part_pers}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}ğ{unrounded_high}m", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}ğ{unrounded_high}n/{part_pers}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}ğ{unrounded_high}n", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}ğ{unrounded_high}m{unrounded_high}z/{part_pers}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}ğ{unrounded_high}m{unrounded_high}z", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}ğ{unrounded_high}n{unrounded_high}z/{part_pers}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}ğ{unrounded_high}n{unrounded_high}z", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}kl{v_low}r{unrounded_high}/{part_3sg}", strip)
+    add_r(strip, f"{neg_suf}d{unrounded_high}kl{v_low}r{unrounded_high}", strip)
+    
+    # Neg Future Participles with Full Person Agreement
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}ğ{unrounded_high}/{part_3sg}", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}ğ{unrounded_high}", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}ğ{unrounded_high}m/{part_pers}", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}ğ{unrounded_high}m", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}ğ{unrounded_high}n/{part_pers}", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}ğ{unrounded_high}n", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}ğ{unrounded_high}m{unrounded_high}z/{part_pers}", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}ğ{unrounded_high}m{unrounded_high}z", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}ğ{unrounded_high}n{unrounded_high}z/{part_pers}", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}ğ{unrounded_high}n{unrounded_high}z", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}kl{v_low}r{unrounded_high}/{part_3sg}", strip)
+    add_r(strip, f"{neg_suf}y{v_low}c{v_low}kl{v_low}r{unrounded_high}", strip)
 
-            # 26. Negative Present Participle: -mayanlar / -meyenler (geçmeyenlerden, bilmeyenlerin)
-            mayan_suf = f"{m_vowel}y{v_low}n"
-            base_neg_an_pl = f"{mayan_suf}l{v_low}r"
-            for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "ın" if back else "in", "la" if back else "le", "ca" if back else "ce", "dandır" if back else "dendir", cop_c, cop_p, cop_r, cop_s]:
-                suf = f"{base_neg_an_pl}{c}" if c else base_neg_an_pl
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+    # Neg Compound Potential: -mayabilir / -meyebilir
+    neg_pot = f"{neg_suf}y{v_low}bil"
+    add_r(strip, f"{neg_pot}ir", strip)
+    add_r(strip, f"{neg_pot}irim", strip)
+    add_r(strip, f"{neg_pot}irsin", strip)
+    add_r(strip, f"{neg_pot}iriz", strip)
+    add_r(strip, f"{neg_pot}irsiniz", strip)
+    add_r(strip, f"{neg_pot}irler", strip)
+    add_r(strip, f"{neg_pot}irdi", strip)
+    add_r(strip, f"{neg_pot}irdik", strip)
+    add_r(strip, f"{neg_pot}irdiler", strip)
+    add_r(strip, f"{neg_pot}irse", strip)
+    add_r(strip, f"{neg_pot}iyor", strip)
+    add_r(strip, f"{neg_pot}iyoruz", strip)
+    add_r(strip, f"{neg_pot}iyorlar", strip)
 
-            for c in ["", "na" if back else "ne", "nı" if back else "ni", "nda" if back else "nde", "ndan" if back else "nden", "nın" if back else "nin", "yla" if back else "yle", cop_c, cop_p]:
-                suf = f"{base_neg_an_pl}{v_pl_poss}{c}" if c else f"{base_neg_an_pl}{v_pl_poss}"
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+    # 13. INABILITY ASPECT (-ama / -eme)
+    inab_p = "iyem" if is_narrow else (f"d{v_low}m" if is_voicing else (f"y{v_low}m" if is_vowel_stem else f"{v_low}m"))
+    inab_strip = "emek" if is_narrow else (f"t{strip}" if is_voicing else strip)
+    inab_cond = "[dy]emek" if is_narrow else (f"t{strip}" if is_voicing else strip)
 
-            base_neg_an_3sg = f"{mayan_suf}{v_pl_poss}"
-            for c in ["", "na" if back else "ne", "nı" if back else "ni", "nda" if back else "nde", "ndan" if back else "nden", "nın" if back else "nin", "yla" if back else "yle", cop_c, cop_p]:
-                suf = f"{base_neg_an_3sg}{c}" if c else base_neg_an_3sg
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_vn])
+    # Inab Pres Cont: yapamıyor, tutamıyor, anlatamıyorsak
+    add_r(inab_strip, f"{inab_p}{unrounded_high}yor/{cop_pres}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{unrounded_high}yorken", inab_cond)
+    for p in p_pres:
+        add_r(inab_strip, f"{inab_p}{unrounded_high}yor{p}", inab_cond)
 
-            # 27. Negative Potential Present Participle: -amayanlar / -emeyenler (sindiremeyenlere, gelemeyenlerin)
-            pot_neg_an = ("yamay" if is_vowel_stem else "amay") if back else (("yemey" if is_vowel_stem else "emey"))
-            base_pot_an_pl = f"{pot_neg_an}{v_low}nl{v_low}r"
-            for c in ["", "a" if back else "e", "ı" if back else "i", "da" if back else "de", "dan" if back else "den", "ın" if back else "in", "la" if back else "le", "ca" if back else "ce", "dandır" if back else "dendir", cop_c, cop_p, cop_r, cop_s]:
-                suf = f"{base_pot_an_pl}{c}" if c else base_pot_an_pl
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+    # Inab Past: yapamadı, alınamadı, düşürülemedi, sevdiremedik
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}/{cop_vow}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}", inab_cond)
+    for p in ["m", "n", "k", f"n{unrounded_high}z", f"l{v_low}r"]:
+        add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}{p}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}ms{v_low}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}ns{v_low}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}ks{v_low}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}n{unrounded_high}zs{v_low}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}l{v_low}rs{v_low}", inab_cond)
 
-            for c in ["", "na" if back else "ne", "nı" if back else "ni", "nda" if back else "nde", "ndan" if back else "nden", "nın" if back else "nin", "yla" if back else "yle", cop_c, cop_p]:
-                suf = f"{base_pot_an_pl}{v_pl_poss}{c}" if c else f"{base_pot_an_pl}{v_pl_poss}"
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+    # Inab Evidential: yapamamış
+    add_r(inab_strip, f"{inab_p}{v_low}m{unrounded_high}ş/{cop_unv}", inab_cond)
+    for p in ["", f"{unrounded_high}m", f"s{unrounded_high}n", f"{unrounded_high}z", f"s{unrounded_high}n{unrounded_high}z", f"l{v_low}r"]:
+        add_r(inab_strip, f"{inab_p}{v_low}m{unrounded_high}ş{p}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}m{unrounded_high}ş{unrounded_high}md{unrounded_high}r", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}m{unrounded_high}ş{unrounded_high}zd{unrounded_high}r", inab_cond)
 
-            base_pot_an_3sg = f"{pot_neg_an}{v_low}n{v_pl_poss}"
-            for c in ["", "na" if back else "ne", "nı" if back else "ni", "nda" if back else "nde", "ndan" if back else "nden", "nın" if back else "nin", "yla" if back else "yle", cop_c, cop_p]:
-                suf = f"{base_pot_an_3sg}{c}" if c else base_pot_an_3sg
-                verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, suf, cond_pot])
+    # Inab Future: yapamayacak, giremeyeceğin
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}k/{cop_unv}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}k", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}ğ{unrounded_high}m", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}ks{unrounded_high}n", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}ğ{unrounded_high}z", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}ks{unrounded_high}n{unrounded_high}z", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}kl{v_low}r", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}kl{v_low}rd{unrounded_high}r", inab_cond)
 
-            # 28. Infinitive Verbal Noun Cases: -makla / -mekle, -maktan / -mekten, -maksızın / -meksizin, -masızın / -mesizin
-            verb_flags_rules[flag_char][1].append(["SFX", flag_char, "0", "la" if back else "le", f"{strip}"])
-            verb_flags_rules[flag_char][1].append(["SFX", flag_char, "0", "tan" if back else "ten", f"{strip}"])
-            verb_flags_rules[flag_char][1].append(["SFX", flag_char, "0", "sık" if back else "sik", f"{strip}"])
-            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"maksızın" if back else f"meksizin", "."])
-            verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"masızın" if back else f"mesizin", "."])
+    # Inab Aorist: sığdıramam, yapamaz, yapamayız
+    add_r(inab_strip, f"{inab_p}{v_low}z/{cop_aor}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}m", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}zs{unrounded_high}n", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}z", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{unrounded_high}z", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}zs{unrounded_high}n{unrounded_high}z", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}zl{v_low}r", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}zken", inab_cond)
 
-            # 29. Aorist Person Locative / Conditional Copulas: -arımda / -erimde, -arımdaysa / -erimdeyse
-            # e.g. bakar + ım + da -> bakarımda; görür + üm + de -> görürümde
-            aor_vow = "ar" if back else "er"
-            if flag_name in ("wa", "we", "wr", "wg", "VB", "VF", "VR", "VG"):
-                aor_1sg = f"{aor_vow}{v_high}m"
-                for c in ["da" if back else "de", "dan" if back else "den", "daysa" if back else "deyse"]:
-                    verb_flags_rules[flag_char][1].append(["SFX", flag_char, strip, f"{aor_1sg}{c}", "."])
+    # Inab Necessitative & Conditional
+    add_r(inab_strip, f"{inab_p}{v_low}m{v_low}l{unrounded_high}/{cop_vow}", inab_cond)
+    for p in ["", f"y{unrounded_high}m", f"s{unrounded_high}n", f"y{unrounded_high}z", f"s{unrounded_high}n{unrounded_high}z", f"l{v_low}r"]:
+        add_r(inab_strip, f"{inab_p}{v_low}m{v_low}l{unrounded_high}{p}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}s{v_low}/{cop_vow}", inab_cond)
+    for p in ["", "m", "n", "k", f"n{unrounded_high}z", f"l{v_low}r", f"n{v_low}", f"n{unrounded_high}z{v_low}"]:
+        add_r(inab_strip, f"{inab_p}{v_low}s{v_low}{p}", inab_cond)
+
+    # Inab Progressive & Infinitives: kullanamamaktadır
+    add_r(inab_strip, f"{inab_p}{v_low}m{v_low}k", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}m{v_low}kt{v_low}/{cop_vow}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}m{v_low}kt{v_low}n", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}m{v_low}kl{v_low}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}m{v_low}y{unrounded_high}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}m{v_low}y{v_low}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}m{v_low}n{unrounded_high}n", inab_cond)
+    for p in ["", f"y{unrounded_high}m", f"s{unrounded_high}n", f"y{unrounded_high}z", f"s{unrounded_high}n{unrounded_high}z", f"l{v_low}r"]:
+        add_r(inab_strip, f"{inab_p}{v_low}m{v_low}kt{v_low}{p}", inab_cond)
+
+    # Inab Participles & Converbs: geçemediğinin, bitirilemeyince
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}ğ{unrounded_high}/{part_3sg}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}ğ{unrounded_high}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}ğ{unrounded_high}m/{part_pers}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}ğ{unrounded_high}n/{part_pers}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}ğ{unrounded_high}m{unrounded_high}z/{part_pers}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}ğ{unrounded_high}m{unrounded_high}z", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}ğ{unrounded_high}n{unrounded_high}z/{part_pers}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}ğ{unrounded_high}n{unrounded_high}z", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}kl{v_low}r{unrounded_high}/{part_3sg}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}kl{v_low}r{unrounded_high}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}ğ{unrounded_high}/{part_3sg}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}ğ{unrounded_high}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}ğ{unrounded_high}m/{part_pers}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}ğ{unrounded_high}m", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}ğ{unrounded_high}n/{part_pers}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}ğ{unrounded_high}n", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}ğ{unrounded_high}m{unrounded_high}z/{part_pers}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}ğ{unrounded_high}m{unrounded_high}z", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}ğ{unrounded_high}n{unrounded_high}z/{part_pers}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}ğ{unrounded_high}n{unrounded_high}z", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}kl{v_low}r{unrounded_high}/{part_3sg}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}kl{v_low}r{unrounded_high}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}m{v_low}s{unrounded_high}/{part_3sg}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}m{v_low}s{unrounded_high}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{v_low}r{v_low}k", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{unrounded_high}p", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}y{unrounded_high}nc{v_low}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}kç{v_low}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{unrounded_high}kt{v_low}n", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}d{v_low}n", inab_cond)
+    for pe in part_endings:
+        add_r(inab_strip, f"{inab_p}{v_low}y{v_low}n{pe}", inab_cond)
+
+    # Inab Compound Potential: -amayabilir / -emeyebilir
+    inab_pot = f"{inab_p}{v_low}y{v_low}bil"
+    add_r(inab_strip, f"{inab_pot}ir", inab_cond)
+    add_r(inab_strip, f"{inab_pot}irim", inab_cond)
+    add_r(inab_strip, f"{inab_pot}irsin", inab_cond)
+    add_r(inab_strip, f"{inab_pot}iriz", inab_cond)
+    add_r(inab_strip, f"{inab_pot}irsiniz", inab_cond)
+    add_r(inab_strip, f"{inab_pot}irler", inab_cond)
+    add_r(inab_strip, f"{inab_pot}irdi", inab_cond)
+    add_r(inab_strip, f"{inab_pot}irdik", inab_cond)
+    add_r(inab_strip, f"{inab_pot}irdiler", inab_cond)
+    add_r(inab_strip, f"{inab_pot}irse", inab_cond)
+
+    # 14. POSITIVE POTENTIAL ASPECT (-abil / -ebil)
+    pot_p = "iyebil" if is_narrow else (f"d{v_low}bil" if is_voicing else (f"y{v_low}bil" if is_vowel_stem else f"{v_low}bil"))
+    pot_strip = inab_strip
+    pot_cond = inab_cond
+    
+    # All suffixes on -bil are front-unrounded
+    add_r(pot_strip, f"{pot_p}ir/{cop_aor}", pot_cond)
+    add_r(pot_strip, f"{pot_p}ir", pot_cond)
+    add_r(pot_strip, f"{pot_p}irim", pot_cond)
+    add_r(pot_strip, f"{pot_p}irsin", pot_cond)
+    add_r(pot_strip, f"{pot_p}iriz", pot_cond)
+    add_r(pot_strip, f"{pot_p}irsiniz", pot_cond)
+    add_r(pot_strip, f"{pot_p}irler", pot_cond)
+    add_r(pot_strip, f"{pot_p}irken", pot_cond)
+    # Past
+    add_r(pot_strip, f"{pot_p}di/{cop_past}", pot_cond)
+    add_r(pot_strip, f"{pot_p}di", pot_cond)
+    add_r(pot_strip, f"{pot_p}dim", pot_cond)
+    add_r(pot_strip, f"{pot_p}din", pot_cond)
+    add_r(pot_strip, f"{pot_p}dik", pot_cond)
+    add_r(pot_strip, f"{pot_p}diniz", pot_cond)
+    add_r(pot_strip, f"{pot_p}diler", pot_cond)
+    add_r(pot_strip, f"{pot_p}dikte", pot_cond)
+    add_r(pot_strip, f"{pot_p}dikten", pot_cond)
+    # Evidential
+    add_r(pot_strip, f"{pot_p}miş/{cop_unv}", pot_cond)
+    add_r(pot_strip, f"{pot_p}miş", pot_cond)
+    add_r(pot_strip, f"{pot_p}mişler", pot_cond)
+    # Present Continuous
+    add_r(pot_strip, f"{pot_p}iyor/{cop_pres}", pot_cond)
+    add_r(pot_strip, f"{pot_p}iyor", pot_cond)
+    add_r(pot_strip, f"{pot_p}iyorum", pot_cond)
+    add_r(pot_strip, f"{pot_p}iyorsun", pot_cond)
+    add_r(pot_strip, f"{pot_p}iyoruz", pot_cond)
+    add_r(pot_strip, f"{pot_p}iyorsunuz", pot_cond)
+    add_r(pot_strip, f"{pot_p}iyorlar", pot_cond)
+    add_r(pot_strip, f"{pot_p}iyorken", pot_cond)
+    # Future
+    add_r(pot_strip, f"{pot_p}ecek/{cop_unv}", pot_cond)
+    add_r(pot_strip, f"{pot_p}ecek", pot_cond)
+    add_r(pot_strip, f"{pot_p}eceğim", pot_cond)
+    add_r(pot_strip, f"{pot_p}eceksin", pot_cond)
+    add_r(pot_strip, f"{pot_p}eceğiz", pot_cond)
+    add_r(pot_strip, f"{pot_p}eceksiniz", pot_cond)
+    add_r(pot_strip, f"{pot_p}ecekler", pot_cond)
+    add_r(pot_strip, f"{pot_p}eceklerdir", pot_cond)
+    # Imperative & Necessitative
+    add_r(pot_strip, f"{pot_p}sin", pot_cond)
+    add_r(pot_strip, f"{pot_p}sinler", pot_cond)
+    add_r(pot_strip, f"{pot_p}meli/{cop_vow}", pot_cond)
+    add_r(pot_strip, f"{pot_p}meli", pot_cond)
+    add_r(pot_strip, f"{pot_p}melisin", pot_cond)
+    add_r(pot_strip, f"{pot_p}meliyiz", pot_cond)
+    add_r(pot_strip, f"{pot_p}meliler", pot_cond)
+    # Verbal Noun & Progressive
+    add_r(pot_strip, f"{pot_p}me", pot_cond)
+    add_r(pot_strip, f"{pot_p}mek", pot_cond)
+    add_r(pot_strip, f"{pot_p}mekte/{cop_vow}", pot_cond)
+    add_r(pot_strip, f"{pot_p}mekte", pot_cond)
+    add_r(pot_strip, f"{pot_p}mektedir", pot_cond)
+    add_r(pot_strip, f"{pot_p}mesi/{part_3sg}", pot_cond)
+    add_r(pot_strip, f"{pot_p}mesi", pot_cond)
+    # Participles
+    add_r(pot_strip, f"{pot_p}diği/{part_3sg}", pot_cond)
+    add_r(pot_strip, f"{pot_p}diği", pot_cond)
+    add_r(pot_strip, f"{pot_p}diğim/{part_pers}", pot_cond)
+    add_r(pot_strip, f"{pot_p}diğin/{part_pers}", pot_cond)
+    add_r(pot_strip, f"{pot_p}diğimiz/{part_pers}", pot_cond)
+    add_r(pot_strip, f"{pot_p}diğiniz/{part_pers}", pot_cond)
+    add_r(pot_strip, f"{pot_p}dikleri/{part_3sg}", pot_cond)
+    add_r(pot_strip, f"{pot_p}dikleri", pot_cond)
+    add_r(pot_strip, f"{pot_p}eceği/{part_3sg}", pot_cond)
+    add_r(pot_strip, f"{pot_p}eceği", pot_cond)
+    add_r(pot_strip, f"{pot_p}eceğim/{part_pers}", pot_cond)
+    add_r(pot_strip, f"{pot_p}eceğin/{part_pers}", pot_cond)
+    add_r(pot_strip, f"{pot_p}eceğimiz/{part_pers}", pot_cond)
+    add_r(pot_strip, f"{pot_p}eceğiniz/{part_pers}", pot_cond)
+    add_r(pot_strip, f"{pot_p}ecekleri/{part_3sg}", pot_cond)
+    add_r(pot_strip, f"{pot_p}ecekleri", pot_cond)
+    for pe in [
+        "", "ler", "leri", "lere", "lerde", "lerden", "lerin", "leriyle",
+        "i", "e", "de", "den", "in", "yle"
+    ]:
+        add_r(pot_strip, f"{pot_p}en{pe}", pot_cond)
+    # Converbs
+    add_r(pot_strip, f"{pot_p}erek", pot_cond)
+    add_r(pot_strip, f"{pot_p}ip", pot_cond)
+    add_r(pot_strip, f"{pot_p}ince", pot_cond)
+    add_r(pot_strip, f"{pot_p}dikçe", pot_cond)
+    add_r(pot_strip, f"{pot_p}se", pot_cond)
+    add_r(pot_strip, f"{pot_p}seydi", pot_cond)
+
+    return make_verb_flag_block(flag, rules)
 
 
+def generate_aorist_subflag_block(flag: str, aor_vowel: str, is_back: bool, strip: str) -> str:
+    rules = []
+    cop_aor = "cA" if is_back else "cE"
+    v_low = "a" if is_back else "e"
+    p_high = aor_vowel if aor_vowel in ('ı', 'i', 'u', 'ü') else ("ı" if is_back else "i")
+    neg_unrounded_high = "ı" if is_back else "i"
+    neg_suf = f"m{v_low}"
 
-    out_lines = []
-    for flag_char in verb_flags_order:
-        combine_char, rules = verb_flags_rules[flag_char]
-        count = len(rules)
-        out_lines.append(f"SFX {flag_char} {combine_char} {count}")
-        for p in rules:
-            p[1] = flag_char
-            out_lines.append(" ".join(p))
+    # Positive Aorist
+    rules.append(sfx(flag, strip, f"{aor_vowel}r/{cop_aor}", strip))
+    rules.append(sfx(flag, strip, f"{aor_vowel}r", strip))
+    rules.append(sfx(flag, strip, f"{aor_vowel}rken", strip))
+    rules.append(sfx(flag, strip, f"{aor_vowel}rc{v_low}s{neg_unrounded_high}n{v_low}", strip))
+    rules.append(sfx(flag, strip, f"{aor_vowel}r{p_high}m", strip))
+    rules.append(sfx(flag, strip, f"{aor_vowel}rs{p_high}n", strip))
+    rules.append(sfx(flag, strip, f"{aor_vowel}rs{neg_unrounded_high}n", strip))
+    rules.append(sfx(flag, strip, f"{aor_vowel}r{p_high}z", strip))
+    rules.append(sfx(flag, strip, f"{aor_vowel}rs{p_high}n{p_high}z", strip))
+    rules.append(sfx(flag, strip, f"{aor_vowel}rs{neg_unrounded_high}n{neg_unrounded_high}z", strip))
+    rules.append(sfx(flag, strip, f"{aor_vowel}rl{v_low}r", strip))
 
-    return '\n'.join(out_lines)
+    # Negative Aorist
+    rules.append(sfx(flag, strip, f"{neg_suf}z/{cop_aor}", strip))
+    rules.append(sfx(flag, strip, f"{neg_suf}m", strip))
+    rules.append(sfx(flag, strip, f"{neg_suf}zs{neg_unrounded_high}n", strip))
+    rules.append(sfx(flag, strip, f"{neg_suf}z", strip))
+    rules.append(sfx(flag, strip, f"{neg_suf}y{neg_unrounded_high}z", strip))
+    rules.append(sfx(flag, strip, f"{neg_suf}zs{neg_unrounded_high}n{neg_unrounded_high}z", strip))
+    rules.append(sfx(flag, strip, f"{neg_suf}zl{v_low}r", strip))
+    rules.append(sfx(flag, strip, f"{neg_suf}zken", strip))
+
+    return make_verb_flag_block(flag, rules)
+
+
+def generate_factorized_verb_rules() -> str:
+    blocks = []
+    
+    # 1. Stage 2 Copula and Case Flags
+    blocks.extend(generate_stage2_flags())
+    
+    # 2. Stage 1 Verb Classes
+    # Consonant stems
+    blocks.append(generate_verb_stage1_block("VB", back=True, round_v=False, is_vowel_stem=False, is_narrow=False, strip="mak"))
+    blocks.append(generate_verb_stage1_block("VR", back=True, round_v=True, is_vowel_stem=False, is_narrow=False, strip="mak"))
+    blocks.append(generate_verb_stage1_block("VF", back=False, round_v=False, is_vowel_stem=False, is_narrow=False, strip="mek"))
+    blocks.append(generate_verb_stage1_block("VG", back=False, round_v=True, is_vowel_stem=False, is_narrow=False, strip="mek"))
+    
+    # Vowel stems
+    blocks.append(generate_verb_stage1_block("VA", back=True, round_v=False, is_vowel_stem=True, is_narrow=False, strip="mak"))
+    blocks.append(generate_verb_stage1_block("VS", back=True, round_v=True, is_vowel_stem=True, is_narrow=False, strip="mak"))
+    blocks.append(generate_verb_stage1_block("VE", back=False, round_v=False, is_vowel_stem=True, is_narrow=False, strip="mek"))
+    blocks.append(generate_verb_stage1_block("VH", back=False, round_v=True, is_vowel_stem=True, is_narrow=False, strip="mek"))
+    
+    # Voicing consonant stems
+    blocks.append(generate_verb_stage1_block("VK", back=True, round_v=False, is_vowel_stem=False, is_narrow=False, strip="mak"))
+    blocks.append(generate_verb_stage1_block("VL", back=True, round_v=True, is_vowel_stem=False, is_narrow=False, strip="mak"))
+    blocks.append(generate_verb_stage1_block("VM", back=False, round_v=False, is_vowel_stem=False, is_narrow=False, strip="mek"))
+    blocks.append(generate_verb_stage1_block("VN", back=False, round_v=True, is_vowel_stem=False, is_narrow=False, strip="mek"))
+    
+    # Narrowing verbs (demek, yemek)
+    blocks.append(generate_verb_stage1_block("VY", back=False, round_v=False, is_vowel_stem=False, is_narrow=True, strip="mek"))
+    
+    # 3. Aorist Subflags
+    blocks.append(generate_aorist_subflag_block("wa", aor_vowel="a", is_back=True, strip="mak"))
+    blocks.append(generate_aorist_subflag_block("wi", aor_vowel="ı", is_back=True, strip="mak"))
+    blocks.append(generate_aorist_subflag_block("wr", aor_vowel="a", is_back=True, strip="mak"))
+    blocks.append(generate_aorist_subflag_block("wu", aor_vowel="u", is_back=True, strip="mak"))
+    blocks.append(generate_aorist_subflag_block("we", aor_vowel="e", is_back=False, strip="mek"))
+    blocks.append(generate_aorist_subflag_block("wj", aor_vowel="i", is_back=False, strip="mek"))
+    blocks.append(generate_aorist_subflag_block("wg", aor_vowel="e", is_back=False, strip="mek"))
+    blocks.append(generate_aorist_subflag_block("wh", aor_vowel="ü", is_back=False, strip="mek"))
+    
+    return "\n\n".join(blocks)
 
 
 def gen_voicing_copula_flags() -> list[str]:

@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+      - tdk
     paths:
       - 'tr.aff'
       - 'tr.dic'
@@ -65,6 +66,7 @@ jobs:
       - name: Commit & Tag New Version
         run: |
           VERSION="${{ steps.bump.outputs.version }}"
+          TAG_NAME="${{ steps.bump.outputs.tag_name || format('v{0}', steps.bump.outputs.version) }}"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
@@ -72,24 +74,24 @@ jobs:
           if git diff --staged --quiet; then
             echo "No manifest changes to commit."
           else
-            git commit -m "chore: release version v${VERSION} [skip ci]"
+            git commit -m "chore: release version ${TAG_NAME} [skip ci]"
             git push origin HEAD
           fi
           
-          if git rev-parse "v${VERSION}" >/dev/null 2>&1; then
-            echo "Tag v${VERSION} already exists locally."
+          if git rev-parse "${TAG_NAME}" >/dev/null 2>&1; then
+            echo "Tag ${TAG_NAME} already exists locally."
           else
-            git tag "v${VERSION}"
-            git push origin "v${VERSION}" || echo "Tag v${VERSION} already pushed or exists on remote."
+            git tag "${TAG_NAME}"
+            git push origin "${TAG_NAME}" || echo "Tag ${TAG_NAME} already pushed or exists on remote."
           fi
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: "v${{ steps.bump.outputs.version }}"
-          name: "Release v${{ steps.bump.outputs.version }}"
+          tag_name: "${{ steps.bump.outputs.tag_name || format('v{0}', steps.bump.outputs.version) }}"
+          name: "Release ${{ steps.bump.outputs.tag_name || format('v{0}', steps.bump.outputs.version) }}"
           body: |
-            Automated release for version `v${{ steps.bump.outputs.version }}` of the Turkspell Firefox dictionary extension.
+            Automated release for version `${{ steps.bump.outputs.tag_name || steps.bump.outputs.version }}` of the Turkspell Firefox dictionary extension.
           files: turkspell-addon.xpi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

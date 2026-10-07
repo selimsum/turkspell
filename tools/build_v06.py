@@ -18,12 +18,13 @@ AFF_SRC = TURKSPELL_DIR / "tr.aff"
 DIC_SRC = TURKSPELL_DIR / "tr.dic"
 
 sys.path.insert(0, str(TURKSPELL_DIR / "build"))
-from utf8_flag_mapping import UTF8_TO_LONG, LONG_TO_UTF8, remap_flag_string, remap_flag_string
+from utf8_flag_mapping import UTF8_TO_LONG, LONG_TO_UTF8, remap_flag_string, STAGE2_VERB_FLAGS
 
 vowels = "AEIOUaeiouÂÎÖÛÜâîöûüİı"
 consonant_cond = "[^AEIOUaeiouÂÎÖÛÜâîöûüİı]"
 
 DEAD_FLAG_CHARS = {LONG_TO_UTF8[f] for f in ['G2', 'NX', 'Vb', 'Vf'] if f in LONG_TO_UTF8}
+STAGE2_VERB_CHARS = {LONG_TO_UTF8[f] for f in STAGE2_VERB_FLAGS if f in LONG_TO_UTF8}
 PROPER_SUB_UTF8 = {k for k, v in UTF8_TO_LONG.items() if v.startswith("p") and len(v) == 3}
 KC_FLAG = LONG_TO_UTF8.get("KC", "")
 
@@ -665,6 +666,43 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "batım/∀∄∌∍∎∡∧∩∪∫∲∶∺∼∽≂≉≋≍≣",
     "tescillenmek/≗⊃",
     "tescillenme/∍∛∨∩∴∸∻∿≄≆≊≌≧≩≫≮⊇",
+    "afişletmek/≗⊃",
+    "zayıflatılmak/≔⊂",
+    "güçsüzleşmek/≗⊃",
+    "aktifleştirilmek/≗⊃",
+    "alenileştirilmek/≗⊃",
+    "itibarsızlaştırılmak/≔⊂",
+    "nemalandırılmak/≔⊂",
+    "kullandırılmak/≔⊂",
+    "yapılandırılmak/≔⊂",
+    "sağırlaştırılmak/≔⊂",
+    "kutsallaştırılmak/≔⊂",
+    "şüphelenilmek/≗⊃",
+    "sabredilmek/≗⊃",
+    "bağlanılmak/≔⊂",
+    "planlanılmak/≔⊂",
+    "rastlanılmak/≔⊂",
+    "dayandırılmak/≔⊂",
+    "cımbızlanmak/≔⊂",
+    "kefenlenmek/≗⊃",
+    "fonlanmak/≔⊂",
+    "gazlaştırılmak/≔⊂",
+    "çaptırmak/≔⊂",
+    "incelettirilmek/≗⊃",
+    "kurtulunmak/≔⊂",
+    "erilmek/≗⊃",
+    "taşırılmak/≔⊂",
+    "meşrulaştırılmak/≔⊂",
+    "vergilenmek/≗⊃",
+    "diriltilmek/≗⊃",
+    "dolgunlaştırılmak/≔⊂",
+    "katledilmek/≗⊃",
+    "kavuşturulmak/≔⊂",
+    "dürtmek/≗⊃",
+    "sürtmek/≗⊃",
+    "toplattırmak/≔⊂",
+    "tamamlatılmak/≔⊂",
+    "hazırlatılmak/≔⊂",
     # Scientific, technical, and everyday measurement unit symbols:
     "nm/⊘⊙⊚⊛⊜⊝⊞⊟",
     "ml/⊘⊙⊚⊛⊜⊝⊞⊟",
@@ -932,7 +970,7 @@ def build_hardened_aff(profile="tdk"):
                 if clean_add.endswith("ğ") and "X" not in flags:
                     parts[3] = f"{clean_add}/X{flags}"
                     line = " ".join(parts) + "\n"
-            if len(parts) >= 5:
+            if curr_flag not in STAGE2_VERB_CHARS and len(parts) >= 5:
                 clean_add = parts[3].split("/")[0]
                 if parts[2] in ("mak", "mek"):
                     if clean_add.startswith(("ıl", "il", "ul", "ül")):
@@ -985,9 +1023,6 @@ def build_hardened_aff(profile="tdk"):
                     dropped_rules += 1
                     continue
                 elif flag_long == 'VS' and cond == 'ımak':
-                    dropped_rules += 1
-                    continue
-                elif flag_long == 'VL' and cond.endswith('tmak'):
                     dropped_rules += 1
                     continue
             seen.add(r_strip)
@@ -1063,7 +1098,52 @@ MAP '’‘"""
         if rule_str:
             clean_extra.append(rule_str)
 
-    if profile == "dd":
+    if profile == "tdk":
+        clean_extra.extend([
+            "resmi resmî",
+            "milli millî",
+            "dini dinî",
+            "askeri askerî",
+            "tarihi tarihî",
+            "ahlaki ahlâkî",
+            "dahili dâhilî",
+            "ilmi ilmî",
+            "edebi edebî",
+            "ebedi ebedî",
+            "insani insanî",
+            "ruhi ruhî",
+            "siyasi siyasî",
+            "hukuki hukukî",
+            "iktisadi iktisadî",
+            "felsefi felsefî",
+            "zihni zihnî",
+            "hayali hayalî",
+            "manevi manevî",
+            "maddi maddî",
+            "harbi harbî",
+            "kısmi kısmî",
+            "şahsi şahsî",
+            "vicdani vicdanî",
+            "dahiliye dâhiliye",
+            "dahil dâhil",
+            "bekar bekâr",
+            "ruzgar rüzgâr",
+            "hikaye hikâye",
+            "kagıt kâğıt",
+            "kagit kâğıt",
+            "dukkan dükkân",
+            "tezgah tezgâh",
+            "mekan mekân",
+            "imkan imkân",
+            "mahkum mahkûm",
+            "sukun sükûn",
+            "sukut sükût",
+            "batini bâtıni",
+            "teleskopu teleskobu",
+            "bergamotu bergamodu",
+            "baçı bacı"
+        ])
+    elif profile == "dd":
         clean_extra.extend([
             "î i",
             "resmî resmi",
@@ -1102,13 +1182,20 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     for h in tdk_words:
         if any(c in h for c in 'âîû'):
             u = h.translate(unhat_map)
-            if u not in dd_words and u not in tdk_words:
-                unhatted_to_purge.add(tr_lower(u))
+            if profile == "tdk":
+                if u not in tdk_words:
+                    unhatted_to_purge.add(tr_lower(u))
+            else:
+                if u not in dd_words and u not in tdk_words:
+                    unhatted_to_purge.add(tr_lower(u))
     print(f"  Unhatted clones targeted for purge: {len(unhatted_to_purge)}")
 
     authority_all = tdk_words | dd_words
+    dd_words_to_purge = set()
     if profile == "tdk":
         all_ref = tdk_words
+        dd_words_to_purge = (dd_words - tdk_words) - custom_names - custom_abbrevs - {tr_lower(c) for c in COMPOUND_SET}
+        print(f"  Dil Derneği-only words targeted for purge: {len(dd_words_to_purge)}")
     elif profile == "dd":
         all_ref = dd_words
     else:
@@ -1144,6 +1231,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     removed_crawler_spam = 0
     removed_unhatted_dups = 0
     removed_bad_stems = 0
+    removed_dd_words = 0
     removed_redundant_upper = 0
     cleaned_common_noun_flags = 0
     
@@ -1175,6 +1263,11 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         if head_lower in BAD_STEMS and "X" not in flags and not flags.startswith("X"):
             removed_bad_stems += 1
             continue
+
+        # 1b. In TDK profile, purge words unique to Dil Derneği
+        if profile == "tdk" and head_lower in dd_words_to_purge:
+            removed_dd_words += 1
+            continue
             
         # 2. Purge unhatted duplicates for mandatory hatted words
         if head in unhatted_to_purge or head_lower in unhatted_to_purge:
@@ -1182,7 +1275,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             continue
             
         # 3. Whitelist check (protects all custom abbreviations, custom names, compound terms, TDK/DD)
-        is_whitelisted = head_lower in whitelist or head in custom_abbrevs_orig or head in custom_names_orig or head_lower in authority_all
+        is_whitelisted = head_lower in whitelist or head in custom_abbrevs_orig or head in custom_names_orig or (head_lower in authority_all if profile != "tdk" else head_lower in tdk_words)
         
         if not is_whitelisted:
             # 1-3 letter permutation noise not in whitelist
@@ -1290,6 +1383,11 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         # Loanwords ending in 'ing' must take front-vowel noun suffixes
         if head.lower().endswith("ing") and ("≑" in flags or not flags):
             flags = flags.replace("≑", "") + "∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍⊘⊙⊚⊛⊜⊝⊞⊟"
+            
+        # For TDK profile: dual voicing stems (teleskop, bergamot, baç) take only consonant suffixes
+        if profile == "tdk" and head_lower in (DUAL_VOICING_BACK_ROUNDED + DUAL_VOICING_BACK_UNROUNDED):
+            consonant_flags = remap_flag_string("CI CK CL L1 LI LK PB Q1 R1 SL SZ".replace(" ", ""))
+            flags = "".join(sorted(set(c for c in flags if c in consonant_flags)))
             
         if profile == "dd" and "î" in head:
             head_dd = head.replace("î", "i")
@@ -1433,7 +1531,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     print(f"  Clean entries before dedup: {len(clean_entries):,} -> after dedup: {len(deduped_entries):,}")
     return deduped_entries
 
-def compile_v06():
+def compile_v06(deploy_profile="tdk"):
     tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig = load_lexicons()
     
     profiles = ["tdk", "dd", "universal"]
@@ -1472,16 +1570,16 @@ def compile_v06():
             with open(src, "rb") as f_in, open(dst, "wb") as f_out:
                 shutil.copyfileobj(f_in, f_out)
 
-    # Deploy default Universal profile to repository root
-    print("\nDeploying default Turkspell (Universal) to repository root (c:\\gemini\\turkspell\\tr.*)...")
-    _copy_file(DIST_DIR / "turkspell-universal" / "tr.aff", TURKSPELL_DIR / "tr.aff")
-    _copy_file(DIST_DIR / "turkspell-universal" / "tr.dic", TURKSPELL_DIR / "tr.dic")
+    # Deploy selected profile to repository root
+    print(f"\nDeploying Turkspell ({deploy_profile.upper()}) to repository root (c:\\gemini\\turkspell\\tr.*)...")
+    _copy_file(DIST_DIR / f"turkspell-{deploy_profile}" / "tr.aff", TURKSPELL_DIR / "tr.aff")
+    _copy_file(DIST_DIR / f"turkspell-{deploy_profile}" / "tr.dic", TURKSPELL_DIR / "tr.dic")
     
     # Deploy to Firefox addon
     addon_dict_dir = TURKSPELL_DIR / "firefox-addon" / "dictionaries"
     if addon_dict_dir.exists():
-        _copy_file(DIST_DIR / "turkspell-universal" / "tr.aff", addon_dict_dir / "tr.aff")
-        _copy_file(DIST_DIR / "turkspell-universal" / "tr.dic", addon_dict_dir / "tr.dic")
+        _copy_file(DIST_DIR / f"turkspell-{deploy_profile}" / "tr.aff", addon_dict_dir / "tr.aff")
+        _copy_file(DIST_DIR / f"turkspell-{deploy_profile}" / "tr.dic", addon_dict_dir / "tr.dic")
         
     print("Deployment complete!")
     print("\nValidating deployed dictionary and running regression tests...")
@@ -1496,4 +1594,13 @@ def compile_v06():
     print(f"Validation and regression tests passed ({len(warnings)} warning(s)).")
 
 if __name__ == "__main__":
-    compile_v06()
+    import argparse
+    parser = argparse.ArgumentParser(description="Compile Turkspell Hunspell dictionaries")
+    parser.add_argument(
+        "--deploy-profile",
+        default=os.environ.get("TURKSPELL_PROFILE", "tdk"),
+        choices=["tdk", "universal", "dd"],
+        help="Profile to deploy to repo root and firefox-addon (default: tdk)"
+    )
+    args = parser.parse_args()
+    compile_v06(deploy_profile=args.deploy_profile)

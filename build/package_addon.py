@@ -16,26 +16,36 @@ def package_addon():
     # 1. Ensure directories exist (don't wipe them — manifest.json is kept in source control)
     os.makedirs(dictionaries_dir, exist_ok=True)
 
-    # 2. Ensure dictionary files are in place (prefer universal profile, fallback to root)
-    universal_dic = os.path.join(_root_dir, "dist", "turkspell-universal", "tr.dic")
-    universal_aff = os.path.join(_root_dir, "dist", "turkspell-universal", "tr.aff")
-    if not (os.path.exists(universal_dic) and os.path.exists(universal_aff)):
-        universal_dic = os.path.join(_root_dir, "dist", "turkspell-v0.6-universal", "tr.dic")
-        universal_aff = os.path.join(_root_dir, "dist", "turkspell-v0.6-universal", "tr.aff")
+    # 2. Ensure dictionary files are in place based on manifest or profile
+    manifest_path = os.path.join(addon_dir, "manifest.json")
+    target_profile = os.environ.get("TURKSPELL_PROFILE", "tdk")
+    if os.path.exists(manifest_path):
+        try:
+            with open(manifest_path, encoding="utf-8") as f:
+                m_data = json.load(f)
+                addon_id = m_data.get("browser_specific_settings", {}).get("gecko", {}).get("id", "")
+                if "tdk" in addon_id or "TDK" in m_data.get("name", ""):
+                    target_profile = "tdk"
+                elif "universal" in addon_id or "Evrensel" in m_data.get("name", ""):
+                    target_profile = "universal"
+        except Exception:
+            pass
+
+    profile_dic = os.path.join(_root_dir, "dist", f"turkspell-{target_profile}", "tr.dic")
+    profile_aff = os.path.join(_root_dir, "dist", f"turkspell-{target_profile}", "tr.aff")
     addon_dic = os.path.join(dictionaries_dir, "tr.dic")
     addon_aff = os.path.join(dictionaries_dir, "tr.aff")
 
-    if os.path.exists(universal_dic) and os.path.exists(universal_aff):
-        print("Using universal profile tr.dic and tr.aff for Firefox extension...")
-        shutil.copy(universal_dic, addon_dic)
-        shutil.copy(universal_aff, addon_aff)
+    if os.path.exists(profile_dic) and os.path.exists(profile_aff):
+        print(f"Using {target_profile} profile tr.dic and tr.aff for Firefox extension...")
+        shutil.copy(profile_dic, addon_dic)
+        shutil.copy(profile_aff, addon_aff)
     elif not (os.path.exists(addon_dic) and os.path.exists(addon_aff)):
         print("Copying root tr.dic and tr.aff...")
         shutil.copy(os.path.join(_root_dir, "tr.dic"), addon_dic)
         shutil.copy(os.path.join(_root_dir, "tr.aff"), addon_aff)
 
     # 3. Verify manifest.json is present
-    manifest_path = os.path.join(addon_dir, "manifest.json")
     if not os.path.exists(manifest_path):
         raise FileNotFoundError(
             "manifest.json not found in firefox-addon/. "

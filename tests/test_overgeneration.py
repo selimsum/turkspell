@@ -9,6 +9,8 @@ Verifies that affix rules and flags do NOT overgenerate impossible Turkish words
 """
 
 import sys
+import os
+import shutil
 import subprocess
 import unittest
 from pathlib import Path
@@ -16,11 +18,19 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DICT_PATH = str(ROOT_DIR / "tr")
 
+winget_pkg_dir = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages")
+for root, dirs, files in os.walk(winget_pkg_dir):
+    if "hunspell.exe" in files:
+        if root not in os.environ.get("PATH", ""):
+            os.environ["PATH"] = root + os.pathsep + os.environ["PATH"]
+        break
+HUNSPELL_BIN = shutil.which("hunspell") or "hunspell"
+
 
 def check_illegal_words(words: list[str], dict_path: str = DICT_PATH) -> list[str]:
     """Runs hunspell -l on words that MUST be rejected. Returns any that leaked (were accepted)."""
     p = subprocess.run(
-        ["hunspell", "-d", dict_path, "-l"],
+        [HUNSPELL_BIN, "-d", dict_path, "-l"],
         input="\n".join(words) + "\n",
         text=True,
         capture_output=True,

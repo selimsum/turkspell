@@ -1,13 +1,13 @@
 {
   "manifest_version": 2,
-  "name": "Turkspell - Türkçe Yazım Denetimi",
-  "version": "0.6.10",
-  "description": "High-performance, lightweight Turkish spell-checking dictionary. Uses a Dynamic Chained Flags architecture, preserving state-of-the-art accuracy on benchmark suites.",
+  "name": "Turkspell - Türkçe Yazım Denetimi (TDK 2026)",
+  "version": "0.7.0",
+  "description": "Sadece Türk Dil Kurumu (TDK 2026) yazım kurallarını ve güncel sözlüğünü referans alan resmî Türkçe yazım denetimi eklentisi. Düzeltme işaretleri ve nispet 'î' kurallarını katı bir şekilde uygular.",
   "author": "Selim Şumlu",
-  "homepage_url": "https://github.com/selimsum/turkspell",
+  "homepage_url": "https://github.com/selimsum/turkspell/tree/tdk",
   "browser_specific_settings": {
     "gecko": {
-      "id": "turkspell@mozilla.org.tr",
+      "id": "turkspell-tdk@mozilla.org.tr",
       "strict_min_version": "109.0"
     }
   },
