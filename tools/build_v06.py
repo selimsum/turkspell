@@ -470,6 +470,36 @@ HEAD_FLAG_OVERRIDES = {
     "ihlalci": remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl LI LK SZ CI CK SL DL DT DE".replace(" ", "")),
     # an: relative -ki flag K1 (∣) for anki, ankinin, ankinden, etc.
     "an": "∀∄∌∍∎∖∗∘∡∣∧∩∪∫∲∶∺∼∽≂≉≋≍≎≣",
+    # apaçi: Kızılderili boyu / külhanbeyi (F3 vowel end)
+    "apaçi": remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl LI LK SZ CI CK SL DL DT DE".replace(" ", "")),
+    # forklift: endüstriyel taşıma aracı (front unvoiced noun)
+    "forklift": remap_flag_string("A3 CI CK DE F1 I2 L2 LI LK N3 P3 P7 PF PP PU PW Q2 R2 SL SZ Y2 cl".replace(" ", "")),
+    # menüsküs: anatomi (front unvoiced noun)
+    "menüsküs": remap_flag_string("A3 CI CK DE F1 I2 L2 LI LK N3 P3 P7 PF PP PU PW Q2 R2 SL SZ Y2 cl".replace(" ", "")),
+    # plutonyum: radyoaktif element (back rounded unvoiced noun)
+    "plutonyum": remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1".replace(" ", "")),
+    # Noun derivation restorations (LI, SZ, LK, CI) for stems stripped by corpus frequency:
+    "levrek": remap_flag_string("V3 L2 R2 I2 Q2 PF cl CK LI LK SZ CI SL".replace(" ", "")),
+    "hatim": remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
+    "maymun": remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1".replace(" ", "")),
+    "anzak": remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
+    "ayırım": remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
+    "nitrit": remap_flag_string("A3 CI CK DE F1 I2 L2 LI LK N3 P3 P7 PF PP PU PW Q2 R2 SL SZ Y2 cl".replace(" ", "")),
+    "ışıldak": remap_flag_string("V1 L1 R1 I1 Q1 PB CL CK LI LK SZ CI SL".replace(" ", "")),
+    "kaymakam": remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
+    "nakliye": remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl LI LK SZ CI CK SL".replace(" ", "")),
+    "frekans": remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
+    "leva": remap_flag_string("B3 a1 y1 L1 R1 n1 i1 Q1 PB PS P1 P5 PM PN CL LI LK SZ CI CK SL".replace(" ", "")),
+    "konvoy": remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1".replace(" ", "")),
+    "römorkör": remap_flag_string("A4 F2 I2 L2 N4 P4 P8 PF PP PU PW Q2 R2 cl CI CK LI LK SZ".replace(" ", "")),
+    "büro": remap_flag_string("B4 a2 y1 L1 R1 n2 i1 Q1 PB PT P2 P6 PO PR CL CK CI LI LK SZ".replace(" ", "")),
+    "mahkeme": remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl CI LI LK SZ CK".replace(" ", "")),
+    "triatlon": remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1".replace(" ", "")),
+    "mat": remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
+    "batma": remap_flag_string("B3 a1 y1 L1 R1 n1 i1 Q1 PB PS P1 P5 PM PN CL CI LI LK SZ CK".replace(" ", "")),
+    "yöneltme": remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl CI LI LK SZ CK".replace(" ", "")),
+    "yetki": remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl CI LI LK SZ CK DE".replace(" ", "")),
+    "idari": remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl CI LI LK SZ CK".replace(" ", "")),
 }
 
 # Standard regular non-voicing inflection flags
@@ -703,6 +733,36 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "toplattırmak/≔⊂",
     "tamamlatılmak/≔⊂",
     "hazırlatılmak/≔⊂",
+    "bulunulmak/≞⊅",
+    "düşülmek/≘⊁",
+    "ilgilenilmek/≗⊃",
+    "hükmedilmek/≗⊃",
+    "fethedilmek/≗⊃",
+    "iyileştirilmek/≗⊃",
+    "haberleştirilmek/≗⊃",
+    "etkinleştirilmek/≗⊃",
+    "yarıştırılmak/≔⊂",
+    "resmedilmek/≗⊃",
+    "dokundurulmak/≞⊅",
+    "uğratılmak/≔⊂",
+    "yaşatılmak/≔⊂",
+    "yayınlanmak/≔⊂",
+    "yayınlamak/≓",
+    "sıkışılmak/≔⊂",
+    "tetiklenmek/≗⊃",
+    "uzatılabilmek/≗⊃",
+    "karatmak/≚⊂",
+    "küçültülmek/≘⊁",
+    "numaralandırılmak/≔⊂",
+    "ortalanmak/≔⊂",
+    "yaşlandırılmak/≔⊂",
+    "üstlenilmek/≗⊃",
+    "kişileştirilmek/≗⊃",
+    "apaçi",
+    "forklift",
+    "menüsküs",
+    "nitrit",
+    "plutonyum",
     # Scientific, technical, and everyday measurement unit symbols:
     "nm/⊘⊙⊚⊛⊜⊝⊞⊟",
     "ml/⊘⊙⊚⊛⊜⊝⊞⊟",
@@ -1454,7 +1514,10 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             continue
         if profile == "dd" and "î" in head_w:
             continue
-        clean_entries.append(w)
+        if "/" not in w and head_lower in HEAD_FLAG_OVERRIDES:
+            clean_entries.append(f"{w}/{HEAD_FLAG_OVERRIDES[head_lower]}")
+        else:
+            clean_entries.append(w)
         added_legit += 1
             
     # 6. Inject all missing custom abbreviations and names from lexicons

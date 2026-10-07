@@ -88,6 +88,12 @@ if not CORPUS_FREQ:
         except:
             pass
 
+DERIVATION_ALLOWLIST = {
+    "levrek", "hatim", "maymun", "anzak", "ayırım", "nitrit", "ışıldak",
+    "kaymakam", "nakliye", "frekans", "leva", "konvoy", "römorkör",
+    "büro", "mahkeme", "triatlon", "mat", "batma", "yöneltme", "yetki", "idari"
+}
+
 # ---------------------------------------------------------------------------
 # Flag mapping
 # ---------------------------------------------------------------------------
@@ -328,7 +334,7 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
                 chain = chain.replace("SZ", "LSZ")
                 chain = chain.replace("CI", "LCI")
             
-            if CORPUS_FREQ:
+            if CORPUS_FREQ and word.lower() not in DERIVATION_ALLOWLIST:
                 new_chain = chain
                 for flag, suffixes in [
                     ("CI", ["ci", "cı", "cu", "cü", "çi", "çı", "çu", "çü"]),

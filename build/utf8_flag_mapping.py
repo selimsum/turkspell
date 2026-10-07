@@ -51,10 +51,10 @@ INVERSE_DERIV_FLAGS = ["LF", "LSZ", "LFK", "LCI"]
 # their exact codepoints between builds.
 STAGE2_VERB_FLAGS = [
     "cA", "cE", "cU", "cI",
-    "uE",
+    "uE", "uO", "uU",
     "vA", "vE",
-    "pA", "pE",
-    "qA", "qE",
+    "pA", "pE", "pO", "pU",
+    "qA", "qE", "qO", "qU",
     "sA", "sE",
 ]
 

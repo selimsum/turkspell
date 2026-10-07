@@ -819,7 +819,9 @@ def compile_dictionary():
                 is_aorist_a = 'Aorist_A' in attrs or (num_vowels == 1 and root not in aorist_i_exceptions)
                 
                 general_flag = "9" if back else "10"
-                if is_aorist_i and not is_aorist_a:
+                if root == 'yen':
+                    flag = general_flag + ",22,23"
+                elif is_aorist_i and not is_aorist_a:
                     flag = general_flag + "," + ("21" if back else "23") # VB, wi or VF, wj (or VR, wu / VG, wh)
                 elif is_aorist_a and not is_aorist_i:
                     flag = general_flag + "," + ("20" if back else "22") # VB, wa or VF, we (or VR, wr / VG, wg)
