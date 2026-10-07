@@ -1,10 +1,18 @@
 {
   "addons": {
+    "turkspell@mozilla.org.tr": {
+      "updates": [
+        {
+          "version": "0.7.2",
+          "update_link": "https://github.com/selimsum/turkspell/releases/download/v0.7.2/turkspell-addon.xpi"
+        }
+      ]
+    },
     "turkspell-tdk@mozilla.org.tr": {
       "updates": [
         {
           "version": "0.7.2",
-          "update_link": "https://github.com/selimsum/turkspell/releases/download/tdk-v0.7.2/turkspell-addon.xpi"
+          "update_link": "https://github.com/selimsum/turkspell/releases/download/tdk-v0.7.2/turkspell-tdk-addon.xpi"
         }
       ]
     }

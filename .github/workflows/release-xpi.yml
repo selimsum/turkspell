@@ -10,8 +10,10 @@ on:
       - 'tr.aff'
       - 'tr.dic'
       - 'firefox-addon/manifest.json'
+      - 'firefox-addon-tdk/manifest.json'
       - 'amo-metadata.json'
       - 'tools/sign_addon.py'
+      - 'build/package_addon.py'
       - '.github/workflows/release-xpi.yml'
   workflow_dispatch:
     inputs:
@@ -54,9 +56,9 @@ jobs:
           BUMP_TYPE="${{ inputs.bump_type || 'auto' }}"
           python tools/bump_version.py --bump-type "$BUMP_TYPE" --repo-owner "${{ github.repository_owner }}" --repo-name "${{ github.event.repository.name }}"
 
-      - name: Package Firefox Extension (.xpi)
+      - name: Package Firefox Extensions (.xpi)
         run: |
-          python build/package_addon.py
+          python build/package_addon.py --profile all
 
       - name: Sign Extension via Mozilla AMO (If Secrets Present)
         id: sign
@@ -64,7 +66,10 @@ jobs:
           AMO_KEY: ${{ secrets.AMO_JWT_ISSUER }}
           AMO_SECRET: ${{ secrets.AMO_JWT_SECRET }}
         run: |
-          python tools/sign_addon.py --version "${{ steps.bump.outputs.version }}"
+          echo "Signing Universal profile on AMO..."
+          python tools/sign_addon.py --profile universal --version "${{ steps.bump.outputs.version }}"
+          echo "Signing TDK profile on AMO..."
+          python tools/sign_addon.py --profile tdk --version "${{ steps.bump.outputs.version }}" || echo "Notice: TDK addon signing on AMO pending initial manual submission on AMO Developer Hub."
 
       - name: Commit & Tag New Version
         run: |
@@ -73,7 +78,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          git add firefox-addon/manifest.json update.json
+          git add firefox-addon/manifest.json firefox-addon-tdk/manifest.json update.json
           if git diff --staged --quiet; then
             echo "No manifest changes to commit."
           else
@@ -94,7 +99,9 @@ jobs:
           tag_name: "${{ steps.bump.outputs.tag_name || format('v{0}', steps.bump.outputs.version) }}"
           name: "Release ${{ steps.bump.outputs.tag_name || format('v{0}', steps.bump.outputs.version) }}"
           body: |
-            Automated release for version `${{ steps.bump.outputs.tag_name || steps.bump.outputs.version }}` of the Turkspell Firefox dictionary extension.
-          files: turkspell-addon.xpi
+            Automated release for version `${{ steps.bump.outputs.tag_name || steps.bump.outputs.version }}` of the Turkspell Firefox dictionary extensions (Universal & TDK 2026).
+          files: |
+            turkspell-addon.xpi
+            turkspell-tdk-addon.xpi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

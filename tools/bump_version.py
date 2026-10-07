@@ -118,22 +118,40 @@ def main():
         print(f"Tag {tag_prefix}v{new_ver} already exists! Advancing to v{bumped}")
         new_ver = bumped
 
-    # 2. Update manifest.json
+    # 2. Update both manifest.json files
     manifest["version"] = new_ver
     with open(manifest_path, "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2, ensure_ascii=False)
         f.write("\n")
 
-    # 3. Update update.json
+    tdk_manifest_path = os.path.join(root_dir, "firefox-addon-tdk", "manifest.json")
+    if os.path.exists(tdk_manifest_path):
+        with open(tdk_manifest_path, "r", encoding="utf-8") as f:
+            tdk_manifest = json.load(f)
+        tdk_manifest["version"] = new_ver
+        with open(tdk_manifest_path, "w", encoding="utf-8") as f:
+            json.dump(tdk_manifest, f, indent=2, ensure_ascii=False)
+            f.write("\n")
+
+    # 3. Update update.json with both Universal and TDK addons
     tag_name = f"{tag_prefix}v{new_ver}"
-    update_link = f"https://github.com/{args.repo_owner}/{args.repo_name}/releases/download/{tag_name}/turkspell-addon.xpi"
+    update_link_universal = f"https://github.com/{args.repo_owner}/{args.repo_name}/releases/download/{tag_name}/turkspell-addon.xpi"
+    update_link_tdk = f"https://github.com/{args.repo_owner}/{args.repo_name}/releases/download/{tag_name}/turkspell-tdk-addon.xpi"
     update_data = {
         "addons": {
-            addon_id: {
+            "turkspell@mozilla.org.tr": {
                 "updates": [
                     {
                         "version": new_ver,
-                        "update_link": update_link
+                        "update_link": update_link_universal
+                    }
+                ]
+            },
+            "turkspell-tdk@mozilla.org.tr": {
+                "updates": [
+                    {
+                        "version": new_ver,
+                        "update_link": update_link_tdk
                     }
                 ]
             }
