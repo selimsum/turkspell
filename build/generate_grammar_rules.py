@@ -2949,6 +2949,7 @@ def generate_stage2_flags() -> list[str]:
     rules_pA = [
         sfx("pA", "0", "nda", "."), sfx("pA", "0", "ndan", "."), sfx("pA", "0", "nı", "."),
         sfx("pA", "0", "na", "."), sfx("pA", "0", "nın", "."), sfx("pA", "0", "yla", "."),
+        sfx("pA", "0", "nca", "."),
         sfx("pA", "0", "dır", "."), sfx("pA", "0", "ydı", "."), sfx("pA", "0", "ymış", "."), sfx("pA", "0", "ysa", "."),
         sfx("pA", "0", "ndaysa", ".")
     ]
@@ -2958,6 +2959,7 @@ def generate_stage2_flags() -> list[str]:
     rules_pE = [
         sfx("pE", "0", "nde", "."), sfx("pE", "0", "nden", "."), sfx("pE", "0", "ni", "."),
         sfx("pE", "0", "ne", "."), sfx("pE", "0", "nin", "."), sfx("pE", "0", "yle", "."),
+        sfx("pE", "0", "nce", "."),
         sfx("pE", "0", "dir", "."), sfx("pE", "0", "ydi", "."), sfx("pE", "0", "ymiş", "."), sfx("pE", "0", "yse", "."),
         sfx("pE", "0", "ndeyse", ".")
     ]
@@ -2967,6 +2969,7 @@ def generate_stage2_flags() -> list[str]:
     rules_pO = [
         sfx("pO", "0", "nda", "."), sfx("pO", "0", "ndan", "."), sfx("pO", "0", "nu", "."), sfx("pO", "0", "nı", "."),
         sfx("pO", "0", "na", "."), sfx("pO", "0", "nun", "."), sfx("pO", "0", "nın", "."), sfx("pO", "0", "yla", "."),
+        sfx("pO", "0", "nca", "."),
         sfx("pO", "0", "dur", "."), sfx("pO", "0", "dır", "."), sfx("pO", "0", "ydu", "."), sfx("pO", "0", "ydı", "."),
         sfx("pO", "0", "ymuş", "."), sfx("pO", "0", "ymış", "."), sfx("pO", "0", "ysa", "."),
         sfx("pO", "0", "ndaysa", ".")
@@ -2977,6 +2980,7 @@ def generate_stage2_flags() -> list[str]:
     rules_pU = [
         sfx("pU", "0", "nde", "."), sfx("pU", "0", "nden", "."), sfx("pU", "0", "nü", "."), sfx("pU", "0", "ni", "."),
         sfx("pU", "0", "ne", "."), sfx("pU", "0", "nün", "."), sfx("pU", "0", "nin", "."), sfx("pU", "0", "yle", "."),
+        sfx("pU", "0", "nce", "."),
         sfx("pU", "0", "dür", "."), sfx("pU", "0", "dir", "."), sfx("pU", "0", "ydü", "."), sfx("pU", "0", "ydi", "."),
         sfx("pU", "0", "ymüş", "."), sfx("pU", "0", "ymiş", "."), sfx("pU", "0", "yse", "."),
         sfx("pU", "0", "ndeyse", ".")
@@ -2987,6 +2991,7 @@ def generate_stage2_flags() -> list[str]:
     rules_qA = [
         sfx("qA", "0", "da", "."), sfx("qA", "0", "dan", "."), sfx("qA", "0", "ı", "."),
         sfx("qA", "0", "a", "."), sfx("qA", "0", "ın", "."), sfx("qA", "0", "la", "."),
+        sfx("qA", "0", "ca", "."),
         sfx("qA", "0", "dır", "."), sfx("qA", "0", "dı", "."), sfx("qA", "0", "sa", "."),
         sfx("qA", "0", "daysa", ".")
     ]
@@ -2996,6 +3001,7 @@ def generate_stage2_flags() -> list[str]:
     rules_qE = [
         sfx("qE", "0", "de", "."), sfx("qE", "0", "den", "."), sfx("qE", "0", "i", "."),
         sfx("qE", "0", "e", "."), sfx("qE", "0", "in", "."), sfx("qE", "0", "le", "."),
+        sfx("qE", "0", "ce", "."),
         sfx("qE", "0", "dir", "."), sfx("qE", "0", "di", "."), sfx("qE", "0", "se", "."),
         sfx("qE", "0", "deyse", ".")
     ]
@@ -3005,6 +3011,7 @@ def generate_stage2_flags() -> list[str]:
     rules_qO = [
         sfx("qO", "0", "da", "."), sfx("qO", "0", "dan", "."), sfx("qO", "0", "u", "."), sfx("qO", "0", "ı", "."),
         sfx("qO", "0", "a", "."), sfx("qO", "0", "un", "."), sfx("qO", "0", "ın", "."), sfx("qO", "0", "la", "."),
+        sfx("qO", "0", "ca", "."),
         sfx("qO", "0", "dur", "."), sfx("qO", "0", "dır", "."), sfx("qO", "0", "du", "."), sfx("qO", "0", "dı", "."),
         sfx("qO", "0", "sa", "."), sfx("qO", "0", "daysa", ".")
     ]
@@ -3014,6 +3021,7 @@ def generate_stage2_flags() -> list[str]:
     rules_qU = [
         sfx("qU", "0", "de", "."), sfx("qU", "0", "den", "."), sfx("qU", "0", "ü", "."), sfx("qU", "0", "i", "."),
         sfx("qU", "0", "e", "."), sfx("qU", "0", "ün", "."), sfx("qU", "0", "in", "."), sfx("qU", "0", "le", "."),
+        sfx("qU", "0", "ce", "."),
         sfx("qU", "0", "dür", "."), sfx("qU", "0", "dir", "."), sfx("qU", "0", "dü", "."), sfx("qU", "0", "di", "."),
         sfx("qU", "0", "se", "."), sfx("qU", "0", "deyse", ".")
     ]
