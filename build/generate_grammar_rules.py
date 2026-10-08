@@ -2950,6 +2950,9 @@ def generate_stage2_flags() -> list[str]:
         sfx("pA", "0", "nda", "."), sfx("pA", "0", "ndan", "."), sfx("pA", "0", "nı", "."),
         sfx("pA", "0", "na", "."), sfx("pA", "0", "nın", "."), sfx("pA", "0", "yla", "."),
         sfx("pA", "0", "nca", "."),
+        sfx("pA", "0", "ndaki", "."), sfx("pA", "0", "ndakiler", "."), sfx("pA", "0", "ndakini", "."),
+        sfx("pA", "0", "ndakine", "."), sfx("pA", "0", "ndakinde", "."), sfx("pA", "0", "ndakinden", "."),
+        sfx("pA", "0", "ndakinin", "."), sfx("pA", "0", "ndakiyle", "."),
         sfx("pA", "0", "dır", "."), sfx("pA", "0", "ydı", "."), sfx("pA", "0", "ymış", "."), sfx("pA", "0", "ysa", "."),
         sfx("pA", "0", "ndaysa", ".")
     ]
@@ -2960,6 +2963,9 @@ def generate_stage2_flags() -> list[str]:
         sfx("pE", "0", "nde", "."), sfx("pE", "0", "nden", "."), sfx("pE", "0", "ni", "."),
         sfx("pE", "0", "ne", "."), sfx("pE", "0", "nin", "."), sfx("pE", "0", "yle", "."),
         sfx("pE", "0", "nce", "."),
+        sfx("pE", "0", "ndeki", "."), sfx("pE", "0", "ndekiler", "."), sfx("pE", "0", "ndekini", "."),
+        sfx("pE", "0", "ndekine", "."), sfx("pE", "0", "ndekinde", "."), sfx("pE", "0", "ndekinden", "."),
+        sfx("pE", "0", "ndekinin", "."), sfx("pE", "0", "ndekiyle", "."),
         sfx("pE", "0", "dir", "."), sfx("pE", "0", "ydi", "."), sfx("pE", "0", "ymiş", "."), sfx("pE", "0", "yse", "."),
         sfx("pE", "0", "ndeyse", ".")
     ]
@@ -2970,6 +2976,9 @@ def generate_stage2_flags() -> list[str]:
         sfx("pO", "0", "nda", "."), sfx("pO", "0", "ndan", "."), sfx("pO", "0", "nu", "."), sfx("pO", "0", "nı", "."),
         sfx("pO", "0", "na", "."), sfx("pO", "0", "nun", "."), sfx("pO", "0", "nın", "."), sfx("pO", "0", "yla", "."),
         sfx("pO", "0", "nca", "."),
+        sfx("pO", "0", "ndaki", "."), sfx("pO", "0", "ndakiler", "."), sfx("pO", "0", "ndakini", "."),
+        sfx("pO", "0", "ndakine", "."), sfx("pO", "0", "ndakinde", "."), sfx("pO", "0", "ndakinden", "."),
+        sfx("pO", "0", "ndakinin", "."), sfx("pO", "0", "ndakiyle", "."),
         sfx("pO", "0", "dur", "."), sfx("pO", "0", "dır", "."), sfx("pO", "0", "ydu", "."), sfx("pO", "0", "ydı", "."),
         sfx("pO", "0", "ymuş", "."), sfx("pO", "0", "ymış", "."), sfx("pO", "0", "ysa", "."),
         sfx("pO", "0", "ndaysa", ".")
@@ -2981,6 +2990,9 @@ def generate_stage2_flags() -> list[str]:
         sfx("pU", "0", "nde", "."), sfx("pU", "0", "nden", "."), sfx("pU", "0", "nü", "."), sfx("pU", "0", "ni", "."),
         sfx("pU", "0", "ne", "."), sfx("pU", "0", "nün", "."), sfx("pU", "0", "nin", "."), sfx("pU", "0", "yle", "."),
         sfx("pU", "0", "nce", "."),
+        sfx("pU", "0", "ndeki", "."), sfx("pU", "0", "ndekiler", "."), sfx("pU", "0", "ndekini", "."),
+        sfx("pU", "0", "ndekine", "."), sfx("pU", "0", "ndekinde", "."), sfx("pU", "0", "ndekinden", "."),
+        sfx("pU", "0", "ndekinin", "."), sfx("pU", "0", "ndekiyle", "."),
         sfx("pU", "0", "dür", "."), sfx("pU", "0", "dir", "."), sfx("pU", "0", "ydü", "."), sfx("pU", "0", "ydi", "."),
         sfx("pU", "0", "ymüş", "."), sfx("pU", "0", "ymiş", "."), sfx("pU", "0", "yse", "."),
         sfx("pU", "0", "ndeyse", ".")
@@ -2992,6 +3004,9 @@ def generate_stage2_flags() -> list[str]:
         sfx("qA", "0", "da", "."), sfx("qA", "0", "dan", "."), sfx("qA", "0", "ı", "."),
         sfx("qA", "0", "a", "."), sfx("qA", "0", "ın", "."), sfx("qA", "0", "la", "."),
         sfx("qA", "0", "ca", "."),
+        sfx("qA", "0", "daki", "."), sfx("qA", "0", "dakiler", "."), sfx("qA", "0", "dakini", "."),
+        sfx("qA", "0", "dakine", "."), sfx("qA", "0", "dakinde", "."), sfx("qA", "0", "dakinden", "."),
+        sfx("qA", "0", "dakinin", "."), sfx("qA", "0", "dakiyle", "."),
         sfx("qA", "0", "dır", "."), sfx("qA", "0", "dı", "."), sfx("qA", "0", "sa", "."),
         sfx("qA", "0", "daysa", ".")
     ]
@@ -3002,6 +3017,9 @@ def generate_stage2_flags() -> list[str]:
         sfx("qE", "0", "de", "."), sfx("qE", "0", "den", "."), sfx("qE", "0", "i", "."),
         sfx("qE", "0", "e", "."), sfx("qE", "0", "in", "."), sfx("qE", "0", "le", "."),
         sfx("qE", "0", "ce", "."),
+        sfx("qE", "0", "deki", "."), sfx("qE", "0", "dekiler", "."), sfx("qE", "0", "dekini", "."),
+        sfx("qE", "0", "dekine", "."), sfx("qE", "0", "dekinde", "."), sfx("qE", "0", "dekinden", "."),
+        sfx("qE", "0", "dekinin", "."), sfx("qE", "0", "dekiyle", "."),
         sfx("qE", "0", "dir", "."), sfx("qE", "0", "di", "."), sfx("qE", "0", "se", "."),
         sfx("qE", "0", "deyse", ".")
     ]
@@ -3012,6 +3030,9 @@ def generate_stage2_flags() -> list[str]:
         sfx("qO", "0", "da", "."), sfx("qO", "0", "dan", "."), sfx("qO", "0", "u", "."), sfx("qO", "0", "ı", "."),
         sfx("qO", "0", "a", "."), sfx("qO", "0", "un", "."), sfx("qO", "0", "ın", "."), sfx("qO", "0", "la", "."),
         sfx("qO", "0", "ca", "."),
+        sfx("qO", "0", "daki", "."), sfx("qO", "0", "dakiler", "."), sfx("qO", "0", "dakini", "."),
+        sfx("qO", "0", "dakine", "."), sfx("qO", "0", "dakinde", "."), sfx("qO", "0", "dakinden", "."),
+        sfx("qO", "0", "dakinin", "."), sfx("qO", "0", "dakiyle", "."),
         sfx("qO", "0", "dur", "."), sfx("qO", "0", "dır", "."), sfx("qO", "0", "du", "."), sfx("qO", "0", "dı", "."),
         sfx("qO", "0", "sa", "."), sfx("qO", "0", "daysa", ".")
     ]
@@ -3022,6 +3043,9 @@ def generate_stage2_flags() -> list[str]:
         sfx("qU", "0", "de", "."), sfx("qU", "0", "den", "."), sfx("qU", "0", "ü", "."), sfx("qU", "0", "i", "."),
         sfx("qU", "0", "e", "."), sfx("qU", "0", "ün", "."), sfx("qU", "0", "in", "."), sfx("qU", "0", "le", "."),
         sfx("qU", "0", "ce", "."),
+        sfx("qU", "0", "deki", "."), sfx("qU", "0", "dekiler", "."), sfx("qU", "0", "dekini", "."),
+        sfx("qU", "0", "dekine", "."), sfx("qU", "0", "dekinde", "."), sfx("qU", "0", "dekinden", "."),
+        sfx("qU", "0", "dekinin", "."), sfx("qU", "0", "dekiyle", "."),
         sfx("qU", "0", "dür", "."), sfx("qU", "0", "dir", "."), sfx("qU", "0", "dü", "."), sfx("qU", "0", "di", "."),
         sfx("qU", "0", "se", "."), sfx("qU", "0", "deyse", ".")
     ]
