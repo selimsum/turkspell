@@ -1436,7 +1436,10 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         "aı", "baı", "baıc", "gur", "pluto",
         "yahudi", "yahudice", "yahudilik", "yahudiliğ", "yahudibaklası",
         "misakımilli", "misakımillî",
-        "fata", "çe"
+        "fata", "çe",
+        # Purge noisy abbreviation/symbol stems causing widespread inflection overgeneration
+        "sr", "ac", "ag", "ariza", "aski", "ba", "paba", "kefne", "ekit",
+        "cav", "pere", "pal", "hut", "banaz", "ızgın", "elazığ"
     }
     if profile == "tdk":
         BAD_STEMS.update({"fata", "çe"})
@@ -1481,7 +1484,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         if head_lower in PURGE_VIRTUAL_STEMS or head_lower in ("felaked", "stoğ"):
             removed_bad_stems += 1
             continue
-        if head_lower in BAD_STEMS and "X" not in flags and not flags.startswith("X"):
+        if head_lower in BAD_STEMS:
             removed_bad_stems += 1
             continue
 
