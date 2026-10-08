@@ -25145,33 +25145,35 @@ SFX ⊴ 0 lerdi .
 SFX ⊴ 0 lerse .
 SFX ⊴ 0 yken .
 
-SFX ⊵ Y 11
+SFX ⊵ Y 12
 SFX ⊵ 0 nda .
 SFX ⊵ 0 ndan .
 SFX ⊵ 0 nı .
 SFX ⊵ 0 na .
 SFX ⊵ 0 nın .
 SFX ⊵ 0 yla .
+SFX ⊵ 0 nca .
 SFX ⊵ 0 dır .
 SFX ⊵ 0 ydı .
 SFX ⊵ 0 ymış .
 SFX ⊵ 0 ysa .
 SFX ⊵ 0 ndaysa .
 
-SFX ⊶ Y 11
+SFX ⊶ Y 12
 SFX ⊶ 0 nde .
 SFX ⊶ 0 nden .
 SFX ⊶ 0 ni .
 SFX ⊶ 0 ne .
 SFX ⊶ 0 nin .
 SFX ⊶ 0 yle .
+SFX ⊶ 0 nce .
 SFX ⊶ 0 dir .
 SFX ⊶ 0 ydi .
 SFX ⊶ 0 ymiş .
 SFX ⊶ 0 yse .
 SFX ⊶ 0 ndeyse .
 
-SFX ⊷ Y 16
+SFX ⊷ Y 17
 SFX ⊷ 0 nda .
 SFX ⊷ 0 ndan .
 SFX ⊷ 0 nu .
@@ -25180,6 +25182,7 @@ SFX ⊷ 0 na .
 SFX ⊷ 0 nun .
 SFX ⊷ 0 nın .
 SFX ⊷ 0 yla .
+SFX ⊷ 0 nca .
 SFX ⊷ 0 dur .
 SFX ⊷ 0 dır .
 SFX ⊷ 0 ydu .
@@ -25189,7 +25192,7 @@ SFX ⊷ 0 ymış .
 SFX ⊷ 0 ysa .
 SFX ⊷ 0 ndaysa .
 
-SFX ⊸ Y 16
+SFX ⊸ Y 17
 SFX ⊸ 0 nde .
 SFX ⊸ 0 nden .
 SFX ⊸ 0 nü .
@@ -25198,6 +25201,7 @@ SFX ⊸ 0 ne .
 SFX ⊸ 0 nün .
 SFX ⊸ 0 nin .
 SFX ⊸ 0 yle .
+SFX ⊸ 0 nce .
 SFX ⊸ 0 dür .
 SFX ⊸ 0 dir .
 SFX ⊸ 0 ydü .
@@ -25207,31 +25211,33 @@ SFX ⊸ 0 ymiş .
 SFX ⊸ 0 yse .
 SFX ⊸ 0 ndeyse .
 
-SFX ⊹ Y 10
+SFX ⊹ Y 11
 SFX ⊹ 0 da .
 SFX ⊹ 0 dan .
 SFX ⊹ 0 ı .
 SFX ⊹ 0 a .
 SFX ⊹ 0 ın .
 SFX ⊹ 0 la .
+SFX ⊹ 0 ca .
 SFX ⊹ 0 dır .
 SFX ⊹ 0 dı .
 SFX ⊹ 0 sa .
 SFX ⊹ 0 daysa .
 
-SFX ⊺ Y 10
+SFX ⊺ Y 11
 SFX ⊺ 0 de .
 SFX ⊺ 0 den .
 SFX ⊺ 0 i .
 SFX ⊺ 0 e .
 SFX ⊺ 0 in .
 SFX ⊺ 0 le .
+SFX ⊺ 0 ce .
 SFX ⊺ 0 dir .
 SFX ⊺ 0 di .
 SFX ⊺ 0 se .
 SFX ⊺ 0 deyse .
 
-SFX ⊻ Y 14
+SFX ⊻ Y 15
 SFX ⊻ 0 da .
 SFX ⊻ 0 dan .
 SFX ⊻ 0 u .
@@ -25240,6 +25246,7 @@ SFX ⊻ 0 a .
 SFX ⊻ 0 un .
 SFX ⊻ 0 ın .
 SFX ⊻ 0 la .
+SFX ⊻ 0 ca .
 SFX ⊻ 0 dur .
 SFX ⊻ 0 dır .
 SFX ⊻ 0 du .
@@ -25247,7 +25254,7 @@ SFX ⊻ 0 dı .
 SFX ⊻ 0 sa .
 SFX ⊻ 0 daysa .
 
-SFX ⊼ Y 14
+SFX ⊼ Y 15
 SFX ⊼ 0 de .
 SFX ⊼ 0 den .
 SFX ⊼ 0 ü .
@@ -25256,6 +25263,7 @@ SFX ⊼ 0 e .
 SFX ⊼ 0 ün .
 SFX ⊼ 0 in .
 SFX ⊼ 0 le .
+SFX ⊼ 0 ce .
 SFX ⊼ 0 dür .
 SFX ⊼ 0 dir .
 SFX ⊼ 0 dü .

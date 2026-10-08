@@ -503,6 +503,7 @@ def compile_dictionary():
     # -----------------------------------------------------------------------
     _tdk_dizin_path = os.path.join(_raw_dir, 'tdk_dizin_2026.json')
     _tdk_morph_map = {}
+    _tdk_verb_voicing = set()
     if os.path.exists(_tdk_dizin_path):
         print(f"Reading TDK 2026 official morphological attributes from {_tdk_dizin_path}...")
         with open(_tdk_dizin_path, 'r', encoding='utf-8') as _tdf:
@@ -524,9 +525,11 @@ def compile_dictionary():
                 _mattrs.add('LastVowelDrop')
                 
             # Voicing:
-            if _e_clean.startswith(('der', 'diler', 'derler')):
+            # For verbs, voicing only indicates stem mutation if the aorist is -der/-dar
+            if _e_clean.startswith(('der', 'dar', 'diler', 'derler')):
                 _mattrs.add('Voicing')
-            if _m[-1] in 'pçtk' and _e_clean[0] in ('b', 'c', 'd', 'ğ'):
+                _tdk_verb_voicing.add(_tlc(_m))
+            elif not _m.endswith(('mak', 'mek')) and _m[-1] in 'pçtk' and _e_clean[0] in ('b', 'c', 'd', 'ğ'):
                 _mattrs.add('Voicing')
                 
             # Aorist:
@@ -573,12 +576,17 @@ def compile_dictionary():
                 
                 # Merge TDK attributes if present
                 _w_tdk_attrs = _tdk_morph_map.get(_tlc(_w), set())
+                if _pos == 'Verb' and 'Voicing' in _w_tdk_attrs and _tlc(_w) not in _tdk_verb_voicing:
+                    _w_tdk_attrs = set(_w_tdk_attrs)
+                    _w_tdk_attrs.discard('Voicing')
                 _attrs = list(set(_attrs) | _w_tdk_attrs)
                 lexicon.append({'lemma': _w, 'pos': _pos, 'attributes': _attrs})
                 _attrs_transferred += 1
             else:
                 _is_verb = _w.endswith(('mak', 'mek')) and _w not in _noun_ends_excl
                 _attrs = list(_tdk_morph_map.get(_tlc(_w), []))
+                if _is_verb and 'Voicing' in _attrs and _tlc(_w) not in _tdk_verb_voicing:
+                    _attrs = [a for a in _attrs if a != 'Voicing']
                 lexicon.append({'lemma': _w, 'pos': 'Verb' if _is_verb else 'Noun', 'attributes': _attrs})
             _tdk_added += 1
     print(f"Added {_tdk_added:,} TDK|DD-only entries ({_attrs_transferred} with transferred Zemberek attributes).")
@@ -590,6 +598,9 @@ def compile_dictionary():
         if _l_key in _tdk_morph_map:
             _cur_attrs = set(_it.get('attributes', []))
             _tdk_attrs_to_add = _tdk_morph_map[_l_key] - _cur_attrs
+            if _it.get('pos') == 'Verb' and 'Voicing' in _tdk_attrs_to_add and _l_key not in _tdk_verb_voicing:
+                _tdk_attrs_to_add = set(_tdk_attrs_to_add)
+                _tdk_attrs_to_add.discard('Voicing')
             if _tdk_attrs_to_add:
                 _it['attributes'] = list(_cur_attrs | _tdk_attrs_to_add)
                 _tdk_enhanced_count += 1
@@ -865,8 +876,8 @@ def compile_dictionary():
             root = lemma[:-3] if lemma.endswith(('mak', 'mek')) else lemma
             vowel_end = ends_with_vowel(root)
             
-            # Voicing only applies if the root ends in a voicing consonant
-            is_voicing_stem = voicing and len(root) > 0 and root[-1] in 'pçtk'
+            # Voicing only applies if the root ends in 't' (Turkish verbs only voice t -> d, never p, ç, k)
+            is_voicing_stem = voicing and len(root) > 0 and root[-1] == 't'
             
             if lemma in ['demek', 'yemek']:
                 flag = "17"
