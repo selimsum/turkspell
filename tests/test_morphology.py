@@ -487,7 +487,27 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         accepted, rejected = check_words(valid)
         self.assertEqual(rejected, [], f"Valid participle relative -ki forms failing: {rejected}")
 
+    def test_compound_verbs_aorist(self):
+        """Verifies that compound verbs with monosyllabic bases preserve their Aorist -ar/-er and causatives preserve -ür."""
+        valid = [
+            "varsayar", "varsayarlar", "varsayardı", "varsayarmış", "varsayarsa",
+            "vazgeçer", "vazgeçerler", "vazgeçerdi", "vazgeçermiş", "vazgeçerse",
+            "alıkoyar", "alıkoyarlar", "alıkoyardı", "alıkoyarmış", "alıkoyarsa", "alıkoydu", "alıkoydular",
+            "dönüştürür", "dönüştürürler", "dönüştürdü", "dönüştürmüş"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid compound verb aorist forms failing: {rejected}")
+
+    def test_negative_imperative_and_bare_verbal_nouns(self):
+        """Verifies 2nd person singular negative imperative and bare -ma/-me forms across verb stems."""
+        valid = [
+            "sıkılaşma", "yayınlama", "yapma", "gitme", "bakma", "gelme", "dönme", "koşma"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid negative imperative / verbal nouns failing: {rejected}")
+
 
 if __name__ == "__main__":
     unittest.main()
+
 

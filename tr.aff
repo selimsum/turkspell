@@ -40,6 +40,7 @@ MAXDIFF 5
 MAXNGRAMSUGS 8
 
 
+
 REP 1650
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
@@ -9448,7 +9449,7 @@ SFX ≑ 0 0 .
 SFX ≒ Y 1
 SFX ≒ 0 0 .
 
-SFX ≓ Y 849
+SFX ≓ Y 850
 SFX ≓ amak ıyor/⊮ amak
 SFX ≓ amak ıyorken amak
 SFX ≓ amak ıyor amak
@@ -9791,6 +9792,7 @@ SFX ≓ mak maya mak
 SFX ≓ mak mayalım mak
 SFX ≓ mak mayasınız mak
 SFX ≓ mak mayalar mak
+SFX ≓ mak ma mak
 SFX ≓ mak masın mak
 SFX ≓ mak mayın mak
 SFX ≓ mak mayınız mak
@@ -10299,7 +10301,7 @@ SFX ≓ mak yabildikçe mak
 SFX ≓ mak yabilse mak
 SFX ≓ mak yabilseydi mak
 
-SFX ≔ Y 874
+SFX ≔ Y 875
 SFX ≔ mak ıyor/⊮ mak
 SFX ≔ mak ıyorken mak
 SFX ≔ mak ıyor mak
@@ -10678,6 +10680,7 @@ SFX ≔ mak maya mak
 SFX ≔ mak mayalım mak
 SFX ≔ mak mayasınız mak
 SFX ≔ mak mayalar mak
+SFX ≔ mak ma mak
 SFX ≔ mak masın mak
 SFX ≔ mak mayın mak
 SFX ≔ mak mayınız mak
@@ -11185,7 +11188,7 @@ SFX ≕ 0 uz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≕ 0 umdur [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≕ 0 uzdur [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 
-SFX ≖ Y 849
+SFX ≖ Y 850
 SFX ≖ emek iyor/⊮ emek
 SFX ≖ emek iyorken emek
 SFX ≖ emek iyor emek
@@ -11528,6 +11531,7 @@ SFX ≖ mek meye mek
 SFX ≖ mek meyelim mek
 SFX ≖ mek meyesiniz mek
 SFX ≖ mek meyeler mek
+SFX ≖ mek me mek
 SFX ≖ mek mesin mek
 SFX ≖ mek meyin mek
 SFX ≖ mek meyiniz mek
@@ -12036,7 +12040,7 @@ SFX ≖ mek yebildikçe mek
 SFX ≖ mek yebilse mek
 SFX ≖ mek yebilseydi mek
 
-SFX ≗ Y 874
+SFX ≗ Y 875
 SFX ≗ mek iyor/⊮ mek
 SFX ≗ mek iyorken mek
 SFX ≗ mek iyor mek
@@ -12415,6 +12419,7 @@ SFX ≗ mek meye mek
 SFX ≗ mek meyelim mek
 SFX ≗ mek meyesiniz mek
 SFX ≗ mek meyeler mek
+SFX ≗ mek me mek
 SFX ≗ mek mesin mek
 SFX ≗ mek meyin mek
 SFX ≗ mek meyiniz mek
@@ -12912,7 +12917,7 @@ SFX ≗ mek ebildikçe mek
 SFX ≗ mek ebilse mek
 SFX ≗ mek ebilseydi mek
 
-SFX ≘ Y 892
+SFX ≘ Y 893
 SFX ≘ mek üyor/⊮ mek
 SFX ≘ mek üyorken mek
 SFX ≘ mek üyor mek
@@ -13309,6 +13314,7 @@ SFX ≘ mek meye mek
 SFX ≘ mek meyelim mek
 SFX ≘ mek meyesiniz mek
 SFX ≘ mek meyeler mek
+SFX ≘ mek me mek
 SFX ≘ mek mesin mek
 SFX ≘ mek meyin mek
 SFX ≘ mek meyiniz mek
@@ -13806,7 +13812,7 @@ SFX ≘ mek ebildikçe mek
 SFX ≘ mek ebilse mek
 SFX ≘ mek ebilseydi mek
 
-SFX ≙ Y 992
+SFX ≙ Y 993
 SFX ≙ emek üyor/⊮ emek
 SFX ≙ emek üyorken emek
 SFX ≙ emek üyor emek
@@ -14291,6 +14297,7 @@ SFX ≙ mek meye mek
 SFX ≙ mek meyelim mek
 SFX ≙ mek meyesiniz mek
 SFX ≙ mek meyeler mek
+SFX ≙ mek me mek
 SFX ≙ mek mesin mek
 SFX ≙ mek meyin mek
 SFX ≙ mek meyiniz mek
@@ -14800,7 +14807,7 @@ SFX ≙ mek yebildikçe mek
 SFX ≙ mek yebilse mek
 SFX ≙ mek yebilseydi mek
 
-SFX ≚ Y 892
+SFX ≚ Y 893
 SFX ≚ tmak dıyor/⊮ tmak
 SFX ≚ tmak dıyorken tmak
 SFX ≚ tmak dıyor tmak
@@ -15186,6 +15193,7 @@ SFX ≚ mak maya mak
 SFX ≚ mak mayalım mak
 SFX ≚ mak mayasınız mak
 SFX ≚ mak mayalar mak
+SFX ≚ mak ma mak
 SFX ≚ mak masın mak
 SFX ≚ mak mayın mak
 SFX ≚ mak mayınız mak
@@ -15694,7 +15702,7 @@ SFX ≚ tmak dabildikçe tmak
 SFX ≚ tmak dabilse tmak
 SFX ≚ tmak dabilseydi tmak
 
-SFX ≛ Y 910
+SFX ≛ Y 911
 SFX ≛ tmak duyor/⊮ tmak
 SFX ≛ tmak duyorken tmak
 SFX ≛ tmak duyor tmak
@@ -16098,6 +16106,7 @@ SFX ≛ mak maya mak
 SFX ≛ mak mayalım mak
 SFX ≛ mak mayasınız mak
 SFX ≛ mak mayalar mak
+SFX ≛ mak ma mak
 SFX ≛ mak masın mak
 SFX ≛ mak mayın mak
 SFX ≛ mak mayınız mak
@@ -16606,7 +16615,7 @@ SFX ≛ tmak dabildikçe tmak
 SFX ≛ tmak dabilse tmak
 SFX ≛ tmak dabilseydi tmak
 
-SFX ≜ Y 892
+SFX ≜ Y 893
 SFX ≜ tmek diyor/⊮ tmek
 SFX ≜ tmek diyorken tmek
 SFX ≜ tmek diyor tmek
@@ -16992,6 +17001,7 @@ SFX ≜ mek meye mek
 SFX ≜ mek meyelim mek
 SFX ≜ mek meyesiniz mek
 SFX ≜ mek meyeler mek
+SFX ≜ mek me mek
 SFX ≜ mek mesin mek
 SFX ≜ mek meyin mek
 SFX ≜ mek meyiniz mek
@@ -17500,7 +17510,7 @@ SFX ≜ tmek debildikçe tmek
 SFX ≜ tmek debilse tmek
 SFX ≜ tmek debilseydi tmek
 
-SFX ≝ Y 910
+SFX ≝ Y 911
 SFX ≝ tmek düyor/⊮ tmek
 SFX ≝ tmek düyorken tmek
 SFX ≝ tmek düyor tmek
@@ -17904,6 +17914,7 @@ SFX ≝ mek meye mek
 SFX ≝ mek meyelim mek
 SFX ≝ mek meyesiniz mek
 SFX ≝ mek meyeler mek
+SFX ≝ mek me mek
 SFX ≝ mek mesin mek
 SFX ≝ mek meyin mek
 SFX ≝ mek meyiniz mek
@@ -18412,7 +18423,7 @@ SFX ≝ tmek debildikçe tmek
 SFX ≝ tmek debilse tmek
 SFX ≝ tmek debilseydi tmek
 
-SFX ≞ Y 892
+SFX ≞ Y 893
 SFX ≞ mak uyor/⊮ mak
 SFX ≞ mak uyorken mak
 SFX ≞ mak uyor mak
@@ -18809,6 +18820,7 @@ SFX ≞ mak maya mak
 SFX ≞ mak mayalım mak
 SFX ≞ mak mayasınız mak
 SFX ≞ mak mayalar mak
+SFX ≞ mak ma mak
 SFX ≞ mak masın mak
 SFX ≞ mak mayın mak
 SFX ≞ mak mayınız mak
@@ -19306,7 +19318,7 @@ SFX ≞ mak abildikçe mak
 SFX ≞ mak abilse mak
 SFX ≞ mak abilseydi mak
 
-SFX ≟ Y 992
+SFX ≟ Y 993
 SFX ≟ amak uyor/⊮ amak
 SFX ≟ amak uyorken amak
 SFX ≟ amak uyor amak
@@ -19791,6 +19803,7 @@ SFX ≟ mak maya mak
 SFX ≟ mak mayalım mak
 SFX ≟ mak mayasınız mak
 SFX ≟ mak mayalar mak
+SFX ≟ mak ma mak
 SFX ≟ mak masın mak
 SFX ≟ mak mayın mak
 SFX ≟ mak mayınız mak
@@ -20300,7 +20313,7 @@ SFX ≟ mak yabildikçe mak
 SFX ≟ mak yabilse mak
 SFX ≟ mak yabilseydi mak
 
-SFX ≠ Y 846
+SFX ≠ Y 847
 SFX ≠ emek iyor/⊮ [dy]emek
 SFX ≠ emek iyorken [dy]emek
 SFX ≠ emek iyor [dy]emek
@@ -20640,6 +20653,7 @@ SFX ≠ mek meye mek
 SFX ≠ mek meyelim mek
 SFX ≠ mek meyesiniz mek
 SFX ≠ mek meyeler mek
+SFX ≠ mek me mek
 SFX ≠ mek mesin mek
 SFX ≠ mek meyin mek
 SFX ≠ mek meyiniz mek

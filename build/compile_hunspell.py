@@ -892,8 +892,15 @@ def compile_dictionary():
                     'al', 'bil', 'bul', 'dur', 'gel', 'gör', 'kal', 'ol', 'öl', 'san', 'var', 'ver', 'vur', 'yen'
                 }
                 
-                is_aorist_i = 'Aorist_I' in attrs or (num_vowels > 1) or (root in aorist_i_exceptions)
-                is_aorist_a = 'Aorist_A' in attrs or (num_vowels == 1 and root not in aorist_i_exceptions)
+                if 'Aorist_A' in attrs:
+                    is_aorist_a = True
+                    is_aorist_i = False
+                elif 'Aorist_I' in attrs:
+                    is_aorist_i = True
+                    is_aorist_a = False
+                else:
+                    is_aorist_i = (num_vowels > 1) or (root in aorist_i_exceptions)
+                    is_aorist_a = (num_vowels == 1 and root not in aorist_i_exceptions)
                 
                 general_flag = "9" if back else "10"
                 if root == 'yen':

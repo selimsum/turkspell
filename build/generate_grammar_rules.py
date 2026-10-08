@@ -3917,6 +3917,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
     add_r(strip, f"{neg_suf}y{v_low}l{unrounded_high}m", strip)
     add_r(strip, f"{neg_suf}y{v_low}s{unrounded_high}n{unrounded_high}z", strip)
     add_r(strip, f"{neg_suf}y{v_low}l{v_low}r", strip)
+    add_r(strip, f"{neg_suf}", strip)
     add_r(strip, f"{neg_suf}s{unrounded_high}n", strip)
     add_r(strip, f"{neg_suf}y{unrounded_high}n", strip)
     add_r(strip, f"{neg_suf}y{unrounded_high}n{unrounded_high}z", strip)
