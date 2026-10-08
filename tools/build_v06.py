@@ -608,6 +608,11 @@ HEAD_FLAG_OVERRIDES = {
     "stok": remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1".replace(" ", "")),
     # ilmek: both noun and verb flags
     "ilmek": remap_flag_string("CI CK DE I2 L2 LI LK PF Q2 R2 SL SZ cl F1 A3 N3 P3 P7 PP PU PW Y2 VF wj".replace(" ", "")),
+    # Compound verbs with Aorist_A (-ar / -er):
+    "varsaymak": remap_flag_string("VB wa".replace(" ", "")),
+    "vazgeçmek": remap_flag_string("VF we".replace(" ", "")),
+    "alıkoymak": remap_flag_string("VR wr".replace(" ", "")),
+    "dönüştürmek": remap_flag_string("VG wh".replace(" ", "")),
     # adem: yokluk (no CI flag, preventing illegal *ademci / *Ademci while preserving legit cases)
     "adem": remap_flag_string("A3 CK F1 I2 L2 LK N3 P3 P7 PF PP PU PW Q2 R2 SZ Y2 cl".replace(" ", "")),
     # aciz: unhatted (no LK flag, so unhatted *acizlik cannot be generated; only âcizlik exists)
