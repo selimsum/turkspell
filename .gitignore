@@ -40,8 +40,6 @@ external_dictionaries/
 # Raw data directory
 raw_data/
 
-# Phase 1 scratch and corpus datasets
-scripts/phase1/data/
 *.pickle
 
 
