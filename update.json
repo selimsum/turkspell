@@ -3,16 +3,16 @@
     "turkspell@mozilla.org.tr": {
       "updates": [
         {
-          "version": "0.7.3",
-          "update_link": "https://github.com/selimsum/turkspell/releases/download/v0.7.3/turkspell-addon.xpi"
+          "version": "0.7.4",
+          "update_link": "https://github.com/selimsum/turkspell/releases/download/v0.7.4/turkspell-addon.xpi"
         }
       ]
     },
     "turkspell-tdk@mozilla.org.tr": {
       "updates": [
         {
-          "version": "0.7.3",
-          "update_link": "https://github.com/selimsum/turkspell/releases/download/v0.7.3/turkspell-tdk-addon.xpi"
+          "version": "0.7.4",
+          "update_link": "https://github.com/selimsum/turkspell/releases/download/v0.7.4/turkspell-tdk-addon.xpi"
         }
       ]
     }
