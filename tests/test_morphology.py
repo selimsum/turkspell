@@ -451,6 +451,31 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         accepted, rejected = check_words(invalid)
         self.assertEqual(accepted, [], f"Illegal palatal/suyu forms leaked: {accepted}")
 
+    def test_artmak_and_non_voicing_verbs(self):
+        """Verifies verbs like artmak, uçmak, çakmak, ekmek do not erroneously voice root consonants."""
+        valid = [
+            "artmak", "artan", "artıyor", "artacak", "artar", "arttı", "artmış", "artsa", "artmalı",
+            "uçmak", "uçan", "uçuyor", "uçacak",
+            "çakmak", "çakan", "çakıyor", "çakacak",
+            "ekmek", "eken", "ekiyor", "ekecek"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid non-voicing verb forms failing: {rejected}")
+
+        invalid = ["ardıyor", "ardacak"]
+        accepted, rejected = check_words(invalid)
+        self.assertEqual(accepted, [], f"Illegal voiced verb forms leaked: {accepted}")
+
+    def test_equative_participles(self):
+        """Verifies equative case (-nca / -nce) on 3sg participles (-dığı, -diği, -duğu, -düğü)."""
+        valid = [
+            "olduğunca", "yaptığınca", "geldiğince", "gördüğünce", "bulduğunca",
+            "aldığınca", "olabildiğince", "istediğince", "bildiğince", "yettiğince"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid equative participle forms failing: {rejected}")
+
 
 if __name__ == "__main__":
     unittest.main()
+
