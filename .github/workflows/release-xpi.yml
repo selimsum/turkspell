@@ -87,7 +87,7 @@ jobs:
             echo "No manifest changes to commit."
           else
             git commit -m "chore: release version ${TAG_NAME} [skip ci]"
-            git pull --rebase origin ${{ github.ref_name }}
+            git pull --rebase --autostash origin ${{ github.ref_name }}
             git push origin HEAD:${{ github.ref_name }}
           fi
           
