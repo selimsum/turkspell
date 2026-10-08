@@ -475,6 +475,18 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         accepted, rejected = check_words(valid)
         self.assertEqual(rejected, [], f"Valid equative participle forms failing: {rejected}")
 
+    def test_participle_locative_relative_ki(self):
+        """Verifies relative -ki and its inflections on locative participles (-dığındaki, -diğindeki)."""
+        valid = [
+            "olduğundaki", "olduğundakiler", "olduğundakini", "olduğundakine", "olduğundakinden",
+            "yaptığındaki", "yaptığındakiler", "yaptığındakini", "yaptığındakine",
+            "geldiğindeki", "geldiğindekiler", "geldiğindekini", "geldiğindekine",
+            "gördüğündeki", "gördüğündekiler", "gördüğündekini", "gördüğündekine",
+            "baktığındaki", "bulduğundaki", "aldığındaki", "yaptığımdaki", "geldiğimdeki"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid participle relative -ki forms failing: {rejected}")
+
 
 if __name__ == "__main__":
     unittest.main()
