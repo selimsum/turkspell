@@ -907,7 +907,7 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "sıkışılmak/≔⊂",
     "tetiklenmek/≗⊃",
     "uzatılabilmek/≗⊃",
-    "karatmak/≚⊂",
+    "karatmak/≔⊂",
     "küçültülmek/≘⊁",
     "numaralandırılmak/≔⊂",
     "ortalanmak/≔⊂",
