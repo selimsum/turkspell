@@ -506,8 +506,35 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         accepted, rejected = check_words(valid)
         self.assertEqual(rejected, [], f"Valid negative imperative / verbal nouns failing: {rejected}")
 
+    def test_corpus_mined_authority_grammar_fixes(self):
+        """Verifies the 4 corpus-mined authority-strict grammar fixes:
+        1. 'ad' vowel-starting case/possessive suffixes
+        2. '-dIktAn' converb on voicing & narrowing verbs (etmek, gitmek, demek, yemek)
+        3. Passive verb stems of official TDK/DD verbs
+        4. Noun harmony, non-voicing, palatal-l, and akarsu inflections
+        """
+        valid = [
+            # 1. 'ad' inflections
+            "adı", "adını", "adıyla", "adında", "adının", "adındaki", "adından", "adın", "adıydı", "adınız",
+            # 2. '-dIktAn' converbs
+            "ettikten", "gittikten", "kaybettikten", "fethettikten", "keşfettikten",
+            "reddettikten", "hallettikten", "dedikten", "yedikten", "tattıktan", "güttükten",
+            # 3. Passive verb inflections
+            "karşılaşılan", "kazandırılmıştır", "onurlandırıldı", "ayrıştırılarak",
+            "kastedilmiş", "sentezlenen", "kavuşturuldu", "tutturulmuş", "tutuşturuldu",
+            "standartlaştırılmış", "yaygınlaştırılması", "kitaplaştırıldı", "mükemmelleştirilmiş",
+            # 4. Noun harmony, non-voicing, palatal-l, and akarsu
+            "pasaportu", "folkloru", "suikaste", "suikasti", "hilafeti", "velayeti",
+            "fenotipi", "genotipi", "ziraati", "veliahtı", "ilahiyatı", "satrapı",
+            "portalları", "marmelatı", "nekropolü", "akropolü", "parabolün",
+            "hiperbolün", "etanolün", "trolü", "akarsuyun", "akarsuyunun"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Corpus-mined authority grammar forms failing: {rejected}")
+
 
 if __name__ == "__main__":
     unittest.main()
+
 
 

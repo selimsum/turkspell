@@ -44,6 +44,8 @@ MAXNGRAMSUGS 8
 
 
 
+
+
 REP 1669
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
@@ -15148,7 +15150,7 @@ SFX ≚ tmak dıp tmak
 SFX ≚ tmak dınca tmak
 SFX ≚ tmak dıncaya tmak
 SFX ≚ mak tıkça mak
-SFX ≚ tmak dıktan tmak
+SFX ≚ mak tıktan tmak
 SFX ≚ tmak dalı tmak
 SFX ≚ tmak dasım tmak
 SFX ≚ mak madan mak
@@ -16052,7 +16054,7 @@ SFX ≛ tmak dup tmak
 SFX ≛ tmak dunca tmak
 SFX ≛ tmak duncaya tmak
 SFX ≛ mak tukça mak
-SFX ≛ tmak duktan tmak
+SFX ≛ mak tuktan tmak
 SFX ≛ tmak dalı tmak
 SFX ≛ tmak dasım tmak
 SFX ≛ mak madan mak
@@ -16956,7 +16958,7 @@ SFX ≜ tmek dip tmek
 SFX ≜ tmek dince tmek
 SFX ≜ tmek dinceye tmek
 SFX ≜ mek tikçe mek
-SFX ≜ tmek dikten tmek
+SFX ≜ mek tikten tmek
 SFX ≜ tmek deli tmek
 SFX ≜ tmek desim tmek
 SFX ≜ mek meden mek
@@ -17860,7 +17862,7 @@ SFX ≝ tmek düp tmek
 SFX ≝ tmek dünce tmek
 SFX ≝ tmek dünceye tmek
 SFX ≝ mek tükçe mek
-SFX ≝ tmek dükten tmek
+SFX ≝ mek tükten tmek
 SFX ≝ tmek deli tmek
 SFX ≝ tmek desim tmek
 SFX ≝ mek meden mek
@@ -20607,7 +20609,7 @@ SFX ≠ emek eyerek [dy]emek
 SFX ≠ emek eyip [dy]emek
 SFX ≠ emek eyince [dy]emek
 SFX ≠ emek eyinceye [dy]emek
-SFX ≠ emek idikten [dy]emek
+SFX ≠ mek dikten [dy]emek
 SFX ≠ emek iyeli [dy]emek
 SFX ≠ emek iyesim [dy]emek
 SFX ≠ mek dikçe mek
