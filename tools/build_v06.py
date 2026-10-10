@@ -1931,7 +1931,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     print(f"  Clean entries before dedup: {len(clean_entries):,} -> after dedup: {len(deduped_entries):,}")
     return deduped_entries
 
-def compile_v06(deploy_profile="tdk"):
+def compile_v06(deploy_profile="universal"):
     tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig = load_lexicons()
     
     profiles = ["tdk", "dd", "universal"]
@@ -1998,9 +1998,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Compile Turkspell Hunspell dictionaries")
     parser.add_argument(
         "--deploy-profile",
-        default=os.environ.get("TURKSPELL_PROFILE", "tdk"),
+        default=os.environ.get("TURKSPELL_PROFILE", "universal"),
         choices=["tdk", "universal", "dd"],
-        help="Profile to deploy to repo root and firefox-addon (default: tdk)"
+        help="Profile to deploy to repo root and firefox-addon (default: universal)"
     )
     args = parser.parse_args()
     compile_v06(deploy_profile=args.deploy_profile)
