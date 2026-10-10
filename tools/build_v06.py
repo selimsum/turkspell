@@ -8,6 +8,7 @@ from pathlib import Path
 BASE_DIR = Path(r"c:\gemini\turkspell-benchmarks")
 TURKSPELL_DIR = Path(r"c:\gemini\turkspell")
 DIST_DIR = TURKSPELL_DIR / "dist"
+RAW_DIR = TURKSPELL_DIR / "raw_data"
 
 TDK_PATH = TURKSPELL_DIR / "raw_data" / "tdk_words.txt"
 DD_PATH = TURKSPELL_DIR / "raw_data" / "dil_dernegi_words.txt"
@@ -421,7 +422,86 @@ EXTRA_REP_RULES = [
     "REP labaratuar laboratuvar",
     "REP ligi lığı",
     "REP lilik lılık",
-    "REP likler lıklar"
+    "REP likler lıklar",
+    # Consensus open compound rules (agreed by both TDK and Dil Derneği)
+    "REP haftasonu hafta_sonu",
+    "REP haftasonları hafta_sonları",
+    "REP haftasonunda hafta_sonunda",
+    "REP haftaiçi hafta_içi",
+    "REP haftaiçinde hafta_içinde",
+    "REP pekçok pek_çok",
+    "REP birşey bir_şey",
+    "REP birşeyler bir_şeyler",
+    "REP birşeyi bir_şeyi",
+    "REP birşeyin bir_şeyin",
+    "REP herşey her_şey",
+    "REP herşeyi her_şeyi",
+    "REP herşeyin her_şeyin",
+    "REP herbir her_bir",
+    "REP herbiri her_biri",
+    "REP herbirimiz her_birimiz",
+    "REP hiçbirşey hiçbir_şey",
+    "REP hiçbirşeyi hiçbir_şeyi",
+    "REP hiçkimse hiç_kimse",
+    "REP hiçkimsenin hiç_kimsenin",
+    "REP hiçkimseye hiç_kimseye",
+    "REP hergün her_gün",
+    "REP herzaman her_zaman",
+    "REP heryer her_yer",
+    "REP heran her_an",
+    "REP biran bir_an",
+    "REP biranda bir_anda",
+    "REP şuan şu_an",
+    "REP şuanda şu_anda",
+    "REP yanısıra yanı_sıra",
+    "REP peşisıra peşi_sıra",
+    "REP ardıardına ardı_ardına",
+    "REP yüzyüze yüz_yüze",
+    "REP başbaşa baş_başa",
+    "REP gözgöze göz_göze",
+    "REP dizdize diz_dize",
+    "REP omuzomuza omuz_omuza",
+    "REP peşpeşe peş_peşe",
+    "REP elele el_ele",
+    "REP artarda art_arda",
+    "REP üstüste üst_üste",
+    "REP altalta alt_alta",
+    "REP içiçe iç_içe",
+    "REP sağol sağ_ol",
+    "REP sağolun sağ_olun",
+    "REP sağolsun sağ_olsun",
+    "REP hoşçakal hoşça_kal",
+    "REP hoşçakalın hoşça_kalın",
+    "REP hoşgeldin hoş_geldin",
+    "REP hoşgeldiniz hoş_geldiniz",
+    "REP hoşbulduk hoş_bulduk",
+    "REP hoşbuldum hoş_buldum",
+    "REP kolaygelsin kolay_gelsin",
+    "REP geçmişolsun geçmiş_olsun",
+    "REP afiyetolsun afiyet_olsun",
+    "REP kurufasulye kuru_fasulye",
+    "REP yeşilsoğan yeşil_soğan",
+    "REP terketti terk_etti",
+    "REP terketmek terk_etmek",
+    "REP farketti fark_etti",
+    "REP farketmek fark_etmek",
+    "REP haketti hak_etti",
+    "REP haketmek hak_etmek",
+    "REP yokoldu yok_oldu",
+    "REP yokolmak yok_olmak",
+    "REP varoldu var_oldu",
+    "REP varolmak var_olmak",
+    "REP önlisans ön_lisans",
+    "REP doğumgünü doğum_günü",
+    "REP doğumgünüm doğum_günüm",
+    "REP doğumgünün doğum_günün",
+    "REP geceyarısı gece_yarısı",
+    "REP gözönünde göz_önünde",
+    "REP gözönüne göz_önüne",
+    "REP başaşağı baş_aşağı",
+    "REP yanıbaşında yanı_başında",
+    "REP yüzbinlerce yüz_binlerce",
+    "REP sınırdışı sınır_dışı"
 ]
 
 MANDATORY_HATTED_WORDS = {
@@ -1447,6 +1527,11 @@ MAP '’‘"""
             "bergamotu bergamodu",
             "baçı bacı"
         ])
+        # Load all TDK-open compound suggestions (where joined is used in Dil Derneği)
+        _tdk_open_rep_path = RAW_DIR / "tdk_open_compound_rep.json"
+        if _tdk_open_rep_path.exists():
+            with open(_tdk_open_rep_path, encoding="utf-8") as _torf:
+                clean_extra.extend(json.load(_torf))
     elif profile == "dd":
         clean_extra.extend([
             "î i",
@@ -1458,6 +1543,11 @@ MAP '’‘"""
             "misakımillî Misakımilli",
             "Misakımillî Misakımilli"
         ])
+        # Load all DD-open compound suggestions (where joined is used in TDK)
+        _dd_open_rep_path = RAW_DIR / "dd_open_compound_rep.json"
+        if _dd_open_rep_path.exists():
+            with open(_dd_open_rep_path, encoding="utf-8") as _dorf:
+                clean_extra.extend(json.load(_dorf))
         
     # Extract only genuine replacement pairs from base aff, ignoring digit counts like "1265"
     base_rep = []
