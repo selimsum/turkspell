@@ -14,6 +14,7 @@ __pycache__/
 !lexicons/zemberek_lexicon.json
 !lexicons/custom_abbreviations.json
 !lexicons/custom_names.json
+!lexicons/authority_pos_completed.json
 !firefox-addon/manifest.json
 !firefox-addon-tdk/manifest.json
 !update.json

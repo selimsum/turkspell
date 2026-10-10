@@ -142,14 +142,21 @@ def validate_result(result):
     return True
 
 
-def parse_candidates_with_llm(model_id, input_file, limit, batch_size):
+def parse_candidates_with_llm(model_id, input_file, limit, batch_size, output_path="oscar_parsed_candidates.json", load_in_4bit=False, allow_new_lemmas=False):
     if not os.path.exists(input_file):
         print(f"Error: {input_file} not found. Run extract_oscar_vocab.py first.")
         sys.exit(1)
 
+    # Ensure parent output directory exists
+    out_dir = os.path.dirname(output_path)
+    if out_dir:
+        os.makedirs(out_dir, exist_ok=True)
+
     # Load root words as source of truth
     root_words = load_root_words()
     print(f"Loaded {len(root_words)} root words from merged_dictionary_cleaned.txt.")
+    if allow_new_lemmas:
+        print("Note: --allow-new-lemmas is enabled. Valid Turkish words will not be filtered out if absent from merged dictionary.")
 
     # Load candidates
     candidates = load_candidates(input_file, limit)
@@ -158,7 +165,6 @@ def parse_candidates_with_llm(model_id, input_file, limit, batch_size):
         return
 
     # Load existing results for resumability
-    output_path = "oscar_parsed_candidates.json"
     parsed_results, already_parsed = load_existing_results(output_path)
 
     # Filter out already-parsed words
@@ -175,17 +181,28 @@ def parse_candidates_with_llm(model_id, input_file, limit, batch_size):
         from transformers import AutoModelForCausalLM, AutoTokenizer
     except ImportError:
         print("Error: 'transformers' and 'torch' are required.")
-        print("Install with: pip install transformers torch accelerate")
+        print("Install with: pip install transformers torch accelerate bitsandbytes")
         sys.exit(1)
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    print(f"Device: {device} | Model: {model_id}")
+    print(f"Device: {device} | Model: {model_id} | 4-bit: {load_in_4bit}")
 
     tokenizer = AutoTokenizer.from_pretrained(model_id)
+
+    model_kwargs = {"device_map": "auto"}
+    if load_in_4bit and device == "cuda":
+        from transformers import BitsAndBytesConfig
+        model_kwargs["quantization_config"] = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_compute_dtype=torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16,
+        )
+    else:
+        model_kwargs["torch_dtype"] = torch.bfloat16 if device == "cuda" and torch.cuda.is_bf16_supported() else (torch.float16 if device == "cuda" else torch.float32)
+
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
-        torch_dtype=torch.bfloat16 if device == "cuda" else torch.float32,
-        device_map="auto"
+        **model_kwargs
     )
 
     total_batches = (len(remaining) + batch_size - 1) // batch_size
@@ -233,7 +250,7 @@ def parse_candidates_with_llm(model_id, input_file, limit, batch_size):
 
             # Check if root lemma is in our valid root words
             lower_lemma = turkish_lowercase(lemma)
-            if lower_lemma not in root_words:
+            if not allow_new_lemmas and len(root_words) > 0 and lower_lemma not in root_words:
                 print(f"  ⊘ {word} → lemma '{lemma}' not in merged_dictionary_cleaned.txt (skipped)")
                 already_parsed.add(word)
                 continue
@@ -269,11 +286,20 @@ if __name__ == '__main__':
                         help='Maximum number of candidates to process (default: 500)')
     parser.add_argument('--batch-size', type=int, default=10,
                         help='Number of words per LLM batch (default: 10)')
+    parser.add_argument('--output', type=str, default='oscar_parsed_candidates.json',
+                        help='Output JSON file path (default: oscar_parsed_candidates.json)')
+    parser.add_argument('--load-in-4bit', action='store_true',
+                        help='Load model in 4-bit NF4 quantization to save VRAM and speed up inference')
+    parser.add_argument('--allow-new-lemmas', action='store_true',
+                        help='Allow discovery of valid new root lemmas even if absent from merged dictionary')
     args = parser.parse_args()
 
     parse_candidates_with_llm(
         model_id=args.model,
         input_file=args.input,
         limit=args.limit,
-        batch_size=args.batch_size
+        batch_size=args.batch_size,
+        output_path=args.output,
+        load_in_4bit=args.load_in_4bit,
+        allow_new_lemmas=args.allow_new_lemmas
     )

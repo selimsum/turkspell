@@ -3804,10 +3804,10 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
             add_r("emek", f"{y_pref}yip", "[dy]emek")
             add_r("emek", f"{y_pref}yince", "[dy]emek")
             add_r("emek", f"{y_pref}yinceye", "[dy]emek")
-        add_r("emek", "idikten", "[dy]emek")
         add_r("emek", "iyeli", "[dy]emek")
         add_r("emek", "iyesim", "[dy]emek")
         add_r(strip, "dikçe", strip)
+        add_r(strip, "dikten", strip)
         add_r(strip, "meden", strip)
     elif flag in ("VH", "VS"):
         sub_h = [("i", "emek"), ("ü", "ümek")] if flag == "VH" else [("ı", "amak"), ("u", "umak")]
@@ -3837,7 +3837,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(f"t{strip}", f"d{v_high}nc{v_low}", f"t{strip}")
         add_r(f"t{strip}", f"d{v_high}nc{v_low}y{v_low}", f"t{strip}")
         add_r(strip, f"t{v_high}kç{v_low}", strip)
-        add_r(f"t{strip}", f"d{v_high}kt{v_low}n", f"t{strip}")
+        add_r(strip, f"t{v_high}kt{v_low}n", strip)
         add_r(f"t{strip}", f"d{v_low}l{unrounded_high}", f"t{strip}")
         add_r(f"t{strip}", f"d{v_low}s{unrounded_high}m", f"t{strip}")
         add_r(strip, f"m{v_low}d{v_low}n", strip)
