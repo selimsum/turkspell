@@ -1,20 +1,22 @@
-# Turkspell: Yüksek Performanslı Türkçe Hunspell Sözlüğü (TDK 2026 Sürümü)
+# Turkspell: Yüksek Performanslı Türkçe Hunspell Sözlüğü
 
 [![Sürüm](https://img.shields.io/github/v/release/selimsum/turkspell?label=s%C3%BCr%C3%BCm)](https://github.com/selimsum/turkspell/releases)
 [![Lisans](https://img.shields.io/badge/lisans-MIT-green.svg)](LICENSE)
 [![Uyumluluk](https://img.shields.io/badge/hunspell-1.7%2B-orange.svg)](https://github.com/hunspell/hunspell)
-[![Mozilla Add-on](https://img.shields.io/badge/Mozilla%20Add--on-TDK%202026-blue.svg)](https://addons.mozilla.org/tr/firefox/addon/turkspell-tdk/)
+[![Mozilla Add-on](https://img.shields.io/badge/Mozilla%20Add--on-Universal-blue.svg)](https://addons.mozilla.org/tr/firefox/addon/turkspell/)
+[![Kalite Güvencesi](https://img.shields.io/badge/kalite%20kapısı-34%2F34%20geçti-success.svg)](tests/)
 
-> [!IMPORTANT]
-> **Bu branch (`tdk`) Turkspell'in yalnızca Türk Dil Kurumu (TDK 2026) resmî kurallarını ve söz varlığını esas alan sürümüdür.**
-> - **Mozilla Eklenti Adı**: `Turkspell - Türkçe Yazım Denetimi (TDK 2026)`
-> - **Gecko ID**: `turkspell-tdk@mozilla.org.tr`
-> - Dil Derneği'ne özgü sözcükler elenmiş; TDK'nin düzeltme işaretleri (*dâhil*, *bekâr*, *rüzgâr*) ve sıfat yapan nispet 'î' kuralları (*resmî*, *millî*, *dinî*, *askerî*) tavizsiz uygulanmıştır.
-> - Hem TDK hem Dil Derneği yazımlarını geçerli sayan **çift standartlı (Universal) sürüm**, [`master`](https://github.com/selimsum/turkspell/tree/master) branch'inde ayrı bir eklenti (`turkspell@mozilla.org.tr`) olarak yönetilmektedir.
+> [!NOTE]
+> **Bu repo (`master` branch'i) Turkspell'in hem Türk Dil Kurumu (TDK) hem de Dil Derneği yazımlarını geçerli sayan amiral gemisi Evrensel (Universal / Varsayılan) sürümüdür.**
+> - **Mozilla Eklenti Adı**: `Turkspell - Türkçe Yazım Denetimi`
+> - **Gecko ID**: `turkspell@mozilla.org.tr`
+> - **Eklenti Sayfası**: [addons.mozilla.org/firefox/addon/turkspell](https://addons.mozilla.org/tr/firefox/addon/turkspell/)
+> - Hem TDK kurallarını (*dâhil*, *bekâr*, *resmî*) hem de Dil Derneği yazımını (*dahil*, *bekar*, *resmi*) meşru kabul ederek kullanıcılara sıfır yanlış alarm ile en yüksek yazım uyumunu sunar.
+> - Yalnızca resmî Türk Dil Kurumu söz varlığını ve zorunlu şapka/nispet standartlarını esas alan katı sürüm için [`tdk` branch'ini](https://github.com/selimsum/turkspell/tree/tdk) (`turkspell-tdk@mozilla.org.tr`) inceleyebilirsiniz.
 
-[🇹🇷 Türkçe](#turkspell-yüksek-performanslı-türkçe-hunspell-sözlüğü-tdk-2026-sürümü) | [🇬🇧 English](#turkspell-high-performance-turkish-hunspell-dictionary)
+[🇹🇷 Türkçe](#turkspell-yüksek-performanslı-türkçe-hunspell-sözlüğü) | [🇬🇧 English](#turkspell-high-performance-turkish-hunspell-dictionary)
 
-**Turkspell (TDK 2026)**, modern Türkçe için geliştirilmiş, doğruluk oranı yüksek, resmi TDK kılavuzunu referans alan hafif bir Hunspell yazım denetim sözlüğüdür (`tr.aff` ve `tr.dic`). **Dinamik Zincirleme Bayrak (Dynamic Chained Flags)** mimarisi üzerine inşa edilmiş olup, akademik metinler, resmî yazışmalar ve yayıncılar için en katı TDK standartlarını sağlar.
+**Turkspell**, modern Türkçe için geliştirilmiş, doğruluk oranı yüksek, dilbilimsel otoriteye dayalı, hafif bir Hunspell yazım denetim sözlüğüdür (`tr.aff` ve `tr.dic`). **Dinamik Zincirleme Bayrak (Dynamic Chained Flags)** mimarisi üzerine inşa edilmiş olup, tüm Türkçe yazım denetimi kıyaslamalarında (Mukayese, Turkspell Official, Circumflex) **%100 Precision (sıfır yanlış alarm)** ve sektör lideri öneri başarısı sergiler.
 
 ---
 
@@ -73,15 +75,15 @@ Turkspell, bağımsız ve standartlaştırılmış tüm Türkçe yazım denetimi
 
 ```
 turkspell/
-├── tr.aff                     # Ana dağıtım (Flagship TDK) kural dosyası
-├── tr.dic                     # Ana dağıtım (Flagship TDK) sözlük dosyası
+├── tr.aff                     # Ana dağıtım (Flagship Universal) kural dosyası
+├── tr.dic                     # Ana dağıtım (Flagship Universal) sözlük dosyası
 ├── update.json                # Firefox eklenti otomatik güncelleme bildirimi
 ├── pytest.ini                 # Pytest resmi test yapılandırması
 │
 ├── dist/                      # Dağıtım Sürüm Çıktıları (3 ayrı profil)
-│   ├── turkspell-tdk/           # TDK Amiral Gemisi Profili (tr.aff, tr.dic)
-│   ├── turkspell-dd/            # Dil Derneği Profili (tr.aff, tr.dic)
-│   └── turkspell-universal/     # Evrensel (Universal) Profil (tr.aff, tr.dic)
+│   ├── turkspell-universal/     # Evrensel (Universal - Amiral Gemisi) Profil (tr.aff, tr.dic)
+│   ├── turkspell-tdk/           # TDK Profili (tr.aff, tr.dic)
+│   └── turkspell-dd/            # Dil Derneği Profili (tr.aff, tr.dic)
 │
 ├── firefox-addon/             # Mozilla Firefox Eklenti Kaynakları
 │   ├── manifest.json          # WebExtension bildirim dosyası
@@ -123,8 +125,8 @@ Turkspell, farklı ihtiyaçlara ve yazım tercihlerine yönelik 3 ayrı profilde
 
 | Profil | Dağıtım Dizini | Özellikler | Tercih Edilen Kullanım Alanı |
 |---|---|---|---|
-| **Universal (Evrensel)** | `dist/turkspell-universal/` | Hem TDK (*dâhil*, *bekâr*, *resmî*) hem de Dil Derneği (*dahil*, *bekar*, *resmi*) biçimlerini meşru kabul eder. | **Web tarayıcıları**, genel metin editörleri ve serbest kullanıcılar. |
-| **TDK (Amiral Gemisi)** | `dist/turkspell-tdk/` & Kök dizin (`tr.*`) | Katı TDK yazım kurallarına uyar. `â`, `î` (nispet) ve `û` şapka işaretlerini zorunlu tutar. | **Akademik yayınlar**, resmi kurumlar, TDK standardını benimseyen yayınevleri için uygundur. |
+| **Universal (Amiral Gemisi / Varsayılan)** | `dist/turkspell-universal/` & Kök dizin (`tr.*`) | Hem TDK (*dâhil*, *bekâr*, *resmî*) hem de Dil Derneği (*dahil*, *bekar*, *resmi*) biçimlerini meşru kabul eder. | **Web tarayıcıları**, genel metin editörleri ve serbest kullanıcılar (varsayılan dağıtım). |
+| **TDK Profili** | `dist/turkspell-tdk/` | Katı TDK yazım kurallarına uyar. `â`, `î` (nispet) ve `û` şapka işaretlerini zorunlu tutar. | **Akademik yayınlar**, resmi kurumlar, TDK standardını benimseyen yayınevleri için uygundur (`tdk` branch'i). |
 | **Dil Derneği (DD)** | `dist/turkspell-dd/` | Dil Derneği ilkelerine uyar. Nispet `î` ekini `i` olarak standartlaştırır (`resmi`), inceltme işaretlerini korur. | **Basın-yayın**, gazetecilik ve Dil Derneği kılavuzunu benimseyen kurumlar için uygundur. |
 
 ---
@@ -254,7 +256,7 @@ Bu derleme aracı ([`tools/build_v06.py`](file:///c:/gemini/turkspell/tools/buil
    * `dist/turkspell-tdk/`: Katı TDK kuralları ve zorunlu şapkalı kullanım profili.
    * `dist/turkspell-dd/`: Dil Derneği yazım kılavuzu ilkelerine dayalı profil.
    * `dist/turkspell-universal/`: Hem TDK hem Dil Derneği yazımını meşru kabul eden çift standart profili.
-5. **Otomatik Konuşlandırma**: Amiral gemisi TDK profili doğrudan repo köküne (`tr.aff` ve `tr.dic`), Evrensel profil ise Firefox eklenti dizinine (`firefox-addon/dictionaries/`) kopyalanır.
+5. **Otomatik Konuşlandırma**: Amiral gemisi Evrensel profil doğrudan repo köküne (`tr.aff` ve `tr.dic`) ve Firefox eklenti dizinine (`firefox-addon/dictionaries/`) kopyalanır.
 
 ### 4. Firefox Eklentisinin Paketlenmesi
 
@@ -463,7 +465,16 @@ Bu proje **MIT Lisansı** altında özgür bir yazılım olarak sunulmaktadır. 
 [![Version](https://img.shields.io/github/v/release/selimsum/turkspell?label=version)](https://github.com/selimsum/turkspell/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Compatibility](https://img.shields.io/badge/hunspell-1.7%2B-orange.svg)](https://github.com/hunspell/hunspell)
+[![Mozilla Add-on](https://img.shields.io/badge/Mozilla%20Add--on-Universal-blue.svg)](https://addons.mozilla.org/tr/firefox/addon/turkspell/)
 [![Quality Gate](https://img.shields.io/badge/quality%20gate-34%2F34%20passed-success.svg)](tests/)
+
+> [!NOTE]
+> **This repository (`master` branch) hosts the flagship Universal (dual-standard) edition of Turkspell, accepting both TDK and Dil Derneği orthography.**
+> - **Mozilla Add-on Name**: `Turkspell - Türkçe Yazım Denetimi`
+> - **Gecko ID**: `turkspell@mozilla.org.tr`
+> - **Add-on Page**: [addons.mozilla.org/firefox/addon/turkspell](https://addons.mozilla.org/tr/firefox/addon/turkspell/)
+> - Offers complete dual-standard tolerance without false alarms, accepting both TDK (*dâhil*, *bekâr*, *resmî*) and Dil Derneği (*dahil*, *bekar*, *resmi*) conventions.
+> - For the strict TDK-only single-standard edition enforcing mandatory circumflexes and nisba marks, see the [`tdk` branch](https://github.com/selimsum/turkspell/tree/tdk) (`turkspell-tdk@mozilla.org.tr`).
 
 [🇹🇷 Türkçe](#turkspell-yüksek-performanslı-türkçe-hunspell-sözlüğü) | [🇬🇧 English](#turkspell-high-performance-turkish-hunspell-dictionary)
 
@@ -526,15 +537,15 @@ Turkspell delivers **100% Precision (zero false alarms)** and industry-leading s
 
 ```
 turkspell/
-├── tr.aff                     # Main distribution (Flagship TDK) affix rules file
-├── tr.dic                     # Main distribution (Flagship TDK) dictionary wordlist
+├── tr.aff                     # Main distribution (Flagship Universal) affix rules file
+├── tr.dic                     # Main distribution (Flagship Universal) dictionary wordlist
 ├── update.json                # Firefox add-on automated update manifest
 ├── pytest.ini                 # Pytest official test configuration
 │
 ├── dist/                      # Distribution Outputs (3 distinct profiles)
-│   ├── turkspell-tdk/           # TDK Flagship Profile (tr.aff, tr.dic)
-│   ├── turkspell-dd/            # Dil Derneği Profile (tr.aff, tr.dic)
-│   └── turkspell-universal/     # Universal Profile (tr.aff, tr.dic)
+│   ├── turkspell-universal/     # Universal Flagship Profile (tr.aff, tr.dic)
+│   ├── turkspell-tdk/           # TDK Profile (tr.aff, tr.dic)
+│   └── turkspell-dd/            # Dil Derneği Profile (tr.aff, tr.dic)
 │
 ├── firefox-addon/             # Mozilla Firefox WebExtension Resources
 │   ├── manifest.json          # WebExtension manifest file
@@ -576,8 +587,8 @@ Turkspell is compiled into 3 targeted profiles tailored for different orthograph
 
 | Profile | Distribution Directory | Characteristics | Recommended Usage |
 |---|---|---|---|
-| **Universal** | `dist/turkspell-universal/` | Accepts both TDK (*dâhil*, *bekâr*, *resmî*) and Dil Derneği (*dahil*, *bekar*, *resmi*) conventions. | **Web browsers**, general text editors, and everyday users. |
-| **TDK (Flagship)** | `dist/turkspell-tdk/` & Root (`tr.*`) | Enforces strict TDK rules. Requires `â`, `î` (nisba), and `û` circumflex marks. | **Academic publications**, official institutions, and publishers adhering to TDK standards. |
+| **Universal (Flagship / Default)** | `dist/turkspell-universal/` & Root (`tr.*`) | Accepts both TDK (*dâhil*, *bekâr*, *resmî*) and Dil Derneği (*dahil*, *bekar*, *resmi*) conventions. | **Web browsers**, general text editors, and everyday users (default release). |
+| **TDK Profile** | `dist/turkspell-tdk/` | Enforces strict TDK rules. Requires `â`, `î` (nisba), and `û` circumflex marks. | **Academic publications**, official institutions, and publishers adhering to TDK standards (`tdk` branch). |
 | **Dil Derneği (DD)** | `dist/turkspell-dd/` | Follows Dil Derneği conventions. Standardizes nisba `î` to `i` (`resmi`), preserves softening circumflexes. | **Media and journalism**, publishing houses adhering to Dil Derneği guidelines. |
 
 ---
@@ -707,7 +718,7 @@ The master build script ([`tools/build_v06.py`](file:///c:/gemini/turkspell/tool
    * `dist/turkspell-tdk/`: Strict TDK profile with mandatory circumflex usage.
    * `dist/turkspell-dd/`: Dil Derneği orthography profile.
    * `dist/turkspell-universal/`: Dual-standard universal profile.
-5. **Automated Deployment**: Copies the flagship TDK profile to the repo root (`tr.aff` and `tr.dic`) and the Universal profile to the Firefox add-on directory (`firefox-addon/dictionaries/`).
+5. **Automated Deployment**: Copies the flagship Universal profile to the repo root (`tr.aff` and `tr.dic`) and the Firefox add-on directory (`firefox-addon/dictionaries/`).
 
 ### 4. Firefox Add-on Packaging
 
