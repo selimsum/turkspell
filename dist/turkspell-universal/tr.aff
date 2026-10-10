@@ -46,7 +46,8 @@ MAXNGRAMSUGS 8
 
 
 
-REP 1650
+
+REP 1662
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -418,6 +419,19 @@ REP labaratuar laboratuvar
 REP ligi lığı
 REP lilik lılık
 REP likler lıklar
+REP haftaiçinde hafta_içinde
+REP herbir her_bir
+REP kurufasulye kuru_fasulye
+REP yeşilsoğan yeşil_soğan
+REP doğumgünü doğum_günü
+REP doğumgünüm doğum_günüm
+REP doğumgünün doğum_günün
+REP gözönünde göz_önünde
+REP gözönüne göz_önüne
+REP başaşağı baş_aşağı
+REP yanıbaşında yanı_başında
+REP yüzbinlerce yüz_binlerce
+REP sınırdışı sınır_dışı
 REP yanliz yalnız
 REP yanlız yalnız
 REP deil değil
@@ -577,7 +591,6 @@ REP xır sır
 REP yk k
 REP yb b
 REP oligo oligar
-REP haftaiçinde hafta_içinde
 REP hoscakal hoşça_kal
 REP hosgeldin hoş_geldin
 REP hosbulduk hoş_bulduk
