@@ -1,19 +1,30 @@
 # train.py
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments
-from datasets import load_dataset
-from peft import LoraConfig, get_peft_model
-from trl import SFTTrainer
+import argparse
+import os
 
-def train():
+def train(model_id="Qwen/Qwen2.5-Coder-7B-Instruct", dataset_path="train_dataset.jsonl", output_dir="./output_dir", epochs=3, batch_size=2, lr=2e-4):
+    try:
+        import torch
+        from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments
+        from datasets import load_dataset
+        from peft import LoraConfig, get_peft_model
+        from trl import SFTTrainer
+    except ImportError as e:
+        print(f"Error: Missing machine learning dependencies: {e}")
+        print("Install with: pip install torch transformers datasets peft trl accelerate bitsandbytes")
+        return
+
     print("Starting SFT Trainer setup...")
-    model_id = "Qwen/Qwen2.5-Coder-7B-Instruct"
+    print(f"Model: {model_id} | Dataset: {dataset_path} | Output Dir: {output_dir} | Epochs: {epochs}")
     
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     tokenizer.pad_token = tokenizer.eos_token
     
     # Load dataset
-    dataset = load_dataset("json", data_files="train_dataset.jsonl", split="train")
+    if not os.path.exists(dataset_path):
+        print(f"Error: {dataset_path} not found. Please run generate_training_data.py first.")
+        return
+    dataset = load_dataset("json", data_files=dataset_path, split="train")
     
     # Format dataset to have a single "text" field to be compatible across TRL versions
     def format_prompts(batch):
@@ -26,8 +37,12 @@ def train():
     dataset = dataset.map(format_prompts, batched=True)
     
     # Check GPU VRAM
-    vram = torch.cuda.get_device_properties(0).total_memory / (1024**3)
-    print(f"Detected VRAM: {vram:.2f} GB")
+    if torch.cuda.is_available():
+        vram = torch.cuda.get_device_properties(0).total_memory / (1024**3)
+        print(f"Detected VRAM: {vram:.2f} GB")
+    else:
+        vram = 0
+        print("No GPU detected! Running on CPU (slow).")
     
     # Decide quantization based on VRAM
     if vram < 20:
@@ -89,12 +104,12 @@ def train():
         print("Using modern SFTConfig for SFTTrainer")
         # Build valid config args
         config_kwargs = {
-            "output_dir": "./output_dir",
-            "per_device_train_batch_size": 2,
+            "output_dir": output_dir,
+            "per_device_train_batch_size": batch_size,
             "gradient_accumulation_steps": 4,
-            "learning_rate": 2e-4,
+            "learning_rate": lr,
             "logging_steps": 10,
-            "num_train_epochs": 3,
+            "num_train_epochs": epochs,
             "bf16": True if vram >= 20 else False,
             "fp16": False if vram >= 20 else True,
             "save_strategy": "epoch",
@@ -126,12 +141,12 @@ def train():
     else:
         print("Using legacy SFTTrainer direct configuration")
         training_args = TrainingArguments(
-            output_dir="./output_dir",
-            per_device_train_batch_size=2,
+            output_dir=output_dir,
+            per_device_train_batch_size=batch_size,
             gradient_accumulation_steps=4,
-            learning_rate=2e-4,
+            learning_rate=lr,
             logging_steps=10,
-            num_train_epochs=3,
+            num_train_epochs=epochs,
             bf16=True if vram >= 20 else False,
             fp16=False if vram >= 20 else True,
             save_strategy="epoch",
@@ -154,7 +169,23 @@ def train():
     
     print("Starting training...")
     trainer.train()
-    print("Training finished! Saved adapters to ./output_dir")
+    print(f"Training finished! Saved adapters to {output_dir}")
 
 if __name__ == "__main__":
-    train()
+    parser = argparse.ArgumentParser(description="Fine-tune Qwen on Turkspell grammar rules using QLoRA")
+    parser.add_argument("--model-id", type=str, default="Qwen/Qwen2.5-Coder-7B-Instruct")
+    parser.add_argument("--dataset", type=str, default="train_dataset.jsonl")
+    parser.add_argument("--output-dir", type=str, default="./output_dir")
+    parser.add_argument("--epochs", type=int, default=3)
+    parser.add_argument("--batch-size", type=int, default=2)
+    parser.add_argument("--lr", type=float, default=2e-4)
+    args = parser.parse_args()
+
+    train(
+        model_id=args.model_id,
+        dataset_path=args.dataset,
+        output_dir=args.output_dir,
+        epochs=args.epochs,
+        batch_size=args.batch_size,
+        lr=args.lr
+    )

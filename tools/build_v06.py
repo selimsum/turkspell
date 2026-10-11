@@ -8,6 +8,7 @@ from pathlib import Path
 BASE_DIR = Path(r"c:\gemini\turkspell-benchmarks")
 TURKSPELL_DIR = Path(r"c:\gemini\turkspell")
 DIST_DIR = TURKSPELL_DIR / "dist"
+RAW_DIR = TURKSPELL_DIR / "raw_data"
 
 TDK_PATH = TURKSPELL_DIR / "raw_data" / "tdk_words.txt"
 DD_PATH = TURKSPELL_DIR / "raw_data" / "dil_dernegi_words.txt"
@@ -421,7 +422,86 @@ EXTRA_REP_RULES = [
     "REP labaratuar laboratuvar",
     "REP ligi lığı",
     "REP lilik lılık",
-    "REP likler lıklar"
+    "REP likler lıklar",
+    # Consensus open compound rules (agreed by both TDK and Dil Derneği)
+    "REP haftasonu hafta_sonu",
+    "REP haftasonları hafta_sonları",
+    "REP haftasonunda hafta_sonunda",
+    "REP haftaiçi hafta_içi",
+    "REP haftaiçinde hafta_içinde",
+    "REP pekçok pek_çok",
+    "REP birşey bir_şey",
+    "REP birşeyler bir_şeyler",
+    "REP birşeyi bir_şeyi",
+    "REP birşeyin bir_şeyin",
+    "REP herşey her_şey",
+    "REP herşeyi her_şeyi",
+    "REP herşeyin her_şeyin",
+    "REP herbir her_bir",
+    "REP herbiri her_biri",
+    "REP herbirimiz her_birimiz",
+    "REP hiçbirşey hiçbir_şey",
+    "REP hiçbirşeyi hiçbir_şeyi",
+    "REP hiçkimse hiç_kimse",
+    "REP hiçkimsenin hiç_kimsenin",
+    "REP hiçkimseye hiç_kimseye",
+    "REP hergün her_gün",
+    "REP herzaman her_zaman",
+    "REP heryer her_yer",
+    "REP heran her_an",
+    "REP biran bir_an",
+    "REP biranda bir_anda",
+    "REP şuan şu_an",
+    "REP şuanda şu_anda",
+    "REP yanısıra yanı_sıra",
+    "REP peşisıra peşi_sıra",
+    "REP ardıardına ardı_ardına",
+    "REP yüzyüze yüz_yüze",
+    "REP başbaşa baş_başa",
+    "REP gözgöze göz_göze",
+    "REP dizdize diz_dize",
+    "REP omuzomuza omuz_omuza",
+    "REP peşpeşe peş_peşe",
+    "REP elele el_ele",
+    "REP artarda art_arda",
+    "REP üstüste üst_üste",
+    "REP altalta alt_alta",
+    "REP içiçe iç_içe",
+    "REP sağol sağ_ol",
+    "REP sağolun sağ_olun",
+    "REP sağolsun sağ_olsun",
+    "REP hoşçakal hoşça_kal",
+    "REP hoşçakalın hoşça_kalın",
+    "REP hoşgeldin hoş_geldin",
+    "REP hoşgeldiniz hoş_geldiniz",
+    "REP hoşbulduk hoş_bulduk",
+    "REP hoşbuldum hoş_buldum",
+    "REP kolaygelsin kolay_gelsin",
+    "REP geçmişolsun geçmiş_olsun",
+    "REP afiyetolsun afiyet_olsun",
+    "REP kurufasulye kuru_fasulye",
+    "REP yeşilsoğan yeşil_soğan",
+    "REP terketti terk_etti",
+    "REP terketmek terk_etmek",
+    "REP farketti fark_etti",
+    "REP farketmek fark_etmek",
+    "REP haketti hak_etti",
+    "REP haketmek hak_etmek",
+    "REP yokoldu yok_oldu",
+    "REP yokolmak yok_olmak",
+    "REP varoldu var_oldu",
+    "REP varolmak var_olmak",
+    "REP önlisans ön_lisans",
+    "REP doğumgünü doğum_günü",
+    "REP doğumgünüm doğum_günüm",
+    "REP doğumgünün doğum_günün",
+    "REP geceyarısı gece_yarısı",
+    "REP gözönünde göz_önünde",
+    "REP gözönüne göz_önüne",
+    "REP başaşağı baş_aşağı",
+    "REP yanıbaşında yanı_başında",
+    "REP yüzbinlerce yüz_binlerce",
+    "REP sınırdışı sınır_dışı"
 ]
 
 MANDATORY_HATTED_WORDS = {
@@ -668,13 +748,16 @@ BACK_UNVOICED_FLAGS = remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB 
 FRONT_UNVOICED_FLAGS = remap_flag_string("A3 CI CK DE F1 I2 L2 LI LK N3 P3 P7 PF PP PU PW Q2 R2 SL SZ Y2 cl".replace(" ", ""))
 BACK_ROUNDED_UNVOICED_FLAGS = remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1".replace(" ", ""))
 
+HEAD_FLAG_OVERRIDES["pasaport"] = BACK_ROUNDED_UNVOICED_FLAGS
+HEAD_FLAG_OVERRIDES["folklor"] = BACK_ROUNDED_UNVOICED_FLAGS
+
 # Stems attested in corpus as non-voicing that erroneously had V1/V3 or missing nominal flags
 BACK_NOVOICING_STEMS = [
-    "imalat", "tahsilat", "harekat", "tatbikat", "tadilat", "salat", "bürokrat",
+    "ad", "imalat", "tahsilat", "harekat", "tatbikat", "tadilat", "salat", "bürokrat",
     "kâinat", "belagat", "boydak", "istihbarat", "muamelat", "müfredat",
     "mefruşat", "nebatat", "haşarat", "barikat", "nasihat", "kabahat", "mükafat",
     "pasaport", "rahat", "bask", "mark", "bank", "fırsat", "ark", "park", "şok",
-    "hasılat", "zanaat"
+    "hasılat", "zanaat", "veliaht", "ilahiyat", "satrap", "portal", "marmelat"
 ]
 
 # Front-vowel non-voicing stems (including Arabic/Persian loanwords ending in -at and -al taking front harmony)
@@ -688,7 +771,7 @@ FRONT_NOVOICING_STEMS = [
     "faset", "brifing", "damping", "doping", "bumerang", "aysberg",
     "dramaturg", "andezit", "babet", "bangkok", "beyrut", "dargeçit",
     "derik", "doğubeyazıt", "ehlibeyt", "çöp", "met", "çet",
-    "arktik"
+    "arktik", "suikast", "hilafet", "velayet", "fenotip", "genotip", "ziraat"
 ]
 
 for _w in BACK_NOVOICING_STEMS:
@@ -734,10 +817,38 @@ PALATAL_L_HEADS = {
     "alkol", "ampul", "kontrol", "otokontrol", "rol", "başrol",
     "sembol", "petrol", "protokol", "kolesterol", "metropol",
     "usul", "mahsul", "alveol", "kabul", "makbul", "faul", "hol",
-    "gol", "idol", "karambol", "bandrol", "ekol", "meçhul", "menkul", "resul"
+    "gol", "idol", "karambol", "bandrol", "ekol", "meçhul", "menkul", "resul",
+    "nekropol", "akropol", "parabol", "hiperbol", "etanol", "trol"
 }
 # Pure palatal l flags: front rounded vowels, includes P4 (-üm), P8 (-ün), PV (-ü), PQ (-ümüz), PZ (-ünüz)
 PALATAL_L_FLAGS = remap_flag_string("A4 N4 P4 PV P8 Y2 L2 R2 I2 PQ PZ CK cl LF LSZ LFK LCI PF".replace(" ", ""))
+
+# Load completed POS & morphological attributes for the 45,273 previously unannotated TDK/DD lemmas
+_COMPLETED_POS_PATH = TURKSPELL_DIR / "lexicons" / "authority_pos_completed.json"
+if _COMPLETED_POS_PATH.exists():
+    with open(_COMPLETED_POS_PATH, encoding="utf-8") as _cpf:
+        for _item in json.load(_cpf):
+            _lem = _item.get("lemma", "")
+            _pos = _item.get("pos", "Noun")
+            _attrs = _item.get("attributes", [])
+            if _lem in HEAD_FLAG_OVERRIDES or _lem in PALATAL_L_HEADS:
+                continue
+            if "CompoundP3sg" in _attrs:
+                if _lem.endswith("ı"):
+                    HEAD_FLAG_OVERRIDES[_lem] = "∀∈∌∍∎∖∗∘∡∧∩∪∫∲∶∺∼∽≂≉≋≍≎≣"
+                elif _lem.endswith("u"):
+                    HEAD_FLAG_OVERRIDES[_lem] = "∁∉∌∍∎∖∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≣"
+                elif _lem.endswith("i"):
+                    HEAD_FLAG_OVERRIDES[_lem] = "∂∊∌∍∖∗∘∢∨∩∪∭∴∸∻∿≄≆≊≌≍≎≤≩"
+                elif _lem.endswith("ü"):
+                    HEAD_FLAG_OVERRIDES[_lem] = "∃∋∌∍∖∗∘∢∨∩∪∮∵∹∻≀≅≈≊≌≍≎≤≩"
+            elif "InverseHarmony" in _attrs:
+                if _lem.endswith(("ol", "ul")):
+                    PALATAL_L_HEADS.add(_lem)
+                elif _lem.endswith(("al", "at")):
+                    HEAD_FLAG_OVERRIDES[_lem] = FRONT_UNVOICED_FLAGS
+            elif _pos in ("Interjection", "Conjunction"):
+                HEAD_FLAG_OVERRIDES[_lem] = ""
 
 VIRTUAL_STEMS = [
     # ard (art -> ard-ı, ard-ı-n-da, ard-ı-n-dan, ard-ı-n-a)
@@ -829,6 +940,12 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "idi/∴∸≆∻≩",
     "idik",
     "imiş/∂∌∍∖∗∘∙∢∨∩∪∭∴∸∻∿≄≆≊≌≤≩",
+    # Irregular compound noun akarsu (paralleling su -> suyu, suyum, suyun, suyumuz, suyunuz):
+    "akarsuyu/" + LONG_TO_UTF8.get("C2", ""),
+    "akarsuyum/" + BACK_ROUNDED_UNVOICED_FLAGS,
+    "akarsuyun/" + BACK_ROUNDED_UNVOICED_FLAGS,
+    "akarsuyumuz/" + BACK_ROUNDED_UNVOICED_FLAGS,
+    "akarsuyunuz/" + BACK_ROUNDED_UNVOICED_FLAGS,
     # Cami, Mevki & Sanayi compound & possessive forms (P7 chain -nde, -nden, -ndeki, -nin):
     "camii/∸",
     "Camii/⊘⊙⊚⊛⊜⊝⊞⊟",
@@ -888,7 +1005,7 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "diriltilmek/≗⊃",
     "dolgunlaştırılmak/≔⊂",
     "katledilmek/≗⊃",
-    "kavuşturulmak/≔⊂",
+    "kavuşturulmak/≞⊅",
     "dürtmek/≗⊃",
     "sürtmek/≗⊃",
     "toplattırmak/≔⊂",
@@ -919,6 +1036,42 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "yaşlandırılmak/≔⊂",
     "üstlenilmek/≗⊃",
     "kişileştirilmek/≗⊃",
+    # 34 additional passive stems of official TDK/DD verbs:
+    "karşılaşılmak/≔⊂",
+    "kazandırılmak/≔⊂",
+    "onurlandırılmak/≔⊂",
+    "ayrıştırılmak/≔⊂",
+    "kaçınılmak/≔⊂",
+    "standartlaştırılmak/≔⊂",
+    "konumlandırılmak/≔⊂",
+    "kitaplaştırılmak/≔⊂",
+    "yaygınlaştırılmak/≔⊂",
+    "devralınmak/≔⊂",
+    "tatlandırılmak/≔⊂",
+    "raporlanmak/≔⊂",
+    "klonlanmak/≔⊂",
+    "odaklanılmak/≔⊂",
+    "tırmanılmak/≔⊂",
+    "kabartılmak/≔⊂",
+    "farklılaştırılmak/≔⊂",
+    "tutturulmak/≞⊅",
+    "tutuşturulmak/≞⊅",
+    "kastedilmek/≗⊃",
+    "sentezlenmek/≗⊃",
+    "tarihlendirilmek/≗⊃",
+    "erdirilmek/≗⊃",
+    "özdeşleştirilmek/≗⊃",
+    "modellenmek/≗⊃",
+    "ilerlenmek/≗⊃",
+    "eşleştirilmek/≗⊃",
+    "modernleştirilmek/≗⊃",
+    "emdirilmek/≗⊃",
+    "içerilmek/≗⊃",
+    "içselleştirilmek/≗⊃",
+    "mükemmelleştirilmek/≗⊃",
+    "idealleştirilmek/≗⊃",
+    "sahiplenilmek/≗⊃",
+    "gerekçelendirilmek/≗⊃",
     "apaçi",
     "forklift",
     "menüsküs",
@@ -1186,6 +1339,16 @@ def build_hardened_aff(profile="tdk"):
                 parts = line_s.split(); parts[-1] = "X"; line = " ".join(parts) + "\n"
             elif line_s.startswith("SFX ⊃ mek irme/"):
                 parts[-1] = "X"; line = " ".join(parts) + "\n"
+            elif line_s == "SFX ≚ tmak dıktan tmak":
+                line = "SFX ≚ mak tıktan tmak\n"
+            elif line_s == "SFX ≛ tmak duktan tmak":
+                line = "SFX ≛ mak tuktan tmak\n"
+            elif line_s == "SFX ≜ tmek dikten tmek":
+                line = "SFX ≜ mek tikten tmek\n"
+            elif line_s == "SFX ≝ tmek dükten tmek":
+                line = "SFX ≝ mek tükten tmek\n"
+            elif line_s in ("SFX ≠ emek idikten [dy]emek", "SFX ≠ emek idikten demek", "SFX ≠ emek idikten yemek"):
+                line = f"SFX ≠ mek dikten {parts[4]}\n"
             elif len(parts) >= 4 and "/" in parts[3]:
                 clean_add, flags = parts[3].split("/", 1)
                 if clean_add.endswith("ğ") and "X" not in flags:
@@ -1364,6 +1527,11 @@ MAP '’‘"""
             "bergamotu bergamodu",
             "baçı bacı"
         ])
+        # Load all TDK-open compound suggestions (where joined is used in Dil Derneği)
+        _tdk_open_rep_path = RAW_DIR / "tdk_open_compound_rep.json"
+        if _tdk_open_rep_path.exists():
+            with open(_tdk_open_rep_path, encoding="utf-8") as _torf:
+                clean_extra.extend(json.load(_torf))
     elif profile == "dd":
         clean_extra.extend([
             "î i",
@@ -1375,6 +1543,11 @@ MAP '’‘"""
             "misakımillî Misakımilli",
             "Misakımillî Misakımilli"
         ])
+        # Load all DD-open compound suggestions (where joined is used in TDK)
+        _dd_open_rep_path = RAW_DIR / "dd_open_compound_rep.json"
+        if _dd_open_rep_path.exists():
+            with open(_dd_open_rep_path, encoding="utf-8") as _dorf:
+                clean_extra.extend(json.load(_dorf))
         
     # Extract only genuine replacement pairs from base aff, ignoring digit counts like "1265"
     base_rep = []
@@ -1436,7 +1609,10 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         "aı", "baı", "baıc", "gur", "pluto",
         "yahudi", "yahudice", "yahudilik", "yahudiliğ", "yahudibaklası",
         "misakımilli", "misakımillî",
-        "fata", "çe"
+        "fata", "çe",
+        # Purge noisy abbreviation/symbol stems causing widespread inflection overgeneration
+        "sr", "ac", "ag", "ariza", "aski", "ba", "paba", "kefne", "ekit",
+        "cav", "pere", "pal", "hut", "banaz", "ızgın", "elazığ"
     }
     if profile == "tdk":
         BAD_STEMS.update({"fata", "çe"})
@@ -1481,7 +1657,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         if head_lower in PURGE_VIRTUAL_STEMS or head_lower in ("felaked", "stoğ"):
             removed_bad_stems += 1
             continue
-        if head_lower in BAD_STEMS and "X" not in flags and not flags.startswith("X"):
+        if head_lower in BAD_STEMS:
             removed_bad_stems += 1
             continue
 
