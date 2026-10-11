@@ -27,6 +27,10 @@ on:
           - minor
           - major
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
@@ -37,6 +41,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -83,7 +88,8 @@ jobs:
             echo "No manifest changes to commit."
           else
             git commit -m "chore: release version ${TAG_NAME} [skip ci]"
-            git push origin HEAD
+            git pull --rebase --autostash origin ${{ github.ref_name }}
+            git push origin HEAD:${{ github.ref_name }}
           fi
           
           if git rev-parse "${TAG_NAME}" >/dev/null 2>&1; then

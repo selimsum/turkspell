@@ -556,6 +556,14 @@ def compile_dictionary():
                 _tdk_morph_map[_m_key].update(_mattrs)
         print(f"Loaded {len(_tdk_morph_map):,} stem morphological attributes directly from TDK 2026 dizin.")
 
+    _completed_pos_path = lexicon_file('authority_pos_completed.json', required=False)
+    _completed_pos_map = {}
+    if _completed_pos_path and os.path.exists(_completed_pos_path):
+        with open(_completed_pos_path, 'r', encoding='utf-8') as _cpf:
+            for _cpe in json.load(_cpf):
+                _completed_pos_map[_tlc(_cpe['lemma'])] = _cpe
+        print(f"Loaded {len(_completed_pos_map):,} completed POS/attribute entries from {_completed_pos_path}.")
+
     for _w in sorted(_authority_set):
         if _w.lower() in ENGLISH_WORDS or _w in _BAD_DD_VARIANTS or _w.lower() in FALSE_NEGATIVE_STEMS:
             continue
@@ -582,6 +590,13 @@ def compile_dictionary():
                 _attrs = list(set(_attrs) | _w_tdk_attrs)
                 lexicon.append({'lemma': _w, 'pos': _pos, 'attributes': _attrs})
                 _attrs_transferred += 1
+            elif _tlc(_w) in _completed_pos_map:
+                _cpe = _completed_pos_map[_tlc(_w)]
+                _pos = _cpe.get('pos', 'Noun')
+                _attrs = list(set(_cpe.get('attributes', [])) | _tdk_morph_map.get(_tlc(_w), set()))
+                if _pos == 'Verb' and 'Voicing' in _attrs and _tlc(_w) not in _tdk_verb_voicing:
+                    _attrs = [a for a in _attrs if a != 'Voicing']
+                lexicon.append({'lemma': _w, 'pos': _pos, 'attributes': _attrs})
             else:
                 _is_verb = _w.endswith(('mak', 'mek')) and _w not in _noun_ends_excl
                 _attrs = list(_tdk_morph_map.get(_tlc(_w), []))
