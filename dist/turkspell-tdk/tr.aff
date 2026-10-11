@@ -49,7 +49,12 @@ MAXNGRAMSUGS 8
 
 
 
-REP 4230
+
+
+
+
+
+REP 4240
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -130,7 +135,8 @@ REP kufi kûfi
 REP meskun meskûn
 REP meşkur meşkûr
 REP celali celâli
-REP eflani eflâni
+REP eflani Eflâni
+REP Eflani Eflâni
 REP batıniye bâtıniye
 REP ademcilik âdemcilik
 REP maniasız mâniasız
@@ -139,7 +145,7 @@ REP mahkumane mahkûmane
 REP mahkuk mahkûk
 REP mahkumiyet mahkûmiyet
 REP hilali hilalî
-REP muhammedi muhammedî
+REP muhammedi Muhammedî
 REP misakımilli Misakımillî
 REP Misakımilli Misakımillî
 REP misakımillî Misakımillî
@@ -157,6 +163,22 @@ REP zanaatkar zanaatkâr
 REP zanaatkarlık zanaatkârlık
 REP zanaatkarlığı zanaatkârlığı
 REP zanaatkarlar zanaatkârlar
+REP erkan erkân
+REP hakimiyet hâkimiyet
+REP hakimiyeti hâkimiyeti
+REP harekat harekât
+REP harekatı harekâtı
+REP hünkar hünkâr
+REP iskan iskân
+REP kabe Kâbe
+REP Kabe Kâbe
+REP kamil kâmil
+REP kaşif kâşif
+REP muhafazakar muhafazakâr
+REP ladik Lâdik
+REP Ladik Lâdik
+REP lapseki Lâpseki
+REP Lapseki Lâpseki
 REP klavuz kılavuz
 REP traş tıraş
 REP unvan ünvan
@@ -3018,6 +3040,11 @@ REP şimşektaşı şimşek_taşı
 REP şişköfte şiş_köfte
 REP şıpşıp şıp_şıp
 REP şıpınişi şıpın_işi
+REP eflani eflâni
+REP muhammedi muhammedî
+REP kabe kâbe
+REP ladik lâdik
+REP lapseki lâpseki
 REP yanliz yalnız
 REP yanlız yalnız
 REP deil değil
@@ -3625,7 +3652,6 @@ REP gavur gâvur
 REP habeşi habeşî
 REP hak hâk
 REP hakim hâkim
-REP hakimiyet hâkimiyet
 REP hakimlik hâkimlik
 REP halleşme hâlleşme
 REP halleşmek hâlleşmek
@@ -3645,7 +3671,6 @@ REP ikametgah ikametgâh
 REP inikas inikâs
 REP inkar inkâr
 REP irtikap irtikâp
-REP iskan iskân
 REP istihkam istihkâm
 REP isyankar isyankâr
 REP isyankarlık isyankârlık
@@ -3655,7 +3680,6 @@ REP kafi kâfi
 REP kafur kâfur
 REP kagir kâgir
 REP kahin kâhin
-REP kamil kâmil
 REP kanun kânun
 REP kar kâr
 REP karargah karargâh
@@ -3712,7 +3736,6 @@ REP Celalilik Celâlilik
 REP Ceylanpınar Ceylânpınar
 REP Devrekani Devrekâni
 REP Edirnekari Edirnekâri
-REP Eflani Eflâni
 REP Elazığ Elâzığ
 REP Elazığlı Elâzığlı
 REP Elazığlılık Elâzığlılık
@@ -3722,12 +3745,9 @@ REP Habeşi Habeşî
 REP Hakkari Hakkâri
 REP Hakkarili Hakkârili
 REP Hakkarililik Hakkârililik
-REP Kabe Kâbe
 REP Kahta Kâhta
 REP Kazımkarabekir Kâzımkarabekir
 REP Kağıthane Kâğıthane
-REP Ladik Lâdik
-REP Lapseki Lâpseki
 REP Laçin Lâçin
 REP Mağribi Mağribî
 REP Mikail Mikâil
@@ -3807,7 +3827,6 @@ REP efsunkar efsunkâr
 REP ekabir ekâbir
 REP emir emîr
 REP emirlik emîrlik
-REP erkan erkân
 REP erkanıharbiyeiumumiye erkânıharbiyeiumumiye
 REP erkanıharp erkânıharp
 REP erkanıharplik erkânıharplik
@@ -3844,7 +3863,6 @@ REP halaskar halaskâr
 REP halaskarlık halaskârlık
 REP hamurkar hamurkâr
 REP hamurkarlık hamurkârlık
-REP harekat harekât
 REP hayalileşme hayalîleşme
 REP hayalileşmek hayalîleşmek
 REP hayalilik hayalîlik
@@ -3889,7 +3907,6 @@ REP hallenme hâllenme
 REP halsizleşme hâlsizleşme
 REP halsizleştirme hâlsizleştirme
 REP halsizleştirmek hâlsizleştirmek
-REP hünkar hünkâr
 REP hünkarbeğendi hünkârbeğendi
 REP hürmetkar hürmetkâr
 REP hürmetkarane hürmetkârane
@@ -3981,7 +3998,6 @@ REP kağıtsı kâğıtsı
 REP kağıtçı kâğıtçı
 REP kağıtçılık kâğıtçılık
 REP kaşane kâşane
-REP kaşif kâşif
 REP kuhi kûhi
 REP kündekar kündekâr
 REP kündekari kündekâri
@@ -4047,7 +4063,6 @@ REP millileştirmek millîleştirmek
 REP millilik millîlik
 REP miri mirî
 REP mirici mirîci
-REP muhafazakar muhafazakâr
 REP muhafazakarlık muhafazakârlık
 REP mani mâni
 REP mania mânia
