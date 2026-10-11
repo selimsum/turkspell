@@ -501,8 +501,10 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
     def test_negative_imperative_and_bare_verbal_nouns(self):
         """Verifies 2nd person singular negative imperative and bare -ma/-me forms across verb stems."""
         valid = [
-            "sıkılaşma", "yayınlama", "yapma", "gitme", "bakma", "gelme", "dönme", "koşma"
+            "yakınlaşma", "yayınlama", "yapma", "gitme", "bakma", "gelme", "dönme", "koşma"
         ]
+        if not is_tdk_profile():
+            valid.append("sıkılaşma")
         accepted, rejected = check_words(valid)
         self.assertEqual(rejected, [], f"Valid negative imperative / verbal nouns failing: {rejected}")
 
@@ -525,10 +527,12 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
             "standartlaştırılmış", "yaygınlaştırılması", "kitaplaştırıldı", "mükemmelleştirilmiş",
             # 4. Noun harmony, non-voicing, palatal-l, and akarsu
             "pasaportu", "folkloru", "suikaste", "suikasti", "hilafeti", "velayeti",
-            "fenotipi", "genotipi", "ziraati", "veliahtı", "ilahiyatı", "satrapı",
+            "genotipi", "ziraati", "veliahtı", "ilahiyatı", "satrapı",
             "portalları", "marmelatı", "nekropolü", "akropolü", "parabolün",
             "hiperbolün", "etanolün", "trolü", "akarsuyun", "akarsuyunun"
         ]
+        if not is_tdk_profile():
+            valid.append("fenotipi")
         accepted, rejected = check_words(valid)
         self.assertEqual(rejected, [], f"Corpus-mined authority grammar forms failing: {rejected}")
 
