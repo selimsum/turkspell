@@ -50,7 +50,8 @@ MAXNGRAMSUGS 8
 
 
 
-REP 1662
+
+REP 1667
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -158,6 +159,19 @@ REP zanaatkar zanaatkâr
 REP zanaatkarlık zanaatkârlık
 REP zanaatkarlığı zanaatkârlığı
 REP zanaatkarlar zanaatkârlar
+REP erkan erkân
+REP hakimiyet hâkimiyet
+REP hakimiyeti hâkimiyeti
+REP harekat harekât
+REP harekatı harekâtı
+REP hünkar hünkâr
+REP iskan iskân
+REP kabe kâbe
+REP kamil kâmil
+REP kaşif kâşif
+REP muhafazakar muhafazakâr
+REP ladik lâdik
+REP lapseki lâpseki
 REP klavuz kılavuz
 REP traş tıraş
 REP unvan ünvan
@@ -1049,7 +1063,6 @@ REP gavur gâvur
 REP habeşi habeşî
 REP hak hâk
 REP hakim hâkim
-REP hakimiyet hâkimiyet
 REP hakimlik hâkimlik
 REP halleşme hâlleşme
 REP halleşmek hâlleşmek
@@ -1070,7 +1083,6 @@ REP ikametgah ikametgâh
 REP inikas inikâs
 REP inkar inkâr
 REP irtikap irtikâp
-REP iskan iskân
 REP istihkam istihkâm
 REP isyankar isyankâr
 REP isyankarlık isyankârlık
@@ -1080,7 +1092,6 @@ REP kafi kâfi
 REP kafur kâfur
 REP kagir kâgir
 REP kahin kâhin
-REP kamil kâmil
 REP kanun kânun
 REP kar kâr
 REP karargah karargâh
@@ -1235,7 +1246,6 @@ REP efsunkar efsunkâr
 REP ekabir ekâbir
 REP emir emîr
 REP emirlik emîrlik
-REP erkan erkân
 REP erkanıharbiyeiumumiye erkânıharbiyeiumumiye
 REP erkanıharp erkânıharp
 REP erkanıharplik erkânıharplik
@@ -1272,7 +1282,6 @@ REP halaskar halaskâr
 REP halaskarlık halaskârlık
 REP hamurkar hamurkâr
 REP hamurkarlık hamurkârlık
-REP harekat harekât
 REP hayali hayalî
 REP hayalileşme hayalîleşme
 REP hayalileşmek hayalîleşmek
@@ -1318,7 +1327,6 @@ REP hallenme hâllenme
 REP halsizleşme hâlsizleşme
 REP halsizleştirme hâlsizleştirme
 REP halsizleştirmek hâlsizleştirmek
-REP hünkar hünkâr
 REP hünkarbeğendi hünkârbeğendi
 REP hürmetkar hürmetkâr
 REP hürmetkarane hürmetkârane
@@ -1411,7 +1419,6 @@ REP kağıtsı kâğıtsı
 REP kağıtçı kâğıtçı
 REP kağıtçılık kâğıtçılık
 REP kaşane kâşane
-REP kaşif kâşif
 REP kuhi kûhi
 REP kündekar kündekâr
 REP kündekari kündekâri
@@ -1478,7 +1485,6 @@ REP millileştirmek millîleştirmek
 REP millilik millîlik
 REP miri mirî
 REP mirici mirîci
-REP muhafazakar muhafazakâr
 REP muhafazakarlık muhafazakârlık
 REP mani mâni
 REP mania mânia

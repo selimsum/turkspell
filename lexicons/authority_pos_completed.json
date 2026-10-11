@@ -243805,5 +243805,32 @@
     "lemma": "şıvga",
     "pos": "Noun",
     "attributes": []
+  },
+  {
+    "lemma": "ariza",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "ekit",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "kefne",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "pal",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "çom",
+    "pos": "Noun",
+    "attributes": []
   }
 ]
