@@ -9255,6 +9255,11 @@
     "attributes": []
   },
   {
+    "lemma": "Dg",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "DiRT",
     "pos": "ProperNoun",
     "attributes": []
@@ -9286,6 +9291,16 @@
   },
   {
     "lemma": "DivX",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Dl",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Dm",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -12440,6 +12455,11 @@
     "attributes": []
   },
   {
+    "lemma": "FMVIÜ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "FMVİÜ",
     "pos": "ProperNoun",
     "attributes": []
@@ -13171,6 +13191,11 @@
   },
   {
     "lemma": "FİSKOBİRLİK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "G",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -16597,6 +16622,11 @@
   {
     "lemma": "HTLV",
     "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "HTML",
+    "pos": "Noun",
     "attributes": []
   },
   {
@@ -21830,6 +21860,11 @@
     "attributes": []
   },
   {
+    "lemma": "KHz",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "KHÜ",
     "pos": "ProperNoun",
     "attributes": []
@@ -24830,6 +24865,11 @@
     "attributes": []
   },
   {
+    "lemma": "LTD",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
     "lemma": "LTE",
     "pos": "ProperNoun",
     "attributes": []
@@ -25346,6 +25386,11 @@
   },
   {
     "lemma": "LİZ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "M",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -26396,6 +26441,11 @@
   },
   {
     "lemma": "MHY",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "MHz",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -32522,6 +32572,11 @@
   {
     "lemma": "PH",
     "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "PHP",
+    "pos": "Noun",
     "attributes": []
   },
   {
@@ -42465,6 +42520,11 @@
     "attributes": []
   },
   {
+    "lemma": "USB",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "USF",
     "pos": "ProperNoun",
     "attributes": []
@@ -44956,6 +45016,11 @@
   },
   {
     "lemma": "WHC",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "WHO",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -48452,6 +48517,11 @@
   {
     "lemma": "e-posta",
     "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "e.",
+    "pos": "ProperNoun",
     "attributes": []
   },
   {
@@ -52451,61 +52521,6 @@
   },
   {
     "lemma": "şbu",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "USB",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "Dg",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "Dl",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "Dm",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "e.",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "FMVIÜ",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "G",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "KHz",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "M",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "MHz",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "WHO",
     "pos": "ProperNoun",
     "attributes": []
   }
