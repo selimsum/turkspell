@@ -52867,11 +52867,6 @@
     "attributes": []
   },
   {
-    "lemma": "dokum",
-    "pos": "Noun",
-    "attributes": []
-  },
-  {
     "lemma": "dokumacı",
     "pos": "Noun",
     "attributes": []
@@ -56385,16 +56380,6 @@
     "attributes": [
       "Voicing"
     ]
-  },
-  {
-    "lemma": "dölenme",
-    "pos": "Noun",
-    "attributes": []
-  },
-  {
-    "lemma": "dölenmek",
-    "pos": "Verb",
-    "attributes": []
   },
   {
     "lemma": "döleşi",
@@ -62447,18 +62432,6 @@
     "attributes": []
   },
   {
-    "lemma": "emlakçi",
-    "pos": "Noun",
-    "attributes": []
-  },
-  {
-    "lemma": "emlakçilik",
-    "pos": "Noun",
-    "attributes": [
-      "Voicing"
-    ]
-  },
-  {
     "lemma": "emlakçılık",
     "pos": "Noun",
     "attributes": [
@@ -63269,13 +63242,6 @@
     "lemma": "enzimbilim",
     "pos": "Noun",
     "attributes": []
-  },
-  {
-    "lemma": "enç",
-    "pos": "Noun",
-    "attributes": [
-      "Voicing"
-    ]
   },
   {
     "lemma": "enüstünlük",
@@ -68865,11 +68831,6 @@
     "attributes": []
   },
   {
-    "lemma": "fata",
-    "pos": "Noun",
-    "attributes": []
-  },
-  {
     "lemma": "fatmaanaeli",
     "pos": "Adjective",
     "attributes": []
@@ -74360,11 +74321,6 @@
   {
     "lemma": "gelim",
     "pos": "Noun",
-    "attributes": []
-  },
-  {
-    "lemma": "gelimli",
-    "pos": "Adjective",
     "attributes": []
   },
   {
@@ -93528,11 +93484,6 @@
   {
     "lemma": "ikikonaklı",
     "pos": "Adjective",
-    "attributes": []
-  },
-  {
-    "lemma": "ikil",
-    "pos": "Noun",
     "attributes": []
   },
   {
