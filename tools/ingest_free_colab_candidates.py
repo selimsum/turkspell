@@ -37,11 +37,12 @@ def turkish_lower(s: str) -> str:
     return s.replace("İ", "i").replace("I", "ı").lower()
 
 
-def load_authorities() -> Tuple[Set[str], Set[str], Dict[str, str]]:
+def load_authorities() -> Tuple[Set[str], Set[str], Dict[str, str], Dict[str, str]]:
     """Loads TDK, Dil Derneği words and circumflex mapping."""
     tdk_words = set()
     dd_words = set()
     circumflex_map = {}
+    authority_casing = {}
 
     if TDK_WORDS_PATH.exists():
         with open(TDK_WORDS_PATH, "r", encoding="utf-8") as f:
@@ -50,6 +51,8 @@ def load_authorities() -> Tuple[Set[str], Set[str], Dict[str, str]]:
                 if w and not w.startswith("#"):
                     clean = turkish_lower(w)
                     tdk_words.add(clean)
+                    if any(ch.isupper() for ch in w) and clean not in authority_casing:
+                        authority_casing[clean] = w
                     unhatted = (
                         clean.replace("â", "a")
                         .replace("î", "i")
@@ -66,6 +69,8 @@ def load_authorities() -> Tuple[Set[str], Set[str], Dict[str, str]]:
                 if w and not w.startswith("#"):
                     clean = turkish_lower(w)
                     dd_words.add(clean)
+                    if any(ch.isupper() for ch in w) and clean not in authority_casing:
+                        authority_casing[clean] = w
                     unhatted = (
                         clean.replace("â", "a")
                         .replace("î", "i")
@@ -75,7 +80,7 @@ def load_authorities() -> Tuple[Set[str], Set[str], Dict[str, str]]:
                     if unhatted != clean and unhatted not in circumflex_map:
                         circumflex_map[unhatted] = clean
 
-    return tdk_words, dd_words, circumflex_map
+    return tdk_words, dd_words, circumflex_map, authority_casing
 
 
 def check_with_hunspell(words: List[str], dict_prefix: str = "tr") -> Set[str]:
@@ -106,7 +111,7 @@ def ingest_mined_candidates(
     check_hunspell: bool = True
 ):
     """Audits mined entries, segregates authority matches, circumflex mismatches, and noise."""
-    tdk_words, dd_words, circumflex_map = load_authorities()
+    tdk_words, dd_words, circumflex_map, authority_casing = load_authorities()
     authority_words = tdk_words | dd_words
     print(f"Loaded authority lexicons: {len(tdk_words):,} TDK words, {len(dd_words):,} Dil Derneği words.")
 
@@ -114,7 +119,15 @@ def ingest_mined_candidates(
         data = json.load(f)
 
     if isinstance(data, dict):
-        entries = list(data.values()) if any(isinstance(v, dict) for v in data.values()) else [{"word": k} for k in data]
+        entries = []
+        for k, v in data.items():
+            if isinstance(v, dict):
+                entry = dict(v)
+                if not entry.get("word"):
+                    entry["word"] = k
+                entries.append(entry)
+            else:
+                entries.append({"word": k})
     elif isinstance(data, list):
         entries = data
     else:
@@ -145,10 +158,17 @@ def ingest_mined_candidates(
 
         if clean_lemma in authority_words or clean_word in authority_words:
             matched_authority = "TDK+DD" if (clean_lemma in tdk_words and clean_lemma in dd_words) else ("TDK" if clean_lemma in tdk_words else "DD")
+            
+            # Apply official casing from authority lexicons if it is a proper noun (e.g. Yahudi, Elazığ)
+            display_lemma = authority_casing.get(clean_lemma, clean_lemma)
+            display_word = authority_casing.get(clean_word, clean_word)
+            if any(ch.isupper() for ch in display_lemma) and not any(ch.isupper() for ch in display_word):
+                display_word = display_lemma
+
             authority_exact.append({
-                "word": clean_word,
-                "lemma": clean_lemma,
-                "pos": item.get("pos"),
+                "word": display_word,
+                "lemma": display_lemma,
+                "pos": "ProperNoun" if any(ch.isupper() for ch in display_lemma) else item.get("pos"),
                 "attributes": item.get("attributes", []),
                 "authority": matched_authority,
                 "prestige_score": prestige,

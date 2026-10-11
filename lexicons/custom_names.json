@@ -2218,6 +2218,11 @@
     "attributes": []
   },
   {
+    "lemma": "Atatürk",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "Atatürkçiçeği",
     "pos": "ProperNoun",
     "attributes": []
@@ -6606,6 +6611,16 @@
   },
   {
     "lemma": "Elazığ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Elazığlı",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Elazığlılık",
     "pos": "ProperNoun",
     "attributes": []
   },
