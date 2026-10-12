@@ -620,9 +620,11 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
             "cebiri", "cebirin", "cebire", "cebri",
             # Postpositives, ayn-ending loanwords & non-voicing stems
             "dolayısıyla", "dolayısı", "göreyse", "göredir", "ötürüdür", "dairdir",
-            "öneki", "soneki", "ginsengi", "suikastı", "suikasta", "suikastta",
+            "ginsengi", "suikastı", "suikasta", "suikastta",
             "müştemilatı", "mercii", "menşei", "tevkii", "karbondioksiti", "karbondioksidi"
         ]
+        if not is_tdk_profile():
+            valid.extend(["öneki", "soneki"])
         accepted, rejected = check_words(valid)
         self.assertEqual(rejected, [], f"Valid corpus-mined inflections failing: {rejected}")
 
