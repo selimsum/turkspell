@@ -917,6 +917,8 @@ def gen_copula_flag_back(flag: str = "CL") -> str:
             cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛçfhkpsşt]" # Voiced consonant
         elif cop_tmpl.startswith('t'):
             cond_suffix = "[çfhkpsşt]" # Unvoiced consonant
+        elif cop_tmpl in ("Im", "Iz", "ImdIr", "IzdIr"):
+            cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛpçtk]" # Non-voicing consonant
         else:
             cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛ]" # Any consonant
 
@@ -966,6 +968,8 @@ def gen_copula_flag_front(flag: str = "cl") -> str:
             cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛçfhkpsşt]" # Voiced consonant
         elif cop_tmpl.startswith('t'):
             cond_suffix = "[çfhkpsşt]" # Unvoiced consonant
+        elif cop_tmpl in ("Im", "Iz", "ImdIr", "IzdIr"):
+            cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛpçtk]" # Non-voicing consonant
         else:
             cond_suffix = "[^aeıioöuüAEIİOÖUÜÂÎÛ]" # Any consonant
 
@@ -1523,23 +1527,15 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("oldugunu", "olduğunu"),                        # 31k
         ("yanlis", "yanlış"), ("yanlıs", "yanlış"),      # ~1.3k
         ("mumkun", "mümkün"), ("mümkun", "mümkün"),
-        ("0", "o"), ("0", "O"),
-        ("1", "i"), ("1", "I"), ("1", "ı"),
-        ("3", "e"), ("3", "E"),
-        ("4", "a"), ("4", "A"),
-        ("5", "s"), ("5", "r"),
-        ("6", "y"), ("6", "g"), ("6", "t"),
-        ("7", "y"), ("7", "t"),
-        ("8", "u"), ("8", "ü"),
-        ("9", "o"), ("9", "u"),]
+    ]
     
-    # 1. Base typographic & phonological character substitutions
+    # 1. Base typographic & phonological character substitutions (appended after specific word/stem rules)
     char_reps = [
         # Circumflex pairs (priority)
         ("a", "â"), ("â", "a"), ("u", "û"), ("û", "u"), ("i", "î"), ("î", "i"),
         ("A", "Â"), ("Â", "A"), ("U", "Û"), ("Û", "U"), ("İ", "Î"), ("Î", "İ"),
         # De-ASCII lowercase & uppercase character swaps
-        ("c", "ç"), ("ç", "c"), ("g", "ğ"), ("ğ", "g"), ("s", "ş"), ("ş", "s"),
+        ("c", "ç"), ("ç", "c"), ("g", "ğ"), ("ğ", "g"), ("k", "ğ"), ("ğ", "k"), ("s", "ş"), ("ş", "s"),
         ("o", "ö"), ("ö", "o"), ("u", "ü"), ("ü", "u"), ("ı", "i"), ("i", "ı"),
         ("C", "Ç"), ("Ç", "C"), ("G", "Ğ"), ("Ğ", "G"), ("S", "Ş"), ("Ş", "S"),
         ("O", "Ö"), ("Ö", "O"), ("U", "Ü"), ("Ü", "U"), ("I", "İ"), ("İ", "I"), ("I", "I"),
@@ -1552,16 +1548,11 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("ın", "in"), ("in", "ın"), ("un", "ün"), ("ün", "un"),
         ("da", "de"), ("de", "da"), ("lar", "ler"), ("ler", "lar"),
         ("la", "le"), ("le", "la"), ("’", "'"),
-        # Circumflex single-char mappings
-        ("a", "â"), ("â", "a"), ("u", "û"), ("û", "u"), ("i", "î"), ("î", "i"),
-        ("A", "Â"), ("Â", "A"), ("U", "Û"), ("Û", "U"), ("İ", "Î"), ("Î", "İ"),
         # Common de-ASCII & uppercase suffix clusters
         ("lari", "ları"), ("larin", "ların"), ("larimi", "larımı"), ("lariniz", "larınız"),
         ("sutcu", "şütçü"), ("sucu", "şücü"), ("tcu", "tçü"),
         ("IS", "İŞ"), ("IL", "İL"), ("IN", "İN"), ("IY", "İY"), ("IR", "İR"), ("ES", "EŞ"), ("IK", "İK")
     ]
-    for src, dst in char_reps:
-        rep_list.append((src, dst))
         
     # 2. Common Lexical Typos
     lexical_typos = [
@@ -1581,7 +1572,7 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("dinazor", "dinozor"),
         ("klavuz", "kılavuz"),
         ("muhattap", "muhatap"),
-        ("idda", "iddaa"),
+        ("idda", "iddia"),
         ("klüp", "kulüp"),
         ("mualif", "muhalif"),
         ("seftali", "şeftali"),
@@ -1810,38 +1801,167 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("egsos", "egzoz"),
         ("eksoz", "egzoz"),
         ("egzos", "egzoz"),
-        ("w", "v"),
-        ("v", "w"),
-        ("q", "k"),
-        ("k", "q"),
-        ("x", "ks"),
+        ("herkezden", "herkesten"),
+        ("herkezde", "herkeste"),
+        ("herkezi", "herkesi"),
+        ("herkezle", "herkesle"),
+        ("yalnışlık", "yanlışlık"),
+        ("yanlızca", "yalnızca"),
+        ("yanlızlık", "yalnızlık"),
+        ("orjinallik", "orijinallik"),
+        ("antremanda", "antrenmanda"),
+        ("antremanı", "antrenmanı"),
+        ("iddea", "iddia"),
+        ("artiz", "artist"),
+        ("acenta", "acente"),
+        ("afaroz", "aforoz"),
+        ("apandist", "apandisit"),
+        ("aperatif", "aperitif"),
+        ("bilader", "birader"),
+        ("bisküüt", "bisküvi"),
+        ("espiri", "espri"),
+        ("espirili", "esprili"),
+        ("krathane", "kıraathane"),
+        ("stajer", "stajyer"),
+        ("stajerlik", "stajyerlik"),
+        ("poaça", "poğaça"),
+        ("pohaça", "poğaça"),
+        ("maydonoz", "maydanoz"),
+        ("kurdela", "kurdele"),
+        ("kolanya", "kolonya"),
+        ("kanbur", "kambur"),
+        ("çenber", "çember"),
+        ("penbe", "pembe"),
+        ("perşenbe", "perşembe"),
+        ("çarşanba", "çarşamba"),
+        ("anbar", "ambar"),
+        ("zanbak", "zambak"),
+        ("sünbül", "sümbül"),
+        ("çiyan", "çıyan"),
+        ("tiskinmek", "tiksinmek"),
+        ("müslüman", "Müslüman"),
+        ("hristiyan", "Hristiyan"),
+        ("hıristiyan", "Hristiyan"),
+        ("yahudi", "Yahudi"),
+        ("muatap", "muhatap"),
+        ("muhatab", "muhatap"),
+        ("vaad", "vaat"),
+        ("tesbit", "tespit"),
+        ("isbat", "ispat"),
+        ("gangaster", "gangster"),
+        ("grapon", "krapon"),
+        ("küpür", "kupür"),
+        ("küsür", "küsur"),
+        ("küsülat", "küsurat"),
+        ("malesef", "maalesef"),
+        ("mağlesef", "maalesef"),
+        ("metod", "metot"),
+        ("standard", "standart"),
+        ("katalok", "katalog"),
+        ("monolok", "monolog"),
+        ("diyalok", "diyalog"),
+        ("psikolok", "psikolog"),
+        ("sezaryan", "sezaryen"),
+        ("şarter", "şalter"),
+        ("şohben", "şofben"),
+        ("tazzik", "tazyik"),
+        ("tazik", "tazyik"),
+        ("tenefüs", "teneffüs"),
+        ("terorist", "terörist"),
+        ("usül", "usul"),
+        ("zıttı", "zıddı"),
+        ("zıttına", "zıddına"),
     ]
     for src, dst in lexical_typos:
         rep_list.append((src, dst))
         
-    # 3. Morphological Typos (Vowel Drop, Voicing, soft-l loans)
+    # 3. Morphological Typos (Vowel Drop, Voicing, Non-Voicing, Soft-L loans)
     voicing_stems = [
-        ("kitap", "kitab", ["ı", "ın", "a", "ımız", "ınız"]),
-        ("ağaç", "ağac", ["ı", "ın", "a", "ımız", "ınız"]),
-        ("çocuk", "çocuğ", ["u", "un", "a", "umuz", "unuz"]),
-        ("kâğıt", "kâğıd", ["ı", "ın", "a", "ımız", "ınız"]),
-        ("borç", "borc", ["u", "un", "a", "umuz", "unuz"]),
-        ("renk", "reng", ["i", "in", "e", "imiz", "iniz"]),
-        ("kalp", "kalb", ["i", "in", "e", "imiz", "iniz"])
+        ("kitap", "kitab", ["ı", "ın", "a", "ım", "ımız", "ınız"]),
+        ("ağaç", "ağac", ["ı", "ın", "a", "ım", "ımız", "ınız"]),
+        ("çocuk", "çocuğ", ["u", "un", "a", "um", "umuz", "unuz"]),
+        ("sokak", "sokağ", ["ı", "ın", "a", "ım", "ımız", "ınız"]),
+        ("ayak", "ayağ", ["ı", "ın", "a", "ım", "ımız", "ınız"]),
+        ("kulak", "kulağ", ["ı", "ın", "a", "ım", "ımız", "ınız"]),
+        ("kâğıt", "kâğıd", ["ı", "ın", "a", "ım", "ımız", "ınız"]),
+        ("borç", "borc", ["u", "un", "a", "um", "umuz", "unuz"]),
+        ("renk", "reng", ["i", "in", "e", "im", "imiz", "iniz"]),
+        ("kalp", "kalb", ["i", "in", "e", "im", "imiz", "iniz"]),
+        ("umut", "umud", ["u", "un", "a", "um", "umuz", "unuz"]),
+        ("kanat", "kanad", ["ı", "ın", "a", "ım", "ımız", "ınız"]),
+        ("yurt", "yurd", ["u", "un", "a", "um", "umuz", "unuz"]),
+        ("kurt", "kurd", ["u", "un", "a", "um", "umuz", "unuz"]),
+        ("dert", "derd", ["i", "in", "e", "im", "imiz", "iniz"]),
+        ("genç", "genc", ["i", "in", "e", "im", "imiz", "iniz"]),
     ]
     for unv, voiced, suffixes in voicing_stems:
         for s in suffixes:
             rep_list.append((f"{unv}{s}", f"{voiced}{s}"))
+
+    nonvoicing_stems = [
+        ("hukuğ", "hukuk", ["u", "a", "un"]),
+        ("ahlağ", "ahlak", ["ı", "a", "ın"]),
+        ("evrağ", "evrak", ["ı", "a", "ın"]),
+        ("ittifağ", "ittifak", ["ı", "a", "ın"]),
+        ("merağ", "merak", ["ı", "a", "ın"]),
+        ("stoğ", "stok", ["u", "a", "un"]),
+        ("felaked", "felaket", ["i", "e", "in"]),
+        ("hakikad", "hakikat", ["i", "e", "in"]),
+        ("tabiad", "tabiat", ["ı", "a", "ın"]),
+        ("sanad", "sanat", ["ı", "a", "ın"]),
+        ("devled", "devlet", ["i", "e", "in"]),
+        ("milled", "millet", ["i", "e", "in"]),
+        ("cumhuriyed", "cumhuriyet", ["i", "e", "in"]),
+        ("edebiyad", "edebiyat", ["ı", "a", "ın"]),
+        ("inşaad", "inşaat", ["ı", "a", "ın"]),
+        ("hayad", "hayat", ["ı", "a", "ın"]),
+        ("saad", "saat", ["i", "e", "in"]),
+        ("paked", "paket", ["i", "e", "in"]),
+        ("kased", "kaset", ["i", "e", "in"]),
+        ("anked", "anket", ["i", "e", "in"]),
+        ("roked", "roket", ["i", "e", "in"]),
+        ("ceked", "ceket", ["i", "e", "in"]),
+        ("marked", "market", ["i", "e", "in"]),
+        ("tabled", "tablet", ["i", "e", "in"]),
+        ("interned", "internet", ["i", "e", "in"]),
+        ("pilod", "pilot", ["u", "a", "un"]),
+        ("robod", "robot", ["u", "a", "un"]),
+    ]
+    for voiced_err, unv_corr, suffixes in nonvoicing_stems:
+        for s in suffixes:
+            rep_list.append((f"{voiced_err}{s}", f"{unv_corr}{s}"))
             
     drop_stems = [
         ("akıl", "akl", ["ı", "ın", "a", "ımız", "ınız"]),
         ("ağız", "ağz", ["ı", "ın", "a", "ımız", "ınız"]),
         ("şehir", "şehr", ["i", "in", "e", "imiz", "iniz"]),
+        ("nehir", "nehr", ["i", "in", "e", "imiz", "iniz"]),
+        ("zehir", "zehr", ["i", "in", "e", "imiz", "iniz"]),
         ("ömür", "ömr", ["ü", "ün", "e", "ümüz", "ünüz"]),
+        ("mühür", "mühr", ["ü", "ün", "e", "ümüz", "ünüz"]),
+        ("şükür", "şükr", ["ü", "ün", "e", "ümüz", "ünüz"]),
+        ("hüküm", "hükm", ["ü", "ün", "e", "ümüz", "ünüz"]),
+        ("zulüm", "zulm", ["ü", "ün", "e", "ümüz", "ünüz"]),
         ("resim", "resm", ["i", "in", "e", "imiz", "iniz"]),
+        ("isim", "ism", ["i", "in", "e", "imiz", "iniz"]),
+        ("cisim", "cism", ["i", "in", "e", "imiz", "iniz"]),
+        ("kısım", "kısm", ["ı", "ın", "a", "ımız", "ınız"]),
+        ("hısım", "hısm", ["ı", "ın", "a", "ımız", "ınız"]),
         ("burun", "burn", ["u", "un", "a", "umuz", "unuz"]),
         ("karın", "karn", ["ı", "ın", "a", "ımız", "ınız"]),
-        ("zehir", "zehr", ["i", "in", "e", "imiz", "iniz"])
+        ("alın", "aln", ["ı", "ın", "a", "ımız", "ınız"]),
+        ("boyun", "boyn", ["u", "un", "a", "umuz", "unuz"]),
+        ("oğul", "oğl", ["u", "un", "a", "umuz", "unuz"]),
+        ("göğüs", "göğs", ["ü", "ün", "e", "ümüz", "ünüz"]),
+        ("omuz", "omz", ["u", "un", "a", "umuz", "unuz"]),
+        ("ufuk", "ufk", ["u", "un", "a", "umuz", "unuz"]),
+        ("beyin", "beyn", ["i", "in", "e", "imiz", "iniz"]),
+        ("keyif", "keyf", ["i", "in", "e", "imiz", "iniz"]),
+        ("sabır", "sabr", ["ı", "ın", "a", "ımız", "ınız"]),
+        ("fikir", "fikr", ["i", "in", "e", "imiz", "iniz"]),
+        ("zikir", "zikr", ["i", "in", "e", "imiz", "iniz"]),
+        ("vakit", "vakt", ["i", "in", "e", "imiz", "iniz"]),
+        ("nakit", "nakt", ["i", "in", "e", "imiz", "iniz"]),
     ]
     for full, dropped, suffixes in drop_stems:
         for s in suffixes:
@@ -1851,39 +1971,56 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("saat", ["ler", "le", "leri", "lerin", "lerinizin", "lerimizin", "e", "i", "in"]),
         ("hâl", ["ler", "le", "leri", "lerin", "e", "i", "in"]),
         ("rol", ["ler", "le", "leri", "lerin", "e", "ü", "ün"]),
-        ("alkol", ["ler", "le", "leri", "lerin", "e", "ü", "ün"]),
+        ("alkol", ["ler", "le", "leri", "lerin", "e", "ü", "ün", "süz"]),
         ("metal", ["ler", "le", "leri", "lerin", "e", "i", "in"]),
-        ("kontrol", ["ler", "le", "leri", "lerin", "e", "ü", "ün"])
+        ("kontrol", ["ler", "le", "leri", "lerin", "e", "ü", "ün", "süz"]),
+        ("sembol", ["ler", "le", "leri", "lerin", "e", "ü", "ün"]),
+        ("petrol", ["ler", "le", "leri", "lerin", "e", "ü", "ün"]),
+        ("protokol", ["ler", "le", "leri", "lerin", "e", "ü", "ün"]),
+        ("ampul", ["ler", "le", "leri", "lerin", "e", "ü", "ün", "süz"]),
+        ("mahsul", ["ler", "le", "leri", "lerin", "e", "ü", "ün"]),
+        ("usul", ["ler", "le", "leri", "lerin", "e", "ü", "ün"]),
+        ("meşgul", ["ler", "le", "leri", "lerin", "e", "ü", "ün"]),
+        ("mesul", ["ler", "le", "leri", "lerin", "e", "ü", "ün"]),
+        ("mamul", ["ler", "le", "leri", "lerin", "e", "ü", "ün"]),
+        ("makul", ["ler", "le", "leri", "lerin", "e", "ü", "ün"]),
     ]
     
     harmony_map = {
         "lar": "ler", "la": "le", "ları": "leri", "ların": "lerin", 
         "larının": "lerinin", "larımızın": "lerimizin", "larınızın": "lerinizin",
-        "a": "e", "ı": "i", "ın": "in", "u": "ü", "un": "ün"
+        "a": "e", "ı": "i", "ın": "in", "u": "ü", "un": "ün", "suz": "süz"
     }
     for stem, suffixes in soft_loans:
         for corr_s in suffixes:
             for back_s, front_s in harmony_map.items():
                 if corr_s == front_s:
                     rep_list.append((f"{stem}{back_s}", f"{stem}{corr_s}"))
-                    
+
+    # Consonant assimilation & palatal-L suffix rules
+    for src, dst in [
+        ("pd", "pt"), ("çd", "çt"), ("td", "tt"), ("kd", "kt"),
+        ("sd", "st"), ("şd", "şt"), ("hd", "ht"), ("fd", "ft"),
+        ("lu$", "lü"), ("lun$", "lün"), ("lsuz$", "lsüz"), ("llar$", "ller"),
+    ]:
+        rep_list.append((src, dst))
+
     digit_replacements = [
-        ("0", "o"), ("0", "ö"),
-        ("1", "ı"), ("1", "i"), ("1", "l"),
-        ("3", "e"),
-        ("4", "a"), ("4", "r"), ("4", "e"),
-        ("5", "s"), ("5", "t"),
-        ("6", "y"), ("6", "t"),
-        ("7", "u"), ("7", "y"),
-        ("8", "b"), ("8", "i"),
+        ("0", "o"), ("0", "ö"), ("0", "O"),
+        ("1", "ı"), ("1", "i"), ("1", "l"), ("1", "I"),
+        ("3", "e"), ("3", "E"),
+        ("4", "a"), ("4", "r"), ("4", "e"), ("4", "A"),
+        ("5", "s"), ("5", "t"), ("5", "r"),
+        ("6", "y"), ("6", "t"), ("6", "g"),
+        ("7", "u"), ("7", "y"), ("7", "t"),
+        ("8", "b"), ("8", "i"), ("8", "u"), ("8", "ü"),
         ("9", "o"), ("9", "u")
     ]
-    for src, dst in digit_replacements:
-        rep_list.append((src, dst))
 
     phonetic_reps = [
         ("ı", "i"), ("i", "ı"),
         ("ğ", "g"), ("g", "ğ"),
+        ("k", "ğ"), ("ğ", "k"),
         ("ü", "u"), ("u", "ü"),
         ("ş", "s"), ("s", "ş"),
         ("ö", "o"), ("o", "ö"),
@@ -1905,19 +2042,9 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("bb", "b"), ("b", "bb"),
         ("dd", "d"), ("d", "dd"),
         ("cc", "c"), ("c", "cc"),
-        ("zz", "z"), ("z", "zz")
+        ("zz", "z"), ("z", "zz"),
+        ("w", "v"), ("v", "w"), ("q", "k"), ("k", "q"), ("x", "ks"),
     ]
-    for src, dst in [
-        ("a", "â"), ("â", "a"),
-        ("A", "Â"), ("Â", "A"),
-        ("i", "î"), ("î", "i"),
-        ("İ", "Î"), ("Î", "İ"), ("I", "Î"),
-        ("u", "û"), ("û", "u"),
-        ("U", "Û"), ("Û", "U"),
-    ]:
-        rep_list.append((src, dst))
-    for src, dst in phonetic_reps:
-        rep_list.append((src, dst))
 
     deascii_typos = [
         ("gunes", "güneş"), ("bagir", "bağır"), ("cirak", "çırak"), ("cirakligi", "çıraklığı"),
@@ -2175,8 +2302,18 @@ def generate_rep_rules() -> list[tuple[str, str]]:
         ("Şarkkari", "Şarkkâri"), ("Şehitkamil", "Şehitkâmil"), ("Şimali", "Şimalî"), ("şehriyar", "şehriyâr"),
         ("şikar", "şikâr"), ("şikayet", "şikâyet"), ("şikayetname", "şikâyetname"), ("şikayetçi", "şikâyetçi"),
         ("şikayetçilik", "şikâyetçilik"), ("şivekar", "şivekâr"), ("şura", "şûra"), ("şüreka", "şürekâ"),
+        ("mahkukat", "mahkûkât"), ("ademci", "âdemci"), ("ademcilik", "âdemcilik"), ("amalık", "âmâlık"),
     ]
     for src, dst in circumflex_typos:
+        rep_list.append((src, dst))
+
+    # Append general single-character, phonetic, and digit replacements LAST so
+    # specific lexical/morphological/circumflex rules always match first in Hunspell.
+    for src, dst in char_reps:
+        rep_list.append((src, dst))
+    for src, dst in phonetic_reps:
+        rep_list.append((src, dst))
+    for src, dst in digit_replacements:
         rep_list.append((src, dst))
         
     # Deduplicate while preserving order and removing self-replacements
@@ -3307,7 +3444,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
     else:
         cond_cons = f"[^çfhkpsşt]{strip}"
         cond_unv = f"[çfhkpsşt]{strip}"
-        for d_c, cond_s in [("d", cond_cons if not is_voicing else f"[çt]{strip}"), ("t", cond_unv if not is_voicing else f"[çt]{strip}")]:
+        for d_c, cond_s in ([("t", f"[çt]{strip}")] if is_voicing else [("d", cond_cons), ("t", cond_unv)]):
             add_r(strip, f"{d_c}{v_high}/{cop_past}", cond_s)
             add_r(strip, f"{d_c}{v_high}", cond_s)
             for p in ["m", "n", "k", f"n{v_high}z", f"l{v_low}r"]:
@@ -3835,7 +3972,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
     else:
         cond_cons = f"[^çfhkpsşt]{strip}"
         cond_unv = f"[çfhkpsşt]{strip}"
-        for d_c, cond_s in [("d", cond_cons if not is_voicing else f"[çt]{strip}"), ("t", cond_unv if not is_voicing else f"[çt]{strip}")]:
+        for d_c, cond_s in ([("t", f"[çt]{strip}")] if is_voicing else [("d", cond_cons), ("t", cond_unv)]):
             add_r(strip, f"{d_c}{v_high}ğ{v_high}/{part_3sg}", cond_s)
             add_r(strip, f"{d_c}{v_high}ğ{v_high}", cond_s)
             add_r(strip, f"{d_c}{v_high}ğ{v_high}m/{part_pers}", cond_s)
