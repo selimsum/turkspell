@@ -23558,6 +23558,16 @@
     "attributes": []
   },
   {
+    "lemma": "iPad",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "iPhone",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "macOS",
     "pos": "ProperNoun",
     "attributes": []

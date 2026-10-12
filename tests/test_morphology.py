@@ -641,6 +641,41 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         accepted_inv, _ = check_words(invalid)
         self.assertEqual(accepted_inv, [], f"Invalid typos leaked: {accepted_inv}")
 
+    def test_abbreviations_and_proper_nouns_apostrophe_inflections(self):
+        """Verifies apostrophe inflections across letter-by-letter initialisms, word acronyms, units, and brands."""
+        valid = [
+            "TBMM'de", "TBMM'den", "TBMM'ye", "TBMM'yi", "TBMM'nin", "TBMM'deki",
+            "ABD'de", "ABD'den", "ABD'ye", "ABD'yi", "ABD'nin", "ABD'li", "ABD'liler",
+            "AB'de", "AB'den", "AB'ye", "AB'yi", "AB'nin", "AB'liler",
+            "CHP'de", "CHP'ye", "CHP'yi", "CHP'nin", "CHP'li", "CHP'liler",
+            "MHP'ye", "MHP'li", "AKP'de", "AKP'ye", "AKP'nin", "AKP'li",
+            "TDK'de", "TDK'ye", "TDK'nin", "TDK'da", "TDK'ya", "TDK'nın",
+            "SGK'de", "SGK'ye", "SGK'da", "SGK'ya", "KYK'ye", "KYK'ya", "TSK'ye", "TSK'ya",
+            "YÖK'te", "YÖK'ten", "YÖK'e", "YÖK'ü", "YÖK'ün",
+            "RTÜK'te", "RTÜK'ten", "RTÜK'e", "RTÜK'ü", "RTÜK'ün",
+            "TÜİK'te", "TÜİK'ten", "TÜİK'e", "TÜİK'in",
+            "MİT'te", "MİT'ten", "MİT'e", "MİT'in",
+            "ÖSYM'de", "ÖSYM'ye", "ÖSYM'yi", "ÖSYM'nin",
+            "KPSS'ye", "YKS'ye", "LGS'ye",
+            "KDV'ye", "KDV'yi", "KDV'nin", "KDV'si", "KDV'li", "KDV'siz",
+            "ÖTV'ye", "ÖTV'yi", "ÖTV'nin", "ÖTV'si",
+            "TRT'ye", "PTT'ye", "THY'ye", "TCMB'ye", "BDDK'ya", "BDDK'ye", "SPK'ya", "EPDK'ya", "KVKK'ya",
+            "STK'ler", "STK'lar", "KOBİ'ler", "İHA'lar", "SİHA'lar", "CEO'su", "CEO'ya",
+            "TÜBİTAK'ta", "TÜBİTAK'tan", "TÜBİTAK'a", "TÜBİTAK'ın",
+            "ASELSAN'da", "ASELSAN'dan", "ASELSAN'a", "ASELSAN'ın",
+            "TÜPRAŞ'ta", "TÜPRAŞ'tan", "BOTAŞ'ta", "TEDAŞ'ta", "TUSAŞ'ta", "TEKNOFEST'te",
+            "NATO'da", "NATO'ya", "NATO'nun", "UNESCO'ya", "UNICEF'te", "OPEC'te", "OECD'ye", "IMF'ye",
+            "TL'lik", "TL'ye", "TL'si", "cm'lik", "cm'ye", "cm'de", "mm'lik", "km'lik",
+            "kg'lık", "kg'dan", "gr'lık", "gr'dan", "mg'lık", "GB'lık", "GB'ta", "MB'lık", "MB'ta",
+            "iPhone'u", "iPhone'a", "iPhone'da", "iPhone'un", "iPad'i", "iPad'e", "iPad'de",
+            "YouTube'da", "YouTube'dan", "YouTube'a", "YouTube'u", "YouTube'un",
+            "WhatsApp'ta", "WhatsApp'tan", "Google'da", "Google'dan", "Twitter'da", "Twitter'dan",
+            "Linux'ta", "Linux'tan", "İstanbul'da", "Ankara'ya", "Boğaziçi'nde", "Atatürk'te"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid abbreviation/proper-noun inflections failing: {rejected}")
+
 
 if __name__ == "__main__":
     unittest.main()
+
