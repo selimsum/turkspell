@@ -715,9 +715,41 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         self.assertEqual(accepted, [], f"Overgenerated or misspelled forms leaked: {accepted}")
 
         # Verify that non-voicing [pçtk] stems still accept 1sg/1pl copula (-ım/-im/-um/-üm, -ız/-iz/-uz/-üz)
-        valid_copulas = ["devletim", "devletiz", "sanatım", "sanatız", "milletiz", "pilotum", "pilotuz", "çöpüz", "المات" if False else "matım", "matız", "Müslüman", "Müslümanlık", "Hristiyan", "Hristiyanlık"]
+        valid_copulas = ["devletim", "devletiz", "sanatım", "sanatız", "milletiz", "pilotum", "pilotuz", "çöpüz", "matım", "matız", "Müslüman", "Müslümanlık", "Hristiyan", "Hristiyanlık"]
         _, rej_copulas = check_words(valid_copulas)
         self.assertEqual(rej_copulas, [], f"Valid non-voicing copula or proper noun forms rejected: {rej_copulas}")
+
+    def test_numbers_ordinals_dates_and_clock_times(self):
+        """Verifies apostrophe inflections and strict negative rejection on numbers, ordinals, years, and clock times."""
+        valid_numbers = [
+            "1'de", "1'den", "1'inci", "1'incisi", "2'de", "2'ye", "2'nci", "2'ncisi", "2'şer", "2'ydi",
+            "3'te", "3'ten", "3'üncü", "3'üncüsü", "3'er", "3'lü", "4'te", "4'üncü", "5'te", "5'inci",
+            "6'da", "6'dan", "6'ya", "6'ncı", "6'ncısı", "6'şar", "7'de", "7'ye", "7'nci", "8'de", "8'inci",
+            "9'da", "9'uncu", "10'da", "10'uncu", "20'de", "20'nci", "30'da", "30'uncu", "30'ların",
+            "40'ta", "40'ıncı", "50'de", "50'si", "50'nci", "60'ta", "60'ıncı", "70'te", "70'inci",
+            "80'de", "80'inci", "80'lerde", "90'da", "90'ıncı", "90'lardan", "100'de", "100'üncü", "100'lerce",
+            "1000'de", "1000'inci", "1.000'de", "10.000'de", "100.000'de", "1.000.000'da",
+            "1071'de", "1453'te", "1881'de", "1915'te", "1919'da", "1920'de", "1923'te", "1923'ten",
+            "1923'teki", "1923'tedir", "1938'de", "1980'lerde", "2000'lerde", "2023'te", "2024'te",
+            "2025'te", "2026'da", "2026'dan", "2026'ya", "2026'nın",
+            "09.00'da", "10.00'da", "12.00'de", "13.00'te", "14.00'te", "15.00'te", "15.00'ten",
+            "16.00'da", "17.00'de", "18.00'de", "19.00'da", "20.00'de", "23.00'te", "24.00'te",
+            "09.15'te", "10.30'da", "14.45'te", "16.20'de", "18.40'ta", "21.50'de",
+            "1923’te", "2026’da", "2’nci", "6’ncı", "15.00’te"
+        ]
+        _, rej_valid = check_words(valid_numbers)
+        self.assertEqual(rej_valid, [], f"Valid number/date/time forms rejected: {rej_valid}")
+
+        invalid_numbers = [
+            "1'nci", "2'inci", "3'ncü", "4'ncü", "5'nci", "6'ıncı", "6'nci", "7'inci",
+            "8'nci", "9'ncu", "10'ncu", "20'inci", "50'inci", "100'ncü",
+            "1'te", "2'te", "3'de", "4'de", "5'de", "6'ta", "7'te", "8'te", "9'ta", "10'ta",
+            "40'da", "60'da", "70'de", "1453'de", "1923'de", "1923'den", "2023'de", "2024'de",
+            "2025'de", "2026'ta", "09.00'de", "13.00'da", "14.00'da", "15.00'da", "15.00'de",
+            "2'er", "6'ar", "7'er", "3'şer"
+        ]
+        acc_invalid, _ = check_words(invalid_numbers)
+        self.assertEqual(acc_invalid, [], f"Invalid number/date/time forms leaked: {acc_invalid}")
 
 
 if __name__ == "__main__":

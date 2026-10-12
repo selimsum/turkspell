@@ -262,6 +262,34 @@ class TestSuggestionRanking(unittest.TestCase):
         ]
         self.assertPairsSuggested(test_pairs)
 
+    def test_number_and_clock_time_suggestions_top1(self):
+        """Verifies Top-1 suggestion accuracy for invalid ordinal, year, and clock-time suffixes."""
+        test_pairs = [
+            ("2'inci", "2'nci", 1),
+            ("6'ıncı", "6'ncı", 1),
+            ("6'nci", "6'ncı", 1),
+            ("7'inci", "7'nci", 1),
+            ("20'inci", "20'nci", 1),
+            ("50'inci", "50'nci", 1),
+            ("3'ncü", "3'üncü", 1),
+            ("4'ncü", "4'üncü", 1),
+            ("100'ncü", "100'üncü", 1),
+            ("1923'de", "1923'te", 1),
+            ("1923'den", "1923'ten", 1),
+            ("1453'de", "1453'te", 1),
+            ("2023'de", "2023'te", 1),
+            ("2024'de", "2024'te", 1),
+            ("2025'de", "2025'te", 1),
+            ("2026'ta", "2026'da", 1),
+            ("15.00'da", "15.00'te", 1),
+            ("15.00'de", "15.00'te", 1),
+            ("13.00'da", "13.00'te", 1),
+            ("09.00'de", "09.00'da", 1),
+            ("2'er", "2'şer", 1),
+            ("6'ar", "6'şar", 1),
+        ]
+        self.assertPairsSuggested(test_pairs)
+
 
 if __name__ == "__main__":
     unittest.main()
