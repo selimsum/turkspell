@@ -675,6 +675,50 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         accepted, rejected = check_words(valid)
         self.assertEqual(rejected, [], f"Valid abbreviation/proper-noun inflections failing: {rejected}")
 
+    def test_overgeneration_and_tdk_misspelling_rejection(self):
+        """Verifies strict rejection of morphological overgeneration and TDK common misspellings."""
+        invalid_forms = [
+            # Missing voicing on voicing stems (including 1sg copula)
+            "kitapı", "kitapa", "kitapın", "kitapım", "ağaçı", "ağaça", "çocuku", "çocuka",
+            "sokakı", "sokaka", "ayakı", "ayaka", "kulakı", "kalpi", "kalpe", "kalpin",
+            "renki", "renke", "borçu", "borça", "umutu", "umuta", "kanatı", "yurtu", "yurta",
+            "kurtu", "kurta", "derti", "derte", "gençi", "gençe",
+            # False voicing on non-voicing loanwords
+            "hukuğu", "hukuğa", "ahlağı", "evrağı", "ittifağı", "merağı", "stoğu", "felakedi",
+            "hakikadi", "tabiadı", "sanadı", "devledi", "cumhuriyedi", "edebiyadı", "inşaadı",
+            "hayadı", "saadi", "pakedi", "kasedi", "ankedi", "rokedi", "cekedi", "markedi",
+            "tabledi", "internedi", "pilodu", "robodu",
+            # Missing vowel drop
+            "oğulu", "oğula", "ömürü", "ömüre", "şehiri", "şehire", "nehiri", "nehire",
+            "zehiri", "zehire", "zehirin", "resimi", "resime", "cisimi", "cisime", "kısımı",
+            "göğüsü", "göğüse", "omuzu", "omuza", "ufuku", "ufuka", "keyifi", "keyife",
+            "sabırı", "sabıra", "akıla", "fikiri", "fikire", "hükümü", "zulümü",
+            # Missing consonant assimilation
+            "kitapda", "kitapdan", "ağaçda", "sokakda", "çocukda", "girişde", "bakışda",
+            "sınıfda", "mutfakda", "yapdı", "gitdi", "bakdı", "seçdi", "koşdu", "çalışdı",
+            "yapdığı", "gitdiği", "bakdığı",
+            # TDK common misspellings & mandatory circumflex/proper-noun forms
+            "herkez", "herkeze", "herkezden", "yalnış", "yanlız", "orjinal", "antreman",
+            "muhattap", "kiprik", "kirbit", "eşki", "şarz", "egsoz", "şöför", "pantalon",
+            "vejeteryan", "insiyatif", "dinazor", "klavuz", "klüp", "süpriz", "meyva",
+            "makina", "döküman", "tesbih", "laboratuar", "müteahit", "müsade", "şurda",
+            "orda", "gardolap", "asvalt", "karnıbahar", "komidin", "parlemento", "sandöviç",
+            "silahşör", "üniverste", "zerafet", "ahçı", "matba", "traş", "kareografi",
+            "idda", "iddea", "artiz", "apandist", "aperatif", "espiri", "stajer", "poaça",
+            "maydonoz", "kolanya", "kanbur", "penbe", "perşenbe", "çarşanba", "tiskinmek",
+            "tesbit", "isbat", "malesef", "metod", "standard", "katalok", "psikolok",
+            "şarter", "tazzik", "tenefüs", "usül", "zıttı", "zıttına",
+            "müslüman", "hristiyan", "hıristiyan", "yahudi",
+            "alimlik", "bekar", "bekarlık", "hayasız", "hayasızca"
+        ]
+        accepted, _ = check_words(invalid_forms)
+        self.assertEqual(accepted, [], f"Overgenerated or misspelled forms leaked: {accepted}")
+
+        # Verify that non-voicing [pçtk] stems still accept 1sg/1pl copula (-ım/-im/-um/-üm, -ız/-iz/-uz/-üz)
+        valid_copulas = ["devletim", "devletiz", "sanatım", "sanatız", "milletiz", "pilotum", "pilotuz", "çöpüz", "المات" if False else "matım", "matız", "Müslüman", "Müslümanlık", "Hristiyan", "Hristiyanlık"]
+        _, rej_copulas = check_words(valid_copulas)
+        self.assertEqual(rej_copulas, [], f"Valid non-voicing copula or proper noun forms rejected: {rej_copulas}")
+
 
 if __name__ == "__main__":
     unittest.main()

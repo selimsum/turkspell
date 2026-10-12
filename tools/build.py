@@ -54,21 +54,21 @@ EXTRA_REP_RULES = [
     "REP çiftliklersen çiftliklerden",
     "REP goya boya",
     # Keyboard & affix boundary substitutions (m/n, j/d, z/a)
-    "REP dem den",
-    "REP dam dan",
-    "REP dej den",
-    "REP daj dan",
-    "REP tem ten",
-    "REP tam tan",
+    "REP dem$ den",
+    "REP dam$ dan",
+    "REP dej$ den",
+    "REP daj$ dan",
+    "REP tem$ ten",
+    "REP tam$ tan",
     # Editorial & publication common substitutions
     "REP yayınlanan yayımlanan",
     "REP yayınladı yayımlandı",
     "REP yayınlandı yayımlandı",
     "REP yayınlamak yayımlamak",
     "REP yayınlanmak yayımlanmak",
-    "REP rim rin",
-    "REP larz lara",
-    "REP lerz lere",
+    "REP rim$ rin",
+    "REP larz$ lara",
+    "REP lerz$ lere",
     "REP lardan lardan",
     # Targeted Acronym Inflections
     "REP HDMI'ya HDMI'a",
@@ -122,7 +122,10 @@ EXTRA_REP_RULES = [
     "REP eflani Eflâni",
     "REP Eflani Eflâni",
     "REP batıniye bâtıniye",
+    "REP ademci âdemci",
     "REP ademcilik âdemcilik",
+    "REP amalık âmâlık",
+    "REP mahkukat mahkûkât",
     "REP maniasız mâniasız",
     "REP harcıalem harcıâlem",
     "REP mahkumane mahkûmane",
@@ -176,6 +179,22 @@ EXTRA_REP_RULES = [
     "REP herkez herkes",
     "REP herkeze herkese",
     "REP herkezin herkesin",
+    "REP herkezden herkesten",
+    "REP idda iddia",
+    "REP iddea iddia",
+    "REP artiz artist",
+    "REP apandist apandisit",
+    "REP espiri espri",
+    "REP espirili esprili",
+    "REP stajer stajyer",
+    "REP stajerlik stajyerlik",
+    "REP kolanya kolonya",
+    "REP küsülat küsurat",
+    "REP şarter şalter",
+    "REP tazik tazyik",
+    "REP tazzik tazyik",
+    "REP zıttı zıddı",
+    "REP zıttına zıddına",
     "REP kiprik kirpik",
     "REP eşki ekşi",
     "REP kirbit kibrit",
@@ -577,7 +596,8 @@ MANDATORY_HATTED_WORDS = {
     "meşkûk": "meşkuk",
     "vârislik": "varislik",
     "yâran": "yaran",
-    "Elâzığlılık": "Elazığlılık"
+    "Elâzığlılık": "Elazığlılık",
+    "bekâr": "bekar"
 }
 
 # Extensive whitelist of Turkish compound-forming nouns (geographical, architectural, institutional)
@@ -757,18 +777,38 @@ HEAD_FLAG_OVERRIDES = {
     "büro": remap_flag_string("B4 a2 y1 L1 R1 n2 i1 Q1 PB PT P2 P6 PO PR CL CK CI LI LK SZ".replace(" ", "")),
     "mahkeme": remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl CI LI LK SZ CK".replace(" ", "")),
     "triatlon": remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1".replace(" ", "")),
-    "mat": remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
+    "mat": remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1 VC".replace(" ", "")),
     "batma": remap_flag_string("B3 a1 y1 L1 R1 n1 i1 Q1 PB PS P1 P5 PM PN CL CI LI LK SZ CK".replace(" ", "")),
     "yöneltme": remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl CI LI LK SZ CK".replace(" ", "")),
     "yetki": remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl CI LI LK SZ CK DE".replace(" ", "")),
     "idari": remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl CI LI LK SZ CK".replace(" ", "")),
+    # Pure voicing stems (no unvoiced vowel-initial case flags B1/B2/F1/F2):
+    "kalp": remap_flag_string("V3 L2 R2 I2 Q2 PF cl CK LF LSZ LFK LCI".replace(" ", "")),
+    "genç": remap_flag_string("V3 CI CK DE DL DT I2 L2 LI LK PF Q2 R2 SL SZ cl".replace(" ", "")),
+    "dinç": remap_flag_string("V3 CI CK DE DL DT I2 L2 LI LK PF Q2 R2 SL SZ cl".replace(" ", "")),
+    "evç": remap_flag_string("V3 CI CK DE DL DT I2 L2 LI LK PF Q2 R2 SL SZ cl".replace(" ", "")),
+    "müebbet": remap_flag_string("V3 CI CK DE DL DT I2 L2 LI LK PF Q2 R2 SL SZ cl".replace(" ", "")),
+    "kurt": remap_flag_string("V2 CI CK CL DE DL DT I1 L1 LI LK PB Q1 R1 SL SZ".replace(" ", "")),
+    "tunç": remap_flag_string("V2 CI CK CL DE DL DT I1 L1 LI LK PB Q1 R1 SL SZ".replace(" ", "")),
+    "uç": remap_flag_string("V2 CI CK CL DE DL DT I1 L1 LI LK PB Q1 R1 SL SZ".replace(" ", "")),
+    # Pure vowel-drop stem (no un-dropped vowel case flags F1/A3/N3/P3):
+    "zehir": remap_flag_string("CI CK DE DL DT I2 L2 LI LK PF Q2 R2 SL SZ cl D3".replace(" ", "")),
+    # zıt: voiced gemination via virtual stem zıdd (zıddı, zıddına); no G1 (*zıttı, *zıttına)
+    "zıt": remap_flag_string("CI CK DE DL DT I1 L1 LI LK PB Q1 R1 SL SZ".replace(" ", "")),
+    # ah: exclamation/sigh (no CI, preventing *ahçı for aşçı)
+    "ah": remap_flag_string("A1 B1 CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
+    # alim, bekar: unhatted forms without LK (only âlimlik, bekârlık are valid)
+    "alim": remap_flag_string("A3 CI CK F1 I2 L2 LI N3 P3 P7 PF PP PU PW Q2 R2 SL SZ Y2 cl".replace(" ", "")),
+    "bekar": remap_flag_string("A1 B1 CI CK CL I1 L1 LI N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
+    # haya: anatomy sense without SZ (only hayâsız, hayâsızca are valid)
+    "haya": remap_flag_string("B3 a1 y1 L1 R1 n1 i1 Q1 PB PS P1 P5 PM PN CL LI LK CI CK SL".replace(" ", "")),
 }
 
-# Standard regular non-voicing inflection flags
-BACK_UNVOICED_FLAGS = remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", ""))
-FRONT_UNVOICED_FLAGS = remap_flag_string("A3 CI CK DE F1 I2 L2 LI LK N3 P3 P7 PF PP PU PW Q2 R2 SL SZ Y2 cl".replace(" ", ""))
-BACK_ROUNDED_UNVOICED_FLAGS = remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1".replace(" ", ""))
-FRONT_ROUNDED_UNVOICED_FLAGS = remap_flag_string("A4 CI CK DE DL DT F2 I2 L2 LI LK N4 P4 P8 PF PQ PV PZ Q2 R2 SL SZ Y2 cl".replace(" ", ""))
+# Standard regular non-voicing inflection flags (including VC/vc for 1sg/1pl vowel-initial copulas on [pçtk] stems)
+BACK_UNVOICED_FLAGS = remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1 VC".replace(" ", ""))
+FRONT_UNVOICED_FLAGS = remap_flag_string("A3 CI CK DE F1 I2 L2 LI LK N3 P3 P7 PF PP PU PW Q2 R2 SL SZ Y2 cl vc".replace(" ", ""))
+BACK_ROUNDED_UNVOICED_FLAGS = remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1 VC".replace(" ", ""))
+FRONT_ROUNDED_UNVOICED_FLAGS = remap_flag_string("A4 CI CK DE DL DT F2 I2 L2 LI LK N4 P4 P8 PF PQ PV PZ Q2 R2 SL SZ Y2 cl vc".replace(" ", ""))
 
 B3_VOWEL_FLAGS = remap_flag_string("B3 a1 y1 L1 R1 n1 i1 Q1 PB PS P1 P5 PM PN CL LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
 B4_VOWEL_FLAGS = remap_flag_string("B4 a2 y1 L1 R1 n2 i1 Q1 PB PT P2 P6 PO PR CL LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
@@ -798,11 +838,25 @@ BACK_NOVOICING_STEMS = [
     "içkat", "katbekat", "ortakkat", "yalınkat", "çekmekat", "üçkat",
     "e-tebligat", "salavat", "tevrat", "hırvat", "bankomat", "karbohidrat",
     "klorat", "laminat", "salisilat", "feldispat",
-    "granat", "muskat", "pomat"
+    "granat", "muskat", "pomat",
+    "edat", "karşıt", "ispat", "inşaat", "ithalat", "ihracat", "mevzuat", "edebiyat",
+    "fiyat", "hayat", "sanat", "kat", "zat", "sıfat", "surat", "kırat", "kamp", "tank",
+    "jant", "rant", "şart", "kart", "mart", "start", "tanjant", "sekant", "kosekant",
+    "varyant", "laborant", "deodorant", "sakat", "bayat", "vasat", "kesat", "kıraat",
+    "itaat", "şefaat", "kanaat", "feragat", "liyakat", "refakat", "sakatat", "mutabakat",
+    "mülakat", "rekat", "zekat", "irtibat", "ihtiyat", "ittifak", "iştirak", "ifrat",
+    "kerahat", "melahat", "sefahat", "sarahat", "vefat", "ruhsat", "maslahat", "habitat",
+    "aparat", "fosfat", "nitrat", "sülfat", "karbonat", "bikarbonat", "silikat", "asetat",
+    "format", "otomat", "diplomat", "akrobat", "aristokrat", "demokrat", "teknokrat",
+    "teokrat", "otokrat", "plutokrat", "kanıt", "anıt", "yanıt", "çark", "şark", "fark", "gark"
 ]
 
 BACK_ROUNDED_NOVOICING_STEMS = [
-    "dramaturg", "bangkok", "beyrut", "golf", "monozigot", "piryol", "şok"
+    "dramaturg", "bangkok", "beyrut", "golf", "monozigot", "piryol", "şok",
+    "pilot", "kopilot", "otopilot", "kaput", "somut", "soyut", "yakut", "akut",
+    "barut", "bulut", "boyut", "komut", "konut", "tabut", "mamut", "azot",
+    "maskot", "boykot", "robot", "mazot", "kot", "lot", "not", "pot", "rot",
+    "şort", "port", "kort"
 ]
 
 # Front-vowel non-voicing stems (including Arabic/Persian loanwords ending in -at and -al taking front harmony)
@@ -818,7 +872,27 @@ FRONT_NOVOICING_STEMS = [
     "derik", "doğubeyazıt", "ehlibeyt", "met", "çet",
     "arktik", "hilafet", "velayet", "fenotip", "genotip", "ziraat",
     "önek", "sonek", "ginseng", "anasaat", "pürdikkat", "şayanıdikkat", "hilafıhakikat",
-    "oerstit"
+    "oerstit",
+    "cumhuriyet", "hürriyet", "milliyet", "meşrutiyet", "iskelet", "dinamit",
+    "lanet", "musibet", "ibaret", "ibret", "illet", "hicret", "nihayet", "nispet",
+    "sabit", "zabit", "direkt", "girift", "serbest", "transit", "devlet", "millet",
+    "hükümet", "hareket", "memleket", "şirket", "ücret", "hizmet", "kıymet", "hikmet",
+    "nimet", "zahmet", "rahmet", "ziyaret", "ticaret", "işaret", "ibadet", "cinayet",
+    "şikayet", "şikâyet", "rivayet", "riayet", "vesayet", "sirayet", "cinnet", "minnet",
+    "sünnet", "zillet", "kudret", "kuvvet", "şiddet", "müddet", "hiddet", "iffet",
+    "gurbet", "sohbet", "nöbet", "heybet", "rağbet", "gıybet", "heyet", "niyet",
+    "vasiyet", "şahsiyet", "cemiyet", "emniyet", "faaliyet", "kabiliyet", "cinsiyet",
+    "aidiyet", "mahiyet", "zihniyet", "teslimiyet", "hakimiyet", "hâkimiyet",
+    "mağlubiyet", "galibiyet", "mecburiyet", "mesuliyet", "memnuniyet", "mağduriyet",
+    "mahrumiyet", "masumiyet", "mahremiyet", "merkeziyet", "beşeriyet", "ebediyet",
+    "külliyet", "mülkiyet", "samimiyet", "ciddiyet", "ehliyet", "vaziyet", "katiyet",
+    "hususiyet", "resmiyet", "kutsiyet", "paket", "etiket", "anket", "roket", "maket",
+    "kaset", "buket", "ceket", "ziyafet", "kıyafet", "zarafet", "nezaket", "felaket",
+    "cesaret", "esaret", "nezaret", "keramet", "selamet", "alamet", "ikamet", "melamet",
+    "kıyamet", "imamet", "vekalet", "kefalet", "rezalet", "cehalet", "sefalet",
+    "delalet", "dalalet", "asalet", "eyalet", "sirk", "terk", "berk", "zerk",
+    "sevk", "zevk", "şevk", "fevk", "tefrit", "tespit", "taksit", "muhit", "müsait",
+    "kasket", "bisiklet", "motosiklet", "atlet", "tablet", "tuvalet", "omlet", "bilet"
 ]
 
 # Stems accepting both back-unvoiced and front-unvoiced suffixes (TDK front harmony -ti/-ki/-li + common back harmony)
@@ -1340,7 +1414,7 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "zül/∠∨≌∢≊∻≩∩∍⊠⊡⊢⊣⊤⊥⊦⊧",
     "zıh/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∍⊈⊉⊊⊋⊌⊍⊎⊏",
     "zıp/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∌∍⊈⊉⊊⊋⊌⊍⊎⊏",
-    "zıt/∝∧≋∡≉∺∎∩∪≎∍∗⊈⊉⊊⊋⊌⊍⊎⊏",
+    "zıt/" + remap_flag_string("CI CK DE DL DT I1 L1 LI LK PB Q1 R1 SL SZ pBN pBL pBR pBY pBA pBI pBP pBC".replace(" ", "")),
     "âli/∛≧⊇∨≌≮≫≊∻≄∴∸∿≆≩∌∍",
     "âlâ/∆≥⊆∧≋≬≪≉∺≂∲∶∼∽∎∍",
     "âm/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∪∍⊈⊉⊊⊋⊌⊍⊎⊏",
@@ -1357,13 +1431,21 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "mı/∆∌∍∎∧∩∪∲∶∺∼∽≂≉≋≍≎≥≪≬⊆",
     "mu/∇∌∍∎∖∧∩∪∳∷∺∾≁≃≉≋≍≎≦≪≭⊆",
     "mü/∌∍∖∜∨∩∪∵∹∻≀≅≈≊≌≍≎≨≩≫≯⊇",
-    "mut/" + remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SZ Y1".replace(" ", "")),
+    "mut/" + remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SZ Y1 VC".replace(" ", "")),
     "ayaklamak/≟",
-    # Yahudi Proper Noun Orthography (TDK standard: capitalized, apostrophe for case, no apostrophe for -ce / -lik / plural)
+    # Yahudi, Müslüman, Hristiyan Proper Noun Orthography (TDK standard: capitalized, apostrophe for case, no apostrophe for -ce / -lik / plural)
     "Yahudi/" + remap_flag_string("pFN pFL pFR pFY pFA pFI pFP pFC PF cl KC".replace(" ", "")),
     "Yahudice/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 KC".replace(" ", "")),
     "Yahudilik/" + remap_flag_string("CK I2 L2 PF Q2 R2 V3 cl KC".replace(" ", "")),
     "Yahudiliğ/" + remap_flag_string("NE A3 N3 P3 P7 PP PU PW Y2 vc KC".replace(" ", "")),
+    "Müslüman/" + remap_flag_string("pBN pBL pBR pBY pBA pBI pBP pBC PB CL LI LK SZ SL KC".replace(" ", "")),
+    "Müslümanca/" + remap_flag_string("CK B3 L1 P1 P5 PB PM PN PS Q1 R1 a1 CL i1 n1 y1 KC".replace(" ", "")),
+    "Müslümanlık/" + remap_flag_string("CK I1 L1 PB Q1 R1 V1 CL KC".replace(" ", "")),
+    "Müslümanlığ/" + remap_flag_string("NE A1 N1 P1 P5 PM PN PS Y1 VC KC".replace(" ", "")),
+    "Hristiyan/" + remap_flag_string("pBN pBL pBR pBY pBA pBI pBP pBC PB CL LI LK SZ SL KC".replace(" ", "")),
+    "Hristiyanca/" + remap_flag_string("CK B3 L1 P1 P5 PB PM PN PS Q1 R1 a1 CL i1 n1 y1 KC".replace(" ", "")),
+    "Hristiyanlık/" + remap_flag_string("CK I1 L1 PB Q1 R1 V1 CL KC".replace(" ", "")),
+    "Hristiyanlığ/" + remap_flag_string("NE A1 N1 P1 P5 PM PN PS Y1 VC KC".replace(" ", "")),
     # Misakımilli / Misakımillî Proper Noun Orthography (capitalized, with proper noun apostrophe flags)
     "Misakımilli/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 pFN pFL pFR pFY pFA pFI pFP pFC".replace(" ", "")),
     "Misakımillî/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 pFN pFL pFR pFY pFA pFI pFP pFC".replace(" ", "")),
@@ -1843,6 +1925,9 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         # Purge legacy noise stems, false abbreviations, and uncapitalized proper nouns
         "aı", "baı", "baıc", "gur", "pluto",
         "yahudi", "yahudice", "yahudilik", "yahudiliğ", "yahudibaklası",
+        "müslüman", "müslümanca", "müslümanlık", "müslümanlığ",
+        "hristiyan", "hristiyanca", "hristiyanlık", "hristiyanlığ",
+        "hıristiyan", "hıristiyanlık", "hıristiyanlığ",
         "misakımilli", "misakımillî",
         "fata", "çe",
         # Purge noisy abbreviation/symbol stems causing widespread inflection overgeneration
@@ -1851,6 +1936,11 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     }
     if profile == "tdk":
         BAD_STEMS.update({"fata", "çe"})
+
+    _B12_CHARS = {LONG_TO_UTF8["B1"], LONG_TO_UTF8["B2"]}
+    _F12_CHARS = {LONG_TO_UTF8["F1"], LONG_TO_UTF8["F2"]}
+    _VC_CHAR = LONG_TO_UTF8["VC"]
+    _vc_CHAR = LONG_TO_UTF8["vc"]
     
     with open(DIC_SRC, "r", encoding="utf-8") as f:
         f.readline()
@@ -1902,7 +1992,10 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 or head_lower in {
                     "ademci", "topyekun", "alemşümul", "alemşümullük",
                     "misakımilli", "misakımillî", "yahudi", "yahudice",
-                    "yahudilik", "yahudiliğ", "yahudibaklası", "fata", "çe"
+                    "yahudilik", "yahudiliğ", "yahudibaklası", "fata", "çe",
+                    "müslüman", "müslümanca", "müslümanlık", "müslümanlığ",
+                    "hristiyan", "hristiyanca", "hristiyanlık", "hristiyanlığ",
+                    "hıristiyan", "hıristiyanlık", "hıristiyanlığ"
                 }
             )
         ):
@@ -2105,6 +2198,11 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 
         if len(head) == 1:
             flags = ""
+        elif head_lower.endswith(("p", "ç", "t", "k")):
+            if any(c in _B12_CHARS for c in flags) and _VC_CHAR not in flags:
+                flags += _VC_CHAR
+            if any(c in _F12_CHARS for c in flags) and _vc_CHAR not in flags:
+                flags += _vc_CHAR
             
         if head == "boyn":
             flags = flags.replace("≕", "")
@@ -2147,6 +2245,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             clean_entries.append(f"{w}/{HEAD_FLAG_OVERRIDES[head_lower]}")
         else:
             clean_entries.append(w)
+        seen_heads.add((head_w, ""))
         added_legit += 1
             
     # 6. Inject all missing custom abbreviations and names from lexicons
