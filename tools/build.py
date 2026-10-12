@@ -682,7 +682,8 @@ LEGITIMATE_MISSED_WORDS = [
     # TDK loanword adjective
     "total",
     # Added legitimate stems
-    "hasılat", "ihlalci", "isek", "HDMI'a", "USB'ye"
+    "hasılat", "ihlalci", "isek", "HDMI'a", "USB'ye",
+    "mercii", "menşei", "tevkii", "mebdei"
 ]
 
 
@@ -765,6 +766,7 @@ HEAD_FLAG_OVERRIDES = {
 BACK_UNVOICED_FLAGS = remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", ""))
 FRONT_UNVOICED_FLAGS = remap_flag_string("A3 CI CK DE F1 I2 L2 LI LK N3 P3 P7 PF PP PU PW Q2 R2 SL SZ Y2 cl".replace(" ", ""))
 BACK_ROUNDED_UNVOICED_FLAGS = remap_flag_string("A2 B2 CI CK CL I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1".replace(" ", ""))
+FRONT_ROUNDED_UNVOICED_FLAGS = remap_flag_string("A4 CI CK DE DL DT F2 I2 L2 LI LK N4 P4 P8 PF PQ PV PZ Q2 R2 SL SZ Y2 cl".replace(" ", ""))
 
 HEAD_FLAG_OVERRIDES["pasaport"] = BACK_ROUNDED_UNVOICED_FLAGS
 HEAD_FLAG_OVERRIDES["folklor"] = BACK_ROUNDED_UNVOICED_FLAGS
@@ -775,7 +777,21 @@ BACK_NOVOICING_STEMS = [
     "kâinat", "belagat", "boydak", "istihbarat", "muamelat", "müfredat",
     "mefruşat", "nebatat", "haşarat", "barikat", "nasihat", "kabahat", "mükafat",
     "pasaport", "rahat", "bask", "mark", "bank", "fırsat", "ark", "park", "şok",
-    "hasılat", "zanaat", "veliaht", "ilahiyat", "satrap", "portal", "marmelat"
+    "hasılat", "zanaat", "veliaht", "ilahiyat", "satrap", "portal", "marmelat",
+    "müştemilat", "mahlukat", "mahsulat", "mamulat", "meçhulat", "müessesat",
+    "mümkünat", "müntahabat", "müntehabat", "muhakemat", "taallukat", "tafsilat",
+    "tahassüsat", "tahvilat", "tanzimat", "tebeddülat", "tenzilat", "tuluat",
+    "rüsubat", "sünuhat", "irsalat", "hadisat", "ahlakiyat", "arabiyat", "türkiyat",
+    "laklakiyat", "seririyat", "hulliyat", "arakat", "asmakat", "binkat", "duyarkat",
+    "içkat", "kaskat", "katbekat", "ortakkat", "yalınkat", "çekmekat", "üçkat",
+    "e-tebligat", "salavat", "tevrat", "hırvat", "bankomat", "karbohidrat",
+    "klorat", "laminat", "marinat", "salisilat", "santigrat", "feldispat",
+    "granat", "muskat", "pomat"
+]
+
+BACK_ROUNDED_NOVOICING_STEMS = [
+    "dramaturg", "bangkok", "beyrut", "kaşkol", "turnusol", "golf",
+    "monozigot", "paraçol", "piryol", "razmol"
 ]
 
 # Front-vowel non-voicing stems (including Arabic/Persian loanwords ending in -at and -al taking front harmony)
@@ -787,14 +803,20 @@ FRONT_NOVOICING_STEMS = [
     "politik", "antik", "melik", "malik", "patik", "vilayet", "bereket",
     "dehşet", "edremit", "ehlisünnet", "elbet", "ensefalit", "eternit",
     "faset", "brifing", "damping", "doping", "bumerang", "aysberg",
-    "dramaturg", "andezit", "babet", "bangkok", "beyrut", "dargeçit",
+    "andezit", "babet", "dargeçit",
     "derik", "doğubeyazıt", "ehlibeyt", "çöp", "met", "çet",
-    "arktik", "suikast", "hilafet", "velayet", "fenotip", "genotip", "ziraat"
+    "arktik", "hilafet", "velayet", "fenotip", "genotip", "ziraat",
+    "önek", "sonek", "ginseng", "anasaat", "pürdikkat", "şayanıdikkat", "hilafıhakikat"
 ]
+
+HEAD_FLAG_OVERRIDES["suikast"] = "".join(sorted(set(BACK_UNVOICED_FLAGS + FRONT_UNVOICED_FLAGS)))
 
 for _w in BACK_NOVOICING_STEMS:
     if _w not in HEAD_FLAG_OVERRIDES:
         HEAD_FLAG_OVERRIDES[_w] = BACK_UNVOICED_FLAGS
+for _w in BACK_ROUNDED_NOVOICING_STEMS:
+    if _w not in HEAD_FLAG_OVERRIDES:
+        HEAD_FLAG_OVERRIDES[_w] = BACK_ROUNDED_UNVOICED_FLAGS
 for _w in FRONT_NOVOICING_STEMS:
     if _w not in HEAD_FLAG_OVERRIDES:
         HEAD_FLAG_OVERRIDES[_w] = FRONT_UNVOICED_FLAGS
@@ -802,11 +824,45 @@ for _w in FRONT_NOVOICING_STEMS:
 # Dual-voicing stems: unvoiced per Dil Derneği, voiced per TDK
 DUAL_VOICING_BACK_ROUNDED = ["teleskop", "radyoteleskop", "stereoskop", "bergamot"]
 DUAL_VOICING_BACK_UNROUNDED = ["baç"]
+DUAL_VOICING_G_BACK_ROUNDED = [
+    "katalog", "diyalog", "monolog", "prolog", "epilog", "blog",
+    "astrolog", "filolog", "psikolog", "sosyolog", "jeolog", "biyolog", "arkeolog",
+    "teolog", "radyolog", "ürolog", "nörolog", "kardiyolog", "dermatolog", "jinekolog",
+    "onkolog", "patolog", "farmakolog", "toksikolog", "bakteriyolog", "virolog",
+    "hematolog", "gastroenterolog", "oftalmolog", "antropolog", "etnolog", "müzikolog",
+    "türkolog", "sümerolog", "hititolog", "sinolog", "hindolog", "kriminolog",
+    "ideolog", "sismolog", "meteorolog", "klimatolog", "hidrolog", "ekolog",
+    "zoolog", "ornitolog", "entomolog", "mikolog", "mikrobiyolog", "mineralog",
+    "minerolog", "grafolog", "seksolog", "fütürolog", "gerontolog", "embriyolog",
+    "histolog", "fizyolog", "morfolog", "leksikolog", "etimolog", "fonolog",
+    "diyalektolog", "semiyolog", "epistemolog", "teknolog", "önolog", "homolog",
+    "kriptolog", "jeomorfolog", "parazitolog", "pedolog", "osteolog", "odontolog",
+    "diyabetolog", "balkanolog", "dendrolog", "glasyolog", "helmintolog",
+    "anesteziyolog", "elektroradyolog", "eglog"
+]
 
 for _w in DUAL_VOICING_BACK_ROUNDED:
     HEAD_FLAG_OVERRIDES[_w] = BACK_ROUNDED_UNVOICED_FLAGS
 for _w in DUAL_VOICING_BACK_UNROUNDED:
     HEAD_FLAG_OVERRIDES[_w] = BACK_UNVOICED_FLAGS
+for _w in DUAL_VOICING_G_BACK_ROUNDED:
+    HEAD_FLAG_OVERRIDES[_w] = "".join(sorted(set(BACK_ROUNDED_UNVOICED_FLAGS + LONG_TO_UTF8["V2"])))
+
+for _w in ["karbondioksit", "monoksit", "dioksit", "oksit", "hidroksit", "peroksit"]:
+    HEAD_FLAG_OVERRIDES[_w] = "".join(sorted(set(FRONT_UNVOICED_FLAGS + LONG_TO_UTF8["V3"])))
+
+# Homonym roots where an Arabic/secondary paradigm previously overwrote the primary Turkish paradigm:
+HEAD_FLAG_OVERRIDES["kül"] = "".join(sorted(set(FRONT_ROUNDED_UNVOICED_FLAGS + LONG_TO_UTF8["G4"])))
+HEAD_FLAG_OVERRIDES["hal"] = "".join(sorted(set(FRONT_UNVOICED_FLAGS + LONG_TO_UTF8["G3"])))
+HEAD_FLAG_OVERRIDES["sır"] = "".join(sorted(set(BACK_UNVOICED_FLAGS + LONG_TO_UTF8["G1"])))
+HEAD_FLAG_OVERRIDES["şık"] = "".join(sorted(set(BACK_UNVOICED_FLAGS + LONG_TO_UTF8["G1"])))
+HEAD_FLAG_OVERRIDES["cebir"] = "".join(sorted(set(FRONT_UNVOICED_FLAGS + LONG_TO_UTF8["D3"])))
+
+# Postpositives & function words missing inflection/copula flags:
+HEAD_FLAG_OVERRIDES["dolayı"] = remap_flag_string("B3 a1 y1 L1 R1 n1 i1 Q1 PB PS P1 P5 PM PN CL CK".replace(" ", ""))
+HEAD_FLAG_OVERRIDES["göre"] = remap_flag_string("cl".replace(" ", ""))
+HEAD_FLAG_OVERRIDES["ötürü"] = remap_flag_string("cl".replace(" ", ""))
+HEAD_FLAG_OVERRIDES["dair"] = remap_flag_string("cl".replace(" ", ""))
 
 # Erroneous verb stems that are genuine nouns/adjectives:
 NON_VERB_MAK_NOUNS = ["ahmak", "çomak", "madımak", "tutamak", "başmak"]
@@ -827,7 +883,7 @@ VOWEL_DROP_D4_HEADS = {"mühür", "fülüs"}
 
 _voicing_table = {"p": "b", "ç": "c", "t": "d", "k": "ğ", "g": "ğ"}
 PURGE_VIRTUAL_STEMS = {"felaked", "stoğ", "yahudiliğ"}
-for _w in BACK_NOVOICING_STEMS + FRONT_NOVOICING_STEMS:
+for _w in BACK_NOVOICING_STEMS + BACK_ROUNDED_NOVOICING_STEMS + FRONT_NOVOICING_STEMS:
     if _w and _w[-1] in _voicing_table:
         PURGE_VIRTUAL_STEMS.add(_w[:-1] + _voicing_table[_w[-1]])
 
@@ -836,10 +892,24 @@ PALATAL_L_HEADS = {
     "sembol", "petrol", "protokol", "kolesterol", "metropol",
     "usul", "mahsul", "alveol", "kabul", "makbul", "faul", "hol",
     "gol", "idol", "karambol", "bandrol", "ekol", "meçhul", "menkul", "resul",
-    "nekropol", "akropol", "parabol", "hiperbol", "etanol", "trol"
+    "nekropol", "akropol", "parabol", "hiperbol", "etanol", "trol",
+    "amfibol", "atol", "azol", "barkarol", "bemol", "benzol", "cihanşümul",
+    "dialkol", "diyastol", "duhul", "ekstrasistol", "etilalkol", "etol",
+    "fenol", "fleol", "formol", "ful", "fümerol", "gayakol", "gayrimenkul",
+    "glikol", "hidrozol", "hulul", "husul", "hüsnükabul", "jul", "kilojul",
+    "krezol", "lizol", "lügol", "mahlul", "mahmul", "makul", "medlul",
+    "meful", "megapol", "mentol", "mol", "monokl", "monopol", "müzikhol",
+    "nükul", "nüzul", "oligopol", "profiterol", "resmikabul", "sistol",
+    "sterol", "tembul", "tul", "viyol", "vusul", "zühul", "âlemşümul",
+    "üful", "şakul", "şarampol", "şümul"
 }
 # Pure palatal l flags: front rounded vowels, includes P4 (-üm), P8 (-ün), PV (-ü), PQ (-ümüz), PZ (-ünüz)
 PALATAL_L_FLAGS = remap_flag_string("A4 N4 P4 PV P8 Y2 L2 R2 I2 PQ PZ CK cl LF LSZ LFK LCI PF".replace(" ", ""))
+
+# sol & bol: everyday Turkish back-rounded words (sola, solu, solda, soldan, solcu / bola, bolu, boldur, bolluk)
+# that also have a palatal-L homonym in TDK (sol, -lü = musical note; bol, -lü = punch bowl)
+for _w in ("sol", "bol"):
+    HEAD_FLAG_OVERRIDES[_w] = "".join(sorted(set(BACK_ROUNDED_UNVOICED_FLAGS + PALATAL_L_FLAGS + remap_flag_string("DL DT DE".replace(" ", "")))))
 
 # Load completed POS & morphological attributes for the 45,273 previously unannotated TDK/DD lemmas
 _COMPLETED_POS_PATH = TURKSPELL_DIR / "lexicons" / "authority_pos_completed.json"
@@ -1808,6 +1878,9 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         if profile == "tdk" and head_lower in (DUAL_VOICING_BACK_ROUNDED + DUAL_VOICING_BACK_UNROUNDED):
             consonant_flags = remap_flag_string("CI CK CL L1 LI LK PB Q1 R1 SL SZ".replace(" ", ""))
             flags = "".join(sorted(set(c for c in flags if c in consonant_flags)))
+        elif profile == "tdk" and head_lower in DUAL_VOICING_G_BACK_ROUNDED:
+            consonant_v2_flags = remap_flag_string("V2 CI CK CL L1 LI LK PB Q1 R1 SL SZ".replace(" ", ""))
+            flags = "".join(sorted(set(c for c in flags if c in consonant_v2_flags)))
             
         if profile == "dd" and "î" in head:
             head_dd = head.replace("î", "i")

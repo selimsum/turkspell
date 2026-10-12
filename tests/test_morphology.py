@@ -594,9 +594,45 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         accepted, rejected = check_words(valid)
         self.assertEqual(rejected, [], f"Valid pure paradigm matrix forms failing: {rejected}")
 
+    def test_corpus_mined_inflection_rescues(self):
+        """Verifies all verbal, derivational, palatal-L, and homonym inflections rescued by corpus mining."""
+        valid = [
+            # 2-level verb derivations (DL/DT/DE -> VB/VF + passive/causative)
+            "serbestleştirilmesi", "serbestleştirilmesini", "serbestleştirilmesine",
+            "derinleşmesini", "yaygınlaşmıştır", "yaygınlaşmıştı",
+            "sorunsallaştırılması", "taçlandırılmış", "kuşkulanılan", "biçimlendirilen",
+            # Compound auxiliary verb aspects (-agel/-egel, -akal/-ekal, -adur/-edur, -ayaz/-eyaz, -ıver/-iver)
+            "kullanılagelen", "tartışılagelen", "anlatılagelen", "kullanılagelmiş", "yapılagelen", "süregelen",
+            "bakakaldı", "donakaldı", "düşeyazdı", "yapıverdi", "deyiverdi", "okuyuverdi",
+            # Productive passive voice (-ıl/-il/-ul/-ül) on consonant & voicing stems
+            "yuvarlatılmış", "inceltilmiş", "ilerletilen", "hicvedildiği", "katedilen",
+            # o/u palatal-L roots & sol/bol homonyms
+            "makulü", "makule", "makuldür", "gayrimenkulü", "gayrimenkule", "gayrimenkuller",
+            "şarampole", "şarampolü", "profiterolü", "mentolü", "mentollü", "bemolü", "monopolü",
+            "sola", "solu", "solda", "soldan", "solcu", "solü",
+            "bola", "bolu", "boldur", "bolluk",
+            "kaşkolu", "kaşkola", "turnusolu",
+            # Homonym roots (kül, hal, sır, şık, cebir)
+            "külü", "küle", "külün", "külde", "külden", "küllü",
+            "hali", "hale", "halin", "halli",
+            "sırı", "sıra", "sırın", "sırrı",
+            "şıkı", "şıktır", "şıklık", "şıkkı",
+            "cebiri", "cebirin", "cebire", "cebri",
+            # Postpositives, ayn-ending loanwords & non-voicing stems
+            "dolayısıyla", "dolayısı", "göreyse", "göredir", "ötürüdür", "dairdir",
+            "ginsengi", "suikastı", "suikasta", "suikastta",
+            "müştemilatı", "mercii", "menşei", "tevkii", "karbondioksiti", "karbondioksidi"
+        ]
+        if not is_tdk_profile():
+            valid.extend(["öneki", "soneki"])
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid corpus-mined inflections failing: {rejected}")
+
+        # Ensure true vowel-drop omissions and consonant-assimilation typos remain rejected
+        invalid = ["oğula", "şehire", "omuza", "kısıma", "göğüse", "hacime", "beyite", "takdığı", "üretiği"]
+        accepted_inv, _ = check_words(invalid)
+        self.assertEqual(accepted_inv, [], f"Invalid typos leaked: {accepted_inv}")
+
 
 if __name__ == "__main__":
     unittest.main()
-
-
-
