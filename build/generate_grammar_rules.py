@@ -1377,61 +1377,64 @@ def gen_deriv_ck(flag: str = "CK") -> str:
 # ---------------------------------------------------------------------------
 
 def gen_deriv_las(flag: str = "DL") -> str:
-    """-lAş verb-forming derivation"""
+    """-lAş verb-forming derivation (plus passive -lAşIl)"""
     rules = []
-    for cond, suf, verb_inf in [
-        ("[aıâ]",                  "laş", "laşmak"),
-        ("[ouû]",                  "laş", "laşmak"),
-        ("[eiîâ]",                  "leş", "leşmek"),
-        ("[öüû]",                  "leş", "leşmek"),
-        ("[aıâ][^aeıioöuüâîû]",       "laş", "laşmak"),
-        ("[ouû][^aeıioöuüâîû]",       "laş", "laşmak"),
-        ("[eiîâ][^aeıioöuüâîû]",       "leş", "leşmek"),
-        ("[öüû][^aeıioöuüâîû]",       "leş", "leşmek"),
+    for cond, suf, verb_inf, pass_inf in [
+        ("[aıâ]",                  "laş", "laşmak", "laşılmak"),
+        ("[ouû]",                  "laş", "laşmak", "laşılmak"),
+        ("[eiîâ]",                  "leş", "leşmek", "leşilmek"),
+        ("[öüû]",                  "leş", "leşmek", "leşilmek"),
+        ("[aıâ][^aeıioöuüâîû]",       "laş", "laşmak", "laşılmak"),
+        ("[ouû][^aeıioöuüâîû]",       "laş", "laşmak", "laşılmak"),
+        ("[eiîâ][^aeıioöuüâîû]",       "leş", "leşmek", "leşilmek"),
+        ("[öüû][^aeıioöuüâîû]",       "leş", "leşmek", "leşilmek"),
         # Two-consonant endings
-        ("[aıâ][^aeıioöuüâîû][^aeıioöuüâîû]",       "laş", "laşmak"),
-        ("[ouû][^aeıioöuüâîû][^aeıioöuüâîû]",       "laş", "laşmak"),
-        ("[eiîâ][^aeıioöuüâîû][^aeıioöuüâîû]",       "leş", "leşmek"),
-        ("[öüû][^aeıioöuüâîû][^aeıioöuüâîû]",       "leş", "leşmek"),
+        ("[aıâ][^aeıioöuüâîû][^aeıioöuüâîû]",       "laş", "laşmak", "laşılmak"),
+        ("[ouû][^aeıioöuüâîû][^aeıioöuüâîû]",       "laş", "laşmak", "laşılmak"),
+        ("[eiîâ][^aeıioöuüâîû][^aeıioöuüâîû]",       "leş", "leşmek", "leşilmek"),
+        ("[öüû][^aeıioöuüâîû][^aeıioöuüâîû]",       "leş", "leşmek", "leşilmek"),
     ]:
-        verb_flag = "Vi" if "a" in suf else "Vj"
+        verb_flag = "VBwi" if "a" in suf else "VFwj"
         rules.append(sfx(flag, "0", f"{verb_inf}/{verb_flag}", cond))
+        rules.append(sfx(flag, "0", f"{pass_inf}/{verb_flag}", cond))
     return make_flag_block(flag, unique(rules))
 
 
 def gen_deriv_las_tir(flag: str = "DT") -> str:
-    """-lAştIr causative verb-forming derivation"""
+    """-lAştIr causative and -lAştIrIl causative-passive verb-forming derivation"""
     rules = []
-    for cond, suf in [
-        ("[aıouâû]",             "laştır"),
-        ("[eiöüîâû]",             "leştir"),
-        ("[aıouâû][^aeıioöuüâîû]",  "laştır"),
-        ("[eiöüîâû][^aeıioöuüâîû]",  "leştir"),
+    for cond, suf, pass_suf in [
+        ("[aıouâû]",             "laştır", "laştırıl"),
+        ("[eiöüîâû]",             "leştir", "leştiril"),
+        ("[aıouâû][^aeıioöuüâîû]",  "laştır", "laştırıl"),
+        ("[eiöüîâû][^aeıioöuüâîû]",  "leştir", "leştiril"),
         # Two-consonant endings
-        ("[aıouâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "laştır"),
-        ("[eiöüîâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "leştir"),
+        ("[aıouâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "laştır", "laştırıl"),
+        ("[eiöüîâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "leştir", "leştiril"),
     ]:
-        verb_flag = "Vi" if "ı" in suf else "Vj"
-        inf_suf = "mak" if verb_flag == "Vi" else "mek"
+        verb_flag = "VBwi" if "ı" in suf else "VFwj"
+        inf_suf = "mak" if verb_flag == "VBwi" else "mek"
         rules.append(sfx(flag, "0", f"{suf}{inf_suf}/{verb_flag}", cond))
+        rules.append(sfx(flag, "0", f"{pass_suf}{inf_suf}/{verb_flag}", cond))
     return make_flag_block(flag, unique(rules))
 
 
 def gen_deriv_len(flag: str = "DE") -> str:
-    """-lAn reflexive/passive verb-forming derivation"""
+    """-lAn, -lAnIl, -lAndIr, -lAndIrIl verb-forming derivations"""
     rules = []
-    for cond, suf in [
-        ("[aıouâû]",             "lan"),
-        ("[eiöüîâû]",             "len"),
-        ("[aıouâû][^aeıioöuüâîû]",  "lan"),
-        ("[eiöüîâû][^aeıioöuüâîû]",  "len"),
+    for cond, suf, pass_suf, caus_suf, caus_pass_suf in [
+        ("[aıouâû]",             "lan", "lanıl", "landır", "landırıl"),
+        ("[eiöüîâû]",             "len", "lenil", "lendir", "lendiril"),
+        ("[aıouâû][^aeıioöuüâîû]",  "lan", "lanıl", "landır", "landırıl"),
+        ("[eiöüîâû][^aeıioöuüâîû]",  "len", "lenil", "lendir", "lendiril"),
         # Two-consonant endings
-        ("[aıouâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "lan"),
-        ("[eiöüîâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "len"),
+        ("[aıouâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "lan", "lanıl", "landır", "landırıl"),
+        ("[eiöüîâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "len", "lenil", "lendir", "lendiril"),
     ]:
-        verb_flag = "Vi" if "a" in suf else "Vj"
-        inf_suf = "mak" if verb_flag == "Vi" else "mek"
-        rules.append(sfx(flag, "0", f"{suf}{inf_suf}/{verb_flag}", cond))
+        verb_flag = "VBwi" if "a" in suf else "VFwj"
+        inf_suf = "mak" if verb_flag == "VBwi" else "mek"
+        for stem_s in (suf, pass_suf, caus_suf, caus_pass_suf):
+            rules.append(sfx(flag, "0", f"{stem_s}{inf_suf}/{verb_flag}", cond))
     return make_flag_block(flag, unique(rules))
 
 
@@ -3341,6 +3344,8 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(strip, f"m{v_high}ş/{cop_evid}", strip)
         for p in ["", f"{v_high}m", f"s{v_high}n", f"{v_high}z", f"s{v_high}n{v_high}z", f"l{v_low}r"]:
             add_r(strip, f"m{v_high}ş{p}", strip)
+        add_r(strip, f"m{v_high}şt{v_high}r", strip)
+        add_r(strip, f"m{v_high}şt{v_high}", strip)
         add_r(strip, f"m{v_high}ş{v_high}md{v_high}r", strip)
         add_r(strip, f"m{v_high}ş{v_high}zd{v_high}r", strip)
         add_r(strip, f"m{v_high}şs{v_high}nd{v_high}r", strip)
@@ -3865,6 +3870,12 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
             
         add_r(strip, f"m{v_low}s{unrounded_high}/{vn_part_3sg}", strip)
         add_r(strip, f"m{v_low}s{unrounded_high}", strip)
+        for vn_3sg_case in [
+            f"n{unrounded_high}", f"n{v_low}", f"nd{v_low}", f"nd{v_low}n",
+            f"n{unrounded_high}n", f"yl{v_low}", f"nd{v_low}ki", f"d{unrounded_high}r"
+        ]:
+            add_r(strip, f"m{v_low}s{unrounded_high}{vn_3sg_case}", strip)
+            add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}{vn_3sg_case}", strip)
         add_r(strip, f"m{v_low}m/{vn_part_pers}", strip)
         add_r(strip, f"m{v_low}m", strip)
         add_r(strip, f"m{v_low}n/{vn_part_pers}", strip)
@@ -4419,6 +4430,175 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
     add_r(pot_strip, f"{pot_p}se/vE", pot_cond)
     for p in ["", "m", "n", "k", "niz", "ler", "ne", "nize"]:
         add_r(pot_strip, f"{pot_p}se{p}", pot_cond)
+
+    # 15. COMPOUND ASPECTS: -agel/-egel, -akal/-ekal, -adur/-edur, -ayaz/-eyaz, -ıver/-iver/-uver/-üver
+    cont_conn = inab_p[:-2]  # "" for cons, "y" for vowel, "d" for voicing, "iy" for narrow
+    agel_p = f"{cont_conn}{v_low}gel"
+    for ag_suf in [
+        "mek", "me", "mesi/pE", "mesi",
+        "di/cE", "di", "dim", "din", "dik", "diniz", "diler",
+        "miş/uE", "miş", "miştir", "mişti", "mişler",
+        "iyor/cU", "iyor", "iyordu", "iyormuş", "iyorlar",
+        "ir/cE", "ir", "irdi", "irmiş", "irler",
+        "ecek/uE", "ecek", "ecektir", "ecekler",
+        "diği/pE", "diği", "dikleri/pE", "dikleri", "dikçe",
+        "en", "enler", "enleri", "enlere", "enlerde", "enlerden", "enlerin", "enleriyle",
+        "eni", "ene", "ende", "enden", "enin", "enle"
+    ]:
+        add_r(pot_strip, f"{agel_p}{ag_suf}", pot_cond)
+
+    akal_p = f"{cont_conn}{v_low}kal"
+    for ak_suf in [
+        "mak", "ma", "ması/pA", "ması",
+        "dı/cA", "dı", "dım", "dın", "dık", "dınız", "dılar",
+        "mış/uA", "mış", "mıştır", "mıştı", "mışlar",
+        "ıyor/cU", "ıyor", "ıyordu", "ır/cA", "ır", "acak/uA", "acak",
+        "dığı/pA", "dığı", "an", "anlar", "ıp", "arak"
+    ]:
+        add_r(pot_strip, f"{akal_p}{ak_suf}", pot_cond)
+
+    adur_p = f"{cont_conn}{v_low}dur"
+    for ad_suf in [
+        "mak", "ma", "du/cU", "du", "dum", "dun", "duk", "dunuz", "dular",
+        "muş/uO", "muş", "uyor/cU", "uyor", "ur/cU", "ur", "acak/uA", "acak",
+        "sun", "sunlar", "an", "anlar"
+    ]:
+        add_r(pot_strip, f"{adur_p}{ad_suf}", pot_cond)
+
+    ayaz_p = f"{cont_conn}{v_low}yaz"
+    for ay_suf in [
+        "mak", "ma", "dı/cA", "dı", "dım", "dın", "dık", "dınız", "dılar",
+        "mış/uA", "mış", "ıyor/cU", "ıyor", "acak/uA", "acak", "an", "anlar"
+    ]:
+        add_r(pot_strip, f"{ayaz_p}{ay_suf}", pot_cond)
+
+    if flag in ("VH", "VS"):
+        iver_pairs = [("yiver", "emek", strip), ("yüver", "ümek", strip)] if flag == "VH" else [("yıver", "amak", strip), ("yuver", "umak", strip)]
+    else:
+        iver_pairs = [(f"{cont_conn}{v_high}ver", pot_cond, pot_strip)]
+    for iv_p, iv_cond, iv_strip in iver_pairs:
+        for iv_suf in [
+            "mek", "me", "mesi/pE", "mesi",
+            "di/cE", "di", "dim", "din", "dik", "diniz", "diler",
+            "miş/uE", "miş", "miştir", "mişti", "mişler",
+            "iyor/cU", "iyor", "iyordu", "ir/cE", "ir", "ecek/uE", "ecek",
+            "diği/pE", "diği", "en", "enler", "ip", "erek", "ince", "sin", "in", "iniz"
+        ]:
+            add_r(iv_strip, f"{iv_p}{iv_suf}", iv_cond)
+
+    # 16. PASSIVE VOICE (-ıl / -il / -ul / -ül) FOR CONSONANT & VOICING STEMS
+    if not is_vowel_stem and not is_narrow:
+        pass_strip = f"t{strip}" if is_voicing else strip
+        pass_cond = f"t{strip}" if is_voicing else f"[^lAEIOUaeiouÂÎÖÛÜâîöûüİı]{strip}"
+        pass_p = f"d{v_high}l" if is_voicing else f"{v_high}l"
+        # Infinitive & Verbal Noun
+        add_r(pass_strip, f"{pass_p}{strip}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}kt{v_low}/{cop_vow}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}kt{v_low}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}kt{v_low}d{unrounded_high}r", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}kt{v_low}n", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}kl{v_low}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}ks{unrounded_high}z{unrounded_high}n", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}", pass_cond)
+        for p_vn_case in [f"y{unrounded_high}", f"y{v_low}", f"d{v_low}", f"d{v_low}n", f"n{unrounded_high}n", f"yl{v_low}"]:
+            add_r(pass_strip, f"{pass_p}m{v_low}{p_vn_case}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}s{unrounded_high}/{vn_part_3sg}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}s{unrounded_high}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}l{v_low}r{unrounded_high}/{vn_part_3sg}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}l{v_low}r{unrounded_high}", pass_cond)
+        for vn_3c in [f"n{unrounded_high}", f"n{v_low}", f"nd{v_low}", f"nd{v_low}n", f"n{unrounded_high}n", f"yl{v_low}", f"d{unrounded_high}r"]:
+            add_r(pass_strip, f"{pass_p}m{v_low}s{unrounded_high}{vn_3c}", pass_cond)
+        # Definite Past & Evidential Past
+        add_r(pass_strip, f"{pass_p}d{v_high}/{cop_past}", pass_cond)
+        for p in ["", "m", "n", "k", f"n{v_high}z", f"l{v_low}r"]:
+            add_r(pass_strip, f"{pass_p}d{v_high}{p}", pass_cond)
+            add_r(pass_strip, f"{pass_p}m{v_low}d{unrounded_high}{p}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}d{unrounded_high}/{cop_past}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_high}ş/{cop_evid}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_high}ş", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_high}şt{v_high}r", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_high}şt{v_high}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_high}şl{v_low}r", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_high}şl{v_low}rd{unrounded_high}r", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}m{unrounded_high}ş/{cop_unv}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}m{unrounded_high}ş", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}m{unrounded_high}şt{unrounded_high}r", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}m{unrounded_high}şt{unrounded_high}", pass_cond)
+        # Present Continuous, Future & Aorist
+        add_r(pass_strip, f"{pass_p}{v_high}yor/{cop_pres}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_high}yor", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_high}yordu", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_high}yormuş", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_high}yorlar", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{unrounded_high}yor/{cop_pres}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{unrounded_high}yor", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{unrounded_high}yordu", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}c{v_low}k/{cop_unv}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}c{v_low}k", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}c{v_low}kt{unrounded_high}r", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}c{v_low}kt{unrounded_high}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}c{v_low}kl{v_low}r", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}y{v_low}c{v_low}k/{cop_unv}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}y{v_low}c{v_low}k", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}y{v_low}c{v_low}kt{unrounded_high}r", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_high}r/{cop_aor}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_high}r", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_high}rl{v_low}r", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}z/{cop_aor}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}z", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}zl{v_low}r", pass_cond)
+        # Necessitative, Conditional & Imperative
+        add_r(pass_strip, f"{pass_p}m{v_low}l{unrounded_high}/{cop_vow}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}l{unrounded_high}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}l{unrounded_high}d{unrounded_high}r", pass_cond)
+        add_r(pass_strip, f"{pass_p}s{v_low}/{cop_vow}", pass_cond)
+        add_r(pass_strip, f"{pass_p}s{v_low}", pass_cond)
+        add_r(pass_strip, f"{pass_p}s{v_high}n", pass_cond)
+        add_r(pass_strip, f"{pass_p}s{v_high}nl{v_low}r", pass_cond)
+        # Participles & Converbs
+        for pe_pass in [
+            "", f"l{v_low}r", f"l{v_low}r{unrounded_high}", f"l{v_low}r{v_low}",
+            f"l{v_low}rd{v_low}", f"l{v_low}rd{v_low}n", f"l{v_low}r{unrounded_high}n",
+            f"{unrounded_high}", f"{v_low}", f"d{v_low}", f"d{v_low}n", f"{unrounded_high}n"
+        ]:
+            add_r(pass_strip, f"{pass_p}{v_low}n{pe_pass}", pass_cond)
+        add_r(pass_strip, f"{pass_p}d{v_high}ğ{v_high}/{part_3sg}", pass_cond)
+        add_r(pass_strip, f"{pass_p}d{v_high}ğ{v_high}", pass_cond)
+        for d_3c in [f"n{v_high}", f"n{v_low}", f"nd{v_low}", f"nd{v_low}n", f"n{v_high}n", f"yl{v_low}"]:
+            add_r(pass_strip, f"{pass_p}d{v_high}ğ{v_high}{d_3c}", pass_cond)
+        add_r(pass_strip, f"{pass_p}d{v_high}kl{v_low}r{unrounded_high}/{vn_part_3sg}", pass_cond)
+        add_r(pass_strip, f"{pass_p}d{v_high}kl{v_low}r{unrounded_high}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}c{v_low}ğ{unrounded_high}/{fut_part_3sg}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}c{v_low}ğ{unrounded_high}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}c{v_low}kl{v_low}r{unrounded_high}/{fut_part_3sg}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}c{v_low}kl{v_low}r{unrounded_high}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}r{v_low}k", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_high}p", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_high}nc{v_low}", pass_cond)
+        add_r(pass_strip, f"{pass_p}d{v_high}kç{v_low}", pass_cond)
+        add_r(pass_strip, f"{pass_p}d{v_high}kt{v_low}n", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}d{v_low}n", pass_cond)
+        # Passive + Ability / Inability (-ılabilir, -ılamaz, -ılabilmesi, -ılamaması)
+        add_r(pass_strip, f"{pass_p}{v_low}bilir/cE", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilir", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}biliyor", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bildi", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilecek", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilmesi/pE", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilmesi", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bildiği/pE", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bildiği", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilen", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}m{v_low}z/{cop_aor}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}m{v_low}z", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}m{unrounded_high}yor", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}m{v_low}d{unrounded_high}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}m{v_low}y{v_low}c{v_low}k", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}m{v_low}m{v_low}s{unrounded_high}/{vn_part_3sg}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}m{v_low}m{v_low}s{unrounded_high}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}m{v_low}d{unrounded_high}ğ{unrounded_high}/{neg_part_3sg}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}m{v_low}d{unrounded_high}ğ{unrounded_high}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}m{v_low}y{v_low}n", pass_cond)
 
     return make_verb_flag_block(flag, rules)
 
