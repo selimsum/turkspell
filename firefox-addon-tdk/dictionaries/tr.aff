@@ -40,7 +40,11 @@ MAXDIFF 5
 MAXNGRAMSUGS 8
 
 
-REP 4235
+
+
+
+
+REP 5005
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -59,20 +63,20 @@ REP topraklarınsan topraklarından
 REP görüntülerinsen görüntülerinden
 REP çiftliklersen çiftliklerden
 REP goya boya
-REP dem den
-REP dam dan
-REP dej den
-REP daj dan
-REP tem ten
-REP tam tan
+REP dem$ den
+REP dam$ dan
+REP dej$ den
+REP daj$ dan
+REP tem$ ten
+REP tam$ tan
 REP yayınlanan yayımlanan
 REP yayınladı yayımlandı
 REP yayınlandı yayımlandı
 REP yayınlamak yayımlamak
 REP yayınlanmak yayımlanmak
-REP rim rin
-REP larz lara
-REP lerz lere
+REP rim$ rin
+REP larz$ lara
+REP lerz$ lere
 REP lardan lardan
 REP HDMI'ya HDMI'a
 REP USB'e USB'ye
@@ -124,7 +128,10 @@ REP celali celâli
 REP eflani Eflâni
 REP Eflani Eflâni
 REP batıniye bâtıniye
+REP ademci âdemci
 REP ademcilik âdemcilik
+REP amalık âmâlık
+REP mahkukat mahkûkât
 REP maniasız mâniasız
 REP harcıalem harcıâlem
 REP mahkumane mahkûmane
@@ -176,6 +183,22 @@ REP büyüksehir büyükşehir
 REP herkez herkes
 REP herkeze herkese
 REP herkezin herkesin
+REP herkezden herkesten
+REP idda iddia
+REP iddea iddia
+REP artiz artist
+REP apandist apandisit
+REP espiri espri
+REP espirili esprili
+REP stajer stajyer
+REP stajerlik stajyerlik
+REP kolanya kolonya
+REP küsülat küsurat
+REP şarter şalter
+REP tazik tazyik
+REP tazzik tazyik
+REP zıttı zıddı
+REP zıttına zıddına
 REP kiprik kirpik
 REP eşki ekşi
 REP kirbit kibrit
@@ -358,6 +381,194 @@ REP yanısıra yanı_sıra
 REP peşisıra peşi_sıra
 REP ardısıra ardı_sıra
 REP icatı icadı
+REP ^farket fark_et
+REP ^farked fark_ed
+REP ^terket terk_et
+REP ^terked terk_ed
+REP ^haket hak_et
+REP ^haked hak_ed
+REP ^hakked hak_ed
+REP ^ayırtet ayırt_et
+REP ^ayırted ayırt_ed
+REP ^ayırdet ayırt_et
+REP ^ayırded ayırt_ed
+REP ^arzet arz_et
+REP ^arzed arz_ed
+REP ^yardımet yardım_et
+REP ^yardımed yardım_ed
+REP ^teşekküret teşekkür_et
+REP ^teşekküred teşekkür_ed
+REP ^kabulet kabul_et
+REP ^kabuled kabul_ed
+REP ^ricaet rica_et
+REP ^ricaed rica_ed
+REP ^dikkatet dikkat_et
+REP ^dikkated dikkat_ed
+REP ^meraket merak_et
+REP ^meraked merak_ed
+REP ^devamet devam_et
+REP ^devamed devam_ed
+REP ^ifadeet ifade_et
+REP ^ifadeed ifade_ed
+REP ^eldeet elde_et
+REP ^eldeed elde_ed
+REP ^hareketet hareket_et
+REP ^hareketed hareket_ed
+REP ^ziyaretet ziyaret_et
+REP ^ziyareted ziyaret_ed
+REP ^kontrolet kontrol_et
+REP ^kontroled kontrol_ed
+REP ^takipet takip_et
+REP ^takiped takip_ed
+REP ^tercihet tercih_et
+REP ^tercihed tercih_ed
+REP ^tavsiyeet tavsiye_et
+REP ^tavsiyeed tavsiye_ed
+REP ^tedaviet tedavi_et
+REP ^tedavied tedavi_ed
+REP ^temsilet temsil_et
+REP ^temsiled temsil_ed
+REP ^tespitet tespit_et
+REP ^tespited tespit_ed
+REP ^teslimet teslim_et
+REP ^teslimed teslim_ed
+REP ^teklifet teklif_et
+REP ^teklifed teklif_ed
+REP ^tekraret tekrar_et
+REP ^tekrared tekrar_ed
+REP ^iknaet ikna_et
+REP ^iknaed ikna_ed
+REP ^ilanet ilan_et
+REP ^ilaned ilan_ed
+REP ^iptalet iptal_et
+REP ^iptaled iptal_ed
+REP ^idareet idare_et
+REP ^idareed idare_ed
+REP ^ihmalet ihmal_et
+REP ^ihmaled ihmal_ed
+REP ^ihlalet ihlal_et
+REP ^ihlaled ihlal_ed
+REP ^sohbetet sohbet_et
+REP ^sohbeted sohbet_ed
+REP ^nefretet nefret_et
+REP ^nefreted nefret_ed
+REP ^danset dans_et
+REP ^dansed dans_ed
+REP ^tahminet tahmin_et
+REP ^tahmined tahmin_ed
+REP ^tebriket tebrik_et
+REP ^tebriked tebrik_ed
+REP ^tehditet tehdit_et
+REP ^tehdited tehdit_ed
+REP ^tenkitet tenkit_et
+REP ^tenkited tenkit_ed
+REP ^teşviket teşvik_et
+REP ^teşviked teşvik_ed
+REP ^tahsiset tahsis_et
+REP ^tahsised tahsis_ed
+REP ^takdiret takdir_et
+REP ^takdired takdir_ed
+REP ^tatminet tatmin_et
+REP ^tatmined tatmin_ed
+REP ^teminet temin_et
+REP ^temined temin_ed
+REP ^tereddütet tereddüt_et
+REP ^tereddüted tereddüt_ed
+REP ^ispatet ispat_et
+REP ^ispated ispat_ed
+REP ^işgalet işgal_et
+REP ^işgaled işgal_ed
+REP ^intiharet intihar_et
+REP ^intihared intihar_ed
+REP ^istifaet istifa_et
+REP ^istifaed istifa_ed
+REP ^itirafet itiraf_et
+REP ^itirafed itiraf_ed
+REP ^itirazet itiraz_et
+REP ^itirazed itiraz_ed
+REP ^ikametet ikamet_et
+REP ^ikameted ikamet_ed
+REP ^ikametmek ikamet_etmek
+REP ^şikayetet şikâyet_et
+REP ^şikayeted şikâyet_ed
+REP ^şikâyetet şikâyet_et
+REP ^şikâyeted şikâyet_ed
+REP ^yokol yok_ol
+REP ^varol var_ol
+REP ^sağol sağ_ol
+REP ^haftason hafta_son
+REP ^haftaiçi hafta_içi
+REP ^birşey bir_şey
+REP ^herşey her_şey
+REP ^hiçbirşey hiçbir_şey
+REP ^hiçkimse hiç_kimse
+REP ^herbir her_bir
+REP ^hergün her_gün
+REP ^herzaman her_zaman
+REP ^heryer her_yer
+REP ^heran her_an
+REP ^biran bir_an
+REP ^şuan şu_an
+REP ^doğumgün doğum_gün
+REP ^geceyarısı gece_yarısı
+REP ^günortası gün_ortası
+REP ^ilkönce ilk_önce
+REP ^yurtdışı yurt_dışı
+REP ^yurtiçi yurt_içi
+REP dışı$ _dışı
+REP dışında$ _dışında
+REP dışından$ _dışından
+REP dışına$ _dışına
+REP dışındaki$ _dışındaki
+REP tabiiki tabii_ki
+REP sizcede sizce_de
+REP yada ya_da
+REP hemde hem_de
+REP uçuca uç_uca
+REP üstütüste üst_üste
+REP yeşilzeytin yeşil_zeytin
+REP siyahzeytin siyah_zeytin
+REP kuruüzüm kuru_üzüm
+REP ^kayıpet kaybet
+REP ^kayıped kaybed
+REP ^kayıtet kaydet
+REP ^kayıted kayded
+REP ^sabıret sabret
+REP ^sabıred sabred
+REP ^şüküret şükret
+REP ^şüküred şükred
+REP ^seyıret seyret
+REP ^seyıred seyred
+REP ^seyiret seyret
+REP ^seyired seyred
+REP ^emıret emret
+REP ^emıred emred
+REP ^emiret emret
+REP ^emired emred
+REP ^keşıfet keşfet
+REP ^keşıfed keşfed
+REP ^keşifet keşfet
+REP ^keşifed keşfed
+REP ^devıret devret
+REP ^devıred devred
+REP ^deviret devret
+REP ^devired devred
+REP ^zikıret zikret
+REP ^zikiret zikret
+REP ^zikired zikred
+REP ^redet reddet
+REP ^reded redded
+REP ^zanet zannet
+REP ^zaned zanned
+REP ^halet hallet
+REP ^haled halled
+REP ^hiset hisset
+REP ^hised hissed
+REP ^afetmek affetmek
+REP ^afetti affetti
+REP ^afedildi affedildi
+REP ^afediyor affediyor
+REP ^afedecek affedecek
 REP yoz yoruz
 REP yom yorum
 REP yosun yorsun
@@ -477,6 +688,7 @@ REP batini bâtıni
 REP teleskopu teleskobu
 REP bergamotu bergamodu
 REP baçı bacı
+REP bilim$ _bilimi
 REP acemlalesi acem_lalesi
 REP acıağaç acı_ağaç
 REP acıbadem acı_badem
@@ -2569,7 +2781,6 @@ REP varsılerki varsıl_erki
 REP veritabanı veri_tabanı
 REP vıdıvıdı vıdı_vıdı
 REP vırvır vır_vır
-REP yada ya_da
 REP yabanarmudu yaban_armudu
 REP yabanarısı yaban_arısı
 REP yabanarısıgiller yaban_arısıgiller
@@ -3046,111 +3257,6 @@ REP yanlis yanlış
 REP yanlıs yanlış
 REP mumkun mümkün
 REP mümkun mümkün
-REP 0 o
-REP 0 O
-REP 1 i
-REP 1 I
-REP 1 ı
-REP 3 e
-REP 3 E
-REP 4 a
-REP 4 A
-REP 5 s
-REP 5 r
-REP 6 y
-REP 6 g
-REP 6 t
-REP 7 y
-REP 7 t
-REP 8 u
-REP 8 ü
-REP 9 o
-REP 9 u
-REP a â
-REP â a
-REP u û
-REP û u
-REP i î
-REP î i
-REP A Â
-REP Â A
-REP U Û
-REP Û U
-REP İ Î
-REP Î İ
-REP c ç
-REP ç c
-REP g ğ
-REP ğ g
-REP s ş
-REP ş s
-REP o ö
-REP ö o
-REP u ü
-REP ü u
-REP ı i
-REP i ı
-REP C Ç
-REP Ç C
-REP G Ğ
-REP Ğ G
-REP S Ş
-REP Ş S
-REP O Ö
-REP Ö O
-REP U Ü
-REP Ü U
-REP I İ
-REP İ I
-REP sh ş
-REP ch ç
-REP gh ğ
-REP ss ş
-REP dd t
-REP tt d
-REP bb p
-REP pp b
-REP cc c
-REP kk g
-REP ğ y
-REP y ğ
-REP h ğ
-REP ğ h
-REP a e
-REP e a
-REP d t
-REP t d
-REP p b
-REP b p
-REP z s
-REP s z
-REP k g
-REP g k
-REP ın in
-REP in ın
-REP un ün
-REP ün un
-REP da de
-REP de da
-REP lar ler
-REP ler lar
-REP la le
-REP le la
-REP ’ '
-REP lari ları
-REP larin ların
-REP larimi larımı
-REP lariniz larınız
-REP sutcu şütçü
-REP sucu şücü
-REP tcu tçü
-REP IS İŞ
-REP IL İL
-REP IN İN
-REP IY İY
-REP IR İR
-REP ES EŞ
-REP IK İK
 REP yalnış yanlış
 REP pantalon pantolon
 REP şöför şoför
@@ -3160,7 +3266,6 @@ REP vejeteryan vejetaryen
 REP insiyatif inisiyatif
 REP orjinal orijinal
 REP dinazor dinozor
-REP idda iddaa
 REP klüp kulüp
 REP mualif muhalif
 REP seftali şeftali
@@ -3226,46 +3331,238 @@ REP matba matbaa
 REP mütevazi mütevazı
 REP egsos egzoz
 REP egzos egzoz
-REP w v
-REP v w
-REP q k
-REP k q
-REP x ks
+REP herkezde herkeste
+REP herkezi herkesi
+REP herkezle herkesle
+REP yalnışlık yanlışlık
+REP yanlızca yalnızca
+REP yanlızlık yalnızlık
+REP orjinallik orijinallik
+REP antremanda antrenmanda
+REP antremanı antrenmanı
+REP acenta acente
+REP afaroz aforoz
+REP aperatif aperitif
+REP bilader birader
+REP bisküüt bisküvi
+REP krathane kıraathane
+REP poaça poğaça
+REP pohaça poğaça
+REP maydonoz maydanoz
+REP kurdela kurdele
+REP kanbur kambur
+REP çenber çember
+REP penbe pembe
+REP perşenbe perşembe
+REP çarşanba çarşamba
+REP anbar ambar
+REP zanbak zambak
+REP sünbül sümbül
+REP çiyan çıyan
+REP tiskinmek tiksinmek
+REP müslüman Müslüman
+REP hristiyan Hristiyan
+REP hıristiyan Hristiyan
+REP yahudi Yahudi
+REP muatap muhatap
+REP muhatab muhatap
+REP vaad vaat
+REP tesbit tespit
+REP isbat ispat
+REP gangaster gangster
+REP grapon krapon
+REP küpür kupür
+REP küsür küsur
+REP malesef maalesef
+REP mağlesef maalesef
+REP metod metot
+REP standard standart
+REP katalok katalog
+REP monolok monolog
+REP diyalok diyalog
+REP psikolok psikolog
+REP sezaryan sezaryen
+REP şohben şofben
+REP tenefüs teneffüs
+REP terorist terörist
+REP usül usul
 REP kitapı kitabı
 REP kitapın kitabın
 REP kitapa kitaba
+REP kitapım kitabım
 REP kitapımız kitabımız
 REP kitapınız kitabınız
 REP ağaçı ağacı
 REP ağaçın ağacın
 REP ağaça ağaca
+REP ağaçım ağacım
 REP ağaçımız ağacımız
 REP ağaçınız ağacınız
 REP çocuku çocuğu
 REP çocukun çocuğun
 REP çocuka çocuğa
+REP çocukum çocuğum
 REP çocukumuz çocuğumuz
 REP çocukunuz çocuğunuz
+REP sokakı sokağı
+REP sokakın sokağın
+REP sokaka sokağa
+REP sokakım sokağım
+REP sokakımız sokağımız
+REP sokakınız sokağınız
+REP ayakı ayağı
+REP ayakın ayağın
+REP ayaka ayağa
+REP ayakım ayağım
+REP ayakımız ayağımız
+REP ayakınız ayağınız
+REP kulakı kulağı
+REP kulakın kulağın
+REP kulaka kulağa
+REP kulakım kulağım
+REP kulakımız kulağımız
+REP kulakınız kulağınız
 REP kâğıtı kâğıdı
 REP kâğıtın kâğıdın
 REP kâğıta kâğıda
+REP kâğıtım kâğıdım
 REP kâğıtımız kâğıdımız
 REP kâğıtınız kâğıdınız
 REP borçu borcu
 REP borçun borcun
 REP borça borca
+REP borçum borcum
 REP borçumuz borcumuz
 REP borçunuz borcunuz
 REP renki rengi
 REP renkin rengin
 REP renke renge
+REP renkim rengim
 REP renkimiz rengimiz
 REP renkiniz renginiz
 REP kalpi kalbi
 REP kalpin kalbin
 REP kalpe kalbe
+REP kalpim kalbim
 REP kalpimiz kalbimiz
 REP kalpiniz kalbiniz
+REP umutu umudu
+REP umutun umudun
+REP umuta umuda
+REP umutum umudum
+REP umutumuz umudumuz
+REP umutunuz umudunuz
+REP kanatı kanadı
+REP kanatın kanadın
+REP kanata kanada
+REP kanatım kanadım
+REP kanatımız kanadımız
+REP kanatınız kanadınız
+REP yurtu yurdu
+REP yurtun yurdun
+REP yurta yurda
+REP yurtum yurdum
+REP yurtumuz yurdumuz
+REP yurtunuz yurdunuz
+REP kurtu kurdu
+REP kurtun kurdun
+REP kurta kurda
+REP kurtum kurdum
+REP kurtumuz kurdumuz
+REP kurtunuz kurdunuz
+REP derti derdi
+REP dertin derdin
+REP derte derde
+REP dertim derdim
+REP dertimiz derdimiz
+REP dertiniz derdiniz
+REP gençi genci
+REP gençin gencin
+REP gençe gence
+REP gençim gencim
+REP gençimiz gencimiz
+REP gençiniz genciniz
+REP hukuğu hukuku
+REP hukuğa hukuka
+REP hukuğun hukukun
+REP ahlağı ahlakı
+REP ahlağa ahlaka
+REP ahlağın ahlakın
+REP evrağı evrakı
+REP evrağa evraka
+REP evrağın evrakın
+REP ittifağı ittifakı
+REP ittifağa ittifaka
+REP ittifağın ittifakın
+REP merağı merakı
+REP merağa meraka
+REP merağın merakın
+REP stoğu stoku
+REP stoğa stoka
+REP stoğun stokun
+REP felakedi felaketi
+REP felakede felakete
+REP felakedin felaketin
+REP hakikadi hakikati
+REP hakikade hakikate
+REP hakikadin hakikatin
+REP tabiadı tabiatı
+REP tabiada tabiata
+REP tabiadın tabiatın
+REP sanadı sanatı
+REP sanada sanata
+REP sanadın sanatın
+REP devledi devleti
+REP devlede devlete
+REP devledin devletin
+REP milledi milleti
+REP millede millete
+REP milledin milletin
+REP cumhuriyedi cumhuriyeti
+REP cumhuriyede cumhuriyete
+REP cumhuriyedin cumhuriyetin
+REP edebiyadı edebiyatı
+REP edebiyada edebiyata
+REP edebiyadın edebiyatın
+REP inşaadı inşaatı
+REP inşaada inşaata
+REP inşaadın inşaatın
+REP hayadı hayatı
+REP hayada hayata
+REP hayadın hayatın
+REP saadi saati
+REP saade saate
+REP saadin saatin
+REP pakedi paketi
+REP pakede pakete
+REP pakedin paketin
+REP kasedi kaseti
+REP kasede kasete
+REP kasedin kasetin
+REP ankedi anketi
+REP ankede ankete
+REP ankedin anketin
+REP rokedi roketi
+REP rokede rokete
+REP rokedin roketin
+REP cekedi ceketi
+REP cekede cekete
+REP cekedin ceketin
+REP markedi marketi
+REP markede markete
+REP markedin marketin
+REP tabledi tableti
+REP tablede tablete
+REP tabledin tabletin
+REP internedi interneti
+REP internede internete
+REP internedin internetin
+REP pilodu pilotu
+REP piloda pilota
+REP pilodun pilotun
+REP robodu robotu
+REP roboda robota
+REP robodun robotun
 REP akılı aklı
 REP akılın aklın
 REP akıla akla
@@ -3281,16 +3578,66 @@ REP şehirin şehrin
 REP şehire şehre
 REP şehirimiz şehrimiz
 REP şehiriniz şehriniz
+REP nehiri nehri
+REP nehirin nehrin
+REP nehire nehre
+REP nehirimiz nehrimiz
+REP nehiriniz nehriniz
+REP zehiri zehri
+REP zehirin zehrin
+REP zehire zehre
+REP zehirimiz zehrimiz
+REP zehiriniz zehriniz
 REP ömürü ömrü
 REP ömürün ömrün
 REP ömüre ömre
 REP ömürümüz ömrümüz
 REP ömürünüz ömrünüz
+REP mühürü mührü
+REP mühürün mührün
+REP mühüre mühre
+REP mühürümüz mührümüz
+REP mühürünüz mührünüz
+REP şükürü şükrü
+REP şükürün şükrün
+REP şüküre şükre
+REP şükürümüz şükrümüz
+REP şükürünüz şükrünüz
+REP hükümü hükmü
+REP hükümün hükmün
+REP hüküme hükme
+REP hükümümüz hükmümüz
+REP hükümünüz hükmünüz
+REP zulümü zulmü
+REP zulümün zulmün
+REP zulüme zulme
+REP zulümümüz zulmümüz
+REP zulümünüz zulmünüz
 REP resimi resmi
 REP resimin resmin
 REP resime resme
 REP resimimiz resmimiz
 REP resiminiz resminiz
+REP isimi ismi
+REP isimin ismin
+REP isime isme
+REP isimimiz ismimiz
+REP isiminiz isminiz
+REP cisimi cismi
+REP cisimin cismin
+REP cisime cisme
+REP cisimimiz cismimiz
+REP cisiminiz cisminiz
+REP kısımı kısmı
+REP kısımın kısmın
+REP kısıma kısma
+REP kısımımız kısmımız
+REP kısımınız kısmınız
+REP hısımı hısmı
+REP hısımın hısmın
+REP hısıma hısma
+REP hısımımız hısmımız
+REP hısımınız hısmınız
 REP burunu burnu
 REP burunun burnun
 REP buruna burna
@@ -3301,11 +3648,71 @@ REP karının karnın
 REP karına karna
 REP karınımız karnımız
 REP karınınız karnınız
-REP zehiri zehri
-REP zehirin zehrin
-REP zehire zehre
-REP zehirimiz zehrimiz
-REP zehiriniz zehriniz
+REP alını alnı
+REP alının alnın
+REP alına alna
+REP alınımız alnımız
+REP alınınız alnınız
+REP boyunu boynu
+REP boyunun boynun
+REP boyuna boyna
+REP boyunumuz boynumuz
+REP boyununuz boynunuz
+REP oğulu oğlu
+REP oğulun oğlun
+REP oğula oğla
+REP oğulumuz oğlumuz
+REP oğulunuz oğlunuz
+REP göğüsü göğsü
+REP göğüsün göğsün
+REP göğüse göğse
+REP göğüsümüz göğsümüz
+REP göğüsünüz göğsünüz
+REP omuzu omzu
+REP omuzun omzun
+REP omuza omza
+REP omuzumuz omzumuz
+REP omuzunuz omzunuz
+REP ufuku ufku
+REP ufukun ufkun
+REP ufuka ufka
+REP ufukumuz ufkumuz
+REP ufukunuz ufkunuz
+REP beyini beyni
+REP beyinin beynin
+REP beyine beyne
+REP beyinimiz beynimiz
+REP beyininiz beyniniz
+REP keyifi keyfi
+REP keyifin keyfin
+REP keyife keyfe
+REP keyifimiz keyfimiz
+REP keyifiniz keyfiniz
+REP sabırı sabrı
+REP sabırın sabrın
+REP sabıra sabra
+REP sabırımız sabrımız
+REP sabırınız sabrınız
+REP fikiri fikri
+REP fikirin fikrin
+REP fikire fikre
+REP fikirimiz fikrimiz
+REP fikiriniz fikriniz
+REP zikiri zikri
+REP zikirin zikrin
+REP zikire zikre
+REP zikirimiz zikrimiz
+REP zikiriniz zikriniz
+REP vakiti vakti
+REP vakitin vaktin
+REP vakite vakte
+REP vakitimiz vaktimiz
+REP vakitiniz vaktiniz
+REP nakiti nakti
+REP nakitin naktin
+REP nakite nakte
+REP nakitimiz naktimiz
+REP nakitiniz naktiniz
 REP saatlar saatler
 REP saatla saatle
 REP saatları saatleri
@@ -3336,6 +3743,7 @@ REP alkolların alkollerin
 REP alkola alkole
 REP alkolu alkolü
 REP alkolun alkolün
+REP alkolsuz alkolsüz
 REP metallar metaller
 REP metalla metalle
 REP metalları metalleri
@@ -3350,40 +3758,264 @@ REP kontrolların kontrollerin
 REP kontrola kontrole
 REP kontrolu kontrolü
 REP kontrolun kontrolün
-REP 0 ö
-REP 1 l
-REP 4 r
-REP 4 e
-REP 5 t
-REP 7 u
-REP 8 b
-REP 8 i
-REP I Î
-REP v b
-REP b v
-REP tt t
-REP t tt
-REP ll l
-REP l ll
-REP ss s
-REP s ss
-REP nn n
-REP n nn
-REP mm m
-REP m mm
-REP rr r
-REP r rr
-REP kk k
-REP k kk
-REP pp p
-REP p pp
-REP bb b
-REP b bb
-REP dd d
-REP d dd
-REP c cc
-REP zz z
-REP z zz
+REP kontrolsuz kontrolsüz
+REP sembollar semboller
+REP sembolla sembolle
+REP sembolları sembolleri
+REP sembolların sembollerin
+REP sembola sembole
+REP sembolu sembolü
+REP sembolun sembolün
+REP petrollar petroller
+REP petrolla petrolle
+REP petrolları petrolleri
+REP petrolların petrollerin
+REP petrola petrole
+REP petrolu petrolü
+REP petrolun petrolün
+REP protokollar protokoller
+REP protokolla protokolle
+REP protokolları protokolleri
+REP protokolların protokollerin
+REP protokola protokole
+REP protokolu protokolü
+REP protokolun protokolün
+REP ampullar ampuller
+REP ampulla ampulle
+REP ampulları ampulleri
+REP ampulların ampullerin
+REP ampula ampule
+REP ampulu ampulü
+REP ampulun ampulün
+REP ampulsuz ampulsüz
+REP mahsullar mahsuller
+REP mahsulla mahsulle
+REP mahsulları mahsulleri
+REP mahsulların mahsullerin
+REP mahsula mahsule
+REP mahsulu mahsulü
+REP mahsulun mahsulün
+REP usullar usuller
+REP usulla usulle
+REP usulları usulleri
+REP usulların usullerin
+REP usula usule
+REP usulu usulü
+REP usulun usulün
+REP meşgullar meşguller
+REP meşgulla meşgulle
+REP meşgulları meşgulleri
+REP meşgulların meşgullerin
+REP meşgula meşgule
+REP meşgulu meşgulü
+REP meşgulun meşgulün
+REP mesullar mesuller
+REP mesulla mesulle
+REP mesulları mesulleri
+REP mesulların mesullerin
+REP mesula mesule
+REP mesulu mesulü
+REP mesulun mesulün
+REP mamullar mamuller
+REP mamulla mamulle
+REP mamulları mamulleri
+REP mamulların mamullerin
+REP mamula mamule
+REP mamulu mamulü
+REP mamulun mamulün
+REP makullar makuller
+REP makulla makulle
+REP makulları makulleri
+REP makulların makullerin
+REP makula makule
+REP makulu makulü
+REP makulun makulün
+REP pd pt
+REP çd çt
+REP td tt
+REP kd kt
+REP sd st
+REP şd şt
+REP hd ht
+REP fd ft
+REP lu$ lü
+REP lun$ lün
+REP lsuz$ lsüz
+REP llar$ ller
+REP 'inci$ 'nci
+REP ’inci$ 'nci
+REP 'ıncı$ 'ncı
+REP ’ıncı$ 'ncı
+REP 'nci$ 'ncı
+REP ’nci$ 'ncı
+REP 'ncı$ 'nci
+REP ’ncı$ 'nci
+REP 'ncü$ 'üncü
+REP ’ncü$ 'üncü
+REP 'ncu$ 'uncu
+REP ’ncu$ 'uncu
+REP 'nci$ 'inci
+REP ’nci$ 'inci
+REP 'ncı$ 'ıncı
+REP ’ncı$ 'ıncı
+REP 'incisi$ 'ncisi
+REP ’incisi$ 'ncisi
+REP 'ıncısı$ 'ncısı
+REP ’ıncısı$ 'ncısı
+REP 'ncüsü$ 'üncüsü
+REP ’ncüsü$ 'üncüsü
+REP 'ncusu$ 'uncusu
+REP ’ncusu$ 'uncusu
+REP 'ncisi$ 'incisi
+REP ’ncisi$ 'incisi
+REP 'ncısı$ 'ıncısı
+REP ’ncısı$ 'ıncısı
+REP 'ncisi$ 'ncısı
+REP ’ncisi$ 'ncısı
+REP 'ncısı$ 'ncisi
+REP ’ncısı$ 'ncisi
+REP 'inciye$ 'nciye
+REP ’inciye$ 'nciye
+REP 'ıncıya$ 'ncıya
+REP ’ıncıya$ 'ncıya
+REP 'ncüye$ 'üncüye
+REP ’ncüye$ 'üncüye
+REP 'ncuya$ 'uncuya
+REP ’ncuya$ 'uncuya
+REP 'incide$ 'ncide
+REP ’incide$ 'ncide
+REP 'ıncıda$ 'ncıda
+REP ’ıncıda$ 'ncıda
+REP 'ncüde$ 'üncüde
+REP ’ncüde$ 'üncüde
+REP 'ncuda$ 'uncuda
+REP ’ncuda$ 'uncuda
+REP 'de$ 'te
+REP ’de$ 'te
+REP 'te$ 'de
+REP ’te$ 'de
+REP 'da$ 'ta
+REP ’da$ 'ta
+REP 'ta$ 'da
+REP ’ta$ 'da
+REP 'den$ 'ten
+REP ’den$ 'ten
+REP 'ten$ 'den
+REP ’ten$ 'den
+REP 'dan$ 'tan
+REP ’dan$ 'tan
+REP 'tan$ 'dan
+REP ’tan$ 'dan
+REP 'da$ 'te
+REP ’da$ 'te
+REP 'dan$ 'ten
+REP ’dan$ 'ten
+REP 'de$ 'da
+REP ’de$ 'da
+REP 'den$ 'dan
+REP ’den$ 'dan
+REP 'da$ 'de
+REP ’da$ 'de
+REP 'dan$ 'den
+REP ’dan$ 'den
+REP 'ta$ 'te
+REP ’ta$ 'te
+REP 'tan$ 'ten
+REP ’tan$ 'ten
+REP 'deki$ 'teki
+REP ’deki$ 'teki
+REP 'teki$ 'deki
+REP ’teki$ 'deki
+REP 'daki$ 'taki
+REP ’daki$ 'taki
+REP 'taki$ 'daki
+REP ’taki$ 'daki
+REP 'daki$ 'teki
+REP ’daki$ 'teki
+REP 'deki$ 'daki
+REP ’deki$ 'daki
+REP 'daki$ 'deki
+REP ’daki$ 'deki
+REP 'e$ 'ye
+REP ’e$ 'ye
+REP 'a$ 'ya
+REP ’a$ 'ya
+REP 'ye$ 'e
+REP ’ye$ 'e
+REP 'ya$ 'a
+REP ’ya$ 'a
+REP 'a$ 'e
+REP ’a$ 'e
+REP 'e$ 'a
+REP ’e$ 'a
+REP 'ya$ 'ye
+REP ’ya$ 'ye
+REP 'ye$ 'ya
+REP ’ye$ 'ya
+REP 'i$ 'yi
+REP ’i$ 'yi
+REP 'ı$ 'yı
+REP ’ı$ 'yı
+REP 'yi$ 'i
+REP ’yi$ 'i
+REP 'yı$ 'ı
+REP ’yı$ 'ı
+REP 'in$ 'nin
+REP ’in$ 'nin
+REP 'ın$ 'nın
+REP ’ın$ 'nın
+REP 'nin$ 'in
+REP ’nin$ 'in
+REP 'nın$ 'ın
+REP ’nın$ 'ın
+REP 'er$ 'şer
+REP ’er$ 'şer
+REP 'ar$ 'şar
+REP ’ar$ 'şar
+REP 'şer$ 'er
+REP ’şer$ 'er
+REP 'şar$ 'ar
+REP ’şar$ 'ar
+REP 'erli$ 'şerli
+REP ’erli$ 'şerli
+REP 'arlı$ 'şarlı
+REP ’arlı$ 'şarlı
+REP 'şerli$ 'erli
+REP ’şerli$ 'erli
+REP 'şarlı$ 'arlı
+REP ’şarlı$ 'arlı
+REP 'dir$ 'tir
+REP ’dir$ 'tir
+REP 'tir$ 'dir
+REP ’tir$ 'dir
+REP 'dür$ 'tür
+REP ’dür$ 'tür
+REP 'tür$ 'dür
+REP ’tür$ 'dür
+REP 'dır$ 'tır
+REP ’dır$ 'tır
+REP 'tır$ 'dır
+REP ’tır$ 'dır
+REP 'dur$ 'tur
+REP ’dur$ 'tur
+REP 'tur$ 'dur
+REP ’tur$ 'dur
+REP 'di$ 'ti
+REP ’di$ 'ti
+REP 'ti$ 'di
+REP ’ti$ 'di
+REP 'dü$ 'tü
+REP ’dü$ 'tü
+REP 'tü$ 'dü
+REP ’tü$ 'dü
+REP 'dı$ 'tı
+REP ’dı$ 'tı
+REP 'tı$ 'dı
+REP ’tı$ 'dı
+REP 'du$ 'tu
+REP ’du$ 'tu
+REP 'tu$ 'du
+REP ’tu$ 'du
 REP gunes güneş
 REP bagir bağır
 REP cirak çırak
@@ -3542,7 +4174,6 @@ REP adem âdem
 REP ademci Âdemci
 REP alemşümullük âlemşümullük
 REP alimlik âlimlik
-REP amalık âmâlık
 REP amin âmin
 REP araz âraz
 REP arzuhalci arzuhâlci
@@ -3606,7 +4237,6 @@ REP hallenmek hâllenmek
 REP hallice hâllice
 REP halsiz hâlsiz
 REP halsizce hâlsizce
-REP ademci âdemci
 REP ademiyet âdemiyet
 REP ademoğlu âdemoğlu
 REP ahdi ahdî
@@ -3996,7 +4626,6 @@ REP mahalli mahallî
 REP mahallileşme mahallîleşme
 REP mahallileşmek mahallîleşmek
 REP mahallilik mahallîlik
-REP mahkukat mahkûkât
 REP mahkumluk mahkûmluk
 REP mahşeri mahşerî
 REP makaskar makaskâr
@@ -4276,6 +4905,151 @@ REP şikayetçilik şikâyetçilik
 REP şivekar şivekâr
 REP şura şûra
 REP şüreka şürekâ
+REP a â
+REP â a
+REP u û
+REP û u
+REP i î
+REP î i
+REP A Â
+REP Â A
+REP U Û
+REP Û U
+REP İ Î
+REP Î İ
+REP c ç
+REP ç c
+REP g ğ
+REP ğ g
+REP k ğ
+REP ğ k
+REP s ş
+REP ş s
+REP o ö
+REP ö o
+REP u ü
+REP ü u
+REP ı i
+REP i ı
+REP C Ç
+REP Ç C
+REP G Ğ
+REP Ğ G
+REP S Ş
+REP Ş S
+REP O Ö
+REP Ö O
+REP U Ü
+REP Ü U
+REP I İ
+REP İ I
+REP sh ş
+REP ch ç
+REP gh ğ
+REP ss ş
+REP dd t
+REP tt d
+REP bb p
+REP pp b
+REP cc c
+REP kk g
+REP ğ y
+REP y ğ
+REP h ğ
+REP ğ h
+REP a e
+REP e a
+REP d t
+REP t d
+REP p b
+REP b p
+REP z s
+REP s z
+REP k g
+REP g k
+REP ın in
+REP in ın
+REP un ün
+REP ün un
+REP da de
+REP de da
+REP lar ler
+REP ler lar
+REP la le
+REP le la
+REP ’ '
+REP lari ları
+REP larin ların
+REP larimi larımı
+REP lariniz larınız
+REP sutcu şütçü
+REP sucu şücü
+REP tcu tçü
+REP IS İŞ
+REP IL İL
+REP IN İN
+REP IY İY
+REP IR İR
+REP ES EŞ
+REP IK İK
+REP v b
+REP b v
+REP tt t
+REP t tt
+REP ll l
+REP l ll
+REP ss s
+REP s ss
+REP nn n
+REP n nn
+REP mm m
+REP m mm
+REP rr r
+REP r rr
+REP kk k
+REP k kk
+REP pp p
+REP p pp
+REP bb b
+REP b bb
+REP dd d
+REP d dd
+REP c cc
+REP zz z
+REP z zz
+REP w v
+REP v w
+REP q k
+REP k q
+REP x ks
+REP 0 o
+REP 0 ö
+REP 0 O
+REP 1 ı
+REP 1 i
+REP 1 l
+REP 1 I
+REP 3 e
+REP 3 E
+REP 4 a
+REP 4 r
+REP 4 e
+REP 4 A
+REP 5 s
+REP 5 t
+REP 5 r
+REP 6 y
+REP 6 t
+REP 6 g
+REP 7 u
+REP 7 y
+REP 7 t
+REP 8 b
+REP 8 i
+REP 8 u
+REP 8 ü
+REP 9 o
+REP 9 u
 
 # Phonetic equivalence rules: lower edit-distance penalty between mistyped and
 # correct candidates that sound alike (silent ğ, metathesis, suffix reduction).
@@ -4365,6 +5139,8 @@ PHONE û u
 # PROPER NOUN CASE/POSSESSIVE FLAGS
 
 # VOICING COPULA FLAGS
+
+# NUMERAL APOSTROPHE FLAGS
 
 SFX ∀ Y 1
 SFX ∀ 0 ı [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
@@ -7440,14 +8216,14 @@ SFX ∎ 0 saymışlar [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ∎ 0 saymışlar [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ∎ 0 saymışlar [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ∎ 0 saymışlar [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ım [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ım [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 um [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 um [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ız [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ız [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 uz [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 uz [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
+SFX ∎ 0 ım [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 ım [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 um [ouû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 um [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 ız [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 ız [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 uz [ouû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 uz [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
 SFX ∎ 0 tır [aıâ][çfhkpsşt]
 SFX ∎ 0 tır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][çfhkpsşt]
 SFX ∎ 0 tur [ouû][çfhkpsşt]
@@ -7460,14 +8236,14 @@ SFX ∎ 0 ken [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ∎ 0 ken [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ∎ 0 ken [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ∎ 0 ken [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ımdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ımdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 umdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 umdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ızdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ızdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 uzdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 uzdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
+SFX ∎ 0 ımdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 ımdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 umdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 umdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 ızdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 ızdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 uzdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 uzdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
 
 SFX ∐ Y 173
 SFX ∐ 0 ydı [aâı]
@@ -20266,7 +21042,7 @@ SFX ≙ mek yüversin ümek
 SFX ≙ mek yüverin ümek
 SFX ≙ mek yüveriniz ümek
 
-SFX ≚ Y 1385
+SFX ≚ Y 1333
 SFX ≚ tmak dıyor/⊮ tmak
 SFX ≚ tmak dıyorken tmak
 SFX ≚ tmak dıyor tmak
@@ -20285,18 +21061,6 @@ SFX ≚ tmak dacaksınız tmak
 SFX ≚ tmak dacaksınızdır tmak
 SFX ≚ tmak dacaklar tmak
 SFX ≚ tmak dacaklardır tmak
-SFX ≚ mak dı/⊽ [çt]mak
-SFX ≚ mak dı [çt]mak
-SFX ≚ mak dım [çt]mak
-SFX ≚ mak dın [çt]mak
-SFX ≚ mak dık [çt]mak
-SFX ≚ mak dınız [çt]mak
-SFX ≚ mak dılar [çt]mak
-SFX ≚ mak dımsa [çt]mak
-SFX ≚ mak dınsa [çt]mak
-SFX ≚ mak dıksa [çt]mak
-SFX ≚ mak dınızsa [çt]mak
-SFX ≚ mak dılarsa [çt]mak
 SFX ≚ mak tı/⊽ [çt]mak
 SFX ≚ mak tı [çt]mak
 SFX ≚ mak tım [çt]mak
@@ -20483,46 +21247,6 @@ SFX ≚ tmak dıcılığın tmak
 SFX ≚ tmak dıcılıkta tmak
 SFX ≚ tmak dıcılıktan tmak
 SFX ≚ tmak dıcılıktır tmak
-SFX ≚ mak dığı/⊵ [çt]mak
-SFX ≚ mak dığı [çt]mak
-SFX ≚ mak dığım/⊹ [çt]mak
-SFX ≚ mak dığım [çt]mak
-SFX ≚ mak dığın/⊹ [çt]mak
-SFX ≚ mak dığın [çt]mak
-SFX ≚ mak dığımız/⊹ [çt]mak
-SFX ≚ mak dığımız [çt]mak
-SFX ≚ mak dığınız/⊹ [çt]mak
-SFX ≚ mak dığınız [çt]mak
-SFX ≚ mak dıkları/⊵ [çt]mak
-SFX ≚ mak dıkları [çt]mak
-SFX ≚ mak dıklarım [çt]mak
-SFX ≚ mak dıklarımı [çt]mak
-SFX ≚ mak dıklarıma [çt]mak
-SFX ≚ mak dıklarımda [çt]mak
-SFX ≚ mak dıklarımdan [çt]mak
-SFX ≚ mak dıklarımın [çt]mak
-SFX ≚ mak dıklarımla [çt]mak
-SFX ≚ mak dıkların [çt]mak
-SFX ≚ mak dıklarını [çt]mak
-SFX ≚ mak dıklarına [çt]mak
-SFX ≚ mak dıklarında [çt]mak
-SFX ≚ mak dıklarından [çt]mak
-SFX ≚ mak dıklarının [çt]mak
-SFX ≚ mak dıklarınla [çt]mak
-SFX ≚ mak dıklarımız [çt]mak
-SFX ≚ mak dıklarımızı [çt]mak
-SFX ≚ mak dıklarımıza [çt]mak
-SFX ≚ mak dıklarımızda [çt]mak
-SFX ≚ mak dıklarımızdan [çt]mak
-SFX ≚ mak dıklarımızın [çt]mak
-SFX ≚ mak dıklarımızla [çt]mak
-SFX ≚ mak dıklarınız [çt]mak
-SFX ≚ mak dıklarınızı [çt]mak
-SFX ≚ mak dıklarınıza [çt]mak
-SFX ≚ mak dıklarınızda [çt]mak
-SFX ≚ mak dıklarınızdan [çt]mak
-SFX ≚ mak dıklarınızın [çt]mak
-SFX ≚ mak dıklarınızla [çt]mak
 SFX ≚ mak tığı/⊵ [çt]mak
 SFX ≚ mak tığı [çt]mak
 SFX ≚ mak tığım/⊹ [çt]mak
@@ -21653,7 +22377,7 @@ SFX ≚ tmak dılamadığı/⊵ tmak
 SFX ≚ tmak dılamadığı tmak
 SFX ≚ tmak dılamayan tmak
 
-SFX ≛ Y 1403
+SFX ≛ Y 1351
 SFX ≛ tmak duyor/⊮ tmak
 SFX ≛ tmak duyorken tmak
 SFX ≛ tmak duyor tmak
@@ -21673,18 +22397,6 @@ SFX ≛ tmak dacaksınızdır tmak
 SFX ≛ tmak dacaklar tmak
 SFX ≛ tmak dacaklardır tmak
 SFX ≛ tmak dacağum tmak
-SFX ≛ mak du/⊽ [çt]mak
-SFX ≛ mak du [çt]mak
-SFX ≛ mak dum [çt]mak
-SFX ≛ mak dun [çt]mak
-SFX ≛ mak duk [çt]mak
-SFX ≛ mak dunuz [çt]mak
-SFX ≛ mak dular [çt]mak
-SFX ≛ mak dumsa [çt]mak
-SFX ≛ mak dunsa [çt]mak
-SFX ≛ mak duksa [çt]mak
-SFX ≛ mak dunuzsa [çt]mak
-SFX ≛ mak dularsa [çt]mak
 SFX ≛ mak tu/⊽ [çt]mak
 SFX ≛ mak tu [çt]mak
 SFX ≛ mak tum [çt]mak
@@ -21873,46 +22585,6 @@ SFX ≛ tmak duculuğun tmak
 SFX ≛ tmak duculukta tmak
 SFX ≛ tmak duculuktan tmak
 SFX ≛ tmak duculuktur tmak
-SFX ≛ mak duğu/⊷ [çt]mak
-SFX ≛ mak duğu [çt]mak
-SFX ≛ mak duğum/⊻ [çt]mak
-SFX ≛ mak duğum [çt]mak
-SFX ≛ mak duğun/⊻ [çt]mak
-SFX ≛ mak duğun [çt]mak
-SFX ≛ mak duğumuz/⊻ [çt]mak
-SFX ≛ mak duğumuz [çt]mak
-SFX ≛ mak duğunuz/⊻ [çt]mak
-SFX ≛ mak duğunuz [çt]mak
-SFX ≛ mak dukları/⊵ [çt]mak
-SFX ≛ mak dukları [çt]mak
-SFX ≛ mak duklarım [çt]mak
-SFX ≛ mak duklarımı [çt]mak
-SFX ≛ mak duklarıma [çt]mak
-SFX ≛ mak duklarımda [çt]mak
-SFX ≛ mak duklarımdan [çt]mak
-SFX ≛ mak duklarımın [çt]mak
-SFX ≛ mak duklarımla [çt]mak
-SFX ≛ mak dukların [çt]mak
-SFX ≛ mak duklarını [çt]mak
-SFX ≛ mak duklarına [çt]mak
-SFX ≛ mak duklarında [çt]mak
-SFX ≛ mak duklarından [çt]mak
-SFX ≛ mak duklarının [çt]mak
-SFX ≛ mak duklarınla [çt]mak
-SFX ≛ mak duklarımız [çt]mak
-SFX ≛ mak duklarımızı [çt]mak
-SFX ≛ mak duklarımıza [çt]mak
-SFX ≛ mak duklarımızda [çt]mak
-SFX ≛ mak duklarımızdan [çt]mak
-SFX ≛ mak duklarımızın [çt]mak
-SFX ≛ mak duklarımızla [çt]mak
-SFX ≛ mak duklarınız [çt]mak
-SFX ≛ mak duklarınızı [çt]mak
-SFX ≛ mak duklarınıza [çt]mak
-SFX ≛ mak duklarınızda [çt]mak
-SFX ≛ mak duklarınızdan [çt]mak
-SFX ≛ mak duklarınızın [çt]mak
-SFX ≛ mak duklarınızla [çt]mak
 SFX ≛ mak tuğu/⊷ [çt]mak
 SFX ≛ mak tuğu [çt]mak
 SFX ≛ mak tuğum/⊻ [çt]mak
@@ -23058,7 +23730,7 @@ SFX ≛ tmak dulamadığı/⊵ tmak
 SFX ≛ tmak dulamadığı tmak
 SFX ≛ tmak dulamayan tmak
 
-SFX ≜ Y 1385
+SFX ≜ Y 1333
 SFX ≜ tmek diyor/⊮ tmek
 SFX ≜ tmek diyorken tmek
 SFX ≜ tmek diyor tmek
@@ -23077,18 +23749,6 @@ SFX ≜ tmek deceksiniz tmek
 SFX ≜ tmek deceksinizdir tmek
 SFX ≜ tmek decekler tmek
 SFX ≜ tmek deceklerdir tmek
-SFX ≜ mek di/⊾ [çt]mek
-SFX ≜ mek di [çt]mek
-SFX ≜ mek dim [çt]mek
-SFX ≜ mek din [çt]mek
-SFX ≜ mek dik [çt]mek
-SFX ≜ mek diniz [çt]mek
-SFX ≜ mek diler [çt]mek
-SFX ≜ mek dimse [çt]mek
-SFX ≜ mek dinse [çt]mek
-SFX ≜ mek dikse [çt]mek
-SFX ≜ mek dinizse [çt]mek
-SFX ≜ mek dilerse [çt]mek
 SFX ≜ mek ti/⊾ [çt]mek
 SFX ≜ mek ti [çt]mek
 SFX ≜ mek tim [çt]mek
@@ -23275,46 +23935,6 @@ SFX ≜ tmek diciliğin tmek
 SFX ≜ tmek dicilikte tmek
 SFX ≜ tmek dicilikten tmek
 SFX ≜ tmek diciliktir tmek
-SFX ≜ mek diği/⊶ [çt]mek
-SFX ≜ mek diği [çt]mek
-SFX ≜ mek diğim/⊺ [çt]mek
-SFX ≜ mek diğim [çt]mek
-SFX ≜ mek diğin/⊺ [çt]mek
-SFX ≜ mek diğin [çt]mek
-SFX ≜ mek diğimiz/⊺ [çt]mek
-SFX ≜ mek diğimiz [çt]mek
-SFX ≜ mek diğiniz/⊺ [çt]mek
-SFX ≜ mek diğiniz [çt]mek
-SFX ≜ mek dikleri/⊶ [çt]mek
-SFX ≜ mek dikleri [çt]mek
-SFX ≜ mek diklerim [çt]mek
-SFX ≜ mek diklerimi [çt]mek
-SFX ≜ mek diklerime [çt]mek
-SFX ≜ mek diklerimde [çt]mek
-SFX ≜ mek diklerimden [çt]mek
-SFX ≜ mek diklerimin [çt]mek
-SFX ≜ mek diklerimle [çt]mek
-SFX ≜ mek diklerin [çt]mek
-SFX ≜ mek diklerini [çt]mek
-SFX ≜ mek diklerine [çt]mek
-SFX ≜ mek diklerinde [çt]mek
-SFX ≜ mek diklerinden [çt]mek
-SFX ≜ mek diklerinin [çt]mek
-SFX ≜ mek diklerinle [çt]mek
-SFX ≜ mek diklerimiz [çt]mek
-SFX ≜ mek diklerimizi [çt]mek
-SFX ≜ mek diklerimize [çt]mek
-SFX ≜ mek diklerimizde [çt]mek
-SFX ≜ mek diklerimizden [çt]mek
-SFX ≜ mek diklerimizin [çt]mek
-SFX ≜ mek diklerimizle [çt]mek
-SFX ≜ mek dikleriniz [çt]mek
-SFX ≜ mek diklerinizi [çt]mek
-SFX ≜ mek diklerinize [çt]mek
-SFX ≜ mek diklerinizde [çt]mek
-SFX ≜ mek diklerinizden [çt]mek
-SFX ≜ mek diklerinizin [çt]mek
-SFX ≜ mek diklerinizle [çt]mek
 SFX ≜ mek tiği/⊶ [çt]mek
 SFX ≜ mek tiği [çt]mek
 SFX ≜ mek tiğim/⊺ [çt]mek
@@ -24445,7 +25065,7 @@ SFX ≜ tmek dilemediği/⊶ tmek
 SFX ≜ tmek dilemediği tmek
 SFX ≜ tmek dilemeyen tmek
 
-SFX ≝ Y 1403
+SFX ≝ Y 1351
 SFX ≝ tmek düyor/⊮ tmek
 SFX ≝ tmek düyorken tmek
 SFX ≝ tmek düyor tmek
@@ -24465,18 +25085,6 @@ SFX ≝ tmek deceksinizdir tmek
 SFX ≝ tmek decekler tmek
 SFX ≝ tmek deceklerdir tmek
 SFX ≝ tmek deceğüm tmek
-SFX ≝ mek dü/⊾ [çt]mek
-SFX ≝ mek dü [çt]mek
-SFX ≝ mek düm [çt]mek
-SFX ≝ mek dün [çt]mek
-SFX ≝ mek dük [çt]mek
-SFX ≝ mek dünüz [çt]mek
-SFX ≝ mek düler [çt]mek
-SFX ≝ mek dümse [çt]mek
-SFX ≝ mek dünse [çt]mek
-SFX ≝ mek dükse [çt]mek
-SFX ≝ mek dünüzse [çt]mek
-SFX ≝ mek dülerse [çt]mek
 SFX ≝ mek tü/⊾ [çt]mek
 SFX ≝ mek tü [çt]mek
 SFX ≝ mek tüm [çt]mek
@@ -24665,46 +25273,6 @@ SFX ≝ tmek dücülüğün tmek
 SFX ≝ tmek dücülükte tmek
 SFX ≝ tmek dücülükten tmek
 SFX ≝ tmek dücülüktür tmek
-SFX ≝ mek düğü/⊸ [çt]mek
-SFX ≝ mek düğü [çt]mek
-SFX ≝ mek düğüm/⊼ [çt]mek
-SFX ≝ mek düğüm [çt]mek
-SFX ≝ mek düğün/⊼ [çt]mek
-SFX ≝ mek düğün [çt]mek
-SFX ≝ mek düğümüz/⊼ [çt]mek
-SFX ≝ mek düğümüz [çt]mek
-SFX ≝ mek düğünüz/⊼ [çt]mek
-SFX ≝ mek düğünüz [çt]mek
-SFX ≝ mek dükleri/⊶ [çt]mek
-SFX ≝ mek dükleri [çt]mek
-SFX ≝ mek düklerim [çt]mek
-SFX ≝ mek düklerimi [çt]mek
-SFX ≝ mek düklerime [çt]mek
-SFX ≝ mek düklerimde [çt]mek
-SFX ≝ mek düklerimden [çt]mek
-SFX ≝ mek düklerimin [çt]mek
-SFX ≝ mek düklerimle [çt]mek
-SFX ≝ mek düklerin [çt]mek
-SFX ≝ mek düklerini [çt]mek
-SFX ≝ mek düklerine [çt]mek
-SFX ≝ mek düklerinde [çt]mek
-SFX ≝ mek düklerinden [çt]mek
-SFX ≝ mek düklerinin [çt]mek
-SFX ≝ mek düklerinle [çt]mek
-SFX ≝ mek düklerimiz [çt]mek
-SFX ≝ mek düklerimizi [çt]mek
-SFX ≝ mek düklerimize [çt]mek
-SFX ≝ mek düklerimizde [çt]mek
-SFX ≝ mek düklerimizden [çt]mek
-SFX ≝ mek düklerimizin [çt]mek
-SFX ≝ mek düklerimizle [çt]mek
-SFX ≝ mek dükleriniz [çt]mek
-SFX ≝ mek düklerinizi [çt]mek
-SFX ≝ mek düklerinize [çt]mek
-SFX ≝ mek düklerinizde [çt]mek
-SFX ≝ mek düklerinizden [çt]mek
-SFX ≝ mek düklerinizin [çt]mek
-SFX ≝ mek düklerinizle [çt]mek
 SFX ≝ mek tüğü/⊸ [çt]mek
 SFX ≝ mek tüğü [çt]mek
 SFX ≝ mek tüğüm/⊼ [çt]mek
@@ -30158,14 +30726,14 @@ SFX ≩ 0 seymişler [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ≩ 0 seymişler [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ≩ 0 seymişler [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ≩ 0 seymişler [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 im [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 im [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 üm [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 üm [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 iz [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 iz [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 üz [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 üz [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
+SFX ≩ 0 im [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 im [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 üm [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 üm [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 iz [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 iz [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 üz [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 üz [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
 SFX ≩ 0 tir [eiaâî][çfhkpsşt]
 SFX ≩ 0 tir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][çfhkpsşt]
 SFX ≩ 0 tür [öüoöuüû][çfhkpsşt]
@@ -30178,14 +30746,14 @@ SFX ≩ 0 ken [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ≩ 0 ken [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ≩ 0 ken [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ≩ 0 ken [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 imdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 imdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 ümdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 ümdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 izdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 izdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 üzdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 üzdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
+SFX ≩ 0 imdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 imdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 ümdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 ümdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 izdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 izdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 üzdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 üzdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
 
 SFX ≪ Y 2
 SFX ≪ 0 yla .
@@ -36971,4 +37539,2042 @@ SFX ⊾ 0 ydin .
 SFX ⊾ 0 ydik .
 SFX ⊾ 0 ydiniz .
 SFX ⊾ 0 ydiler .
+
+SFX ⊿ Y 224
+SFX ⊿ 0 'e .
+SFX ⊿ 0 ’e .
+SFX ⊿ 0 'i .
+SFX ⊿ 0 ’i .
+SFX ⊿ 0 'de .
+SFX ⊿ 0 ’de .
+SFX ⊿ 0 'den .
+SFX ⊿ 0 ’den .
+SFX ⊿ 0 'in .
+SFX ⊿ 0 ’in .
+SFX ⊿ 0 'le .
+SFX ⊿ 0 ’le .
+SFX ⊿ 0 'ce .
+SFX ⊿ 0 ’ce .
+SFX ⊿ 0 'deki .
+SFX ⊿ 0 ’deki .
+SFX ⊿ 0 'dekiler .
+SFX ⊿ 0 ’dekiler .
+SFX ⊿ 0 'dekilerin .
+SFX ⊿ 0 ’dekilerin .
+SFX ⊿ 0 'dekilere .
+SFX ⊿ 0 ’dekilere .
+SFX ⊿ 0 'dekilerde .
+SFX ⊿ 0 ’dekilerde .
+SFX ⊿ 0 'dekilerden .
+SFX ⊿ 0 ’dekilerden .
+SFX ⊿ 0 'dekileri .
+SFX ⊿ 0 ’dekileri .
+SFX ⊿ 0 'dekini .
+SFX ⊿ 0 ’dekini .
+SFX ⊿ 0 'dekinin .
+SFX ⊿ 0 ’dekinin .
+SFX ⊿ 0 'dekine .
+SFX ⊿ 0 ’dekine .
+SFX ⊿ 0 'dekinde .
+SFX ⊿ 0 ’dekinde .
+SFX ⊿ 0 'dekinden .
+SFX ⊿ 0 ’dekinden .
+SFX ⊿ 0 'ine .
+SFX ⊿ 0 ’ine .
+SFX ⊿ 0 'inde .
+SFX ⊿ 0 ’inde .
+SFX ⊿ 0 'indeki .
+SFX ⊿ 0 ’indeki .
+SFX ⊿ 0 'inden .
+SFX ⊿ 0 ’inden .
+SFX ⊿ 0 'ini .
+SFX ⊿ 0 ’ini .
+SFX ⊿ 0 'inin .
+SFX ⊿ 0 ’inin .
+SFX ⊿ 0 'iyle .
+SFX ⊿ 0 ’iyle .
+SFX ⊿ 0 'imiz .
+SFX ⊿ 0 ’imiz .
+SFX ⊿ 0 'imize .
+SFX ⊿ 0 ’imize .
+SFX ⊿ 0 'imizde .
+SFX ⊿ 0 ’imizde .
+SFX ⊿ 0 'imizden .
+SFX ⊿ 0 ’imizden .
+SFX ⊿ 0 'imizi .
+SFX ⊿ 0 ’imizi .
+SFX ⊿ 0 'imizin .
+SFX ⊿ 0 ’imizin .
+SFX ⊿ 0 'iniz .
+SFX ⊿ 0 ’iniz .
+SFX ⊿ 0 'inize .
+SFX ⊿ 0 ’inize .
+SFX ⊿ 0 'inizde .
+SFX ⊿ 0 ’inizde .
+SFX ⊿ 0 'inizden .
+SFX ⊿ 0 ’inizden .
+SFX ⊿ 0 'inizi .
+SFX ⊿ 0 ’inizi .
+SFX ⊿ 0 'inizin .
+SFX ⊿ 0 ’inizin .
+SFX ⊿ 0 'inci .
+SFX ⊿ 0 ’inci .
+SFX ⊿ 0 'inciye .
+SFX ⊿ 0 ’inciye .
+SFX ⊿ 0 'inciyi .
+SFX ⊿ 0 ’inciyi .
+SFX ⊿ 0 'incide .
+SFX ⊿ 0 ’incide .
+SFX ⊿ 0 'incideki .
+SFX ⊿ 0 ’incideki .
+SFX ⊿ 0 'inciden .
+SFX ⊿ 0 ’inciden .
+SFX ⊿ 0 'incinin .
+SFX ⊿ 0 ’incinin .
+SFX ⊿ 0 'inciyle .
+SFX ⊿ 0 ’inciyle .
+SFX ⊿ 0 'incisi .
+SFX ⊿ 0 ’incisi .
+SFX ⊿ 0 'incisine .
+SFX ⊿ 0 ’incisine .
+SFX ⊿ 0 'incisinde .
+SFX ⊿ 0 ’incisinde .
+SFX ⊿ 0 'incisinden .
+SFX ⊿ 0 ’incisinden .
+SFX ⊿ 0 'incisini .
+SFX ⊿ 0 ’incisini .
+SFX ⊿ 0 'incisinin .
+SFX ⊿ 0 ’incisinin .
+SFX ⊿ 0 'incisiyle .
+SFX ⊿ 0 ’incisiyle .
+SFX ⊿ 0 'inciler .
+SFX ⊿ 0 ’inciler .
+SFX ⊿ 0 'incilerde .
+SFX ⊿ 0 ’incilerde .
+SFX ⊿ 0 'incilerden .
+SFX ⊿ 0 ’incilerden .
+SFX ⊿ 0 'incilere .
+SFX ⊿ 0 ’incilere .
+SFX ⊿ 0 'incileri .
+SFX ⊿ 0 ’incileri .
+SFX ⊿ 0 'incilerin .
+SFX ⊿ 0 ’incilerin .
+SFX ⊿ 0 'incilik .
+SFX ⊿ 0 ’incilik .
+SFX ⊿ 0 'inciliği .
+SFX ⊿ 0 ’inciliği .
+SFX ⊿ 0 'inciliğe .
+SFX ⊿ 0 ’inciliğe .
+SFX ⊿ 0 'er .
+SFX ⊿ 0 ’er .
+SFX ⊿ 0 'erli .
+SFX ⊿ 0 ’erli .
+SFX ⊿ 0 'erden .
+SFX ⊿ 0 ’erden .
+SFX ⊿ 0 'ler .
+SFX ⊿ 0 ’ler .
+SFX ⊿ 0 'lerde .
+SFX ⊿ 0 ’lerde .
+SFX ⊿ 0 'lerdeki .
+SFX ⊿ 0 ’lerdeki .
+SFX ⊿ 0 'lerdekiler .
+SFX ⊿ 0 ’lerdekiler .
+SFX ⊿ 0 'lerden .
+SFX ⊿ 0 ’lerden .
+SFX ⊿ 0 'lere .
+SFX ⊿ 0 ’lere .
+SFX ⊿ 0 'leri .
+SFX ⊿ 0 ’leri .
+SFX ⊿ 0 'lerin .
+SFX ⊿ 0 ’lerin .
+SFX ⊿ 0 'lerine .
+SFX ⊿ 0 ’lerine .
+SFX ⊿ 0 'lerinde .
+SFX ⊿ 0 ’lerinde .
+SFX ⊿ 0 'lerinden .
+SFX ⊿ 0 ’lerinden .
+SFX ⊿ 0 'lerini .
+SFX ⊿ 0 ’lerini .
+SFX ⊿ 0 'lerinin .
+SFX ⊿ 0 ’lerinin .
+SFX ⊿ 0 'lerle .
+SFX ⊿ 0 ’lerle .
+SFX ⊿ 0 'lerce .
+SFX ⊿ 0 ’lerce .
+SFX ⊿ 0 'lik .
+SFX ⊿ 0 ’lik .
+SFX ⊿ 0 'likler .
+SFX ⊿ 0 ’likler .
+SFX ⊿ 0 'liği .
+SFX ⊿ 0 ’liği .
+SFX ⊿ 0 'liğe .
+SFX ⊿ 0 ’liğe .
+SFX ⊿ 0 'liğin .
+SFX ⊿ 0 ’liğin .
+SFX ⊿ 0 'likte .
+SFX ⊿ 0 ’likte .
+SFX ⊿ 0 'likten .
+SFX ⊿ 0 ’likten .
+SFX ⊿ 0 'li .
+SFX ⊿ 0 ’li .
+SFX ⊿ 0 'liler .
+SFX ⊿ 0 ’liler .
+SFX ⊿ 0 'lilerde .
+SFX ⊿ 0 ’lilerde .
+SFX ⊿ 0 'lilerden .
+SFX ⊿ 0 ’lilerden .
+SFX ⊿ 0 'lilere .
+SFX ⊿ 0 ’lilere .
+SFX ⊿ 0 'lileri .
+SFX ⊿ 0 ’lileri .
+SFX ⊿ 0 'lilerin .
+SFX ⊿ 0 ’lilerin .
+SFX ⊿ 0 'lide .
+SFX ⊿ 0 ’lide .
+SFX ⊿ 0 'liden .
+SFX ⊿ 0 ’liden .
+SFX ⊿ 0 'liye .
+SFX ⊿ 0 ’liye .
+SFX ⊿ 0 'liyi .
+SFX ⊿ 0 ’liyi .
+SFX ⊿ 0 'linin .
+SFX ⊿ 0 ’linin .
+SFX ⊿ 0 'siz .
+SFX ⊿ 0 ’siz .
+SFX ⊿ 0 'dir .
+SFX ⊿ 0 ’dir .
+SFX ⊿ 0 'dirler .
+SFX ⊿ 0 ’dirler .
+SFX ⊿ 0 'di .
+SFX ⊿ 0 ’di .
+SFX ⊿ 0 'miş .
+SFX ⊿ 0 ’miş .
+SFX ⊿ 0 'miştir .
+SFX ⊿ 0 ’miştir .
+SFX ⊿ 0 'se .
+SFX ⊿ 0 ’se .
+SFX ⊿ 0 'dedir .
+SFX ⊿ 0 ’dedir .
+SFX ⊿ 0 'deydi .
+SFX ⊿ 0 ’deydi .
+SFX ⊿ 0 'deymiş .
+SFX ⊿ 0 ’deymiş .
+SFX ⊿ 0 'deyse .
+SFX ⊿ 0 ’deyse .
+SFX ⊿ 0 'dendir .
+SFX ⊿ 0 ’dendir .
+SFX ⊿ 0 'dendi .
+SFX ⊿ 0 ’dendi .
+
+SFX ⋀ Y 226
+SFX ⋀ 0 'ye .
+SFX ⋀ 0 ’ye .
+SFX ⋀ 0 'yi .
+SFX ⋀ 0 ’yi .
+SFX ⋀ 0 'de .
+SFX ⋀ 0 ’de .
+SFX ⋀ 0 'den .
+SFX ⋀ 0 ’den .
+SFX ⋀ 0 'nin .
+SFX ⋀ 0 ’nin .
+SFX ⋀ 0 'yle .
+SFX ⋀ 0 ’yle .
+SFX ⋀ 0 'ce .
+SFX ⋀ 0 ’ce .
+SFX ⋀ 0 'deki .
+SFX ⋀ 0 ’deki .
+SFX ⋀ 0 'dekiler .
+SFX ⋀ 0 ’dekiler .
+SFX ⋀ 0 'dekilerin .
+SFX ⋀ 0 ’dekilerin .
+SFX ⋀ 0 'dekilere .
+SFX ⋀ 0 ’dekilere .
+SFX ⋀ 0 'dekilerde .
+SFX ⋀ 0 ’dekilerde .
+SFX ⋀ 0 'dekilerden .
+SFX ⋀ 0 ’dekilerden .
+SFX ⋀ 0 'dekileri .
+SFX ⋀ 0 ’dekileri .
+SFX ⋀ 0 'dekini .
+SFX ⋀ 0 ’dekini .
+SFX ⋀ 0 'dekinin .
+SFX ⋀ 0 ’dekinin .
+SFX ⋀ 0 'dekine .
+SFX ⋀ 0 ’dekine .
+SFX ⋀ 0 'dekinde .
+SFX ⋀ 0 ’dekinde .
+SFX ⋀ 0 'dekinden .
+SFX ⋀ 0 ’dekinden .
+SFX ⋀ 0 'si .
+SFX ⋀ 0 ’si .
+SFX ⋀ 0 'sine .
+SFX ⋀ 0 ’sine .
+SFX ⋀ 0 'sinde .
+SFX ⋀ 0 ’sinde .
+SFX ⋀ 0 'sindeki .
+SFX ⋀ 0 ’sindeki .
+SFX ⋀ 0 'sinden .
+SFX ⋀ 0 ’sinden .
+SFX ⋀ 0 'sini .
+SFX ⋀ 0 ’sini .
+SFX ⋀ 0 'sinin .
+SFX ⋀ 0 ’sinin .
+SFX ⋀ 0 'siyle .
+SFX ⋀ 0 ’siyle .
+SFX ⋀ 0 'miz .
+SFX ⋀ 0 ’miz .
+SFX ⋀ 0 'mize .
+SFX ⋀ 0 ’mize .
+SFX ⋀ 0 'mizde .
+SFX ⋀ 0 ’mizde .
+SFX ⋀ 0 'mizden .
+SFX ⋀ 0 ’mizden .
+SFX ⋀ 0 'mizi .
+SFX ⋀ 0 ’mizi .
+SFX ⋀ 0 'mizin .
+SFX ⋀ 0 ’mizin .
+SFX ⋀ 0 'niz .
+SFX ⋀ 0 ’niz .
+SFX ⋀ 0 'nize .
+SFX ⋀ 0 ’nize .
+SFX ⋀ 0 'nizde .
+SFX ⋀ 0 ’nizde .
+SFX ⋀ 0 'nizden .
+SFX ⋀ 0 ’nizden .
+SFX ⋀ 0 'nizi .
+SFX ⋀ 0 ’nizi .
+SFX ⋀ 0 'nizin .
+SFX ⋀ 0 ’nizin .
+SFX ⋀ 0 'nci .
+SFX ⋀ 0 ’nci .
+SFX ⋀ 0 'nciye .
+SFX ⋀ 0 ’nciye .
+SFX ⋀ 0 'nciyi .
+SFX ⋀ 0 ’nciyi .
+SFX ⋀ 0 'ncide .
+SFX ⋀ 0 ’ncide .
+SFX ⋀ 0 'ncideki .
+SFX ⋀ 0 ’ncideki .
+SFX ⋀ 0 'nciden .
+SFX ⋀ 0 ’nciden .
+SFX ⋀ 0 'ncinin .
+SFX ⋀ 0 ’ncinin .
+SFX ⋀ 0 'nciyle .
+SFX ⋀ 0 ’nciyle .
+SFX ⋀ 0 'ncisi .
+SFX ⋀ 0 ’ncisi .
+SFX ⋀ 0 'ncisine .
+SFX ⋀ 0 ’ncisine .
+SFX ⋀ 0 'ncisinde .
+SFX ⋀ 0 ’ncisinde .
+SFX ⋀ 0 'ncisinden .
+SFX ⋀ 0 ’ncisinden .
+SFX ⋀ 0 'ncisini .
+SFX ⋀ 0 ’ncisini .
+SFX ⋀ 0 'ncisinin .
+SFX ⋀ 0 ’ncisinin .
+SFX ⋀ 0 'ncisiyle .
+SFX ⋀ 0 ’ncisiyle .
+SFX ⋀ 0 'nciler .
+SFX ⋀ 0 ’nciler .
+SFX ⋀ 0 'ncilerde .
+SFX ⋀ 0 ’ncilerde .
+SFX ⋀ 0 'ncilerden .
+SFX ⋀ 0 ’ncilerden .
+SFX ⋀ 0 'ncilere .
+SFX ⋀ 0 ’ncilere .
+SFX ⋀ 0 'ncileri .
+SFX ⋀ 0 ’ncileri .
+SFX ⋀ 0 'ncilerin .
+SFX ⋀ 0 ’ncilerin .
+SFX ⋀ 0 'ncilik .
+SFX ⋀ 0 ’ncilik .
+SFX ⋀ 0 'nciliği .
+SFX ⋀ 0 ’nciliği .
+SFX ⋀ 0 'nciliğe .
+SFX ⋀ 0 ’nciliğe .
+SFX ⋀ 0 'şer .
+SFX ⋀ 0 ’şer .
+SFX ⋀ 0 'şerli .
+SFX ⋀ 0 ’şerli .
+SFX ⋀ 0 'şerden .
+SFX ⋀ 0 ’şerden .
+SFX ⋀ 0 'ler .
+SFX ⋀ 0 ’ler .
+SFX ⋀ 0 'lerde .
+SFX ⋀ 0 ’lerde .
+SFX ⋀ 0 'lerdeki .
+SFX ⋀ 0 ’lerdeki .
+SFX ⋀ 0 'lerdekiler .
+SFX ⋀ 0 ’lerdekiler .
+SFX ⋀ 0 'lerden .
+SFX ⋀ 0 ’lerden .
+SFX ⋀ 0 'lere .
+SFX ⋀ 0 ’lere .
+SFX ⋀ 0 'leri .
+SFX ⋀ 0 ’leri .
+SFX ⋀ 0 'lerin .
+SFX ⋀ 0 ’lerin .
+SFX ⋀ 0 'lerine .
+SFX ⋀ 0 ’lerine .
+SFX ⋀ 0 'lerinde .
+SFX ⋀ 0 ’lerinde .
+SFX ⋀ 0 'lerinden .
+SFX ⋀ 0 ’lerinden .
+SFX ⋀ 0 'lerini .
+SFX ⋀ 0 ’lerini .
+SFX ⋀ 0 'lerinin .
+SFX ⋀ 0 ’lerinin .
+SFX ⋀ 0 'lerle .
+SFX ⋀ 0 ’lerle .
+SFX ⋀ 0 'lerce .
+SFX ⋀ 0 ’lerce .
+SFX ⋀ 0 'lik .
+SFX ⋀ 0 ’lik .
+SFX ⋀ 0 'likler .
+SFX ⋀ 0 ’likler .
+SFX ⋀ 0 'liği .
+SFX ⋀ 0 ’liği .
+SFX ⋀ 0 'liğe .
+SFX ⋀ 0 ’liğe .
+SFX ⋀ 0 'liğin .
+SFX ⋀ 0 ’liğin .
+SFX ⋀ 0 'likte .
+SFX ⋀ 0 ’likte .
+SFX ⋀ 0 'likten .
+SFX ⋀ 0 ’likten .
+SFX ⋀ 0 'li .
+SFX ⋀ 0 ’li .
+SFX ⋀ 0 'liler .
+SFX ⋀ 0 ’liler .
+SFX ⋀ 0 'lilerde .
+SFX ⋀ 0 ’lilerde .
+SFX ⋀ 0 'lilerden .
+SFX ⋀ 0 ’lilerden .
+SFX ⋀ 0 'lilere .
+SFX ⋀ 0 ’lilere .
+SFX ⋀ 0 'lileri .
+SFX ⋀ 0 ’lileri .
+SFX ⋀ 0 'lilerin .
+SFX ⋀ 0 ’lilerin .
+SFX ⋀ 0 'lide .
+SFX ⋀ 0 ’lide .
+SFX ⋀ 0 'liden .
+SFX ⋀ 0 ’liden .
+SFX ⋀ 0 'liye .
+SFX ⋀ 0 ’liye .
+SFX ⋀ 0 'liyi .
+SFX ⋀ 0 ’liyi .
+SFX ⋀ 0 'linin .
+SFX ⋀ 0 ’linin .
+SFX ⋀ 0 'siz .
+SFX ⋀ 0 ’siz .
+SFX ⋀ 0 'dir .
+SFX ⋀ 0 ’dir .
+SFX ⋀ 0 'dirler .
+SFX ⋀ 0 ’dirler .
+SFX ⋀ 0 'ydi .
+SFX ⋀ 0 ’ydi .
+SFX ⋀ 0 'ymiş .
+SFX ⋀ 0 ’ymiş .
+SFX ⋀ 0 'ymiştir .
+SFX ⋀ 0 ’ymiştir .
+SFX ⋀ 0 'yse .
+SFX ⋀ 0 ’yse .
+SFX ⋀ 0 'dedir .
+SFX ⋀ 0 ’dedir .
+SFX ⋀ 0 'deydi .
+SFX ⋀ 0 ’deydi .
+SFX ⋀ 0 'deymiş .
+SFX ⋀ 0 ’deymiş .
+SFX ⋀ 0 'deyse .
+SFX ⋀ 0 ’deyse .
+SFX ⋀ 0 'dendir .
+SFX ⋀ 0 ’dendir .
+SFX ⋀ 0 'dendi .
+SFX ⋀ 0 ’dendi .
+
+SFX ⋁ Y 224
+SFX ⋁ 0 'e .
+SFX ⋁ 0 ’e .
+SFX ⋁ 0 'ü .
+SFX ⋁ 0 ’ü .
+SFX ⋁ 0 'te .
+SFX ⋁ 0 ’te .
+SFX ⋁ 0 'ten .
+SFX ⋁ 0 ’ten .
+SFX ⋁ 0 'ün .
+SFX ⋁ 0 ’ün .
+SFX ⋁ 0 'le .
+SFX ⋁ 0 ’le .
+SFX ⋁ 0 'çe .
+SFX ⋁ 0 ’çe .
+SFX ⋁ 0 'teki .
+SFX ⋁ 0 ’teki .
+SFX ⋁ 0 'tekiler .
+SFX ⋁ 0 ’tekiler .
+SFX ⋁ 0 'tekilerin .
+SFX ⋁ 0 ’tekilerin .
+SFX ⋁ 0 'tekilere .
+SFX ⋁ 0 ’tekilere .
+SFX ⋁ 0 'tekilerde .
+SFX ⋁ 0 ’tekilerde .
+SFX ⋁ 0 'tekilerden .
+SFX ⋁ 0 ’tekilerden .
+SFX ⋁ 0 'tekileri .
+SFX ⋁ 0 ’tekileri .
+SFX ⋁ 0 'tekini .
+SFX ⋁ 0 ’tekini .
+SFX ⋁ 0 'tekinin .
+SFX ⋁ 0 ’tekinin .
+SFX ⋁ 0 'tekine .
+SFX ⋁ 0 ’tekine .
+SFX ⋁ 0 'tekinde .
+SFX ⋁ 0 ’tekinde .
+SFX ⋁ 0 'tekinden .
+SFX ⋁ 0 ’tekinden .
+SFX ⋁ 0 'üne .
+SFX ⋁ 0 ’üne .
+SFX ⋁ 0 'ünde .
+SFX ⋁ 0 ’ünde .
+SFX ⋁ 0 'ündeki .
+SFX ⋁ 0 ’ündeki .
+SFX ⋁ 0 'ünden .
+SFX ⋁ 0 ’ünden .
+SFX ⋁ 0 'ünü .
+SFX ⋁ 0 ’ünü .
+SFX ⋁ 0 'ünün .
+SFX ⋁ 0 ’ünün .
+SFX ⋁ 0 'üyle .
+SFX ⋁ 0 ’üyle .
+SFX ⋁ 0 'ümüz .
+SFX ⋁ 0 ’ümüz .
+SFX ⋁ 0 'ümüze .
+SFX ⋁ 0 ’ümüze .
+SFX ⋁ 0 'ümüzde .
+SFX ⋁ 0 ’ümüzde .
+SFX ⋁ 0 'ümüzden .
+SFX ⋁ 0 ’ümüzden .
+SFX ⋁ 0 'ümüzü .
+SFX ⋁ 0 ’ümüzü .
+SFX ⋁ 0 'ümüzün .
+SFX ⋁ 0 ’ümüzün .
+SFX ⋁ 0 'ünüz .
+SFX ⋁ 0 ’ünüz .
+SFX ⋁ 0 'ünüze .
+SFX ⋁ 0 ’ünüze .
+SFX ⋁ 0 'ünüzde .
+SFX ⋁ 0 ’ünüzde .
+SFX ⋁ 0 'ünüzden .
+SFX ⋁ 0 ’ünüzden .
+SFX ⋁ 0 'ünüzü .
+SFX ⋁ 0 ’ünüzü .
+SFX ⋁ 0 'ünüzün .
+SFX ⋁ 0 ’ünüzün .
+SFX ⋁ 0 'üncü .
+SFX ⋁ 0 ’üncü .
+SFX ⋁ 0 'üncüye .
+SFX ⋁ 0 ’üncüye .
+SFX ⋁ 0 'üncüyü .
+SFX ⋁ 0 ’üncüyü .
+SFX ⋁ 0 'üncüde .
+SFX ⋁ 0 ’üncüde .
+SFX ⋁ 0 'üncüdeki .
+SFX ⋁ 0 ’üncüdeki .
+SFX ⋁ 0 'üncüden .
+SFX ⋁ 0 ’üncüden .
+SFX ⋁ 0 'üncünün .
+SFX ⋁ 0 ’üncünün .
+SFX ⋁ 0 'üncüyle .
+SFX ⋁ 0 ’üncüyle .
+SFX ⋁ 0 'üncüsü .
+SFX ⋁ 0 ’üncüsü .
+SFX ⋁ 0 'üncüsüne .
+SFX ⋁ 0 ’üncüsüne .
+SFX ⋁ 0 'üncüsünde .
+SFX ⋁ 0 ’üncüsünde .
+SFX ⋁ 0 'üncüsünden .
+SFX ⋁ 0 ’üncüsünden .
+SFX ⋁ 0 'üncüsünü .
+SFX ⋁ 0 ’üncüsünü .
+SFX ⋁ 0 'üncüsünün .
+SFX ⋁ 0 ’üncüsünün .
+SFX ⋁ 0 'üncüsüyle .
+SFX ⋁ 0 ’üncüsüyle .
+SFX ⋁ 0 'üncüler .
+SFX ⋁ 0 ’üncüler .
+SFX ⋁ 0 'üncülerde .
+SFX ⋁ 0 ’üncülerde .
+SFX ⋁ 0 'üncülerden .
+SFX ⋁ 0 ’üncülerden .
+SFX ⋁ 0 'üncülere .
+SFX ⋁ 0 ’üncülere .
+SFX ⋁ 0 'üncüleri .
+SFX ⋁ 0 ’üncüleri .
+SFX ⋁ 0 'üncülerin .
+SFX ⋁ 0 ’üncülerin .
+SFX ⋁ 0 'üncülük .
+SFX ⋁ 0 ’üncülük .
+SFX ⋁ 0 'üncülüğü .
+SFX ⋁ 0 ’üncülüğü .
+SFX ⋁ 0 'üncülüğe .
+SFX ⋁ 0 ’üncülüğe .
+SFX ⋁ 0 'er .
+SFX ⋁ 0 ’er .
+SFX ⋁ 0 'erli .
+SFX ⋁ 0 ’erli .
+SFX ⋁ 0 'erden .
+SFX ⋁ 0 ’erden .
+SFX ⋁ 0 'ler .
+SFX ⋁ 0 ’ler .
+SFX ⋁ 0 'lerde .
+SFX ⋁ 0 ’lerde .
+SFX ⋁ 0 'lerdeki .
+SFX ⋁ 0 ’lerdeki .
+SFX ⋁ 0 'lerdekiler .
+SFX ⋁ 0 ’lerdekiler .
+SFX ⋁ 0 'lerden .
+SFX ⋁ 0 ’lerden .
+SFX ⋁ 0 'lere .
+SFX ⋁ 0 ’lere .
+SFX ⋁ 0 'leri .
+SFX ⋁ 0 ’leri .
+SFX ⋁ 0 'lerin .
+SFX ⋁ 0 ’lerin .
+SFX ⋁ 0 'lerine .
+SFX ⋁ 0 ’lerine .
+SFX ⋁ 0 'lerinde .
+SFX ⋁ 0 ’lerinde .
+SFX ⋁ 0 'lerinden .
+SFX ⋁ 0 ’lerinden .
+SFX ⋁ 0 'lerini .
+SFX ⋁ 0 ’lerini .
+SFX ⋁ 0 'lerinin .
+SFX ⋁ 0 ’lerinin .
+SFX ⋁ 0 'lerle .
+SFX ⋁ 0 ’lerle .
+SFX ⋁ 0 'lerce .
+SFX ⋁ 0 ’lerce .
+SFX ⋁ 0 'lük .
+SFX ⋁ 0 ’lük .
+SFX ⋁ 0 'lükler .
+SFX ⋁ 0 ’lükler .
+SFX ⋁ 0 'lüğü .
+SFX ⋁ 0 ’lüğü .
+SFX ⋁ 0 'lüğe .
+SFX ⋁ 0 ’lüğe .
+SFX ⋁ 0 'lüğün .
+SFX ⋁ 0 ’lüğün .
+SFX ⋁ 0 'lükte .
+SFX ⋁ 0 ’lükte .
+SFX ⋁ 0 'lükten .
+SFX ⋁ 0 ’lükten .
+SFX ⋁ 0 'lü .
+SFX ⋁ 0 ’lü .
+SFX ⋁ 0 'lüler .
+SFX ⋁ 0 ’lüler .
+SFX ⋁ 0 'lülerde .
+SFX ⋁ 0 ’lülerde .
+SFX ⋁ 0 'lülerden .
+SFX ⋁ 0 ’lülerden .
+SFX ⋁ 0 'lülere .
+SFX ⋁ 0 ’lülere .
+SFX ⋁ 0 'lüleri .
+SFX ⋁ 0 ’lüleri .
+SFX ⋁ 0 'lülerin .
+SFX ⋁ 0 ’lülerin .
+SFX ⋁ 0 'lüde .
+SFX ⋁ 0 ’lüde .
+SFX ⋁ 0 'lüden .
+SFX ⋁ 0 ’lüden .
+SFX ⋁ 0 'lüye .
+SFX ⋁ 0 ’lüye .
+SFX ⋁ 0 'lüyü .
+SFX ⋁ 0 ’lüyü .
+SFX ⋁ 0 'lünün .
+SFX ⋁ 0 ’lünün .
+SFX ⋁ 0 'süz .
+SFX ⋁ 0 ’süz .
+SFX ⋁ 0 'tür .
+SFX ⋁ 0 ’tür .
+SFX ⋁ 0 'türler .
+SFX ⋁ 0 ’türler .
+SFX ⋁ 0 'tü .
+SFX ⋁ 0 ’tü .
+SFX ⋁ 0 'müş .
+SFX ⋁ 0 ’müş .
+SFX ⋁ 0 'müştür .
+SFX ⋁ 0 ’müştür .
+SFX ⋁ 0 'se .
+SFX ⋁ 0 ’se .
+SFX ⋁ 0 'tedir .
+SFX ⋁ 0 ’tedir .
+SFX ⋁ 0 'teydi .
+SFX ⋁ 0 ’teydi .
+SFX ⋁ 0 'teymiş .
+SFX ⋁ 0 ’teymiş .
+SFX ⋁ 0 'teyse .
+SFX ⋁ 0 ’teyse .
+SFX ⋁ 0 'tendir .
+SFX ⋁ 0 ’tendir .
+SFX ⋁ 0 'tendi .
+SFX ⋁ 0 ’tendi .
+
+SFX ⋂ Y 224
+SFX ⋂ 0 'e .
+SFX ⋂ 0 ’e .
+SFX ⋂ 0 'i .
+SFX ⋂ 0 ’i .
+SFX ⋂ 0 'te .
+SFX ⋂ 0 ’te .
+SFX ⋂ 0 'ten .
+SFX ⋂ 0 ’ten .
+SFX ⋂ 0 'in .
+SFX ⋂ 0 ’in .
+SFX ⋂ 0 'le .
+SFX ⋂ 0 ’le .
+SFX ⋂ 0 'çe .
+SFX ⋂ 0 ’çe .
+SFX ⋂ 0 'teki .
+SFX ⋂ 0 ’teki .
+SFX ⋂ 0 'tekiler .
+SFX ⋂ 0 ’tekiler .
+SFX ⋂ 0 'tekilerin .
+SFX ⋂ 0 ’tekilerin .
+SFX ⋂ 0 'tekilere .
+SFX ⋂ 0 ’tekilere .
+SFX ⋂ 0 'tekilerde .
+SFX ⋂ 0 ’tekilerde .
+SFX ⋂ 0 'tekilerden .
+SFX ⋂ 0 ’tekilerden .
+SFX ⋂ 0 'tekileri .
+SFX ⋂ 0 ’tekileri .
+SFX ⋂ 0 'tekini .
+SFX ⋂ 0 ’tekini .
+SFX ⋂ 0 'tekinin .
+SFX ⋂ 0 ’tekinin .
+SFX ⋂ 0 'tekine .
+SFX ⋂ 0 ’tekine .
+SFX ⋂ 0 'tekinde .
+SFX ⋂ 0 ’tekinde .
+SFX ⋂ 0 'tekinden .
+SFX ⋂ 0 ’tekinden .
+SFX ⋂ 0 'ine .
+SFX ⋂ 0 ’ine .
+SFX ⋂ 0 'inde .
+SFX ⋂ 0 ’inde .
+SFX ⋂ 0 'indeki .
+SFX ⋂ 0 ’indeki .
+SFX ⋂ 0 'inden .
+SFX ⋂ 0 ’inden .
+SFX ⋂ 0 'ini .
+SFX ⋂ 0 ’ini .
+SFX ⋂ 0 'inin .
+SFX ⋂ 0 ’inin .
+SFX ⋂ 0 'iyle .
+SFX ⋂ 0 ’iyle .
+SFX ⋂ 0 'imiz .
+SFX ⋂ 0 ’imiz .
+SFX ⋂ 0 'imize .
+SFX ⋂ 0 ’imize .
+SFX ⋂ 0 'imizde .
+SFX ⋂ 0 ’imizde .
+SFX ⋂ 0 'imizden .
+SFX ⋂ 0 ’imizden .
+SFX ⋂ 0 'imizi .
+SFX ⋂ 0 ’imizi .
+SFX ⋂ 0 'imizin .
+SFX ⋂ 0 ’imizin .
+SFX ⋂ 0 'iniz .
+SFX ⋂ 0 ’iniz .
+SFX ⋂ 0 'inize .
+SFX ⋂ 0 ’inize .
+SFX ⋂ 0 'inizde .
+SFX ⋂ 0 ’inizde .
+SFX ⋂ 0 'inizden .
+SFX ⋂ 0 ’inizden .
+SFX ⋂ 0 'inizi .
+SFX ⋂ 0 ’inizi .
+SFX ⋂ 0 'inizin .
+SFX ⋂ 0 ’inizin .
+SFX ⋂ 0 'inci .
+SFX ⋂ 0 ’inci .
+SFX ⋂ 0 'inciye .
+SFX ⋂ 0 ’inciye .
+SFX ⋂ 0 'inciyi .
+SFX ⋂ 0 ’inciyi .
+SFX ⋂ 0 'incide .
+SFX ⋂ 0 ’incide .
+SFX ⋂ 0 'incideki .
+SFX ⋂ 0 ’incideki .
+SFX ⋂ 0 'inciden .
+SFX ⋂ 0 ’inciden .
+SFX ⋂ 0 'incinin .
+SFX ⋂ 0 ’incinin .
+SFX ⋂ 0 'inciyle .
+SFX ⋂ 0 ’inciyle .
+SFX ⋂ 0 'incisi .
+SFX ⋂ 0 ’incisi .
+SFX ⋂ 0 'incisine .
+SFX ⋂ 0 ’incisine .
+SFX ⋂ 0 'incisinde .
+SFX ⋂ 0 ’incisinde .
+SFX ⋂ 0 'incisinden .
+SFX ⋂ 0 ’incisinden .
+SFX ⋂ 0 'incisini .
+SFX ⋂ 0 ’incisini .
+SFX ⋂ 0 'incisinin .
+SFX ⋂ 0 ’incisinin .
+SFX ⋂ 0 'incisiyle .
+SFX ⋂ 0 ’incisiyle .
+SFX ⋂ 0 'inciler .
+SFX ⋂ 0 ’inciler .
+SFX ⋂ 0 'incilerde .
+SFX ⋂ 0 ’incilerde .
+SFX ⋂ 0 'incilerden .
+SFX ⋂ 0 ’incilerden .
+SFX ⋂ 0 'incilere .
+SFX ⋂ 0 ’incilere .
+SFX ⋂ 0 'incileri .
+SFX ⋂ 0 ’incileri .
+SFX ⋂ 0 'incilerin .
+SFX ⋂ 0 ’incilerin .
+SFX ⋂ 0 'incilik .
+SFX ⋂ 0 ’incilik .
+SFX ⋂ 0 'inciliği .
+SFX ⋂ 0 ’inciliği .
+SFX ⋂ 0 'inciliğe .
+SFX ⋂ 0 ’inciliğe .
+SFX ⋂ 0 'er .
+SFX ⋂ 0 ’er .
+SFX ⋂ 0 'erli .
+SFX ⋂ 0 ’erli .
+SFX ⋂ 0 'erden .
+SFX ⋂ 0 ’erden .
+SFX ⋂ 0 'ler .
+SFX ⋂ 0 ’ler .
+SFX ⋂ 0 'lerde .
+SFX ⋂ 0 ’lerde .
+SFX ⋂ 0 'lerdeki .
+SFX ⋂ 0 ’lerdeki .
+SFX ⋂ 0 'lerdekiler .
+SFX ⋂ 0 ’lerdekiler .
+SFX ⋂ 0 'lerden .
+SFX ⋂ 0 ’lerden .
+SFX ⋂ 0 'lere .
+SFX ⋂ 0 ’lere .
+SFX ⋂ 0 'leri .
+SFX ⋂ 0 ’leri .
+SFX ⋂ 0 'lerin .
+SFX ⋂ 0 ’lerin .
+SFX ⋂ 0 'lerine .
+SFX ⋂ 0 ’lerine .
+SFX ⋂ 0 'lerinde .
+SFX ⋂ 0 ’lerinde .
+SFX ⋂ 0 'lerinden .
+SFX ⋂ 0 ’lerinden .
+SFX ⋂ 0 'lerini .
+SFX ⋂ 0 ’lerini .
+SFX ⋂ 0 'lerinin .
+SFX ⋂ 0 ’lerinin .
+SFX ⋂ 0 'lerle .
+SFX ⋂ 0 ’lerle .
+SFX ⋂ 0 'lerce .
+SFX ⋂ 0 ’lerce .
+SFX ⋂ 0 'lik .
+SFX ⋂ 0 ’lik .
+SFX ⋂ 0 'likler .
+SFX ⋂ 0 ’likler .
+SFX ⋂ 0 'liği .
+SFX ⋂ 0 ’liği .
+SFX ⋂ 0 'liğe .
+SFX ⋂ 0 ’liğe .
+SFX ⋂ 0 'liğin .
+SFX ⋂ 0 ’liğin .
+SFX ⋂ 0 'likte .
+SFX ⋂ 0 ’likte .
+SFX ⋂ 0 'likten .
+SFX ⋂ 0 ’likten .
+SFX ⋂ 0 'li .
+SFX ⋂ 0 ’li .
+SFX ⋂ 0 'liler .
+SFX ⋂ 0 ’liler .
+SFX ⋂ 0 'lilerde .
+SFX ⋂ 0 ’lilerde .
+SFX ⋂ 0 'lilerden .
+SFX ⋂ 0 ’lilerden .
+SFX ⋂ 0 'lilere .
+SFX ⋂ 0 ’lilere .
+SFX ⋂ 0 'lileri .
+SFX ⋂ 0 ’lileri .
+SFX ⋂ 0 'lilerin .
+SFX ⋂ 0 ’lilerin .
+SFX ⋂ 0 'lide .
+SFX ⋂ 0 ’lide .
+SFX ⋂ 0 'liden .
+SFX ⋂ 0 ’liden .
+SFX ⋂ 0 'liye .
+SFX ⋂ 0 ’liye .
+SFX ⋂ 0 'liyi .
+SFX ⋂ 0 ’liyi .
+SFX ⋂ 0 'linin .
+SFX ⋂ 0 ’linin .
+SFX ⋂ 0 'siz .
+SFX ⋂ 0 ’siz .
+SFX ⋂ 0 'tir .
+SFX ⋂ 0 ’tir .
+SFX ⋂ 0 'tirler .
+SFX ⋂ 0 ’tirler .
+SFX ⋂ 0 'ti .
+SFX ⋂ 0 ’ti .
+SFX ⋂ 0 'miş .
+SFX ⋂ 0 ’miş .
+SFX ⋂ 0 'miştir .
+SFX ⋂ 0 ’miştir .
+SFX ⋂ 0 'se .
+SFX ⋂ 0 ’se .
+SFX ⋂ 0 'tedir .
+SFX ⋂ 0 ’tedir .
+SFX ⋂ 0 'teydi .
+SFX ⋂ 0 ’teydi .
+SFX ⋂ 0 'teymiş .
+SFX ⋂ 0 ’teymiş .
+SFX ⋂ 0 'teyse .
+SFX ⋂ 0 ’teyse .
+SFX ⋂ 0 'tendir .
+SFX ⋂ 0 ’tendir .
+SFX ⋂ 0 'tendi .
+SFX ⋂ 0 ’tendi .
+
+SFX ⋃ Y 226
+SFX ⋃ 0 'ya .
+SFX ⋃ 0 ’ya .
+SFX ⋃ 0 'yı .
+SFX ⋃ 0 ’yı .
+SFX ⋃ 0 'da .
+SFX ⋃ 0 ’da .
+SFX ⋃ 0 'dan .
+SFX ⋃ 0 ’dan .
+SFX ⋃ 0 'nın .
+SFX ⋃ 0 ’nın .
+SFX ⋃ 0 'yla .
+SFX ⋃ 0 ’yla .
+SFX ⋃ 0 'ca .
+SFX ⋃ 0 ’ca .
+SFX ⋃ 0 'daki .
+SFX ⋃ 0 ’daki .
+SFX ⋃ 0 'dakiler .
+SFX ⋃ 0 ’dakiler .
+SFX ⋃ 0 'dakilerin .
+SFX ⋃ 0 ’dakilerin .
+SFX ⋃ 0 'dakilere .
+SFX ⋃ 0 ’dakilere .
+SFX ⋃ 0 'dakilerde .
+SFX ⋃ 0 ’dakilerde .
+SFX ⋃ 0 'dakilerden .
+SFX ⋃ 0 ’dakilerden .
+SFX ⋃ 0 'dakileri .
+SFX ⋃ 0 ’dakileri .
+SFX ⋃ 0 'dakini .
+SFX ⋃ 0 ’dakini .
+SFX ⋃ 0 'dakinin .
+SFX ⋃ 0 ’dakinin .
+SFX ⋃ 0 'dakine .
+SFX ⋃ 0 ’dakine .
+SFX ⋃ 0 'dakinde .
+SFX ⋃ 0 ’dakinde .
+SFX ⋃ 0 'dakinden .
+SFX ⋃ 0 ’dakinden .
+SFX ⋃ 0 'sı .
+SFX ⋃ 0 ’sı .
+SFX ⋃ 0 'sına .
+SFX ⋃ 0 ’sına .
+SFX ⋃ 0 'sında .
+SFX ⋃ 0 ’sında .
+SFX ⋃ 0 'sındaki .
+SFX ⋃ 0 ’sındaki .
+SFX ⋃ 0 'sından .
+SFX ⋃ 0 ’sından .
+SFX ⋃ 0 'sını .
+SFX ⋃ 0 ’sını .
+SFX ⋃ 0 'sının .
+SFX ⋃ 0 ’sının .
+SFX ⋃ 0 'sıyla .
+SFX ⋃ 0 ’sıyla .
+SFX ⋃ 0 'mız .
+SFX ⋃ 0 ’mız .
+SFX ⋃ 0 'mıza .
+SFX ⋃ 0 ’mıza .
+SFX ⋃ 0 'mızda .
+SFX ⋃ 0 ’mızda .
+SFX ⋃ 0 'mızdan .
+SFX ⋃ 0 ’mızdan .
+SFX ⋃ 0 'mızı .
+SFX ⋃ 0 ’mızı .
+SFX ⋃ 0 'mızın .
+SFX ⋃ 0 ’mızın .
+SFX ⋃ 0 'nız .
+SFX ⋃ 0 ’nız .
+SFX ⋃ 0 'nıza .
+SFX ⋃ 0 ’nıza .
+SFX ⋃ 0 'nızda .
+SFX ⋃ 0 ’nızda .
+SFX ⋃ 0 'nızdan .
+SFX ⋃ 0 ’nızdan .
+SFX ⋃ 0 'nızı .
+SFX ⋃ 0 ’nızı .
+SFX ⋃ 0 'nızın .
+SFX ⋃ 0 ’nızın .
+SFX ⋃ 0 'ncı .
+SFX ⋃ 0 ’ncı .
+SFX ⋃ 0 'ncıya .
+SFX ⋃ 0 ’ncıya .
+SFX ⋃ 0 'ncıyı .
+SFX ⋃ 0 ’ncıyı .
+SFX ⋃ 0 'ncıda .
+SFX ⋃ 0 ’ncıda .
+SFX ⋃ 0 'ncıdaki .
+SFX ⋃ 0 ’ncıdaki .
+SFX ⋃ 0 'ncıdan .
+SFX ⋃ 0 ’ncıdan .
+SFX ⋃ 0 'ncının .
+SFX ⋃ 0 ’ncının .
+SFX ⋃ 0 'ncıyla .
+SFX ⋃ 0 ’ncıyla .
+SFX ⋃ 0 'ncısı .
+SFX ⋃ 0 ’ncısı .
+SFX ⋃ 0 'ncısına .
+SFX ⋃ 0 ’ncısına .
+SFX ⋃ 0 'ncısında .
+SFX ⋃ 0 ’ncısında .
+SFX ⋃ 0 'ncısından .
+SFX ⋃ 0 ’ncısından .
+SFX ⋃ 0 'ncısını .
+SFX ⋃ 0 ’ncısını .
+SFX ⋃ 0 'ncısının .
+SFX ⋃ 0 ’ncısının .
+SFX ⋃ 0 'ncısıyla .
+SFX ⋃ 0 ’ncısıyla .
+SFX ⋃ 0 'ncılar .
+SFX ⋃ 0 ’ncılar .
+SFX ⋃ 0 'ncılarda .
+SFX ⋃ 0 ’ncılarda .
+SFX ⋃ 0 'ncılardan .
+SFX ⋃ 0 ’ncılardan .
+SFX ⋃ 0 'ncılara .
+SFX ⋃ 0 ’ncılara .
+SFX ⋃ 0 'ncıları .
+SFX ⋃ 0 ’ncıları .
+SFX ⋃ 0 'ncıların .
+SFX ⋃ 0 ’ncıların .
+SFX ⋃ 0 'ncılık .
+SFX ⋃ 0 ’ncılık .
+SFX ⋃ 0 'ncılığı .
+SFX ⋃ 0 ’ncılığı .
+SFX ⋃ 0 'ncılığa .
+SFX ⋃ 0 ’ncılığa .
+SFX ⋃ 0 'şar .
+SFX ⋃ 0 ’şar .
+SFX ⋃ 0 'şarlı .
+SFX ⋃ 0 ’şarlı .
+SFX ⋃ 0 'şardan .
+SFX ⋃ 0 ’şardan .
+SFX ⋃ 0 'lar .
+SFX ⋃ 0 ’lar .
+SFX ⋃ 0 'larda .
+SFX ⋃ 0 ’larda .
+SFX ⋃ 0 'lardaki .
+SFX ⋃ 0 ’lardaki .
+SFX ⋃ 0 'lardakiler .
+SFX ⋃ 0 ’lardakiler .
+SFX ⋃ 0 'lardan .
+SFX ⋃ 0 ’lardan .
+SFX ⋃ 0 'lara .
+SFX ⋃ 0 ’lara .
+SFX ⋃ 0 'ları .
+SFX ⋃ 0 ’ları .
+SFX ⋃ 0 'ların .
+SFX ⋃ 0 ’ların .
+SFX ⋃ 0 'larına .
+SFX ⋃ 0 ’larına .
+SFX ⋃ 0 'larında .
+SFX ⋃ 0 ’larında .
+SFX ⋃ 0 'larından .
+SFX ⋃ 0 ’larından .
+SFX ⋃ 0 'larını .
+SFX ⋃ 0 ’larını .
+SFX ⋃ 0 'larının .
+SFX ⋃ 0 ’larının .
+SFX ⋃ 0 'larla .
+SFX ⋃ 0 ’larla .
+SFX ⋃ 0 'larca .
+SFX ⋃ 0 ’larca .
+SFX ⋃ 0 'lık .
+SFX ⋃ 0 ’lık .
+SFX ⋃ 0 'lıklar .
+SFX ⋃ 0 ’lıklar .
+SFX ⋃ 0 'lığı .
+SFX ⋃ 0 ’lığı .
+SFX ⋃ 0 'lığa .
+SFX ⋃ 0 ’lığa .
+SFX ⋃ 0 'lığın .
+SFX ⋃ 0 ’lığın .
+SFX ⋃ 0 'lıkta .
+SFX ⋃ 0 ’lıkta .
+SFX ⋃ 0 'lıktan .
+SFX ⋃ 0 ’lıktan .
+SFX ⋃ 0 'lı .
+SFX ⋃ 0 ’lı .
+SFX ⋃ 0 'lılar .
+SFX ⋃ 0 ’lılar .
+SFX ⋃ 0 'lılarda .
+SFX ⋃ 0 ’lılarda .
+SFX ⋃ 0 'lılardan .
+SFX ⋃ 0 ’lılardan .
+SFX ⋃ 0 'lılara .
+SFX ⋃ 0 ’lılara .
+SFX ⋃ 0 'lıları .
+SFX ⋃ 0 ’lıları .
+SFX ⋃ 0 'lıların .
+SFX ⋃ 0 ’lıların .
+SFX ⋃ 0 'lıda .
+SFX ⋃ 0 ’lıda .
+SFX ⋃ 0 'lıdan .
+SFX ⋃ 0 ’lıdan .
+SFX ⋃ 0 'lıya .
+SFX ⋃ 0 ’lıya .
+SFX ⋃ 0 'lıyı .
+SFX ⋃ 0 ’lıyı .
+SFX ⋃ 0 'lının .
+SFX ⋃ 0 ’lının .
+SFX ⋃ 0 'sız .
+SFX ⋃ 0 ’sız .
+SFX ⋃ 0 'dır .
+SFX ⋃ 0 ’dır .
+SFX ⋃ 0 'dırlar .
+SFX ⋃ 0 ’dırlar .
+SFX ⋃ 0 'ydı .
+SFX ⋃ 0 ’ydı .
+SFX ⋃ 0 'ymış .
+SFX ⋃ 0 ’ymış .
+SFX ⋃ 0 'ymıştır .
+SFX ⋃ 0 ’ymıştır .
+SFX ⋃ 0 'ysa .
+SFX ⋃ 0 ’ysa .
+SFX ⋃ 0 'dadır .
+SFX ⋃ 0 ’dadır .
+SFX ⋃ 0 'daydı .
+SFX ⋃ 0 ’daydı .
+SFX ⋃ 0 'daymış .
+SFX ⋃ 0 ’daymış .
+SFX ⋃ 0 'daysa .
+SFX ⋃ 0 ’daysa .
+SFX ⋃ 0 'dandır .
+SFX ⋃ 0 ’dandır .
+SFX ⋃ 0 'dandı .
+SFX ⋃ 0 ’dandı .
+
+SFX ⋄ Y 224
+SFX ⋄ 0 'a .
+SFX ⋄ 0 ’a .
+SFX ⋄ 0 'u .
+SFX ⋄ 0 ’u .
+SFX ⋄ 0 'da .
+SFX ⋄ 0 ’da .
+SFX ⋄ 0 'dan .
+SFX ⋄ 0 ’dan .
+SFX ⋄ 0 'un .
+SFX ⋄ 0 ’un .
+SFX ⋄ 0 'la .
+SFX ⋄ 0 ’la .
+SFX ⋄ 0 'ca .
+SFX ⋄ 0 ’ca .
+SFX ⋄ 0 'daki .
+SFX ⋄ 0 ’daki .
+SFX ⋄ 0 'dakiler .
+SFX ⋄ 0 ’dakiler .
+SFX ⋄ 0 'dakilerin .
+SFX ⋄ 0 ’dakilerin .
+SFX ⋄ 0 'dakilere .
+SFX ⋄ 0 ’dakilere .
+SFX ⋄ 0 'dakilerde .
+SFX ⋄ 0 ’dakilerde .
+SFX ⋄ 0 'dakilerden .
+SFX ⋄ 0 ’dakilerden .
+SFX ⋄ 0 'dakileri .
+SFX ⋄ 0 ’dakileri .
+SFX ⋄ 0 'dakini .
+SFX ⋄ 0 ’dakini .
+SFX ⋄ 0 'dakinin .
+SFX ⋄ 0 ’dakinin .
+SFX ⋄ 0 'dakine .
+SFX ⋄ 0 ’dakine .
+SFX ⋄ 0 'dakinde .
+SFX ⋄ 0 ’dakinde .
+SFX ⋄ 0 'dakinden .
+SFX ⋄ 0 ’dakinden .
+SFX ⋄ 0 'una .
+SFX ⋄ 0 ’una .
+SFX ⋄ 0 'unda .
+SFX ⋄ 0 ’unda .
+SFX ⋄ 0 'undaki .
+SFX ⋄ 0 ’undaki .
+SFX ⋄ 0 'undan .
+SFX ⋄ 0 ’undan .
+SFX ⋄ 0 'unu .
+SFX ⋄ 0 ’unu .
+SFX ⋄ 0 'unun .
+SFX ⋄ 0 ’unun .
+SFX ⋄ 0 'uyla .
+SFX ⋄ 0 ’uyla .
+SFX ⋄ 0 'umuz .
+SFX ⋄ 0 ’umuz .
+SFX ⋄ 0 'umuza .
+SFX ⋄ 0 ’umuza .
+SFX ⋄ 0 'umuzda .
+SFX ⋄ 0 ’umuzda .
+SFX ⋄ 0 'umuzdan .
+SFX ⋄ 0 ’umuzdan .
+SFX ⋄ 0 'umuzu .
+SFX ⋄ 0 ’umuzu .
+SFX ⋄ 0 'umuzun .
+SFX ⋄ 0 ’umuzun .
+SFX ⋄ 0 'unuz .
+SFX ⋄ 0 ’unuz .
+SFX ⋄ 0 'unuza .
+SFX ⋄ 0 ’unuza .
+SFX ⋄ 0 'unuzda .
+SFX ⋄ 0 ’unuzda .
+SFX ⋄ 0 'unuzdan .
+SFX ⋄ 0 ’unuzdan .
+SFX ⋄ 0 'unuzu .
+SFX ⋄ 0 ’unuzu .
+SFX ⋄ 0 'unuzun .
+SFX ⋄ 0 ’unuzun .
+SFX ⋄ 0 'uncu .
+SFX ⋄ 0 ’uncu .
+SFX ⋄ 0 'uncuya .
+SFX ⋄ 0 ’uncuya .
+SFX ⋄ 0 'uncuyu .
+SFX ⋄ 0 ’uncuyu .
+SFX ⋄ 0 'uncuda .
+SFX ⋄ 0 ’uncuda .
+SFX ⋄ 0 'uncudaki .
+SFX ⋄ 0 ’uncudaki .
+SFX ⋄ 0 'uncudan .
+SFX ⋄ 0 ’uncudan .
+SFX ⋄ 0 'uncunun .
+SFX ⋄ 0 ’uncunun .
+SFX ⋄ 0 'uncuyla .
+SFX ⋄ 0 ’uncuyla .
+SFX ⋄ 0 'uncusu .
+SFX ⋄ 0 ’uncusu .
+SFX ⋄ 0 'uncusuna .
+SFX ⋄ 0 ’uncusuna .
+SFX ⋄ 0 'uncusunda .
+SFX ⋄ 0 ’uncusunda .
+SFX ⋄ 0 'uncusundan .
+SFX ⋄ 0 ’uncusundan .
+SFX ⋄ 0 'uncusunu .
+SFX ⋄ 0 ’uncusunu .
+SFX ⋄ 0 'uncusunun .
+SFX ⋄ 0 ’uncusunun .
+SFX ⋄ 0 'uncusuyla .
+SFX ⋄ 0 ’uncusuyla .
+SFX ⋄ 0 'uncular .
+SFX ⋄ 0 ’uncular .
+SFX ⋄ 0 'uncularda .
+SFX ⋄ 0 ’uncularda .
+SFX ⋄ 0 'unculardan .
+SFX ⋄ 0 ’unculardan .
+SFX ⋄ 0 'unculara .
+SFX ⋄ 0 ’unculara .
+SFX ⋄ 0 'uncuları .
+SFX ⋄ 0 ’uncuları .
+SFX ⋄ 0 'uncuların .
+SFX ⋄ 0 ’uncuların .
+SFX ⋄ 0 'unculuk .
+SFX ⋄ 0 ’unculuk .
+SFX ⋄ 0 'unculuğu .
+SFX ⋄ 0 ’unculuğu .
+SFX ⋄ 0 'unculuğa .
+SFX ⋄ 0 ’unculuğa .
+SFX ⋄ 0 'ar .
+SFX ⋄ 0 ’ar .
+SFX ⋄ 0 'arlı .
+SFX ⋄ 0 ’arlı .
+SFX ⋄ 0 'ardan .
+SFX ⋄ 0 ’ardan .
+SFX ⋄ 0 'lar .
+SFX ⋄ 0 ’lar .
+SFX ⋄ 0 'larda .
+SFX ⋄ 0 ’larda .
+SFX ⋄ 0 'lardaki .
+SFX ⋄ 0 ’lardaki .
+SFX ⋄ 0 'lardakiler .
+SFX ⋄ 0 ’lardakiler .
+SFX ⋄ 0 'lardan .
+SFX ⋄ 0 ’lardan .
+SFX ⋄ 0 'lara .
+SFX ⋄ 0 ’lara .
+SFX ⋄ 0 'ları .
+SFX ⋄ 0 ’ları .
+SFX ⋄ 0 'ların .
+SFX ⋄ 0 ’ların .
+SFX ⋄ 0 'larına .
+SFX ⋄ 0 ’larına .
+SFX ⋄ 0 'larında .
+SFX ⋄ 0 ’larında .
+SFX ⋄ 0 'larından .
+SFX ⋄ 0 ’larından .
+SFX ⋄ 0 'larını .
+SFX ⋄ 0 ’larını .
+SFX ⋄ 0 'larının .
+SFX ⋄ 0 ’larının .
+SFX ⋄ 0 'larla .
+SFX ⋄ 0 ’larla .
+SFX ⋄ 0 'larca .
+SFX ⋄ 0 ’larca .
+SFX ⋄ 0 'luk .
+SFX ⋄ 0 ’luk .
+SFX ⋄ 0 'luklar .
+SFX ⋄ 0 ’luklar .
+SFX ⋄ 0 'luğu .
+SFX ⋄ 0 ’luğu .
+SFX ⋄ 0 'luğa .
+SFX ⋄ 0 ’luğa .
+SFX ⋄ 0 'luğun .
+SFX ⋄ 0 ’luğun .
+SFX ⋄ 0 'lukta .
+SFX ⋄ 0 ’lukta .
+SFX ⋄ 0 'luktan .
+SFX ⋄ 0 ’luktan .
+SFX ⋄ 0 'lu .
+SFX ⋄ 0 ’lu .
+SFX ⋄ 0 'lular .
+SFX ⋄ 0 ’lular .
+SFX ⋄ 0 'lularda .
+SFX ⋄ 0 ’lularda .
+SFX ⋄ 0 'lulardan .
+SFX ⋄ 0 ’lulardan .
+SFX ⋄ 0 'lulara .
+SFX ⋄ 0 ’lulara .
+SFX ⋄ 0 'luları .
+SFX ⋄ 0 ’luları .
+SFX ⋄ 0 'luların .
+SFX ⋄ 0 ’luların .
+SFX ⋄ 0 'luda .
+SFX ⋄ 0 ’luda .
+SFX ⋄ 0 'ludan .
+SFX ⋄ 0 ’ludan .
+SFX ⋄ 0 'luya .
+SFX ⋄ 0 ’luya .
+SFX ⋄ 0 'luyu .
+SFX ⋄ 0 ’luyu .
+SFX ⋄ 0 'lunun .
+SFX ⋄ 0 ’lunun .
+SFX ⋄ 0 'suz .
+SFX ⋄ 0 ’suz .
+SFX ⋄ 0 'dur .
+SFX ⋄ 0 ’dur .
+SFX ⋄ 0 'durlar .
+SFX ⋄ 0 ’durlar .
+SFX ⋄ 0 'du .
+SFX ⋄ 0 ’du .
+SFX ⋄ 0 'muş .
+SFX ⋄ 0 ’muş .
+SFX ⋄ 0 'muştur .
+SFX ⋄ 0 ’muştur .
+SFX ⋄ 0 'sa .
+SFX ⋄ 0 ’sa .
+SFX ⋄ 0 'dadır .
+SFX ⋄ 0 ’dadır .
+SFX ⋄ 0 'daydı .
+SFX ⋄ 0 ’daydı .
+SFX ⋄ 0 'daymış .
+SFX ⋄ 0 ’daymış .
+SFX ⋄ 0 'daysa .
+SFX ⋄ 0 ’daysa .
+SFX ⋄ 0 'dandır .
+SFX ⋄ 0 ’dandır .
+SFX ⋄ 0 'dandı .
+SFX ⋄ 0 ’dandı .
+
+SFX ⋅ Y 224
+SFX ⋅ 0 'a .
+SFX ⋅ 0 ’a .
+SFX ⋅ 0 'ı .
+SFX ⋅ 0 ’ı .
+SFX ⋅ 0 'ta .
+SFX ⋅ 0 ’ta .
+SFX ⋅ 0 'tan .
+SFX ⋅ 0 ’tan .
+SFX ⋅ 0 'ın .
+SFX ⋅ 0 ’ın .
+SFX ⋅ 0 'la .
+SFX ⋅ 0 ’la .
+SFX ⋅ 0 'ça .
+SFX ⋅ 0 ’ça .
+SFX ⋅ 0 'taki .
+SFX ⋅ 0 ’taki .
+SFX ⋅ 0 'takiler .
+SFX ⋅ 0 ’takiler .
+SFX ⋅ 0 'takilerin .
+SFX ⋅ 0 ’takilerin .
+SFX ⋅ 0 'takilere .
+SFX ⋅ 0 ’takilere .
+SFX ⋅ 0 'takilerde .
+SFX ⋅ 0 ’takilerde .
+SFX ⋅ 0 'takilerden .
+SFX ⋅ 0 ’takilerden .
+SFX ⋅ 0 'takileri .
+SFX ⋅ 0 ’takileri .
+SFX ⋅ 0 'takini .
+SFX ⋅ 0 ’takini .
+SFX ⋅ 0 'takinin .
+SFX ⋅ 0 ’takinin .
+SFX ⋅ 0 'takine .
+SFX ⋅ 0 ’takine .
+SFX ⋅ 0 'takinde .
+SFX ⋅ 0 ’takinde .
+SFX ⋅ 0 'takinden .
+SFX ⋅ 0 ’takinden .
+SFX ⋅ 0 'ına .
+SFX ⋅ 0 ’ına .
+SFX ⋅ 0 'ında .
+SFX ⋅ 0 ’ında .
+SFX ⋅ 0 'ındaki .
+SFX ⋅ 0 ’ındaki .
+SFX ⋅ 0 'ından .
+SFX ⋅ 0 ’ından .
+SFX ⋅ 0 'ını .
+SFX ⋅ 0 ’ını .
+SFX ⋅ 0 'ının .
+SFX ⋅ 0 ’ının .
+SFX ⋅ 0 'ıyla .
+SFX ⋅ 0 ’ıyla .
+SFX ⋅ 0 'ımız .
+SFX ⋅ 0 ’ımız .
+SFX ⋅ 0 'ımıza .
+SFX ⋅ 0 ’ımıza .
+SFX ⋅ 0 'ımızda .
+SFX ⋅ 0 ’ımızda .
+SFX ⋅ 0 'ımızdan .
+SFX ⋅ 0 ’ımızdan .
+SFX ⋅ 0 'ımızı .
+SFX ⋅ 0 ’ımızı .
+SFX ⋅ 0 'ımızın .
+SFX ⋅ 0 ’ımızın .
+SFX ⋅ 0 'ınız .
+SFX ⋅ 0 ’ınız .
+SFX ⋅ 0 'ınıza .
+SFX ⋅ 0 ’ınıza .
+SFX ⋅ 0 'ınızda .
+SFX ⋅ 0 ’ınızda .
+SFX ⋅ 0 'ınızdan .
+SFX ⋅ 0 ’ınızdan .
+SFX ⋅ 0 'ınızı .
+SFX ⋅ 0 ’ınızı .
+SFX ⋅ 0 'ınızın .
+SFX ⋅ 0 ’ınızın .
+SFX ⋅ 0 'ıncı .
+SFX ⋅ 0 ’ıncı .
+SFX ⋅ 0 'ıncıya .
+SFX ⋅ 0 ’ıncıya .
+SFX ⋅ 0 'ıncıyı .
+SFX ⋅ 0 ’ıncıyı .
+SFX ⋅ 0 'ıncıda .
+SFX ⋅ 0 ’ıncıda .
+SFX ⋅ 0 'ıncıdaki .
+SFX ⋅ 0 ’ıncıdaki .
+SFX ⋅ 0 'ıncıdan .
+SFX ⋅ 0 ’ıncıdan .
+SFX ⋅ 0 'ıncının .
+SFX ⋅ 0 ’ıncının .
+SFX ⋅ 0 'ıncıyla .
+SFX ⋅ 0 ’ıncıyla .
+SFX ⋅ 0 'ıncısı .
+SFX ⋅ 0 ’ıncısı .
+SFX ⋅ 0 'ıncısına .
+SFX ⋅ 0 ’ıncısına .
+SFX ⋅ 0 'ıncısında .
+SFX ⋅ 0 ’ıncısında .
+SFX ⋅ 0 'ıncısından .
+SFX ⋅ 0 ’ıncısından .
+SFX ⋅ 0 'ıncısını .
+SFX ⋅ 0 ’ıncısını .
+SFX ⋅ 0 'ıncısının .
+SFX ⋅ 0 ’ıncısının .
+SFX ⋅ 0 'ıncısıyla .
+SFX ⋅ 0 ’ıncısıyla .
+SFX ⋅ 0 'ıncılar .
+SFX ⋅ 0 ’ıncılar .
+SFX ⋅ 0 'ıncılarda .
+SFX ⋅ 0 ’ıncılarda .
+SFX ⋅ 0 'ıncılardan .
+SFX ⋅ 0 ’ıncılardan .
+SFX ⋅ 0 'ıncılara .
+SFX ⋅ 0 ’ıncılara .
+SFX ⋅ 0 'ıncıları .
+SFX ⋅ 0 ’ıncıları .
+SFX ⋅ 0 'ıncıların .
+SFX ⋅ 0 ’ıncıların .
+SFX ⋅ 0 'ıncılık .
+SFX ⋅ 0 ’ıncılık .
+SFX ⋅ 0 'ıncılığı .
+SFX ⋅ 0 ’ıncılığı .
+SFX ⋅ 0 'ıncılığa .
+SFX ⋅ 0 ’ıncılığa .
+SFX ⋅ 0 'ar .
+SFX ⋅ 0 ’ar .
+SFX ⋅ 0 'arlı .
+SFX ⋅ 0 ’arlı .
+SFX ⋅ 0 'ardan .
+SFX ⋅ 0 ’ardan .
+SFX ⋅ 0 'lar .
+SFX ⋅ 0 ’lar .
+SFX ⋅ 0 'larda .
+SFX ⋅ 0 ’larda .
+SFX ⋅ 0 'lardaki .
+SFX ⋅ 0 ’lardaki .
+SFX ⋅ 0 'lardakiler .
+SFX ⋅ 0 ’lardakiler .
+SFX ⋅ 0 'lardan .
+SFX ⋅ 0 ’lardan .
+SFX ⋅ 0 'lara .
+SFX ⋅ 0 ’lara .
+SFX ⋅ 0 'ları .
+SFX ⋅ 0 ’ları .
+SFX ⋅ 0 'ların .
+SFX ⋅ 0 ’ların .
+SFX ⋅ 0 'larına .
+SFX ⋅ 0 ’larına .
+SFX ⋅ 0 'larında .
+SFX ⋅ 0 ’larında .
+SFX ⋅ 0 'larından .
+SFX ⋅ 0 ’larından .
+SFX ⋅ 0 'larını .
+SFX ⋅ 0 ’larını .
+SFX ⋅ 0 'larının .
+SFX ⋅ 0 ’larının .
+SFX ⋅ 0 'larla .
+SFX ⋅ 0 ’larla .
+SFX ⋅ 0 'larca .
+SFX ⋅ 0 ’larca .
+SFX ⋅ 0 'lık .
+SFX ⋅ 0 ’lık .
+SFX ⋅ 0 'lıklar .
+SFX ⋅ 0 ’lıklar .
+SFX ⋅ 0 'lığı .
+SFX ⋅ 0 ’lığı .
+SFX ⋅ 0 'lığa .
+SFX ⋅ 0 ’lığa .
+SFX ⋅ 0 'lığın .
+SFX ⋅ 0 ’lığın .
+SFX ⋅ 0 'lıkta .
+SFX ⋅ 0 ’lıkta .
+SFX ⋅ 0 'lıktan .
+SFX ⋅ 0 ’lıktan .
+SFX ⋅ 0 'lı .
+SFX ⋅ 0 ’lı .
+SFX ⋅ 0 'lılar .
+SFX ⋅ 0 ’lılar .
+SFX ⋅ 0 'lılarda .
+SFX ⋅ 0 ’lılarda .
+SFX ⋅ 0 'lılardan .
+SFX ⋅ 0 ’lılardan .
+SFX ⋅ 0 'lılara .
+SFX ⋅ 0 ’lılara .
+SFX ⋅ 0 'lıları .
+SFX ⋅ 0 ’lıları .
+SFX ⋅ 0 'lıların .
+SFX ⋅ 0 ’lıların .
+SFX ⋅ 0 'lıda .
+SFX ⋅ 0 ’lıda .
+SFX ⋅ 0 'lıdan .
+SFX ⋅ 0 ’lıdan .
+SFX ⋅ 0 'lıya .
+SFX ⋅ 0 ’lıya .
+SFX ⋅ 0 'lıyı .
+SFX ⋅ 0 ’lıyı .
+SFX ⋅ 0 'lının .
+SFX ⋅ 0 ’lının .
+SFX ⋅ 0 'sız .
+SFX ⋅ 0 ’sız .
+SFX ⋅ 0 'tır .
+SFX ⋅ 0 ’tır .
+SFX ⋅ 0 'tırlar .
+SFX ⋅ 0 ’tırlar .
+SFX ⋅ 0 'tı .
+SFX ⋅ 0 ’tı .
+SFX ⋅ 0 'mış .
+SFX ⋅ 0 ’mış .
+SFX ⋅ 0 'mıştır .
+SFX ⋅ 0 ’mıştır .
+SFX ⋅ 0 'sa .
+SFX ⋅ 0 ’sa .
+SFX ⋅ 0 'tadır .
+SFX ⋅ 0 ’tadır .
+SFX ⋅ 0 'taydı .
+SFX ⋅ 0 ’taydı .
+SFX ⋅ 0 'taymış .
+SFX ⋅ 0 ’taymış .
+SFX ⋅ 0 'taysa .
+SFX ⋅ 0 ’taysa .
+SFX ⋅ 0 'tandır .
+SFX ⋅ 0 ’tandır .
+SFX ⋅ 0 'tandı .
+SFX ⋅ 0 ’tandı .
+
+SFX ⋆ Y 224
+SFX ⋆ 0 'a .
+SFX ⋆ 0 ’a .
+SFX ⋆ 0 'ı .
+SFX ⋆ 0 ’ı .
+SFX ⋆ 0 'da .
+SFX ⋆ 0 ’da .
+SFX ⋆ 0 'dan .
+SFX ⋆ 0 ’dan .
+SFX ⋆ 0 'ın .
+SFX ⋆ 0 ’ın .
+SFX ⋆ 0 'la .
+SFX ⋆ 0 ’la .
+SFX ⋆ 0 'ca .
+SFX ⋆ 0 ’ca .
+SFX ⋆ 0 'daki .
+SFX ⋆ 0 ’daki .
+SFX ⋆ 0 'dakiler .
+SFX ⋆ 0 ’dakiler .
+SFX ⋆ 0 'dakilerin .
+SFX ⋆ 0 ’dakilerin .
+SFX ⋆ 0 'dakilere .
+SFX ⋆ 0 ’dakilere .
+SFX ⋆ 0 'dakilerde .
+SFX ⋆ 0 ’dakilerde .
+SFX ⋆ 0 'dakilerden .
+SFX ⋆ 0 ’dakilerden .
+SFX ⋆ 0 'dakileri .
+SFX ⋆ 0 ’dakileri .
+SFX ⋆ 0 'dakini .
+SFX ⋆ 0 ’dakini .
+SFX ⋆ 0 'dakinin .
+SFX ⋆ 0 ’dakinin .
+SFX ⋆ 0 'dakine .
+SFX ⋆ 0 ’dakine .
+SFX ⋆ 0 'dakinde .
+SFX ⋆ 0 ’dakinde .
+SFX ⋆ 0 'dakinden .
+SFX ⋆ 0 ’dakinden .
+SFX ⋆ 0 'ına .
+SFX ⋆ 0 ’ına .
+SFX ⋆ 0 'ında .
+SFX ⋆ 0 ’ında .
+SFX ⋆ 0 'ındaki .
+SFX ⋆ 0 ’ındaki .
+SFX ⋆ 0 'ından .
+SFX ⋆ 0 ’ından .
+SFX ⋆ 0 'ını .
+SFX ⋆ 0 ’ını .
+SFX ⋆ 0 'ının .
+SFX ⋆ 0 ’ının .
+SFX ⋆ 0 'ıyla .
+SFX ⋆ 0 ’ıyla .
+SFX ⋆ 0 'ımız .
+SFX ⋆ 0 ’ımız .
+SFX ⋆ 0 'ımıza .
+SFX ⋆ 0 ’ımıza .
+SFX ⋆ 0 'ımızda .
+SFX ⋆ 0 ’ımızda .
+SFX ⋆ 0 'ımızdan .
+SFX ⋆ 0 ’ımızdan .
+SFX ⋆ 0 'ımızı .
+SFX ⋆ 0 ’ımızı .
+SFX ⋆ 0 'ımızın .
+SFX ⋆ 0 ’ımızın .
+SFX ⋆ 0 'ınız .
+SFX ⋆ 0 ’ınız .
+SFX ⋆ 0 'ınıza .
+SFX ⋆ 0 ’ınıza .
+SFX ⋆ 0 'ınızda .
+SFX ⋆ 0 ’ınızda .
+SFX ⋆ 0 'ınızdan .
+SFX ⋆ 0 ’ınızdan .
+SFX ⋆ 0 'ınızı .
+SFX ⋆ 0 ’ınızı .
+SFX ⋆ 0 'ınızın .
+SFX ⋆ 0 ’ınızın .
+SFX ⋆ 0 'ıncı .
+SFX ⋆ 0 ’ıncı .
+SFX ⋆ 0 'ıncıya .
+SFX ⋆ 0 ’ıncıya .
+SFX ⋆ 0 'ıncıyı .
+SFX ⋆ 0 ’ıncıyı .
+SFX ⋆ 0 'ıncıda .
+SFX ⋆ 0 ’ıncıda .
+SFX ⋆ 0 'ıncıdaki .
+SFX ⋆ 0 ’ıncıdaki .
+SFX ⋆ 0 'ıncıdan .
+SFX ⋆ 0 ’ıncıdan .
+SFX ⋆ 0 'ıncının .
+SFX ⋆ 0 ’ıncının .
+SFX ⋆ 0 'ıncıyla .
+SFX ⋆ 0 ’ıncıyla .
+SFX ⋆ 0 'ıncısı .
+SFX ⋆ 0 ’ıncısı .
+SFX ⋆ 0 'ıncısına .
+SFX ⋆ 0 ’ıncısına .
+SFX ⋆ 0 'ıncısında .
+SFX ⋆ 0 ’ıncısında .
+SFX ⋆ 0 'ıncısından .
+SFX ⋆ 0 ’ıncısından .
+SFX ⋆ 0 'ıncısını .
+SFX ⋆ 0 ’ıncısını .
+SFX ⋆ 0 'ıncısının .
+SFX ⋆ 0 ’ıncısının .
+SFX ⋆ 0 'ıncısıyla .
+SFX ⋆ 0 ’ıncısıyla .
+SFX ⋆ 0 'ıncılar .
+SFX ⋆ 0 ’ıncılar .
+SFX ⋆ 0 'ıncılarda .
+SFX ⋆ 0 ’ıncılarda .
+SFX ⋆ 0 'ıncılardan .
+SFX ⋆ 0 ’ıncılardan .
+SFX ⋆ 0 'ıncılara .
+SFX ⋆ 0 ’ıncılara .
+SFX ⋆ 0 'ıncıları .
+SFX ⋆ 0 ’ıncıları .
+SFX ⋆ 0 'ıncıların .
+SFX ⋆ 0 ’ıncıların .
+SFX ⋆ 0 'ıncılık .
+SFX ⋆ 0 ’ıncılık .
+SFX ⋆ 0 'ıncılığı .
+SFX ⋆ 0 ’ıncılığı .
+SFX ⋆ 0 'ıncılığa .
+SFX ⋆ 0 ’ıncılığa .
+SFX ⋆ 0 'ar .
+SFX ⋆ 0 ’ar .
+SFX ⋆ 0 'arlı .
+SFX ⋆ 0 ’arlı .
+SFX ⋆ 0 'ardan .
+SFX ⋆ 0 ’ardan .
+SFX ⋆ 0 'lar .
+SFX ⋆ 0 ’lar .
+SFX ⋆ 0 'larda .
+SFX ⋆ 0 ’larda .
+SFX ⋆ 0 'lardaki .
+SFX ⋆ 0 ’lardaki .
+SFX ⋆ 0 'lardakiler .
+SFX ⋆ 0 ’lardakiler .
+SFX ⋆ 0 'lardan .
+SFX ⋆ 0 ’lardan .
+SFX ⋆ 0 'lara .
+SFX ⋆ 0 ’lara .
+SFX ⋆ 0 'ları .
+SFX ⋆ 0 ’ları .
+SFX ⋆ 0 'ların .
+SFX ⋆ 0 ’ların .
+SFX ⋆ 0 'larına .
+SFX ⋆ 0 ’larına .
+SFX ⋆ 0 'larında .
+SFX ⋆ 0 ’larında .
+SFX ⋆ 0 'larından .
+SFX ⋆ 0 ’larından .
+SFX ⋆ 0 'larını .
+SFX ⋆ 0 ’larını .
+SFX ⋆ 0 'larının .
+SFX ⋆ 0 ’larının .
+SFX ⋆ 0 'larla .
+SFX ⋆ 0 ’larla .
+SFX ⋆ 0 'larca .
+SFX ⋆ 0 ’larca .
+SFX ⋆ 0 'lık .
+SFX ⋆ 0 ’lık .
+SFX ⋆ 0 'lıklar .
+SFX ⋆ 0 ’lıklar .
+SFX ⋆ 0 'lığı .
+SFX ⋆ 0 ’lığı .
+SFX ⋆ 0 'lığa .
+SFX ⋆ 0 ’lığa .
+SFX ⋆ 0 'lığın .
+SFX ⋆ 0 ’lığın .
+SFX ⋆ 0 'lıkta .
+SFX ⋆ 0 ’lıkta .
+SFX ⋆ 0 'lıktan .
+SFX ⋆ 0 ’lıktan .
+SFX ⋆ 0 'lı .
+SFX ⋆ 0 ’lı .
+SFX ⋆ 0 'lılar .
+SFX ⋆ 0 ’lılar .
+SFX ⋆ 0 'lılarda .
+SFX ⋆ 0 ’lılarda .
+SFX ⋆ 0 'lılardan .
+SFX ⋆ 0 ’lılardan .
+SFX ⋆ 0 'lılara .
+SFX ⋆ 0 ’lılara .
+SFX ⋆ 0 'lıları .
+SFX ⋆ 0 ’lıları .
+SFX ⋆ 0 'lıların .
+SFX ⋆ 0 ’lıların .
+SFX ⋆ 0 'lıda .
+SFX ⋆ 0 ’lıda .
+SFX ⋆ 0 'lıdan .
+SFX ⋆ 0 ’lıdan .
+SFX ⋆ 0 'lıya .
+SFX ⋆ 0 ’lıya .
+SFX ⋆ 0 'lıyı .
+SFX ⋆ 0 ’lıyı .
+SFX ⋆ 0 'lının .
+SFX ⋆ 0 ’lının .
+SFX ⋆ 0 'sız .
+SFX ⋆ 0 ’sız .
+SFX ⋆ 0 'dır .
+SFX ⋆ 0 ’dır .
+SFX ⋆ 0 'dırlar .
+SFX ⋆ 0 ’dırlar .
+SFX ⋆ 0 'dı .
+SFX ⋆ 0 ’dı .
+SFX ⋆ 0 'mış .
+SFX ⋆ 0 ’mış .
+SFX ⋆ 0 'mıştır .
+SFX ⋆ 0 ’mıştır .
+SFX ⋆ 0 'sa .
+SFX ⋆ 0 ’sa .
+SFX ⋆ 0 'dadır .
+SFX ⋆ 0 ’dadır .
+SFX ⋆ 0 'daydı .
+SFX ⋆ 0 ’daydı .
+SFX ⋆ 0 'daymış .
+SFX ⋆ 0 ’daymış .
+SFX ⋆ 0 'daysa .
+SFX ⋆ 0 ’daysa .
+SFX ⋆ 0 'dandır .
+SFX ⋆ 0 ’dandır .
+SFX ⋆ 0 'dandı .
+SFX ⋆ 0 ’dandı .
+
+SFX ⋇ Y 224
+SFX ⋇ 0 'e .
+SFX ⋇ 0 ’e .
+SFX ⋇ 0 'ü .
+SFX ⋇ 0 ’ü .
+SFX ⋇ 0 'de .
+SFX ⋇ 0 ’de .
+SFX ⋇ 0 'den .
+SFX ⋇ 0 ’den .
+SFX ⋇ 0 'ün .
+SFX ⋇ 0 ’ün .
+SFX ⋇ 0 'le .
+SFX ⋇ 0 ’le .
+SFX ⋇ 0 'ce .
+SFX ⋇ 0 ’ce .
+SFX ⋇ 0 'deki .
+SFX ⋇ 0 ’deki .
+SFX ⋇ 0 'dekiler .
+SFX ⋇ 0 ’dekiler .
+SFX ⋇ 0 'dekilerin .
+SFX ⋇ 0 ’dekilerin .
+SFX ⋇ 0 'dekilere .
+SFX ⋇ 0 ’dekilere .
+SFX ⋇ 0 'dekilerde .
+SFX ⋇ 0 ’dekilerde .
+SFX ⋇ 0 'dekilerden .
+SFX ⋇ 0 ’dekilerden .
+SFX ⋇ 0 'dekileri .
+SFX ⋇ 0 ’dekileri .
+SFX ⋇ 0 'dekini .
+SFX ⋇ 0 ’dekini .
+SFX ⋇ 0 'dekinin .
+SFX ⋇ 0 ’dekinin .
+SFX ⋇ 0 'dekine .
+SFX ⋇ 0 ’dekine .
+SFX ⋇ 0 'dekinde .
+SFX ⋇ 0 ’dekinde .
+SFX ⋇ 0 'dekinden .
+SFX ⋇ 0 ’dekinden .
+SFX ⋇ 0 'üne .
+SFX ⋇ 0 ’üne .
+SFX ⋇ 0 'ünde .
+SFX ⋇ 0 ’ünde .
+SFX ⋇ 0 'ündeki .
+SFX ⋇ 0 ’ündeki .
+SFX ⋇ 0 'ünden .
+SFX ⋇ 0 ’ünden .
+SFX ⋇ 0 'ünü .
+SFX ⋇ 0 ’ünü .
+SFX ⋇ 0 'ünün .
+SFX ⋇ 0 ’ünün .
+SFX ⋇ 0 'üyle .
+SFX ⋇ 0 ’üyle .
+SFX ⋇ 0 'ümüz .
+SFX ⋇ 0 ’ümüz .
+SFX ⋇ 0 'ümüze .
+SFX ⋇ 0 ’ümüze .
+SFX ⋇ 0 'ümüzde .
+SFX ⋇ 0 ’ümüzde .
+SFX ⋇ 0 'ümüzden .
+SFX ⋇ 0 ’ümüzden .
+SFX ⋇ 0 'ümüzü .
+SFX ⋇ 0 ’ümüzü .
+SFX ⋇ 0 'ümüzün .
+SFX ⋇ 0 ’ümüzün .
+SFX ⋇ 0 'ünüz .
+SFX ⋇ 0 ’ünüz .
+SFX ⋇ 0 'ünüze .
+SFX ⋇ 0 ’ünüze .
+SFX ⋇ 0 'ünüzde .
+SFX ⋇ 0 ’ünüzde .
+SFX ⋇ 0 'ünüzden .
+SFX ⋇ 0 ’ünüzden .
+SFX ⋇ 0 'ünüzü .
+SFX ⋇ 0 ’ünüzü .
+SFX ⋇ 0 'ünüzün .
+SFX ⋇ 0 ’ünüzün .
+SFX ⋇ 0 'üncü .
+SFX ⋇ 0 ’üncü .
+SFX ⋇ 0 'üncüye .
+SFX ⋇ 0 ’üncüye .
+SFX ⋇ 0 'üncüyü .
+SFX ⋇ 0 ’üncüyü .
+SFX ⋇ 0 'üncüde .
+SFX ⋇ 0 ’üncüde .
+SFX ⋇ 0 'üncüdeki .
+SFX ⋇ 0 ’üncüdeki .
+SFX ⋇ 0 'üncüden .
+SFX ⋇ 0 ’üncüden .
+SFX ⋇ 0 'üncünün .
+SFX ⋇ 0 ’üncünün .
+SFX ⋇ 0 'üncüyle .
+SFX ⋇ 0 ’üncüyle .
+SFX ⋇ 0 'üncüsü .
+SFX ⋇ 0 ’üncüsü .
+SFX ⋇ 0 'üncüsüne .
+SFX ⋇ 0 ’üncüsüne .
+SFX ⋇ 0 'üncüsünde .
+SFX ⋇ 0 ’üncüsünde .
+SFX ⋇ 0 'üncüsünden .
+SFX ⋇ 0 ’üncüsünden .
+SFX ⋇ 0 'üncüsünü .
+SFX ⋇ 0 ’üncüsünü .
+SFX ⋇ 0 'üncüsünün .
+SFX ⋇ 0 ’üncüsünün .
+SFX ⋇ 0 'üncüsüyle .
+SFX ⋇ 0 ’üncüsüyle .
+SFX ⋇ 0 'üncüler .
+SFX ⋇ 0 ’üncüler .
+SFX ⋇ 0 'üncülerde .
+SFX ⋇ 0 ’üncülerde .
+SFX ⋇ 0 'üncülerden .
+SFX ⋇ 0 ’üncülerden .
+SFX ⋇ 0 'üncülere .
+SFX ⋇ 0 ’üncülere .
+SFX ⋇ 0 'üncüleri .
+SFX ⋇ 0 ’üncüleri .
+SFX ⋇ 0 'üncülerin .
+SFX ⋇ 0 ’üncülerin .
+SFX ⋇ 0 'üncülük .
+SFX ⋇ 0 ’üncülük .
+SFX ⋇ 0 'üncülüğü .
+SFX ⋇ 0 ’üncülüğü .
+SFX ⋇ 0 'üncülüğe .
+SFX ⋇ 0 ’üncülüğe .
+SFX ⋇ 0 'er .
+SFX ⋇ 0 ’er .
+SFX ⋇ 0 'erli .
+SFX ⋇ 0 ’erli .
+SFX ⋇ 0 'erden .
+SFX ⋇ 0 ’erden .
+SFX ⋇ 0 'ler .
+SFX ⋇ 0 ’ler .
+SFX ⋇ 0 'lerde .
+SFX ⋇ 0 ’lerde .
+SFX ⋇ 0 'lerdeki .
+SFX ⋇ 0 ’lerdeki .
+SFX ⋇ 0 'lerdekiler .
+SFX ⋇ 0 ’lerdekiler .
+SFX ⋇ 0 'lerden .
+SFX ⋇ 0 ’lerden .
+SFX ⋇ 0 'lere .
+SFX ⋇ 0 ’lere .
+SFX ⋇ 0 'leri .
+SFX ⋇ 0 ’leri .
+SFX ⋇ 0 'lerin .
+SFX ⋇ 0 ’lerin .
+SFX ⋇ 0 'lerine .
+SFX ⋇ 0 ’lerine .
+SFX ⋇ 0 'lerinde .
+SFX ⋇ 0 ’lerinde .
+SFX ⋇ 0 'lerinden .
+SFX ⋇ 0 ’lerinden .
+SFX ⋇ 0 'lerini .
+SFX ⋇ 0 ’lerini .
+SFX ⋇ 0 'lerinin .
+SFX ⋇ 0 ’lerinin .
+SFX ⋇ 0 'lerle .
+SFX ⋇ 0 ’lerle .
+SFX ⋇ 0 'lerce .
+SFX ⋇ 0 ’lerce .
+SFX ⋇ 0 'lük .
+SFX ⋇ 0 ’lük .
+SFX ⋇ 0 'lükler .
+SFX ⋇ 0 ’lükler .
+SFX ⋇ 0 'lüğü .
+SFX ⋇ 0 ’lüğü .
+SFX ⋇ 0 'lüğe .
+SFX ⋇ 0 ’lüğe .
+SFX ⋇ 0 'lüğün .
+SFX ⋇ 0 ’lüğün .
+SFX ⋇ 0 'lükte .
+SFX ⋇ 0 ’lükte .
+SFX ⋇ 0 'lükten .
+SFX ⋇ 0 ’lükten .
+SFX ⋇ 0 'lü .
+SFX ⋇ 0 ’lü .
+SFX ⋇ 0 'lüler .
+SFX ⋇ 0 ’lüler .
+SFX ⋇ 0 'lülerde .
+SFX ⋇ 0 ’lülerde .
+SFX ⋇ 0 'lülerden .
+SFX ⋇ 0 ’lülerden .
+SFX ⋇ 0 'lülere .
+SFX ⋇ 0 ’lülere .
+SFX ⋇ 0 'lüleri .
+SFX ⋇ 0 ’lüleri .
+SFX ⋇ 0 'lülerin .
+SFX ⋇ 0 ’lülerin .
+SFX ⋇ 0 'lüde .
+SFX ⋇ 0 ’lüde .
+SFX ⋇ 0 'lüden .
+SFX ⋇ 0 ’lüden .
+SFX ⋇ 0 'lüye .
+SFX ⋇ 0 ’lüye .
+SFX ⋇ 0 'lüyü .
+SFX ⋇ 0 ’lüyü .
+SFX ⋇ 0 'lünün .
+SFX ⋇ 0 ’lünün .
+SFX ⋇ 0 'süz .
+SFX ⋇ 0 ’süz .
+SFX ⋇ 0 'dür .
+SFX ⋇ 0 ’dür .
+SFX ⋇ 0 'dürler .
+SFX ⋇ 0 ’dürler .
+SFX ⋇ 0 'dü .
+SFX ⋇ 0 ’dü .
+SFX ⋇ 0 'müş .
+SFX ⋇ 0 ’müş .
+SFX ⋇ 0 'müştür .
+SFX ⋇ 0 ’müştür .
+SFX ⋇ 0 'se .
+SFX ⋇ 0 ’se .
+SFX ⋇ 0 'dedir .
+SFX ⋇ 0 ’dedir .
+SFX ⋇ 0 'deydi .
+SFX ⋇ 0 ’deydi .
+SFX ⋇ 0 'deymiş .
+SFX ⋇ 0 ’deymiş .
+SFX ⋇ 0 'deyse .
+SFX ⋇ 0 ’deyse .
+SFX ⋇ 0 'dendir .
+SFX ⋇ 0 ’dendir .
+SFX ⋇ 0 'dendi .
+SFX ⋇ 0 ’dendi .
 
