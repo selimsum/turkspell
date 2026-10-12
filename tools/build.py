@@ -1318,6 +1318,11 @@ def load_lexicons():
 def build_hardened_aff(profile="tdk"):
     print(f"Building hardened .aff file for profile [{profile}]...")
     with open(AFF_SRC, "r", encoding="utf-8") as f:
+        raw_aff_check = f.read()
+    if "FLAG long" in raw_aff_check:
+        from compile_hunspell_utf8 import remap_aff_file
+        remap_aff_file(str(AFF_SRC), str(AFF_SRC))
+    with open(AFF_SRC, "r", encoding="utf-8") as f:
         lines = f.readlines()
         
     hardened_lines = []
@@ -1949,7 +1954,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     print(f"  Clean entries before dedup: {len(clean_entries):,} -> after dedup: {len(deduped_entries):,}")
     return deduped_entries
 
-def compile_v06(deploy_profile="tdk"):
+def compile_v06(deploy_profile="universal"):
     tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig = load_lexicons()
     
     profiles = ["tdk", "dd", "universal"]
@@ -2016,9 +2021,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Compile Turkspell Hunspell dictionaries")
     parser.add_argument(
         "--deploy-profile",
-        default=os.environ.get("TURKSPELL_PROFILE", "tdk"),
+        default=os.environ.get("TURKSPELL_PROFILE", "universal"),
         choices=["tdk", "universal", "dd"],
-        help="Profile to deploy to repo root and firefox-addon (default: tdk)"
+        help="Profile to deploy to repo root and firefox-addon (default: universal)"
     )
     args = parser.parse_args()
     compile_v06(deploy_profile=args.deploy_profile)
