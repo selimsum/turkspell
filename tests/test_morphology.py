@@ -621,7 +621,15 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
             # Postpositives, ayn-ending loanwords & non-voicing stems
             "dolayısıyla", "dolayısı", "göreyse", "göredir", "ötürüdür", "dairdir",
             "ginsengi", "suikastı", "suikasta", "suikastta",
-            "müştemilatı", "mercii", "menşei", "tevkii", "karbondioksiti", "karbondioksidi"
+            "müştemilatı", "mercii", "menşei", "tevkii", "karbondioksiti", "karbondioksidi",
+            # TDK Dizin 81k audit fixes (palatal-L, homonyms, voicing/doubling, dead verb flag rescue)
+            "meşgulü", "meşgule", "mesulü", "mesule", "mamulü", "malulü", "maktulü",
+            "menüsküsü", "çöpü", "şoku", "hatmi", "hatime",
+            "katile", "katili", "katli", "kadire", "kadiri", "kadri", "nefisi", "nefsi",
+            "ağızı", "ağzı", "hayırı", "hayrı", "kayıtı", "kaydı",
+            "belagati", "kabahati", "nasihati", "helaki", "istimlaki",
+            "marmeladı", "veliahdı", "santigradı", "patiği", "boydağı", "mıncığı",
+            "tamlananın", "tamlayanın", "adlandırımın", "sesletimin", "güpürü", "bıttımı"
         ]
         if not is_tdk_profile():
             valid.extend(["öneki", "soneki"])
