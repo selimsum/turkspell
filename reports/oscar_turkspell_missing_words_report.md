@@ -2,7 +2,7 @@
 
 - **Execution Timestamp**: 2026-09-03 23:29:20
 - **Corpus Source**: `raw_data/oscar_10m_corpus_frequencies.json`
-- **Active Dictionary Tested**: Turkspell v0.6 Gold (`tr.aff` / `tr.dic`)
+- **Active Dictionary Tested**: Turkspell (`tr.aff` / `tr.dic`)
 
 ---
 
