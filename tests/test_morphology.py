@@ -551,6 +551,49 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         accepted, rejected = check_words(valid)
         self.assertEqual(rejected, [], f"Valid inability/negative verbal nouns failing: {rejected}")
 
+    def test_pure_paradigm_matrix_rescues(self):
+        """Verifies all verb and noun/adjective paradigm gaps uncovered by the Pure Paradigm Matrix Audit."""
+        valid = [
+            # Ability verbal nouns (-abilme/-ebilme) bare, cases & possessives
+            "yapabilmeyi", "yapabilmeye", "yapabilmede", "yapabilmeden", "yapabilmenin", "yapabilmeyle",
+            "yapabilmem", "yapabilmen", "yapabilmemiz", "yapabilmeniz", "yapabilmeleri",
+            "yapabilmemden", "yapabilmemizden", "yapabilmelerinden",
+            "koyabilmeyi", "koyabilmemiz", "gelebilmeyi", "gelebilmemiz", "görebilmeyi", "görebilmemiz",
+            # Ability infinitive (-abilmek/-ebilmek) cases & copulas
+            "yapabilmekten", "yapabilmekle", "yapabilmektir", "yapabilmekti", "yapabilmeksizin",
+            "koyabilmekten", "koyabilmeksizin", "gelebilmekten", "gelebilmeksizin",
+            # Ability & positive/negative participles + plural possessives
+            "yapabildiğim", "yapabildiğimiz", "yapabileceğim", "yapabileceğimiz",
+            "yapabildiklerim", "yapabildiklerimiz", "yapabileceklerim", "yapabileceklerimiz",
+            "yapacaklarım", "yapacaklarımız", "yapacaklarımdan", "yapacaklarımızdan",
+            "diyeceği", "diyeceğim", "diyeceğimiz", "diyeceklerim", "diyeceklerimizden",
+            # Ability evidential, conditional, necessitative, progressive & converbs
+            "yapabilmişim", "yapabilmişsin", "yapabilmişiz", "yapabilmişsiniz", "yapabilmişçesine",
+            "yapabilse", "yapabilsem", "yapabilsen", "yapabilsek", "yapabilseniz", "yapabilseler",
+            "yapabilseydi", "yapabilseydim", "yapabilseydin", "yapabilseydik", "yapabilseydiniz",
+            "yapabilmeliyim", "yapabilmelisiniz", "yapabilmeliydi", "yapabilmeliydim", "yapabilmeliydik",
+            "yapabilmekteyim", "yapabilmektesin", "yapabilmekteyiz", "yapabilmektesiniz", "yapabilmekteler",
+            "yapabilinceye", "yapamayıncaya", "yapamamaksızın",
+            # Converb & similative chains (-asıya/-esiye, -alı/-eli, -casına/-cesine)
+            "yapasıya", "koyasıya", "göresiye", "edilesiye", "edesiye", "gidesiye", "diyesiye", "başlayasıya",
+            "okuyalı", "yürüyeli", "edeli", "gideli", "tadalı", "diyeli",
+            "yapmazcasına", "gelmezcesine", "yapamazcasına", "gelemezcesine",
+            "yapmamışçasına", "gelmemişçesine", "yapamamışçasına", "gelememişçesine",
+            # Verbal noun (-ış/-iş/-uş/-üş) across all stem classes including VH/VS/VY
+            "okuyuş", "okuyuşu", "okuyuşa", "okuyuşta", "okuyuştan", "okuyuşun",
+            "yürüyüş", "yürüyüşü", "yürüyüşe", "yürüyüşte", "yürüyüşten", "yürüyüşün",
+            "deyiş", "deyişi", "deyişe", "deyişte", "deyişten", "deyişin",
+            "yapışım", "yapışımız", "yapışımdan", "yapışımızdan", "yapışlarından",
+            # 2-hop abstract noun derivations (-lılık, -sızlık, -cılık) & rounded vowel stems (-suz/-süz)
+            "evlilikten", "evliliğin", "evsizlikten", "evsizliğin", "evsizliği",
+            "kitapsızlıktan", "kitapsızlığın", "kitapçılıktan", "kitapçılığın", "kitapçılığı",
+            "arabasızlıktan", "kutusuz", "kutusuzluk", "kutusuzluktan", "ütüsüz", "ütüsüzlük", "ütüsüzlükten",
+            # Nominal compound conditional copulas (-saydı/-seydi, -ysaydı/-yseydi)
+            "evdeyseydi", "evdeyseydim", "evdeyseydik", "güzelseydi", "güzelseydim", "güzelseydik"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid pure paradigm matrix forms failing: {rejected}")
+
 
 if __name__ == "__main__":
     unittest.main()
