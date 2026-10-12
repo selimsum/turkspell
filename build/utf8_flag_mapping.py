@@ -58,9 +58,14 @@ STAGE2_VERB_FLAGS = [
     "sA", "sE",
 ]
 
+# Numeral apostrophe-inflection flags (9 phonological classes for numbers & clock times)
+NUMERAL_FLAGS = [
+    "N5", "N6", "N7", "N8", "N9", "NA", "NB", "NC", "ND"
+]
+
 # Map each flag to a unique Mathematical Operator codepoint starting at \u2200 (8704)
 # 2-char flags come first, then 3-char flags, then inverse-harmony deriv flags,
-# and finally stage-2 verb secondary flags.
+# stage-2 verb secondary flags, and numeral flags.
 LONG_TO_UTF8 = {}
 for idx, flag in enumerate(ALL_FLAGS):
     LONG_TO_UTF8[flag] = chr(8704 + idx)
@@ -71,6 +76,9 @@ for idx, flag in enumerate(INVERSE_DERIV_FLAGS):
 _offset_s2 = len(ALL_FLAGS) + len(PROPER_NOUN_FLAGS_3) + len(INVERSE_DERIV_FLAGS)
 for idx, flag in enumerate(STAGE2_VERB_FLAGS):
     LONG_TO_UTF8[flag] = chr(8704 + _offset_s2 + idx)
+_offset_num = _offset_s2 + len(STAGE2_VERB_FLAGS)
+for idx, flag in enumerate(NUMERAL_FLAGS):
+    LONG_TO_UTF8[flag] = chr(8704 + _offset_num + idx)
 
 # Override NE to ASCII 'X' to guarantee correct NEEDAFFIX parsing by Hunspell
 LONG_TO_UTF8["NE"] = "X"
