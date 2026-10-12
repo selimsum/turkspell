@@ -104,32 +104,25 @@ def make_flag_block(flag: str, rules: list[str]) -> str:
             consolidated.extend(conds)
             continue
             
-        single_brackets = []
+        pos_chars = set()
+        neg_chars = set()
         others = []
         for c in conds:
             if re.fullmatch(r'\[([^\]]+)\]', c):
-                single_brackets.append(c)
+                inner = c[1:-1]
+                if inner.startswith('^'):
+                    neg_chars.update(list(inner[1:]))
+                else:
+                    pos_chars.update(list(inner))
             else:
                 others.append(c)
                 
-        if single_brackets:
-            chars = set()
-            is_negated = False
-            for c in single_brackets:
-                m = re.match(r'\[([^\]]+)\]', c)
-                inner = m.group(1)
-                if inner.startswith('^'):
-                    is_negated = True
-                    chars.update(list(inner[1:]))
-                else:
-                    chars.update(list(inner))
-            
-            sorted_chars = ''.join(sorted(chars))
-            if is_negated:
-                new_cond = '[^' + sorted_chars + ']'
-            else:
-                new_cond = '[' + sorted_chars + ']'
-            consolidated.append(' '.join(prefix) + ' ' + new_cond)
+        if neg_chars:
+            sorted_neg = ''.join(sorted(neg_chars))
+            consolidated.append(' '.join(prefix) + ' [^' + sorted_neg + ']')
+        if pos_chars:
+            sorted_pos = ''.join(sorted(pos_chars))
+            consolidated.append(' '.join(prefix) + ' [' + sorted_pos + ']')
             
         for c in others:
             consolidated.append(' '.join(prefix) + ' ' + c)
@@ -2515,6 +2508,9 @@ def gen_proper_flags() -> list[str]:
     # -----------------------------------------------------------------------
     # Helper: build one complete proper-noun flag set for a given harmony
     # -----------------------------------------------------------------------
+    UPPER_LETTER_RE = "[ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZQWX]"
+    VOWEL_UNIT_CONDS = (UPPER_LETTER_RE, "km", "cm", "mm", "dm", "nm", "ml", "mL", "cl", "dl", "hl", "lt", "sn")
+
     def _proper_family(
         flag_prefix: str,      # e.g. "pB" for back-unrounded
         gen_cons: str,         # genitive suffix after consonant: 'ın / 'un / 'in / 'ün
@@ -2540,7 +2536,7 @@ def gen_proper_flags() -> list[str]:
         rules_N = []
         sfx_ki(f"{flag_prefix}N", "0", f"'{gen_cons}",   CONS_RE, rules_N)
         sfx_ki(f"{flag_prefix}N", "0", f"'{gen_vowel}",  VOWEL_RE,  rules_N)
-        if flag_prefix == "pB":
+        if flag_prefix in ("pB", "pO"):
             sfx_ki(f"{flag_prefix}N", "0", f"'{gen_cons}",   "[eıiEİ]", rules_N)
         if flag_prefix == "pF":
             sfx_ki(f"{flag_prefix}N", "0", f"'{gen_cons}",   ".", rules_N)
@@ -2548,26 +2544,32 @@ def gen_proper_flags() -> list[str]:
             sfx_ki(f"{flag_prefix}N", "0", f"'un",          ".", rules_N)
             sfx_ki(f"{flag_prefix}N", "0", f"'{gen_vowel}",  "tl",          rules_N)
             sfx_ki(f"{flag_prefix}N", "0", f"'{gen_vowel}",  "TL",          rules_N)
-        for cond_pattern in ("[A-Z]", "km", "cm", "mm"):
+        for cond_pattern in VOWEL_UNIT_CONDS:
             sfx_ki(f"{flag_prefix}N", "0", f"'{gen_vowel}", cond_pattern, rules_N)
         blocks.append(make_flag_block(f"{flag_prefix}N", unique(rules_N)))
 
         # --- Locative flag ---
         rules_L = []
-        sfx_ki(f"{flag_prefix}L", "0", f"'{loc_soft}", "[^çfhkpsşt]", rules_L)
-        sfx_ki(f"{flag_prefix}L", "0", f"'{loc_hard}", "[çfhkpsşt]", rules_L)
+        sfx_ki(f"{flag_prefix}L", "0", f"'{loc_soft}", "[^çfhkpsştx]", rules_L)
+        sfx_ki(f"{flag_prefix}L", "0", f"'{loc_hard}", "[çfhkpsştxÇFHKPSŞTXC]", rules_L)
+        if flag_prefix == "pB":
+            for byte_unit in ("GB", "MB", "TB", "KB", "PB"):
+                sfx_ki(f"{flag_prefix}L", "0", f"'{loc_hard}", byte_unit, rules_L)
         sfx_ki(f"{flag_prefix}L", "0", f"'n{loc_soft}", VOWEL_RE, rules_L)
-        for cond_pattern in ("[A-Z]", "km", "cm", "mm"):
+        for cond_pattern in VOWEL_UNIT_CONDS:
             sfx_ki(f"{flag_prefix}L", "0", f"'n{loc_soft}", cond_pattern, rules_L)
         blocks.append(make_flag_block(f"{flag_prefix}L", unique(rules_L)))
 
         # --- Ablative flag ---
         rules_R = [
-            sfx(f"{flag_prefix}R", "0", f"'{abl_soft}/cl", "[^çfhkpsşt]"),
-            sfx(f"{flag_prefix}R", "0", f"'{abl_hard}/cl", "[çfhkpsşt]"),
+            sfx(f"{flag_prefix}R", "0", f"'{abl_soft}/cl", "[^çfhkpsştx]"),
+            sfx(f"{flag_prefix}R", "0", f"'{abl_hard}/cl", "[çfhkpsştxÇFHKPSŞTXC]"),
             sfx(f"{flag_prefix}R", "0", f"'n{abl_soft}/cl", VOWEL_RE),
         ]
-        for cond_pattern in ("[A-Z]", "km", "cm", "mm"):
+        if flag_prefix == "pB":
+            for byte_unit in ("GB", "MB", "TB", "KB", "PB"):
+                rules_R.append(sfx(f"{flag_prefix}R", "0", f"'{abl_hard}/cl", byte_unit))
+        for cond_pattern in VOWEL_UNIT_CONDS:
             rules_R.append(sfx(f"{flag_prefix}R", "0", f"'n{abl_soft}/cl", cond_pattern))
         blocks.append(make_flag_block(f"{flag_prefix}R", unique(rules_R)))
 
@@ -2577,14 +2579,14 @@ def gen_proper_flags() -> list[str]:
             sfx(f"{flag_prefix}Y", "0", f"'{dat_vowel}", VOWEL_RE),
             sfx(f"{flag_prefix}Y", "0", f"'n{dat_cons}",  VOWEL_RE),
         ]
-        if flag_prefix == "pB":
+        if flag_prefix in ("pB", "pO"):
             rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_cons}",  "[eıiEİ]"))
         if flag_prefix == "pF":
             rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_cons}",  "."))
             rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'a",          "."))
             rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_vowel}", "tl"))
             rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_vowel}", "TL"))
-        for cond_pattern in ("[A-Z]", "km", "cm", "mm"):
+        for cond_pattern in VOWEL_UNIT_CONDS:
             rules_Y.append(sfx(f"{flag_prefix}Y", "0", f"'{dat_vowel}", cond_pattern))
         blocks.append(make_flag_block(f"{flag_prefix}Y", unique(rules_Y)))
 
@@ -2594,14 +2596,14 @@ def gen_proper_flags() -> list[str]:
             sfx(f"{flag_prefix}A", "0", f"'{acc_vowel}", VOWEL_RE),
             sfx(f"{flag_prefix}A", "0", f"'n{acc_cons}",  VOWEL_RE),
         ]
-        if flag_prefix == "pB":
+        if flag_prefix in ("pB", "pO"):
             rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_cons}",  "[eıiEİ]"))
         if flag_prefix == "pF":
             rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_cons}",  "."))
             rules_A.append(sfx(f"{flag_prefix}A", "0", f"'ı",          "."))
             rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_vowel}", "tl"))
             rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_vowel}", "TL"))
-        for cond_pattern in ("[A-Z]", "km", "cm", "mm"):
+        for cond_pattern in VOWEL_UNIT_CONDS:
             rules_A.append(sfx(f"{flag_prefix}A", "0", f"'{acc_vowel}", cond_pattern))
         blocks.append(make_flag_block(f"{flag_prefix}A", unique(rules_A)))
 
@@ -2610,7 +2612,7 @@ def gen_proper_flags() -> list[str]:
             sfx(f"{flag_prefix}I", "0", f"'{ins_suf}/cl", CONS_RE),
             sfx(f"{flag_prefix}I", "0", f"'y{ins_suf}/cl", VOWEL_RE),
         ]
-        for cond_pattern in ("[A-Z]", "km", "cm", "mm"):
+        for cond_pattern in VOWEL_UNIT_CONDS:
             rules_I.append(sfx(f"{flag_prefix}I", "0", f"'y{ins_suf}/cl", cond_pattern))
         blocks.append(make_flag_block(f"{flag_prefix}I", unique(rules_I)))
 
@@ -2627,16 +2629,16 @@ def gen_proper_flags() -> list[str]:
         # In Turkish orthography, institutional compounds place the apostrophe AFTER the possessive
         # and require the pronominal 'n' (zamir n'si) before case suffixes:
         # e.g., Meclis -> Meclisi'nin, Mahalle -> Mahallesi'nde, Bakanlık -> Bakanlığı'na
-        dat_vowel = "e" if loc_soft == "de" else "a"
+        dat_vowel_c = "e" if loc_soft == "de" else "a"
         c_gen_suf = poss3_cons + "'n" + gen_cons   # i'nin / ı'nın / u'nun / ü'nün
-        c_dat_suf = poss3_cons + "'n" + dat_vowel  # i'ne / ı'na / u'na / ü'ne
-        c_loc_suf = poss3_cons + "'n" + loc_soft   # i'nde / ı'nda / u'nda / ü'nde
+        c_dat_suf = poss3_cons + "'n" + dat_vowel_c  # i'ne / ı'na / u'na / ü'ne
+        c_loc_suf = poss3_cons + "'n" + loc_soft   # i'nde / ı'nda / u'nde / ü'nde
         c_abl_suf = poss3_cons + "'n" + abl_soft   # i'nden / ı'ndan / u'ndan / ü'nden
         c_acc_suf_inst = poss3_cons + "'n" + acc_cons # i'ni / ı'nı / u'nu / ü'nü
         c_ins_suf_inst = poss3_cons + "'" + ("yle" if ins_suf == "le" else "yla") # i'yle / ı'yla
 
         v_gen_suf_inst = "s" + poss3_cons + "'n" + gen_cons  # si'nin / sı'nın
-        v_dat_suf_inst = "s" + poss3_cons + "'n" + dat_vowel  # si'ne / sı'na
+        v_dat_suf_inst = "s" + poss3_cons + "'n" + dat_vowel_c  # si'ne / sı'na
         v_loc_suf_inst = "s" + poss3_cons + "'n" + loc_soft  # si'nde / sı'nda
         v_abl_suf_inst = "s" + poss3_cons + "'n" + abl_soft  # si'nden / sı'ndan
         v_acc_suf_inst = "s" + poss3_cons + "'n" + acc_cons  # si'ni / sı'nı
@@ -2705,8 +2707,14 @@ def gen_proper_flags() -> list[str]:
         if flag_prefix == "pF":
             rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/cl", "tl"))
             rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/cl", "TL"))
-        for cond_pattern in ("[A-Z]", "km", "cm", "mm"):
+        for cond_pattern in VOWEL_UNIT_CONDS:
             rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/cl", cond_pattern))
+            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_v_gen}",    cond_pattern))
+            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_v_dat}",    cond_pattern))
+            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_v_loc}",    cond_pattern))
+            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_v_abl}/cl", cond_pattern))
+            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{v_acc_suf}",      cond_pattern))
+            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_v_ins}/cl", cond_pattern))
         blocks.append(make_flag_block(f"{flag_prefix}P", unique(rules_P)))
 
         # --- Copula flag ---
@@ -2749,8 +2757,11 @@ def gen_proper_flags() -> list[str]:
             # Plural institutional proper noun forms (e.g. Tesisleri'nde, Ödülleri'nde, Elemeleri'nde)
             "lArI'nIn", "lArI'nA", "lArI'ndA", "lArI'ndAn", "lArI'nI", "lArI'ylA",
             "lArI'ndAki", "lArI'ndAkiler",
-            # Unit / Abbreviation derivation suffixes (e.g. TL'lik, cm'lik, kg'lık)
-            "'lIk", "'lIklAr", "'lIğI", "'lIğIn", "'lIğA", "'lIktA", "'lIktAn"
+            # Unit / Abbreviation derivation suffixes (e.g. TL'lik, cm'lik, kg'lık, ABD'li, CHP'liler, KDV'siz)
+            "'lIk", "'lIklAr", "'lIğI", "'lIğIn", "'lIğA", "'lIktA", "'lIktAn",
+            "'lI", "'lIlAr", "'lInIn", "'lIyA", "'lIyI", "'lIdA", "'lIdAn",
+            "'lIlArIn", "'lIlArA", "'lIlArdA", "'lIlArdAn", "'lIlArI",
+            "'sIz", "'sIzlAr", "'cA"
         ]
         rules_C = []
         for cop_tmpl in COPULAS_PROP:
