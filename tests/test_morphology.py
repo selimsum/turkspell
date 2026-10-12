@@ -751,7 +751,60 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         acc_invalid, _ = check_words(invalid_numbers)
         self.assertEqual(acc_invalid, [], f"Invalid number/date/time forms leaked: {acc_invalid}")
 
+    def test_open_and_closed_compounds_and_auxiliary_verbs(self):
+        """Verifies mandatory closed compounds, rejection of consensus open compounds, and TDK/DD profile differences."""
+        valid_closed = [
+            "kaybetmek", "kaybetti", "kaybediyor", "kaydetmek", "kaydetti", "kaydediyor",
+            "sabretmek", "sabretti", "şükretmek", "şükretti", "seyretmek", "seyretti",
+            "emretmek", "emretti", "keşfetmek", "keşfetti", "devretmek", "devretti",
+            "affetmek", "affetti", "hissetmek", "hissetti", "reddetmek", "reddetti",
+            "zannetmek", "zannetti", "halletmek", "halletti", "halledildi",
+            "vazgeçmek", "vazgeçti", "varsaymak", "varsaydı", "öngörmek", "öngördü",
+            "başvurmak", "başvurdu", "alıkoymak", "alıkoydu",
+            "sanki", "oysaki", "mademki", "belki", "hâlbuki", "çünkü", "meğerki", "illaki",
+            "biraz", "birçok", "birçoğu", "birkaç", "birkaçı", "birtakım", "herhangi",
+            "hiçbir", "hiçbiri", "hiçbirimiz", "bilinçaltı", "denizaltı", "gözaltı",
+            "ayaküstü", "suçüstü", "olağanüstü", "gökyüzü", "yeryüzü", "başbakan",
+            "yayınevi", "öğretmenevi", "huzurevi", "dershane", "hastane", "pastane",
+            "eczane", "depremzede", "kazazede", "insanoğlu", "kızılötesi", "morötesi"
+        ]
+        _, rej_closed = check_words(valid_closed)
+        self.assertEqual(rej_closed, [], f"Valid closed compounds rejected: {rej_closed}")
+
+        invalid_consensus_open = [
+            "farketmek", "farketti", "farkediyor", "farketmedi", "terketmek", "terketti",
+            "terkediyor", "haketmek", "haketti", "hakediyor", "arzediyorum", "arzetti",
+            "yardımetmek", "yardımediyor", "teşekkürederim", "teşekkürediyoruz",
+            "kabuletmek", "kabuletti", "kabuledildi", "kabulediyor", "ricaederim",
+            "dikkatetti", "merakediyorum", "devamediyor", "devamedecek", "ifadeediyor",
+            "eldeedildi", "yokoldu", "yokoluyor", "varoluyor", "sağol", "sağolun",
+            "kayıpetmek", "kayıpetti", "kayıtetmek", "sabıretmek", "redetmek", "redetti",
+            "zanetti", "haletmek", "haletti", "haledildi", "hisetti", "afetmek", "afedildi",
+            "birşey", "birşeyler", "birşeyden", "herşey", "herşeyi", "herşeyden",
+            "hiçbirşey", "hiçbirşeyden", "hiçkimse", "hiçkimsenin", "herbir", "herbiri",
+            "hergün", "herzaman", "heryerde", "biran", "biranda", "şuan", "şuanda",
+            "haftasonu", "haftasonunda", "haftaiçi", "haftaiçinde", "doğumgünü",
+            "doğumgününde", "yanyana", "içiçe", "üstüste", "peşpeşe", "elele", "gözgöze",
+            "yüzyüze", "uçuca", "yada", "hemde", "bencede", "sencede", "bizcede", "sizcede",
+            "tabiki", "tabiiki", "yeşilzeytin", "siyahzeytin", "kuruüzüm", "kurufasulye"
+        ]
+        acc_open, _ = check_words(invalid_consensus_open)
+        self.assertEqual(acc_open, [], f"Invalid joined open compounds leaked: {acc_open}")
+
+        dd_closed_tdk_open = [
+            "doğalgaz", "doğalgazda", "önyargı", "önyargılı", "önsöz", "altyazı",
+            "altyazılı", "bilimkurgu", "anadil", "anadili", "işbirliği", "işbirliğinde",
+            "özgüven", "özgüvenli", "kuruyemiş", "çiğköfte", "ilkönce", "sıradışı",
+            "olağandışı", "yasadışı", "yurtdışı", "yurtdışında", "yurtiçi"
+        ]
+        acc_prof, rej_prof = check_words(dd_closed_tdk_open)
+        if is_tdk_profile():
+            self.assertEqual(acc_prof, [], f"DD-only closed compounds leaked in TDK profile: {acc_prof}")
+        else:
+            self.assertEqual(rej_prof, [], f"DD closed compounds rejected in Universal/DD profile: {rej_prof}")
+
 
 if __name__ == "__main__":
     unittest.main()
+
 

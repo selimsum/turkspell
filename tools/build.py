@@ -385,6 +385,194 @@ EXTRA_REP_RULES = [
     "REP peşisıra peşi_sıra",
     "REP ardısıra ardı_sıra",
     "REP icatı icadı",
+    "REP ^farket fark_et",
+    "REP ^farked fark_ed",
+    "REP ^terket terk_et",
+    "REP ^terked terk_ed",
+    "REP ^haket hak_et",
+    "REP ^haked hak_ed",
+    "REP ^hakked hak_ed",
+    "REP ^ayırtet ayırt_et",
+    "REP ^ayırted ayırt_ed",
+    "REP ^ayırdet ayırt_et",
+    "REP ^ayırded ayırt_ed",
+    "REP ^arzet arz_et",
+    "REP ^arzed arz_ed",
+    "REP ^yardımet yardım_et",
+    "REP ^yardımed yardım_ed",
+    "REP ^teşekküret teşekkür_et",
+    "REP ^teşekküred teşekkür_ed",
+    "REP ^kabulet kabul_et",
+    "REP ^kabuled kabul_ed",
+    "REP ^ricaet rica_et",
+    "REP ^ricaed rica_ed",
+    "REP ^dikkatet dikkat_et",
+    "REP ^dikkated dikkat_ed",
+    "REP ^meraket merak_et",
+    "REP ^meraked merak_ed",
+    "REP ^devamet devam_et",
+    "REP ^devamed devam_ed",
+    "REP ^ifadeet ifade_et",
+    "REP ^ifadeed ifade_ed",
+    "REP ^eldeet elde_et",
+    "REP ^eldeed elde_ed",
+    "REP ^hareketet hareket_et",
+    "REP ^hareketed hareket_ed",
+    "REP ^ziyaretet ziyaret_et",
+    "REP ^ziyareted ziyaret_ed",
+    "REP ^kontrolet kontrol_et",
+    "REP ^kontroled kontrol_ed",
+    "REP ^takipet takip_et",
+    "REP ^takiped takip_ed",
+    "REP ^tercihet tercih_et",
+    "REP ^tercihed tercih_ed",
+    "REP ^tavsiyeet tavsiye_et",
+    "REP ^tavsiyeed tavsiye_ed",
+    "REP ^tedaviet tedavi_et",
+    "REP ^tedavied tedavi_ed",
+    "REP ^temsilet temsil_et",
+    "REP ^temsiled temsil_ed",
+    "REP ^tespitet tespit_et",
+    "REP ^tespited tespit_ed",
+    "REP ^teslimet teslim_et",
+    "REP ^teslimed teslim_ed",
+    "REP ^teklifet teklif_et",
+    "REP ^teklifed teklif_ed",
+    "REP ^tekraret tekrar_et",
+    "REP ^tekrared tekrar_ed",
+    "REP ^iknaet ikna_et",
+    "REP ^iknaed ikna_ed",
+    "REP ^ilanet ilan_et",
+    "REP ^ilaned ilan_ed",
+    "REP ^iptalet iptal_et",
+    "REP ^iptaled iptal_ed",
+    "REP ^idareet idare_et",
+    "REP ^idareed idare_ed",
+    "REP ^ihmalet ihmal_et",
+    "REP ^ihmaled ihmal_ed",
+    "REP ^ihlalet ihlal_et",
+    "REP ^ihlaled ihlal_ed",
+    "REP ^sohbetet sohbet_et",
+    "REP ^sohbeted sohbet_ed",
+    "REP ^nefretet nefret_et",
+    "REP ^nefreted nefret_ed",
+    "REP ^danset dans_et",
+    "REP ^dansed dans_ed",
+    "REP ^tahminet tahmin_et",
+    "REP ^tahmined tahmin_ed",
+    "REP ^tebriket tebrik_et",
+    "REP ^tebriked tebrik_ed",
+    "REP ^tehditet tehdit_et",
+    "REP ^tehdited tehdit_ed",
+    "REP ^tenkitet tenkit_et",
+    "REP ^tenkited tenkit_ed",
+    "REP ^teşviket teşvik_et",
+    "REP ^teşviked teşvik_ed",
+    "REP ^tahsiset tahsis_et",
+    "REP ^tahsised tahsis_ed",
+    "REP ^takdiret takdir_et",
+    "REP ^takdired takdir_ed",
+    "REP ^tatminet tatmin_et",
+    "REP ^tatmined tatmin_ed",
+    "REP ^teminet temin_et",
+    "REP ^temined temin_ed",
+    "REP ^tereddütet tereddüt_et",
+    "REP ^tereddüted tereddüt_ed",
+    "REP ^ispatet ispat_et",
+    "REP ^ispated ispat_ed",
+    "REP ^işgalet işgal_et",
+    "REP ^işgaled işgal_ed",
+    "REP ^intiharet intihar_et",
+    "REP ^intihared intihar_ed",
+    "REP ^istifaet istifa_et",
+    "REP ^istifaed istifa_ed",
+    "REP ^itirafet itiraf_et",
+    "REP ^itirafed itiraf_ed",
+    "REP ^itirazet itiraz_et",
+    "REP ^itirazed itiraz_ed",
+    "REP ^ikametet ikamet_et",
+    "REP ^ikameted ikamet_ed",
+    "REP ^ikametmek ikamet_etmek",
+    "REP ^şikayetet şikâyet_et",
+    "REP ^şikayeted şikâyet_ed",
+    "REP ^şikâyetet şikâyet_et",
+    "REP ^şikâyeted şikâyet_ed",
+    "REP ^yokol yok_ol",
+    "REP ^varol var_ol",
+    "REP ^sağol sağ_ol",
+    "REP ^haftason hafta_son",
+    "REP ^haftaiçi hafta_içi",
+    "REP ^birşey bir_şey",
+    "REP ^herşey her_şey",
+    "REP ^hiçbirşey hiçbir_şey",
+    "REP ^hiçkimse hiç_kimse",
+    "REP ^herbir her_bir",
+    "REP ^hergün her_gün",
+    "REP ^herzaman her_zaman",
+    "REP ^heryer her_yer",
+    "REP ^heran her_an",
+    "REP ^biran bir_an",
+    "REP ^şuan şu_an",
+    "REP ^doğumgün doğum_gün",
+    "REP ^geceyarısı gece_yarısı",
+    "REP ^günortası gün_ortası",
+    "REP ^ilkönce ilk_önce",
+    "REP ^yurtdışı yurt_dışı",
+    "REP ^yurtiçi yurt_içi",
+    "REP dışı$ _dışı",
+    "REP dışında$ _dışında",
+    "REP dışından$ _dışından",
+    "REP dışına$ _dışına",
+    "REP dışındaki$ _dışındaki",
+    "REP tabiiki tabii_ki",
+    "REP sizcede sizce_de",
+    "REP yada ya_da",
+    "REP hemde hem_de",
+    "REP uçuca uç_uca",
+    "REP üstütüste üst_üste",
+    "REP yeşilzeytin yeşil_zeytin",
+    "REP siyahzeytin siyah_zeytin",
+    "REP kuruüzüm kuru_üzüm",
+    "REP ^kayıpet kaybet",
+    "REP ^kayıped kaybed",
+    "REP ^kayıtet kaydet",
+    "REP ^kayıted kayded",
+    "REP ^sabıret sabret",
+    "REP ^sabıred sabred",
+    "REP ^şüküret şükret",
+    "REP ^şüküred şükred",
+    "REP ^seyıret seyret",
+    "REP ^seyıred seyred",
+    "REP ^seyiret seyret",
+    "REP ^seyired seyred",
+    "REP ^emıret emret",
+    "REP ^emıred emred",
+    "REP ^emiret emret",
+    "REP ^emired emred",
+    "REP ^keşıfet keşfet",
+    "REP ^keşıfed keşfed",
+    "REP ^keşifet keşfet",
+    "REP ^keşifed keşfed",
+    "REP ^devıret devret",
+    "REP ^devıred devred",
+    "REP ^deviret devret",
+    "REP ^devired devred",
+    "REP ^zikıret zikret",
+    "REP ^zikiret zikret",
+    "REP ^zikired zikred",
+    "REP ^redet reddet",
+    "REP ^reded redded",
+    "REP ^zanet zannet",
+    "REP ^zaned zanned",
+    "REP ^halet hallet",
+    "REP ^haled halled",
+    "REP ^hiset hisset",
+    "REP ^hised hissed",
+    "REP ^afetmek affetmek",
+    "REP ^afetti affetti",
+    "REP ^afedildi affedildi",
+    "REP ^afediyor affediyor",
+    "REP ^afedecek affedecek",
     # Spoken / colloquial reductions & contractions
     "REP yoz yoruz",
     "REP yom yorum",
@@ -802,6 +990,21 @@ HEAD_FLAG_OVERRIDES = {
     "bekar": remap_flag_string("A1 B1 CI CK CL I1 L1 LI N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
     # haya: anatomy sense without SZ (only hayâsız, hayâsızca are valid)
     "haya": remap_flag_string("B3 a1 y1 L1 R1 n1 i1 Q1 PB PS P1 P5 PM PN CL LI LK CI CK SL".replace(" ", "")),
+    # Equative pronoun adverbs: only copula cl (preventing *bencede, *sencede, *bizcede, *sizcede)
+    "bence": remap_flag_string("cl"),
+    "sence": remap_flag_string("cl"),
+    "bizce": remap_flag_string("cl"),
+    "sizce": remap_flag_string("cl"),
+    # Conjunction hem and interjection/letter he (preventing *hemde for 'hem de')
+    "hem": "",
+    "he": remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF cl".replace(" ", "")),
+    # Unhatted yad ('yabancı'): no dative Y1 (-a), preventing *yada for 'ya da' (hatted yâd keeps full flags)
+    "yad": remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ".replace(" ", "")),
+    # şua & bira: omit 2sg possessive P5 (-n/-nda), preventing *şuan, *şuanda, *biran, *biranda
+    "şua": remap_flag_string("B3 a1 y1 L1 R1 n1 i1 Q1 PB PS P1 PM PN CL LI LK SZ CI CK SL".replace(" ", "")),
+    "bira": remap_flag_string("B3 a1 y1 L1 R1 n1 i1 Q1 PB PS P1 PM PN CL LI LK SZ CI CK SL".replace(" ", "")),
+    # halet (unhatted hâlet): omit cl copula (-ti), preventing *haletti leak for halletti
+    "halet": remap_flag_string("A3 CK F1 I2 L2 N3 P3 P7 PF PP PU PW Q2 R2 Y2".replace(" ", "")),
 }
 
 # Standard regular non-voicing inflection flags (including VC/vc for 1sg/1pl vowel-initial copulas on [pçtk] stems)
@@ -1555,13 +1758,13 @@ def load_lexicons():
     tdk_words = set()
     with open(TDK_PATH, encoding="utf-8") as f:
         for line in f:
-            w = tr_lower(line.strip().split("/")[0])
+            w = tr_lower(line.strip().split("/")[0].split(" (")[0])
             if w: tdk_words.add(w)
             
     dd_words = set()
     with open(DD_PATH, encoding="utf-8") as f:
         for line in f:
-            w = tr_lower(line.strip().split("/")[0])
+            w = tr_lower(line.strip().split("/")[0].split(" (")[0])
             if w: dd_words.add(w)
             
     custom_abbrevs = set()
@@ -1823,7 +2026,8 @@ MAP '’‘"""
             "batini bâtıni",
             "teleskopu teleskobu",
             "bergamotu bergamodu",
-            "baçı bacı"
+            "baçı bacı",
+            "bilim$ _bilimi"
         ])
         # Load all TDK-open compound suggestions (where joined is used in Dil Derneği)
         _tdk_open_rep_path = RAW_DIR / "tdk_open_compound_rep.json"
@@ -2001,7 +2205,8 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         "fata", "çe",
         # Purge noisy abbreviation/symbol stems causing widespread inflection overgeneration
         "sr", "ac", "ag", "ariza", "aski", "ba", "paba", "kefne", "ekit",
-        "cav", "pere", "pal", "hut", "banaz", "ızgın", "elazığ"
+        "cav", "pere", "pal", "hut", "banaz", "ızgın", "elazığ",
+        "haletmek", "haledilmek", "haletme", "haledilme", "hal etmek", "günorta", "uçuc"
     }
     if profile == "tdk":
         BAD_STEMS.update({"fata", "çe"})
@@ -2047,7 +2252,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     virtual_stem_heads = {w.split("/")[0] for w in VIRTUAL_STEMS}
     for head, flags in parsed_lines:
         head_lower = tr_lower(head)
-        if head in virtual_stem_heads:
+        if head in virtual_stem_heads or " (" in head:
             continue
         
         # 1. Purge known bad stems and bogus voiced virtual stems
@@ -2170,6 +2375,12 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             flags = HEAD_FLAG_OVERRIDES[head_lower]
         elif head_lower in PALATAL_L_HEADS:
             flags = PALATAL_L_FLAGS
+        elif head_lower.endswith((" etmek", " gitmek")) or head_lower in ("kayetmek", "kayyetmek"):
+            flags = LONG_TO_UTF8["VM"]
+        elif head_lower.endswith(" tatmak"):
+            flags = LONG_TO_UTF8["VK"]
+        elif head_lower.endswith(" gütmek"):
+            flags = LONG_TO_UTF8["VN"]
         elif not head_lower.endswith(("mak", "mek")) and "X" not in flags and any(c in flags for c in "≔≖≗≘≙≚≛≜≝≞≟≠≡"):
             # Rescue non-mak/mek nouns/adjectives that erroneously received verb flags
             if head_lower in {
