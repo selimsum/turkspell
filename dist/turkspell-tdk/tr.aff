@@ -40,21 +40,7 @@ MAXDIFF 5
 MAXNGRAMSUGS 8
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-REP 4240
+REP 4235
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -3040,11 +3026,6 @@ REP şimşektaşı şimşek_taşı
 REP şişköfte şiş_köfte
 REP şıpşıp şıp_şıp
 REP şıpınişi şıpın_işi
-REP eflani eflâni
-REP muhammedi muhammedî
-REP kabe kâbe
-REP ladik lâdik
-REP lapseki lâpseki
 REP yanliz yalnız
 REP yanlız yalnız
 REP deil değil
@@ -12052,7 +12033,7 @@ SFX ≑ 0 0 .
 SFX ≒ Y 1
 SFX ≒ 0 0 .
 
-SFX ≓ Y 850
+SFX ≓ Y 858
 SFX ≓ amak ıyor/⊮ amak
 SFX ≓ amak ıyorken amak
 SFX ≓ amak ıyor amak
@@ -12414,6 +12395,10 @@ SFX ≓ mak mamak mak
 SFX ≓ mak mamakta/⊳ mak
 SFX ≓ mak mamaktan mak
 SFX ≓ mak mamakla mak
+SFX ≓ mak mama mak
+SFX ≓ mak mamada mak
+SFX ≓ mak mamadan mak
+SFX ≓ mak mamayla mak
 SFX ≓ mak mamayı mak
 SFX ≓ mak mamaya mak
 SFX ≓ mak mamanın mak
@@ -12654,6 +12639,10 @@ SFX ≓ mak yamamak mak
 SFX ≓ mak yamamakta/⊳ mak
 SFX ≓ mak yamamaktan mak
 SFX ≓ mak yamamakla mak
+SFX ≓ mak yamama mak
+SFX ≓ mak yamamada mak
+SFX ≓ mak yamamadan mak
+SFX ≓ mak yamamayla mak
 SFX ≓ mak yamamayı mak
 SFX ≓ mak yamamaya mak
 SFX ≓ mak yamamanın mak
@@ -12904,7 +12893,7 @@ SFX ≓ mak yabildikçe mak
 SFX ≓ mak yabilse mak
 SFX ≓ mak yabilseydi mak
 
-SFX ≔ Y 875
+SFX ≔ Y 883
 SFX ≔ mak ıyor/⊮ mak
 SFX ≔ mak ıyorken mak
 SFX ≔ mak ıyor mak
@@ -13302,6 +13291,10 @@ SFX ≔ mak mamak mak
 SFX ≔ mak mamakta/⊳ mak
 SFX ≔ mak mamaktan mak
 SFX ≔ mak mamakla mak
+SFX ≔ mak mama mak
+SFX ≔ mak mamada mak
+SFX ≔ mak mamadan mak
+SFX ≔ mak mamayla mak
 SFX ≔ mak mamayı mak
 SFX ≔ mak mamaya mak
 SFX ≔ mak mamanın mak
@@ -13531,6 +13524,10 @@ SFX ≔ mak amamak mak
 SFX ≔ mak amamakta/⊳ mak
 SFX ≔ mak amamaktan mak
 SFX ≔ mak amamakla mak
+SFX ≔ mak amama mak
+SFX ≔ mak amamada mak
+SFX ≔ mak amamadan mak
+SFX ≔ mak amamayla mak
 SFX ≔ mak amamayı mak
 SFX ≔ mak amamaya mak
 SFX ≔ mak amamanın mak
@@ -13791,7 +13788,7 @@ SFX ≕ 0 uz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≕ 0 umdur [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≕ 0 uzdur [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 
-SFX ≖ Y 850
+SFX ≖ Y 858
 SFX ≖ emek iyor/⊮ emek
 SFX ≖ emek iyorken emek
 SFX ≖ emek iyor emek
@@ -14153,6 +14150,10 @@ SFX ≖ mek memek mek
 SFX ≖ mek memekte/⊴ mek
 SFX ≖ mek memekten mek
 SFX ≖ mek memekle mek
+SFX ≖ mek meme mek
+SFX ≖ mek memede mek
+SFX ≖ mek memeden mek
+SFX ≖ mek memeyle mek
 SFX ≖ mek memeyi mek
 SFX ≖ mek memeye mek
 SFX ≖ mek memenin mek
@@ -14393,6 +14394,10 @@ SFX ≖ mek yememek mek
 SFX ≖ mek yememekte/⊴ mek
 SFX ≖ mek yememekten mek
 SFX ≖ mek yememekle mek
+SFX ≖ mek yememe mek
+SFX ≖ mek yememede mek
+SFX ≖ mek yememeden mek
+SFX ≖ mek yememeyle mek
 SFX ≖ mek yememeyi mek
 SFX ≖ mek yememeye mek
 SFX ≖ mek yememenin mek
@@ -14643,7 +14648,7 @@ SFX ≖ mek yebildikçe mek
 SFX ≖ mek yebilse mek
 SFX ≖ mek yebilseydi mek
 
-SFX ≗ Y 875
+SFX ≗ Y 883
 SFX ≗ mek iyor/⊮ mek
 SFX ≗ mek iyorken mek
 SFX ≗ mek iyor mek
@@ -15041,6 +15046,10 @@ SFX ≗ mek memek mek
 SFX ≗ mek memekte/⊴ mek
 SFX ≗ mek memekten mek
 SFX ≗ mek memekle mek
+SFX ≗ mek meme mek
+SFX ≗ mek memede mek
+SFX ≗ mek memeden mek
+SFX ≗ mek memeyle mek
 SFX ≗ mek memeyi mek
 SFX ≗ mek memeye mek
 SFX ≗ mek memenin mek
@@ -15270,6 +15279,10 @@ SFX ≗ mek ememek mek
 SFX ≗ mek ememekte/⊴ mek
 SFX ≗ mek ememekten mek
 SFX ≗ mek ememekle mek
+SFX ≗ mek ememe mek
+SFX ≗ mek ememede mek
+SFX ≗ mek ememeden mek
+SFX ≗ mek ememeyle mek
 SFX ≗ mek ememeyi mek
 SFX ≗ mek ememeye mek
 SFX ≗ mek ememenin mek
@@ -15520,7 +15533,7 @@ SFX ≗ mek ebildikçe mek
 SFX ≗ mek ebilse mek
 SFX ≗ mek ebilseydi mek
 
-SFX ≘ Y 893
+SFX ≘ Y 901
 SFX ≘ mek üyor/⊮ mek
 SFX ≘ mek üyorken mek
 SFX ≘ mek üyor mek
@@ -15936,6 +15949,10 @@ SFX ≘ mek memek mek
 SFX ≘ mek memekte/⊴ mek
 SFX ≘ mek memekten mek
 SFX ≘ mek memekle mek
+SFX ≘ mek meme mek
+SFX ≘ mek memede mek
+SFX ≘ mek memeden mek
+SFX ≘ mek memeyle mek
 SFX ≘ mek memeyi mek
 SFX ≘ mek memeye mek
 SFX ≘ mek memenin mek
@@ -16165,6 +16182,10 @@ SFX ≘ mek ememek mek
 SFX ≘ mek ememekte/⊴ mek
 SFX ≘ mek ememekten mek
 SFX ≘ mek ememekle mek
+SFX ≘ mek ememe mek
+SFX ≘ mek ememede mek
+SFX ≘ mek ememeden mek
+SFX ≘ mek ememeyle mek
 SFX ≘ mek ememeyi mek
 SFX ≘ mek ememeye mek
 SFX ≘ mek ememenin mek
@@ -16415,7 +16436,7 @@ SFX ≘ mek ebildikçe mek
 SFX ≘ mek ebilse mek
 SFX ≘ mek ebilseydi mek
 
-SFX ≙ Y 993
+SFX ≙ Y 1001
 SFX ≙ emek üyor/⊮ emek
 SFX ≙ emek üyorken emek
 SFX ≙ emek üyor emek
@@ -16919,6 +16940,10 @@ SFX ≙ mek memek mek
 SFX ≙ mek memekte/⊴ mek
 SFX ≙ mek memekten mek
 SFX ≙ mek memekle mek
+SFX ≙ mek meme mek
+SFX ≙ mek memede mek
+SFX ≙ mek memeden mek
+SFX ≙ mek memeyle mek
 SFX ≙ mek memeyi mek
 SFX ≙ mek memeye mek
 SFX ≙ mek memenin mek
@@ -17160,6 +17185,10 @@ SFX ≙ mek yememek mek
 SFX ≙ mek yememekte/⊴ mek
 SFX ≙ mek yememekten mek
 SFX ≙ mek yememekle mek
+SFX ≙ mek yememe mek
+SFX ≙ mek yememede mek
+SFX ≙ mek yememeden mek
+SFX ≙ mek yememeyle mek
 SFX ≙ mek yememeyi mek
 SFX ≙ mek yememeye mek
 SFX ≙ mek yememenin mek
@@ -17410,7 +17439,7 @@ SFX ≙ mek yebildikçe mek
 SFX ≙ mek yebilse mek
 SFX ≙ mek yebilseydi mek
 
-SFX ≚ Y 893
+SFX ≚ Y 901
 SFX ≚ tmak dıyor/⊮ tmak
 SFX ≚ tmak dıyorken tmak
 SFX ≚ tmak dıyor tmak
@@ -17729,7 +17758,7 @@ SFX ≚ tmak dıp tmak
 SFX ≚ tmak dınca tmak
 SFX ≚ tmak dıncaya tmak
 SFX ≚ mak tıkça mak
-SFX ≚ mak tıktan tmak
+SFX ≚ mak tıktan mak
 SFX ≚ tmak dalı tmak
 SFX ≚ tmak dasım tmak
 SFX ≚ mak madan mak
@@ -17815,6 +17844,10 @@ SFX ≚ mak mamak mak
 SFX ≚ mak mamakta/⊳ mak
 SFX ≚ mak mamaktan mak
 SFX ≚ mak mamakla mak
+SFX ≚ mak mama mak
+SFX ≚ mak mamada mak
+SFX ≚ mak mamadan mak
+SFX ≚ mak mamayla mak
 SFX ≚ mak mamayı mak
 SFX ≚ mak mamaya mak
 SFX ≚ mak mamanın mak
@@ -18055,6 +18088,10 @@ SFX ≚ tmak damamak tmak
 SFX ≚ tmak damamakta/⊳ tmak
 SFX ≚ tmak damamaktan tmak
 SFX ≚ tmak damamakla tmak
+SFX ≚ tmak damama tmak
+SFX ≚ tmak damamada tmak
+SFX ≚ tmak damamadan tmak
+SFX ≚ tmak damamayla tmak
 SFX ≚ tmak damamayı tmak
 SFX ≚ tmak damamaya tmak
 SFX ≚ tmak damamanın tmak
@@ -18305,7 +18342,7 @@ SFX ≚ tmak dabildikçe tmak
 SFX ≚ tmak dabilse tmak
 SFX ≚ tmak dabilseydi tmak
 
-SFX ≛ Y 911
+SFX ≛ Y 919
 SFX ≛ tmak duyor/⊮ tmak
 SFX ≛ tmak duyorken tmak
 SFX ≛ tmak duyor tmak
@@ -18633,7 +18670,7 @@ SFX ≛ tmak dup tmak
 SFX ≛ tmak dunca tmak
 SFX ≛ tmak duncaya tmak
 SFX ≛ mak tukça mak
-SFX ≛ mak tuktan tmak
+SFX ≛ mak tuktan mak
 SFX ≛ tmak dalı tmak
 SFX ≛ tmak dasım tmak
 SFX ≛ mak madan mak
@@ -18728,6 +18765,10 @@ SFX ≛ mak mamak mak
 SFX ≛ mak mamakta/⊳ mak
 SFX ≛ mak mamaktan mak
 SFX ≛ mak mamakla mak
+SFX ≛ mak mama mak
+SFX ≛ mak mamada mak
+SFX ≛ mak mamadan mak
+SFX ≛ mak mamayla mak
 SFX ≛ mak mamayı mak
 SFX ≛ mak mamaya mak
 SFX ≛ mak mamanın mak
@@ -18968,6 +19009,10 @@ SFX ≛ tmak damamak tmak
 SFX ≛ tmak damamakta/⊳ tmak
 SFX ≛ tmak damamaktan tmak
 SFX ≛ tmak damamakla tmak
+SFX ≛ tmak damama tmak
+SFX ≛ tmak damamada tmak
+SFX ≛ tmak damamadan tmak
+SFX ≛ tmak damamayla tmak
 SFX ≛ tmak damamayı tmak
 SFX ≛ tmak damamaya tmak
 SFX ≛ tmak damamanın tmak
@@ -19218,7 +19263,7 @@ SFX ≛ tmak dabildikçe tmak
 SFX ≛ tmak dabilse tmak
 SFX ≛ tmak dabilseydi tmak
 
-SFX ≜ Y 893
+SFX ≜ Y 901
 SFX ≜ tmek diyor/⊮ tmek
 SFX ≜ tmek diyorken tmek
 SFX ≜ tmek diyor tmek
@@ -19537,7 +19582,7 @@ SFX ≜ tmek dip tmek
 SFX ≜ tmek dince tmek
 SFX ≜ tmek dinceye tmek
 SFX ≜ mek tikçe mek
-SFX ≜ mek tikten tmek
+SFX ≜ mek tikten mek
 SFX ≜ tmek deli tmek
 SFX ≜ tmek desim tmek
 SFX ≜ mek meden mek
@@ -19623,6 +19668,10 @@ SFX ≜ mek memek mek
 SFX ≜ mek memekte/⊴ mek
 SFX ≜ mek memekten mek
 SFX ≜ mek memekle mek
+SFX ≜ mek meme mek
+SFX ≜ mek memede mek
+SFX ≜ mek memeden mek
+SFX ≜ mek memeyle mek
 SFX ≜ mek memeyi mek
 SFX ≜ mek memeye mek
 SFX ≜ mek memenin mek
@@ -19863,6 +19912,10 @@ SFX ≜ tmek dememek tmek
 SFX ≜ tmek dememekte/⊴ tmek
 SFX ≜ tmek dememekten tmek
 SFX ≜ tmek dememekle tmek
+SFX ≜ tmek dememe tmek
+SFX ≜ tmek dememede tmek
+SFX ≜ tmek dememeden tmek
+SFX ≜ tmek dememeyle tmek
 SFX ≜ tmek dememeyi tmek
 SFX ≜ tmek dememeye tmek
 SFX ≜ tmek dememenin tmek
@@ -20113,7 +20166,7 @@ SFX ≜ tmek debildikçe tmek
 SFX ≜ tmek debilse tmek
 SFX ≜ tmek debilseydi tmek
 
-SFX ≝ Y 911
+SFX ≝ Y 919
 SFX ≝ tmek düyor/⊮ tmek
 SFX ≝ tmek düyorken tmek
 SFX ≝ tmek düyor tmek
@@ -20441,7 +20494,7 @@ SFX ≝ tmek düp tmek
 SFX ≝ tmek dünce tmek
 SFX ≝ tmek dünceye tmek
 SFX ≝ mek tükçe mek
-SFX ≝ mek tükten tmek
+SFX ≝ mek tükten mek
 SFX ≝ tmek deli tmek
 SFX ≝ tmek desim tmek
 SFX ≝ mek meden mek
@@ -20536,6 +20589,10 @@ SFX ≝ mek memek mek
 SFX ≝ mek memekte/⊴ mek
 SFX ≝ mek memekten mek
 SFX ≝ mek memekle mek
+SFX ≝ mek meme mek
+SFX ≝ mek memede mek
+SFX ≝ mek memeden mek
+SFX ≝ mek memeyle mek
 SFX ≝ mek memeyi mek
 SFX ≝ mek memeye mek
 SFX ≝ mek memenin mek
@@ -20776,6 +20833,10 @@ SFX ≝ tmek dememek tmek
 SFX ≝ tmek dememekte/⊴ tmek
 SFX ≝ tmek dememekten tmek
 SFX ≝ tmek dememekle tmek
+SFX ≝ tmek dememe tmek
+SFX ≝ tmek dememede tmek
+SFX ≝ tmek dememeden tmek
+SFX ≝ tmek dememeyle tmek
 SFX ≝ tmek dememeyi tmek
 SFX ≝ tmek dememeye tmek
 SFX ≝ tmek dememenin tmek
@@ -21026,7 +21087,7 @@ SFX ≝ tmek debildikçe tmek
 SFX ≝ tmek debilse tmek
 SFX ≝ tmek debilseydi tmek
 
-SFX ≞ Y 893
+SFX ≞ Y 901
 SFX ≞ mak uyor/⊮ mak
 SFX ≞ mak uyorken mak
 SFX ≞ mak uyor mak
@@ -21442,6 +21503,10 @@ SFX ≞ mak mamak mak
 SFX ≞ mak mamakta/⊳ mak
 SFX ≞ mak mamaktan mak
 SFX ≞ mak mamakla mak
+SFX ≞ mak mama mak
+SFX ≞ mak mamada mak
+SFX ≞ mak mamadan mak
+SFX ≞ mak mamayla mak
 SFX ≞ mak mamayı mak
 SFX ≞ mak mamaya mak
 SFX ≞ mak mamanın mak
@@ -21671,6 +21736,10 @@ SFX ≞ mak amamak mak
 SFX ≞ mak amamakta/⊳ mak
 SFX ≞ mak amamaktan mak
 SFX ≞ mak amamakla mak
+SFX ≞ mak amama mak
+SFX ≞ mak amamada mak
+SFX ≞ mak amamadan mak
+SFX ≞ mak amamayla mak
 SFX ≞ mak amamayı mak
 SFX ≞ mak amamaya mak
 SFX ≞ mak amamanın mak
@@ -21921,7 +21990,7 @@ SFX ≞ mak abildikçe mak
 SFX ≞ mak abilse mak
 SFX ≞ mak abilseydi mak
 
-SFX ≟ Y 993
+SFX ≟ Y 1001
 SFX ≟ amak uyor/⊮ amak
 SFX ≟ amak uyorken amak
 SFX ≟ amak uyor amak
@@ -22425,6 +22494,10 @@ SFX ≟ mak mamak mak
 SFX ≟ mak mamakta/⊳ mak
 SFX ≟ mak mamaktan mak
 SFX ≟ mak mamakla mak
+SFX ≟ mak mama mak
+SFX ≟ mak mamada mak
+SFX ≟ mak mamadan mak
+SFX ≟ mak mamayla mak
 SFX ≟ mak mamayı mak
 SFX ≟ mak mamaya mak
 SFX ≟ mak mamanın mak
@@ -22666,6 +22739,10 @@ SFX ≟ mak yamamak mak
 SFX ≟ mak yamamakta/⊳ mak
 SFX ≟ mak yamamaktan mak
 SFX ≟ mak yamamakla mak
+SFX ≟ mak yamama mak
+SFX ≟ mak yamamada mak
+SFX ≟ mak yamamadan mak
+SFX ≟ mak yamamayla mak
 SFX ≟ mak yamamayı mak
 SFX ≟ mak yamamaya mak
 SFX ≟ mak yamamanın mak
@@ -22916,7 +22993,7 @@ SFX ≟ mak yabildikçe mak
 SFX ≟ mak yabilse mak
 SFX ≟ mak yabilseydi mak
 
-SFX ≠ Y 847
+SFX ≠ Y 855
 SFX ≠ emek iyor/⊮ [dy]emek
 SFX ≠ emek iyorken [dy]emek
 SFX ≠ emek iyor [dy]emek
@@ -23188,10 +23265,10 @@ SFX ≠ emek eyerek [dy]emek
 SFX ≠ emek eyip [dy]emek
 SFX ≠ emek eyince [dy]emek
 SFX ≠ emek eyinceye [dy]emek
-SFX ≠ mek dikten [dy]emek
 SFX ≠ emek iyeli [dy]emek
 SFX ≠ emek iyesim [dy]emek
 SFX ≠ mek dikçe mek
+SFX ≠ mek dikten mek
 SFX ≠ mek meden mek
 SFX ≠ mek miyor/⊮ mek
 SFX ≠ mek miyorken mek
@@ -23275,6 +23352,10 @@ SFX ≠ mek memek mek
 SFX ≠ mek memekte/⊴ mek
 SFX ≠ mek memekten mek
 SFX ≠ mek memekle mek
+SFX ≠ mek meme mek
+SFX ≠ mek memede mek
+SFX ≠ mek memeden mek
+SFX ≠ mek memeyle mek
 SFX ≠ mek memeyi mek
 SFX ≠ mek memeye mek
 SFX ≠ mek memenin mek
@@ -23515,6 +23596,10 @@ SFX ≠ emek iyememek [dy]emek
 SFX ≠ emek iyememekte/⊴ [dy]emek
 SFX ≠ emek iyememekten [dy]emek
 SFX ≠ emek iyememekle [dy]emek
+SFX ≠ emek iyememe [dy]emek
+SFX ≠ emek iyememede [dy]emek
+SFX ≠ emek iyememeden [dy]emek
+SFX ≠ emek iyememeyle [dy]emek
 SFX ≠ emek iyememeyi [dy]emek
 SFX ≠ emek iyememeye [dy]emek
 SFX ≠ emek iyememenin [dy]emek

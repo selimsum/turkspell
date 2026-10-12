@@ -536,6 +536,21 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         accepted, rejected = check_words(valid)
         self.assertEqual(rejected, [], f"Corpus-mined authority grammar forms failing: {rejected}")
 
+    def test_inability_and_negative_verbal_nouns(self):
+        """Verifies bare -amama/-ememe and -mama/-meme verbal nouns and case inflections."""
+        valid = [
+            # Inability bare verbal nouns (-amama / -ememe) and case forms
+            "koyamama", "koyamamada", "koyamamadan", "koyamamayla", "koyamamaya", "koyamamayı", "koyamamanın",
+            "yapamama", "yapamamada", "yapamamadan", "yapamamayla",
+            "gidememe", "gidememede", "gidememeden", "gidememeyle",
+            "alamama", "uyuyamama", "anlayamama", "diyememe", "yiyememe",
+            # Regular negative verbal nouns (-mama / -meme) and case forms
+            "koymama", "koymamada", "koymamadan", "koymamayla",
+            "yapmama", "yapmamada", "yapmamadan", "yapmamayla"
+        ]
+        accepted, rejected = check_words(valid)
+        self.assertEqual(rejected, [], f"Valid inability/negative verbal nouns failing: {rejected}")
+
 
 if __name__ == "__main__":
     unittest.main()
