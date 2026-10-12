@@ -235,7 +235,7 @@ def audit_cross_pos_collisions() -> dict:
             stem = w[:-3] if w.endswith(("mak", "mek")) else w
             if not stem.endswith("t"):
                 suspicious_voicing_verbs.append((w, fl_name, "Stem does not end in 't'"))
-            elif not (w.endswith("etmek") or w in {"tatmak", "ditmek", "gitmek", "gütmek"}):
+            elif not (w.endswith(("etmek", "gitmek")) or w in {"tatmak", "ditmek", "gitmek", "gütmek"}):
                 suspicious_voicing_verbs.append((w, fl_name, "Stem is not in known voicing verb list"))
 
     print(f"\nSuspicious Voicing Verbs Found: {len(suspicious_voicing_verbs)}")
@@ -331,7 +331,7 @@ def audit_combinatorial_matrix() -> dict:
             y_buf = "y" if ends_vow else ""
             return [
                 f"{root}{d_c}{v_h}kçe" if v_l == "e" else f"{root}{d_c}{v_h}kça",
-                f"{root}{y_buf}eli" if v_l == "e" else f"{root}{y_buf}alı",
+                f"{voiced_root}{y_buf}eli" if v_l == "e" else f"{voiced_root}{y_buf}alı",
                 f"{root}meksizin" if v_l == "e" else f"{root}maksızın",
             ]
         elif sfx_type == "prog":

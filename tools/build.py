@@ -1318,6 +1318,11 @@ def load_lexicons():
 def build_hardened_aff(profile="tdk"):
     print(f"Building hardened .aff file for profile [{profile}]...")
     with open(AFF_SRC, "r", encoding="utf-8") as f:
+        raw_aff_check = f.read()
+    if "FLAG long" in raw_aff_check:
+        from compile_hunspell_utf8 import remap_aff_file
+        remap_aff_file(str(AFF_SRC), str(AFF_SRC))
+    with open(AFF_SRC, "r", encoding="utf-8") as f:
         lines = f.readlines()
         
     hardened_lines = []

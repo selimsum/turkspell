@@ -102,7 +102,7 @@ turkspell/
 │   └── test_suggestions.py    # Öneri kalitesi ve MRR kıyaslama testleri
 │
 ├── tools/                     # Veri Analiz ve İnce Ayar Araçları
-│   ├── build_v06.py           # Tek adımda sözlük derleyici
+│   ├── build.py           # Tek adımda sözlük derleyici
 │   ├── audit_missing_morphology.py # Morfolojik eksiklik denetçisi
 │   ├── corpus_affix_discovery.py   # Derlemden ek madenciliği aracı
 │   └── clean_and_audit_oscar.py    # OSCAR derlem temizleme hattı
@@ -236,10 +236,10 @@ Derleme hattı, web kazıyıcı veya filtrelenmemiş kullanıcı verileri yerine
 Tüm profilleri tek komutla, kural sertleştirmeleri ve sözlük arıtmalarıyla birlikte derlemek için:
 
 ```bash
-python tools/build_v06.py
+python tools/build.py
 ```
 
-Bu derleme aracı ([`tools/build_v06.py`](file:///c:/gemini/turkspell/tools/build_v06.py)) sırasıyla şu adımları icra eder:
+Bu derleme aracı ([`tools/build.py`](file:///c:/gemini/turkspell/tools/build.py)) sırasıyla şu adımları icra eder:
 
 1. **Leksikon Harmonizasyonu (`load_lexicons`)**: TDK ve Dil Derneği sözcük havuzları yüklenir; özel ad ve kısaltma koleksiyonlarıyla harmanlanır.
 2. **Kural Dosyasının Sertleştirilmesi (`build_hardened_aff`)**:
@@ -382,7 +382,7 @@ Bu matris sayesinde kullanıcı örneğin `ruzgar` yazdığında motor doğrudan
 
 #### 2. Kapsamlı Fonetik ve İmla Düzeltme Tablosu (`REP`)
 
-[`tools/build_v06.py`](file:///c:/gemini/turkspell/tools/build_v06.py) tarafından derlenen `tr.aff` dosyasına Türkçenin en yaygın yazım yanlışlarını kapsayan yüzlerce `REP` kuralı enjekte edilir:
+[`tools/build.py`](file:///c:/gemini/turkspell/tools/build.py) tarafından derlenen `tr.aff` dosyasına Türkçenin en yaygın yazım yanlışlarını kapsayan yüzlerce `REP` kuralı enjekte edilir:
 
 * **Klavye Kayması ve Ek Sınırları**:
   `dem -> den` | `dam -> dan` | `dej -> den` | `tem -> ten` | `larz -> lara` | `lerz -> lere`
@@ -564,7 +564,7 @@ turkspell/
 │   └── test_suggestions.py    # Suggestion quality and MRR evaluation tests
 │
 ├── tools/                     # Data Analysis and Fine-Tuning Utilities
-│   ├── build_v06.py           # One-step master dictionary compiler
+│   ├── build.py           # One-step master dictionary compiler
 │   ├── audit_missing_morphology.py # Morphological gap audit tool
 │   ├── corpus_affix_discovery.py   # Corpus affix mining tool
 │   └── clean_and_audit_oscar.py    # OSCAR corpus sanitization pipeline
@@ -698,10 +698,10 @@ The build pipeline strictly avoids unfiltered web scrapes, relying entirely on v
 To compile all profiles in a single command with rule hardening and dictionary sanitization:
 
 ```bash
-python tools/build_v06.py
+python tools/build.py
 ```
 
-The master build script ([`tools/build_v06.py`](file:///c:/gemini/turkspell/tools/build_v06.py)) executes the following steps sequentially:
+The master build script ([`tools/build.py`](file:///c:/gemini/turkspell/tools/build.py)) executes the following steps sequentially:
 
 1. **Lexicon Harmonization (`load_lexicons`)**: Loads TDK and Dil Derneği vocabularies and merges them with proper names and acronyms.
 2. **Affix Rule Hardening (`build_hardened_aff`)**:
@@ -844,7 +844,7 @@ When a user types `ruzgar`, the engine directly surfaces `rüzgâr` as the Rank 
 
 #### 2. Comprehensive Phonetic & Typo Replacement Table (`REP`)
 
-Injected into `tr.aff` by [`tools/build_v06.py`](file:///c:/gemini/turkspell/tools/build_v06.py), the `REP` table targets high-frequency Turkish errors:
+Injected into `tr.aff` by [`tools/build.py`](file:///c:/gemini/turkspell/tools/build.py), the `REP` table targets high-frequency Turkish errors:
 
 * **Keyboard Slip & Suffix Boundaries**:
   `dem -> den` | `dam -> dan` | `dej -> den` | `tem -> ten` | `larz -> lara` | `lerz -> lere`
