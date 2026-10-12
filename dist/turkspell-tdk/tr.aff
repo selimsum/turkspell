@@ -40,7 +40,7 @@ MAXDIFF 5
 MAXNGRAMSUGS 8
 
 
-REP 4235
+REP 4643
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -59,20 +59,20 @@ REP topraklarınsan topraklarından
 REP görüntülerinsen görüntülerinden
 REP çiftliklersen çiftliklerden
 REP goya boya
-REP dem den
-REP dam dan
-REP dej den
-REP daj dan
-REP tem ten
-REP tam tan
+REP dem$ den
+REP dam$ dan
+REP dej$ den
+REP daj$ dan
+REP tem$ ten
+REP tam$ tan
 REP yayınlanan yayımlanan
 REP yayınladı yayımlandı
 REP yayınlandı yayımlandı
 REP yayınlamak yayımlamak
 REP yayınlanmak yayımlanmak
-REP rim rin
-REP larz lara
-REP lerz lere
+REP rim$ rin
+REP larz$ lara
+REP lerz$ lere
 REP lardan lardan
 REP HDMI'ya HDMI'a
 REP USB'e USB'ye
@@ -124,7 +124,10 @@ REP celali celâli
 REP eflani Eflâni
 REP Eflani Eflâni
 REP batıniye bâtıniye
+REP ademci âdemci
 REP ademcilik âdemcilik
+REP amalık âmâlık
+REP mahkukat mahkûkât
 REP maniasız mâniasız
 REP harcıalem harcıâlem
 REP mahkumane mahkûmane
@@ -176,6 +179,22 @@ REP büyüksehir büyükşehir
 REP herkez herkes
 REP herkeze herkese
 REP herkezin herkesin
+REP herkezden herkesten
+REP idda iddia
+REP iddea iddia
+REP artiz artist
+REP apandist apandisit
+REP espiri espri
+REP espirili esprili
+REP stajer stajyer
+REP stajerlik stajyerlik
+REP kolanya kolonya
+REP küsülat küsurat
+REP şarter şalter
+REP tazik tazyik
+REP tazzik tazyik
+REP zıttı zıddı
+REP zıttına zıddına
 REP kiprik kirpik
 REP eşki ekşi
 REP kirbit kibrit
@@ -3046,111 +3065,6 @@ REP yanlis yanlış
 REP yanlıs yanlış
 REP mumkun mümkün
 REP mümkun mümkün
-REP 0 o
-REP 0 O
-REP 1 i
-REP 1 I
-REP 1 ı
-REP 3 e
-REP 3 E
-REP 4 a
-REP 4 A
-REP 5 s
-REP 5 r
-REP 6 y
-REP 6 g
-REP 6 t
-REP 7 y
-REP 7 t
-REP 8 u
-REP 8 ü
-REP 9 o
-REP 9 u
-REP a â
-REP â a
-REP u û
-REP û u
-REP i î
-REP î i
-REP A Â
-REP Â A
-REP U Û
-REP Û U
-REP İ Î
-REP Î İ
-REP c ç
-REP ç c
-REP g ğ
-REP ğ g
-REP s ş
-REP ş s
-REP o ö
-REP ö o
-REP u ü
-REP ü u
-REP ı i
-REP i ı
-REP C Ç
-REP Ç C
-REP G Ğ
-REP Ğ G
-REP S Ş
-REP Ş S
-REP O Ö
-REP Ö O
-REP U Ü
-REP Ü U
-REP I İ
-REP İ I
-REP sh ş
-REP ch ç
-REP gh ğ
-REP ss ş
-REP dd t
-REP tt d
-REP bb p
-REP pp b
-REP cc c
-REP kk g
-REP ğ y
-REP y ğ
-REP h ğ
-REP ğ h
-REP a e
-REP e a
-REP d t
-REP t d
-REP p b
-REP b p
-REP z s
-REP s z
-REP k g
-REP g k
-REP ın in
-REP in ın
-REP un ün
-REP ün un
-REP da de
-REP de da
-REP lar ler
-REP ler lar
-REP la le
-REP le la
-REP ’ '
-REP lari ları
-REP larin ların
-REP larimi larımı
-REP lariniz larınız
-REP sutcu şütçü
-REP sucu şücü
-REP tcu tçü
-REP IS İŞ
-REP IL İL
-REP IN İN
-REP IY İY
-REP IR İR
-REP ES EŞ
-REP IK İK
 REP yalnış yanlış
 REP pantalon pantolon
 REP şöför şoför
@@ -3160,7 +3074,6 @@ REP vejeteryan vejetaryen
 REP insiyatif inisiyatif
 REP orjinal orijinal
 REP dinazor dinozor
-REP idda iddaa
 REP klüp kulüp
 REP mualif muhalif
 REP seftali şeftali
@@ -3226,46 +3139,238 @@ REP matba matbaa
 REP mütevazi mütevazı
 REP egsos egzoz
 REP egzos egzoz
-REP w v
-REP v w
-REP q k
-REP k q
-REP x ks
+REP herkezde herkeste
+REP herkezi herkesi
+REP herkezle herkesle
+REP yalnışlık yanlışlık
+REP yanlızca yalnızca
+REP yanlızlık yalnızlık
+REP orjinallik orijinallik
+REP antremanda antrenmanda
+REP antremanı antrenmanı
+REP acenta acente
+REP afaroz aforoz
+REP aperatif aperitif
+REP bilader birader
+REP bisküüt bisküvi
+REP krathane kıraathane
+REP poaça poğaça
+REP pohaça poğaça
+REP maydonoz maydanoz
+REP kurdela kurdele
+REP kanbur kambur
+REP çenber çember
+REP penbe pembe
+REP perşenbe perşembe
+REP çarşanba çarşamba
+REP anbar ambar
+REP zanbak zambak
+REP sünbül sümbül
+REP çiyan çıyan
+REP tiskinmek tiksinmek
+REP müslüman Müslüman
+REP hristiyan Hristiyan
+REP hıristiyan Hristiyan
+REP yahudi Yahudi
+REP muatap muhatap
+REP muhatab muhatap
+REP vaad vaat
+REP tesbit tespit
+REP isbat ispat
+REP gangaster gangster
+REP grapon krapon
+REP küpür kupür
+REP küsür küsur
+REP malesef maalesef
+REP mağlesef maalesef
+REP metod metot
+REP standard standart
+REP katalok katalog
+REP monolok monolog
+REP diyalok diyalog
+REP psikolok psikolog
+REP sezaryan sezaryen
+REP şohben şofben
+REP tenefüs teneffüs
+REP terorist terörist
+REP usül usul
 REP kitapı kitabı
 REP kitapın kitabın
 REP kitapa kitaba
+REP kitapım kitabım
 REP kitapımız kitabımız
 REP kitapınız kitabınız
 REP ağaçı ağacı
 REP ağaçın ağacın
 REP ağaça ağaca
+REP ağaçım ağacım
 REP ağaçımız ağacımız
 REP ağaçınız ağacınız
 REP çocuku çocuğu
 REP çocukun çocuğun
 REP çocuka çocuğa
+REP çocukum çocuğum
 REP çocukumuz çocuğumuz
 REP çocukunuz çocuğunuz
+REP sokakı sokağı
+REP sokakın sokağın
+REP sokaka sokağa
+REP sokakım sokağım
+REP sokakımız sokağımız
+REP sokakınız sokağınız
+REP ayakı ayağı
+REP ayakın ayağın
+REP ayaka ayağa
+REP ayakım ayağım
+REP ayakımız ayağımız
+REP ayakınız ayağınız
+REP kulakı kulağı
+REP kulakın kulağın
+REP kulaka kulağa
+REP kulakım kulağım
+REP kulakımız kulağımız
+REP kulakınız kulağınız
 REP kâğıtı kâğıdı
 REP kâğıtın kâğıdın
 REP kâğıta kâğıda
+REP kâğıtım kâğıdım
 REP kâğıtımız kâğıdımız
 REP kâğıtınız kâğıdınız
 REP borçu borcu
 REP borçun borcun
 REP borça borca
+REP borçum borcum
 REP borçumuz borcumuz
 REP borçunuz borcunuz
 REP renki rengi
 REP renkin rengin
 REP renke renge
+REP renkim rengim
 REP renkimiz rengimiz
 REP renkiniz renginiz
 REP kalpi kalbi
 REP kalpin kalbin
 REP kalpe kalbe
+REP kalpim kalbim
 REP kalpimiz kalbimiz
 REP kalpiniz kalbiniz
+REP umutu umudu
+REP umutun umudun
+REP umuta umuda
+REP umutum umudum
+REP umutumuz umudumuz
+REP umutunuz umudunuz
+REP kanatı kanadı
+REP kanatın kanadın
+REP kanata kanada
+REP kanatım kanadım
+REP kanatımız kanadımız
+REP kanatınız kanadınız
+REP yurtu yurdu
+REP yurtun yurdun
+REP yurta yurda
+REP yurtum yurdum
+REP yurtumuz yurdumuz
+REP yurtunuz yurdunuz
+REP kurtu kurdu
+REP kurtun kurdun
+REP kurta kurda
+REP kurtum kurdum
+REP kurtumuz kurdumuz
+REP kurtunuz kurdunuz
+REP derti derdi
+REP dertin derdin
+REP derte derde
+REP dertim derdim
+REP dertimiz derdimiz
+REP dertiniz derdiniz
+REP gençi genci
+REP gençin gencin
+REP gençe gence
+REP gençim gencim
+REP gençimiz gencimiz
+REP gençiniz genciniz
+REP hukuğu hukuku
+REP hukuğa hukuka
+REP hukuğun hukukun
+REP ahlağı ahlakı
+REP ahlağa ahlaka
+REP ahlağın ahlakın
+REP evrağı evrakı
+REP evrağa evraka
+REP evrağın evrakın
+REP ittifağı ittifakı
+REP ittifağa ittifaka
+REP ittifağın ittifakın
+REP merağı merakı
+REP merağa meraka
+REP merağın merakın
+REP stoğu stoku
+REP stoğa stoka
+REP stoğun stokun
+REP felakedi felaketi
+REP felakede felakete
+REP felakedin felaketin
+REP hakikadi hakikati
+REP hakikade hakikate
+REP hakikadin hakikatin
+REP tabiadı tabiatı
+REP tabiada tabiata
+REP tabiadın tabiatın
+REP sanadı sanatı
+REP sanada sanata
+REP sanadın sanatın
+REP devledi devleti
+REP devlede devlete
+REP devledin devletin
+REP milledi milleti
+REP millede millete
+REP milledin milletin
+REP cumhuriyedi cumhuriyeti
+REP cumhuriyede cumhuriyete
+REP cumhuriyedin cumhuriyetin
+REP edebiyadı edebiyatı
+REP edebiyada edebiyata
+REP edebiyadın edebiyatın
+REP inşaadı inşaatı
+REP inşaada inşaata
+REP inşaadın inşaatın
+REP hayadı hayatı
+REP hayada hayata
+REP hayadın hayatın
+REP saadi saati
+REP saade saate
+REP saadin saatin
+REP pakedi paketi
+REP pakede pakete
+REP pakedin paketin
+REP kasedi kaseti
+REP kasede kasete
+REP kasedin kasetin
+REP ankedi anketi
+REP ankede ankete
+REP ankedin anketin
+REP rokedi roketi
+REP rokede rokete
+REP rokedin roketin
+REP cekedi ceketi
+REP cekede cekete
+REP cekedin ceketin
+REP markedi marketi
+REP markede markete
+REP markedin marketin
+REP tabledi tableti
+REP tablede tablete
+REP tabledin tabletin
+REP internedi interneti
+REP internede internete
+REP internedin internetin
+REP pilodu pilotu
+REP piloda pilota
+REP pilodun pilotun
+REP robodu robotu
+REP roboda robota
+REP robodun robotun
 REP akılı aklı
 REP akılın aklın
 REP akıla akla
@@ -3281,16 +3386,66 @@ REP şehirin şehrin
 REP şehire şehre
 REP şehirimiz şehrimiz
 REP şehiriniz şehriniz
+REP nehiri nehri
+REP nehirin nehrin
+REP nehire nehre
+REP nehirimiz nehrimiz
+REP nehiriniz nehriniz
+REP zehiri zehri
+REP zehirin zehrin
+REP zehire zehre
+REP zehirimiz zehrimiz
+REP zehiriniz zehriniz
 REP ömürü ömrü
 REP ömürün ömrün
 REP ömüre ömre
 REP ömürümüz ömrümüz
 REP ömürünüz ömrünüz
+REP mühürü mührü
+REP mühürün mührün
+REP mühüre mühre
+REP mühürümüz mührümüz
+REP mühürünüz mührünüz
+REP şükürü şükrü
+REP şükürün şükrün
+REP şüküre şükre
+REP şükürümüz şükrümüz
+REP şükürünüz şükrünüz
+REP hükümü hükmü
+REP hükümün hükmün
+REP hüküme hükme
+REP hükümümüz hükmümüz
+REP hükümünüz hükmünüz
+REP zulümü zulmü
+REP zulümün zulmün
+REP zulüme zulme
+REP zulümümüz zulmümüz
+REP zulümünüz zulmünüz
 REP resimi resmi
 REP resimin resmin
 REP resime resme
 REP resimimiz resmimiz
 REP resiminiz resminiz
+REP isimi ismi
+REP isimin ismin
+REP isime isme
+REP isimimiz ismimiz
+REP isiminiz isminiz
+REP cisimi cismi
+REP cisimin cismin
+REP cisime cisme
+REP cisimimiz cismimiz
+REP cisiminiz cisminiz
+REP kısımı kısmı
+REP kısımın kısmın
+REP kısıma kısma
+REP kısımımız kısmımız
+REP kısımınız kısmınız
+REP hısımı hısmı
+REP hısımın hısmın
+REP hısıma hısma
+REP hısımımız hısmımız
+REP hısımınız hısmınız
 REP burunu burnu
 REP burunun burnun
 REP buruna burna
@@ -3301,11 +3456,71 @@ REP karının karnın
 REP karına karna
 REP karınımız karnımız
 REP karınınız karnınız
-REP zehiri zehri
-REP zehirin zehrin
-REP zehire zehre
-REP zehirimiz zehrimiz
-REP zehiriniz zehriniz
+REP alını alnı
+REP alının alnın
+REP alına alna
+REP alınımız alnımız
+REP alınınız alnınız
+REP boyunu boynu
+REP boyunun boynun
+REP boyuna boyna
+REP boyunumuz boynumuz
+REP boyununuz boynunuz
+REP oğulu oğlu
+REP oğulun oğlun
+REP oğula oğla
+REP oğulumuz oğlumuz
+REP oğulunuz oğlunuz
+REP göğüsü göğsü
+REP göğüsün göğsün
+REP göğüse göğse
+REP göğüsümüz göğsümüz
+REP göğüsünüz göğsünüz
+REP omuzu omzu
+REP omuzun omzun
+REP omuza omza
+REP omuzumuz omzumuz
+REP omuzunuz omzunuz
+REP ufuku ufku
+REP ufukun ufkun
+REP ufuka ufka
+REP ufukumuz ufkumuz
+REP ufukunuz ufkunuz
+REP beyini beyni
+REP beyinin beynin
+REP beyine beyne
+REP beyinimiz beynimiz
+REP beyininiz beyniniz
+REP keyifi keyfi
+REP keyifin keyfin
+REP keyife keyfe
+REP keyifimiz keyfimiz
+REP keyifiniz keyfiniz
+REP sabırı sabrı
+REP sabırın sabrın
+REP sabıra sabra
+REP sabırımız sabrımız
+REP sabırınız sabrınız
+REP fikiri fikri
+REP fikirin fikrin
+REP fikire fikre
+REP fikirimiz fikrimiz
+REP fikiriniz fikriniz
+REP zikiri zikri
+REP zikirin zikrin
+REP zikire zikre
+REP zikirimiz zikrimiz
+REP zikiriniz zikriniz
+REP vakiti vakti
+REP vakitin vaktin
+REP vakite vakte
+REP vakitimiz vaktimiz
+REP vakitiniz vaktiniz
+REP nakiti nakti
+REP nakitin naktin
+REP nakite nakte
+REP nakitimiz naktimiz
+REP nakitiniz naktiniz
 REP saatlar saatler
 REP saatla saatle
 REP saatları saatleri
@@ -3336,6 +3551,7 @@ REP alkolların alkollerin
 REP alkola alkole
 REP alkolu alkolü
 REP alkolun alkolün
+REP alkolsuz alkolsüz
 REP metallar metaller
 REP metalla metalle
 REP metalları metalleri
@@ -3350,40 +3566,90 @@ REP kontrolların kontrollerin
 REP kontrola kontrole
 REP kontrolu kontrolü
 REP kontrolun kontrolün
-REP 0 ö
-REP 1 l
-REP 4 r
-REP 4 e
-REP 5 t
-REP 7 u
-REP 8 b
-REP 8 i
-REP I Î
-REP v b
-REP b v
-REP tt t
-REP t tt
-REP ll l
-REP l ll
-REP ss s
-REP s ss
-REP nn n
-REP n nn
-REP mm m
-REP m mm
-REP rr r
-REP r rr
-REP kk k
-REP k kk
-REP pp p
-REP p pp
-REP bb b
-REP b bb
-REP dd d
-REP d dd
-REP c cc
-REP zz z
-REP z zz
+REP kontrolsuz kontrolsüz
+REP sembollar semboller
+REP sembolla sembolle
+REP sembolları sembolleri
+REP sembolların sembollerin
+REP sembola sembole
+REP sembolu sembolü
+REP sembolun sembolün
+REP petrollar petroller
+REP petrolla petrolle
+REP petrolları petrolleri
+REP petrolların petrollerin
+REP petrola petrole
+REP petrolu petrolü
+REP petrolun petrolün
+REP protokollar protokoller
+REP protokolla protokolle
+REP protokolları protokolleri
+REP protokolların protokollerin
+REP protokola protokole
+REP protokolu protokolü
+REP protokolun protokolün
+REP ampullar ampuller
+REP ampulla ampulle
+REP ampulları ampulleri
+REP ampulların ampullerin
+REP ampula ampule
+REP ampulu ampulü
+REP ampulun ampulün
+REP ampulsuz ampulsüz
+REP mahsullar mahsuller
+REP mahsulla mahsulle
+REP mahsulları mahsulleri
+REP mahsulların mahsullerin
+REP mahsula mahsule
+REP mahsulu mahsulü
+REP mahsulun mahsulün
+REP usullar usuller
+REP usulla usulle
+REP usulları usulleri
+REP usulların usullerin
+REP usula usule
+REP usulu usulü
+REP usulun usulün
+REP meşgullar meşguller
+REP meşgulla meşgulle
+REP meşgulları meşgulleri
+REP meşgulların meşgullerin
+REP meşgula meşgule
+REP meşgulu meşgulü
+REP meşgulun meşgulün
+REP mesullar mesuller
+REP mesulla mesulle
+REP mesulları mesulleri
+REP mesulların mesullerin
+REP mesula mesule
+REP mesulu mesulü
+REP mesulun mesulün
+REP mamullar mamuller
+REP mamulla mamulle
+REP mamulları mamulleri
+REP mamulların mamullerin
+REP mamula mamule
+REP mamulu mamulü
+REP mamulun mamulün
+REP makullar makuller
+REP makulla makulle
+REP makulları makulleri
+REP makulların makullerin
+REP makula makule
+REP makulu makulü
+REP makulun makulün
+REP pd pt
+REP çd çt
+REP td tt
+REP kd kt
+REP sd st
+REP şd şt
+REP hd ht
+REP fd ft
+REP lu$ lü
+REP lun$ lün
+REP lsuz$ lsüz
+REP llar$ ller
 REP gunes güneş
 REP bagir bağır
 REP cirak çırak
@@ -3542,7 +3808,6 @@ REP adem âdem
 REP ademci Âdemci
 REP alemşümullük âlemşümullük
 REP alimlik âlimlik
-REP amalık âmâlık
 REP amin âmin
 REP araz âraz
 REP arzuhalci arzuhâlci
@@ -3606,7 +3871,6 @@ REP hallenmek hâllenmek
 REP hallice hâllice
 REP halsiz hâlsiz
 REP halsizce hâlsizce
-REP ademci âdemci
 REP ademiyet âdemiyet
 REP ademoğlu âdemoğlu
 REP ahdi ahdî
@@ -3996,7 +4260,6 @@ REP mahalli mahallî
 REP mahallileşme mahallîleşme
 REP mahallileşmek mahallîleşmek
 REP mahallilik mahallîlik
-REP mahkukat mahkûkât
 REP mahkumluk mahkûmluk
 REP mahşeri mahşerî
 REP makaskar makaskâr
@@ -4276,6 +4539,151 @@ REP şikayetçilik şikâyetçilik
 REP şivekar şivekâr
 REP şura şûra
 REP şüreka şürekâ
+REP a â
+REP â a
+REP u û
+REP û u
+REP i î
+REP î i
+REP A Â
+REP Â A
+REP U Û
+REP Û U
+REP İ Î
+REP Î İ
+REP c ç
+REP ç c
+REP g ğ
+REP ğ g
+REP k ğ
+REP ğ k
+REP s ş
+REP ş s
+REP o ö
+REP ö o
+REP u ü
+REP ü u
+REP ı i
+REP i ı
+REP C Ç
+REP Ç C
+REP G Ğ
+REP Ğ G
+REP S Ş
+REP Ş S
+REP O Ö
+REP Ö O
+REP U Ü
+REP Ü U
+REP I İ
+REP İ I
+REP sh ş
+REP ch ç
+REP gh ğ
+REP ss ş
+REP dd t
+REP tt d
+REP bb p
+REP pp b
+REP cc c
+REP kk g
+REP ğ y
+REP y ğ
+REP h ğ
+REP ğ h
+REP a e
+REP e a
+REP d t
+REP t d
+REP p b
+REP b p
+REP z s
+REP s z
+REP k g
+REP g k
+REP ın in
+REP in ın
+REP un ün
+REP ün un
+REP da de
+REP de da
+REP lar ler
+REP ler lar
+REP la le
+REP le la
+REP ’ '
+REP lari ları
+REP larin ların
+REP larimi larımı
+REP lariniz larınız
+REP sutcu şütçü
+REP sucu şücü
+REP tcu tçü
+REP IS İŞ
+REP IL İL
+REP IN İN
+REP IY İY
+REP IR İR
+REP ES EŞ
+REP IK İK
+REP v b
+REP b v
+REP tt t
+REP t tt
+REP ll l
+REP l ll
+REP ss s
+REP s ss
+REP nn n
+REP n nn
+REP mm m
+REP m mm
+REP rr r
+REP r rr
+REP kk k
+REP k kk
+REP pp p
+REP p pp
+REP bb b
+REP b bb
+REP dd d
+REP d dd
+REP c cc
+REP zz z
+REP z zz
+REP w v
+REP v w
+REP q k
+REP k q
+REP x ks
+REP 0 o
+REP 0 ö
+REP 0 O
+REP 1 ı
+REP 1 i
+REP 1 l
+REP 1 I
+REP 3 e
+REP 3 E
+REP 4 a
+REP 4 r
+REP 4 e
+REP 4 A
+REP 5 s
+REP 5 t
+REP 5 r
+REP 6 y
+REP 6 t
+REP 6 g
+REP 7 u
+REP 7 y
+REP 7 t
+REP 8 b
+REP 8 i
+REP 8 u
+REP 8 ü
+REP 9 o
+REP 9 u
 
 # Phonetic equivalence rules: lower edit-distance penalty between mistyped and
 # correct candidates that sound alike (silent ğ, metathesis, suffix reduction).
@@ -7440,14 +7848,14 @@ SFX ∎ 0 saymışlar [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ∎ 0 saymışlar [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ∎ 0 saymışlar [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ∎ 0 saymışlar [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ım [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ım [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 um [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 um [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ız [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ız [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 uz [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 uz [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
+SFX ∎ 0 ım [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 ım [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 um [ouû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 um [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 ız [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 ız [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 uz [ouû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 uz [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
 SFX ∎ 0 tır [aıâ][çfhkpsşt]
 SFX ∎ 0 tır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][çfhkpsşt]
 SFX ∎ 0 tur [ouû][çfhkpsşt]
@@ -7460,14 +7868,14 @@ SFX ∎ 0 ken [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ∎ 0 ken [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ∎ 0 ken [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ∎ 0 ken [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ımdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ımdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 umdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 umdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ızdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 ızdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 uzdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ∎ 0 uzdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
+SFX ∎ 0 ımdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 ımdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 umdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 umdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 ızdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 ızdır [aıâ][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 uzdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ∎ 0 uzdur [ouû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
 
 SFX ∐ Y 173
 SFX ∐ 0 ydı [aâı]
@@ -20266,7 +20674,7 @@ SFX ≙ mek yüversin ümek
 SFX ≙ mek yüverin ümek
 SFX ≙ mek yüveriniz ümek
 
-SFX ≚ Y 1385
+SFX ≚ Y 1333
 SFX ≚ tmak dıyor/⊮ tmak
 SFX ≚ tmak dıyorken tmak
 SFX ≚ tmak dıyor tmak
@@ -20285,18 +20693,6 @@ SFX ≚ tmak dacaksınız tmak
 SFX ≚ tmak dacaksınızdır tmak
 SFX ≚ tmak dacaklar tmak
 SFX ≚ tmak dacaklardır tmak
-SFX ≚ mak dı/⊽ [çt]mak
-SFX ≚ mak dı [çt]mak
-SFX ≚ mak dım [çt]mak
-SFX ≚ mak dın [çt]mak
-SFX ≚ mak dık [çt]mak
-SFX ≚ mak dınız [çt]mak
-SFX ≚ mak dılar [çt]mak
-SFX ≚ mak dımsa [çt]mak
-SFX ≚ mak dınsa [çt]mak
-SFX ≚ mak dıksa [çt]mak
-SFX ≚ mak dınızsa [çt]mak
-SFX ≚ mak dılarsa [çt]mak
 SFX ≚ mak tı/⊽ [çt]mak
 SFX ≚ mak tı [çt]mak
 SFX ≚ mak tım [çt]mak
@@ -20483,46 +20879,6 @@ SFX ≚ tmak dıcılığın tmak
 SFX ≚ tmak dıcılıkta tmak
 SFX ≚ tmak dıcılıktan tmak
 SFX ≚ tmak dıcılıktır tmak
-SFX ≚ mak dığı/⊵ [çt]mak
-SFX ≚ mak dığı [çt]mak
-SFX ≚ mak dığım/⊹ [çt]mak
-SFX ≚ mak dığım [çt]mak
-SFX ≚ mak dığın/⊹ [çt]mak
-SFX ≚ mak dığın [çt]mak
-SFX ≚ mak dığımız/⊹ [çt]mak
-SFX ≚ mak dığımız [çt]mak
-SFX ≚ mak dığınız/⊹ [çt]mak
-SFX ≚ mak dığınız [çt]mak
-SFX ≚ mak dıkları/⊵ [çt]mak
-SFX ≚ mak dıkları [çt]mak
-SFX ≚ mak dıklarım [çt]mak
-SFX ≚ mak dıklarımı [çt]mak
-SFX ≚ mak dıklarıma [çt]mak
-SFX ≚ mak dıklarımda [çt]mak
-SFX ≚ mak dıklarımdan [çt]mak
-SFX ≚ mak dıklarımın [çt]mak
-SFX ≚ mak dıklarımla [çt]mak
-SFX ≚ mak dıkların [çt]mak
-SFX ≚ mak dıklarını [çt]mak
-SFX ≚ mak dıklarına [çt]mak
-SFX ≚ mak dıklarında [çt]mak
-SFX ≚ mak dıklarından [çt]mak
-SFX ≚ mak dıklarının [çt]mak
-SFX ≚ mak dıklarınla [çt]mak
-SFX ≚ mak dıklarımız [çt]mak
-SFX ≚ mak dıklarımızı [çt]mak
-SFX ≚ mak dıklarımıza [çt]mak
-SFX ≚ mak dıklarımızda [çt]mak
-SFX ≚ mak dıklarımızdan [çt]mak
-SFX ≚ mak dıklarımızın [çt]mak
-SFX ≚ mak dıklarımızla [çt]mak
-SFX ≚ mak dıklarınız [çt]mak
-SFX ≚ mak dıklarınızı [çt]mak
-SFX ≚ mak dıklarınıza [çt]mak
-SFX ≚ mak dıklarınızda [çt]mak
-SFX ≚ mak dıklarınızdan [çt]mak
-SFX ≚ mak dıklarınızın [çt]mak
-SFX ≚ mak dıklarınızla [çt]mak
 SFX ≚ mak tığı/⊵ [çt]mak
 SFX ≚ mak tığı [çt]mak
 SFX ≚ mak tığım/⊹ [çt]mak
@@ -21653,7 +22009,7 @@ SFX ≚ tmak dılamadığı/⊵ tmak
 SFX ≚ tmak dılamadığı tmak
 SFX ≚ tmak dılamayan tmak
 
-SFX ≛ Y 1403
+SFX ≛ Y 1351
 SFX ≛ tmak duyor/⊮ tmak
 SFX ≛ tmak duyorken tmak
 SFX ≛ tmak duyor tmak
@@ -21673,18 +22029,6 @@ SFX ≛ tmak dacaksınızdır tmak
 SFX ≛ tmak dacaklar tmak
 SFX ≛ tmak dacaklardır tmak
 SFX ≛ tmak dacağum tmak
-SFX ≛ mak du/⊽ [çt]mak
-SFX ≛ mak du [çt]mak
-SFX ≛ mak dum [çt]mak
-SFX ≛ mak dun [çt]mak
-SFX ≛ mak duk [çt]mak
-SFX ≛ mak dunuz [çt]mak
-SFX ≛ mak dular [çt]mak
-SFX ≛ mak dumsa [çt]mak
-SFX ≛ mak dunsa [çt]mak
-SFX ≛ mak duksa [çt]mak
-SFX ≛ mak dunuzsa [çt]mak
-SFX ≛ mak dularsa [çt]mak
 SFX ≛ mak tu/⊽ [çt]mak
 SFX ≛ mak tu [çt]mak
 SFX ≛ mak tum [çt]mak
@@ -21873,46 +22217,6 @@ SFX ≛ tmak duculuğun tmak
 SFX ≛ tmak duculukta tmak
 SFX ≛ tmak duculuktan tmak
 SFX ≛ tmak duculuktur tmak
-SFX ≛ mak duğu/⊷ [çt]mak
-SFX ≛ mak duğu [çt]mak
-SFX ≛ mak duğum/⊻ [çt]mak
-SFX ≛ mak duğum [çt]mak
-SFX ≛ mak duğun/⊻ [çt]mak
-SFX ≛ mak duğun [çt]mak
-SFX ≛ mak duğumuz/⊻ [çt]mak
-SFX ≛ mak duğumuz [çt]mak
-SFX ≛ mak duğunuz/⊻ [çt]mak
-SFX ≛ mak duğunuz [çt]mak
-SFX ≛ mak dukları/⊵ [çt]mak
-SFX ≛ mak dukları [çt]mak
-SFX ≛ mak duklarım [çt]mak
-SFX ≛ mak duklarımı [çt]mak
-SFX ≛ mak duklarıma [çt]mak
-SFX ≛ mak duklarımda [çt]mak
-SFX ≛ mak duklarımdan [çt]mak
-SFX ≛ mak duklarımın [çt]mak
-SFX ≛ mak duklarımla [çt]mak
-SFX ≛ mak dukların [çt]mak
-SFX ≛ mak duklarını [çt]mak
-SFX ≛ mak duklarına [çt]mak
-SFX ≛ mak duklarında [çt]mak
-SFX ≛ mak duklarından [çt]mak
-SFX ≛ mak duklarının [çt]mak
-SFX ≛ mak duklarınla [çt]mak
-SFX ≛ mak duklarımız [çt]mak
-SFX ≛ mak duklarımızı [çt]mak
-SFX ≛ mak duklarımıza [çt]mak
-SFX ≛ mak duklarımızda [çt]mak
-SFX ≛ mak duklarımızdan [çt]mak
-SFX ≛ mak duklarımızın [çt]mak
-SFX ≛ mak duklarımızla [çt]mak
-SFX ≛ mak duklarınız [çt]mak
-SFX ≛ mak duklarınızı [çt]mak
-SFX ≛ mak duklarınıza [çt]mak
-SFX ≛ mak duklarınızda [çt]mak
-SFX ≛ mak duklarınızdan [çt]mak
-SFX ≛ mak duklarınızın [çt]mak
-SFX ≛ mak duklarınızla [çt]mak
 SFX ≛ mak tuğu/⊷ [çt]mak
 SFX ≛ mak tuğu [çt]mak
 SFX ≛ mak tuğum/⊻ [çt]mak
@@ -23058,7 +23362,7 @@ SFX ≛ tmak dulamadığı/⊵ tmak
 SFX ≛ tmak dulamadığı tmak
 SFX ≛ tmak dulamayan tmak
 
-SFX ≜ Y 1385
+SFX ≜ Y 1333
 SFX ≜ tmek diyor/⊮ tmek
 SFX ≜ tmek diyorken tmek
 SFX ≜ tmek diyor tmek
@@ -23077,18 +23381,6 @@ SFX ≜ tmek deceksiniz tmek
 SFX ≜ tmek deceksinizdir tmek
 SFX ≜ tmek decekler tmek
 SFX ≜ tmek deceklerdir tmek
-SFX ≜ mek di/⊾ [çt]mek
-SFX ≜ mek di [çt]mek
-SFX ≜ mek dim [çt]mek
-SFX ≜ mek din [çt]mek
-SFX ≜ mek dik [çt]mek
-SFX ≜ mek diniz [çt]mek
-SFX ≜ mek diler [çt]mek
-SFX ≜ mek dimse [çt]mek
-SFX ≜ mek dinse [çt]mek
-SFX ≜ mek dikse [çt]mek
-SFX ≜ mek dinizse [çt]mek
-SFX ≜ mek dilerse [çt]mek
 SFX ≜ mek ti/⊾ [çt]mek
 SFX ≜ mek ti [çt]mek
 SFX ≜ mek tim [çt]mek
@@ -23275,46 +23567,6 @@ SFX ≜ tmek diciliğin tmek
 SFX ≜ tmek dicilikte tmek
 SFX ≜ tmek dicilikten tmek
 SFX ≜ tmek diciliktir tmek
-SFX ≜ mek diği/⊶ [çt]mek
-SFX ≜ mek diği [çt]mek
-SFX ≜ mek diğim/⊺ [çt]mek
-SFX ≜ mek diğim [çt]mek
-SFX ≜ mek diğin/⊺ [çt]mek
-SFX ≜ mek diğin [çt]mek
-SFX ≜ mek diğimiz/⊺ [çt]mek
-SFX ≜ mek diğimiz [çt]mek
-SFX ≜ mek diğiniz/⊺ [çt]mek
-SFX ≜ mek diğiniz [çt]mek
-SFX ≜ mek dikleri/⊶ [çt]mek
-SFX ≜ mek dikleri [çt]mek
-SFX ≜ mek diklerim [çt]mek
-SFX ≜ mek diklerimi [çt]mek
-SFX ≜ mek diklerime [çt]mek
-SFX ≜ mek diklerimde [çt]mek
-SFX ≜ mek diklerimden [çt]mek
-SFX ≜ mek diklerimin [çt]mek
-SFX ≜ mek diklerimle [çt]mek
-SFX ≜ mek diklerin [çt]mek
-SFX ≜ mek diklerini [çt]mek
-SFX ≜ mek diklerine [çt]mek
-SFX ≜ mek diklerinde [çt]mek
-SFX ≜ mek diklerinden [çt]mek
-SFX ≜ mek diklerinin [çt]mek
-SFX ≜ mek diklerinle [çt]mek
-SFX ≜ mek diklerimiz [çt]mek
-SFX ≜ mek diklerimizi [çt]mek
-SFX ≜ mek diklerimize [çt]mek
-SFX ≜ mek diklerimizde [çt]mek
-SFX ≜ mek diklerimizden [çt]mek
-SFX ≜ mek diklerimizin [çt]mek
-SFX ≜ mek diklerimizle [çt]mek
-SFX ≜ mek dikleriniz [çt]mek
-SFX ≜ mek diklerinizi [çt]mek
-SFX ≜ mek diklerinize [çt]mek
-SFX ≜ mek diklerinizde [çt]mek
-SFX ≜ mek diklerinizden [çt]mek
-SFX ≜ mek diklerinizin [çt]mek
-SFX ≜ mek diklerinizle [çt]mek
 SFX ≜ mek tiği/⊶ [çt]mek
 SFX ≜ mek tiği [çt]mek
 SFX ≜ mek tiğim/⊺ [çt]mek
@@ -24445,7 +24697,7 @@ SFX ≜ tmek dilemediği/⊶ tmek
 SFX ≜ tmek dilemediği tmek
 SFX ≜ tmek dilemeyen tmek
 
-SFX ≝ Y 1403
+SFX ≝ Y 1351
 SFX ≝ tmek düyor/⊮ tmek
 SFX ≝ tmek düyorken tmek
 SFX ≝ tmek düyor tmek
@@ -24465,18 +24717,6 @@ SFX ≝ tmek deceksinizdir tmek
 SFX ≝ tmek decekler tmek
 SFX ≝ tmek deceklerdir tmek
 SFX ≝ tmek deceğüm tmek
-SFX ≝ mek dü/⊾ [çt]mek
-SFX ≝ mek dü [çt]mek
-SFX ≝ mek düm [çt]mek
-SFX ≝ mek dün [çt]mek
-SFX ≝ mek dük [çt]mek
-SFX ≝ mek dünüz [çt]mek
-SFX ≝ mek düler [çt]mek
-SFX ≝ mek dümse [çt]mek
-SFX ≝ mek dünse [çt]mek
-SFX ≝ mek dükse [çt]mek
-SFX ≝ mek dünüzse [çt]mek
-SFX ≝ mek dülerse [çt]mek
 SFX ≝ mek tü/⊾ [çt]mek
 SFX ≝ mek tü [çt]mek
 SFX ≝ mek tüm [çt]mek
@@ -24665,46 +24905,6 @@ SFX ≝ tmek dücülüğün tmek
 SFX ≝ tmek dücülükte tmek
 SFX ≝ tmek dücülükten tmek
 SFX ≝ tmek dücülüktür tmek
-SFX ≝ mek düğü/⊸ [çt]mek
-SFX ≝ mek düğü [çt]mek
-SFX ≝ mek düğüm/⊼ [çt]mek
-SFX ≝ mek düğüm [çt]mek
-SFX ≝ mek düğün/⊼ [çt]mek
-SFX ≝ mek düğün [çt]mek
-SFX ≝ mek düğümüz/⊼ [çt]mek
-SFX ≝ mek düğümüz [çt]mek
-SFX ≝ mek düğünüz/⊼ [çt]mek
-SFX ≝ mek düğünüz [çt]mek
-SFX ≝ mek dükleri/⊶ [çt]mek
-SFX ≝ mek dükleri [çt]mek
-SFX ≝ mek düklerim [çt]mek
-SFX ≝ mek düklerimi [çt]mek
-SFX ≝ mek düklerime [çt]mek
-SFX ≝ mek düklerimde [çt]mek
-SFX ≝ mek düklerimden [çt]mek
-SFX ≝ mek düklerimin [çt]mek
-SFX ≝ mek düklerimle [çt]mek
-SFX ≝ mek düklerin [çt]mek
-SFX ≝ mek düklerini [çt]mek
-SFX ≝ mek düklerine [çt]mek
-SFX ≝ mek düklerinde [çt]mek
-SFX ≝ mek düklerinden [çt]mek
-SFX ≝ mek düklerinin [çt]mek
-SFX ≝ mek düklerinle [çt]mek
-SFX ≝ mek düklerimiz [çt]mek
-SFX ≝ mek düklerimizi [çt]mek
-SFX ≝ mek düklerimize [çt]mek
-SFX ≝ mek düklerimizde [çt]mek
-SFX ≝ mek düklerimizden [çt]mek
-SFX ≝ mek düklerimizin [çt]mek
-SFX ≝ mek düklerimizle [çt]mek
-SFX ≝ mek dükleriniz [çt]mek
-SFX ≝ mek düklerinizi [çt]mek
-SFX ≝ mek düklerinize [çt]mek
-SFX ≝ mek düklerinizde [çt]mek
-SFX ≝ mek düklerinizden [çt]mek
-SFX ≝ mek düklerinizin [çt]mek
-SFX ≝ mek düklerinizle [çt]mek
 SFX ≝ mek tüğü/⊸ [çt]mek
 SFX ≝ mek tüğü [çt]mek
 SFX ≝ mek tüğüm/⊼ [çt]mek
@@ -30158,14 +30358,14 @@ SFX ≩ 0 seymişler [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ≩ 0 seymişler [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ≩ 0 seymişler [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ≩ 0 seymişler [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 im [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 im [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 üm [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 üm [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 iz [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 iz [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 üz [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 üz [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
+SFX ≩ 0 im [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 im [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 üm [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 üm [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 iz [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 iz [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 üz [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 üz [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
 SFX ≩ 0 tir [eiaâî][çfhkpsşt]
 SFX ≩ 0 tir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][çfhkpsşt]
 SFX ≩ 0 tür [öüoöuüû][çfhkpsşt]
@@ -30178,14 +30378,14 @@ SFX ≩ 0 ken [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ≩ 0 ken [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ≩ 0 ken [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ]
 SFX ≩ 0 ken [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 imdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 imdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 ümdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 ümdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 izdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 izdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 üzdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ]
-SFX ≩ 0 üzdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛ]
+SFX ≩ 0 imdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 imdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 ümdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 ümdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 izdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 izdir [eiaâî][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 üzdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
+SFX ≩ 0 üzdür [öüoöuüû][^aeıioöuüAEIİOÖUÜÂÎÛ][^aeıioöuüAEIİOÖUÜÂÎÛpçtk]
 
 SFX ≪ Y 2
 SFX ≪ 0 yla .

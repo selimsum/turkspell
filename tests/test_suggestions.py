@@ -183,6 +183,85 @@ class TestSuggestionRanking(unittest.TestCase):
         self.assertGreaterEqual(mrr, 0.90, f"MRR {mrr:.3f} fell below threshold 0.90")
         self.assertGreaterEqual(top1_pct, 90.0, f"Top-1 accuracy {top1_pct:.1f}% fell below 90%")
 
+    def test_tdk_common_misspellings_top1(self):
+        """Verifies Top-1 suggestion accuracy across TDK 'Sıkça Yapılan Yazım Yanlışları' and circumflex inflections."""
+        test_pairs = [
+            ("herkez", "herkes", 1),
+            ("herkezden", "herkesten", 1),
+            ("yalnış", "yanlış", 1),
+            ("yanlız", "yalnız", 1),
+            ("orjinal", "orijinal", 1),
+            ("antreman", "antrenman", 1),
+            ("muhattap", "muhatap", 1),
+            ("espiri", "espri", 1),
+            ("stajer", "stajyer", 1),
+            ("poaça", "poğaça", 1),
+            ("maydonoz", "maydanoz", 1),
+            ("kolanya", "kolonya", 1),
+            ("kanbur", "kambur", 1),
+            ("penbe", "pembe", 1),
+            ("perşenbe", "perşembe", 1),
+            ("çarşanba", "çarşamba", 1),
+            ("tiskinmek", "tiksinmek", 1),
+            ("tesbit", "tespit", 1),
+            ("isbat", "ispat", 1),
+            ("malesef", "maalesef", 1),
+            ("metod", "metot", 1),
+            ("standard", "standart", 1),
+            ("katalok", "katalog", 1),
+            ("psikolok", "psikolog", 1),
+            ("şarter", "şalter", 1),
+            ("tazzik", "tazyik", 1),
+            ("tenefüs", "teneffüs", 1),
+            ("usül", "usul", 1),
+            ("zıttı", "zıddı", 1),
+            ("zıttına", "zıddına", 1),
+            ("ahçı", "aşçı", 1),
+            ("idda", "iddia", 1),
+            ("iddea", "iddia", 1),
+            ("müslüman", "Müslüman", 1),
+            ("hristiyan", "Hristiyan", 1),
+            ("yahudi", "Yahudi", 1),
+            ("zekası", "zekâsı", 1),
+            ("rüzgarlı", "rüzgârlı", 1),
+            ("kağıdı", "kâğıdı", 1),
+            ("mekanlar", "mekânlar", 1),
+            ("şikayetçi", "şikâyetçi", 1),
+            ("mahkumiyet", "mahkûmiyet", 1),
+            ("imkansızlık", "imkânsızlık", 1),
+            ("hikayeler", "hikâyeler", 1),
+            ("muhafazakarlık", "muhafazakârlık", 1),
+            ("hakimiyeti", "hâkimiyeti", 1),
+            ("bekarlık", "bekârlık", 1),
+            ("amalık", "âmâlık", 1),
+            ("ademcilik", "âdemcilik", 1),
+            ("mahkukat", "mahkûkât", 1),
+        ]
+        self.assertPairsSuggested(test_pairs)
+
+    def test_morphological_error_suggestions_top1(self):
+        """Verifies Top-1 suggestion accuracy for voicing, vowel-drop, and consonant assimilation errors."""
+        test_pairs = [
+            ("kitapı", "kitabı", 1),
+            ("kitapım", "kitabım", 1),
+            ("çocuka", "çocuğa", 1),
+            ("sokakı", "sokağı", 1),
+            ("kalpi", "kalbi", 1),
+            ("kurtu", "kurdu", 1),
+            ("gençi", "genci", 1),
+            ("hukuğu", "hukuku", 1),
+            ("cumhuriyedi", "cumhuriyeti", 1),
+            ("pilodu", "pilotu", 1),
+            ("zehiri", "zehri", 1),
+            ("şehiri", "şehri", 1),
+            ("oğulu", "oğlu", 1),
+            ("kitapda", "kitapta", 1),
+            ("yapdı", "yaptı", 1),
+            ("gitdi", "gitti", 1),
+            ("gitdiği", "gittiği", 1),
+        ]
+        self.assertPairsSuggested(test_pairs)
+
 
 if __name__ == "__main__":
     unittest.main()
