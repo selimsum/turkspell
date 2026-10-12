@@ -1149,6 +1149,75 @@ VIRTUAL_STEMS = [
     "veliahd/X∀∫∲∶∼∽≂≕≣",
 ]
 
+
+def get_numeral_flag_code(n: int) -> str:
+    """Return the 2-char numeral affix flag code (N5..ND) for integer n based on its Turkish reading."""
+    if n == 0:
+        return "NC"
+    u = n % 10
+    if u != 0:
+        return {
+            1: "N5", 2: "N6", 3: "N7", 4: "N7", 5: "N8",
+            6: "N9", 7: "N6", 8: "N5", 9: "NA"
+        }[u]
+    t = n % 100
+    if t != 0:
+        return {
+            10: "NA", 20: "N6", 30: "NA", 40: "NB", 50: "N6",
+            60: "NB", 70: "N8", 80: "N5", 90: "NC"
+        }[t]
+    if n % 1000 != 0:
+        return "ND"  # yüz
+    if n % 1000000 != 0:
+        return "N5"  # bin
+    if n % 1000000000 != 0:
+        return "NA"  # milyon
+    return "NC"      # milyar
+
+
+def generate_numeral_virtual_stems() -> list[str]:
+    """Generate NEEDAFFIX-guarded numeric and clock-time stems for apostrophe inflections."""
+    stems = {}
+
+    def _add(token: str, flag_code: str):
+        u_char = LONG_TO_UTF8.get(flag_code, "")
+        if u_char:
+            stems[token] = f"{token}/X{u_char}"
+
+    # 1. Integers 0..2100 and leading-zero 01..09
+    for n in range(0, 2101):
+        _add(str(n), get_numeral_flag_code(n))
+    for n in range(1, 10):
+        _add(f"0{n}", get_numeral_flag_code(n))
+
+    # 2. Round numbers & dotted thousand-separator forms
+    round_nums = [
+        1000, 1500, 2000, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900,
+        3000, 3500, 4000, 4500, 5000, 6000, 7000, 7500, 8000, 9000,
+        10000, 15000, 20000, 25000, 30000, 40000, 50000, 60000, 70000, 75000, 80000, 90000,
+        100000, 150000, 200000, 250000, 300000, 400000, 500000, 600000, 700000, 750000, 800000, 900000,
+        1000000, 2000000, 5000000, 10000000, 100000000, 1000000000,
+    ]
+    for n in round_nums:
+        fc = get_numeral_flag_code(n)
+        _add(str(n), fc)
+        dotted = f"{n:,}".replace(",", ".")
+        _add(dotted, fc)
+
+    # 3. 24-hour clock times HH.MM (where .00 follows hour phonology per TDK rules)
+    for hh in range(0, 25):
+        hh_strs = [f"{hh:02d}"] + ([str(hh)] if 1 <= hh <= 9 else [])
+        for mm in range(0, 60):
+            fc = get_numeral_flag_code(hh) if mm == 0 else get_numeral_flag_code(mm)
+            mm_str = f"{mm:02d}"
+            for hs in hh_strs:
+                _add(f"{hs}.{mm_str}", fc)
+
+    return list(stems.values())
+
+
+VIRTUAL_STEMS.extend(generate_numeral_virtual_stems())
+
 EXTRA_AUTHORITY_HEADWORDS = [
     # Pronoun copula forms:
     "odur/∆∍∎∧∲∶∺∼∽≂≉≋≥≪≬⊆",
