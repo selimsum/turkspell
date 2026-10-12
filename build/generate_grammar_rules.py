@@ -2005,6 +2005,38 @@ def generate_rep_rules() -> list[tuple[str, str]]:
     ]:
         rep_list.append((src, dst))
 
+    # Numeral, ordinal, and clock-time apostrophe suffix replacement rules
+    numeral_suffix_reps = [
+        # Ordinals (vowel-ending vs consonant-ending & harmony)
+        ("'inci$", "'nci"), ("'ıncı$", "'ncı"), ("'nci$", "'ncı"), ("'ncı$", "'nci"),
+        ("'ncü$", "'üncü"), ("'ncu$", "'uncu"), ("'nci$", "'inci"), ("'ncı$", "'ıncı"),
+        ("'incisi$", "'ncisi"), ("'ıncısı$", "'ncısı"), ("'ncüsü$", "'üncüsü"), ("'ncusu$", "'uncusu"),
+        ("'ncisi$", "'incisi"), ("'ncısı$", "'ıncısı"), ("'ncisi$", "'ncısı"), ("'ncısı$", "'ncisi"),
+        ("'inciye$", "'nciye"), ("'ıncıya$", "'ncıya"), ("'ncüye$", "'üncüye"), ("'ncuya$", "'uncuya"),
+        ("'incide$", "'ncide"), ("'ıncıda$", "'ncıda"), ("'ncüde$", "'üncüde"), ("'ncuda$", "'uncuda"),
+        # Locative & Ablative assimilation and .00 clock-time harmony
+        ("'de$", "'te"), ("'te$", "'de"), ("'da$", "'ta"), ("'ta$", "'da"),
+        ("'den$", "'ten"), ("'ten$", "'den"), ("'dan$", "'tan"), ("'tan$", "'dan"),
+        ("'da$", "'te"), ("'dan$", "'ten"), ("'de$", "'da"), ("'den$", "'dan"),
+        ("'da$", "'de"), ("'dan$", "'den"), ("'ta$", "'te"), ("'tan$", "'ten"),
+        ("'deki$", "'teki"), ("'teki$", "'deki"), ("'daki$", "'taki"), ("'taki$", "'daki"),
+        ("'daki$", "'teki"), ("'deki$", "'daki"), ("'daki$", "'deki"),
+        # Dative, Accusative, Genitive, Distributive & Copula buffer/assimilation
+        ("'e$", "'ye"), ("'a$", "'ya"), ("'ye$", "'e"), ("'ya$", "'a"),
+        ("'a$", "'e"), ("'e$", "'a"), ("'ya$", "'ye"), ("'ye$", "'ya"),
+        ("'i$", "'yi"), ("'ı$", "'yı"), ("'yi$", "'i"), ("'yı$", "'ı"),
+        ("'in$", "'nin"), ("'ın$", "'nın"), ("'nin$", "'in"), ("'nın$", "'ın"),
+        ("'er$", "'şer"), ("'ar$", "'şar"), ("'şer$", "'er"), ("'şar$", "'ar"),
+        ("'erli$", "'şerli"), ("'arlı$", "'şarlı"), ("'şerli$", "'erli"), ("'şarlı$", "'arlı"),
+        ("'dir$", "'tir"), ("'tir$", "'dir"), ("'dür$", "'tür"), ("'tür$", "'dür"),
+        ("'dır$", "'tır"), ("'tır$", "'dır"), ("'dur$", "'tur"), ("'tur$", "'dur"),
+        ("'di$", "'ti"), ("'ti$", "'di"), ("'dü$", "'tü"), ("'tü$", "'dü"),
+        ("'dı$", "'tı"), ("'tı$", "'dı"), ("'du$", "'tu"), ("'tu$", "'du"),
+    ]
+    for src, dst in numeral_suffix_reps:
+        rep_list.append((src, dst))
+        rep_list.append((src.replace("'", "’"), dst))
+
     digit_replacements = [
         ("0", "o"), ("0", "ö"), ("0", "O"),
         ("1", "ı"), ("1", "i"), ("1", "l"), ("1", "I"),
@@ -2601,6 +2633,12 @@ def generate_grammar():
     print("Generating Voicing Copula flags (VC, vc)...")
     content += "\n# VOICING COPULA FLAGS\n"
     for block in gen_voicing_copula_flags():
+        content += block + "\n"
+
+    # --- Numeral Apostrophe flags ---
+    print("Generating Numeral Apostrophe flags (N5..ND)...")
+    content += "\n# NUMERAL APOSTROPHE FLAGS\n"
+    for block in gen_numeral_flags():
         content += block + "\n"
 
     print("Writing tr.aff...")
@@ -4865,6 +4903,167 @@ def gen_voicing_copula_flags() -> list[str]:
     block_vc = make_flag_block("vc", unique(rules_vc))
 
     return [block_VC, block_vc]
+
+
+def gen_numeral_flags() -> list[str]:
+    """Generate apostrophe-suffix flags for the 9 Turkish phonological numeral classes (N5..ND).
+
+    Every Turkish number and clock time maps to one of 9 suffix paradigms based on
+    the pronunciation of its final spoken element:
+      - N5: 1, 8, 80, 1000 (bir, sekiz, seksen, bin: front unrounded, voiced consonant)
+      - N6: 2, 7, 20, 50   (iki, yedi, yirmi, elli: front unrounded, vowel-ending)
+      - N7: 3, 4           (üç, dört: front rounded, unvoiced consonant)
+      - N8: 5, 70          (beş, yetmiş: front unrounded, unvoiced consonant)
+      - N9: 6              (altı: back unrounded, vowel-ending)
+      - NA: 9, 10, 30, 10^6(dokuz, on, otuz, milyon: back rounded, voiced consonant)
+      - NB: 40, 60         (kırk, altmış: back unrounded, unvoiced consonant)
+      - NC: 90, 0, 10^9    (doksan, sıfır, milyar: back unrounded, voiced consonant)
+      - ND: 100            (yüz: front rounded, voiced consonant)
+    """
+    specs = [
+        ("N5", "e", "i", False, False),
+        ("N6", "e", "i", True,  False),
+        ("N7", "e", "ü", False, True),
+        ("N8", "e", "i", False, True),
+        ("N9", "a", "ı", True,  False),
+        ("NA", "a", "u", False, False),
+        ("NB", "a", "ı", False, True),
+        ("NC", "a", "ı", False, False),
+        ("ND", "e", "ü", False, False),
+    ]
+    blocks = []
+    for flag, v_low, v_high, is_vowel, is_unvoiced in specs:
+        d = "t" if is_unvoiced else "d"
+        c_eq = "ç" if is_unvoiced else "c"
+        v_unround = "ı" if v_low == "a" else "i"
+        y_buf = "y" if is_vowel else ""
+        n_buf = "n" if is_vowel else ""
+        s_buf = "s" if is_vowel else ""
+        ord_base = f"'{ '' if is_vowel else v_high }nc{v_high}"
+        dist_base = f"'{ 'ş' if is_vowel else '' }{v_low}r"
+        pl_base = f"'l{v_low}r"
+        p1pl = f"'{ '' if is_vowel else v_high }m{v_high}z"
+        p2pl = f"'{ '' if is_vowel else v_high }n{v_high}z"
+
+        suffixes = [
+            # 1. Singular Cases + Locative -ki
+            f"'{y_buf}{v_low}",
+            f"'{y_buf}{v_high}",
+            f"'{d}{v_low}",
+            f"'{d}{v_low}n",
+            f"'{n_buf}{v_high}n",
+            f"'{y_buf}l{v_low}",
+            f"'{c_eq}{v_low}",
+            f"'{d}{v_low}ki",
+            f"'{d}{v_low}kiler",
+            f"'{d}{v_low}kilerin",
+            f"'{d}{v_low}kilere",
+            f"'{d}{v_low}kilerde",
+            f"'{d}{v_low}kilerden",
+            f"'{d}{v_low}kileri",
+            f"'{d}{v_low}kini",
+            f"'{d}{v_low}kinin",
+            f"'{d}{v_low}kine",
+            f"'{d}{v_low}kinde",
+            f"'{d}{v_low}kinden",
+            # 2. 3sg Possessive + Cases (e.g. 50'si, 50'sinde, 100'ü, 100'ünde)
+            f"'{s_buf}{v_high}",
+            f"'{s_buf}{v_high}n{v_low}",
+            f"'{s_buf}{v_high}nd{v_low}",
+            f"'{s_buf}{v_high}nd{v_low}ki",
+            f"'{s_buf}{v_high}nd{v_low}n",
+            f"'{s_buf}{v_high}n{v_high}",
+            f"'{s_buf}{v_high}n{v_high}n",
+            f"'{s_buf}{v_high}yl{v_low}",
+            # 1pl & 2pl Possessives (e.g. 3'ümüz, 2'miz, 1'imiz)
+            p1pl, f"{p1pl}{v_low}", f"{p1pl}d{v_low}", f"{p1pl}d{v_low}n", f"{p1pl}{v_high}", f"{p1pl}{v_high}n",
+            p2pl, f"{p2pl}{v_low}", f"{p2pl}d{v_low}", f"{p2pl}d{v_low}n", f"{p2pl}{v_high}", f"{p2pl}{v_high}n",
+            # 3. Ordinals (-ıncı/-inci/-uncu/-üncü/-ncı/-nci) + Cases & Possessives
+            ord_base,
+            f"{ord_base}y{v_low}",
+            f"{ord_base}y{v_high}",
+            f"{ord_base}d{v_low}",
+            f"{ord_base}d{v_low}ki",
+            f"{ord_base}d{v_low}n",
+            f"{ord_base}n{v_high}n",
+            f"{ord_base}yl{v_low}",
+            f"{ord_base}s{v_high}",
+            f"{ord_base}s{v_high}n{v_low}",
+            f"{ord_base}s{v_high}nd{v_low}",
+            f"{ord_base}s{v_high}nd{v_low}n",
+            f"{ord_base}s{v_high}n{v_high}",
+            f"{ord_base}s{v_high}n{v_high}n",
+            f"{ord_base}s{v_high}yl{v_low}",
+            f"{ord_base}l{v_low}r",
+            f"{ord_base}l{v_low}rd{v_low}",
+            f"{ord_base}l{v_low}rd{v_low}n",
+            f"{ord_base}l{v_low}r{v_low}",
+            f"{ord_base}l{v_low}r{v_unround}",
+            f"{ord_base}l{v_low}r{v_unround}n",
+            f"{ord_base}l{v_high}k",
+            f"{ord_base}l{v_high}ğ{v_high}",
+            f"{ord_base}l{v_high}ğ{v_low}",
+            # 4. Distributives ('er/'şer/'ar/'şar)
+            dist_base,
+            f"{dist_base}l{v_unround}",
+            f"{dist_base}d{v_low}n",
+            # 5. Plurals (e.g. 1980'ler, 80'lerde, 30'ların, 100'lerin, 100'lerce)
+            pl_base,
+            f"{pl_base}d{v_low}",
+            f"{pl_base}d{v_low}ki",
+            f"{pl_base}d{v_low}kiler",
+            f"{pl_base}d{v_low}n",
+            f"{pl_base}{v_low}",
+            f"{pl_base}{v_unround}",
+            f"{pl_base}{v_unround}n",
+            f"{pl_base}{v_unround}n{v_low}",
+            f"{pl_base}{v_unround}nd{v_low}",
+            f"{pl_base}{v_unround}nd{v_low}n",
+            f"{pl_base}{v_unround}n{v_unround}",
+            f"{pl_base}{v_unround}n{v_unround}n",
+            f"{pl_base}l{v_low}",
+            f"{pl_base}c{v_low}",
+            # 6. Derivations ('lik/'lük/'lık/'luk, 'li/'lü/'lı/'lu, 'siz/'süz/'sız/'suz)
+            f"'l{v_high}k",
+            f"'l{v_high}kl{v_low}r",
+            f"'l{v_high}ğ{v_high}",
+            f"'l{v_high}ğ{v_low}",
+            f"'l{v_high}ğ{v_high}n",
+            f"'l{v_high}kt{v_low}",
+            f"'l{v_high}kt{v_low}n",
+            f"'l{v_high}",
+            f"'l{v_high}l{v_low}r",
+            f"'l{v_high}l{v_low}rd{v_low}",
+            f"'l{v_high}l{v_low}rd{v_low}n",
+            f"'l{v_high}l{v_low}r{v_low}",
+            f"'l{v_high}l{v_low}r{v_unround}",
+            f"'l{v_high}l{v_low}r{v_unround}n",
+            f"'l{v_high}d{v_low}",
+            f"'l{v_high}d{v_low}n",
+            f"'l{v_high}y{v_low}",
+            f"'l{v_high}y{v_high}",
+            f"'l{v_high}n{v_high}n",
+            f"'s{v_high}z",
+            # 7. Copulas (on bare number, locative, and ablative)
+            f"'{d}{v_high}r",
+            f"'{d}{v_high}rl{v_low}r",
+            f"'{ 'yd' if is_vowel else d }{v_high}",
+            f"'{y_buf}m{v_high}ş",
+            f"'{y_buf}m{v_high}şt{v_high}r",
+            f"'{y_buf}s{v_low}",
+            f"'{d}{v_low}d{v_unround}r",
+            f"'{d}{v_low}yd{v_unround}",
+            f"'{d}{v_low}ym{v_unround}ş",
+            f"'{d}{v_low}ys{v_low}",
+            f"'{d}{v_low}nd{v_unround}r",
+            f"'{d}{v_low}nd{v_unround}",
+        ]
+        rules = []
+        for suf in unique(suffixes):
+            rules.append(sfx(flag, "0", suf, "."))
+            rules.append(sfx(flag, "0", suf.replace("'", "’"), "."))
+        blocks.append(make_flag_block(flag, unique(rules)))
+    return blocks
 
 
 if __name__ == '__main__':
