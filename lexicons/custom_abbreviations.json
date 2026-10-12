@@ -5125,12 +5125,22 @@
     "attributes": []
   },
   {
+    "lemma": "CEO",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "CERN",
     "pos": "ProperNoun",
     "attributes": []
   },
   {
     "lemma": "CERP",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "CFO",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -7316,6 +7326,11 @@
   },
   {
     "lemma": "DDİ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "DEM",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -13186,6 +13201,11 @@
   },
   {
     "lemma": "FÜR",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "FİBA",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -38180,6 +38200,11 @@
     "attributes": []
   },
   {
+    "lemma": "SİHA",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "SİÜ",
     "pos": "ProperNoun",
     "attributes": []
@@ -38751,6 +38776,11 @@
   },
   {
     "lemma": "TEK",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TEKNOFEST",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -40780,6 +40810,11 @@
     "attributes": []
   },
   {
+    "lemma": "TUSAŞ",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "TV",
     "pos": "ProperNoun",
     "attributes": []
@@ -41345,6 +41380,11 @@
     "attributes": []
   },
   {
+    "lemma": "TÜMOSAN",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "TÜPRAŞ",
     "pos": "ProperNoun",
     "attributes": []
@@ -41365,7 +41405,17 @@
     "attributes": []
   },
   {
+    "lemma": "TÜRKPATENT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
     "lemma": "TÜRKSAT",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "TÜRKSOY",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -48325,11 +48375,6 @@
     "attributes": []
   },
   {
-    "lemma": "c/o",
-    "pos": "Noun",
-    "attributes": []
-  },
-  {
     "lemma": "cP",
     "pos": "ProperNoun",
     "attributes": []
@@ -52126,6 +52171,11 @@
   },
   {
     "lemma": "İYV",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "İZSU",
     "pos": "ProperNoun",
     "attributes": []
   },

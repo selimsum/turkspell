@@ -1372,9 +1372,9 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "çerçöp/∃∌∍∖√∢∨∩∪∮∵∹∻≀≅≈≊≌≍≎≤≩",
     "serçeparmak/∌∍∎∡∧∩∪∺≉≋≍≎≏≔≾",
     "tutamak/" + remap_flag_string("CI CK CL I1 L1 LI LK PB Q1 R1 SZ V1".replace(" ", "")),
-    "sürücüsüz/" + remap_flag_string("CI CK I2 L2 LI LK PF Q2 R2 SL SZ cl F1 A3 N3 P3 P7 PP PU PW Y2".replace(" ", "")),
-    "statüsüz/" + remap_flag_string("CI CK I2 L2 LI LK PF Q2 R2 SL SZ cl F1 A3 N3 P3 P7 PP PU PW Y2".replace(" ", "")),
-    "kovuksuz/" + remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SZ Y1".replace(" ", "")),
+    "sürücüsüz/" + FRONT_ROUNDED_UNVOICED_FLAGS,
+    "statüsüz/" + FRONT_ROUNDED_UNVOICED_FLAGS,
+    "kovuksuz/" + BACK_ROUNDED_UNVOICED_FLAGS,
     "temsilen",
     "sanayiinde",
     "buzdağı/∀∈∍∎∡∧∫∲∶∺∼∽≂≉≋≍≣",
@@ -1715,6 +1715,94 @@ MAP '’‘"""
     
     return aff_text
 
+PROPER_B = remap_flag_string("pBN pBL pBR pBY pBA pBI pBP pBC".replace(" ", ""))
+PROPER_O = remap_flag_string("pON pOL pOR pOY pOA pOI pOP pOC".replace(" ", ""))
+PROPER_F = remap_flag_string("pFN pFL pFR pFY pFA pFI pFP pFC".replace(" ", ""))
+PROPER_U = remap_flag_string("pUN pUL pUR pUY pUA pUI pUP pUC".replace(" ", ""))
+
+UNIT_FLAG_MAP = {
+    "cm": PROPER_F, "mm": PROPER_F, "km": PROPER_F, "dm": PROPER_F, "nm": PROPER_F,
+    "ml": PROPER_F, "mL": PROPER_F, "cl": PROPER_F, "dl": PROPER_F, "hl": PROPER_F,
+    "lt": PROPER_F, "sn": PROPER_F,
+    "kg": PROPER_B, "gr": PROPER_B, "mg": PROPER_B, "dg": PROPER_B, "cg": PROPER_B,
+    "dk": PROPER_B, "yy": PROPER_B,
+    "kr": PROPER_O, "krş": PROPER_O,
+}
+
+BRAND_FLAG_MAP = {
+    "iPhone": remap_flag_string("KC CK CL cl L1 L2".replace(" ", "")) + PROPER_O + PROPER_F,
+    "iPad": remap_flag_string("KC CK cl L2".replace(" ", "")) + PROPER_F + PROPER_B,
+    "YouTube": remap_flag_string("CK CL cl L1 L2".replace(" ", "")) + PROPER_O + PROPER_F,
+    "Google": remap_flag_string("CK CL cl L1 L2".replace(" ", "")) + PROPER_B + PROPER_F,
+    "Apple": remap_flag_string("CK CL cl L1 L2".replace(" ", "")) + PROPER_B + PROPER_F,
+    "Twitter": remap_flag_string("CK CL cl L1 L2".replace(" ", "")) + PROPER_B + PROPER_F,
+    "VMware": remap_flag_string("CK cl L2".replace(" ", "")) + PROPER_F,
+    "A101": PROPER_F,
+}
+
+
+def get_abbrev_flags(w: str) -> str:
+    if not w or len(w) <= 1 or any(c in w for c in ". '/"):
+        return ""
+    if w in UNIT_FLAG_MAP:
+        return UNIT_FLAG_MAP[w]
+    if w in BRAND_FLAG_MAP:
+        return BRAND_FLAG_MAP[w]
+    wl = tr_lower(w)
+    if wl in ("usb", "hdmi", "hdmı"):
+        return HEAD_FLAG_OVERRIDES[wl]
+    if w.isupper() and w.isalpha() and len(w) >= 2:
+        if w[-1] in "AIÂ":
+            fl = PROPER_B
+        elif w[-1] in "OUÛ":
+            fl = PROPER_O
+        elif w[-1] in "EİÎ":
+            fl = PROPER_F
+        elif w[-1] in "ÖÜ":
+            fl = PROPER_U
+        else:
+            if w[-1] == "Q":
+                fl = PROPER_U
+            elif w[-1] == "W":
+                fl = PROPER_O + PROPER_F
+            else:
+                fl = PROPER_F
+            if w[-1] in "KH" or w in ("TL", "GB", "MB", "TB", "KB", "PB"):
+                fl += PROPER_B
+            for ch in reversed(w):
+                if ch in "AIÂOUÛEİÎÖÜ":
+                    if ch in "AIÂ":
+                        fl += PROPER_B
+                    elif ch in "OUÛ":
+                        fl += PROPER_O
+                    elif ch in "EİÎ":
+                        fl += PROPER_F
+                    elif ch in "ÖÜ":
+                        fl += PROPER_U
+                    break
+        return "".join(sorted(set(fl)))
+    if w.isalpha() and len(w) >= 2:
+        lv = "e"
+        for ch in reversed(w):
+            if ch in "aıâouûeiîöüAIÂOUÛEİÎÖÜ":
+                lv = tr_lower(ch)
+                break
+        if lv in "aıâ":
+            fl = PROPER_B
+        elif lv in "ouû":
+            fl = PROPER_O
+        elif lv in "eiî":
+            fl = PROPER_F
+        else:
+            fl = PROPER_U
+        if w[-1].isupper() and w[-1] not in "AIÂOUÛEİÎÖÜ":
+            fl += PROPER_F
+            if w[-1] in "KH":
+                fl += PROPER_B
+        return "".join(sorted(set(fl)))
+    return ""
+
+
 def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig, profile="tdk"):
     print(f"Sanitizing .dic file for profile [{profile}]...")
     
@@ -1807,7 +1895,17 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         if head_lower in PURGE_VIRTUAL_STEMS or head_lower in ("felaked", "stoğ"):
             removed_bad_stems += 1
             continue
-        if head_lower in BAD_STEMS:
+        if head in BAD_STEMS or (
+            head_lower in BAD_STEMS
+            and (
+                head.islower()
+                or head_lower in {
+                    "ademci", "topyekun", "alemşümul", "alemşümullük",
+                    "misakımilli", "misakımillî", "yahudi", "yahudice",
+                    "yahudilik", "yahudiliğ", "yahudibaklası", "fata", "çe"
+                }
+            )
+        ):
             removed_bad_stems += 1
             continue
 
@@ -1883,8 +1981,8 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 if proper_flags and (cap_head, proper_flags) not in seen_heads:
                     seen_heads.add((cap_head, proper_flags))
                     clean_entries.append(f"{cap_head}/{proper_flags}")
-            elif head_lower in {'km', 'cm', 'mm', 'kg', 'gr', 'ml', 'mg', 'dl', 'cl'}:
-                flags = proper_flags
+            elif head in UNIT_FLAG_MAP:
+                flags = UNIT_FLAG_MAP[head]
             elif head in custom_abbrevs_orig or head_lower in custom_abbrevs:
                 # Keep abbreviation as-is
                 pass
@@ -1898,7 +1996,15 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                     flags = common_flags
                     
         # Morphological flag overrides for core stems:
-        if head_lower in HEAD_FLAG_OVERRIDES:
+        if head in UNIT_FLAG_MAP:
+            flags = UNIT_FLAG_MAP[head]
+        elif head in BRAND_FLAG_MAP:
+            flags = BRAND_FLAG_MAP[head]
+        elif len(head) >= 2 and head.isupper() and head.isalpha():
+            flags = get_abbrev_flags(head)
+        elif head in custom_abbrevs_orig and not head.islower():
+            flags = "".join(sorted(set(flags + get_abbrev_flags(head))))
+        elif head_lower in HEAD_FLAG_OVERRIDES:
             flags = HEAD_FLAG_OVERRIDES[head_lower]
         elif head_lower in PALATAL_L_HEADS:
             flags = PALATAL_L_FLAGS
@@ -2048,10 +2154,10 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     for a in custom_abbrevs_orig:
         if (a, "") not in seen_heads:
             if (a.lower(), "") not in seen_heads or a != a.lower():
-                if a.lower() in HEAD_FLAG_OVERRIDES:
-                    clean_entries.append(f"{a}/{HEAD_FLAG_OVERRIDES[a.lower()]}")
-                else:
-                    clean_entries.append(a)
+                fl_a = get_abbrev_flags(a)
+                if not fl_a and a.lower() in HEAD_FLAG_OVERRIDES:
+                    fl_a = HEAD_FLAG_OVERRIDES[a.lower()]
+                clean_entries.append(f"{a}/{fl_a}" if fl_a else a)
                 seen_heads.add((a, ""))
                 added_abbrevs += 1
             
@@ -2065,13 +2171,18 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         if (n, "") not in seen_heads and ((n.lower(), "") not in seen_heads or (n and (n[0].isupper() or any(c.isupper() for c in n)))):
             base_fl = lower_to_flags.get(n.lower(), "")
             # Assign harmonic proper noun apostrophe inflection flags for capitalized proper names
-            if n.lower() in HEAD_FLAG_OVERRIDES:
+            if n in BRAND_FLAG_MAP:
+                entry_n = f"{n}/{BRAND_FLAG_MAP[n]}"
+            elif len(n) >= 2 and n.isupper() and n.isalpha():
+                fl_n = get_abbrev_flags(n)
+                entry_n = f"{n}/{fl_n}" if fl_n else n
+            elif n.lower() in HEAD_FLAG_OVERRIDES:
                 entry_n = f"{n}/{HEAD_FLAG_OVERRIDES[n.lower()]}"
             elif n and (n[0].isupper() or any(c.isupper() for c in n)) and not any(c in n for c in "0123456789."):
                 last_vowel = ""
                 for ch in reversed(n):
                     if ch in "aıâouûeiîöüAIÂOUÛEİÎÖÜ":
-                        last_vowel = ch.lower()
+                        last_vowel = tr_lower(ch)
                         break
                 if last_vowel in "aıâ":
                     proper_flags = remap_flag_string("CK CL L1 pBN pBL pBR pBY pBA pBI pBP pBC".replace(" ", ""))
