@@ -847,6 +847,28 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         acc_invalid, _ = check_words(invalid_joined_clitics)
         self.assertEqual(acc_invalid, [], f"Invalid joined clitics leaked: {acc_invalid}")
 
+    def test_corpus_mined_derivational_and_inflectional_affixes(self):
+        """Verifies positive acceptance of corpus-mined technical roots, compounds, and derivations."""
+        valid_words = [
+            # Technical root 'kod' regular case and possessive inflections
+            "kod", "kodu", "koda", "kodun", "kodda", "koddan", "kodlar", "kodları", "kodların",
+            "kodum", "kodumuz", "kodunuz", "kodlu", "kodsuz", "kodcu", "kodluk", "kodunu", "kodunda",
+            # Inter-X compound adjectives (-lararası / -lerarası)
+            "yıldızlararası", "gezegenlerarası", "dinlerarası", "bankalararası", "eyaletlerarası", "buzullararası",
+            # Scientific compound derivations and abstract nouns
+            "kütleçekim", "kütleçekimi", "kütleçekimsel", "yerçekimsel", "dilbilgisel", "vektörel",
+            "maruziyet", "maruziyeti", "maruziyetin", "maruziyete", "maruziyetler",
+            "temsiliyet", "temsiliyeti", "tekabüliyet",
+            "asteroit", "asteroitler", "asteroitlerin", "asteroite", "asteroidi", "asteroidin",
+            "psikiyatrik", "psikiyatrist", "psikiyatristler",
+            "asidik", "embriyonik", "periferik", "taksonomik", "kanonik", "mikroskopik",
+            "polimeraz", "oksidaz", "senkronize", "plasebo", "rapçi", "küçükresim",
+            # Computing verbal nouns (-lama / -leme)
+            "adresleme", "anahtarlama", "kablolama", "haritalama", "lisanslama", "tünelleme", "indeksleme"
+        ]
+        _, rej = check_words(valid_words)
+        self.assertEqual(rej, [], f"Corpus-mined affix derivations rejected: {rej}")
+
 
 if __name__ == "__main__":
     unittest.main()
