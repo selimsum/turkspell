@@ -1245,11 +1245,6 @@ B4_VOWEL_FLAGS = remap_flag_string("B4 a2 y1 L1 R1 n2 i1 Q1 PB PT P2 P6 PO PR CL
 F3_VOWEL_FLAGS = remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
 F4_VOWEL_FLAGS = remap_flag_string("F4 a4 y2 L2 R2 n4 i2 Q2 PF PV P4 P8 PQ PZ cl LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
 
-B3_VOWEL_FLAGS = remap_flag_string("B3 a1 y1 L1 R1 n1 i1 Q1 PB PS P1 P5 PM PN CL LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
-B4_VOWEL_FLAGS = remap_flag_string("B4 a2 y1 L1 R1 n2 i1 Q1 PB PT P2 P6 PO PR CL LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
-F3_VOWEL_FLAGS = remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
-F4_VOWEL_FLAGS = remap_flag_string("F4 a4 y2 L2 R2 n4 i2 Q2 PF PV P4 P8 PQ PZ cl LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
-
 HEAD_FLAG_OVERRIDES["pasaport"] = BACK_ROUNDED_UNVOICED_FLAGS
 HEAD_FLAG_OVERRIDES["folklor"] = BACK_ROUNDED_UNVOICED_FLAGS
 HEAD_FLAG_OVERRIDES["kovuksuz"] = BACK_ROUNDED_UNVOICED_FLAGS
@@ -1379,6 +1374,15 @@ for _w in DUAL_VOICING_G_BACK_ROUNDED:
     HEAD_FLAG_OVERRIDES[_w] = "".join(sorted(set(BACK_ROUNDED_UNVOICED_FLAGS + LONG_TO_UTF8["V2"])))
 
 for _w in ["karbondioksit", "monoksit", "dioksit", "oksit", "hidroksit", "peroksit", "patik", "aktinit", "askarit", "becet", "çenet", "diploit"]:
+    HEAD_FLAG_OVERRIDES[_w] = "".join(sorted(set(FRONT_UNVOICED_FLAGS + LONG_TO_UTF8["V3"])))
+
+# Scientific and technical terms ending in -ik with front-vowel voicing to -iğe/-iğin
+for _w in [
+    "psikiyatrik", "embriyonik", "asidik", "periferik", "taksonomik", "kanonik",
+    "mikroskopik", "makroskopik", "fotovoltaik", "filogenetik", "biyotik", "abiyotik",
+    "harmonik", "genomik", "algoritmik", "sinaptik", "ultrasonik", "pediatrik",
+    "sitoplazmik", "elektrolitik", "holografik", "semptomatik", "fenotipik", "enzimatik"
+]:
     HEAD_FLAG_OVERRIDES[_w] = "".join(sorted(set(FRONT_UNVOICED_FLAGS + LONG_TO_UTF8["V3"])))
 
 for _w in ["aşık", "âşık", "boydak", "kaskat", "marinat", "marmelat", "santigrat", "veliaht", "kâp", "slap"]:
@@ -1973,7 +1977,62 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "ni", "pa", "pu", "ra", "rh", "sc", "u", "v", "y", "ö", "ı", "ın", "ır", "ke", "isa",
     "ag", "Ag", "ba", "Ba", "be", "Be", "br", "Br", "ce", "Ce", "cr", "Cr", "dy", "Dy",
     "hg", "Hg", "nb", "Nb", "nd", "Nd", "th", "Th", "zr", "Zr", "ph", "pH",
-    "vâkıfane", "vâle", "hâletinez", "neftîmsi", "zengûle", "zımparamsı"
+    "vâkıfane", "vâle", "hâletinez", "neftîmsi", "zengûle", "zımparamsı",
+    # Technical & authoritative noun roots missing from base dictionaries:
+    "kod/" + remap_flag_string("A2 B2 CI CK CL DE DL DT I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1 VC".replace(" ", "")),
+    # Physics & scientific compound derivations:
+    "kütleçekim/" + FRONT_UNVOICED_FLAGS,
+    "yerçekim/" + FRONT_UNVOICED_FLAGS,
+    "kütleçekimsel/" + FRONT_UNVOICED_FLAGS,
+    "yerçekimsel/" + FRONT_UNVOICED_FLAGS,
+    "dilbilgisel/" + FRONT_UNVOICED_FLAGS,
+    "üstbilişsel/" + FRONT_UNVOICED_FLAGS,
+    "sözdebilimsel/" + FRONT_UNVOICED_FLAGS,
+    "vektörel/" + FRONT_UNVOICED_FLAGS,
+    "maruziyet/" + FRONT_UNVOICED_FLAGS,
+    "temsiliyet/" + FRONT_UNVOICED_FLAGS,
+    "tekabüliyet/" + FRONT_UNVOICED_FLAGS,
+    "asteroit/" + FRONT_UNVOICED_FLAGS,
+    "asteroid/" + remap_flag_string("NE A3 N3 P3 P7 PP PU PW Y2 vc".replace(" ", "")),
+    "otoimmün/" + FRONT_ROUNDED_UNVOICED_FLAGS,
+    "kortizol/" + BACK_ROUNDED_UNVOICED_FLAGS,
+    # Productive inter-X compound adjectives (-lararası / -lerarası):
+    "yıldızlararası/" + B3_VOWEL_FLAGS,
+    "gezegenlerarası/" + B3_VOWEL_FLAGS,
+    "dinlerarası/" + B3_VOWEL_FLAGS,
+    "buzullararası/" + B3_VOWEL_FLAGS,
+    "bankalararası/" + B3_VOWEL_FLAGS,
+    "eyaletlerarası/" + B3_VOWEL_FLAGS,
+    # Computing verbal nouns (-lama / -leme):
+    "adresleme/" + F3_VOWEL_FLAGS,
+    "tünelleme/" + F3_VOWEL_FLAGS,
+    "indeksleme/" + F3_VOWEL_FLAGS,
+    "girintileme/" + F3_VOWEL_FLAGS,
+    "anahtarlama/" + B3_VOWEL_FLAGS,
+    "kablolama/" + B3_VOWEL_FLAGS,
+    "haritalama/" + B3_VOWEL_FLAGS,
+    "lisanslama/" + B3_VOWEL_FLAGS,
+    # Specialized agents, ideologies and enzymes:
+    "rapçi/" + FRONT_UNVOICED_FLAGS,
+    "küçükresim/" + FRONT_UNVOICED_FLAGS,
+    "psikiyatrist/" + FRONT_UNVOICED_FLAGS,
+    "pasifist/" + FRONT_UNVOICED_FLAGS,
+    "minimalist/" + FRONT_UNVOICED_FLAGS,
+    "elitist/" + FRONT_UNVOICED_FLAGS,
+    "pasifizm/" + FRONT_UNVOICED_FLAGS,
+    "polimeraz/" + BACK_UNVOICED_FLAGS,
+    "oksidaz/" + BACK_UNVOICED_FLAGS,
+    "kinaz/" + BACK_UNVOICED_FLAGS,
+    "sentaz/" + BACK_UNVOICED_FLAGS,
+    "senkronize/" + F3_VOWEL_FLAGS,
+    "plasebo/" + B4_VOWEL_FLAGS,
+    "paramiliter/" + FRONT_UNVOICED_FLAGS,
+    "paranormal/" + BACK_UNVOICED_FLAGS,
+    # Scientific -ik loanword adjectives:
+    "psikiyatrik", "embriyonik", "asidik", "periferik", "taksonomik", "kanonik",
+    "mikroskopik", "makroskopik", "fotovoltaik", "filogenetik", "biyotik", "abiyotik",
+    "harmonik", "genomik", "algoritmik", "sinaptik", "ultrasonik", "pediatrik",
+    "sitoplazmik", "elektrolitik", "holografik", "semptomatik", "fenotipik", "enzimatik"
 ]
 
 def tr_lower(s: str) -> str:
