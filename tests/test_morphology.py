@@ -803,6 +803,50 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         else:
             self.assertEqual(rej_prof, [], f"DD closed compounds rejected in Universal/DD profile: {rej_prof}")
 
+    def test_clitics_particles_and_conjunctions(self):
+        """Verifies acceptance of standalone question particles & bound -ki and rejection of joined mı/mi/mu/mü, da/de, and ki typos."""
+        valid_clitics_and_ki = [
+            "mı", "mi", "mu", "mü",
+            "mıyım", "miyim", "muyum", "müyüm",
+            "mısın", "misin", "musun", "müsün",
+            "mıyız", "miyiz", "muyuz", "müyüz",
+            "mısınız", "misiniz", "musunuz", "müsünüz",
+            "mıdır", "midir", "mudur", "müdür",
+            "mıydı", "miydi", "muydu", "müydü",
+            "mıydım", "miydim", "muydum", "müydüm",
+            "mıydın", "miydin", "muydun", "müydün",
+            "mıydık", "miydik", "muyduk", "müydük",
+            "mıydınız", "miydiniz", "muydunuz", "müydünüz",
+            "mıymış", "miymiş", "muymuş", "müymüş",
+            "benimki", "seninki", "onunki", "bizimki", "sizinki", "onlarınki",
+            "dünkü", "bugünkü", "yarınki", "önceki", "sonraki", "şimdiki",
+            "evdeki", "okuldaki", "buradaki", "oradaki", "neredeki", "içindeki", "üzerindeki",
+            "buradayım", "buradasın", "buradadır", "buradalar", "neredeyim", "neredeler"
+        ]
+        _, rej_valid = check_words(valid_clitics_and_ki)
+        self.assertEqual(rej_valid, [], f"Valid standalone particles or bound -ki forms rejected: {rej_valid}")
+
+        invalid_joined_clitics = [
+            "geldimi", "gittimi", "oldumu", "verdimi", "geldinmi", "gördünmü", "anladınmı",
+            "geliyormu", "biliyormu", "biliyormusun", "istiyormusun", "yaparmısın",
+            "gelecekmisin", "olurmu", "olmazmı", "olacakmı", "varmı", "varmıydı", "varmıdır",
+            "yokmu", "yokmuydu", "değilmi", "değilmiydi", "güzelmi", "iyimi", "iyimisin",
+            "tamammı", "doğrumu", "değilde", "isede", "vede", "amada", "ancakda", "fakatda",
+            "hattada", "yinede", "genede", "belkide", "sankide", "çünküde", "bilede",
+            "zatende", "hiçde", "hiçte", "pekde", "pekte", "çokda", "gelsede", "yapsada",
+            "olsada", "olursada", "istersede", "gelsekde", "olsamda", "bilsemde", "geldimde",
+            "gittimde", "yaptımda", "baktımda", "gördümde", "evdede", "okuldada", "buradada",
+            "oradada", "bendede", "sendede", "bizdede", "sizdede", "aslındada", "sonundada",
+            "içindede", "üzerindede", "yanındada", "biliyorumki", "diyorumki", "anladımki",
+            "gördümki", "baktımki", "sanırımki", "umarımki", "olurki", "olduki", "dediki",
+            "demişki", "biliyorsunki", "görüyorsunki", "inanıyorumki", "düşünüyorumki",
+            "unutmayalımki", "varsayalımki", "tutki", "yeterki", "bilmemki", "nedendirki",
+            "nasılki", "öyleki", "şöyleki", "demekki", "kaldıki", "iyiki", "belliki",
+            "şüphesizki", "elbetteki", "gerçiki", "neyseki", "keşkeki"
+        ]
+        acc_invalid, _ = check_words(invalid_joined_clitics)
+        self.assertEqual(acc_invalid, [], f"Invalid joined clitics leaked: {acc_invalid}")
+
 
 if __name__ == "__main__":
     unittest.main()
