@@ -40,7 +40,12 @@ MAXDIFF 5
 MAXNGRAMSUGS 8
 
 
-REP 4817
+
+
+
+
+
+REP 5169
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -848,6 +853,7 @@ REP batini bâtıni
 REP teleskopu teleskobu
 REP bergamotu bergamodu
 REP baçı bacı
+REP bilim$ _bilimi
 REP acemlalesi acem_lalesi
 REP acıağaç acı_ağaç
 REP acıbadem acı_badem
@@ -2940,7 +2946,6 @@ REP varsılerki varsıl_erki
 REP veritabanı veri_tabanı
 REP vıdıvıdı vıdı_vıdı
 REP vırvır vır_vır
-REP yada ya_da
 REP yabanarmudu yaban_armudu
 REP yabanarısı yaban_arısı
 REP yabanarısıgiller yaban_arısıgiller
