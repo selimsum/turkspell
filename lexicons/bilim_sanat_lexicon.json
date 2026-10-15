@@ -2184,6 +2184,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "albendazol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "alber",
     "pos": "Noun",
     "attributes": [],
@@ -2206,6 +2212,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "albuterol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "aldangan",
@@ -3397,6 +3409,12 @@
   },
   {
     "lemma": "aminoglütetimit",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "aminonitrotiyazol",
     "pos": "Noun",
     "attributes": [],
     "source": "llm_triage"
@@ -4614,6 +4632,12 @@
     "source": "llm_triage"
   },
   {
+    "lemma": "antianjinal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "antiaritmik",
     "pos": "Adjective",
     "attributes": [],
@@ -4716,6 +4740,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "antifungal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "antifungaller",
     "pos": "Noun",
     "attributes": [],
@@ -4780,6 +4810,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "antikataral",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "antikiklon",
@@ -4858,6 +4894,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "antimalarial",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "antimutagen",
@@ -4944,6 +4986,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "antiretroviral",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "antirezistan",
     "pos": "Noun",
     "attributes": [],
@@ -4954,6 +5002,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "antiromatizmal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "antisekretuvar",
@@ -6834,6 +6888,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "asinitrazol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "asipenserin",
     "pos": "Noun",
     "attributes": [],
@@ -7056,6 +7116,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "astemizol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "astenik",
     "pos": "Adjective",
     "attributes": [],
@@ -7198,6 +7264,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "atimizol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "atkaz",
@@ -8304,6 +8376,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "bakteriyal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "bakteriyoklorofil",
     "pos": "Noun",
     "attributes": [],
@@ -8748,6 +8826,12 @@
     "source": "llm_triage"
   },
   {
+    "lemma": "basal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "basalgan",
     "pos": "Noun",
     "attributes": [],
@@ -8836,6 +8920,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "batidemersal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "batlangoz",
@@ -9636,6 +9726,12 @@
     "source": "llm_triage"
   },
   {
+    "lemma": "benisal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "benivaz",
     "pos": "Noun",
     "attributes": [],
@@ -9808,6 +9904,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "benzoksazol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "benzoksimat",
@@ -10242,6 +10344,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "bilharziyal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "bilharziyazis",
     "pos": "Noun",
     "attributes": [],
@@ -10576,6 +10684,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "bisfenol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "bisinoz",
     "pos": "Noun",
     "attributes": [],
@@ -10595,6 +10709,12 @@
   },
   {
     "lemma": "bisülfit",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "bitertanol",
     "pos": "Noun",
     "attributes": [],
     "source": "llm_triage"
@@ -10922,6 +11042,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "biyosidal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "biyositin",
@@ -12100,10 +12226,28 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "butaconazol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "butamben",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "butamizol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "butarfanol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "buvaz",
@@ -14296,6 +14440,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "colesterol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "collodion",
     "pos": "Noun",
     "attributes": [],
@@ -15316,6 +15466,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "danazol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "dandin",
     "pos": "Noun",
     "attributes": [],
@@ -16256,6 +16412,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "demersal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "demeteken",
@@ -17344,6 +17506,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "diacilgliserol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "diadelf",
     "pos": "Noun",
     "attributes": [],
@@ -17468,6 +17636,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "diasilgliserol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "diastazis",
@@ -17752,6 +17926,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "dietilstilbestrol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "difenhidramin",
     "pos": "Noun",
     "attributes": [],
@@ -17950,6 +18130,12 @@
     "source": "deterministic_vowel"
   },
   {
+    "lemma": "digital",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "digitasyo",
     "pos": "Noun",
     "attributes": [],
@@ -18028,6 +18214,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "dihidroergokalsiferol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "dihidroksiaseton",
     "pos": "Noun",
     "attributes": [],
@@ -18050,6 +18242,18 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "dihidrotakisterol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "dihidrotaşisterol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "dihidrotestosteron",
@@ -20560,6 +20764,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "distal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "distalis",
     "pos": "Noun",
     "attributes": [],
@@ -20638,6 +20848,18 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "diston",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "distop",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "distorsiyon",
     "pos": "Noun",
     "attributes": [],
@@ -20656,6 +20878,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "distos",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "distosya",
     "pos": "Noun",
     "attributes": [],
@@ -20666,6 +20894,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "distrof",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "distrofik",
@@ -21527,9 +21761,9 @@
   },
   {
     "lemma": "dişar",
-    "pos": "Noun",
+    "pos": "Adjective",
     "attributes": [],
-    "source": "deterministic_consonant"
+    "source": "llm_triage"
   },
   {
     "lemma": "dişare",
@@ -21548,6 +21782,18 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_vowel"
+  },
+  {
+    "lemma": "dişboşluk",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "dişdeğişim",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "dişdir",
@@ -21956,6 +22202,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "dorsal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "dorsifleksiyon",
@@ -24294,6 +24546,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "dışyapısal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "dışyapışma",
     "pos": "Noun",
     "attributes": [],
@@ -24310,6 +24568,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "dışınsal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "ebbebin",
@@ -26544,6 +26808,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "endokardiyal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "endokardiyum",
     "pos": "Noun",
     "attributes": [],
@@ -26554,6 +26824,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "endokondral",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "endokoryon",
@@ -26602,6 +26878,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "endometriyal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "endometriyom",
@@ -26674,6 +26956,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "endonöral",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "endonöryum",
@@ -27258,6 +27546,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "eparteryal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "eparven",
     "pos": "Noun",
     "attributes": [],
@@ -27312,6 +27606,12 @@
     "source": "deterministic_vowel"
   },
   {
+    "lemma": "epidermal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "epidermis",
     "pos": "Noun",
     "attributes": [],
@@ -27362,6 +27662,12 @@
   {
     "lemma": "epidot",
     "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "epidural",
+    "pos": "Adjective",
     "attributes": [],
     "source": "llm_triage"
   },
@@ -27448,6 +27754,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "epigeal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "epigeik",
@@ -27688,6 +28000,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "epinöral",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "epinöryum",
@@ -28038,6 +28356,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "ergokalsiferol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "ergometre",
     "pos": "Noun",
     "attributes": [],
@@ -28048,6 +28372,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "ergosterol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "ergotizm",
@@ -30342,6 +30672,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "fitosterol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "fitosönoz",
     "pos": "Noun",
     "attributes": [],
@@ -30898,6 +31234,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "fosforimetre",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "fosforit",
     "pos": "Noun",
     "attributes": [],
@@ -30991,7 +31333,7 @@
     "lemma": "fotograf",
     "pos": "Noun",
     "attributes": [],
-    "source": "deterministic_consonant"
+    "source": "llm_triage"
   },
   {
     "lemma": "fotografiya",
@@ -31357,6 +31699,12 @@
   },
   {
     "lemma": "fundament",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "fundoskop",
     "pos": "Noun",
     "attributes": [],
     "source": "llm_triage"
@@ -31854,6 +32202,12 @@
     "source": "llm_triage"
   },
   {
+    "lemma": "galvanimetre",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "galyon",
     "pos": "Noun",
     "attributes": [],
@@ -32316,6 +32670,18 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "gastroenteropat",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "gastrograf",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "gastrohepatitis",
     "pos": "Noun",
     "attributes": [],
@@ -32368,6 +32734,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "gastropat",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "gastroreksis",
@@ -33988,6 +34360,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "gliserol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "gliserolasyon",
@@ -40576,6 +40954,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "homotermal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "homotransplantasyon",
     "pos": "Noun",
     "attributes": [],
@@ -42340,6 +42724,12 @@
     "source": "llm_triage"
   },
   {
+    "lemma": "imidazol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "imidazoldion",
     "pos": "Noun",
     "attributes": [],
@@ -42710,6 +43100,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "indazol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "indeksleme",
@@ -43222,6 +43618,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "interkostal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "interksiler",
     "pos": "Noun",
     "attributes": [],
@@ -43294,6 +43696,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "interorbital",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "interpozisyon",
     "pos": "Noun",
     "attributes": [],
@@ -43352,6 +43760,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_vowel"
+  },
+  {
+    "lemma": "interval",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "interventriküler",
@@ -43426,6 +43840,18 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "intraabdominal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "intraarteriyal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "intraarteriyel",
     "pos": "Noun",
     "attributes": [],
@@ -43438,10 +43864,76 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "intraatriyal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "intraaural",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "intraaurikular",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "intrabronşiyal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "intrabukkal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "intradermal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "intradiskal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "intraduktal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "intraduodenal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "intradural",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "intraepidermal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "intrafissural",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "intrafistular",
@@ -43456,6 +43948,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "intrafusal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "intraglanduler",
     "pos": "Noun",
     "attributes": [],
@@ -43466,6 +43964,18 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "intragluteal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "intraintestinal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "intrakanalikular",
@@ -43480,16 +43990,40 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "intrakardiyal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "intrakarpal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "intrakartilajinöz",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "intrakavernosal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "intrakaviter",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "intrakondriyal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "intrakoroner",
@@ -43570,6 +44104,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "intraoral",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "intraosseöz",
     "pos": "Noun",
     "attributes": [],
@@ -43592,6 +44132,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "intraperitoneal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "intrapetroz",
@@ -43634,6 +44180,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "intraspinal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "intratendinöz",
@@ -44646,6 +45198,18 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "izobütilalkol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "izobütilkarbinol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "izoekojen",
     "pos": "Noun",
     "attributes": [],
@@ -44742,6 +45306,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "izomilalkol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "izonim",
     "pos": "Noun",
     "attributes": [],
@@ -44758,6 +45328,18 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "izopropilalkol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "izoproterenol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "izosentez",
@@ -44788,6 +45370,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "izotermal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "izoton",
@@ -45702,6 +46290,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "kalsiferol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "kalsifikans",
     "pos": "Noun",
     "attributes": [],
@@ -46506,6 +47100,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "karbazol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "karben",
     "pos": "Noun",
     "attributes": [],
@@ -46516,6 +47116,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "karbimazol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "karbinoksamin",
@@ -48750,6 +49356,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "ketokonazol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "ketonik",
     "pos": "Adjective",
     "attributes": [],
@@ -49664,6 +50276,12 @@
     "source": "llm_triage"
   },
   {
+    "lemma": "klenbuterol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "klever",
     "pos": "Noun",
     "attributes": [],
@@ -49766,6 +50384,12 @@
     "source": "llm_triage"
   },
   {
+    "lemma": "kloprostenol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "kloralhidrat",
     "pos": "Noun",
     "attributes": [],
@@ -49806,6 +50430,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "klorbutanol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "klorfeniramin",
@@ -49896,6 +50526,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "klotrimazol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "klozapin",
@@ -50228,6 +50864,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "kolekalsiferol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "kolelitiyaz",
     "pos": "Noun",
     "attributes": [],
@@ -50256,6 +50898,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "kolestanol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "kolestaz",
@@ -60474,6 +61122,12 @@
     "source": "llm_triage"
   },
   {
+    "lemma": "monoklonal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "monoklorür",
     "pos": "Noun",
     "attributes": [],
@@ -60526,6 +61180,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "monolateral",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "monolayer",
@@ -60618,10 +61278,22 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "monopetal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "monopil",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "monopodiyal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "monopolar",
@@ -60690,6 +61362,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "monosefal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "monosefaliyen",
     "pos": "Noun",
     "attributes": [],
@@ -60709,6 +61387,12 @@
   },
   {
     "lemma": "monosentrik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "monosepal",
     "pos": "Adjective",
     "attributes": [],
     "source": "llm_triage"
@@ -64936,6 +65620,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "okyanusal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "okzalizm",
     "pos": "Noun",
     "attributes": [],
@@ -68238,7 +68928,19 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "periferal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "periferik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "periferiyal",
     "pos": "Adjective",
     "attributes": [],
     "source": "llm_triage"
@@ -68284,6 +68986,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "perihemal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "perihepatik",
@@ -68428,6 +69136,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "perinatal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "perinefrik",
@@ -70212,6 +70926,12 @@
     "source": "deterministic_vowel"
   },
   {
+    "lemma": "poliklonal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "polikotiledon",
     "pos": "Noun",
     "attributes": [],
@@ -70870,6 +71590,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "postnatal",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "postnotum",
@@ -82338,6 +83064,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "tazlık",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "tazıs",
     "pos": "Noun",
     "attributes": [],
@@ -82428,6 +83160,18 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "tebik",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "tebit",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "tebrikleme",
     "pos": "Noun",
     "attributes": [],
@@ -82438,6 +83182,36 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "tecimyerlik",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "tecinlik",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "tecizat",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "tederik",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "tedik",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "tedirkin",
@@ -82504,6 +83278,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "tehmik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "tehmin",
@@ -82662,6 +83442,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "telegrafist",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "telehon",
     "pos": "Noun",
     "attributes": [],
@@ -82684,6 +83470,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "teleskopik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "televisyon",
@@ -82884,10 +83676,32 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "temer",
+    "pos": "Noun",
+    "attributes": [
+      "InverseHarmony"
+    ],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "temon",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "temşit",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "tendin",
+    "pos": "Noun",
+    "attributes": [
+      "InverseHarmony"
+    ],
+    "source": "llm_triage"
   },
   {
     "lemma": "tenekteplaz",
@@ -82932,6 +83746,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "teodolit",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "teofilin",
     "pos": "Noun",
     "attributes": [],
@@ -82974,10 +83794,34 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "terapötik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "terapötist",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "teratojen",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "teratojenik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "teratojenlik",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "terazosin",
@@ -83034,6 +83878,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "tergit",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "terklorür",
     "pos": "Noun",
     "attributes": [],
@@ -83076,16 +83926,52 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "termobioloj",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "termodilüsyon",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "termodurik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "termofil",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "termofilik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "termofobik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "termografi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "termojenetik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "termojenez",
@@ -83098,6 +83984,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "termojenik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "termojenin",
@@ -83145,7 +84037,13 @@
     "lemma": "termometr",
     "pos": "Noun",
     "attributes": [],
-    "source": "deterministic_consonant"
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "termometrik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "termonörozis",
@@ -83184,6 +84082,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "termoset",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "termosilin",
     "pos": "Noun",
     "attributes": [],
@@ -83202,10 +84106,34 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "termotolerant",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "termoçift",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "terofit",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "terpen",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "terpenik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "terpenler",
@@ -83230,6 +84158,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "terratip",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "tersineleme",
@@ -83274,6 +84208,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "tesbik",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "teselleme",
     "pos": "Noun",
     "attributes": [],
@@ -83292,10 +84232,34 @@
     "source": "deterministic_vowel"
   },
   {
+    "lemma": "tesesat",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "tesik",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "tesker",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "teslik",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "tesmit",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "testerekaplama",
@@ -83446,6 +84410,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "tetraloj",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "tetramer",
@@ -84108,6 +85078,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "tirik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "tirin",
     "pos": "Noun",
     "attributes": [],
@@ -84324,6 +85300,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "titrimetrik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "titsingen",
     "pos": "Noun",
     "attributes": [],
@@ -84358,6 +85340,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_vowel"
+  },
+  {
+    "lemma": "tiyik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "tiyin",
@@ -84486,10 +85474,22 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "tokoferol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "tokolizis",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "tokotrienol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "toksafen",
@@ -84690,6 +85690,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "tonometr",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "topdon",
     "pos": "Noun",
     "attributes": [],
@@ -84700,6 +85706,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_vowel"
+  },
+  {
+    "lemma": "topografi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "topoizomer",
@@ -84900,6 +85912,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "trakeobronşit",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "trakeofitler",
     "pos": "Noun",
     "attributes": [],
@@ -84916,6 +85934,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "traktat",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "traktor",
@@ -85020,6 +86044,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "transgenik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "transiluminasyon",
     "pos": "Noun",
     "attributes": [],
@@ -85122,6 +86152,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "transparant",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "transpirasyon",
     "pos": "Noun",
     "attributes": [],
@@ -85168,6 +86204,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "tranzit",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "travertin",
@@ -85362,6 +86404,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "triazol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "triazolam",
     "pos": "Noun",
     "attributes": [],
@@ -85378,6 +86426,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "triaçilgliserit",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "tribenzil",
@@ -85422,6 +86476,12 @@
     "source": "deterministic_vowel"
   },
   {
+    "lemma": "tribunal",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "tribütilamin",
     "pos": "Noun",
     "attributes": [],
@@ -85438,6 +86498,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "tridekanol",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "tridesil",
@@ -85506,6 +86572,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "trigeminal",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "trigemine",
     "pos": "Noun",
     "attributes": [],
@@ -85518,6 +86590,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "trigliserit",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "trigon",
     "pos": "Noun",
     "attributes": [],
@@ -85528,6 +86606,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_vowel"
+  },
+  {
+    "lemma": "trigonal",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "trigonometriya",
@@ -85920,6 +87004,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "trioloj",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "trioz",
     "pos": "Noun",
     "attributes": [],
@@ -86016,6 +87106,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "trisom",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "triterpen",
     "pos": "Noun",
     "attributes": [],
@@ -86074,6 +87170,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "trizom",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "trişina",
@@ -86442,6 +87544,12 @@
     "source": "deterministic_vowel"
   },
   {
+    "lemma": "turbülent",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "turkaz",
     "pos": "Noun",
     "attributes": [],
@@ -86794,6 +87902,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_vowel"
+  },
+  {
+    "lemma": "türbidimetri",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "türekleme",
@@ -87180,6 +88294,30 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "ultrasonik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "ultrasonografi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "ultrasonoskopi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "ultrasüzgeç",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "ulçuhlama",
     "pos": "Noun",
     "attributes": [],
@@ -87196,6 +88334,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "undulat",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "unlubitler",
@@ -87304,6 +88448,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_vowel"
+  },
+  {
+    "lemma": "uterografi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "uteroskleroz",
@@ -87576,10 +88726,22 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "vajinoskopi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "vakans",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "vakat",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "vaksin",
@@ -87682,6 +88844,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "variant",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "varikosel",
@@ -87798,6 +88966,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "vazografi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "vazokonstriksiyon",
     "pos": "Noun",
     "attributes": [],
@@ -87882,6 +89056,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "veksilloji",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "veleme",
     "pos": "Noun",
     "attributes": [],
@@ -87904,6 +89084,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "velosipedist",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "vember",
@@ -87948,6 +89134,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "venografi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "venoklizis",
     "pos": "Noun",
     "attributes": [],
@@ -87964,6 +89156,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "ventrikülografi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "venöz",
@@ -88092,6 +89290,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "vestnik",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "veten",
     "pos": "Noun",
     "attributes": [],
@@ -88138,6 +89342,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "vibroterapotik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "vidarabin",
@@ -88212,6 +89422,18 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "violoncellist",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "violonist",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "viomisin",
     "pos": "Noun",
     "attributes": [],
@@ -88254,10 +89476,22 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "virostatik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "virtiöz",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "virtopsi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "virtüoz",
@@ -88368,10 +89602,22 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "viviseksiyonist",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "viviseksiyonizm",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "vizit",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "vizkometre",
@@ -88392,16 +89638,40 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "voleybolist",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "volframit",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "volkanizm",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "vollastonit",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "volonter",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "voltametri",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "voltamogram",
@@ -88422,6 +89692,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "volumetrik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "volutin",
     "pos": "Noun",
     "attributes": [],
@@ -88432,6 +89708,24 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "volümatik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "volümetri",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "volümetrik",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "vombatgiller",
@@ -88456,6 +89750,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "voyant",
+    "pos": "Adjective",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "voz",
@@ -88962,6 +90262,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_vowel"
+  },
+  {
+    "lemma": "yavapsı",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "yavaşliyin",
@@ -90482,6 +91788,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "zakıt",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "zalog",
     "pos": "Noun",
     "attributes": [],
@@ -90494,10 +91806,58 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "zalıt",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "zamık",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "zant",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "zantor",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "zapit",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "zapovednik",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "zappik",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "zarallık",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "zarat",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "zarbezen",
@@ -90506,16 +91866,34 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "zarencilik",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "zarer",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "zarfalık",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "zartlama",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_vowel"
+  },
+  {
+    "lemma": "zarılık",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "zator",
@@ -90662,6 +92040,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "zelzemi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "zembiligozgoz",
     "pos": "Noun",
     "attributes": [],
@@ -90704,6 +92088,12 @@
     "source": "deterministic_vowel"
   },
   {
+    "lemma": "zepsi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "zerer",
     "pos": "Noun",
     "attributes": [],
@@ -90726,6 +92116,12 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "zerzemi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "zerzin",
@@ -94648,6 +96044,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "üranografi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "üreaz",
     "pos": "Noun",
     "attributes": [],
@@ -94666,6 +96068,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "üreterografi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "üreterolitiazis",
     "pos": "Noun",
     "attributes": [],
@@ -94676,6 +96084,18 @@
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "üretimyöntemi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "üretrografi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "üretrogram",
@@ -94726,6 +96146,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "ürikasidemi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "ürikaz",
     "pos": "Noun",
     "attributes": [],
@@ -94774,10 +96200,28 @@
     "source": "deterministic_vowel"
   },
   {
+    "lemma": "ürinometri",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
+    "lemma": "ürinoskopi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "ürinöz",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "ürisemi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "ürkeğen",
@@ -94816,6 +96260,12 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "üroklepsi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "ürokriterion",
     "pos": "Noun",
     "attributes": [],
@@ -94852,10 +96302,22 @@
     "source": "deterministic_consonant"
   },
   {
+    "lemma": "ürosemiyoloji",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
+  },
+  {
     "lemma": "ürosiyanoz",
     "pos": "Noun",
     "attributes": [],
     "source": "deterministic_consonant"
+  },
+  {
+    "lemma": "üroskopi",
+    "pos": "Noun",
+    "attributes": [],
+    "source": "llm_triage"
   },
   {
     "lemma": "ürotensin",
