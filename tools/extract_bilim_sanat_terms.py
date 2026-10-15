@@ -145,6 +145,78 @@ EXTRA_PATTERNS = [
 ]
 RE_EXTRA = re.compile('|'.join(EXTRA_PATTERNS), re.IGNORECASE)
 
+# English vocabulary for rejecting raw bilingual / foreign headwords
+EN_PATH = ROOT_DIR / "raw_data" / "english_words_large.txt"
+if not EN_PATH.exists():
+    EN_PATH = Path(r"C:\gemini\hunspell-tr-moz\english_words_large.txt")
+
+english_words = set()
+if EN_PATH.exists():
+    with open(EN_PATH, "r", encoding="utf-8", errors="ignore") as f:
+        for line in f:
+            w_en = line.strip().lower()
+            if w_en:
+                english_words.add(w_en)
+    print(f"Loaded {len(english_words):,} English words for cross-lingual filtering.")
+
+RE_ENGLISH_SUFFIXES = re.compile(
+    r'.*(?:tion|sion|ment|ity|ance|ence|ous|able|ible|ship|hood|ing)$', re.IGNORECASE
+)
+
+NON_PLURAL_ADJECTIVES = re.compile(
+    r'.*(?:[kv]askül[ea]r|[kv]askul[ea]r|küler|kuler|kular|'
+    r'selül[ea]r|selul[ea]r|sellül[ea]r|sellul[ea]r|'
+    r'lobül[ea]r|lobul[ea]r|lokül[ea]r|lokul[ea]r|'
+    r'medüll[ea]r|medul[ea]r|'
+    r'serebellar|maksilar|papilar|aksilar|tonsiller|'
+    r'alveoler|baziler|capituler|glandul[ea]r|globul[ea]r|'
+    r'jukstaglomerul[ea]r|dipolar|polar|sufler|kavaler|'
+    r'granül[ea]r|papül[ea]r|nodül[ea]r|ovül[ea]r|jügül[ea]r|'
+    r'regül[ea]r|irregül[ea]r|kapsul[ea]r|kapill?er|tübül[ea]r|valvül[ea]r|'
+    r'triangül[ea]r|transanül[ea]r|anül[ea]r|angül[ea]r|sferül[ea]r)$',
+    re.IGNORECASE
+)
+
+ROOT_EXCEPTIONS = {
+    "kiler", "şeker", "haber", "pazar", "ambar", "yular", "dolar", "aynar",
+    "bestseller", "broyler", "stapler", "inhaler", "biller", "boler", "sufler"
+}
+
+PALATAL_L_PLURALS = re.compile(
+    r'.*(?:[oa]l|[ou]l|azol|tiol|fenol|diol|sterol|kol|rol|pol|sol|fol|tol|bor|mor)ler$',
+    re.IGNORECASE
+)
+
+def is_english(w: str) -> bool:
+    clean_w = w.lower().strip()
+    if clean_w in known_words:
+        return False
+    if clean_w in english_words:
+        return True
+    if RE_ENGLISH_SUFFIXES.match(clean_w):
+        return True
+    return False
+
+def singularize_lemma(w: str) -> str:
+    clean_w = w.lower().strip()
+    if clean_w.endswith('giller') or clean_w.endswith('keler'):
+        return clean_w
+    if NON_PLURAL_ADJECTIVES.match(clean_w) or clean_w in ROOT_EXCEPTIONS:
+        return clean_w
+    
+    if clean_w.endswith('ler'):
+        stem = clean_w[:-3]
+        if len(stem) < 3: return clean_w
+        if PALATAL_L_PLURALS.match(clean_w): return stem
+        last_v = next((c for c in reversed(stem) if c in "aeıioöuüâîû"), None)
+        if last_v in "eiöüî": return stem
+    elif clean_w.endswith('lar'):
+        stem = clean_w[:-3]
+        if len(stem) < 3: return clean_w
+        last_v = next((c for c in reversed(stem) if c in "aeıioöuüâîû"), None)
+        if last_v in "aıouâû": return stem
+    return clean_w
+
 def clean_lemma(w: str) -> str:
     return w.replace("I", "ı").replace("İ", "i").lower().strip()
 
@@ -168,7 +240,29 @@ def is_clean_standard_term(word: str) -> bool:
             return False
     if DIALECT_EXCLUDE.match(w):
         return False
+    if is_english(w):
+        return False
     if not (RE_SCIENTIFIC.match(w) or RE_PREFIX.match(w) or RE_EXTRA.match(w)):
+        return False
+    return True
+
+def is_hygienic(w: str) -> bool:
+    if len(w) < 3 or len(w) > 30:
+        return False
+    if not all(c in "abcçdefgğhıijklmnoöprsştuüvyzâîû" for c in w):
+        return False
+    if re.search(r"(.)\1\1", w):
+        return False
+    if w.endswith(('b', 'c', 'd', 'ğ')):
+        return False
+    if w in FORBIDDEN_STEMS or w in strictly_rejected_set:
+        return False
+    for suffix in ('i', 'ı', 'e', 'a', 'de', 'da', 'di', 'dı', 'si', 'sı'):
+        if (w + suffix) in strictly_rejected_set:
+            return False
+    if DIALECT_EXCLUDE.match(w):
+        return False
+    if is_english(w):
         return False
     return True
 
@@ -181,18 +275,27 @@ if colab_parsed_path.exists():
         parsed_items = json.load(f)
     print(f"Reading {len(parsed_items):,} parsed items from colab_parsed_terimler.json...")
     for item in parsed_items:
-        lem = clean_lemma(item.get("lemma") or "")
-        if not lem or lem in known_words:
+        lem_raw = clean_lemma(item.get("lemma") or "")
+        if not lem_raw or is_english(lem_raw):
             continue
-        if is_clean_standard_term(lem):
+        lem = singularize_lemma(lem_raw)
+        if not lem or is_english(lem) or lem in known_words:
+            continue
+            
+        is_valid = is_clean_standard_term(lem) or (lem != lem_raw and is_clean_standard_term(lem_raw) and is_hygienic(lem))
+        if is_valid:
             pos = item.get("pos") or "Noun"
             attrs = [a for a in (item.get("attributes") or []) if a in ("Voicing", "CompoundP3sg", "InverseHarmony", "LastVowelDrop")]
-            extracted_terms[lem] = {
-                "lemma": lem,
-                "pos": pos,
-                "attributes": sorted(set(attrs)),
-                "source": "llm_triage"
-            }
+            if lem not in extracted_terms:
+                extracted_terms[lem] = {
+                    "lemma": lem,
+                    "pos": pos,
+                    "attributes": sorted(set(attrs)),
+                    "source": "llm_triage"
+                }
+            else:
+                existing = extracted_terms[lem]
+                existing["attributes"] = sorted(set(existing["attributes"] + attrs))
     print(f"Extracted {len(extracted_terms):,} terms from LLM triage.")
 
 # 2. Process deterministic candidates (vowel_ending, regular_consonant, verbs)
@@ -205,11 +308,14 @@ if det_path.exists():
     det_added = 0
     # Regular consonants
     for w in det_data.get("regular_consonant", []):
-        w_clean = clean_lemma(w)
-        if w_clean in known_words or w_clean in extracted_terms:
+        w_raw = clean_lemma(w)
+        if not w_raw or is_english(w_raw):
             continue
-        if is_clean_standard_term(w_clean):
-            # Regular consonant nouns/adjectives
+        w_clean = singularize_lemma(w_raw)
+        if is_english(w_clean) or w_clean in known_words or w_clean in extracted_terms:
+            continue
+        is_valid = is_clean_standard_term(w_clean) or (w_clean != w_raw and is_clean_standard_term(w_raw) and is_hygienic(w_clean))
+        if is_valid:
             extracted_terms[w_clean] = {
                 "lemma": w_clean,
                 "pos": "Noun",
@@ -220,10 +326,14 @@ if det_path.exists():
 
     # Vowel endings
     for w in det_data.get("vowel_ending", []):
-        w_clean = clean_lemma(w)
-        if w_clean in known_words or w_clean in extracted_terms:
+        w_raw = clean_lemma(w)
+        if not w_raw or is_english(w_raw):
             continue
-        if is_clean_standard_term(w_clean):
+        w_clean = singularize_lemma(w_raw)
+        if is_english(w_clean) or w_clean in known_words or w_clean in extracted_terms:
+            continue
+        is_valid = is_clean_standard_term(w_clean) or (w_clean != w_raw and is_clean_standard_term(w_raw) and is_hygienic(w_clean))
+        if is_valid:
             extracted_terms[w_clean] = {
                 "lemma": w_clean,
                 "pos": "Noun",
@@ -235,7 +345,7 @@ if det_path.exists():
     # Verbs (-mak / -mek)
     for w in det_data.get("verbs", []):
         w_clean = clean_lemma(w)
-        if w_clean in known_words or w_clean in extracted_terms:
+        if not w_clean or is_english(w_clean) or w_clean in known_words or w_clean in extracted_terms:
             continue
         # Only standard technical/computing/scientific nominal verbs (-lamak / -lemek)
         if is_clean_standard_term(w_clean) and (w_clean.endswith("lamak") or w_clean.endswith("lemek")):
