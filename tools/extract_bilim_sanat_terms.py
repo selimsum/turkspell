@@ -126,6 +126,25 @@ SCIENTIFIC_PATTERNS = [
 ]
 RE_SCIENTIFIC = re.compile("|".join(SCIENTIFIC_PATTERNS), re.IGNORECASE)
 
+SCIENTIFIC_PREFIXES = [
+    'hiper', 'hipo', 'peri', 'para', 'epi', 'endo', 'ekto', 'mezo', 'retro',
+    'intra', 'inter', 'sub', 'supra', 'post', 'pre', 'pro', 'anti', 'oto',
+    'hetero', 'homo', 'izo', 'poli', 'mono', 'di', 'tri', 'tetra', 'penta',
+    'makro', 'mikro', 'krio', 'sito', 'hemato', 'kardiyo', 'nöro', 'psiko',
+    'oftalmo', 'dermato', 'gastro', 'hepato', 'osteo', 'biyo', 'termo',
+    'elektro', 'foto', 'hidro', 'aero', 'termo', 'nano', 'kromo', 'ribo'
+]
+RE_PREFIX = re.compile('^(?:' + '|'.join(SCIENTIFIC_PREFIXES) + ')[a-zçğıöşü]{3,}$', re.IGNORECASE)
+
+EXTRA_PATTERNS = [
+    r'.*(?:anol|enol|erol|sterol|fenol|tiol|azol|izol|klorol|parasetamol)$',
+    r'.*(?:emi|emiya)$',
+    r'.*(?:yal|iyal)$',
+    r'.*(?:klorür|sülfür|oksit|hidrür|nitrür|karbür|iyodür|bromür|florür)$',
+    r'.*(?:ozis|asis|azis|ozid|ozit)$',
+]
+RE_EXTRA = re.compile('|'.join(EXTRA_PATTERNS), re.IGNORECASE)
+
 def clean_lemma(w: str) -> str:
     return w.replace("I", "ı").replace("İ", "i").lower().strip()
 
@@ -149,7 +168,7 @@ def is_clean_standard_term(word: str) -> bool:
             return False
     if DIALECT_EXCLUDE.match(w):
         return False
-    if not RE_SCIENTIFIC.match(w):
+    if not (RE_SCIENTIFIC.match(w) or RE_PREFIX.match(w) or RE_EXTRA.match(w)):
         return False
     return True
 
