@@ -2480,12 +2480,12 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     print(f"  Unhatted clones targeted for purge: {len(unhatted_to_purge)}")
 
     authority_all = tdk_words | dd_words
-    if profile in ("universal", "bilim-sanat") and bilim_sanat_words:
+    if profile in ("universal", "bilim-sanat", "tdk") and bilim_sanat_words:
         authority_all = authority_all | bilim_sanat_words
     dd_words_to_purge = set()
     if profile == "tdk":
-        all_ref = tdk_words
-        dd_words_to_purge = (dd_words - tdk_words) - custom_names - custom_abbrevs - {tr_lower(c) for c in COMPOUND_SET}
+        all_ref = tdk_words | (bilim_sanat_words if bilim_sanat_words else set())
+        dd_words_to_purge = (dd_words - all_ref) - custom_names - custom_abbrevs - {tr_lower(c) for c in COMPOUND_SET}
         print(f"  Dil Derneği-only words targeted for purge: {len(dd_words_to_purge)}")
     elif profile == "dd":
         all_ref = dd_words
@@ -2838,9 +2838,9 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         seen_heads.add((head_w, ""))
         added_legit += 1
             
-    # 5b. Inject Bilim ve Sanat Terimleri in universal profile
+    # 5b. Inject Bilim ve Sanat Terimleri
     added_terimler = 0
-    if profile in ("universal", "bilim-sanat") and bilim_sanat_lexicon:
+    if profile in ("universal", "bilim-sanat", "tdk") and bilim_sanat_lexicon:
         for t_item in bilim_sanat_lexicon:
             w = t_item["lemma"]
             head_lower = tr_lower(w)
