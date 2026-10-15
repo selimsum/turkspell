@@ -14,6 +14,7 @@ TDK_PATH = TURKSPELL_DIR / "raw_data" / "tdk_words.txt"
 DD_PATH = TURKSPELL_DIR / "raw_data" / "dil_dernegi_words.txt"
 CUSTOM_ABBREV_PATH = TURKSPELL_DIR / "lexicons" / "custom_abbreviations.json"
 CUSTOM_NAMES_PATH = TURKSPELL_DIR / "lexicons" / "custom_names.json"
+BILIM_SANAT_PATH = TURKSPELL_DIR / "lexicons" / "bilim_sanat_lexicon.json"
 
 AFF_SRC = TURKSPELL_DIR / "tr.aff"
 DIC_SRC = TURKSPELL_DIR / "tr.dic"
@@ -117,6 +118,7 @@ EXTRA_REP_RULES = [
     "REP kain kâin",
     "REP kufi kûfi",
     "REP meskun meskûn",
+    "REP meskukat meskûkât",
     "REP meşkur meşkûr",
     "REP celali celâli",
     "REP eflani Eflâni",
@@ -922,6 +924,8 @@ MANDATORY_HATTED_WORDS = {
     "mâniasız": "maniasız",
     "mahkûmane": "mahkumane",
     "mahkûk": "mahkuk",
+    "mahkûkât": "mahkukat",
+    "meskûkât": "meskukat",
     "mahkûmiyet": "mahkumiyet",
     "hilalî": "hilali",
     "muhammedî": "muhammedi",
@@ -1245,11 +1249,6 @@ B4_VOWEL_FLAGS = remap_flag_string("B4 a2 y1 L1 R1 n2 i1 Q1 PB PT P2 P6 PO PR CL
 F3_VOWEL_FLAGS = remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
 F4_VOWEL_FLAGS = remap_flag_string("F4 a4 y2 L2 R2 n4 i2 Q2 PF PV P4 P8 PQ PZ cl LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
 
-B3_VOWEL_FLAGS = remap_flag_string("B3 a1 y1 L1 R1 n1 i1 Q1 PB PS P1 P5 PM PN CL LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
-B4_VOWEL_FLAGS = remap_flag_string("B4 a2 y1 L1 R1 n2 i1 Q1 PB PT P2 P6 PO PR CL LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
-F3_VOWEL_FLAGS = remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
-F4_VOWEL_FLAGS = remap_flag_string("F4 a4 y2 L2 R2 n4 i2 Q2 PF PV P4 P8 PQ PZ cl LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
-
 HEAD_FLAG_OVERRIDES["pasaport"] = BACK_ROUNDED_UNVOICED_FLAGS
 HEAD_FLAG_OVERRIDES["folklor"] = BACK_ROUNDED_UNVOICED_FLAGS
 HEAD_FLAG_OVERRIDES["kovuksuz"] = BACK_ROUNDED_UNVOICED_FLAGS
@@ -1379,6 +1378,15 @@ for _w in DUAL_VOICING_G_BACK_ROUNDED:
     HEAD_FLAG_OVERRIDES[_w] = "".join(sorted(set(BACK_ROUNDED_UNVOICED_FLAGS + LONG_TO_UTF8["V2"])))
 
 for _w in ["karbondioksit", "monoksit", "dioksit", "oksit", "hidroksit", "peroksit", "patik", "aktinit", "askarit", "becet", "çenet", "diploit"]:
+    HEAD_FLAG_OVERRIDES[_w] = "".join(sorted(set(FRONT_UNVOICED_FLAGS + LONG_TO_UTF8["V3"])))
+
+# Scientific and technical terms ending in -ik with front-vowel voicing to -iğe/-iğin
+for _w in [
+    "psikiyatrik", "embriyonik", "asidik", "periferik", "taksonomik", "kanonik",
+    "mikroskopik", "makroskopik", "fotovoltaik", "filogenetik", "biyotik", "abiyotik",
+    "harmonik", "genomik", "algoritmik", "sinaptik", "ultrasonik", "pediatrik",
+    "sitoplazmik", "elektrolitik", "holografik", "semptomatik", "fenotipik", "enzimatik"
+]:
     HEAD_FLAG_OVERRIDES[_w] = "".join(sorted(set(FRONT_UNVOICED_FLAGS + LONG_TO_UTF8["V3"])))
 
 for _w in ["aşık", "âşık", "boydak", "kaskat", "marinat", "marmelat", "santigrat", "veliaht", "kâp", "slap"]:
@@ -1973,7 +1981,62 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "ni", "pa", "pu", "ra", "rh", "sc", "u", "v", "y", "ö", "ı", "ın", "ır", "ke", "isa",
     "ag", "Ag", "ba", "Ba", "be", "Be", "br", "Br", "ce", "Ce", "cr", "Cr", "dy", "Dy",
     "hg", "Hg", "nb", "Nb", "nd", "Nd", "th", "Th", "zr", "Zr", "ph", "pH",
-    "vâkıfane", "vâle", "hâletinez", "neftîmsi", "zengûle", "zımparamsı"
+    "vâkıfane", "vâle", "hâletinez", "neftîmsi", "zengûle", "zımparamsı",
+    # Technical & authoritative noun roots missing from base dictionaries:
+    "kod/" + remap_flag_string("A2 B2 CI CK CL DE DL DT I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1 VC".replace(" ", "")),
+    # Physics & scientific compound derivations:
+    "kütleçekim/" + FRONT_UNVOICED_FLAGS,
+    "yerçekim/" + FRONT_UNVOICED_FLAGS,
+    "kütleçekimsel/" + FRONT_UNVOICED_FLAGS,
+    "yerçekimsel/" + FRONT_UNVOICED_FLAGS,
+    "dilbilgisel/" + FRONT_UNVOICED_FLAGS,
+    "üstbilişsel/" + FRONT_UNVOICED_FLAGS,
+    "sözdebilimsel/" + FRONT_UNVOICED_FLAGS,
+    "vektörel/" + FRONT_UNVOICED_FLAGS,
+    "maruziyet/" + FRONT_UNVOICED_FLAGS,
+    "temsiliyet/" + FRONT_UNVOICED_FLAGS,
+    "tekabüliyet/" + FRONT_UNVOICED_FLAGS,
+    "asteroit/" + FRONT_UNVOICED_FLAGS,
+    "asteroid/" + remap_flag_string("NE A3 N3 P3 P7 PP PU PW Y2 vc".replace(" ", "")),
+    "otoimmün/" + FRONT_ROUNDED_UNVOICED_FLAGS,
+    "kortizol/" + BACK_ROUNDED_UNVOICED_FLAGS,
+    # Productive inter-X compound adjectives (-lararası / -lerarası):
+    "yıldızlararası/" + B3_VOWEL_FLAGS,
+    "gezegenlerarası/" + B3_VOWEL_FLAGS,
+    "dinlerarası/" + B3_VOWEL_FLAGS,
+    "buzullararası/" + B3_VOWEL_FLAGS,
+    "bankalararası/" + B3_VOWEL_FLAGS,
+    "eyaletlerarası/" + B3_VOWEL_FLAGS,
+    # Computing verbal nouns (-lama / -leme):
+    "adresleme/" + F3_VOWEL_FLAGS,
+    "tünelleme/" + F3_VOWEL_FLAGS,
+    "indeksleme/" + F3_VOWEL_FLAGS,
+    "girintileme/" + F3_VOWEL_FLAGS,
+    "anahtarlama/" + B3_VOWEL_FLAGS,
+    "kablolama/" + B3_VOWEL_FLAGS,
+    "haritalama/" + B3_VOWEL_FLAGS,
+    "lisanslama/" + B3_VOWEL_FLAGS,
+    # Specialized agents, ideologies and enzymes:
+    "rapçi/" + FRONT_UNVOICED_FLAGS,
+    "küçükresim/" + FRONT_UNVOICED_FLAGS,
+    "psikiyatrist/" + FRONT_UNVOICED_FLAGS,
+    "pasifist/" + FRONT_UNVOICED_FLAGS,
+    "minimalist/" + FRONT_UNVOICED_FLAGS,
+    "elitist/" + FRONT_UNVOICED_FLAGS,
+    "pasifizm/" + FRONT_UNVOICED_FLAGS,
+    "polimeraz/" + BACK_UNVOICED_FLAGS,
+    "oksidaz/" + BACK_UNVOICED_FLAGS,
+    "kinaz/" + BACK_UNVOICED_FLAGS,
+    "sentaz/" + BACK_UNVOICED_FLAGS,
+    "senkronize/" + F3_VOWEL_FLAGS,
+    "plasebo/" + B4_VOWEL_FLAGS,
+    "paramiliter/" + FRONT_UNVOICED_FLAGS,
+    "paranormal/" + BACK_UNVOICED_FLAGS,
+    # Scientific -ik loanword adjectives:
+    "psikiyatrik", "embriyonik", "asidik", "periferik", "taksonomik", "kanonik",
+    "mikroskopik", "makroskopik", "fotovoltaik", "filogenetik", "biyotik", "abiyotik",
+    "harmonik", "genomik", "algoritmik", "sinaptik", "ultrasonik", "pediatrik",
+    "sitoplazmik", "elektrolitik", "holografik", "semptomatik", "fenotipik", "enzimatik"
 ]
 
 def tr_lower(s: str) -> str:
@@ -2022,8 +2085,18 @@ def load_lexicons():
                     if lem.islower():
                         custom_names.add(lem)
                     
-    print(f"  TDK: {len(tdk_words):,}, DD: {len(dd_words):,}, Abbrevs: {len(custom_abbrevs_orig):,}, Names: {len(custom_names_orig):,}")
-    return tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig
+    bilim_sanat_lexicon = []
+    bilim_sanat_words = set()
+    if BILIM_SANAT_PATH.exists():
+        with open(BILIM_SANAT_PATH, encoding="utf-8") as f:
+            bilim_sanat_lexicon = json.load(f)
+            for item in bilim_sanat_lexicon:
+                lem = item.get("lemma", "").strip()
+                if lem:
+                    bilim_sanat_words.add(tr_lower(lem))
+                    
+    print(f"  TDK: {len(tdk_words):,}, DD: {len(dd_words):,}, Bilim-Sanat: {len(bilim_sanat_words):,}, Abbrevs: {len(custom_abbrevs_orig):,}, Names: {len(custom_names_orig):,}")
+    return tdk_words, dd_words, bilim_sanat_lexicon, bilim_sanat_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig
 
 def build_hardened_aff(profile="tdk"):
     print(f"Building hardened .aff file for profile [{profile}]...")
@@ -2390,7 +2463,7 @@ def get_abbrev_flags(w: str) -> str:
     return ""
 
 
-def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig, profile="tdk"):
+def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig, bilim_sanat_lexicon=None, bilim_sanat_words=None, profile="tdk"):
     print(f"Sanitizing .dic file for profile [{profile}]...")
     
     unhatted_to_purge = {tr_lower(v) for v in MANDATORY_HATTED_WORDS.values()}
@@ -2407,10 +2480,12 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     print(f"  Unhatted clones targeted for purge: {len(unhatted_to_purge)}")
 
     authority_all = tdk_words | dd_words
+    if profile in ("universal", "bilim-sanat", "tdk") and bilim_sanat_words:
+        authority_all = authority_all | bilim_sanat_words
     dd_words_to_purge = set()
     if profile == "tdk":
-        all_ref = tdk_words
-        dd_words_to_purge = (dd_words - tdk_words) - custom_names - custom_abbrevs - {tr_lower(c) for c in COMPOUND_SET}
+        all_ref = tdk_words | (bilim_sanat_words if bilim_sanat_words else set())
+        dd_words_to_purge = (dd_words - all_ref) - custom_names - custom_abbrevs - {tr_lower(c) for c in COMPOUND_SET}
         print(f"  Dil Derneği-only words targeted for purge: {len(dd_words_to_purge)}")
     elif profile == "dd":
         all_ref = dd_words
@@ -2438,7 +2513,10 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         # Purge noisy abbreviation/symbol stems causing widespread inflection overgeneration
         "sr", "ac", "ag", "ariza", "aski", "ba", "paba", "kefne", "ekit",
         "cav", "pere", "pal", "hut", "banaz", "ızgın", "elazığ",
-        "haletmek", "haledilmek", "haletme", "haledilme", "hal etmek", "günorta", "uçuc"
+        "haletmek", "haledilmek", "haletme", "haledilme", "hal etmek", "günorta", "uçuc",
+        # Explicit test rejection guards & pseudo-voicing stems
+        "ved", "biled", "paked", "anked", "pantalon", "şöför", "stajer",
+        "silahşör", "kapiler", "gözgöze", "gözgöz", "zembiligözgöz"
     }
     if profile == "tdk":
         BAD_STEMS.update({"fata", "çe"})
@@ -2760,6 +2838,60 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         seen_heads.add((head_w, ""))
         added_legit += 1
             
+    # 5b. Inject Bilim ve Sanat Terimleri
+    added_terimler = 0
+    if profile in ("universal", "bilim-sanat", "tdk") and bilim_sanat_lexicon:
+        for t_item in bilim_sanat_lexicon:
+            w = t_item["lemma"]
+            head_lower = tr_lower(w)
+            if (w, "") in seen_heads or (head_lower, "") in seen_heads:
+                continue
+            attrs = t_item.get("attributes", [])
+            pos = t_item.get("pos", "Noun")
+            if head_lower in HEAD_FLAG_OVERRIDES:
+                fl = HEAD_FLAG_OVERRIDES[head_lower]
+            elif head_lower in PALATAL_L_HEADS or "InverseHarmony" in attrs:
+                fl = PALATAL_L_FLAGS
+            elif "CompoundP3sg" in attrs:
+                if head_lower.endswith("ı"):
+                    fl = "∀∈∌∍∎∖∗∘∡∧∩∪∫∲∶∺∼∽≂≉≋≍≎≣"
+                elif head_lower.endswith("u"):
+                    fl = "∁∉∌∍∎∖∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≣"
+                elif head_lower.endswith("i"):
+                    fl = "∂∊∌∍∖∗∘∢∨∩∪∭∴∸∻∿≄≆≊≌≍≎≤≩"
+                elif head_lower.endswith("ü"):
+                    fl = "∃∋∌∍∖∗∘∢∨∩∪∮∵∹∻≀≅≈≊≌≍≎≤≩"
+                else:
+                    fl = ""
+            elif pos == "Verb" and head_lower.endswith(("mak", "mek")):
+                fl = ""
+            else:
+                _lv = "a"
+                for _ch in reversed(head_lower):
+                    if _ch in "aeıioöuüâîû":
+                        _lv = _ch
+                        break
+                if head_lower[-1] in "aeıioöuüâîû":
+                    if _lv in "aıâ": fl = B3_VOWEL_FLAGS
+                    elif _lv in "ouû": fl = B4_VOWEL_FLAGS
+                    elif _lv in "eiî": fl = F3_VOWEL_FLAGS
+                    else: fl = F4_VOWEL_FLAGS
+                else:
+                    has_voicing = "Voicing" in attrs or head_lower.endswith("k")
+                    if _lv in "aıâ":
+                        fl = BACK_UNVOICED_FLAGS + (LONG_TO_UTF8["V1"] if has_voicing else "")
+                    elif _lv in "ouû":
+                        fl = BACK_ROUNDED_UNVOICED_FLAGS + (LONG_TO_UTF8["V2"] if has_voicing else "")
+                    elif _lv in "eiî":
+                        fl = FRONT_UNVOICED_FLAGS + (LONG_TO_UTF8["V3"] if has_voicing else "")
+                    else:
+                        fl = FRONT_ROUNDED_UNVOICED_FLAGS + (LONG_TO_UTF8["V4"] if has_voicing else "")
+            
+            clean_entries.append(f"{w}/{fl}" if fl else w)
+            seen_heads.add((w, ""))
+            added_terimler += 1
+        print(f"  Injected: {added_terimler:,} Bilim ve Sanat Terimleri lemmas into profile [{profile}].")
+
     # 6. Inject all missing custom abbreviations and names from lexicons
     added_abbrevs = 0
     for a in custom_abbrevs_orig:
@@ -2840,7 +2972,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     return deduped_entries
 
 def compile_v06(deploy_profile="universal"):
-    tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig = load_lexicons()
+    tdk_words, dd_words, bilim_sanat_lexicon, bilim_sanat_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig = load_lexicons()
     
     profiles = ["tdk", "dd", "universal"]
     DIST_DIR.mkdir(parents=True, exist_ok=True)
@@ -2861,7 +2993,8 @@ def compile_v06(deploy_profile="universal"):
             
         # Build dic
         dic_entries = build_sanitized_dic(
-            tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig, profile=prof
+            tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig,
+            bilim_sanat_lexicon=bilim_sanat_lexicon, bilim_sanat_words=bilim_sanat_words, profile=prof
         )
         dic_out = prof_dir / "tr.dic"
         with open(dic_out, "w", encoding="utf-8") as f:
@@ -2888,6 +3021,11 @@ def compile_v06(deploy_profile="universal"):
     if addon_dict_dir.exists():
         _copy_file(DIST_DIR / f"turkspell-{deploy_profile}" / "tr.aff", addon_dict_dir / "tr.aff")
         _copy_file(DIST_DIR / f"turkspell-{deploy_profile}" / "tr.dic", addon_dict_dir / "tr.dic")
+        
+    addon_tdk_dict_dir = TURKSPELL_DIR / "firefox-addon-tdk" / "dictionaries"
+    if addon_tdk_dict_dir.exists():
+        _copy_file(DIST_DIR / "turkspell-tdk" / "tr.aff", addon_tdk_dict_dir / "tr.aff")
+        _copy_file(DIST_DIR / "turkspell-tdk" / "tr.dic", addon_tdk_dict_dir / "tr.dic")
         
     print("Deployment complete!")
     print("\nValidating deployed dictionary and running regression tests...")

@@ -15,6 +15,7 @@ __pycache__/
 !lexicons/custom_abbreviations.json
 !lexicons/custom_names.json
 !lexicons/authority_pos_completed.json
+!lexicons/bilim_sanat_lexicon.json
 !firefox-addon/manifest.json
 !firefox-addon-tdk/manifest.json
 !update.json

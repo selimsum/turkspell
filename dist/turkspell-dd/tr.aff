@@ -45,6 +45,16 @@ MAXNGRAMSUGS 8
 
 
 
+
+
+
+
+
+
+
+
+
+
 REP 2752
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
@@ -124,6 +134,7 @@ REP yekun yekûn
 REP kain kâin
 REP kufi kûfi
 REP meskun meskûn
+REP meskukat meskûkât
 REP meşkur meşkûr
 REP celali celâli
 REP eflani Eflâni
@@ -2400,7 +2411,6 @@ REP merkezileştirmek merkezîleştirmek
 REP merkezilik merkezîlik
 REP merkup merkûp
 REP merzenguş merzengûş
-REP meskukat meskûkât
 REP meskut meskût
 REP metrukat metrukât
 REP metin metîn
