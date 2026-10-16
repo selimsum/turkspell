@@ -1019,7 +1019,7 @@ LEGITIMATE_MISSED_WORDS = [
     "menekşemsi",
     "paranoyaklaşmış",
     "politikasızlık", "politikasızlığın",
-    "şikayetname", "şikayetnamede",
+    "şikâyetname", "şikâyetnamede",
     "şümul", "şümulünden",
     "mağdure", "mağdurelerle",
     "ardındayken",
@@ -2468,7 +2468,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     
     unhatted_to_purge = {tr_lower(v) for v in MANDATORY_HATTED_WORDS.values()}
     unhat_map = str.maketrans('âîûÂÎÛ', 'aiuAIU')
-    for h in tdk_words:
+    for h in (tdk_words | dd_words):
         if any(c in h for c in 'âîû'):
             u = h.translate(unhat_map)
             if profile == "tdk":
@@ -2815,6 +2815,9 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         if profile == "dd" and "î" in w:
             w = w.replace("î", "i")
         head_w = w.split("/")[0]
+        head_lower = tr_lower(head_w)
+        if head_w in unhatted_to_purge or head_lower in unhatted_to_purge:
+            continue
         fl_w = w.split("/")[1] if "/" in w else ""
         if head_w.lower() in HEAD_FLAG_OVERRIDES and not fl_w:
             fl_w = HEAD_FLAG_OVERRIDES[head_w.lower()]
@@ -2827,7 +2830,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     for w in VIRTUAL_STEMS + EXTRA_AUTHORITY_HEADWORDS:
         head_w = w.split("/")[0]
         head_lower = tr_lower(head_w)
-        if profile == "tdk" and (head_w in unhatted_to_purge or head_lower in unhatted_to_purge):
+        if head_w in unhatted_to_purge or head_lower in unhatted_to_purge:
             continue
         if profile == "dd" and "î" in head_w:
             continue
@@ -2844,6 +2847,8 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         for t_item in bilim_sanat_lexicon:
             w = t_item["lemma"]
             head_lower = tr_lower(w)
+            if w in unhatted_to_purge or head_lower in unhatted_to_purge:
+                continue
             if (w, "") in seen_heads or (head_lower, "") in seen_heads:
                 continue
             attrs = t_item.get("attributes", [])
@@ -2911,6 +2916,9 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
 
     added_names = 0
     for n in custom_names_orig:
+        n_lower = tr_lower(n)
+        if (n in unhatted_to_purge or n_lower in unhatted_to_purge) and not any(c in n for c in "âîû"):
+            continue
         if (n, "") not in seen_heads and ((n.lower(), "") not in seen_heads or (n and (n[0].isupper() or any(c.isupper() for c in n)))):
             base_fl = lower_to_flags.get(n.lower(), "")
             # Assign harmonic proper noun apostrophe inflection flags for capitalized proper names
