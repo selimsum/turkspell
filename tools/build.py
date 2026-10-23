@@ -1682,6 +1682,7 @@ VIRTUAL_STEMS = [
     "marmelad/X∀∫∲∶∼∽≂≕≣",
     "santigrad/X∀∫∲∶∼∽≂≕≣",
     "veliahd/X∀∫∲∶∼∽≂≕≣",
+    "dokunmatiğ/X∂∭∴∸∿≄≆≤≽",
 ]
 
 
@@ -2128,7 +2129,13 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "psikiyatrik", "embriyonik", "asidik", "periferik", "taksonomik", "kanonik",
     "mikroskopik", "makroskopik", "fotovoltaik", "filogenetik", "biyotik", "abiyotik",
     "harmonik", "genomik", "algoritmik", "sinaptik", "ultrasonik", "pediatrik",
-    "sitoplazmik", "elektrolitik", "holografik", "semptomatik", "fenotipik", "enzimatik"
+    "sitoplazmik", "elektrolitik", "holografik", "semptomatik", "fenotipik", "enzimatik",
+    # High-impact attested corpus & official TDK headwords:
+    "dokunmatik/∌∍∖∗∘∢∨∩∪∻≊≌≍≎≑≩",
+    "kafatasları/∀∄∌∍∎∖∗∘∡∩∪∫∲∶∺∼∽≂≉≋≍≎≣",
+    "anakart/∀∄∌∍∎∡∧∩∪∫∲∶∺∼∽≂≉≋≍≎≕≣",
+    "detoks/∁∅∌∍∎∖∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≣",
+    "üreter/∂∌∍∖∗∘∙∢∨∩∪∭∴∸∻∿≄≆≊≌≍≎≤≩"
 ]
 
 def tr_lower(s: str) -> str:
