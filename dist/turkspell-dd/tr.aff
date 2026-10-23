@@ -57,6 +57,7 @@ MAXNGRAMSUGS 8
 
 
 
+
 REP 2751
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
@@ -5667,45 +5668,65 @@ SFX ∌ 0 çülük/∨≌∢≊∻≩∩∪≎∌∍≍∗∘∖ [öüû][^aeıi
 SFX ∌ 0 çülüğ/∃≤∮≅∵∹≀≈≽XX [öüû][çfhkpsşt]
 SFX ∌ 0 çülüğ/∃≤∮≅∵∹≀≈≽XX [öüû][^aeıioöuüâîû][çfhkpsşt]
 
-SFX ∍ Y 64
-SFX ∍ 0 cık/∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∘∖ [aâı]
-SFX ∍ 0 cık/∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∘∖ [aıâ][bcdgğjlmnrvyz]
-SFX ∍ 0 cık/∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∘∖ [aıâ][^aeıioöuüâîû][bcdgğjlmnrvyz]
+SFX ∍ Y 84
+SFX ∍ 0 cık/∧≋∡≉∺∎∩∪≎∌∍≍∗∘∖ [aâı]
+SFX ∍ 0 cığ/∀≣∫≂∲∶∼∽≕X [aâı]
+SFX ∍ 0 cık/∧≋∡≉∺∎∩∪≎∌∍≍∗∘∖ [aıâ][bcdgğjlmnrvyz]
+SFX ∍ 0 cığ/∀≣∫≂∲∶∼∽≕X [aıâ][bcdgğjlmnrvyz]
+SFX ∍ 0 cık/∧≋∡≉∺∎∩∪≎∌∍≍∗∘∖ [aıâ][^aeıioöuüâîû][bcdgğjlmnrvyz]
+SFX ∍ 0 cığ/∀≣∫≂∲∶∼∽≕X [aıâ][^aeıioöuüâîû][bcdgğjlmnrvyz]
 SFX ∍ 0 cık [aâı]
 SFX ∍ 0 cık [aıâ][bcdgğjlmnrvyz]
 SFX ∍ 0 cık [aıâ][^aeıioöuüâîû][bcdgğjlmnrvyz]
-SFX ∍ 0 cuk/∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∘∖ [ouû]
-SFX ∍ 0 cuk/∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∘∖ [ouû][bcdgğjlmnrvyz]
-SFX ∍ 0 cuk/∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∘∖ [ouû][^aeıioöuüâîû][bcdgğjlmnrvyz]
+SFX ∍ 0 cuk/∧≋∡≉∺∎∩∪≎∌∍≍∗∘∖ [ouû]
+SFX ∍ 0 cuğ/∁≣∬≃∳∷∾≁≕X [ouû]
+SFX ∍ 0 cuk/∧≋∡≉∺∎∩∪≎∌∍≍∗∘∖ [ouû][bcdgğjlmnrvyz]
+SFX ∍ 0 cuğ/∁≣∬≃∳∷∾≁≕X [ouû][bcdgğjlmnrvyz]
+SFX ∍ 0 cuk/∧≋∡≉∺∎∩∪≎∌∍≍∗∘∖ [ouû][^aeıioöuüâîû][bcdgğjlmnrvyz]
+SFX ∍ 0 cuğ/∁≣∬≃∳∷∾≁≕X [ouû][^aeıioöuüâîû][bcdgğjlmnrvyz]
 SFX ∍ 0 cuk [ouû]
 SFX ∍ 0 cuk [ouû][bcdgğjlmnrvyz]
 SFX ∍ 0 cuk [ouû][^aeıioöuüâîû][bcdgğjlmnrvyz]
-SFX ∍ 0 cik/∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍∗∘∖ [eiâî]
-SFX ∍ 0 cik/∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍∗∘∖ [eiîâ][bcdgğjlmnrvyz]
-SFX ∍ 0 cik/∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍∗∘∖ [eiîâ][^aeıioöuüâîû][bcdgğjlmnrvyz]
+SFX ∍ 0 cik/∨≌∢≊∻≩∩∪≎∌∍≍∗∘∖ [eiâî]
+SFX ∍ 0 ciğ/∂≤∭≄∴∸∿≆≽X [eiâî]
+SFX ∍ 0 cik/∨≌∢≊∻≩∩∪≎∌∍≍∗∘∖ [eiîâ][bcdgğjlmnrvyz]
+SFX ∍ 0 ciğ/∂≤∭≄∴∸∿≆≽X [eiîâ][bcdgğjlmnrvyz]
+SFX ∍ 0 cik/∨≌∢≊∻≩∩∪≎∌∍≍∗∘∖ [eiîâ][^aeıioöuüâîû][bcdgğjlmnrvyz]
+SFX ∍ 0 ciğ/∂≤∭≄∴∸∿≆≽X [eiîâ][^aeıioöuüâîû][bcdgğjlmnrvyz]
 SFX ∍ 0 cik [eiâî]
 SFX ∍ 0 cik [eiîâ][bcdgğjlmnrvyz]
 SFX ∍ 0 cik [eiîâ][^aeıioöuüâîû][bcdgğjlmnrvyz]
-SFX ∍ 0 cük/∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍∗∘∖ [öûü]
-SFX ∍ 0 cük/∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍∗∘∖ [öüû][bcdgğjlmnrvyz]
-SFX ∍ 0 cük/∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍∗∘∖ [öüû][^aeıioöuüâîû][bcdgğjlmnrvyz]
+SFX ∍ 0 cük/∨≌∢≊∻≩∩∪≎∌∍≍∗∘∖ [öûü]
+SFX ∍ 0 cüğ/∃≤∮≅∵∹≀≈≽X [öûü]
+SFX ∍ 0 cük/∨≌∢≊∻≩∩∪≎∌∍≍∗∘∖ [öüû][bcdgğjlmnrvyz]
+SFX ∍ 0 cüğ/∃≤∮≅∵∹≀≈≽X [öüû][bcdgğjlmnrvyz]
+SFX ∍ 0 cük/∨≌∢≊∻≩∩∪≎∌∍≍∗∘∖ [öüû][^aeıioöuüâîû][bcdgğjlmnrvyz]
+SFX ∍ 0 cüğ/∃≤∮≅∵∹≀≈≽X [öüû][^aeıioöuüâîû][bcdgğjlmnrvyz]
 SFX ∍ 0 cük [öûü]
 SFX ∍ 0 cük [öüû][bcdgğjlmnrvyz]
 SFX ∍ 0 cük [öüû][^aeıioöuüâîû][bcdgğjlmnrvyz]
-SFX ∍ 0 çık/∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∘∖ [aıâ][çfhkpsşt]
-SFX ∍ 0 çık/∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∘∖ [aıâ][^aeıioöuüâîû][çfhkpsşt]
+SFX ∍ 0 çık/∧≋∡≉∺∎∩∪≎∌∍≍∗∘∖ [aıâ][çfhkpsşt]
+SFX ∍ 0 çığ/∀≣∫≂∲∶∼∽≕X [aıâ][çfhkpsşt]
+SFX ∍ 0 çık/∧≋∡≉∺∎∩∪≎∌∍≍∗∘∖ [aıâ][^aeıioöuüâîû][çfhkpsşt]
+SFX ∍ 0 çığ/∀≣∫≂∲∶∼∽≕X [aıâ][^aeıioöuüâîû][çfhkpsşt]
 SFX ∍ 0 çık [aıâ][çfhkpsşt]
 SFX ∍ 0 çık [aıâ][^aeıioöuüâîû][çfhkpsşt]
-SFX ∍ 0 çuk/∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∘∖ [ouû][çfhkpsşt]
-SFX ∍ 0 çuk/∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∘∖ [ouû][^aeıioöuüâîû][çfhkpsşt]
+SFX ∍ 0 çuk/∧≋∡≉∺∎∩∪≎∌∍≍∗∘∖ [ouû][çfhkpsşt]
+SFX ∍ 0 çuğ/∁≣∬≃∳∷∾≁≕X [ouû][çfhkpsşt]
+SFX ∍ 0 çuk/∧≋∡≉∺∎∩∪≎∌∍≍∗∘∖ [ouû][^aeıioöuüâîû][çfhkpsşt]
+SFX ∍ 0 çuğ/∁≣∬≃∳∷∾≁≕X [ouû][^aeıioöuüâîû][çfhkpsşt]
 SFX ∍ 0 çuk [ouû][çfhkpsşt]
 SFX ∍ 0 çuk [ouû][^aeıioöuüâîû][çfhkpsşt]
-SFX ∍ 0 çik/∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍∗∘∖ [eiîâ][çfhkpsşt]
-SFX ∍ 0 çik/∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍∗∘∖ [eiîâ][^aeıioöuüâîû][çfhkpsşt]
+SFX ∍ 0 çik/∨≌∢≊∻≩∩∪≎∌∍≍∗∘∖ [eiîâ][çfhkpsşt]
+SFX ∍ 0 çiğ/∂≤∭≄∴∸∿≆≽X [eiîâ][çfhkpsşt]
+SFX ∍ 0 çik/∨≌∢≊∻≩∩∪≎∌∍≍∗∘∖ [eiîâ][^aeıioöuüâîû][çfhkpsşt]
+SFX ∍ 0 çiğ/∂≤∭≄∴∸∿≆≽X [eiîâ][^aeıioöuüâîû][çfhkpsşt]
 SFX ∍ 0 çik [eiîâ][çfhkpsşt]
 SFX ∍ 0 çik [eiîâ][^aeıioöuüâîû][çfhkpsşt]
-SFX ∍ 0 çük/∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍∗∘∖ [öüû][çfhkpsşt]
-SFX ∍ 0 çük/∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍∗∘∖ [öüû][^aeıioöuüâîû][çfhkpsşt]
+SFX ∍ 0 çük/∨≌∢≊∻≩∩∪≎∌∍≍∗∘∖ [öüû][çfhkpsşt]
+SFX ∍ 0 çüğ/∃≤∮≅∵∹≀≈≽X [öüû][çfhkpsşt]
+SFX ∍ 0 çük/∨≌∢≊∻≩∩∪≎∌∍≍∗∘∖ [öüû][^aeıioöuüâîû][çfhkpsşt]
+SFX ∍ 0 çüğ/∃≤∮≅∵∹≀≈≽X [öüû][^aeıioöuüâîû][çfhkpsşt]
 SFX ∍ 0 çük [öüû][çfhkpsşt]
 SFX ∍ 0 çük [öüû][^aeıioöuüâîû][çfhkpsşt]
 SFX ∍ 0 cım/∎ [aâı]
@@ -11416,7 +11437,7 @@ SFX ≓ mak mayabiliyor mak
 SFX ≓ mak mayabiliyoruz mak
 SFX ≓ mak mayabiliyorlar mak
 SFX ≓ mak mayabilecek mak
-SFX ≓ mak mayabileceği/⊵ mak
+SFX ≓ mak mayabileceği/⊶ mak
 SFX ≓ mak mayabileceği mak
 SFX ≓ mak yamıyor/⊮ mak
 SFX ≓ mak yamıyorken mak
@@ -11657,7 +11678,7 @@ SFX ≓ mak yamayabiliriz mak
 SFX ≓ mak yamayabilirsiniz mak
 SFX ≓ mak yamayabilirler mak
 SFX ≓ mak yamayabiliyor mak
-SFX ≓ mak yamayabileceği/⊵ mak
+SFX ≓ mak yamayabileceği/⊶ mak
 SFX ≓ mak yamayabileceği mak
 SFX ≓ mak yamayabilecek mak
 SFX ≓ mak yabilir/⊭ mak
@@ -12654,7 +12675,7 @@ SFX ≔ mak mayabiliyor mak
 SFX ≔ mak mayabiliyoruz mak
 SFX ≔ mak mayabiliyorlar mak
 SFX ≔ mak mayabilecek mak
-SFX ≔ mak mayabileceği/⊵ mak
+SFX ≔ mak mayabileceği/⊶ mak
 SFX ≔ mak mayabileceği mak
 SFX ≔ mak amıyor/⊮ mak
 SFX ≔ mak amıyorken mak
@@ -12895,7 +12916,7 @@ SFX ≔ mak amayabiliriz mak
 SFX ≔ mak amayabilirsiniz mak
 SFX ≔ mak amayabilirler mak
 SFX ≔ mak amayabiliyor mak
-SFX ≔ mak amayabileceği/⊵ mak
+SFX ≔ mak amayabileceği/⊶ mak
 SFX ≔ mak amayabileceği mak
 SFX ≔ mak amayabilecek mak
 SFX ≔ mak abilir/⊭ mak
@@ -15974,7 +15995,7 @@ SFX ≗ mek ilemediği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilemediği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilemeyen [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 
-SFX ≘ Y 1377
+SFX ≘ Y 1376
 SFX ≘ mek üyor/⊮ mek
 SFX ≘ mek üyorken mek
 SFX ≘ mek üyor mek
@@ -15993,7 +16014,6 @@ SFX ≘ mek eceksiniz mek
 SFX ≘ mek eceksinizdir mek
 SFX ≘ mek ecekler mek
 SFX ≘ mek eceklerdir mek
-SFX ≘ mek eceğüm mek
 SFX ≘ mek dü/⊾ [^çfhkpsşt]mek
 SFX ≘ mek dü [^çfhkpsşt]mek
 SFX ≘ mek düm [^çfhkpsşt]mek
@@ -16650,7 +16670,7 @@ SFX ≘ mek emeyeceğiz mek
 SFX ≘ mek emeyeceksiniz mek
 SFX ≘ mek emeyecekler mek
 SFX ≘ mek emeyeceklerdir mek
-SFX ≘ mek emez/⊯ mek
+SFX ≘ mek emez/⊭ mek
 SFX ≘ mek emem mek
 SFX ≘ mek emezsin mek
 SFX ≘ mek emez mek
@@ -17291,7 +17311,7 @@ SFX ≘ mek ülmeyecektir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülür/⊯ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülür [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülürler [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
-SFX ≘ mek ülmez/⊯ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmez/⊭ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülmez [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülmezler [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülmeli/⊴ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
@@ -17342,7 +17362,7 @@ SFX ≘ mek ülebilmesi [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülebildiği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülebildiği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülebilen [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
-SFX ≘ mek ülemez/⊯ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülemez/⊭ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülemez [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülemiyor [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülemedi [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
@@ -17353,7 +17373,7 @@ SFX ≘ mek ülemediği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülemediği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülemeyen [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 
-SFX ≙ Y 1431
+SFX ≙ Y 1430
 SFX ≙ emek üyor/⊮ emek
 SFX ≙ emek üyorken emek
 SFX ≙ emek üyor emek
@@ -17381,7 +17401,6 @@ SFX ≙ mek yeceksiniz mek
 SFX ≙ mek yeceksinizdir mek
 SFX ≙ mek yecekler mek
 SFX ≙ mek yeceklerdir mek
-SFX ≙ mek yeceğüm ümek
 SFX ≙ mek di/⊾ emek
 SFX ≙ mek di emek
 SFX ≙ mek dim emek
@@ -17762,7 +17781,7 @@ SFX ≙ mek düğümüz/⊼ ümek
 SFX ≙ mek düğümüz ümek
 SFX ≙ mek düğünüz/⊼ ümek
 SFX ≙ mek düğünüz ümek
-SFX ≙ mek dükleri/⊸ ümek
+SFX ≙ mek dükleri/⊶ ümek
 SFX ≙ mek dükleri ümek
 SFX ≙ mek düklerim ümek
 SFX ≙ mek düklerimi ümek
@@ -18179,7 +18198,7 @@ SFX ≙ mek yemeyeceğiz mek
 SFX ≙ mek yemeyeceksiniz mek
 SFX ≙ mek yemeyecekler mek
 SFX ≙ mek yemeyeceklerdir mek
-SFX ≙ mek yemez/⊯ mek
+SFX ≙ mek yemez/⊭ mek
 SFX ≙ mek yemem mek
 SFX ≙ mek yemezsin mek
 SFX ≙ mek yemez mek
@@ -19376,7 +19395,7 @@ SFX ≚ mak mayabiliyor mak
 SFX ≚ mak mayabiliyoruz mak
 SFX ≚ mak mayabiliyorlar mak
 SFX ≚ mak mayabilecek mak
-SFX ≚ mak mayabileceği/⊵ mak
+SFX ≚ mak mayabileceği/⊶ mak
 SFX ≚ mak mayabileceği mak
 SFX ≚ tmak damıyor/⊮ tmak
 SFX ≚ tmak damıyorken tmak
@@ -19617,7 +19636,7 @@ SFX ≚ tmak damayabiliriz tmak
 SFX ≚ tmak damayabilirsiniz tmak
 SFX ≚ tmak damayabilirler tmak
 SFX ≚ tmak damayabiliyor tmak
-SFX ≚ tmak damayabileceği/⊵ tmak
+SFX ≚ tmak damayabileceği/⊶ tmak
 SFX ≚ tmak damayabileceği tmak
 SFX ≚ tmak damayabilecek tmak
 SFX ≚ tmak dabilir/⊭ tmak
@@ -21454,7 +21473,7 @@ SFX ≜ tmek dilemediği/⊶ tmek
 SFX ≜ tmek dilemediği tmek
 SFX ≜ tmek dilemeyen tmek
 
-SFX ≝ Y 1344
+SFX ≝ Y 1343
 SFX ≝ tmek düyor/⊮ tmek
 SFX ≝ tmek düyorken tmek
 SFX ≝ tmek düyor tmek
@@ -21473,7 +21492,6 @@ SFX ≝ tmek deceksiniz tmek
 SFX ≝ tmek deceksinizdir tmek
 SFX ≝ tmek decekler tmek
 SFX ≝ tmek deceklerdir tmek
-SFX ≝ tmek deceğüm tmek
 SFX ≝ mek tü/⊾ [çt]mek
 SFX ≝ mek tü [çt]mek
 SFX ≝ mek tüm [çt]mek
@@ -21578,7 +21596,7 @@ SFX ≝ mek sün mek
 SFX ≝ tmek dün tmek
 SFX ≝ tmek dünüz tmek
 SFX ≝ mek sünler mek
-SFX ≝ tmek der/⊯ tmek
+SFX ≝ tmek der/⊭ tmek
 SFX ≝ tmek der tmek
 SFX ≝ tmek derken tmek
 SFX ≝ tmek dercesine tmek
@@ -22097,7 +22115,7 @@ SFX ≝ tmek demeyeceğiz tmek
 SFX ≝ tmek demeyeceksiniz tmek
 SFX ≝ tmek demeyecekler tmek
 SFX ≝ tmek demeyeceklerdir tmek
-SFX ≝ tmek demez/⊯ tmek
+SFX ≝ tmek demez/⊭ tmek
 SFX ≝ tmek demem tmek
 SFX ≝ tmek demezsin tmek
 SFX ≝ tmek demez tmek
@@ -22738,7 +22756,7 @@ SFX ≝ tmek dülmeyecektir tmek
 SFX ≝ tmek dülür/⊯ tmek
 SFX ≝ tmek dülür tmek
 SFX ≝ tmek dülürler tmek
-SFX ≝ tmek dülmez/⊯ tmek
+SFX ≝ tmek dülmez/⊭ tmek
 SFX ≝ tmek dülmez tmek
 SFX ≝ tmek dülmezler tmek
 SFX ≝ tmek dülmeli/⊴ tmek
@@ -22789,7 +22807,7 @@ SFX ≝ tmek dülebilmesi tmek
 SFX ≝ tmek dülebildiği/⊶ tmek
 SFX ≝ tmek dülebildiği tmek
 SFX ≝ tmek dülebilen tmek
-SFX ≝ tmek dülemez/⊯ tmek
+SFX ≝ tmek dülemez/⊭ tmek
 SFX ≝ tmek dülemez tmek
 SFX ≝ tmek dülemiyor tmek
 SFX ≝ tmek dülemedi tmek
@@ -22800,7 +22818,7 @@ SFX ≝ tmek dülemediği/⊶ tmek
 SFX ≝ tmek dülemediği tmek
 SFX ≝ tmek dülemeyen tmek
 
-SFX ≞ Y 1377
+SFX ≞ Y 1376
 SFX ≞ mak uyor/⊮ mak
 SFX ≞ mak uyorken mak
 SFX ≞ mak uyor mak
@@ -22819,7 +22837,6 @@ SFX ≞ mak acaksınız mak
 SFX ≞ mak acaksınızdır mak
 SFX ≞ mak acaklar mak
 SFX ≞ mak acaklardır mak
-SFX ≞ mak acağum mak
 SFX ≞ mak du/⊽ [^çfhkpsşt]mak
 SFX ≞ mak du [^çfhkpsşt]mak
 SFX ≞ mak dum [^çfhkpsşt]mak
@@ -23435,7 +23452,7 @@ SFX ≞ mak mayabiliyor mak
 SFX ≞ mak mayabiliyoruz mak
 SFX ≞ mak mayabiliyorlar mak
 SFX ≞ mak mayabilecek mak
-SFX ≞ mak mayabileceği/⊵ mak
+SFX ≞ mak mayabileceği/⊶ mak
 SFX ≞ mak mayabileceği mak
 SFX ≞ mak amıyor/⊮ mak
 SFX ≞ mak amıyorken mak
@@ -23476,7 +23493,7 @@ SFX ≞ mak amayacağız mak
 SFX ≞ mak amayacaksınız mak
 SFX ≞ mak amayacaklar mak
 SFX ≞ mak amayacaklardır mak
-SFX ≞ mak amaz/⊮ mak
+SFX ≞ mak amaz/⊬ mak
 SFX ≞ mak amam mak
 SFX ≞ mak amazsın mak
 SFX ≞ mak amaz mak
@@ -23676,7 +23693,7 @@ SFX ≞ mak amayabiliriz mak
 SFX ≞ mak amayabilirsiniz mak
 SFX ≞ mak amayabilirler mak
 SFX ≞ mak amayabiliyor mak
-SFX ≞ mak amayabileceği/⊵ mak
+SFX ≞ mak amayabileceği/⊶ mak
 SFX ≞ mak amayabileceği mak
 SFX ≞ mak amayabilecek mak
 SFX ≞ mak abilir/⊭ mak
@@ -24117,7 +24134,7 @@ SFX ≞ mak ulmayacaktır [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulur/⊮ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulur [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulurlar [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
-SFX ≞ mak ulmaz/⊮ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmaz/⊬ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulmaz [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulmazlar [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulmalı/⊳ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
@@ -24168,7 +24185,7 @@ SFX ≞ mak ulabilmesi [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulabildiği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulabildiği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulabilen [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
-SFX ≞ mak ulamaz/⊮ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulamaz/⊬ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulamaz [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulamıyor [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulamadı [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
@@ -24179,7 +24196,7 @@ SFX ≞ mak ulamadığı/⊵ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulamadığı [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulamayan [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 
-SFX ≟ Y 1431
+SFX ≟ Y 1430
 SFX ≟ amak uyor/⊮ amak
 SFX ≟ amak uyorken amak
 SFX ≟ amak uyor amak
@@ -24207,7 +24224,6 @@ SFX ≟ mak yacaksınız mak
 SFX ≟ mak yacaksınızdır mak
 SFX ≟ mak yacaklar mak
 SFX ≟ mak yacaklardır mak
-SFX ≟ mak yacağum umak
 SFX ≟ mak dı/⊽ amak
 SFX ≟ mak dı amak
 SFX ≟ mak dım amak
@@ -24588,7 +24604,7 @@ SFX ≟ mak duğumuz/⊻ umak
 SFX ≟ mak duğumuz umak
 SFX ≟ mak duğunuz/⊻ umak
 SFX ≟ mak duğunuz umak
-SFX ≟ mak dukları/⊷ umak
+SFX ≟ mak dukları/⊵ umak
 SFX ≟ mak dukları umak
 SFX ≟ mak duklarım umak
 SFX ≟ mak duklarımı umak
@@ -24964,7 +24980,7 @@ SFX ≟ mak mayabiliyor mak
 SFX ≟ mak mayabiliyoruz mak
 SFX ≟ mak mayabiliyorlar mak
 SFX ≟ mak mayabilecek mak
-SFX ≟ mak mayabileceği/⊵ mak
+SFX ≟ mak mayabileceği/⊶ mak
 SFX ≟ mak mayabileceği mak
 SFX ≟ mak yamıyor/⊮ mak
 SFX ≟ mak yamıyorken mak
@@ -25005,7 +25021,7 @@ SFX ≟ mak yamayacağız mak
 SFX ≟ mak yamayacaksınız mak
 SFX ≟ mak yamayacaklar mak
 SFX ≟ mak yamayacaklardır mak
-SFX ≟ mak yamaz/⊮ mak
+SFX ≟ mak yamaz/⊬ mak
 SFX ≟ mak yamam mak
 SFX ≟ mak yamazsın mak
 SFX ≟ mak yamaz mak
@@ -25205,7 +25221,7 @@ SFX ≟ mak yamayabiliriz mak
 SFX ≟ mak yamayabilirsiniz mak
 SFX ≟ mak yamayabilirler mak
 SFX ≟ mak yamayabiliyor mak
-SFX ≟ mak yamayabileceği/⊵ mak
+SFX ≟ mak yamayabileceği/⊶ mak
 SFX ≟ mak yamayabileceği mak
 SFX ≟ mak yamayabilecek mak
 SFX ≟ mak yabilir/⊭ mak
@@ -28485,26 +28501,26 @@ SFX ⊉ 0 'ndakiyken lt
 SFX ⊉ 0 'ndakiyken sn
 
 SFX ⊊ Y 20
-SFX ⊊ 0 'dan/≩ [^fhkpstxçş]
-SFX ⊊ 0 'tan/≩ [CFHKPSTXfhkpstxÇçŞş]
-SFX ⊊ 0 'tan/≩ GB
-SFX ⊊ 0 'tan/≩ MB
-SFX ⊊ 0 'tan/≩ TB
-SFX ⊊ 0 'tan/≩ KB
-SFX ⊊ 0 'tan/≩ PB
-SFX ⊊ 0 'ndan/≩ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
-SFX ⊊ 0 'ndan/≩ km
-SFX ⊊ 0 'ndan/≩ cm
-SFX ⊊ 0 'ndan/≩ mm
-SFX ⊊ 0 'ndan/≩ dm
-SFX ⊊ 0 'ndan/≩ nm
-SFX ⊊ 0 'ndan/≩ ml
-SFX ⊊ 0 'ndan/≩ mL
-SFX ⊊ 0 'ndan/≩ cl
-SFX ⊊ 0 'ndan/≩ dl
-SFX ⊊ 0 'ndan/≩ hl
-SFX ⊊ 0 'ndan/≩ lt
-SFX ⊊ 0 'ndan/≩ sn
+SFX ⊊ 0 'dan/∎ [^fhkpstxçş]
+SFX ⊊ 0 'tan/∎ [CFHKPSTXfhkpstxÇçŞş]
+SFX ⊊ 0 'tan/∎ GB
+SFX ⊊ 0 'tan/∎ MB
+SFX ⊊ 0 'tan/∎ TB
+SFX ⊊ 0 'tan/∎ KB
+SFX ⊊ 0 'tan/∎ PB
+SFX ⊊ 0 'ndan/∎ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
+SFX ⊊ 0 'ndan/∎ km
+SFX ⊊ 0 'ndan/∎ cm
+SFX ⊊ 0 'ndan/∎ mm
+SFX ⊊ 0 'ndan/∎ dm
+SFX ⊊ 0 'ndan/∎ nm
+SFX ⊊ 0 'ndan/∎ ml
+SFX ⊊ 0 'ndan/∎ mL
+SFX ⊊ 0 'ndan/∎ cl
+SFX ⊊ 0 'ndan/∎ dl
+SFX ⊊ 0 'ndan/∎ hl
+SFX ⊊ 0 'ndan/∎ lt
+SFX ⊊ 0 'ndan/∎ sn
 
 SFX ⊋ Y 16
 SFX ⊋ 0 'a [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
@@ -28543,48 +28559,48 @@ SFX ⊌ 0 'yı sn
 SFX ⊌ 0 'nı [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 
 SFX ⊍ Y 14
-SFX ⊍ 0 'la/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊍ 0 'yla/≩ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
-SFX ⊍ 0 'yla/≩ km
-SFX ⊍ 0 'yla/≩ cm
-SFX ⊍ 0 'yla/≩ mm
-SFX ⊍ 0 'yla/≩ dm
-SFX ⊍ 0 'yla/≩ nm
-SFX ⊍ 0 'yla/≩ ml
-SFX ⊍ 0 'yla/≩ mL
-SFX ⊍ 0 'yla/≩ cl
-SFX ⊍ 0 'yla/≩ dl
-SFX ⊍ 0 'yla/≩ hl
-SFX ⊍ 0 'yla/≩ lt
-SFX ⊍ 0 'yla/≩ sn
+SFX ⊍ 0 'la/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊍ 0 'yla/∎ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
+SFX ⊍ 0 'yla/∎ km
+SFX ⊍ 0 'yla/∎ cm
+SFX ⊍ 0 'yla/∎ mm
+SFX ⊍ 0 'yla/∎ dm
+SFX ⊍ 0 'yla/∎ nm
+SFX ⊍ 0 'yla/∎ ml
+SFX ⊍ 0 'yla/∎ mL
+SFX ⊍ 0 'yla/∎ cl
+SFX ⊍ 0 'yla/∎ dl
+SFX ⊍ 0 'yla/∎ hl
+SFX ⊍ 0 'yla/∎ lt
+SFX ⊍ 0 'yla/∎ sn
 
 SFX ⊎ Y 313
-SFX ⊎ 0 'ı/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊎ 0 'ı/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊎ 0 'ının [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊎ 0 'ına [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊎ 0 'ında [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊎ 0 'ından/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊎ 0 'ından/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊎ 0 'ını [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊎ 0 'ıyla/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊎ 0 'ıyla/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊎ 0 ı'nın [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊎ 0 ı'na [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊎ 0 ı'nda [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊎ 0 ı'ndan/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊎ 0 ı'ndan/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊎ 0 ı'nı [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊎ 0 ı'yla/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊎ 0 'sı/≩ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
-SFX ⊎ 0 'sı/≩ km
-SFX ⊎ 0 'sı/≩ cm
-SFX ⊎ 0 'sı/≩ mm
-SFX ⊎ 0 'sı/≩ dm
-SFX ⊎ 0 'sı/≩ nm
-SFX ⊎ 0 'sı/≩ ml
-SFX ⊎ 0 'sı/≩ mL
-SFX ⊎ 0 'sı/≩ cl
-SFX ⊎ 0 'sı/≩ dl
-SFX ⊎ 0 'sı/≩ hl
-SFX ⊎ 0 'sı/≩ lt
-SFX ⊎ 0 'sı/≩ sn
+SFX ⊎ 0 ı'yla/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊎ 0 'sı/∎ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
+SFX ⊎ 0 'sı/∎ km
+SFX ⊎ 0 'sı/∎ cm
+SFX ⊎ 0 'sı/∎ mm
+SFX ⊎ 0 'sı/∎ dm
+SFX ⊎ 0 'sı/∎ nm
+SFX ⊎ 0 'sı/∎ ml
+SFX ⊎ 0 'sı/∎ mL
+SFX ⊎ 0 'sı/∎ cl
+SFX ⊎ 0 'sı/∎ dl
+SFX ⊎ 0 'sı/∎ hl
+SFX ⊎ 0 'sı/∎ lt
+SFX ⊎ 0 'sı/∎ sn
 SFX ⊎ 0 'sının [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
 SFX ⊎ 0 'sının km
 SFX ⊎ 0 'sının cm
@@ -28624,19 +28640,19 @@ SFX ⊎ 0 'sında dl
 SFX ⊎ 0 'sında hl
 SFX ⊎ 0 'sında lt
 SFX ⊎ 0 'sında sn
-SFX ⊎ 0 'sından/≩ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
-SFX ⊎ 0 'sından/≩ km
-SFX ⊎ 0 'sından/≩ cm
-SFX ⊎ 0 'sından/≩ mm
-SFX ⊎ 0 'sından/≩ dm
-SFX ⊎ 0 'sından/≩ nm
-SFX ⊎ 0 'sından/≩ ml
-SFX ⊎ 0 'sından/≩ mL
-SFX ⊎ 0 'sından/≩ cl
-SFX ⊎ 0 'sından/≩ dl
-SFX ⊎ 0 'sından/≩ hl
-SFX ⊎ 0 'sından/≩ lt
-SFX ⊎ 0 'sından/≩ sn
+SFX ⊎ 0 'sından/∎ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
+SFX ⊎ 0 'sından/∎ km
+SFX ⊎ 0 'sından/∎ cm
+SFX ⊎ 0 'sından/∎ mm
+SFX ⊎ 0 'sından/∎ dm
+SFX ⊎ 0 'sından/∎ nm
+SFX ⊎ 0 'sından/∎ ml
+SFX ⊎ 0 'sından/∎ mL
+SFX ⊎ 0 'sından/∎ cl
+SFX ⊎ 0 'sından/∎ dl
+SFX ⊎ 0 'sından/∎ hl
+SFX ⊎ 0 'sından/∎ lt
+SFX ⊎ 0 'sından/∎ sn
 SFX ⊎ 0 'sını [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
 SFX ⊎ 0 'sını km
 SFX ⊎ 0 'sını cm
@@ -28650,39 +28666,39 @@ SFX ⊎ 0 'sını dl
 SFX ⊎ 0 'sını hl
 SFX ⊎ 0 'sını lt
 SFX ⊎ 0 'sını sn
-SFX ⊎ 0 'sıyla/≩ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
-SFX ⊎ 0 'sıyla/≩ km
-SFX ⊎ 0 'sıyla/≩ cm
-SFX ⊎ 0 'sıyla/≩ mm
-SFX ⊎ 0 'sıyla/≩ dm
-SFX ⊎ 0 'sıyla/≩ nm
-SFX ⊎ 0 'sıyla/≩ ml
-SFX ⊎ 0 'sıyla/≩ mL
-SFX ⊎ 0 'sıyla/≩ cl
-SFX ⊎ 0 'sıyla/≩ dl
-SFX ⊎ 0 'sıyla/≩ hl
-SFX ⊎ 0 'sıyla/≩ lt
-SFX ⊎ 0 'sıyla/≩ sn
+SFX ⊎ 0 'sıyla/∎ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
+SFX ⊎ 0 'sıyla/∎ km
+SFX ⊎ 0 'sıyla/∎ cm
+SFX ⊎ 0 'sıyla/∎ mm
+SFX ⊎ 0 'sıyla/∎ dm
+SFX ⊎ 0 'sıyla/∎ nm
+SFX ⊎ 0 'sıyla/∎ ml
+SFX ⊎ 0 'sıyla/∎ mL
+SFX ⊎ 0 'sıyla/∎ cl
+SFX ⊎ 0 'sıyla/∎ dl
+SFX ⊎ 0 'sıyla/∎ hl
+SFX ⊎ 0 'sıyla/∎ lt
+SFX ⊎ 0 'sıyla/∎ sn
 SFX ⊎ 0 sı'nın [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊎ 0 sı'na [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊎ 0 sı'nda [AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊎ 0 sı'ndan/≩ [AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊎ 0 sı'ndan/∎ [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊎ 0 sı'nı [AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊎ 0 sı'yla/≩ [AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊎ 0 sı'yla/∎ [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊎ k ğı'nın k
 SFX ⊎ k ğı'na k
 SFX ⊎ k ğı'nda k
-SFX ⊎ k ğı'ndan/≩ k
+SFX ⊎ k ğı'ndan/∎ k
 SFX ⊎ k ğı'nı k
-SFX ⊎ k ğı'yla/≩ k
+SFX ⊎ k ğı'yla/∎ k
 SFX ⊎ t dı'nın t
 SFX ⊎ t dı'na t
 SFX ⊎ t dı'nda t
-SFX ⊎ t dı'ndan/≩ t
+SFX ⊎ t dı'ndan/∎ t
 SFX ⊎ p bı'nın p
 SFX ⊎ p bı'na p
 SFX ⊎ p bı'nda p
-SFX ⊎ p bı'ndan/≩ p
+SFX ⊎ p bı'ndan/∎ p
 SFX ⊎ 0 'ında/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊎ 0 'ındaki [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊎ 0 'ındakiler [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
@@ -29888,21 +29904,21 @@ SFX ⊑ 0 'ndakiyken lt
 SFX ⊑ 0 'ndakiyken sn
 
 SFX ⊒ Y 15
-SFX ⊒ 0 'dan/≩ [^fhkpstxçş]
-SFX ⊒ 0 'tan/≩ [CFHKPSTXfhkpstxÇçŞş]
-SFX ⊒ 0 'ndan/≩ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
-SFX ⊒ 0 'ndan/≩ km
-SFX ⊒ 0 'ndan/≩ cm
-SFX ⊒ 0 'ndan/≩ mm
-SFX ⊒ 0 'ndan/≩ dm
-SFX ⊒ 0 'ndan/≩ nm
-SFX ⊒ 0 'ndan/≩ ml
-SFX ⊒ 0 'ndan/≩ mL
-SFX ⊒ 0 'ndan/≩ cl
-SFX ⊒ 0 'ndan/≩ dl
-SFX ⊒ 0 'ndan/≩ hl
-SFX ⊒ 0 'ndan/≩ lt
-SFX ⊒ 0 'ndan/≩ sn
+SFX ⊒ 0 'dan/∎ [^fhkpstxçş]
+SFX ⊒ 0 'tan/∎ [CFHKPSTXfhkpstxÇçŞş]
+SFX ⊒ 0 'ndan/∎ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
+SFX ⊒ 0 'ndan/∎ km
+SFX ⊒ 0 'ndan/∎ cm
+SFX ⊒ 0 'ndan/∎ mm
+SFX ⊒ 0 'ndan/∎ dm
+SFX ⊒ 0 'ndan/∎ nm
+SFX ⊒ 0 'ndan/∎ ml
+SFX ⊒ 0 'ndan/∎ mL
+SFX ⊒ 0 'ndan/∎ cl
+SFX ⊒ 0 'ndan/∎ dl
+SFX ⊒ 0 'ndan/∎ hl
+SFX ⊒ 0 'ndan/∎ lt
+SFX ⊒ 0 'ndan/∎ sn
 
 SFX ⊓ Y 16
 SFX ⊓ 0 'a [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
@@ -29941,48 +29957,48 @@ SFX ⊔ 0 'yu sn
 SFX ⊔ 0 'nu [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 
 SFX ⊕ Y 14
-SFX ⊕ 0 'la/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊕ 0 'yla/≩ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
-SFX ⊕ 0 'yla/≩ km
-SFX ⊕ 0 'yla/≩ cm
-SFX ⊕ 0 'yla/≩ mm
-SFX ⊕ 0 'yla/≩ dm
-SFX ⊕ 0 'yla/≩ nm
-SFX ⊕ 0 'yla/≩ ml
-SFX ⊕ 0 'yla/≩ mL
-SFX ⊕ 0 'yla/≩ cl
-SFX ⊕ 0 'yla/≩ dl
-SFX ⊕ 0 'yla/≩ hl
-SFX ⊕ 0 'yla/≩ lt
-SFX ⊕ 0 'yla/≩ sn
+SFX ⊕ 0 'la/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊕ 0 'yla/∎ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
+SFX ⊕ 0 'yla/∎ km
+SFX ⊕ 0 'yla/∎ cm
+SFX ⊕ 0 'yla/∎ mm
+SFX ⊕ 0 'yla/∎ dm
+SFX ⊕ 0 'yla/∎ nm
+SFX ⊕ 0 'yla/∎ ml
+SFX ⊕ 0 'yla/∎ mL
+SFX ⊕ 0 'yla/∎ cl
+SFX ⊕ 0 'yla/∎ dl
+SFX ⊕ 0 'yla/∎ hl
+SFX ⊕ 0 'yla/∎ lt
+SFX ⊕ 0 'yla/∎ sn
 
 SFX ⊖ Y 313
-SFX ⊖ 0 'u/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊖ 0 'u/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊖ 0 'unun [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊖ 0 'una [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊖ 0 'unda [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊖ 0 'undan/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊖ 0 'undan/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊖ 0 'unu [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊖ 0 'ıyla/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊖ 0 'uyla/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊖ 0 u'nun [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊖ 0 u'na [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊖ 0 u'nda [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊖ 0 u'ndan/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊖ 0 u'ndan/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊖ 0 u'nu [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊖ 0 u'yla/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊖ 0 'su/≩ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
-SFX ⊖ 0 'su/≩ km
-SFX ⊖ 0 'su/≩ cm
-SFX ⊖ 0 'su/≩ mm
-SFX ⊖ 0 'su/≩ dm
-SFX ⊖ 0 'su/≩ nm
-SFX ⊖ 0 'su/≩ ml
-SFX ⊖ 0 'su/≩ mL
-SFX ⊖ 0 'su/≩ cl
-SFX ⊖ 0 'su/≩ dl
-SFX ⊖ 0 'su/≩ hl
-SFX ⊖ 0 'su/≩ lt
-SFX ⊖ 0 'su/≩ sn
+SFX ⊖ 0 u'yla/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊖ 0 'su/∎ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
+SFX ⊖ 0 'su/∎ km
+SFX ⊖ 0 'su/∎ cm
+SFX ⊖ 0 'su/∎ mm
+SFX ⊖ 0 'su/∎ dm
+SFX ⊖ 0 'su/∎ nm
+SFX ⊖ 0 'su/∎ ml
+SFX ⊖ 0 'su/∎ mL
+SFX ⊖ 0 'su/∎ cl
+SFX ⊖ 0 'su/∎ dl
+SFX ⊖ 0 'su/∎ hl
+SFX ⊖ 0 'su/∎ lt
+SFX ⊖ 0 'su/∎ sn
 SFX ⊖ 0 'sunun [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
 SFX ⊖ 0 'sunun km
 SFX ⊖ 0 'sunun cm
@@ -30022,19 +30038,19 @@ SFX ⊖ 0 'sunda dl
 SFX ⊖ 0 'sunda hl
 SFX ⊖ 0 'sunda lt
 SFX ⊖ 0 'sunda sn
-SFX ⊖ 0 'sundan/≩ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
-SFX ⊖ 0 'sundan/≩ km
-SFX ⊖ 0 'sundan/≩ cm
-SFX ⊖ 0 'sundan/≩ mm
-SFX ⊖ 0 'sundan/≩ dm
-SFX ⊖ 0 'sundan/≩ nm
-SFX ⊖ 0 'sundan/≩ ml
-SFX ⊖ 0 'sundan/≩ mL
-SFX ⊖ 0 'sundan/≩ cl
-SFX ⊖ 0 'sundan/≩ dl
-SFX ⊖ 0 'sundan/≩ hl
-SFX ⊖ 0 'sundan/≩ lt
-SFX ⊖ 0 'sundan/≩ sn
+SFX ⊖ 0 'sundan/∎ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
+SFX ⊖ 0 'sundan/∎ km
+SFX ⊖ 0 'sundan/∎ cm
+SFX ⊖ 0 'sundan/∎ mm
+SFX ⊖ 0 'sundan/∎ dm
+SFX ⊖ 0 'sundan/∎ nm
+SFX ⊖ 0 'sundan/∎ ml
+SFX ⊖ 0 'sundan/∎ mL
+SFX ⊖ 0 'sundan/∎ cl
+SFX ⊖ 0 'sundan/∎ dl
+SFX ⊖ 0 'sundan/∎ hl
+SFX ⊖ 0 'sundan/∎ lt
+SFX ⊖ 0 'sundan/∎ sn
 SFX ⊖ 0 'sunu [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
 SFX ⊖ 0 'sunu km
 SFX ⊖ 0 'sunu cm
@@ -30048,39 +30064,39 @@ SFX ⊖ 0 'sunu dl
 SFX ⊖ 0 'sunu hl
 SFX ⊖ 0 'sunu lt
 SFX ⊖ 0 'sunu sn
-SFX ⊖ 0 'sıyla/≩ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
-SFX ⊖ 0 'sıyla/≩ km
-SFX ⊖ 0 'sıyla/≩ cm
-SFX ⊖ 0 'sıyla/≩ mm
-SFX ⊖ 0 'sıyla/≩ dm
-SFX ⊖ 0 'sıyla/≩ nm
-SFX ⊖ 0 'sıyla/≩ ml
-SFX ⊖ 0 'sıyla/≩ mL
-SFX ⊖ 0 'sıyla/≩ cl
-SFX ⊖ 0 'sıyla/≩ dl
-SFX ⊖ 0 'sıyla/≩ hl
-SFX ⊖ 0 'sıyla/≩ lt
-SFX ⊖ 0 'sıyla/≩ sn
+SFX ⊖ 0 'suyla/∎ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
+SFX ⊖ 0 'suyla/∎ km
+SFX ⊖ 0 'suyla/∎ cm
+SFX ⊖ 0 'suyla/∎ mm
+SFX ⊖ 0 'suyla/∎ dm
+SFX ⊖ 0 'suyla/∎ nm
+SFX ⊖ 0 'suyla/∎ ml
+SFX ⊖ 0 'suyla/∎ mL
+SFX ⊖ 0 'suyla/∎ cl
+SFX ⊖ 0 'suyla/∎ dl
+SFX ⊖ 0 'suyla/∎ hl
+SFX ⊖ 0 'suyla/∎ lt
+SFX ⊖ 0 'suyla/∎ sn
 SFX ⊖ 0 su'nun [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊖ 0 su'na [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊖ 0 su'nda [AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊖ 0 su'ndan/≩ [AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊖ 0 su'ndan/∎ [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊖ 0 su'nu [AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊖ 0 su'yla/≩ [AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊖ 0 su'yla/∎ [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊖ k ğu'nun k
 SFX ⊖ k ğu'na k
 SFX ⊖ k ğu'nda k
-SFX ⊖ k ğu'ndan/≩ k
+SFX ⊖ k ğu'ndan/∎ k
 SFX ⊖ k ğu'nu k
-SFX ⊖ k ğu'yla/≩ k
+SFX ⊖ k ğu'yla/∎ k
 SFX ⊖ t du'nun t
 SFX ⊖ t du'na t
 SFX ⊖ t du'nda t
-SFX ⊖ t du'ndan/≩ t
+SFX ⊖ t du'ndan/∎ t
 SFX ⊖ p bu'nun p
 SFX ⊖ p bu'na p
 SFX ⊖ p bu'nda p
-SFX ⊖ p bu'ndan/≩ p
+SFX ⊖ p bu'ndan/∎ p
 SFX ⊖ 0 'unda/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊖ 0 'undaki [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊖ 0 'undakiler [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
@@ -32849,7 +32865,7 @@ SFX ⊦ 0 'üne [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊦ 0 'ünde [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊦ 0 'ünden/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊦ 0 'ünü [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
-SFX ⊦ 0 'iyle/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ⊦ 0 'üyle/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊦ 0 ü'nün [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊦ 0 ü'ne [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊦ 0 ü'nde [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
@@ -32934,19 +32950,19 @@ SFX ⊦ 0 'sünü dl
 SFX ⊦ 0 'sünü hl
 SFX ⊦ 0 'sünü lt
 SFX ⊦ 0 'sünü sn
-SFX ⊦ 0 'siyle/≩ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
-SFX ⊦ 0 'siyle/≩ km
-SFX ⊦ 0 'siyle/≩ cm
-SFX ⊦ 0 'siyle/≩ mm
-SFX ⊦ 0 'siyle/≩ dm
-SFX ⊦ 0 'siyle/≩ nm
-SFX ⊦ 0 'siyle/≩ ml
-SFX ⊦ 0 'siyle/≩ mL
-SFX ⊦ 0 'siyle/≩ cl
-SFX ⊦ 0 'siyle/≩ dl
-SFX ⊦ 0 'siyle/≩ hl
-SFX ⊦ 0 'siyle/≩ lt
-SFX ⊦ 0 'siyle/≩ sn
+SFX ⊦ 0 'süyle/≩ [ABCDEFGHIJKLMNOPQRSTUVWXYZaeiouÂÇÎÖÛÜâîöûüĞİıŞ]
+SFX ⊦ 0 'süyle/≩ km
+SFX ⊦ 0 'süyle/≩ cm
+SFX ⊦ 0 'süyle/≩ mm
+SFX ⊦ 0 'süyle/≩ dm
+SFX ⊦ 0 'süyle/≩ nm
+SFX ⊦ 0 'süyle/≩ ml
+SFX ⊦ 0 'süyle/≩ mL
+SFX ⊦ 0 'süyle/≩ cl
+SFX ⊦ 0 'süyle/≩ dl
+SFX ⊦ 0 'süyle/≩ hl
+SFX ⊦ 0 'süyle/≩ lt
+SFX ⊦ 0 'süyle/≩ sn
 SFX ⊦ 0 sü'nün [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊦ 0 sü'ne [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ⊦ 0 sü'nde [AEIOUaeiouÂÎÖÛÜâîöûüİı]
