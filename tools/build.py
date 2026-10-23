@@ -19,6 +19,25 @@ BILIM_SANAT_PATH = TURKSPELL_DIR / "lexicons" / "bilim_sanat_lexicon.json"
 AFF_SRC = TURKSPELL_DIR / "tr.aff"
 DIC_SRC = TURKSPELL_DIR / "tr.dic"
 
+def get_base_dic_lines():
+    dic_path = TURKSPELL_DIR / "tr.dic"
+    if dic_path.exists():
+        with open(dic_path, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+        if len(lines) > 135000:
+            return lines
+    try:
+        import subprocess
+        proc = subprocess.run(["git", "show", "master:tr.dic"], capture_output=True, text=True, encoding="utf-8")
+        if proc.returncode == 0 and len(proc.stdout) > 3000000:
+            return proc.stdout.splitlines(keepends=True)
+    except Exception:
+        pass
+    if dic_path.exists():
+        with open(dic_path, "r", encoding="utf-8") as f:
+            return f.readlines()
+    return []
+
 sys.path.insert(0, str(TURKSPELL_DIR / "build"))
 from utf8_flag_mapping import UTF8_TO_LONG, LONG_TO_UTF8, remap_flag_string, STAGE2_VERB_FLAGS
 
@@ -2691,9 +2710,9 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     _VC_CHAR = LONG_TO_UTF8["VC"]
     _vc_CHAR = LONG_TO_UTF8["vc"]
     
-    with open(DIC_SRC, "r", encoding="utf-8") as f:
-        f.readline()
-        raw_lines = f.readlines()
+    raw_lines = get_base_dic_lines()
+    if raw_lines and raw_lines[0].strip().isdigit():
+        raw_lines = raw_lines[1:]
         
     clean_entries = []
     seen_heads = set()
@@ -3199,6 +3218,11 @@ def compile_v06(deploy_profile="universal"):
     if addon_dict_dir.exists():
         _copy_file(DIST_DIR / f"turkspell-{deploy_profile}" / "tr.aff", addon_dict_dir / "tr.aff")
         _copy_file(DIST_DIR / f"turkspell-{deploy_profile}" / "tr.dic", addon_dict_dir / "tr.dic")
+        
+    addon_tdk_dict_dir = TURKSPELL_DIR / "firefox-addon-tdk" / "dictionaries"
+    if addon_tdk_dict_dir.exists():
+        _copy_file(DIST_DIR / "turkspell-tdk" / "tr.aff", addon_tdk_dict_dir / "tr.aff")
+        _copy_file(DIST_DIR / "turkspell-tdk" / "tr.dic", addon_tdk_dict_dir / "tr.dic")
         
     print("Deployment complete!")
     print("\nValidating deployed dictionary and running regression tests...")

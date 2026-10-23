@@ -352,7 +352,7 @@ def generate_verb_forms(vinfo: dict) -> list[str]:
         forms.add(f"{st_v(True)}{v_low}r{v_low}k")
         forms.add(f"{st_v(True)}{v_high}p")
         forms.add(f"{st_v(True)}{v_high}nc{v_low}")
-    forms.add(f"{stem}rk{v_low}n")
+    forms.add(f"{aor_base}k{v_low}n")
     forms.add(f"{stem}{part_d}{v_high}kç{v_low}")
     forms.add(f"{stem}m{v_low}d{v_low}n")
 
