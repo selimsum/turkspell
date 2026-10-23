@@ -2,6 +2,24 @@
 
 Tüm önemli değişiklikler bu dosyada belgelenmektedir. Proje [Semantic Versioning](https://semver.org/) prensiplerini takip eder.
 
+## [0.7.25] - 2026-10-23
+
+### 🧹 Sözlük Hijyeni, Morfolojik Kural Sertleştirmesi & Kalite Kapıları
+- **Bilim ve Sanat Terimleri Sözlüğü Arıtması (`lexicons/bilim_sanat_lexicon.json`)**:
+  - `tools/extract_bilim_sanat_terms.py` çıkarım hattındaki Python `re.IGNORECASE` Türkçe `i`/`ı` eşleşme hatası ve tekilleştirme öncesi erken süzgeç hatası giderildi.
+  - Kaynak veritabanına karışmış Anadolu ağızları (*Derleme Sözlüğü*: `ağrısık`, `babcük`, `cibillik`, `gıllik` vb.) ve Türk lehçeleri/Rusça alıntılar (*Lehçeler Sözlüğü*: `abajurcu`, `astronotluk` vb.) ile standart kelimelerin bozuk yazımları (`antreman`, `gardrop`, `ataç`, `mütevazi`) tamamen temizlendi; doğrulanmış **4.955** saf bilim, tıp, kimya, biyoloji, felsefe ve sanat terimi korundu.
+- **`.aff` Ünlü Uyumu ve Morfoloji Düzeltmeleri (`tr.aff`, `tools/build.py`)**:
+  - Olumsuz isim-fiil eklerinden (`-ma`/`-me`) sonra yuvarlak ünlü türeten 144 bozuk kural (`*görmesü`, `*ölmesü`, `*okumasu`, `*bulmamuz`, `*düşünmemüz` vb.) kaldırıldı.
+  - Ek yazım ve ünlü uyumu hataları düzeltildi (`laryla` ➔ `larıyla`, `leryle` ➔ `leriyle`, `kilar` ➔ `kiler`) ve geçersiz `X` koşullu kurallar budandı.
+  - Kendi kendini değiştiren etkisiz `REP lardan lardan` kuralı ve kullanılmayan ölü `VL` (`≛`) bayrak bloğu temizlendi.
+- **`.dic` Yetim Bayrak ve Yanlış Türetim Temizliği (`tr.dic`, `lexicons/custom_names.json`)**:
+  - `tr.dic` içinde karşılığı olmayan 15 yetim bayrak (`K`, `L`, `∞` ve 12 adet `≰..≼` `u1..uY` bayrağı) temizlendi.
+  - `co`/`Co` kısaltma köklerinden küçültme eki bayrağı (`∍` / `CK`) kaldırılarak `*cocuklara`, `*Cocukken` gibi şapkasız/çengelsiz yazım yanlışlarının kabul edilmesi engellendi.
+  - `lexicons/custom_names.json` içindeki mükerrer kayıtlar ve şapkasız `Elazığlı`/`Elazığlılık` varyantları temizlendi; `Misakımilli`/`Misakımillî` özel adına `KEEPCASE` (`∥`) bayrağı eklendi.
+- **Doğrulama ve Test Altyapısı (`build/validate_build.py`, `tests/test_golden_verbs.py`)**:
+  - `build/validate_build.py` aracına `.dic`/`.aff` çapraz bayrak denetimi (yetim bayraklar, kullanılmayan `SFX`/`PFX` blokları ve etkisiz `REP` kuralları) eklendi; tüm profiller **0 hata ve 0 uyarı** ile doğrulandı.
+  - `tools/generate_golden_verbs.py` ve `tests/golden_verbs_baseline.json` güncellenerek 66/66 pytest birim testi ve 240 alt test %100 başarıyla geçti.
+
 ## [0.7.0] - 2026-10-07
 
 ### 🚀 Öne Çıkan Başarılar & Metrikler (Milestones)

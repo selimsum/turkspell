@@ -4630,17 +4630,7 @@
     "attributes": []
   },
   {
-    "lemma": "Bâtıni",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
     "lemma": "Bâtınilik",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "Bâtıniye",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -4935,11 +4925,6 @@
     "attributes": []
   },
   {
-    "lemma": "Celâli",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
     "lemma": "Celâlilik",
     "pos": "ProperNoun",
     "attributes": []
@@ -5026,11 +5011,6 @@
   },
   {
     "lemma": "Ceyhan",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "Ceylânpınar",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -6540,11 +6520,6 @@
     "attributes": []
   },
   {
-    "lemma": "Eflâni",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
     "lemma": "Ege",
     "pos": "ProperNoun",
     "attributes": []
@@ -6615,16 +6590,6 @@
     "attributes": []
   },
   {
-    "lemma": "Elazığlı",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "Elazığlılık",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
     "lemma": "Elbasan tava",
     "pos": "ProperNoun",
     "attributes": []
@@ -6681,11 +6646,6 @@
   },
   {
     "lemma": "Elmalı",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "Elâzığ",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -9099,11 +9059,6 @@
   },
   {
     "lemma": "Hakasça",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "Hakkâri",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -12751,17 +12706,7 @@
     "attributes": []
   },
   {
-    "lemma": "Kâhta",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
     "lemma": "Kâzımkarabekir",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "Kâğıthane",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -13819,11 +13764,6 @@
   },
   {
     "lemma": "Lâdik",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "Lâpseki",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -15026,11 +14966,6 @@
   },
   {
     "lemma": "Millî Mücadele",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "Milâs",
     "pos": "ProperNoun",
     "attributes": []
   },
@@ -25594,11 +25529,6 @@
   },
   {
     "lemma": "Şeferlikoçhisar",
-    "pos": "ProperNoun",
-    "attributes": []
-  },
-  {
-    "lemma": "Şehitkâmil",
     "pos": "ProperNoun",
     "attributes": []
   },

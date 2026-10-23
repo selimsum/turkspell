@@ -80,7 +80,7 @@ def check_dic(path, errors, warnings):
     return body
 
 
-def check_aff(path, errors, warnings):
+def check_aff(path, errors, warnings, dic_body=None):
     with open(path, encoding='utf-8') as f:
         lines = [l.rstrip('\n') for l in f]
 
@@ -106,9 +106,20 @@ def check_aff(path, errors, warnings):
                 f"tr.aff: {key} is {val!r}; under FLAG UTF-8 it must be a single character"
             )
 
+    # Check REP self-replacements (no-op REP rules)
+    noop_reps = []
+    for l in lines:
+        p = l.split()
+        if len(p) == 3 and p[0] == 'REP' and p[1] == p[2]:
+            noop_reps.append(l)
+    if noop_reps:
+        warnings.append(f"tr.aff: {len(noop_reps)} self-replacing no-op REP rule(s), e.g. {noop_reps[:3]}")
+
     # Every SFX/PFX block header declares its rule count; a mismatch makes
     # Hunspell silently misparse the remainder of the block.
     mismatches = []
+    sfx_flags = set()
+    cont_flags = set()
     cur = declared = count = None
     for l in lines:
         p = l.split()
@@ -116,8 +127,11 @@ def check_aff(path, errors, warnings):
             if cur is not None and declared != count:
                 mismatches.append((cur, declared, count))
             cur, declared, count = p[1], int(p[3]), 0
+            sfx_flags.add(p[1])
         elif cur is not None and len(p) >= 3 and p[0] in ('SFX', 'PFX'):
             count += 1
+            if len(p) >= 4 and '/' in p[3]:
+                cont_flags.update(p[3].split('/', 1)[1])
     if cur is not None and declared != count:
         mismatches.append((cur, declared, count))
 
@@ -137,6 +151,29 @@ def check_aff(path, errors, warnings):
     if dup:
         warnings.append(f"tr.aff: {dup:,} exactly duplicated affix rules ({dup / len(rules):.1%})")
 
+    # Cross-check flags between tr.dic and tr.aff
+    if dic_body is not None:
+        special_flags = {
+            header.get('NOSUGGEST', ''),
+            header.get('KEEPCASE', ''),
+            header.get('NEEDAFFIX', ''),
+        } - {''}
+        valid_flags = sfx_flags | special_flags
+        dic_flags = set()
+        for l in dic_body:
+            if '/' in l:
+                dic_flags.update(l.split('/', 1)[1])
+        orphan_dic_flags = sorted(dic_flags - valid_flags)
+        if orphan_dic_flags:
+            errors.append(
+                f"tr.dic: {len(orphan_dic_flags)} flag character(s) have no definition in tr.aff: {orphan_dic_flags}"
+            )
+        unused_aff_blocks = sorted(sfx_flags - (dic_flags | cont_flags))
+        if unused_aff_blocks:
+            warnings.append(
+                f"tr.aff: {len(unused_aff_blocks)} affix block(s) are never referenced: {unused_aff_blocks}"
+            )
+
     return header
 
 
@@ -147,6 +184,7 @@ def check_presence(body, errors, warnings):
     """
     forms = {l.split('/')[0] for l in body}
     folded = {_tlc(w) for w in forms}
+    unhatted_folded = {w.translate(str.maketrans('âîû', 'aiu')) for w in folded}
 
     lex_dir = os.path.join(BASE_DIR, 'lexicons')
     for fname, label in (
@@ -162,7 +200,12 @@ def check_presence(body, errors, warnings):
         lemmas = [e['lemma'] for e in entries if isinstance(e, dict) and e.get('lemma')]
         if not lemmas:
             continue
-        missing = [w for w in lemmas if w not in forms and _tlc(w) not in folded]
+        missing = [
+            w for w in lemmas
+            if w not in forms
+            and _tlc(w) not in folded
+            and _tlc(w).translate(str.maketrans('âîû', 'aiu')) not in unhatted_folded
+        ]
         rate = 1 - len(missing) / len(lemmas)
         if rate < MIN_PRESENCE:
             errors.append(
@@ -185,7 +228,7 @@ def validate(dic_path='tr.dic', aff_path='tr.aff', verbose=True, run_tests=True)
         return errors, warnings
 
     body = check_dic(dic_path, errors, warnings)
-    check_aff(aff_path, errors, warnings)
+    check_aff(aff_path, errors, warnings, dic_body=body)
     check_presence(body, errors, warnings)
     if run_tests:
         check_regression_tests(errors)

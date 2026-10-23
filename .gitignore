@@ -18,6 +18,7 @@ __pycache__/
 !lexicons/bilim_sanat_lexicon.json
 !firefox-addon/manifest.json
 !firefox-addon-tdk/manifest.json
+!tests/golden_verbs_baseline.json
 !update.json
 !amo-metadata.json
 

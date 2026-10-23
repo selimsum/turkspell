@@ -1340,6 +1340,12 @@ def gen_deriv_ci2(flag: str = "LCI") -> str:
 def gen_deriv_ck(flag: str = "CK") -> str:
     """-cIk diminutive & -cIm affection suffixes"""
     rules = []
+    ck_map = {
+        "cık": ("cığ", "B1"), "cuk": ("cuğ", "B2"),
+        "cik": ("ciğ", "F1"), "cük": ("cüğ", "F2"),
+        "çık": ("çığ", "B1"), "çuk": ("çuğ", "B2"),
+        "çik": ("çiğ", "F1"), "çük": ("çüğ", "F2"),
+    }
     for cond, suf in [
         ("[aıâ][bcdgğjlmnrvyz]", "cık"), ("[ouû][bcdgğjlmnrvyz]", "cuk"),
         ("[eiîâ][bcdgğjlmnrvyz]", "cik"), ("[öüû][bcdgğjlmnrvyz]", "cük"),
@@ -1352,8 +1358,9 @@ def gen_deriv_ck(flag: str = "CK") -> str:
         ("[aıâ][^aeıioöuüâîû][çfhkpsşt]",  "çık"), ("[ouû][^aeıioöuüâîû][çfhkpsşt]",  "çuk"),
         ("[eiîâ][^aeıioöuüâîû][çfhkpsşt]",  "çik"), ("[öüû][^aeıioöuüâîû][çfhkpsşt]",  "çük"),
     ]:
-        sc = "B1" if suf.endswith(('cık', 'cuk', 'çık', 'çuk')) else "F1"
-        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
+        suf_v, sc = ck_map[suf]
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc, only_consonant=True)[2:]}", cond))
+        rules.append(sfx(flag, "0", f"{suf_v}/{get_noun_chain(sc, only_vowel=True)}", cond))
         rules.append(sfx(flag, "0", suf, cond))
         
     # Affection suffixes (-cIm, e.g. doktorcum, ninecim, ziyacığım)
@@ -2735,17 +2742,18 @@ def gen_proper_flags() -> list[str]:
             sfx_ki(f"{flag_prefix}L", "0", f"'n{loc_soft}", cond_pattern, rules_L)
         blocks.append(make_flag_block(f"{flag_prefix}L", unique(rules_L)))
 
+        prop_cop = "CL" if flag_prefix in ("pB", "pO") else "cl"
         # --- Ablative flag ---
         rules_R = [
-            sfx(f"{flag_prefix}R", "0", f"'{abl_soft}/cl", "[^çfhkpsştx]"),
-            sfx(f"{flag_prefix}R", "0", f"'{abl_hard}/cl", "[çfhkpsştxÇFHKPSŞTXC]"),
-            sfx(f"{flag_prefix}R", "0", f"'n{abl_soft}/cl", VOWEL_RE),
+            sfx(f"{flag_prefix}R", "0", f"'{abl_soft}/{prop_cop}", "[^çfhkpsştx]"),
+            sfx(f"{flag_prefix}R", "0", f"'{abl_hard}/{prop_cop}", "[çfhkpsştxÇFHKPSŞTXC]"),
+            sfx(f"{flag_prefix}R", "0", f"'n{abl_soft}/{prop_cop}", VOWEL_RE),
         ]
         if flag_prefix == "pB":
             for byte_unit in ("GB", "MB", "TB", "KB", "PB"):
-                rules_R.append(sfx(f"{flag_prefix}R", "0", f"'{abl_hard}/cl", byte_unit))
+                rules_R.append(sfx(f"{flag_prefix}R", "0", f"'{abl_hard}/{prop_cop}", byte_unit))
         for cond_pattern in VOWEL_UNIT_CONDS:
-            rules_R.append(sfx(f"{flag_prefix}R", "0", f"'n{abl_soft}/cl", cond_pattern))
+            rules_R.append(sfx(f"{flag_prefix}R", "0", f"'n{abl_soft}/{prop_cop}", cond_pattern))
         blocks.append(make_flag_block(f"{flag_prefix}R", unique(rules_R)))
 
         # --- Dative flag ---
@@ -2784,11 +2792,11 @@ def gen_proper_flags() -> list[str]:
 
         # --- Instrumental flag ---
         rules_I = [
-            sfx(f"{flag_prefix}I", "0", f"'{ins_suf}/cl", CONS_RE),
-            sfx(f"{flag_prefix}I", "0", f"'y{ins_suf}/cl", VOWEL_RE),
+            sfx(f"{flag_prefix}I", "0", f"'{ins_suf}/{prop_cop}", CONS_RE),
+            sfx(f"{flag_prefix}I", "0", f"'y{ins_suf}/{prop_cop}", VOWEL_RE),
         ]
         for cond_pattern in VOWEL_UNIT_CONDS:
-            rules_I.append(sfx(f"{flag_prefix}I", "0", f"'y{ins_suf}/cl", cond_pattern))
+            rules_I.append(sfx(f"{flag_prefix}I", "0", f"'y{ins_suf}/{prop_cop}", cond_pattern))
         blocks.append(make_flag_block(f"{flag_prefix}I", unique(rules_I)))
 
         # --- 3sg possessive flag (supports institutional/compound proper nouns e.g. Mahallesi'nde, Meclisi'nin, Bankası'na, Bakanlığı'na) ---
@@ -2798,8 +2806,8 @@ def gen_proper_flags() -> list[str]:
         poss3_v_abl = "s" + poss3_abl  # si'nden / sı'ndan / su'ndan / sü'nden
         v_acc_suf = "s" + ("ını" if poss3_cons == "ı" else ("ini" if poss3_cons == "i" else ("unu" if poss3_cons == "u" else "ünü")))
         c_acc_suf = ("ını" if poss3_cons == "ı" else ("ini" if poss3_cons == "i" else ("unu" if poss3_cons == "u" else "ünü")))
-        poss3_v_ins = "s" + ("ıyla" if ins_suf == "la" else "iyle")
-        poss3_c_ins = ("ıyla" if ins_suf == "la" else "iyle")
+        poss3_v_ins = f"{poss3_vowel}y{ins_suf}"
+        poss3_c_ins = f"{poss3_cons}y{ins_suf}"
 
         # In Turkish orthography, institutional compounds place the apostrophe AFTER the possessive
         # and require the pronominal 'n' (zamir n'si) before case suffixes:
@@ -2821,56 +2829,56 @@ def gen_proper_flags() -> list[str]:
 
         rules_P = [
             # Consonant ending base - apostrophe before possessive (e.g. Meclis'i, Kanun'u)
-            sfx(f"{flag_prefix}P", "0", f"'{poss3_cons}/cl",  CONS_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_cons}/{prop_cop}",  CONS_RE),
             sfx(f"{flag_prefix}P", "0", f"'{poss3_gen}",      CONS_RE),
             sfx(f"{flag_prefix}P", "0", f"'{poss3_dat}",      CONS_RE),
             sfx(f"{flag_prefix}P", "0", f"'{poss3_loc}",      CONS_RE),
-            sfx(f"{flag_prefix}P", "0", f"'{poss3_abl}/cl",   CONS_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_abl}/{prop_cop}",   CONS_RE),
             sfx(f"{flag_prefix}P", "0", f"'{c_acc_suf}",      CONS_RE),
-            sfx(f"{flag_prefix}P", "0", f"'{poss3_c_ins}/cl", CONS_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_c_ins}/{prop_cop}", CONS_RE),
 
             # Consonant ending base - institutional compounds (apostrophe after possessive: Meclisi'nin, Ligi'nde)
             sfx(f"{flag_prefix}P", "0", c_gen_suf,            CONS_RE),
             sfx(f"{flag_prefix}P", "0", c_dat_suf,            CONS_RE),
             sfx(f"{flag_prefix}P", "0", c_loc_suf,            CONS_RE),
-            sfx(f"{flag_prefix}P", "0", f"{c_abl_suf}/cl",    CONS_RE),
+            sfx(f"{flag_prefix}P", "0", f"{c_abl_suf}/{prop_cop}",    CONS_RE),
             sfx(f"{flag_prefix}P", "0", c_acc_suf_inst,       CONS_RE),
-            sfx(f"{flag_prefix}P", "0", f"{c_ins_suf_inst}/cl", CONS_RE),
+            sfx(f"{flag_prefix}P", "0", f"{c_ins_suf_inst}/{prop_cop}", CONS_RE),
 
             # Vowel ending base - apostrophe before possessive (e.g. Mahalle'si)
-            sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/cl", VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/{prop_cop}", VOWEL_RE),
             sfx(f"{flag_prefix}P", "0", f"'{poss3_v_gen}",    VOWEL_RE),
             sfx(f"{flag_prefix}P", "0", f"'{poss3_v_dat}",    VOWEL_RE),
             sfx(f"{flag_prefix}P", "0", f"'{poss3_v_loc}",    VOWEL_RE),
-            sfx(f"{flag_prefix}P", "0", f"'{poss3_v_abl}/cl", VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_v_abl}/{prop_cop}", VOWEL_RE),
             sfx(f"{flag_prefix}P", "0", f"'{v_acc_suf}",      VOWEL_RE),
-            sfx(f"{flag_prefix}P", "0", f"'{poss3_v_ins}/cl", VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", f"'{poss3_v_ins}/{prop_cop}", VOWEL_RE),
 
             # Vowel ending base - institutional compounds (apostrophe after possessive: Mahallesi'nde, Partisi'nin, Bankası'nda)
             sfx(f"{flag_prefix}P", "0", v_gen_suf_inst,       VOWEL_RE),
             sfx(f"{flag_prefix}P", "0", v_dat_suf_inst,       VOWEL_RE),
             sfx(f"{flag_prefix}P", "0", v_loc_suf_inst,       VOWEL_RE),
-            sfx(f"{flag_prefix}P", "0", f"{v_abl_suf_inst}/cl", VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", f"{v_abl_suf_inst}/{prop_cop}", VOWEL_RE),
             sfx(f"{flag_prefix}P", "0", v_acc_suf_inst,       VOWEL_RE),
-            sfx(f"{flag_prefix}P", "0", f"{v_ins_suf_inst}/cl", VOWEL_RE),
+            sfx(f"{flag_prefix}P", "0", f"{v_ins_suf_inst}/{prop_cop}", VOWEL_RE),
 
             # Voiced consonant stems (k -> ğ, t -> d, p -> b): Bakanlık -> Bakanlığı'na, Stat -> Stadı'nda, Grup -> Grubu'nda
             sfx(f"{flag_prefix}P", "k", f"ğ{c_gen_suf}",      "k"),
             sfx(f"{flag_prefix}P", "k", f"ğ{c_dat_suf}",      "k"),
             sfx(f"{flag_prefix}P", "k", f"ğ{c_loc_suf}",      "k"),
-            sfx(f"{flag_prefix}P", "k", f"ğ{c_abl_suf}/cl",   "k"),
+            sfx(f"{flag_prefix}P", "k", f"ğ{c_abl_suf}/{prop_cop}",   "k"),
             sfx(f"{flag_prefix}P", "k", f"ğ{c_acc_suf_inst}",  "k"),
-            sfx(f"{flag_prefix}P", "k", f"ğ{c_ins_suf_inst}/cl","k"),
+            sfx(f"{flag_prefix}P", "k", f"ğ{c_ins_suf_inst}/{prop_cop}","k"),
 
             sfx(f"{flag_prefix}P", "t", f"d{c_gen_suf}",      "t"),
             sfx(f"{flag_prefix}P", "t", f"d{c_dat_suf}",      "t"),
             sfx(f"{flag_prefix}P", "t", f"d{c_loc_suf}",      "t"),
-            sfx(f"{flag_prefix}P", "t", f"d{c_abl_suf}/cl",   "t"),
+            sfx(f"{flag_prefix}P", "t", f"d{c_abl_suf}/{prop_cop}",   "t"),
 
             sfx(f"{flag_prefix}P", "p", f"b{c_gen_suf}",      "p"),
             sfx(f"{flag_prefix}P", "p", f"b{c_dat_suf}",      "p"),
             sfx(f"{flag_prefix}P", "p", f"b{c_loc_suf}",      "p"),
-            sfx(f"{flag_prefix}P", "p", f"b{c_abl_suf}/cl",   "p"),
+            sfx(f"{flag_prefix}P", "p", f"b{c_abl_suf}/{prop_cop}",   "p"),
         ]
         sfx_ki(f"{flag_prefix}P", "0", f"'{poss3_loc}",    CONS_RE, rules_P)
         sfx_ki(f"{flag_prefix}P", "0", f"'{poss3_gen}",    CONS_RE, rules_P)
@@ -2880,16 +2888,16 @@ def gen_proper_flags() -> list[str]:
         sfx_ki(f"{flag_prefix}P", "0", v_loc_suf_inst,     VOWEL_RE, rules_P)
         sfx_ki(f"{flag_prefix}P", "k", f"ğ{c_loc_suf}",    "k", rules_P)
         if flag_prefix == "pF":
-            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/cl", "tl"))
-            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/cl", "TL"))
+            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/{prop_cop}", "tl"))
+            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/{prop_cop}", "TL"))
         for cond_pattern in VOWEL_UNIT_CONDS:
-            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/cl", cond_pattern))
+            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_vowel}/{prop_cop}", cond_pattern))
             rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_v_gen}",    cond_pattern))
             rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_v_dat}",    cond_pattern))
             rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_v_loc}",    cond_pattern))
-            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_v_abl}/cl", cond_pattern))
+            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_v_abl}/{prop_cop}", cond_pattern))
             rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{v_acc_suf}",      cond_pattern))
-            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_v_ins}/cl", cond_pattern))
+            rules_P.append(sfx(f"{flag_prefix}P", "0", f"'{poss3_v_ins}/{prop_cop}", cond_pattern))
         blocks.append(make_flag_block(f"{flag_prefix}P", unique(rules_P)))
 
         # --- Copula flag ---
@@ -3417,10 +3425,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(strip, f"{fut_suf}{v_low}ks{unrounded_high}n{unrounded_high}zd{unrounded_high}r", strip)
         add_r(strip, f"{fut_suf}{v_low}kl{v_low}r", strip)
         add_r(strip, f"{fut_suf}{v_low}kl{v_low}rd{unrounded_high}r", strip)
-        if flag == "VH":
-            add_r(strip, f"{fut_suf}{v_low}ğüm", "ümek")
-        elif flag == "VS":
-            add_r(strip, f"{fut_suf}{v_low}ğum", "umak")
+
     elif is_voicing:
         add_r(f"t{strip}", f"d{fut_suf}{v_low}k/{cop_unv}", f"t{strip}")
         add_r(f"t{strip}", f"d{fut_suf}{v_low}k", f"t{strip}")
@@ -3431,8 +3436,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(f"t{strip}", f"d{fut_suf}{v_low}ks{unrounded_high}n{unrounded_high}zd{unrounded_high}r", f"t{strip}")
         add_r(f"t{strip}", f"d{fut_suf}{v_low}kl{v_low}r", f"t{strip}")
         add_r(f"t{strip}", f"d{fut_suf}{v_low}kl{v_low}rd{unrounded_high}r", f"t{strip}")
-        if round_v:
-            add_r(f"t{strip}", f"d{fut_suf}{v_low}ğ{v_high}m", f"t{strip}")
+
     else:
         add_r(strip, f"{fut_suf}{v_low}k/{cop_unv}", strip)
         add_r(strip, f"{fut_suf}{v_low}k", strip)
@@ -3443,8 +3447,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(strip, f"{fut_suf}{v_low}ks{unrounded_high}n{unrounded_high}zd{unrounded_high}r", strip)
         add_r(strip, f"{fut_suf}{v_low}kl{v_low}r", strip)
         add_r(strip, f"{fut_suf}{v_low}kl{v_low}rd{unrounded_high}r", strip)
-        if round_v:
-            add_r(strip, f"{fut_suf}{v_low}ğ{v_high}m", strip)
+
 
     # 3. DEFINITE PAST: -dı / -di / -tı / -ti
     if flag == "VH":
@@ -3558,7 +3561,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(strip, f"m{v_high}şl{v_low}rd{v_low}n", strip)
         add_r(strip, f"m{v_high}şl{v_low}r{unrounded_high}", strip)
         add_r(strip, f"m{v_high}şl{v_low}rl{v_low}", strip)
-        add_r(strip, f"m{v_high}şl{v_low}ryl{v_low}", strip)
+        add_r(strip, f"m{v_high}şl{v_low}r{unrounded_high}yl{v_low}", strip)
 
     # 5. NECESSITATIVE: -malı / -meli
     add_r(strip, f"m{v_low}l{unrounded_high}/{cop_vow}", strip)
@@ -3581,7 +3584,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
     add_r(strip, f"m{v_low}km{unrounded_high}ş", strip)
     add_r(strip, f"m{v_low}ks{unrounded_high}z{unrounded_high}n", strip)
     add_r(strip, f"m{v_low}kt{v_low}ki", strip)
-    add_r(strip, f"m{v_low}kt{v_low}kil{v_low}r", strip)
+    add_r(strip, f"m{v_low}kt{v_low}kiler", strip)
     add_r(strip, f"m{v_low}d{v_low}", strip)
     add_r(strip, f"m{v_low}d{v_low}n", strip)
     add_r(strip, f"m{v_low}yl{v_low}", strip)
@@ -3589,7 +3592,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
     add_r(strip, f"m{v_low}y{v_low}", strip)
     add_r(strip, f"m{v_low}n{unrounded_high}n", strip)
     add_r(strip, f"m{v_low}d{v_low}ki", strip)
-    add_r(strip, f"m{v_low}d{v_low}kil{v_low}r", strip)
+    add_r(strip, f"m{v_low}d{v_low}kiler", strip)
     for vn_pl in [
         f"m{v_low}l{v_low}r",
         f"m{v_low}l{v_low}r{v_low}",
@@ -3597,7 +3600,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         f"m{v_low}l{v_low}rd{v_low}n",
         f"m{v_low}l{v_low}r{unrounded_high}n",
         f"m{v_low}l{v_low}rl{v_low}",
-        f"m{v_low}l{v_low}ryl{v_low}",
+        f"m{v_low}l{v_low}r{unrounded_high}yl{v_low}",
     ]:
         add_r(strip, vn_pl, strip)
     for p in ["", f"y{unrounded_high}m", f"s{unrounded_high}n", f"y{unrounded_high}z", f"s{unrounded_high}n{unrounded_high}z", f"l{v_low}r"]:
@@ -3704,7 +3707,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
             add_r(strip, f"r{p}", strip)
     elif is_voicing:
         aor_c_vow = "a" if back else "e"
-        add_r(f"t{strip}", f"d{aor_c_vow}r/{cop_aor}", f"t{strip}")
+        add_r(f"t{strip}", f"d{aor_c_vow}r/{neg_cop_aor}", f"t{strip}")
         add_r(f"t{strip}", f"d{aor_c_vow}r", f"t{strip}")
         add_r(f"t{strip}", f"d{aor_c_vow}rken", f"t{strip}")
         add_r(f"t{strip}", f"d{aor_c_vow}rc{v_low}s{unrounded_high}n{v_low}", f"t{strip}")
@@ -3718,7 +3721,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
     part_endings = [
         "", f"l{v_low}r", f"l{v_low}r{unrounded_high}", f"l{v_low}r{v_low}",
         f"l{v_low}rd{v_low}", f"l{v_low}rd{v_low}n", f"l{v_low}r{unrounded_high}n",
-        f"l{v_low}ryl{v_low}", f"l{v_low}rl{v_low}", f"{unrounded_high}", f"{v_low}", f"d{v_low}",
+        f"l{v_low}r{unrounded_high}yl{v_low}", f"l{v_low}rl{v_low}", f"{unrounded_high}", f"{v_low}", f"d{v_low}",
         f"d{v_low}n", f"{unrounded_high}n", f"yl{v_low}",
         f"l{v_low}r{unrounded_high}m{unrounded_high}z",
         f"l{v_low}r{unrounded_high}m{unrounded_high}z{unrounded_high}",
@@ -3796,7 +3799,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
             f"{ici_base}n{ici_high}n", f"{ici_base}yl{ici_low}",
             f"{ici_base}l{ici_low}r", f"{ici_base}l{ici_low}r{ici_low}", f"{ici_base}l{ici_low}r{ici_unrounded}",
             f"{ici_base}l{ici_low}rd{ici_low}", f"{ici_base}l{ici_low}rd{ici_low}n", f"{ici_base}l{ici_low}r{ici_unrounded}n",
-            f"{ici_base}l{ici_low}rl{ici_low}", f"{ici_base}l{ici_low}ryl{ici_low}",
+            f"{ici_base}l{ici_low}rl{ici_low}", f"{ici_base}l{ici_low}r{ici_unrounded}yl{ici_low}",
             f"{ici_base}s{ici_high}", f"{ici_base}s{ici_high}n{ici_high}", f"{ici_base}s{ici_high}n{ici_low}",
             f"{ici_base}s{ici_high}nd{ici_low}", f"{ici_base}s{ici_high}nd{ici_low}n", f"{ici_base}s{ici_high}n{ici_high}n",
             f"{ici_base}s{ici_high}yl{ici_low}", f"{ici_base}s{ici_high}d{ici_high}r",
@@ -3828,7 +3831,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(s_strip, f"{is_base}t{v_low}", s_cond)
         add_r(s_strip, f"{is_base}t{v_low}n", s_cond)
         add_r(s_strip, f"{is_base}t{v_low}ki", s_cond)
-        add_r(s_strip, f"{is_base}t{v_low}kil{v_low}r", s_cond)
+        add_r(s_strip, f"{is_base}t{v_low}kiler", s_cond)
         add_r(s_strip, f"{is_base}l{v_low}", s_cond)
         add_r(s_strip, f"{is_base}{v_h}m/{pp_f}", s_cond)
         add_r(s_strip, f"{is_base}{v_h}m", s_cond)
@@ -3847,7 +3850,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
             f"{is_base}l{v_low}rd{v_low}n",
             f"{is_base}l{v_low}r{unrounded_high}n",
             f"{is_base}l{v_low}rl{v_low}",
-            f"{is_base}l{v_low}ryl{v_low}",
+            f"{is_base}l{v_low}r{unrounded_high}yl{v_low}",
         ]:
             add_r(s_strip, is_pl, s_cond)
 
@@ -3867,7 +3870,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
             add_r(strip, f"d{v_h_curr}ğ{v_h_curr}m{v_h_curr}z", cond_curr)
             add_r(strip, f"d{v_h_curr}ğ{v_h_curr}n{v_h_curr}z/{part_pers_curr}", cond_curr)
             add_r(strip, f"d{v_h_curr}ğ{v_h_curr}n{v_h_curr}z", cond_curr)
-            add_r(strip, f"d{v_h_curr}kl{v_low}r{unrounded_high}/{part_3sg_curr}", cond_curr)
+            add_r(strip, f"d{v_h_curr}kl{v_low}r{unrounded_high}/{vn_part_3sg}", cond_curr)
             add_r(strip, f"d{v_h_curr}kl{v_low}r{unrounded_high}", cond_curr)
             add_pl_part_poss(strip, f"d{v_h_curr}kl{v_low}r{unrounded_high}", cond_curr)
             add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}/{fut_part_3sg}", cond_curr)
@@ -3895,13 +3898,6 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
             add_r(strip, f"m{v_low}n{unrounded_high}z", cond_curr)
             add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}/{vn_part_3sg}", cond_curr)
             add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}", cond_curr)
-            if v_h_curr != unrounded_high:
-                add_r(strip, f"m{v_low}s{v_h_curr}/{part_3sg_curr}", cond_curr)
-                add_r(strip, f"m{v_low}s{v_h_curr}", cond_curr)
-                add_r(strip, f"m{v_low}m{v_h_curr}z/{part_pers_curr}", cond_curr)
-                add_r(strip, f"m{v_low}m{v_h_curr}z", cond_curr)
-                add_r(strip, f"m{v_low}n{v_h_curr}z/{part_pers_curr}", cond_curr)
-                add_r(strip, f"m{v_low}n{v_h_curr}z", cond_curr)
             add_is_verbal_noun(strip, f"y{v_h_curr}ş", cond_curr, v_h_curr)
     elif flag == "VS":
         sub_h = [("ı", "amak"), ("u", "umak")]
@@ -3918,7 +3914,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
             add_r(strip, f"d{v_h_curr}ğ{v_h_curr}m{v_h_curr}z", cond_curr)
             add_r(strip, f"d{v_h_curr}ğ{v_h_curr}n{v_h_curr}z/{part_pers_curr}", cond_curr)
             add_r(strip, f"d{v_h_curr}ğ{v_h_curr}n{v_h_curr}z", cond_curr)
-            add_r(strip, f"d{v_h_curr}kl{v_low}r{unrounded_high}/{part_3sg_curr}", cond_curr)
+            add_r(strip, f"d{v_h_curr}kl{v_low}r{unrounded_high}/{vn_part_3sg}", cond_curr)
             add_r(strip, f"d{v_h_curr}kl{v_low}r{unrounded_high}", cond_curr)
             add_pl_part_poss(strip, f"d{v_h_curr}kl{v_low}r{unrounded_high}", cond_curr)
             add_r(strip, f"{fut_suf}{v_low}ğ{unrounded_high}/{fut_part_3sg}", cond_curr)
@@ -3946,13 +3942,6 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
             add_r(strip, f"m{v_low}n{unrounded_high}z", cond_curr)
             add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}/{vn_part_3sg}", cond_curr)
             add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}", cond_curr)
-            if v_h_curr != unrounded_high:
-                add_r(strip, f"m{v_low}s{v_h_curr}/{part_3sg_curr}", cond_curr)
-                add_r(strip, f"m{v_low}s{v_h_curr}", cond_curr)
-                add_r(strip, f"m{v_low}m{v_h_curr}z/{part_pers_curr}", cond_curr)
-                add_r(strip, f"m{v_low}m{v_h_curr}z", cond_curr)
-                add_r(strip, f"m{v_low}n{v_h_curr}z/{part_pers_curr}", cond_curr)
-                add_r(strip, f"m{v_low}n{v_h_curr}z", cond_curr)
             add_is_verbal_noun(strip, f"y{v_h_curr}ş", cond_curr, v_h_curr)
     elif is_vowel_stem or is_narrow:
         add_r(strip, f"d{v_high}ğ{v_high}/{part_3sg}", strip)
@@ -3965,7 +3954,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(strip, f"d{v_high}ğ{v_high}m{v_high}z", strip)
         add_r(strip, f"d{v_high}ğ{v_high}n{v_high}z/{part_pers}", strip)
         add_r(strip, f"d{v_high}ğ{v_high}n{v_high}z", strip)
-        add_r(strip, f"d{v_high}kl{v_low}r{unrounded_high}/{part_3sg}", strip)
+        add_r(strip, f"d{v_high}kl{v_low}r{unrounded_high}/{vn_part_3sg}", strip)
         add_r(strip, f"d{v_high}kl{v_low}r{unrounded_high}", strip)
         add_pl_part_poss(strip, f"d{v_high}kl{v_low}r{unrounded_high}", strip)
         f_strip = "emek" if is_narrow else strip
@@ -3996,13 +3985,6 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(strip, f"m{v_low}n{unrounded_high}z", strip)
         add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}/{vn_part_3sg}", strip)
         add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}", strip)
-        if v_high != unrounded_high:
-            add_r(strip, f"m{v_low}s{v_high}/{part_3sg}", strip)
-            add_r(strip, f"m{v_low}s{v_high}", strip)
-            add_r(strip, f"m{v_low}m{v_high}z/{part_pers}", strip)
-            add_r(strip, f"m{v_low}m{v_high}z", strip)
-            add_r(strip, f"m{v_low}n{v_high}z/{part_pers}", strip)
-            add_r(strip, f"m{v_low}n{v_high}z", strip)
         # Verbal Noun (-yış / -yiş: yürüyüşü, söyleyişine, deyiş, yiyiş)
         add_is_verbal_noun(strip, f"y{v_high}ş", strip, v_high)
         if is_narrow:
@@ -4072,13 +4054,6 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(strip, f"m{v_low}n{unrounded_high}z", strip)
         add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}/{vn_part_3sg}", strip)
         add_r(strip, f"m{v_low}l{v_low}r{unrounded_high}", strip)
-        if v_high != unrounded_high:
-            add_r(strip, f"m{v_low}s{v_high}/{part_3sg}", strip)
-            add_r(strip, f"m{v_low}s{v_high}", strip)
-            add_r(strip, f"m{v_low}m{v_high}z/{part_pers}", strip)
-            add_r(strip, f"m{v_low}m{v_high}z", strip)
-            add_r(strip, f"m{v_low}n{v_high}z/{part_pers}", strip)
-            add_r(strip, f"m{v_low}n{v_high}z", strip)
         # Verbal Noun (-iş / -ış: katledilişine, yayınlanışı, bitiş, gidiş)
         is_pref = "d" if is_voicing else ""
         is_strip = f"t{strip}" if is_voicing else strip
@@ -4316,7 +4291,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
     add_r(strip, f"{neg_pot}iyoruz", strip)
     add_r(strip, f"{neg_pot}iyorlar", strip)
     add_r(strip, f"{neg_pot}ecek", strip)
-    add_r(strip, f"{neg_pot}eceği/{fut_part_3sg}", strip)
+    add_r(strip, f"{neg_pot}eceği/pE", strip)
     add_r(strip, f"{neg_pot}eceği", strip)
     add_r(strip, f"{neg_pot}iyor", strip)
     add_r(strip, f"{neg_pot}iyoruz", strip)
@@ -4363,7 +4338,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
     add_r(inab_strip, f"{inab_p}{v_low}y{v_low}c{v_low}kl{v_low}rd{unrounded_high}r", inab_cond)
 
     # Inab Aorist: sığdıramam, yapamaz, yapamayız
-    add_r(inab_strip, f"{inab_p}{v_low}z/{cop_aor}", inab_cond)
+    add_r(inab_strip, f"{inab_p}{v_low}z/{neg_cop_aor}", inab_cond)
     add_r(inab_strip, f"{inab_p}{v_low}m", inab_cond)
     add_r(inab_strip, f"{inab_p}{v_low}zs{unrounded_high}n", inab_cond)
     add_r(inab_strip, f"{inab_p}{v_low}z", inab_cond)
@@ -4472,7 +4447,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
     add_r(inab_strip, f"{inab_pot}irsiniz", inab_cond)
     add_r(inab_strip, f"{inab_pot}irler", inab_cond)
     add_r(inab_strip, f"{inab_pot}iyor", inab_cond)
-    add_r(inab_strip, f"{inab_pot}eceği/{fut_part_3sg}", inab_cond)
+    add_r(inab_strip, f"{inab_pot}eceği/pE", inab_cond)
     add_r(inab_strip, f"{inab_pot}eceği", inab_cond)
     add_r(inab_strip, f"{inab_pot}ecek", inab_cond)
 
@@ -4730,7 +4705,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(pass_strip, f"{pass_p}{v_high}r/{cop_aor}", pass_cond)
         add_r(pass_strip, f"{pass_p}{v_high}r", pass_cond)
         add_r(pass_strip, f"{pass_p}{v_high}rl{v_low}r", pass_cond)
-        add_r(pass_strip, f"{pass_p}m{v_low}z/{cop_aor}", pass_cond)
+        add_r(pass_strip, f"{pass_p}m{v_low}z/{neg_cop_aor}", pass_cond)
         add_r(pass_strip, f"{pass_p}m{v_low}z", pass_cond)
         add_r(pass_strip, f"{pass_p}m{v_low}zl{v_low}r", pass_cond)
         # Necessitative, Conditional & Imperative
@@ -4775,7 +4750,7 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(pass_strip, f"{pass_p}{v_low}bildiği/pE", pass_cond)
         add_r(pass_strip, f"{pass_p}{v_low}bildiği", pass_cond)
         add_r(pass_strip, f"{pass_p}{v_low}bilen", pass_cond)
-        add_r(pass_strip, f"{pass_p}{v_low}m{v_low}z/{cop_aor}", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}m{v_low}z/{neg_cop_aor}", pass_cond)
         add_r(pass_strip, f"{pass_p}{v_low}m{v_low}z", pass_cond)
         add_r(pass_strip, f"{pass_p}{v_low}m{unrounded_high}yor", pass_cond)
         add_r(pass_strip, f"{pass_p}{v_low}m{v_low}d{unrounded_high}", pass_cond)

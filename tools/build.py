@@ -5,8 +5,8 @@ import shutil
 import json
 from pathlib import Path
 
-BASE_DIR = Path(r"c:\gemini\turkspell-benchmarks")
-TURKSPELL_DIR = Path(r"c:\gemini\turkspell")
+TURKSPELL_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = TURKSPELL_DIR.parent / "turkspell-benchmarks"
 DIST_DIR = TURKSPELL_DIR / "dist"
 RAW_DIR = TURKSPELL_DIR / "raw_data"
 
@@ -25,7 +25,7 @@ from utf8_flag_mapping import UTF8_TO_LONG, LONG_TO_UTF8, remap_flag_string, STA
 vowels = "AEIOUaeiouÂÎÖÛÜâîöûüİı"
 consonant_cond = "[^AEIOUaeiouÂÎÖÛÜâîöûüİı]"
 
-DEAD_FLAG_CHARS = {LONG_TO_UTF8[f] for f in ['G2', 'NX', 'Vb', 'Vf'] if f in LONG_TO_UTF8}
+DEAD_FLAG_CHARS = {LONG_TO_UTF8[f] for f in ['G2', 'NX', 'Vb', 'Vf', 'VL'] if f in LONG_TO_UTF8}
 STAGE2_VERB_CHARS = {LONG_TO_UTF8[f] for f in STAGE2_VERB_FLAGS if f in LONG_TO_UTF8}
 PROPER_SUB_UTF8 = {k for k, v in UTF8_TO_LONG.items() if v.startswith("p") and len(v) == 3}
 KC_FLAG = LONG_TO_UTF8.get("KC", "")
@@ -70,7 +70,6 @@ EXTRA_REP_RULES = [
     "REP rim$ rin",
     "REP larz$ lara",
     "REP lerz$ lere",
-    "REP lardan lardan",
     # Targeted Acronym Inflections
     "REP HDMI'ya HDMI'a",
     "REP USB'e USB'ye",
@@ -821,6 +820,85 @@ EXTRA_REP_RULES = [
     "REP ligi lığı",
     "REP lilik lılık",
     "REP likler lıklar",
+    # Multi-diacritic / full-ASCII suffix and stem recovery rules
+    "REP clilik$ çlılık",
+    "REP slilik$ şlılık",
+    "REP tlilik$ tlılık",
+    "REP klilik$ klılık",
+    "REP rlilik$ rlılık",
+    "REP ilis$ ılış",
+    "REP tilis$ tılış",
+    "REP ulus$ ülüş",
+    "REP rulus$ rülüş",
+    "REP sulus$ şülüş",
+    "REP mustu$ muştu",
+    "REP mustur$ muştur",
+    "REP dildigini$ dıldığını",
+    "REP digini$ dığını",
+    "REP tigini$ tığını",
+    "REP larimi$ larımı",
+    "REP larini$ larını",
+    "REP rmaci$ rmacı",
+    "REP maci$ macı",
+    "REP kci$ kçı",
+    "REP tci$ tçi",
+    "REP pci$ pçi",
+    "REP cci$ ççı",
+    "REP asiri$ aşırı",
+    "REP ibosluk$ ıboşluk",
+    "REP bosluk$ boşluk",
+    "REP ntulu$ ntülü",
+    "REP tulu$ tülü",
+    "REP turebilmek$ türebilmek",
+    "REP torünun$ törünün",
+    "REP törünun$ törünün",
+    # Spoken contractions, soft-g (ğ) drops, and affix boundary repairs
+    "REP deişt değişt",
+    "REP deiş değiş",
+    "REP eitim eğitim",
+    "REP düüml düğüml",
+    "REP döül dökül",
+    "REP ^baı$ bağı",
+    "REP ^amak$ ağmak",
+    "REP ^bıci$ bıcı",
+    "REP iyormusun$ iyormuşsun",
+    "REP ıyormusun$ ıyormuşsun",
+    "REP uyormusun$ uyormuşsun",
+    "REP üyormusun$ üyormuşsun",
+    "REP larmı$ larmış",
+    "REP lermi$ lermiş",
+    "REP makmi$ makmış",
+    "REP mekmi$ mekmiş",
+    "REP timek$ tilmek",
+    "REP emezke$ emezken",
+    "REP amazke$ amazken",
+    "REP memizir$ memizdir",
+    "REP mamızır$ mamızdır",
+    "REP lerekini$ lerdekini",
+    "REP larakini$ lardakini",
+    "REP ciine$ cisine",
+    "REP cıına$ cısına",
+    "REP kutsuzçuk kutsuzluk",
+    "REP imnkarcı inkârcı",
+    "REP cezairli cezayirli",
+    "REP kakanadı kazkanadı",
+    "REP karınalanış karıncalanış",
+    "REP acinsama açınsama",
+    "REP alcaltilis alçaltılış",
+    "REP aykirilik aykırılık",
+    "REP aziklik azıklık",
+    "REP dogurmustu doğurmuştu",
+    "REP gorulus görülüş",
+    "REP gidanin gıdanın",
+    "REP kitirdamak kıtırdamak",
+    "REP aklie akliye",
+    "REP doyurp doyurup",
+    "REP ilikemeden iliklemeden",
+    "REP ekenmedikçe eklenmedikçe",
+    "REP kuafören kuaförden",
+    "REP düşrülebilir düşürülebilir",
+    "REP balamsal bağlamsal",
+    "REP banazca bağnazca",
     # Consensus open compound rules (agreed by both TDK and Dil Derneği)
     "REP haftasonu hafta_sonu",
     "REP haftasonları hafta_sonları",
@@ -985,7 +1063,8 @@ COMPOUND_PROPER_TERMS = [
     'mahkeme', 'mahkemesi', 'savcılık', 'savcılığı', 'başsavcılık', 'başsavcılığı', 'baro', 'barosu',
     'üniversite', 'üniversitesi', 'fakülte', 'fakültesi', 'enstitü', 'enstitüsü', 'yüksekokul', 'yüksekokulu', 'okul', 'okulu', 'lise', 'lisesi', 'kolej', 'koleji', 'akademi', 'akademisi', 'dershane', 'dershanesi', 'anaokulu', 'ilkokul', 'ilkokulu', 'ortaokul', 'ortaokulu', 'rasathane', 'rasathanesi',
     'hastane', 'hastanesi', 'dispanser', 'dispanseri', 'poliklinik', 'polikliniği', 'ocak', 'ocağı', 'klinik', 'kliniği',
-    'dernek', 'derneği', 'vakıf', 'vakfı', 'birlik', 'birliği', 'federasyon', 'federasyonu', 'konfederasyon', 'konfederasyonu', 'oda', 'odası', 'borsa', 'borsası', 'sendika', 'sendikası', 'kooperatif', 'kooperatifi', 'kulüp', 'kulübü', 'cemiyet', 'cemiyeti', 'komisyon', 'komisyonu', 'kurul', 'kurulu', 'ajans', 'ajansı', 'banka', 'bankası', 'merkez', 'merkezi', 'laboratuvar', 'laboratuvarı', 'kütüphane', 'kütüphanesi', 'müze', 'müzesi', 'tiyatro', 'tiyatrosu', 'opera', 'operası', 'bale', 'balesi', 'orkestra', 'orkestrası', 'lig', 'ligi', 'takım', 'takımı'
+    'dernek', 'derneği', 'vakıf', 'vakfı', 'birlik', 'birliği', 'federasyon', 'federasyonu', 'konfederasyon', 'konfederasyonu', 'oda', 'odası', 'borsa', 'borsası', 'sendika', 'sendikası', 'kooperatif', 'kooperatifi', 'kulüp', 'kulübü', 'cemiyet', 'cemiyeti', 'komisyon', 'komisyonu', 'kurul', 'kurulu', 'ajans', 'ajansı', 'banka', 'bankası', 'merkez', 'merkezi', 'laboratuvar', 'laboratuvarı', 'kütüphane', 'kütüphanesi', 'müze', 'müzesi', 'tiyatro', 'tiyatrosu', 'opera', 'operası', 'bale', 'balesi', 'orkestra', 'orkestrası', 'lig', 'ligi', 'takım', 'takımı',
+    'sistem', 'sistemi', 'patlama', 'patlaması', 'savaş', 'savaşı', 'muharebe', 'muharebesi', 'imparatorluk', 'imparatorluğu', 'krallık', 'krallığı', 'cumhuriyet', 'cumhuriyeti', 'devlet', 'devleti', 'parti', 'partisi', 'ödül', 'ödülü', 'teleskop', 'teleskobu', 'çağ', 'çağı', 'devir', 'devri', 'dönem', 'dönemi', 'devrim', 'devrimi', 'antlaşma', 'antlaşması', 'anlaşma', 'anlaşması', 'sözleşme', 'sözleşmesi', 'yasa', 'yasası', 'kanun', 'kanunu', 'kurum', 'kurumu', 'kuruluş', 'kuruluşu', 'model', 'modeli'
 ]
 COMPOUND_SET = set(COMPOUND_PROPER_TERMS)
 
@@ -1066,7 +1145,20 @@ LEGITIMATE_MISSED_WORDS = [
     "total",
     # Added legitimate stems
     "hasılat", "ihlalci", "isek", "HDMI'a", "USB'ye",
-    "mercii", "menşei", "tevkii", "mebdei"
+    "mercii", "menşei", "tevkii", "mebdei",
+    "kozmolog/∁∅∌∍∎∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≐≕≣",
+    "paleontolog/∁∅∌∍∎∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≐≕≣",
+    "nötrino/∁∉∌∍∎∖∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ötegezegen/∂∌∍∖∗∘∢∨∩∪∭∴∸∻∿≄≆≊≌≍≎≤≩",
+    "öngezegen/∂∌∍∖∗∘∢∨∩∪∭∴∸∻∿≄≆≊≌≍≎≤≩",
+    "önyıldız/∀∄∌∍∎∖∗∘∡∧∩∪∫∲∶∺∼∽≂≉≋≍≎≣",
+    "kübit/∃∋∌∍∖∗∘∢∨∩∪∮∵∹∻≀≅≈≊≌≍≎≤≩⊘⊙⊚⊛⊜⊝⊞⊟",
+    "müon/∁∅∌∍∎∖∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≣",
+    "süperiletken/∂∌∍∖∗∘∢∨∩∪∭∴∸∻∿≄≆≊≌≍≎≤≩",
+    "süperpozisyon/∁∅∌∍∎∖∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≣",
+    "simüle", "nötralize", "nöral", "fütüristik",
+    "vestibüler", "tübül", "biyomoleküler", "terapötik",
+    "nükleus", "nörodejeneratif", "ökaryot"
 ]
 
 
@@ -1590,6 +1682,7 @@ VIRTUAL_STEMS = [
     "marmelad/X∀∫∲∶∼∽≂≕≣",
     "santigrad/X∀∫∲∶∼∽≂≕≣",
     "veliahd/X∀∫∲∶∼∽≂≕≣",
+    "dokunmatiğ/X∂∭∴∸∿≄≆≤≽",
 ]
 
 
@@ -1878,7 +1971,7 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "fi/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∖⊘⊙⊚⊛⊜⊝⊞⊟",
     "fış/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎≎∍",
     "gag/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪∍⊈⊉⊊⊋⊌⊍⊎⊏",
-    "hâd/∟∨≌∢≊∻≩K⊩L∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "hâd/∟∨≌∢≊∻≩⊩∍⊈⊉⊊⊋⊌⊍⊎⊏",
     "hâr/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∍⊈⊉⊊⊋⊌⊍⊎⊏",
     "höl/√∃≤∨≌∮∢≊∻≅∵∹≀≈≩∪∍⊠⊡⊢⊣⊤⊥⊦⊧",
     "hüt/√∃≤∨≌∮∢≊∻≅∵∹≀≈≩∩∍⊠⊡⊢⊣⊤⊥⊦⊧",
@@ -1900,7 +1993,7 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "lik/≑∨≌∢≊∻≩∩≎∌∍≍⊘⊙⊚⊛⊜⊝⊞⊟",
     "mağ/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍⊈⊉⊊⊋⊌⊍⊎⊏",
     "mok/∅∁≣∧≋∬∡≉∺≃∳∷∾≁∎∩∪∍⊐⊑⊒⊓⊔⊕⊖⊗",
-    "mol/∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩⊨⊪L⊫∍∖⊐⊑⊒⊓⊔⊕⊖⊗",
+    "mol/∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩⊨⊪⊫∍∖⊐⊑⊒⊓⊔⊕⊖⊗",
     "nar/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍⊈⊉⊊⊋⊌⊍⊎⊏",
     "naş/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∍⊈⊉⊊⊋⊌⊍⊎⊏",
     "neo/∇≦⊆∧≋≭≪≉∺≃∳∷∾≁∎∩∌∍⊐⊑⊒⊓⊔⊕⊖⊗",
@@ -1959,8 +2052,8 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "Hristiyanlık/" + remap_flag_string("CK I1 L1 PB Q1 R1 V1 CL KC".replace(" ", "")),
     "Hristiyanlığ/" + remap_flag_string("NE A1 N1 P1 P5 PM PN PS Y1 VC KC".replace(" ", "")),
     # Misakımilli / Misakımillî Proper Noun Orthography (capitalized, with proper noun apostrophe flags)
-    "Misakımilli/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 pFN pFL pFR pFY pFA pFI pFP pFC".replace(" ", "")),
-    "Misakımillî/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 pFN pFL pFR pFY pFA pFI pFP pFC".replace(" ", "")),
+    "Misakımilli/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 pFN pFL pFR pFY pFA pFI pFP pFC KC".replace(" ", "")),
+    "Misakımillî/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 pFN pFL pFR pFY pFA pFI pFP pFC KC".replace(" ", "")),
     # TDK / DD regular derived or compound words
     "çıtır/" + remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SZ Y1".replace(" ", "")),
     "çerçöp/∃∌∍∖√∢∨∩∪∮∵∹∻≀≅≈≊≌≍≎≤≩",
@@ -2036,7 +2129,13 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "psikiyatrik", "embriyonik", "asidik", "periferik", "taksonomik", "kanonik",
     "mikroskopik", "makroskopik", "fotovoltaik", "filogenetik", "biyotik", "abiyotik",
     "harmonik", "genomik", "algoritmik", "sinaptik", "ultrasonik", "pediatrik",
-    "sitoplazmik", "elektrolitik", "holografik", "semptomatik", "fenotipik", "enzimatik"
+    "sitoplazmik", "elektrolitik", "holografik", "semptomatik", "fenotipik", "enzimatik",
+    # High-impact attested corpus & official TDK headwords:
+    "dokunmatik/∌∍∖∗∘∢∨∩∪∻≊≌≍≎≑≩",
+    "kafatasları/∀∄∌∍∎∖∗∘∡∩∪∫∲∶∺∼∽≂≉≋≍≎≣",
+    "anakart/∀∄∌∍∎∡∧∩∪∫∲∶∺∼∽≂≉≋≍≎≕≣",
+    "detoks/∁∅∌∍∎∖∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≣",
+    "üreter/∂∌∍∖∗∘∙∢∨∩∪∭∴∸∻∿≄≆≊≌≍≎≤≩"
 ]
 
 def tr_lower(s: str) -> str:
@@ -2209,14 +2308,76 @@ def build_hardened_aff(profile="tdk"):
             parts_r = r_strip.split()
             if len(parts_r) >= 5:
                 cond = parts_r[4]
+                clean_add_r = parts_r[3].split("/")[0]
+                if cond == 'X' or clean_add_r in ('mesü', 'memüz', 'menüz', 'masu', 'mamuz', 'manuz', 'eceğüm', 'yeceğüm', 'deceğüm', 'acağum', 'yacağum'):
+                    dropped_rules += 1
+                    continue
                 if flag_long == 'VH' and cond == 'imek':
                     dropped_rules += 1
                     continue
                 elif flag_long == 'VS' and cond == 'ımak':
                     dropped_rules += 1
                     continue
+                if any(bad_s in clean_add_r for bad_s in ('laryla', 'leryle', 'kilar')):
+                    parts_r[3] = parts_r[3].replace('laryla', 'larıyla').replace('leryle', 'leriyle').replace('kilar', 'kiler')
+                # Fix verb continuation vowel harmony mismatches
+                if '/' in parts_r[3]:
+                    if clean_add_r in ('emez', 'ülmez', 'ülemez', 'yemez', 'der', 'demez', 'dülmez', 'dülemez'):
+                        parts_r[3] = parts_r[3].replace('/' + LONG_TO_UTF8['cI'], '/' + LONG_TO_UTF8['cE'])
+                    elif clean_add_r in ('amaz', 'ulmaz', 'ulamaz', 'yamaz'):
+                        parts_r[3] = parts_r[3].replace('/' + LONG_TO_UTF8['cU'], '/' + LONG_TO_UTF8['cA'])
+                    elif clean_add_r == 'dükleri':
+                        parts_r[3] = parts_r[3].replace('/' + LONG_TO_UTF8['pU'], '/' + LONG_TO_UTF8['pE'])
+                    elif clean_add_r == 'dukları':
+                        parts_r[3] = parts_r[3].replace('/' + LONG_TO_UTF8['pO'], '/' + LONG_TO_UTF8['pA'])
+                    elif clean_add_r.endswith('abileceği'):
+                        parts_r[3] = parts_r[3].replace('/' + LONG_TO_UTF8['pA'], '/' + LONG_TO_UTF8['pE'])
+                    elif flag_long in ('pBR', 'pBI', 'pBP', 'pOR', 'pOI', 'pOP'):
+                        parts_r[3] = parts_r[3].replace('/' + LONG_TO_UTF8['cl'], '/' + LONG_TO_UTF8['CL'])
+                        if flag_long == 'pOP':
+                            parts_r[3] = parts_r[3].replace("'ıyla/", "'uyla/").replace("'sıyla/", "'suyla/")
+                    elif flag_long == 'pUP':
+                        parts_r[3] = parts_r[3].replace("'iyle/", "'üyle/").replace("'siyle/", "'süyle/")
+                if flag_long == 'CK' and '/' in parts_r[3] and clean_add_r in ('cık', 'cuk', 'cik', 'cük', 'çık', 'çuk', 'çik', 'çük'):
+                    from utf8_flag_mapping import remap_flag_string
+                    ck_chains = {
+                        'cık': ('cığ', remap_flag_string('L1R1I1Q1PBCLLILKSZCICKSLDLDTDE'), remap_flag_string('A1Y1N1PSP1P5PMPNVCNE')),
+                        'çık': ('çığ', remap_flag_string('L1R1I1Q1PBCLLILKSZCICKSLDLDTDE'), remap_flag_string('A1Y1N1PSP1P5PMPNVCNE')),
+                        'cuk': ('cuğ', remap_flag_string('L1R1I1Q1PBCLLILKSZCICKSLDLDTDE'), remap_flag_string('A2Y1N2PTP2P6POPRVCNE')),
+                        'çuk': ('çuğ', remap_flag_string('L1R1I1Q1PBCLLILKSZCICKSLDLDTDE'), remap_flag_string('A2Y1N2PTP2P6POPRVCNE')),
+                        'cik': ('ciğ', remap_flag_string('L2R2I2Q2PFclLILKSZCICKSLDLDTDE'), remap_flag_string('A3Y2N3PUP3P7PPPWvcNE')),
+                        'çik': ('çiğ', remap_flag_string('L2R2I2Q2PFclLILKSZCICKSLDLDTDE'), remap_flag_string('A3Y2N3PUP3P7PPPWvcNE')),
+                        'cük': ('cüğ', remap_flag_string('L2R2I2Q2PFclLILKSZCICKSLDLDTDE'), remap_flag_string('A4Y2N4PVP4P8PQPZvcNE')),
+                        'çük': ('çüğ', remap_flag_string('L2R2I2Q2PFclLILKSZCICKSLDLDTDE'), remap_flag_string('A4Y2N4PVP4P8PQPZvcNE')),
+                    }
+                    suf_v, cons_c, vow_c = ck_chains[clean_add_r]
+                    r1_s = f"SFX {flag} 0 {clean_add_r}/{cons_c} {cond}"
+                    r2_s = f"SFX {flag} 0 {suf_v}/{vow_c} {cond}"
+                    for rx_s in (r1_s, r2_s):
+                        if rx_s not in seen:
+                            seen.add(rx_s)
+                            kept.append(rx_s + '\n')
+                    continue
+                r_strip = ' '.join(parts_r)
+                r = r_strip + '\n'
+            if r_strip in seen:
+                dropped_rules += 1
+                continue
             seen.add(r_strip)
             kept.append(r)
+
+        if flag_long == 'VR':
+            for opt_suf in ('ayım', 'asın', 'alım'):
+                opt_rule = f"SFX {flag} mak {opt_suf} [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mak"
+                if opt_rule not in seen:
+                    seen.add(opt_rule)
+                    kept.append(opt_rule + "\n")
+        elif flag_long == 'VG':
+            for opt_suf in ('eyim', 'esin', 'elim'):
+                opt_rule = f"SFX {flag} mek {opt_suf} [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mek"
+                if opt_rule not in seen:
+                    seen.add(opt_rule)
+                    kept.append(opt_rule + "\n")
             
         parts = header.split()
         if len(parts) >= 4 and parts[2] in ('Y', 'N'):
@@ -2332,7 +2493,9 @@ MAP '’‘"""
             "teleskopu teleskobu",
             "bergamotu bergamodu",
             "baçı bacı",
-            "bilim$ _bilimi"
+            "bilim$ _bilimi",
+            "^hayalilik$ hayalîlik",
+            "^haki$ hâkî"
         ])
         # Load all TDK-open compound suggestions (where joined is used in Dil Derneği)
         _tdk_open_rep_path = RAW_DIR / "tdk_open_compound_rep.json"
@@ -2341,6 +2504,8 @@ MAP '’‘"""
                 clean_extra.extend(json.load(_torf))
     elif profile == "dd":
         clean_extra.extend([
+            "dâhilî dahili",
+            "hâkî haki",
             "î i",
             "resmî resmi",
             "askerî askeri",
@@ -2366,7 +2531,7 @@ MAP '’‘"""
         if len(parts) >= 2 and not (len(parts) == 1 and parts[0].isdigit()):
             base_rep.append(rule_str)
 
-    all_rep = list(dict.fromkeys(clean_extra + base_rep))
+    all_rep = [r for r in dict.fromkeys(clean_extra + base_rep) if len(r.split()) >= 2 and r.split()[0] != r.split()[1]]
     rep_block = f"REP {len(all_rep)}\n" + "\n".join(f"REP {r}" for r in all_rep) + "\n"
 
     # Remove all existing REP lines and replace cleanly after MAXNGRAMSUGS
@@ -2816,7 +2981,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             w = w.replace("î", "i")
         head_w = w.split("/")[0]
         head_lower = tr_lower(head_w)
-        if head_w in unhatted_to_purge or head_lower in unhatted_to_purge:
+        if (head_w in unhatted_to_purge or head_lower in unhatted_to_purge) and not (head_w == "Misakımilli" and profile in ("universal", "dd")):
             continue
         fl_w = w.split("/")[1] if "/" in w else ""
         if head_w.lower() in HEAD_FLAG_OVERRIDES and not fl_w:
@@ -2830,7 +2995,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     for w in VIRTUAL_STEMS + EXTRA_AUTHORITY_HEADWORDS:
         head_w = w.split("/")[0]
         head_lower = tr_lower(head_w)
-        if head_w in unhatted_to_purge or head_lower in unhatted_to_purge:
+        if (head_w in unhatted_to_purge or head_lower in unhatted_to_purge) and not (head_w == "Misakımilli" and profile in ("universal", "dd")):
             continue
         if profile == "dd" and "î" in head_w:
             continue
@@ -2970,9 +3135,14 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         else:
             merged_heads[h].update(fl)
 
+    valid_dic_flags = (set(UTF8_TO_LONG.keys()) - DEAD_FLAG_CHARS - {
+        LONG_TO_UTF8[f] for f in ('u1', 'u2', 'u3', 'u4', 'uC', 'uI', 'uL', 'uN', 'uP', 'uQ', 'uR', 'uY') if f in LONG_TO_UTF8
+    }) | {'X', '∥', '∰'}
     deduped_entries = []
     for h in sorted(merged_heads.keys()):
-        fl_set = merged_heads[h]
+        fl_set = merged_heads[h] & valid_dic_flags
+        if h in ("co", "Co"):
+            fl_set.discard("∍")
         fl_combined = "".join(sorted(fl_set))
         deduped_entries.append(f"{h}/{fl_combined}" if fl_combined else h)
 
