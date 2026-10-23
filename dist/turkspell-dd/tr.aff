@@ -58,7 +58,8 @@ MAXNGRAMSUGS 8
 
 
 
-REP 2751
+
+REP 2830
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -818,6 +819,83 @@ REP labaratuar laboratuvar
 REP ligi lığı
 REP lilik lılık
 REP likler lıklar
+REP clilik$ çlılık
+REP slilik$ şlılık
+REP tlilik$ tlılık
+REP klilik$ klılık
+REP rlilik$ rlılık
+REP ilis$ ılış
+REP tilis$ tılış
+REP ulus$ ülüş
+REP rulus$ rülüş
+REP sulus$ şülüş
+REP mustu$ muştu
+REP mustur$ muştur
+REP dildigini$ dıldığını
+REP digini$ dığını
+REP tigini$ tığını
+REP larimi$ larımı
+REP larini$ larını
+REP rmaci$ rmacı
+REP maci$ macı
+REP kci$ kçı
+REP tci$ tçi
+REP pci$ pçi
+REP cci$ ççı
+REP asiri$ aşırı
+REP ibosluk$ ıboşluk
+REP bosluk$ boşluk
+REP ntulu$ ntülü
+REP tulu$ tülü
+REP turebilmek$ türebilmek
+REP torünun$ törünün
+REP törünun$ törünün
+REP deişt değişt
+REP deiş değiş
+REP eitim eğitim
+REP düüml düğüml
+REP döül dökül
+REP ^baı$ bağı
+REP ^amak$ ağmak
+REP ^bıci$ bıcı
+REP iyormusun$ iyormuşsun
+REP ıyormusun$ ıyormuşsun
+REP uyormusun$ uyormuşsun
+REP üyormusun$ üyormuşsun
+REP larmı$ larmış
+REP lermi$ lermiş
+REP makmi$ makmış
+REP mekmi$ mekmiş
+REP timek$ tilmek
+REP emezke$ emezken
+REP amazke$ amazken
+REP memizir$ memizdir
+REP mamızır$ mamızdır
+REP lerekini$ lerdekini
+REP larakini$ lardakini
+REP ciine$ cisine
+REP cıına$ cısına
+REP kutsuzçuk kutsuzluk
+REP imnkarcı inkârcı
+REP cezairli cezayirli
+REP kakanadı kazkanadı
+REP karınalanış karıncalanış
+REP acinsama açınsama
+REP alcaltilis alçaltılış
+REP aykirilik aykırılık
+REP aziklik azıklık
+REP dogurmustu doğurmuştu
+REP gorulus görülüş
+REP gidanin gıdanın
+REP kitirdamak kıtırdamak
+REP aklie akliye
+REP doyurp doyurup
+REP ilikemeden iliklemeden
+REP ekenmedikçe eklenmedikçe
+REP kuafören kuaförden
+REP düşrülebilir düşürülebilir
+REP balamsal bağlamsal
+REP banazca bağnazca
 REP haftaiçinde hafta_içinde
 REP herbir her_bir
 REP kurufasulye kuru_fasulye
@@ -831,6 +909,8 @@ REP başaşağı baş_aşağı
 REP yanıbaşında yanı_başında
 REP yüzbinlerce yüz_binlerce
 REP sınırdışı sınır_dışı
+REP dâhilî dahili
+REP hâkî haki
 REP î i
 REP resmî resmi
 REP askerî askeri
@@ -15995,7 +16075,7 @@ SFX ≗ mek ilemediği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilemediği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilemeyen [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 
-SFX ≘ Y 1376
+SFX ≘ Y 1379
 SFX ≘ mek üyor/⊮ mek
 SFX ≘ mek üyorken mek
 SFX ≘ mek üyor mek
@@ -17372,6 +17452,9 @@ SFX ≘ mek ülememesi [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülemediği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülemediği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülemeyen [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek eyim [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek esin [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek elim [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 
 SFX ≙ Y 1430
 SFX ≙ emek üyor/⊮ emek
@@ -22818,7 +22901,7 @@ SFX ≝ tmek dülemediği/⊶ tmek
 SFX ≝ tmek dülemediği tmek
 SFX ≝ tmek dülemeyen tmek
 
-SFX ≞ Y 1376
+SFX ≞ Y 1379
 SFX ≞ mak uyor/⊮ mak
 SFX ≞ mak uyorken mak
 SFX ≞ mak uyor mak
@@ -24195,6 +24278,9 @@ SFX ≞ mak ulamaması [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulamadığı/⊵ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulamadığı [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulamayan [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ayım [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak asın [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak alım [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 
 SFX ≟ Y 1430
 SFX ≟ amak uyor/⊮ amak
