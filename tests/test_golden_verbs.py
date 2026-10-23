@@ -79,7 +79,9 @@ class TestGoldenVerbs(unittest.TestCase):
             # Double copulas
             "yaptıymış", "yaptıydıymış", "gelmiştidi",
             # Non-pronominal cases on 3rd-person participles (missing pronominal 'n')
-            "yaptığıda", "yaptığıdan", "gittiğide", "gittiğiden"
+            "yaptığıda", "yaptığıdan", "gittiğide", "gittiğiden",
+            # Illegal rounded possessives on -ma/-me verbal nouns
+            "görmesü", "ölmesü", "okumasu", "bulmamuz", "düşünmemüz"
         ]
         flagged = check_words_batch(canaries)
         leaked = set(canaries) - flagged
