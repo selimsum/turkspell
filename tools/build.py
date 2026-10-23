@@ -820,6 +820,85 @@ EXTRA_REP_RULES = [
     "REP ligi lığı",
     "REP lilik lılık",
     "REP likler lıklar",
+    # Multi-diacritic / full-ASCII suffix and stem recovery rules
+    "REP clilik$ çlılık",
+    "REP slilik$ şlılık",
+    "REP tlilik$ tlılık",
+    "REP klilik$ klılık",
+    "REP rlilik$ rlılık",
+    "REP ilis$ ılış",
+    "REP tilis$ tılış",
+    "REP ulus$ ülüş",
+    "REP rulus$ rülüş",
+    "REP sulus$ şülüş",
+    "REP mustu$ muştu",
+    "REP mustur$ muştur",
+    "REP dildigini$ dıldığını",
+    "REP digini$ dığını",
+    "REP tigini$ tığını",
+    "REP larimi$ larımı",
+    "REP larini$ larını",
+    "REP rmaci$ rmacı",
+    "REP maci$ macı",
+    "REP kci$ kçı",
+    "REP tci$ tçi",
+    "REP pci$ pçi",
+    "REP cci$ ççı",
+    "REP asiri$ aşırı",
+    "REP ibosluk$ ıboşluk",
+    "REP bosluk$ boşluk",
+    "REP ntulu$ ntülü",
+    "REP tulu$ tülü",
+    "REP turebilmek$ türebilmek",
+    "REP torünun$ törünün",
+    "REP törünun$ törünün",
+    # Spoken contractions, soft-g (ğ) drops, and affix boundary repairs
+    "REP deişt değişt",
+    "REP deiş değiş",
+    "REP eitim eğitim",
+    "REP düüml düğüml",
+    "REP döül dökül",
+    "REP ^baı$ bağı",
+    "REP ^amak$ ağmak",
+    "REP ^bıci$ bıcı",
+    "REP iyormusun$ iyormuşsun",
+    "REP ıyormusun$ ıyormuşsun",
+    "REP uyormusun$ uyormuşsun",
+    "REP üyormusun$ üyormuşsun",
+    "REP larmı$ larmış",
+    "REP lermi$ lermiş",
+    "REP makmi$ makmış",
+    "REP mekmi$ mekmiş",
+    "REP timek$ tilmek",
+    "REP emezke$ emezken",
+    "REP amazke$ amazken",
+    "REP memizir$ memizdir",
+    "REP mamızır$ mamızdır",
+    "REP lerekini$ lerdekini",
+    "REP larakini$ lardakini",
+    "REP ciine$ cisine",
+    "REP cıına$ cısına",
+    "REP kutsuzçuk kutsuzluk",
+    "REP imnkarcı inkârcı",
+    "REP cezairli cezayirli",
+    "REP kakanadı kazkanadı",
+    "REP karınalanış karıncalanış",
+    "REP acinsama açınsama",
+    "REP alcaltilis alçaltılış",
+    "REP aykirilik aykırılık",
+    "REP aziklik azıklık",
+    "REP dogurmustu doğurmuştu",
+    "REP gorulus görülüş",
+    "REP gidanin gıdanın",
+    "REP kitirdamak kıtırdamak",
+    "REP aklie akliye",
+    "REP doyurp doyurup",
+    "REP ilikemeden iliklemeden",
+    "REP ekenmedikçe eklenmedikçe",
+    "REP kuafören kuaförden",
+    "REP düşrülebilir düşürülebilir",
+    "REP balamsal bağlamsal",
+    "REP banazca bağnazca",
     # Consensus open compound rules (agreed by both TDK and Dil Derneği)
     "REP haftasonu hafta_sonu",
     "REP haftasonları hafta_sonları",
@@ -984,7 +1063,8 @@ COMPOUND_PROPER_TERMS = [
     'mahkeme', 'mahkemesi', 'savcılık', 'savcılığı', 'başsavcılık', 'başsavcılığı', 'baro', 'barosu',
     'üniversite', 'üniversitesi', 'fakülte', 'fakültesi', 'enstitü', 'enstitüsü', 'yüksekokul', 'yüksekokulu', 'okul', 'okulu', 'lise', 'lisesi', 'kolej', 'koleji', 'akademi', 'akademisi', 'dershane', 'dershanesi', 'anaokulu', 'ilkokul', 'ilkokulu', 'ortaokul', 'ortaokulu', 'rasathane', 'rasathanesi',
     'hastane', 'hastanesi', 'dispanser', 'dispanseri', 'poliklinik', 'polikliniği', 'ocak', 'ocağı', 'klinik', 'kliniği',
-    'dernek', 'derneği', 'vakıf', 'vakfı', 'birlik', 'birliği', 'federasyon', 'federasyonu', 'konfederasyon', 'konfederasyonu', 'oda', 'odası', 'borsa', 'borsası', 'sendika', 'sendikası', 'kooperatif', 'kooperatifi', 'kulüp', 'kulübü', 'cemiyet', 'cemiyeti', 'komisyon', 'komisyonu', 'kurul', 'kurulu', 'ajans', 'ajansı', 'banka', 'bankası', 'merkez', 'merkezi', 'laboratuvar', 'laboratuvarı', 'kütüphane', 'kütüphanesi', 'müze', 'müzesi', 'tiyatro', 'tiyatrosu', 'opera', 'operası', 'bale', 'balesi', 'orkestra', 'orkestrası', 'lig', 'ligi', 'takım', 'takımı'
+    'dernek', 'derneği', 'vakıf', 'vakfı', 'birlik', 'birliği', 'federasyon', 'federasyonu', 'konfederasyon', 'konfederasyonu', 'oda', 'odası', 'borsa', 'borsası', 'sendika', 'sendikası', 'kooperatif', 'kooperatifi', 'kulüp', 'kulübü', 'cemiyet', 'cemiyeti', 'komisyon', 'komisyonu', 'kurul', 'kurulu', 'ajans', 'ajansı', 'banka', 'bankası', 'merkez', 'merkezi', 'laboratuvar', 'laboratuvarı', 'kütüphane', 'kütüphanesi', 'müze', 'müzesi', 'tiyatro', 'tiyatrosu', 'opera', 'operası', 'bale', 'balesi', 'orkestra', 'orkestrası', 'lig', 'ligi', 'takım', 'takımı',
+    'sistem', 'sistemi', 'patlama', 'patlaması', 'savaş', 'savaşı', 'muharebe', 'muharebesi', 'imparatorluk', 'imparatorluğu', 'krallık', 'krallığı', 'cumhuriyet', 'cumhuriyeti', 'devlet', 'devleti', 'parti', 'partisi', 'ödül', 'ödülü', 'teleskop', 'teleskobu', 'çağ', 'çağı', 'devir', 'devri', 'dönem', 'dönemi', 'devrim', 'devrimi', 'antlaşma', 'antlaşması', 'anlaşma', 'anlaşması', 'sözleşme', 'sözleşmesi', 'yasa', 'yasası', 'kanun', 'kanunu', 'kurum', 'kurumu', 'kuruluş', 'kuruluşu', 'model', 'modeli'
 ]
 COMPOUND_SET = set(COMPOUND_PROPER_TERMS)
 
@@ -1065,7 +1145,20 @@ LEGITIMATE_MISSED_WORDS = [
     "total",
     # Added legitimate stems
     "hasılat", "ihlalci", "isek", "HDMI'a", "USB'ye",
-    "mercii", "menşei", "tevkii", "mebdei"
+    "mercii", "menşei", "tevkii", "mebdei",
+    "kozmolog/∁∅∌∍∎∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≐≕≣",
+    "paleontolog/∁∅∌∍∎∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≐≕≣",
+    "nötrino/∁∉∌∍∎∖∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≣⊘⊙⊚⊛⊜⊝⊞⊟",
+    "ötegezegen/∂∌∍∖∗∘∢∨∩∪∭∴∸∻∿≄≆≊≌≍≎≤≩",
+    "öngezegen/∂∌∍∖∗∘∢∨∩∪∭∴∸∻∿≄≆≊≌≍≎≤≩",
+    "önyıldız/∀∄∌∍∎∖∗∘∡∧∩∪∫∲∶∺∼∽≂≉≋≍≎≣",
+    "kübit/∃∋∌∍∖∗∘∢∨∩∪∮∵∹∻≀≅≈≊≌≍≎≤≩⊘⊙⊚⊛⊜⊝⊞⊟",
+    "müon/∁∅∌∍∎∖∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≣",
+    "süperiletken/∂∌∍∖∗∘∢∨∩∪∭∴∸∻∿≄≆≊≌≍≎≤≩",
+    "süperpozisyon/∁∅∌∍∎∖∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≣",
+    "simüle", "nötralize", "nöral", "fütüristik",
+    "vestibüler", "tübül", "biyomoleküler", "terapötik",
+    "nükleus", "nörodejeneratif", "ökaryot"
 ]
 
 
@@ -2265,6 +2358,19 @@ def build_hardened_aff(profile="tdk"):
                 continue
             seen.add(r_strip)
             kept.append(r)
+
+        if flag_long == 'VR':
+            for opt_suf in ('ayım', 'asın', 'alım'):
+                opt_rule = f"SFX {flag} mak {opt_suf} [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mak"
+                if opt_rule not in seen:
+                    seen.add(opt_rule)
+                    kept.append(opt_rule + "\n")
+        elif flag_long == 'VG':
+            for opt_suf in ('eyim', 'esin', 'elim'):
+                opt_rule = f"SFX {flag} mek {opt_suf} [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mek"
+                if opt_rule not in seen:
+                    seen.add(opt_rule)
+                    kept.append(opt_rule + "\n")
             
         parts = header.split()
         if len(parts) >= 4 and parts[2] in ('Y', 'N'):
@@ -2380,7 +2486,9 @@ MAP '’‘"""
             "teleskopu teleskobu",
             "bergamotu bergamodu",
             "baçı bacı",
-            "bilim$ _bilimi"
+            "bilim$ _bilimi",
+            "^hayalilik$ hayalîlik",
+            "^haki$ hâkî"
         ])
         # Load all TDK-open compound suggestions (where joined is used in Dil Derneği)
         _tdk_open_rep_path = RAW_DIR / "tdk_open_compound_rep.json"
@@ -2389,6 +2497,8 @@ MAP '’‘"""
                 clean_extra.extend(json.load(_torf))
     elif profile == "dd":
         clean_extra.extend([
+            "dâhilî dahili",
+            "hâkî haki",
             "î i",
             "resmî resmi",
             "askerî askeri",
