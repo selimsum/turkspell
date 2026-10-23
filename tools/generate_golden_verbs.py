@@ -243,12 +243,13 @@ def generate_verb_forms(vinfo: dict) -> list[str]:
     else:
         fut_base = f"{st_v(True)}{v_low}c{v_low}k"
         
+    unrounded_v = "ı" if back else "i"
     fut_voiced = fut_base[:-1] + "ğ"
     forms.add(f"{fut_base}")
-    forms.add(f"{fut_voiced}{v_high}m")
-    forms.add(f"{fut_base}s{v_high}n")
-    forms.add(f"{fut_voiced}{v_high}z")
-    forms.add(f"{fut_base}s{v_high}n{v_high}z")
+    forms.add(f"{fut_voiced}{unrounded_v}m")
+    forms.add(f"{fut_base}s{unrounded_v}n")
+    forms.add(f"{fut_voiced}{unrounded_v}z")
+    forms.add(f"{fut_base}s{unrounded_v}n{unrounded_v}z")
     forms.add(f"{fut_base}l{v_low}r")
     for cop in ["tı" if back else "ti", "tım" if back else "tim", "tık" if back else "tik", "tılar" if back else "tiler"]:
         forms.add(f"{fut_base}{cop}")
@@ -259,8 +260,8 @@ def generate_verb_forms(vinfo: dict) -> list[str]:
     forms.add(f"{fut_base}tır" if back else f"{fut_base}tir")
 
     # 7. Necessitative: -malı / -meli
-    nec_base = f"{stem}m{v_low}l{v_high}"
-    for p_suf in ["", f"y{v_high}m", f"s{v_high}n", f"y{v_high}z", f"s{v_high}n{v_high}z", f"l{v_low}r"]:
+    nec_base = f"{stem}m{v_low}l{unrounded_v}"
+    for p_suf in ["", f"y{unrounded_v}m", f"s{unrounded_v}n", f"y{unrounded_v}z", f"s{unrounded_v}n{unrounded_v}z", f"l{v_low}r"]:
         forms.add(f"{nec_base}{p_suf}")
     for cop in ["ydı" if back else "ydi", "ydım" if back else "ydim", "ydık" if back else "ydik"]:
         forms.add(f"{nec_base}{cop}")
@@ -325,20 +326,20 @@ def generate_verb_forms(vinfo: dict) -> list[str]:
     for c in ["", "da" if back else "de", "dan" if back else "den", "ı" if back else "i", "a" if back else "e", "ın" if back else "in", "la" if back else "le", cop_d]:
         forms.add(f"{part_1pl}{c}")
         
-    part_pl = f"{stem}{part_d}{v_high}kl{v_low}r{v_high}"
+    part_pl = f"{stem}{part_d}{v_high}kl{v_low}r{unrounded_v}"
     for c in cases_pronom:
         forms.add(f"{part_pl}{c}")
 
-    # b. Verbal noun: -ma / -me
-    vn_3sg = f"{stem}m{v_low}s{v_high}"
+    # b. Verbal noun: -ma / -me (always takes unrounded possessive -sı/-si, -mız/-miz, -ları/-leri)
+    vn_3sg = f"{stem}m{v_low}s{unrounded_v}"
     for c in cases_pronom:
         forms.add(f"{vn_3sg}{c}")
         
-    vn_1pl = f"{stem}m{v_low}m{v_high}z"
+    vn_1pl = f"{stem}m{v_low}m{unrounded_v}z"
     for c in ["", "da" if back else "de", "dan" if back else "den", "a" if back else "e", "ı" if back else "i", "ın" if back else "in", "la" if back else "le"]:
         forms.add(f"{vn_1pl}{c}")
         
-    vn_pl = f"{stem}m{v_low}l{v_low}r{v_high}"
+    vn_pl = f"{stem}m{v_low}l{v_low}r{unrounded_v}"
     for c in ["", loc_n, abl_n, acc_n, dat_n, gen_n, ins_n]:
         forms.add(f"{vn_pl}{c}")
 

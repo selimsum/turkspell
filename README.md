@@ -23,11 +23,11 @@
 ## 🌟 Öne Çıkan Özellikler
 
 * **Yüksek Doğruluk**: Temiz ve kurallara uygun yazılmış Türkçe metinlerde meşru sözcükleri yanlışlıkla hata olarak işaretlemez. Testlerde sıfır yanlış alarm skoru ile en iyi performansı sergiler.
-* **Katı Dilbilimsel Otorite**: Yalnızca **Türk Dil Kurumu (TDK)** Güncel Türkçe Sözlüğü, **TDK Bilim ve Sanat Terimleri Sözlüğü** (15.457 terim) ve **Dil Derneği** sözlüklerinde yer alan resmi sözcükleri referans alır; web kazıyıcı çöplerinden (crawler spam), uydurma köklerden ve yabancı terim kirliliğinden tamamen arındırılmıştır.
+* **Katı Dilbilimsel Otorite**: Yalnızca **Türk Dil Kurumu (TDK)** Güncel Türkçe Sözlüğü, **TDK Bilim ve Sanat Terimleri Sözlüğü** (4.955 terim) ve **Dil Derneği** sözlüklerinde yer alan resmi sözcükleri referans alır; web kazıyıcı çöplerinden (crawler spam), uydurma köklerden ve yabancı terim kirliliğinden tamamen arındırılmıştır.
 * **Çift Standart Uyumu (Universal Profile)**: Hem TDK kurallarını (*dâhil*, *bekâr*, *resmî*) hem de Dil Derneği yazımını (*dahil*, *bekar*, *resmi*) meşru kabul eden esnek profil seçeneği sunar.
 * **Aşırı Üretim (Overgeneration) Koruması**: `tr.aff` dosyasındaki 17.824 adet kontrolsüz kural arıtılmış; kaynaştırma harfi olmaksızın çift ünlü türeten (*acııydı*, *anomaliine*, *beliiydi*) veya bozuk fiil türeten (*debileceklerine*, *yebilecek*) kural açıkları kapatılmıştır.
 * **Gelişmiş Öneri Matrisi (MAP 14 & Genişletilmiş REP)**: Düzeltme işaretli (şapkalı), klavye kayması kaynaklı ve ses benzerliği olan hatalarda doğru kelimeyi %87'nin üzerinde 1. sırada (Top-1) ve **0.904 MRR** skoruyla önerir.
-* **Hafif, Optimize ve Hızlı**: 153.220 temiz kök başlığı ve tek karakterli UTF-8 bayrak mimarisiyle bellek ayak izi optimize edilmiş (toplam 11.10 MB sözlük, ~0.79 MB XPI); Firefox ve tarayıcı eklentilerinde başlatma süresi 90 ms seviyesine indirilmiştir.
+* **Hafif, Optimize ve Hızlı**: 141.592 temiz kök başlığı ve tek karakterli UTF-8 bayrak mimarisiyle bellek ayak izi optimize edilmiş (toplam 10.18 MB sözlük, ~0.77 MB XPI); Firefox ve tarayıcı eklentilerinde başlatma süresi 90 ms seviyesine indirilmiştir.
 
 ---
 
@@ -138,7 +138,7 @@ turkspell/
 │   └── clean_and_audit_oscar.py    # OSCAR derlem temizleme hattı
 │
 ├── lexicons/                  # Giriş Sözlükleri ve Veri Kümeleri
-│   ├── bilim_sanat_lexicon.json  # TDK Bilim ve Sanat Terimleri Sözlüğü (15.457 terim)
+│   ├── bilim_sanat_lexicon.json  # TDK Bilim ve Sanat Terimleri Sözlüğü (4.955 terim)
 │   ├── custom_abbreviations.json # Resmi kısaltmalar
 │   ├── custom_names.json         # Özel isimler ve yer adları
 │   └── zemberek_lexicon.json     # Zemberek morfolojik referans kökleri
@@ -168,9 +168,9 @@ Turkspell, şişirilmiş statik kurallar veya yüz binlerce çekimli sözcük ye
 
 | Sözlük / Profil | `.aff` Boyutu | `.dic` Boyutu | **Toplam Boyut** | Kök Başlık Sayısı (Stems) | Mimari / Biçim |
 |---|:---:|:---:|:---:|:---:|:---:|
-| **Turkspell Universal (Amiral Gemisi)** | **1.18 MB** | **9.92 MB** | **11.10 MB** | 153.220 | Dinamik Zincirleme UTF-8 Bayrak (~0.79 MB XPI) |
-| **Turkspell TDK Profili** | 1.25 MB | 8.93 MB | **10.18 MB** | 139.125 | Katı TDK Şapka/Kök Standartı (~0.73 MB XPI) |
-| **Turkspell Dil Derneği Profili** | 1.18 MB | 9.89 MB | **10.07 MB** | 152.846 | Dil Derneği Şapkasızlaşma Standartı |
+| **Turkspell Universal (Amiral Gemisi)** | **1.14 MB** | **9.04 MB** | **10.18 MB** | 141.592 | Dinamik Zincirleme UTF-8 Bayrak (~0.77 MB XPI) |
+| **Turkspell TDK Profili** | 1.21 MB | 8.05 MB | **9.26 MB** | 127.496 | Katı TDK Şapka/Kök Standartı (~0.73 MB XPI) |
+| **Turkspell Dil Derneği Profili** | 1.14 MB | 8.63 MB | **9.77 MB** | 136.335 | Dil Derneği Şapkasızlaşma Standartı |
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) | 31.79 MB | 1.30 MB | **33.10 MB** | 86.460 | Statik Uzun Bayrak Bloğu |
 | [**tdd-ai**](https://github.com/tdd-ai/hunspell-tr) | 2.35 MB | 34.54 MB | **36.88 MB** | 75.909 | Şişirilmiş Büyük `.dic` Leksikonu |
 | [**harunzafer**](https://github.com/harunzafer/hunspell-tr) | 0.24 MB | 9.00 MB | **9.24 MB** | 371.169 | Statik Çekimli Sözcük Listesi |
@@ -254,7 +254,7 @@ Turkspell, modern Türkçenin zengin morfolojik çekim yapısını minimum belle
 
 Derleme hattı, web kazıyıcı veya filtrelenmemiş kullanıcı verileri yerine yalnızca doğrulanmış otorite kaynaklarını kabul eder:
 * **TDK Güncel Türkçe Sözlük ([`raw_data/tdk_words.txt`](file:///c:/gemini/turkspell/raw_data/tdk_words.txt))**: Katı TDK yazım standartlarının ve zorunlu düzeltme işaretli (şapkalı) sözcüklerin ana omurgası.
-* **TDK Bilim ve Sanat Terimleri Sözlüğü ([`lexicons/bilim_sanat_lexicon.json`](file:///c:/gemini/turkspell/lexicons/bilim_sanat_lexicon.json))**: TDK tarafından yayımlanan tıp, biyoloji, fizik, felsefe, sanat ve mühendislik alanlarındaki 15.457 adet temiz ve doğrulanmış terim kökü.
+* **TDK Bilim ve Sanat Terimleri Sözlüğü ([`lexicons/bilim_sanat_lexicon.json`](file:///c:/gemini/turkspell/lexicons/bilim_sanat_lexicon.json))**: TDK tarafından yayımlanan tıp, biyoloji, fizik, felsefe, sanat ve mühendislik alanlarındaki 4.955 adet temiz ve doğrulanmış terim kökü.
 * **Dil Derneği Yazım Kılavuzu ([`raw_data/dil_dernegi_words.txt`](file:///c:/gemini/turkspell/raw_data/dil_dernegi_words.txt))**: Nispet eki `î` yerine `i` kullanımını standartlaştıran alternatif resmî lügat.
 * **Özel Adlar ve Yer İsimleri ([`lexicons/custom_names.json`](file:///c:/gemini/turkspell/lexicons/custom_names.json))**: Türkiye mülki idare birimleri, dünya ülkeleri, tarihi şahsiyetler ve doğrulanmış özel isimler.
 * **Resmî Kısaltmalar ([`lexicons/custom_abbreviations.json`](file:///c:/gemini/turkspell/lexicons/custom_abbreviations.json))**: Büyük/küçük harf duyarlılığı korunan ulusal ve uluslararası kısaltmalar (`TBMM`, `TÜBİTAK`, `KHz`, `Wi-Fi`).
@@ -520,11 +520,11 @@ Bu proje **MIT Lisansı** altında özgür bir yazılım olarak sunulmaktadır. 
 ## 🌟 Key Highlights
 
 * **High Accuracy**: Does not falsely flag legitimate words in clean, well-formed Turkish texts. Delivers top-tier performance with zero false alarms in evaluation benchmarks.
-* **Strict Linguistic Authority**: Exclusively references official vocabularies from the **Turkish Language Association (TDK)** Güncel Türkçe Sözlük, **TDK Science and Arts Terms Lexicon** (15,457 terms), and the **Language Association (Dil Derneği)**; completely purged of crawler spam, fabricated roots, and foreign term pollution.
+* **Strict Linguistic Authority**: Exclusively references official vocabularies from the **Turkish Language Association (TDK)** Güncel Türkçe Sözlük, **TDK Science and Arts Terms Lexicon** (4,955 terms), and the **Language Association (Dil Derneği)**; completely purged of crawler spam, fabricated roots, and foreign term pollution.
 * **Dual-Standard Compatibility (Universal Profile)**: Offers a flexible profile option accepting both TDK orthography (*dâhil*, *bekâr*, *resmî*) and Dil Derneği conventions (*dahil*, *bekar*, *resmi*).
 * **Overgeneration Protection**: Purged 17,824 uncontrolled rules from `tr.aff`; closed morphological vulnerabilities that generated ungrammatical double vowels (*acııydı*, *anomaliine*, *beliiydi*) without buffer consonants or illegal verb derivations (*debileceklerine*, *yebilecek*).
 * **Advanced Suggestion Matrix (MAP 14 & Extended REP)**: Corrects circumflex (accent marks), keyboard slip, and phonetic errors with over 90% accuracy at Rank 1 (Top-1) and a 0.90+ MRR score.
-* **Lightweight, Optimized & Fast**: 153,220 sanitized root stems and single-character UTF-8 flag architecture optimize memory footprint (total 11.10 MB dictionary, ~0.79 MB XPI), lowering browser add-on startup latency down to ~90 ms.
+* **Lightweight, Optimized & Fast**: 141,592 sanitized root stems and single-character UTF-8 flag architecture optimize memory footprint (total 10.18 MB dictionary, ~0.77 MB XPI), lowering browser add-on startup latency down to ~90 ms.
 
 ---
 
@@ -635,7 +635,7 @@ turkspell/
 │   └── clean_and_audit_oscar.py    # OSCAR corpus sanitization pipeline
 │
 ├── lexicons/                  # Curated Input Lexicons & Datasets
-│   ├── bilim_sanat_lexicon.json  # TDK Science & Arts Terms Lexicon (15,457 terms)
+│   ├── bilim_sanat_lexicon.json  # TDK Science & Arts Terms Lexicon (4,955 terms)
 │   ├── custom_abbreviations.json # Verified official abbreviations
 │   ├── custom_names.json         # Verified proper nouns and geographic names
 │   └── zemberek_lexicon.json     # Zemberek morphological reference stems
@@ -665,9 +665,9 @@ Rather than bloated static rule sets or hundreds of thousands of pre-inflected w
 
 | Dictionary / Profile | `.aff` Size | `.dic` Size | **Total Size** | Root Stems Count | Architecture / Format |
 |---|:---:|:---:|:---:|:---:|:---:|
-| **Turkspell Universal (Flagship)** | **1.18 MB** | **9.92 MB** | **11.10 MB** | 153,220 | Dynamic Chained UTF-8 Flags (~0.79 MB XPI) |
-| **Turkspell TDK Profile** | 1.25 MB | 8.93 MB | **10.18 MB** | 139,125 | Strict TDK Circumflex/Stem Rules (~0.73 MB XPI) |
-| **Turkspell Dil Derneği Profile** | 1.18 MB | 9.89 MB | **10.07 MB** | 152,846 | Dil Derneği Unaccented Conventions |
+| **Turkspell Universal (Flagship)** | **1.14 MB** | **9.04 MB** | **10.18 MB** | 141,592 | Dynamic Chained UTF-8 Flags (~0.77 MB XPI) |
+| **Turkspell TDK Profile** | 1.21 MB | 8.05 MB | **9.26 MB** | 127,496 | Strict TDK Circumflex/Stem Rules (~0.73 MB XPI) |
+| **Turkspell Dil Derneği Profile** | 1.14 MB | 8.63 MB | **9.77 MB** | 136,335 | Dil Derneği Unaccented Conventions |
 | [**selimsum/hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) | 31.79 MB | 1.30 MB | **33.10 MB** | 86,460 | Static Long-Flag Block |
 | [**tdd-ai**](https://github.com/tdd-ai/hunspell-tr) | 2.35 MB | 34.54 MB | **36.88 MB** | 75,909 | Bloated Large `.dic` Lexicon |
 | [**harunzafer**](https://github.com/harunzafer/hunspell-tr) | 0.24 MB | 9.00 MB | **9.24 MB** | 371,169 | Static Pre-Inflected Wordlist |
@@ -751,7 +751,7 @@ Turkspell is compiled using a **Dynamic Chained Flags** architecture that models
 
 The build pipeline strictly avoids unfiltered web scrapes, relying entirely on verified authority sources:
 * **TDK Güncel Türkçe Sözlük ([`raw_data/tdk_words.txt`](file:///c:/gemini/turkspell/raw_data/tdk_words.txt))**: The foundation for strict TDK orthography and mandatory circumflex words.
-* **TDK Science & Arts Terms Lexicon ([`lexicons/bilim_sanat_lexicon.json`](file:///c:/gemini/turkspell/lexicons/bilim_sanat_lexicon.json))**: 15,457 cleaned and verified academic stems across medicine, biology, physics, philosophy, arts, and engineering published by TDK.
+* **TDK Science & Arts Terms Lexicon ([`lexicons/bilim_sanat_lexicon.json`](file:///c:/gemini/turkspell/lexicons/bilim_sanat_lexicon.json))**: 4,955 cleaned and verified academic stems across medicine, biology, physics, philosophy, arts, and engineering published by TDK.
 * **Dil Derneği Yazım Kılavuzu ([`raw_data/dil_dernegi_words.txt`](file:///c:/gemini/turkspell/raw_data/dil_dernegi_words.txt))**: Official alternative lexicon standardizing nisba `î` to `i`.
 * **Proper Nouns & Geographic Names ([`lexicons/custom_names.json`](file:///c:/gemini/turkspell/lexicons/custom_names.json))**: Verified proper nouns, administrative regions, countries, and historical figures.
 * **Official Abbreviations ([`lexicons/custom_abbreviations.json`](file:///c:/gemini/turkspell/lexicons/custom_abbreviations.json))**: Case-preserved national and international acronyms (`TBMM`, `TÜBİTAK`, `KHz`, `Wi-Fi`).

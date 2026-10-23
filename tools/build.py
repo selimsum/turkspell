@@ -5,8 +5,8 @@ import shutil
 import json
 from pathlib import Path
 
-BASE_DIR = Path(r"c:\gemini\turkspell-benchmarks")
-TURKSPELL_DIR = Path(r"c:\gemini\turkspell")
+TURKSPELL_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = TURKSPELL_DIR.parent / "turkspell-benchmarks"
 DIST_DIR = TURKSPELL_DIR / "dist"
 RAW_DIR = TURKSPELL_DIR / "raw_data"
 
@@ -25,7 +25,7 @@ from utf8_flag_mapping import UTF8_TO_LONG, LONG_TO_UTF8, remap_flag_string, STA
 vowels = "AEIOUaeiouÂÎÖÛÜâîöûüİı"
 consonant_cond = "[^AEIOUaeiouÂÎÖÛÜâîöûüİı]"
 
-DEAD_FLAG_CHARS = {LONG_TO_UTF8[f] for f in ['G2', 'NX', 'Vb', 'Vf'] if f in LONG_TO_UTF8}
+DEAD_FLAG_CHARS = {LONG_TO_UTF8[f] for f in ['G2', 'NX', 'Vb', 'Vf', 'VL'] if f in LONG_TO_UTF8}
 STAGE2_VERB_CHARS = {LONG_TO_UTF8[f] for f in STAGE2_VERB_FLAGS if f in LONG_TO_UTF8}
 PROPER_SUB_UTF8 = {k for k, v in UTF8_TO_LONG.items() if v.startswith("p") and len(v) == 3}
 KC_FLAG = LONG_TO_UTF8.get("KC", "")
@@ -70,7 +70,6 @@ EXTRA_REP_RULES = [
     "REP rim$ rin",
     "REP larz$ lara",
     "REP lerz$ lere",
-    "REP lardan lardan",
     # Targeted Acronym Inflections
     "REP HDMI'ya HDMI'a",
     "REP USB'e USB'ye",
@@ -1878,7 +1877,7 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "fi/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∖⊘⊙⊚⊛⊜⊝⊞⊟",
     "fış/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎≎∍",
     "gag/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪∍⊈⊉⊊⊋⊌⊍⊎⊏",
-    "hâd/∟∨≌∢≊∻≩K⊩L∍⊈⊉⊊⊋⊌⊍⊎⊏",
+    "hâd/∟∨≌∢≊∻≩⊩∍⊈⊉⊊⊋⊌⊍⊎⊏",
     "hâr/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∍⊈⊉⊊⊋⊌⊍⊎⊏",
     "höl/√∃≤∨≌∮∢≊∻≅∵∹≀≈≩∪∍⊠⊡⊢⊣⊤⊥⊦⊧",
     "hüt/√∃≤∨≌∮∢≊∻≅∵∹≀≈≩∩∍⊠⊡⊢⊣⊤⊥⊦⊧",
@@ -1900,7 +1899,7 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "lik/≑∨≌∢≊∻≩∩≎∌∍≍⊘⊙⊚⊛⊜⊝⊞⊟",
     "mağ/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍⊈⊉⊊⊋⊌⊍⊎⊏",
     "mok/∅∁≣∧≋∬∡≉∺≃∳∷∾≁∎∩∪∍⊐⊑⊒⊓⊔⊕⊖⊗",
-    "mol/∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩⊨⊪L⊫∍∖⊐⊑⊒⊓⊔⊕⊖⊗",
+    "mol/∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩⊨⊪⊫∍∖⊐⊑⊒⊓⊔⊕⊖⊗",
     "nar/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍⊈⊉⊊⊋⊌⊍⊎⊏",
     "naş/∄∀≣∧≋∫∡≉∺≂∲∶∼∽∎∍⊈⊉⊊⊋⊌⊍⊎⊏",
     "neo/∇≦⊆∧≋≭≪≉∺≃∳∷∾≁∎∩∌∍⊐⊑⊒⊓⊔⊕⊖⊗",
@@ -1959,8 +1958,8 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "Hristiyanlık/" + remap_flag_string("CK I1 L1 PB Q1 R1 V1 CL KC".replace(" ", "")),
     "Hristiyanlığ/" + remap_flag_string("NE A1 N1 P1 P5 PM PN PS Y1 VC KC".replace(" ", "")),
     # Misakımilli / Misakımillî Proper Noun Orthography (capitalized, with proper noun apostrophe flags)
-    "Misakımilli/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 pFN pFL pFR pFY pFA pFI pFP pFC".replace(" ", "")),
-    "Misakımillî/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 pFN pFL pFR pFY pFA pFI pFP pFC".replace(" ", "")),
+    "Misakımilli/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 pFN pFL pFR pFY pFA pFI pFP pFC KC".replace(" ", "")),
+    "Misakımillî/" + remap_flag_string("CK F3 L2 P3 P7 PF PP PU PW Q2 R2 a3 cl i2 n3 y2 pFN pFL pFR pFY pFA pFI pFP pFC KC".replace(" ", "")),
     # TDK / DD regular derived or compound words
     "çıtır/" + remap_flag_string("A1 B1 CI CK CL I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SZ Y1".replace(" ", "")),
     "çerçöp/∃∌∍∖√∢∨∩∪∮∵∹∻≀≅≈≊≌≍≎≤≩",
@@ -2209,12 +2208,23 @@ def build_hardened_aff(profile="tdk"):
             parts_r = r_strip.split()
             if len(parts_r) >= 5:
                 cond = parts_r[4]
+                clean_add_r = parts_r[3].split("/")[0]
+                if cond == 'X' or clean_add_r in ('mesü', 'memüz', 'menüz', 'masu', 'mamuz', 'manuz'):
+                    dropped_rules += 1
+                    continue
                 if flag_long == 'VH' and cond == 'imek':
                     dropped_rules += 1
                     continue
                 elif flag_long == 'VS' and cond == 'ımak':
                     dropped_rules += 1
                     continue
+                if any(bad_s in clean_add_r for bad_s in ('laryla', 'leryle', 'kilar')):
+                    parts_r[3] = parts_r[3].replace('laryla', 'larıyla').replace('leryle', 'leriyle').replace('kilar', 'kiler')
+                    r_strip = ' '.join(parts_r)
+                    r = r_strip + '\n'
+            if r_strip in seen:
+                dropped_rules += 1
+                continue
             seen.add(r_strip)
             kept.append(r)
             
@@ -2366,7 +2376,7 @@ MAP '’‘"""
         if len(parts) >= 2 and not (len(parts) == 1 and parts[0].isdigit()):
             base_rep.append(rule_str)
 
-    all_rep = list(dict.fromkeys(clean_extra + base_rep))
+    all_rep = [r for r in dict.fromkeys(clean_extra + base_rep) if len(r.split()) >= 2 and r.split()[0] != r.split()[1]]
     rep_block = f"REP {len(all_rep)}\n" + "\n".join(f"REP {r}" for r in all_rep) + "\n"
 
     # Remove all existing REP lines and replace cleanly after MAXNGRAMSUGS
@@ -2816,7 +2826,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             w = w.replace("î", "i")
         head_w = w.split("/")[0]
         head_lower = tr_lower(head_w)
-        if head_w in unhatted_to_purge or head_lower in unhatted_to_purge:
+        if (head_w in unhatted_to_purge or head_lower in unhatted_to_purge) and not (head_w == "Misakımilli" and profile in ("universal", "dd")):
             continue
         fl_w = w.split("/")[1] if "/" in w else ""
         if head_w.lower() in HEAD_FLAG_OVERRIDES and not fl_w:
@@ -2830,7 +2840,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     for w in VIRTUAL_STEMS + EXTRA_AUTHORITY_HEADWORDS:
         head_w = w.split("/")[0]
         head_lower = tr_lower(head_w)
-        if head_w in unhatted_to_purge or head_lower in unhatted_to_purge:
+        if (head_w in unhatted_to_purge or head_lower in unhatted_to_purge) and not (head_w == "Misakımilli" and profile in ("universal", "dd")):
             continue
         if profile == "dd" and "î" in head_w:
             continue
@@ -2970,9 +2980,14 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         else:
             merged_heads[h].update(fl)
 
+    valid_dic_flags = (set(UTF8_TO_LONG.keys()) - DEAD_FLAG_CHARS - {
+        LONG_TO_UTF8[f] for f in ('u1', 'u2', 'u3', 'u4', 'uC', 'uI', 'uL', 'uN', 'uP', 'uQ', 'uR', 'uY') if f in LONG_TO_UTF8
+    }) | {'X', '∥', '∰'}
     deduped_entries = []
     for h in sorted(merged_heads.keys()):
-        fl_set = merged_heads[h]
+        fl_set = merged_heads[h] & valid_dic_flags
+        if h in ("co", "Co"):
+            fl_set.discard("∍")
         fl_combined = "".join(sorted(fl_set))
         deduped_entries.append(f"{h}/{fl_combined}" if fl_combined else h)
 
