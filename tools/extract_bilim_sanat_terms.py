@@ -210,7 +210,7 @@ RE_EXTRA = re.compile('|'.join(EXTRA_PATTERNS))
 # English vocabulary for rejecting raw bilingual / foreign headwords
 EN_PATH = ROOT_DIR / "raw_data" / "english_words_large.txt"
 if not EN_PATH.exists():
-    EN_PATH = Path(r"C:\gemini\hunspell-tr-moz\english_words_large.txt")
+    EN_PATH = BASE_DIR / "training" / "english_words_large.txt"
 
 english_words = set()
 if EN_PATH.exists():

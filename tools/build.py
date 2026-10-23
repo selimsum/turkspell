@@ -2209,7 +2209,7 @@ def build_hardened_aff(profile="tdk"):
             if len(parts_r) >= 5:
                 cond = parts_r[4]
                 clean_add_r = parts_r[3].split("/")[0]
-                if cond == 'X' or clean_add_r in ('mesü', 'memüz', 'menüz', 'masu', 'mamuz', 'manuz'):
+                if cond == 'X' or clean_add_r in ('mesü', 'memüz', 'menüz', 'masu', 'mamuz', 'manuz', 'eceğüm', 'yeceğüm', 'deceğüm', 'acağum', 'yacağum'):
                     dropped_rules += 1
                     continue
                 if flag_long == 'VH' and cond == 'imek':
@@ -2220,8 +2220,46 @@ def build_hardened_aff(profile="tdk"):
                     continue
                 if any(bad_s in clean_add_r for bad_s in ('laryla', 'leryle', 'kilar')):
                     parts_r[3] = parts_r[3].replace('laryla', 'larıyla').replace('leryle', 'leriyle').replace('kilar', 'kiler')
-                    r_strip = ' '.join(parts_r)
-                    r = r_strip + '\n'
+                # Fix verb continuation vowel harmony mismatches
+                if '/' in parts_r[3]:
+                    if clean_add_r in ('emez', 'ülmez', 'ülemez', 'yemez', 'der', 'demez', 'dülmez', 'dülemez'):
+                        parts_r[3] = parts_r[3].replace('/' + LONG_TO_UTF8['cI'], '/' + LONG_TO_UTF8['cE'])
+                    elif clean_add_r in ('amaz', 'ulmaz', 'ulamaz', 'yamaz'):
+                        parts_r[3] = parts_r[3].replace('/' + LONG_TO_UTF8['cU'], '/' + LONG_TO_UTF8['cA'])
+                    elif clean_add_r == 'dükleri':
+                        parts_r[3] = parts_r[3].replace('/' + LONG_TO_UTF8['pU'], '/' + LONG_TO_UTF8['pE'])
+                    elif clean_add_r == 'dukları':
+                        parts_r[3] = parts_r[3].replace('/' + LONG_TO_UTF8['pO'], '/' + LONG_TO_UTF8['pA'])
+                    elif clean_add_r.endswith('abileceği'):
+                        parts_r[3] = parts_r[3].replace('/' + LONG_TO_UTF8['pA'], '/' + LONG_TO_UTF8['pE'])
+                    elif flag_long in ('pBR', 'pBI', 'pBP', 'pOR', 'pOI', 'pOP'):
+                        parts_r[3] = parts_r[3].replace('/' + LONG_TO_UTF8['cl'], '/' + LONG_TO_UTF8['CL'])
+                        if flag_long == 'pOP':
+                            parts_r[3] = parts_r[3].replace("'ıyla/", "'uyla/").replace("'sıyla/", "'suyla/")
+                    elif flag_long == 'pUP':
+                        parts_r[3] = parts_r[3].replace("'iyle/", "'üyle/").replace("'siyle/", "'süyle/")
+                if flag_long == 'CK' and '/' in parts_r[3] and clean_add_r in ('cık', 'cuk', 'cik', 'cük', 'çık', 'çuk', 'çik', 'çük'):
+                    from utf8_flag_mapping import remap_flag_string
+                    ck_chains = {
+                        'cık': ('cığ', remap_flag_string('L1R1I1Q1PBCLLILKSZCICKSLDLDTDE'), remap_flag_string('A1Y1N1PSP1P5PMPNVCNE')),
+                        'çık': ('çığ', remap_flag_string('L1R1I1Q1PBCLLILKSZCICKSLDLDTDE'), remap_flag_string('A1Y1N1PSP1P5PMPNVCNE')),
+                        'cuk': ('cuğ', remap_flag_string('L1R1I1Q1PBCLLILKSZCICKSLDLDTDE'), remap_flag_string('A2Y1N2PTP2P6POPRVCNE')),
+                        'çuk': ('çuğ', remap_flag_string('L1R1I1Q1PBCLLILKSZCICKSLDLDTDE'), remap_flag_string('A2Y1N2PTP2P6POPRVCNE')),
+                        'cik': ('ciğ', remap_flag_string('L2R2I2Q2PFclLILKSZCICKSLDLDTDE'), remap_flag_string('A3Y2N3PUP3P7PPPWvcNE')),
+                        'çik': ('çiğ', remap_flag_string('L2R2I2Q2PFclLILKSZCICKSLDLDTDE'), remap_flag_string('A3Y2N3PUP3P7PPPWvcNE')),
+                        'cük': ('cüğ', remap_flag_string('L2R2I2Q2PFclLILKSZCICKSLDLDTDE'), remap_flag_string('A4Y2N4PVP4P8PQPZvcNE')),
+                        'çük': ('çüğ', remap_flag_string('L2R2I2Q2PFclLILKSZCICKSLDLDTDE'), remap_flag_string('A4Y2N4PVP4P8PQPZvcNE')),
+                    }
+                    suf_v, cons_c, vow_c = ck_chains[clean_add_r]
+                    r1_s = f"SFX {flag} 0 {clean_add_r}/{cons_c} {cond}"
+                    r2_s = f"SFX {flag} 0 {suf_v}/{vow_c} {cond}"
+                    for rx_s in (r1_s, r2_s):
+                        if rx_s not in seen:
+                            seen.add(rx_s)
+                            kept.append(rx_s + '\n')
+                    continue
+                r_strip = ' '.join(parts_r)
+                r = r_strip + '\n'
             if r_strip in seen:
                 dropped_rules += 1
                 continue
