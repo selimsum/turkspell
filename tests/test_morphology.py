@@ -709,13 +709,13 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
             "tesbit", "isbat", "malesef", "metod", "standard", "katalok", "psikolok",
             "şarter", "tazzik", "tenefüs", "usül", "zıttı", "zıttına",
             "müslüman", "hristiyan", "hıristiyan", "yahudi",
-            "alimlik", "bekar", "bekarlık", "hayasız", "hayasızca"
+            "alimlik", "bekarlık", "hayasız", "hayasızca"
         ]
         accepted, _ = check_words(invalid_forms)
         self.assertEqual(accepted, [], f"Overgenerated or misspelled forms leaked: {accepted}")
 
         # Verify that non-voicing [pçtk] stems still accept 1sg/1pl copula (-ım/-im/-um/-üm, -ız/-iz/-uz/-üz)
-        valid_copulas = ["devletim", "devletiz", "sanatım", "sanatız", "milletiz", "pilotum", "pilotuz", "çöpüz", "matım", "matız", "Müslüman", "Müslümanlık", "Hristiyan", "Hristiyanlık"]
+        valid_copulas = ["devletim", "devletiz", "sanatım", "sanatız", "milletiz", "pilotum", "pilotuz", "çöpüz", "matım", "matız", "Müslüman", "Müslümanlık", "Hristiyan", "Hristiyanlık", "bekar", "bekâr"]
         _, rej_copulas = check_words(valid_copulas)
         self.assertEqual(rej_copulas, [], f"Valid non-voicing copula or proper noun forms rejected: {rej_copulas}")
 

@@ -1056,8 +1056,7 @@ MANDATORY_HATTED_WORDS = {
     "meşkûk": "meşkuk",
     "vârislik": "varislik",
     "yâran": "yaran",
-    "Elâzığlılık": "Elazığlılık",
-    "bekâr": "bekar"
+    "Elâzığlılık": "Elazığlılık"
 }
 
 # Extensive whitelist of Turkish compound-forming nouns (geographical, architectural, institutional)
@@ -1810,6 +1809,7 @@ EXTRA_AUTHORITY_HEADWORDS = [
     "Paraguay/∀∄∍∎∡∧∩∫∲∶∺∼∽≂≉≋≣⊈⊉⊊⊋⊌⊍⊎⊏",
     "Venezuela/∆∍∎∧∩∲∶∺∼∽≂≉≋≥≪≬⊆⊈⊉⊊⊋⊌⊍⊎⊏",
     # Legitimate TDK stems & verb inflections:
+    "bekar",
     "trend/∂∌∍∙∢∨∩∭∴∸∻∿≄≆≊≌≍≎≤≩",
     "batım/∀∄∌∍∎∡∧∩∪∫∲∶∺∼∽≂≉≋≍≣",
     "tescillenmek/≗⊃",
