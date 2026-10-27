@@ -16,7 +16,7 @@ import unittest
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
-DICT_PATH = str(ROOT_DIR / "tr")
+DICT_PATH = os.environ.get("TURKSPELL_DICT", str(ROOT_DIR / "tr"))
 
 winget_pkg_dir = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages")
 for root, dirs, files in os.walk(winget_pkg_dir):
@@ -29,6 +29,10 @@ HUNSPELL_BIN = shutil.which("hunspell") or "hunspell"
 
 def check_illegal_words(words: list[str], dict_path: str = DICT_PATH) -> list[str]:
     """Runs hunspell -l on words that MUST be rejected. Returns any that leaked (were accepted)."""
+    aff_file = Path(f"{dict_path}.aff")
+    dic_file = Path(f"{dict_path}.dic")
+    if not aff_file.exists() or not dic_file.exists():
+        raise FileNotFoundError(f"Dictionary files not found at {dict_path} (.aff/.dic)")
     p = subprocess.run(
         [HUNSPELL_BIN, "-d", dict_path, "-l"],
         input="\n".join(words) + "\n",
@@ -36,6 +40,8 @@ def check_illegal_words(words: list[str], dict_path: str = DICT_PATH) -> list[st
         capture_output=True,
         encoding="utf-8"
     )
+    if p.returncode != 0:
+        raise RuntimeError(f"hunspell process failed with code {p.returncode}: {p.stderr.strip()}")
     flagged = set(line.strip() for line in p.stdout.splitlines() if line.strip())
     # A leaked word is one that hunspell accepted (NOT in flagged)
     leaked = [w for w in words if w not in flagged]
@@ -91,6 +97,8 @@ class TestOvergenerationProtection(unittest.TestCase):
             "arabadaın", "çocukdaden", "masadanler"
         ]
         leaked = check_illegal_words(illegal)
+        self.assertEqual(leaked, [], f"Impossible suffix chains leaked: {leaked}")
+
     def test_bare_virtual_stems(self):
         """Virtual stems guarded by NEEDAFFIX X must never be recognized as bare words."""
         illegal = [

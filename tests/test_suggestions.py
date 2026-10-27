@@ -11,19 +11,35 @@ import subprocess
 import unittest
 from pathlib import Path
 
+import shutil
+
 ROOT_DIR = Path(__file__).resolve().parent.parent
-DICT_PATH = str(ROOT_DIR / "tr")
+DICT_PATH = os.environ.get("TURKSPELL_DICT", str(ROOT_DIR / "tr"))
+
+winget_pkg_dir = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages")
+for root, dirs, files in os.walk(winget_pkg_dir):
+    if "hunspell.exe" in files:
+        if root not in os.environ.get("PATH", ""):
+            os.environ["PATH"] = root + os.pathsep + os.environ["PATH"]
+        break
+HUNSPELL_BIN = shutil.which("hunspell") or "hunspell"
 
 
 def get_batch_suggestions(words: list[str], dict_path: str = DICT_PATH) -> dict[str, list[str]]:
     """Runs hunspell -a for a list of words in a single fast process invocation."""
+    aff_file = Path(f"{dict_path}.aff")
+    dic_file = Path(f"{dict_path}.dic")
+    if not aff_file.exists() or not dic_file.exists():
+        raise FileNotFoundError(f"Dictionary files not found at {dict_path} (.aff/.dic)")
     p = subprocess.run(
-        ["hunspell", "-d", dict_path, "-a"],
+        [HUNSPELL_BIN, "-d", dict_path, "-a"],
         input="\n".join(words) + "\n",
         text=True,
         capture_output=True,
         encoding="utf-8"
     )
+    if p.returncode != 0:
+        raise RuntimeError(f"hunspell process failed with code {p.returncode}: {p.stderr.strip()}")
     result = {w: [] for w in words}
     for line in p.stdout.splitlines():
         line = line.strip()

@@ -8,8 +8,9 @@ on:
     paths:
       - 'tr.aff'
       - 'tr.dic'
-      - 'firefox-addon/manifest.json'
-      - 'firefox-addon-tdk/manifest.json'
+      - 'dist/**'
+      - 'firefox-addon/**'
+      - 'firefox-addon-tdk/**'
       - 'amo-metadata.json'
       - 'tools/sign_addon.py'
       - 'build/package_addon.py'
@@ -53,6 +54,22 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install System Dependencies (Hunspell)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y hunspell
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Validate Build & Run Test Suite
+        run: |
+          python build/validate_build.py
+          pytest -v
 
       - name: Determine & Bump Extension Version
         id: bump

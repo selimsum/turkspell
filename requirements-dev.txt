@@ -1,0 +1,8 @@
+# Development and testing dependencies for Turkspell
+pytest>=7.0.0
+pytest-subtests>=0.10.0
+
+# Packaging and AMO signing dependencies (tools/sign_addon.py)
+requests>=2.28.0
+PyJWT>=2.6.0
+cryptography>=40.0.0

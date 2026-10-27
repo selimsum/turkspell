@@ -21,6 +21,7 @@ __pycache__/
 !tests/golden_verbs_baseline.json
 !update.json
 !amo-metadata.json
+!requirements*.txt
 
 # Generated build outputs (kept out of source control)
 turkspell-addon.xpi

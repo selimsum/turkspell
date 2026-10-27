@@ -26,6 +26,10 @@ HUNSPELL_BIN = shutil.which("hunspell") or "hunspell"
 
 def check_words(words: list[str], dict_path: str = DICT_PATH) -> tuple[list[str], list[str]]:
     """Runs hunspell -l and returns (accepted_words, rejected_words)."""
+    aff_file = Path(f"{dict_path}.aff")
+    dic_file = Path(f"{dict_path}.dic")
+    if not aff_file.exists() or not dic_file.exists():
+        raise FileNotFoundError(f"Dictionary files not found at {dict_path} (.aff/.dic)")
     p = subprocess.run(
         [HUNSPELL_BIN, "-d", dict_path, "-l"],
         input="\n".join(words) + "\n",
@@ -33,6 +37,8 @@ def check_words(words: list[str], dict_path: str = DICT_PATH) -> tuple[list[str]
         capture_output=True,
         encoding="utf-8"
     )
+    if p.returncode != 0:
+        raise RuntimeError(f"hunspell process failed with code {p.returncode}: {p.stderr.strip()}")
     flagged = set(line.strip() for line in p.stdout.splitlines() if line.strip())
     accepted = [w for w in words if w not in flagged]
     rejected = [w for w in words if w in flagged]
