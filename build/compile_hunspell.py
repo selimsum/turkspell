@@ -19,7 +19,7 @@ from utf8_flag_mapping import LONG_TO_UTF8, remap_flag_string
 # Vowels definition
 TURKISH_VOWELS = 'aeıioöuüâîûAEIİOÖUÜÂÎÛ'
 TURKISH_VOWELS_LOWER = 'aeıioöuüâîû'
-FRONT_VOWELS = set('eioüîiöEİÖÜÎ')
+FRONT_VOWELS = set('eiöüîEİÖÜÎ')
 BACK_VOWELS  = set('aıouâûAIOUÂÛ')
 
 def _tlc(s: str) -> str:

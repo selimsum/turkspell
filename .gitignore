@@ -16,6 +16,8 @@ __pycache__/
 !lexicons/custom_names.json
 !lexicons/authority_pos_completed.json
 !lexicons/bilim_sanat_lexicon.json
+!lexicons/extra_rep_rules.json
+!lexicons/bad_stems.json
 !firefox-addon/manifest.json
 !firefox-addon-tdk/manifest.json
 !tests/golden_verbs_baseline.json
