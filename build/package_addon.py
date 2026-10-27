@@ -7,6 +7,10 @@ import argparse
 # Extensions that must be stored as UTF-8 text (read explicitly, not via OS raw copy)
 TEXT_EXTENSIONS = {'.json', '.txt', '.md', '.css', '.html', '.js'}
 
+# File patterns to exclude from packaging
+EXCLUDED_FILENAMES = {'.DS_Store', 'Thumbs.db', 'ehthumbs.db'}
+
+
 def package_profile(profile: str = "universal"):
     """Package a specific profile ('universal' or 'tdk') into its corresponding .xpi file."""
     _root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,9 +32,13 @@ def package_profile(profile: str = "universal"):
     # 1. Ensure dictionaries directory exists and copy appropriate dictionaries
     dict_dir = os.path.join(source_dir, "dictionaries")
     os.makedirs(dict_dir, exist_ok=True)
-    if os.path.exists(dic_src) and os.path.exists(aff_src):
-        shutil.copy(dic_src, os.path.join(dict_dir, "tr.dic"))
-        shutil.copy(aff_src, os.path.join(dict_dir, "tr.aff"))
+    if not os.path.exists(dic_src):
+        raise FileNotFoundError(f"Source dictionary missing for {profile} profile: {dic_src}")
+    if not os.path.exists(aff_src):
+        raise FileNotFoundError(f"Source affix file missing for {profile} profile: {aff_src}")
+
+    shutil.copy2(dic_src, os.path.join(dict_dir, "tr.dic"))
+    shutil.copy2(aff_src, os.path.join(dict_dir, "tr.aff"))
 
     # 2. Verify manifest.json is present
     manifest_path = os.path.join(source_dir, "manifest.json")
@@ -46,14 +54,19 @@ def package_profile(profile: str = "universal"):
     print(f"Source: {source_dir}")
     print(f"Dictionaries: {dic_src}")
 
-    # 3. Create zip (xpi) archive
+    # 3. Create zip (xpi) archive with deterministic ordering
     xpi_filename = os.path.join(_root_dir, xpi_name)
     if os.path.exists(xpi_filename):
         os.remove(xpi_filename)
 
     with zipfile.ZipFile(xpi_filename, "w", zipfile.ZIP_DEFLATED) as xpi:
         for root, dirs, files in os.walk(source_dir):
+            dirs.sort()
+            files.sort()
             for file in files:
+                if file.startswith(".") or file.endswith(".pyc") or file in EXCLUDED_FILENAMES:
+                    continue
+
                 filepath = os.path.join(root, file)
                 arcname = os.path.relpath(filepath, source_dir).replace(os.sep, "/")
 

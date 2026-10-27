@@ -26,7 +26,13 @@ __pycache__/
 # Generated build outputs (kept out of source control)
 turkspell-addon.xpi
 turkspell-tdk-addon.xpi
+*-unsigned.xpi
 tr_test.*
+
+# Firefox extension staging dictionaries & signing artifacts
+firefox-addon/dictionaries/
+firefox-addon-tdk/dictionaries/
+signed_dist/
 
 # Temporary/Experimental build outputs
 test_tr.*
@@ -45,5 +51,3 @@ external_dictionaries/
 raw_data/
 
 *.pickle
-
-

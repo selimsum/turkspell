@@ -14,6 +14,17 @@ import urllib.request
 import urllib.parse
 import urllib.error
 
+def is_signed_xpi(xpi_path: str) -> bool:
+    """Verify that an .xpi archive contains Mozilla cryptographic signatures."""
+    if not os.path.exists(xpi_path):
+        return False
+    try:
+        with zipfile.ZipFile(xpi_path, "r") as zf:
+            names = zf.namelist()
+            return any(n.startswith("META-INF/") for n in names)
+    except Exception:
+        return False
+
 def create_jwt(issuer: str, secret: str) -> str:
     """Generate a HS256 JWT for Mozilla AMO API authentication."""
     header = {"alg": "HS256", "typ": "JWT"}
@@ -79,20 +90,21 @@ def download_signed_file(file_url: str, output_path: str, issuer: str, secret: s
 
     opener = urllib.request.build_opener(NoRedirect)
     req = urllib.request.Request(file_url)
-    if "addons.mozilla.org" in file_url:
+    
+    parsed_initial = urllib.parse.urlparse(file_url)
+    if parsed_initial.hostname == "addons.mozilla.org":
         req.add_header("Authorization", f"JWT {token}")
     req.add_header("User-Agent", "turkspell-release-automation")
-
-    target_url = file_url
-    is_external = False
 
     try:
         resp = opener.open(req, timeout=60)
         content = resp.read()
     except urllib.error.HTTPError as e:
         if e.code in (301, 302, 303, 307, 308):
-            target_url = e.headers.get("Location")
-            is_external = "addons.mozilla.org" not in target_url
+            target_url = urllib.parse.urljoin(file_url, e.headers.get("Location", ""))
+            parsed_target = urllib.parse.urlparse(target_url)
+            is_external = parsed_target.hostname != "addons.mozilla.org"
+            
             download_req = urllib.request.Request(target_url)
             download_req.add_header("User-Agent", "turkspell-release-automation")
             if not is_external:
@@ -173,12 +185,17 @@ def run_web_ext_lint(source_dir: str) -> subprocess.CompletedProcess:
     return subprocess.run(cmd, capture_output=True, text=True, shell=shell)
 
 def run_web_ext_sign(source_dir: str, issuer: str, secret: str, artifacts_dir: str, channel: str = "listed", metadata_file: str = None) -> subprocess.CompletedProcess:
-    """Run `npx web-ext sign` with generous approval and request timeouts."""
+    """
+    Run `npx web-ext sign` with credentials passed via environment variables
+    to prevent secrets leaking into process command line arguments.
+    """
+    env = os.environ.copy()
+    env["WEB_EXT_API_KEY"] = issuer
+    env["WEB_EXT_API_SECRET"] = secret
+
     cmd = [
         "npx", "web-ext", "sign",
         "--source-dir", source_dir,
-        "--api-key", issuer,
-        "--api-secret", secret,
         "--channel", channel,
         "--artifacts-dir", artifacts_dir,
         "--approval-timeout", "600000",
@@ -187,9 +204,8 @@ def run_web_ext_sign(source_dir: str, issuer: str, secret: str, artifacts_dir: s
     if metadata_file and os.path.exists(metadata_file):
         cmd.extend(["--amo-metadata", metadata_file])
     print(f"Running: npx web-ext sign --source-dir {source_dir} --channel {channel} --approval-timeout 600000...")
-    # On Windows, npx is a cmd script
     shell = os.name == "nt"
-    return subprocess.run(cmd, capture_output=True, text=True, shell=shell)
+    return subprocess.run(cmd, capture_output=True, text=True, shell=shell, env=env)
 
 def sign_addon_profile(source_dir: str, output_path: str, addon_id: str, version: str, channel: str, issuer: str, secret: str, root_dir: str, artifacts_dir: str, metadata_file: str = None) -> bool:
     print(f"\n========================================================")
@@ -222,18 +238,15 @@ def sign_addon_profile(source_dir: str, output_path: str, addon_id: str, version
         candidate_meta = os.path.normpath(os.path.join(root_dir, "amo-metadata.json"))
         if os.path.exists(candidate_meta):
             metadata_file = candidate_meta
-        else:
-            metadata_file = candidate_meta
-            with open(metadata_file, "w", encoding="utf-8") as mf:
-                json.dump({
-                    "categories": ["general"],
-                    "version": {
-                        "license": "MIT"
-                    }
-                }, mf, indent=2)
 
-    os.makedirs(artifacts_dir, exist_ok=True)
-    sign_res = run_web_ext_sign(source_dir, issuer, secret, artifacts_dir, channel=channel, metadata_file=metadata_file)
+    # Isolate profile artifacts directory to avoid collision across runs or profiles
+    prof_subdir = addon_id.replace("@", "_").replace(".", "_")
+    profile_artifacts_dir = os.path.join(artifacts_dir, prof_subdir)
+    if os.path.exists(profile_artifacts_dir):
+        shutil.rmtree(profile_artifacts_dir, ignore_errors=True)
+    os.makedirs(profile_artifacts_dir, exist_ok=True)
+
+    sign_res = run_web_ext_sign(source_dir, issuer, secret, profile_artifacts_dir, channel=channel, metadata_file=metadata_file)
 
     print("--- web-ext stdout ---")
     print(sign_res.stdout)
@@ -241,18 +254,21 @@ def sign_addon_profile(source_dir: str, output_path: str, addon_id: str, version
         print("--- web-ext stderr ---")
         print(sign_res.stderr)
 
-    # Check if web-ext produced a signed .xpi directly
+    # Check if web-ext produced a signed .xpi directly in the isolated folder
     signed_candidates = []
-    if os.path.exists(artifacts_dir):
-        for f in os.listdir(artifacts_dir):
+    if os.path.exists(profile_artifacts_dir):
+        for f in os.listdir(profile_artifacts_dir):
             if f.endswith(".xpi"):
-                signed_candidates.append(os.path.join(artifacts_dir, f))
+                signed_candidates.append(os.path.join(profile_artifacts_dir, f))
 
     if sign_res.returncode == 0 and signed_candidates:
         latest_file = max(signed_candidates, key=os.path.getmtime)
         shutil.copyfile(latest_file, output_path)
-        print(f"Successfully signed .xpi with web-ext: {output_path}")
-        return True
+        if is_signed_xpi(output_path):
+            print(f"Successfully signed .xpi with web-ext (verified META-INF signatures): {output_path}")
+            return True
+        else:
+            print(f"Warning: Produced .xpi at {output_path} does not appear to contain META-INF signatures.")
 
     # Fail fast if AMO rejected the upload due to validation or bad request submission failure
     combined_output = (sign_res.stdout or "") + "\n" + (sign_res.stderr or "")
@@ -266,7 +282,7 @@ def sign_addon_profile(source_dir: str, output_path: str, addon_id: str, version
         print(f"\nError: Extension submission/validation failed on AMO for {addon_id}. See validation error messages above.", file=sys.stderr)
         return False
 
-    # 4. Resilience Fallback:
+    # 4. Resilience Fallback: Poll AMO API
     print(f"\nweb-ext sign exited with code {sign_res.returncode}.")
     print(f"Initiating resilient status polling via Mozilla AMO API directly for {addon_id}...")
 
@@ -278,8 +294,11 @@ def sign_addon_profile(source_dir: str, output_path: str, addon_id: str, version
     while time.time() - start_time < max_poll_seconds:
         print(f"Polling AMO API for signed .xpi (Attempt {attempt}, elapsed {int(time.time() - start_time)}s)...")
         if try_fetch_signed_xpi(addon_id, version, issuer, secret, output_path):
-            print(f"Resilient recovery succeeded! Downloaded signed .xpi for v{version}.")
-            return True
+            if is_signed_xpi(output_path):
+                print(f"Resilient recovery succeeded! Downloaded verified signed .xpi for v{version}.")
+                return True
+            else:
+                print(f"Downloaded file at {output_path} but missing META-INF signatures.")
         
         attempt += 1
         time.sleep(poll_interval)
@@ -297,7 +316,16 @@ def main():
     parser.add_argument("--output", default=None, help="Output signed .xpi destination path")
     parser.add_argument("--artifacts-dir", default="./signed_dist", help="web-ext artifacts directory")
     parser.add_argument("--amo-metadata", help="Path to AMO metadata JSON file")
+    parser.add_argument("--verify", help="Check whether a specific .xpi file is cryptographically signed and exit")
     args = parser.parse_args()
+
+    if args.verify:
+        if is_signed_xpi(args.verify):
+            print(f"VERIFIED: {args.verify} is cryptographically signed (contains META-INF signatures).")
+            sys.exit(0)
+        else:
+            print(f"FAILED: {args.verify} is NOT signed or missing META-INF signatures.")
+            sys.exit(1)
 
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     artifacts_dir = os.path.normpath(os.path.join(root_dir, args.artifacts_dir))
