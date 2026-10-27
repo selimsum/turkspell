@@ -55,7 +55,7 @@ EXPLICIT_HOMOGRAPHS = {
     # Valid Turkish inflected / suffixed / uppercase entries
     "kelime", "kronoloji", "sek", "silahlanma", "vergisi", "i̇çli", "içli",
     "aşıklı", "hayasız", "hayasızca", "karsızca", "yaran", "geleceğinizin",
-    "görüntülerinsen", "teknolojilerinsen", "topraklarınsan", "yasamazken",
+    "yasamazken",
     # Additional TDK unigram homographs
     "bedeni", "beşeri", "cebri", "cinsi", "dahili", "derhal", "dini", "ebedi", "edebi",
     "ehli", "elifi", "esatiri", "fani", "fenni", "ferdi", "ferdilik", "feri", "fiili",

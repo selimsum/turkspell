@@ -34,6 +34,11 @@
 
 Turkspell, bağımsız ve standartlaştırılmış tüm Türkçe yazım denetimi kıyaslama paketlerinde **%100,00 Precision (sıfır yanlış alarm)**, **%100,00 Recall** ve sektör lideri öneri başarısı sergiler.
 
+> [!NOTE]
+> **Metodolojik Not & Kıyaslama Kapsamı**:
+> * **Precision (Hassasiyet)**: TDK Güncel Türkçe Sözlük ve Dil Derneği söz varlıklarına dayalı temiz metinlerde meşru Türkçe sözcüklerin yanlışlıkla hata sayılmamasını (%100 Precision / sıfır yanlış alarm) doğrular.
+> * **Test İzolasyonu & Öneri Kıyaslamaları**: Turkspell'in testleri ve derleme süreçleri bağımsız harici referanslara dayanır; test setleri değerlendirilen modelden bağımsız tutulur.
+
 ### 1. Turkspell Benchmark V2
 #### A. TDK Standardı ( 10.000 Temiz + 13.639 Hatalı Token)
 | Sözlük / Motor | Precision (%) | Recall (%) | F1 Skoru (%) | Top-1 (%) | Top-3 (%) | Top-5 (%) | MRR | Süre (sn) |
@@ -116,38 +121,54 @@ turkspell/
 ├── tr.dic                     # Ana dağıtım (Universal) sözlük dosyası
 ├── update.json                # Firefox eklenti otomatik güncelleme bildirimi
 ├── pytest.ini                 # Pytest resmi test yapılandırması
+├── requirements-dev.txt       # Geliştirme, test ve imzalama bağımlılıkları
+│
+├── .github/workflows/         # Sürekli Entegrasyon ve Dağıtım (CI/CD)
+│   ├── test.yml               # Otomatik test ve kalite kapısı iş akışı
+│   └── release-xpi.yml        # Güvenli Firefox XPI paketleme ve imzalama
 │
 ├── dist/                      # Dağıtım Sürüm Çıktıları (3 ayrı profil)
-│   ├── turkspell-universal/     # Evrensel (Universal) Profil (tr.aff, tr.dic)
-│   ├── turkspell-tdk/           # TDK Profili (tr.aff, tr.dic)
-│   └── turkspell-dd/            # Dil Derneği Profili (tr.aff, tr.dic)
+│   ├── turkspell-universal/   # Evrensel (Universal) Profil (tr.aff, tr.dic)
+│   ├── turkspell-tdk/         # TDK Profili (tr.aff, tr.dic)
+│   └── turkspell-dd/          # Dil Derneği Profili (tr.aff, tr.dic)
 │
-├── firefox-addon/             # Mozilla Firefox Eklenti Kaynakları
+├── firefox-addon/             # Mozilla Firefox Eklenti Kaynakları (Universal)
 │   ├── manifest.json          # WebExtension bildirim dosyası
-│   └── dictionaries/          # Eklenti içi sözlük dosyaları (tr.aff, tr.dic)
+│   └── dictionaries/          # Derleme sırasında dinamik hazırlanan sözlükler
+│
+├── firefox-addon-tdk/         # Mozilla Firefox Eklenti Kaynakları (TDK 2026)
+│   ├── manifest.json          # WebExtension bildirim dosyası
+│   └── dictionaries/          # Derleme sırasında dinamik hazırlanan sözlükler
 │
 ├── build/                     # Derleme ve Paketleme Araçları
 │   ├── compile_hunspell.py    # Hunspell derleme yürütücüsü
 │   ├── generate_grammar_rules.py # Morfolojik kural ve bayrak üreteci
-│   ├── package_addon.py       # Firefox XPI paketleme betiği
-│   ├── utf8_flag_mapping.py   # UTF-8 bayrak eşleme tablosu
+│   ├── package_addon.py       # Deterministik Firefox XPI paketleme betiği
+│   ├── utf8_flag_mapping.py   # Dondurulmuş UTF-8 bayrak eşleme tablosu
 │   └── validate_build.py      # Yapı bütünlüğü ve kalite kontrol aracı
 │
-├── tests/                     # Otomasyon ve Regresyon Test Paketi
+├── tests/                     # Otomasyon ve Regresyon Test Paketi (71 test)
 │   ├── test_morphology.py     # Pozitif morfolojik çekim testleri
 │   ├── test_overgeneration.py # Aşırı üretim ve anomali engelleme testleri
-│   └── test_suggestions.py    # Öneri kalitesi ve MRR kıyaslama testleri
+│   ├── test_suggestions.py    # Öneri kalitesi ve MRR kıyaslama testleri
+│   ├── test_golden_verbs.py   # 15.000+ fiil çekim regresyon & kanarya testleri
+│   ├── test_flag_mapping.py   # UTF-8 bayrak kararlılık ve tekillik testleri
+│   └── golden_verbs_baseline.json # Fiil morfolojisi altın referans kümesi
 │
-├── tools/                     # Veri Analiz ve İnce Ayar Araçları
-│   ├── build.py           # Tek adımda sözlük derleyici
-│   ├── audit_missing_morphology.py # Morfolojik eksiklik denetçisi
-│   ├── corpus_affix_discovery.py   # Derlemden ek madenciliği aracı
-│   └── clean_and_audit_oscar.py    # OSCAR derlem temizleme hattı
+├── tools/                     # Veri Analiz, Kıyaslama ve Yardımcı Araçlar
+│   ├── README.md              # Araçlar kullanım ve sınıflandırma kılavuzu
+│   ├── build.py               # Tek adımda sözlük derleyici
+│   ├── bump_version.py        # Sürüm artırma ve manifest senkronizasyonu
+│   ├── sign_addon.py          # Mozilla AMO API eklenti imzalayıcı
+│   ├── benchmark_evaluator.py # Kıyaslama değerlendirme aracı
+│   └── ...                    # Derlem madenciliği ve leksikon araçları
 │
 ├── lexicons/                  # Giriş Sözlükleri ve Veri Kümeleri
 │   ├── bilim_sanat_lexicon.json  # TDK Bilim ve Sanat Terimleri Sözlüğü (4.955 terim)
 │   ├── custom_abbreviations.json # Resmi kısaltmalar
 │   ├── custom_names.json         # Özel isimler ve yer adları
+│   ├── extra_rep_rules.json      # Yapılandırılmış öneri (REP) kural tablosu
+│   ├── bad_stems.json            # Ayıklanmış gürültü ve engellenen kökler
 │   └── zemberek_lexicon.json     # Zemberek morfolojik referans kökleri
 │
 └── raw_data/                  # Temel Otorite Kaynakları
@@ -359,7 +380,7 @@ Geleneksel Hunspell sözlükleri statik el yapımı kurallarla sınırlıyken, T
 
 [`training/generate_training_data.py`](file:///c:/gemini/turkspell/training/generate_training_data.py) betiği derlemlerden otomatik eğitim verisi hazırlar:
 1. **Derlem Tarama**: `wiki_corpus.txt` ve `magazine_corpus.txt` dosyalarındaki milyonlarca sözcük taranır, tokenize edilir.
-2. **Filtreleme**: İngilizce sözcükler ([`data/english_words_large.txt`](file:///c:/gemini/turkspell/training/english_words_large.txt)), yabancı özel adlar, Q/W/X içeren gürültüler ve frekansı 10'dan düşük olan yazım hataları ayıklanır.
+2. **Filtreleme**: İngilizce sözcükler ([`data/english_words_large.txt`](file:///c:/gemini/turkspell/raw_data/english_words_large.txt)), yabancı özel adlar, Q/W/X içeren gürültüler ve frekansı 10'dan düşük olan yazım hataları ayıklanır.
 3. **Kaçırılan Sözcüklerin (False Negatives) Tespiti**: Yüksek frekanslı adaylar sistemdeki Hunspell motorundan (`hunspell -d tr -l`) geçirilir. Sözlük tarafından tanınmayan meşru Türkçe sözcükler saptanır.
 4. **Kök Kümeleri Oluşturma**: Tanınmayan sözcükler bilinen köklerle (`merged_dictionary_cleaned.txt`) eşleştirilir. Bir kökte 3 veya daha fazla kaçırılmış çekim varsa (`valid_groups`), bir kural açığı olduğu belirlenir.
 5. **Instruction Formatında Veri Seti**: Modelin Python kural şablonları üretmesini sağlayan `train_dataset.jsonl` oluşturulur:
@@ -501,13 +522,17 @@ python -m unittest discover tests
    * Kaba ünlü uyumu ihlalleri (*\*evlar*, *\*kedidan*).
 3. **`tests/test_suggestions.py` (Öneri Doğruluğu & MRR)**:
    * Şapka hataları ve klavye kaymalarında Top-1 / Top-3 doğruluk denetimi.
-   * 25 sözcüklük standart bataryada **0,90+ MRR** ve **%90,0+ Top-1 başarı eşiği** zorunluluğu.
+   * Standart bataryada **0,90+ MRR** ve **%90,0+ Top-1 başarı eşiği** zorunluluğu.
+4. **`tests/test_golden_verbs.py` (Fiil Çekim Regresyon & Kanarya Testleri)**:
+   * 15.323 fiil çekim formunda regresyon denetimi ve 49 canary aşırı üretim koruması.
+5. **`tests/test_flag_mapping.py` (Bayrak Eşleme ve Karakter Bütünlüğü)**:
+   * 200 adet UTF-8 bayrağının tekillik, NEEDAFFIX ve kod noktası kararlılığı denetimi.
 
 ### Git Pre-Commit Kalite Kapısı
 
 Projeye kurulu `.git/hooks/pre-commit` kancası sayesinde, her `git commit` işleminde:
 1. `python build/validate_build.py` çalıştırılarak sözlük boyutları, bayrak eşlemeleri ve leksikon varlığı doğrulanır.
-2. `python -m unittest discover tests` ile 28 testin tamamı firesiz çalıştırılır.
+2. `pytest` ile 71 test ve 240 alt testin tamamı firesiz çalıştırılır.
 3. Herhangi bir hata durumunda commit işlemi otomatik olarak engellenir.
 
 ---
@@ -554,6 +579,11 @@ Bu proje **MIT Lisansı** altında özgür bir yazılım olarak sunulmaktadır. 
 ## 📊 Comprehensive Benchmark Results
 
 Turkspell delivers **100.00% Precision (zero false alarms)**, **100.00% Recall**, **100.00% F1 accuracy**, and industry-leading suggestion accuracy across independent, standardized Turkish spell-checking benchmarks.
+
+> [!NOTE]
+> **Methodological Scope & Test Isolation**:
+> * **Precision**: Validates zero false alarms on standard Turkish texts vetted against official TDK and Dil Derneği vocabularies.
+> * **Evaluation Independence**: Benchmarks and suggestion tests rely on independent external ground-truth references; the dictionary under test is never used as an evaluation oracle for its own test sets.
 
 ### 1. Turkspell Benchmark V2
 #### A. TDK Standard ( 10,000 Clean + 13,639 Misspelled Tokens)
@@ -637,38 +667,54 @@ turkspell/
 ├── tr.dic                     # Main distribution (Universal) dictionary wordlist
 ├── update.json                # Firefox add-on automated update manifest
 ├── pytest.ini                 # Pytest official test configuration
+├── requirements-dev.txt       # Development, testing, and signing dependencies
+│
+├── .github/workflows/         # Continuous Integration & Delivery (CI/CD)
+│   ├── test.yml               # Automated test & quality gate workflow
+│   └── release-xpi.yml        # Secure Firefox XPI packaging and signing
 │
 ├── dist/                      # Distribution Outputs (3 distinct profiles)
-│   ├── turkspell-universal/     # Universal Profile (tr.aff, tr.dic)
-│   ├── turkspell-tdk/           # TDK Profile (tr.aff, tr.dic)
-│   └── turkspell-dd/            # Dil Derneği Profile (tr.aff, tr.dic)
+│   ├── turkspell-universal/   # Universal Profile (tr.aff, tr.dic)
+│   ├── turkspell-tdk/         # TDK Profile (tr.aff, tr.dic)
+│   └── turkspell-dd/          # Dil Derneği Profile (tr.aff, tr.dic)
 │
-├── firefox-addon/             # Mozilla Firefox WebExtension Resources
+├── firefox-addon/             # Mozilla Firefox WebExtension Resources (Universal)
 │   ├── manifest.json          # WebExtension manifest file
-│   └── dictionaries/          # Add-on dictionary bundle (tr.aff, tr.dic)
+│   └── dictionaries/          # Add-on dictionary bundle (dynamically staged)
+│
+├── firefox-addon-tdk/         # Mozilla Firefox WebExtension Resources (TDK 2026)
+│   ├── manifest.json          # WebExtension manifest file
+│   └── dictionaries/          # Add-on dictionary bundle (dynamically staged)
 │
 ├── build/                     # Build & Packaging Tooling
 │   ├── compile_hunspell.py    # Hunspell compilation pipeline runner
 │   ├── generate_grammar_rules.py # Morphological rule and affix generator
-│   ├── package_addon.py       # Firefox XPI packaging script
-│   ├── utf8_flag_mapping.py   # UTF-8 flag mapping table
+│   ├── package_addon.py       # Deterministic Firefox XPI packaging script
+│   ├── utf8_flag_mapping.py   # Frozen UTF-8 flag mapping registry
 │   └── validate_build.py      # Build integrity & quality verification tool
 │
-├── tests/                     # Automated Testing & Regression Test Suite
+├── tests/                     # Automated Testing & Regression Test Suite (71 tests)
 │   ├── test_morphology.py     # Positive morphological inflection tests
 │   ├── test_overgeneration.py # Overgeneration and anomaly prevention tests
-│   └── test_suggestions.py    # Suggestion quality and MRR evaluation tests
+│   ├── test_suggestions.py    # Suggestion quality and MRR evaluation tests
+│   ├── test_golden_verbs.py   # 15,000+ verb inflection regression & canaries
+│   ├── test_flag_mapping.py   # UTF-8 flag stability & uniqueness tests
+│   └── golden_verbs_baseline.json # Golden verbal reference baseline dataset
 │
-├── tools/                     # Data Analysis and Fine-Tuning Utilities
-│   ├── build.py           # One-step master dictionary compiler
-│   ├── audit_missing_morphology.py # Morphological gap audit tool
-│   ├── corpus_affix_discovery.py   # Corpus affix mining tool
-│   └── clean_and_audit_oscar.py    # OSCAR corpus sanitization pipeline
+├── tools/                     # Data Analysis, Benchmarks, and Utilities
+│   ├── README.md              # Script catalog and usage documentation
+│   ├── build.py               # Master dictionary compiler
+│   ├── bump_version.py        # Version bumping and manifest synchronizer
+│   ├── sign_addon.py          # Mozilla AMO API extension signer
+│   ├── benchmark_evaluator.py # Benchmark evaluation runner
+│   └── ...                    # Corpus mining and lexicon sanitization tools
 │
 ├── lexicons/                  # Curated Input Lexicons & Datasets
 │   ├── bilim_sanat_lexicon.json  # TDK Science & Arts Terms Lexicon (4,955 terms)
 │   ├── custom_abbreviations.json # Verified official abbreviations
 │   ├── custom_names.json         # Verified proper nouns and geographic names
+│   ├── extra_rep_rules.json      # Structured suggestion (REP) rule table
+│   ├── bad_stems.json            # Sanitized noise stems & rejection guards
 │   └── zemberek_lexicon.json     # Zemberek morphological reference stems
 │
 └── raw_data/                  # Primary Linguistic Authority Sources
@@ -880,7 +926,7 @@ While traditional Hunspell dictionaries rely exclusively on static manual rules,
 
 [`training/generate_training_data.py`](file:///c:/gemini/turkspell/training/generate_training_data.py) extracts training samples from large corpora:
 1. **Corpus Ingestion**: Scans and tokenizes millions of words across `wiki_corpus.txt` and `magazine_corpus.txt`.
-2. **Filtering**: Removes English vocabulary ([`data/english_words_large.txt`](file:///c:/gemini/turkspell/training/english_words_large.txt)), foreign proper nouns, Q/W/X noise, and low-frequency typos (freq < 10).
+2. **Filtering**: Removes English vocabulary ([`data/english_words_large.txt`](file:///c:/gemini/turkspell/raw_data/english_words_large.txt)), foreign proper nouns, Q/W/X noise, and low-frequency typos (freq < 10).
 3. **False Negative Detection**: Evaluates candidate words against Hunspell (`hunspell -d tr -l`) to identify legitimate Turkish words currently rejected by the dictionary.
 4. **Root Clustering**: Groups unrecognized inflected forms by their known stems (`merged_dictionary_cleaned.txt`). Roots with 3+ unrecognized inflections (`valid_groups`) are identified as rule gaps.
 5. **Instruction-Tuning Dataset Creation**: Assembles `train_dataset.jsonl` with structured prompts:
