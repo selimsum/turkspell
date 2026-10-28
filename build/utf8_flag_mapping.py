@@ -80,11 +80,15 @@ def remap_flag_string(s: str) -> str:
     i = 0
     n = len(s)
     while i < n:
-        # Check if 3-char match is valid (only proper-noun flags start with p[BOFU][NLRYAIPC])
+        # Check if 3-char match is valid (proper-noun flags p[BOFU][NLRYAIPC] or inverse-harmony LSZ, LFK, LCI)
         matched_3 = False
         if i + 3 <= n:
             three = s[i:i+3]
-            if three in LONG_TO_UTF8 and three.startswith("p") and len(three) == 3 and three[1] in "BOFU" and three[2] in "NLRYAIPC":
+            if three in ('LSZ', 'LFK', 'LCI'):
+                result.append(LONG_TO_UTF8[three])
+                i += 3
+                matched_3 = True
+            elif three in LONG_TO_UTF8 and three.startswith("p") and len(three) == 3 and three[1] in "BOFU" and three[2] in "NLRYAIPC":
                 # If remaining length is odd, a 3-char match would leave an orphan 1-char.
                 # Check if a 2-char match + next 2-char match can parse cleanly instead:
                 if i + 3 < n and (n - (i + 3)) % 2 != 0:

@@ -123,6 +123,22 @@ class TestOvergenerationProtection(unittest.TestCase):
         leaked = check_illegal_words(illegal)
         self.assertEqual(leaked, [], f"Plural singular copulas overgenerated: {leaked}")
 
+    def test_chained_derivation_overgeneration(self):
+        """Recursive chained affix pseudo-words (*kitaplıkçılıklaştırmak, *denizlikleşebilen) must be rejected."""
+        illegal = [
+            "denizlikleşebilen", "akılsızlıkçılıklaştırmak", "kapılılıkçılıklaştırmak",
+            "havasızlıkçılıklaştırmak", "kitaplıkçılıklaştırmak", "topraksızlıkçılıklaştırmak",
+            "dağlıkçılıklaştırmak", "insanlıkçılıklaştırmak", "kapısızlıkçılıklaştırmak",
+            "çiçeklikleşebilen", "mühendislikleşebilen", "güneşlikleşebilen",
+            "arabalıkçılıklaştırmak", "ormanlıkçılıklaştırmak", "avukatlıkçılıklaştırmak",
+            "ağaçlıklılaşabilmek", "arabasızlıkçılıklaştırmak", "ağaçlıkçılıklaştırmak",
+            "zamansızlıkçılıklaştırmak", "ağaçlılıkçılıklaştırmak", "masasızlıkçılıklaştırmak",
+            "dünyalıkçılıklaştırmak", "şehircilikleştiriliverme", "dağlılıkçılıklaştırmak",
+            "kalemlikleşebilen", "evlikleşebilen"
+        ]
+        leaked = check_illegal_words(illegal)
+        self.assertEqual(leaked, [], f"Chained derivation pseudo-words leaked: {leaked}")
+
 
 if __name__ == "__main__":
     unittest.main()

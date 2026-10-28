@@ -186,7 +186,7 @@ def sfx_ki(flag: str, strip: str, add: str, cond: str, rules: list, chain_copula
         # -ki rules don't typically take nominal copulas directly (except -dir etc handled in infl)
         rules.append(sfx(flag, strip, add + ki_part + infl, cond))
 
-def get_noun_chain(stem_flag: str, only_vowel: bool = False, only_consonant: bool = False) -> str:
+def get_noun_chain(stem_flag: str, only_vowel: bool = False, only_consonant: bool = False, derivs: str = None) -> str:
     if stem_flag in ("PX", "NX"):
         return stem_flag
     back_flags = {"B1", "B2", "V1", "V2", "D1", "D2", "C1", "C2", "G1", "G2"}  # back cons
@@ -247,28 +247,29 @@ def get_noun_chain(stem_flag: str, only_vowel: bool = False, only_consonant: boo
     elif is_front and not is_rounded:  p2pl = "PW"
     else:                              p2pl = "PZ"
 
+    default_derivs = "LILKSZCICKSLDLDTDE"
+    effective_derivs = default_derivs if derivs is None else derivs
+
     exclude_vowel = stem_flag[0] in ("V", "D", "G")
     if only_vowel:
         cases = f"{acc_f}{dat_f}{gen_f}"
         possessives = f"{p3}{p1}{p2s}{p1pl}{p2pl}"
         copula_flag = "VC" if is_back else "vc"
-        derivs = ""
+        effective_derivs = ""
         plural = ""
     elif only_consonant or exclude_vowel:
         cases = f"{loc_f}{abl_f}{ins_f}{eq_f}"
         possessives = ""
         copula_flag = "CL" if is_back else "cl"
-        derivs = "LILKSZCICKSLDLDTDE"
     else:
         cases = f"{acc_f}{dat_f}{loc_f}{abl_f}{gen_f}{ins_f}{eq_f}"
         possessives = f"{p3}{p1}{p2s}{p1pl}{p2pl}"
         copula_flag = "CL" if is_back else "cl"
-        derivs = "LILKSZCICKSLDLDTDE"
 
     if only_vowel:
         return f"{cases}{possessives}{copula_flag}NE"
     else:
-        return f"{stem_flag}{cases}{plural}{possessives}{copula_flag}{derivs}"
+        return f"{stem_flag}{cases}{plural}{possessives}{copula_flag}{effective_derivs}"
 
 
 def get_vowel_chain(stem_flag: str) -> str:
@@ -1130,7 +1131,7 @@ def gen_deriv_li(flag: str = "LI") -> str:
     for cond, suf, sc in stems:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
         lk_s, lk_v, lk_sc = lk_map[suf]
-        rules.append(sfx(flag, "0", f"{lk_s}/{get_noun_chain(lk_sc, only_consonant=True)[2:]}", cond))
+        rules.append(sfx(flag, "0", f"{lk_s}/{get_noun_chain(lk_sc, only_consonant=True, derivs='')[2:]}", cond))
         rules.append(sfx(flag, "0", f"{lk_v}/{get_noun_chain(lk_sc, only_vowel=True)}NE", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -1165,7 +1166,7 @@ def gen_deriv_li2(flag: str = "LF") -> str:
     for cond, suf, sc in stems:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
         lk_s, lk_v, lk_sc = lk_map[suf]
-        rules.append(sfx(flag, "0", f"{lk_s}/{get_noun_chain(lk_sc, only_consonant=True)[2:]}", cond))
+        rules.append(sfx(flag, "0", f"{lk_s}/{get_noun_chain(lk_sc, only_consonant=True, derivs='')[2:]}", cond))
         rules.append(sfx(flag, "0", f"{lk_v}/{get_noun_chain(lk_sc, only_vowel=True)}NE", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -1190,7 +1191,7 @@ def gen_deriv_sz(flag: str = "SZ") -> str:
     ]:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
         lk_s, lk_v, lk_sc = lk_map[suf]
-        rules.append(sfx(flag, "0", f"{lk_s}/{get_noun_chain(lk_sc, only_consonant=True)[2:]}", cond))
+        rules.append(sfx(flag, "0", f"{lk_s}/{get_noun_chain(lk_sc, only_consonant=True, derivs='')[2:]}", cond))
         rules.append(sfx(flag, "0", f"{lk_v}/{get_noun_chain(lk_sc, only_vowel=True)}NE", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -1217,7 +1218,7 @@ def gen_deriv_sz2(flag: str = "LSZ") -> str:
     ]:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
         lk_s, lk_v, lk_sc = lk_map[suf]
-        rules.append(sfx(flag, "0", f"{lk_s}/{get_noun_chain(lk_sc, only_consonant=True)[2:]}", cond))
+        rules.append(sfx(flag, "0", f"{lk_s}/{get_noun_chain(lk_sc, only_consonant=True, derivs='')[2:]}", cond))
         rules.append(sfx(flag, "0", f"{lk_v}/{get_noun_chain(lk_sc, only_vowel=True)}NE", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -1256,7 +1257,7 @@ def gen_deriv_lk(flag: str = "LK") -> str:
         ("[eiîâ][^aeıioöuüâîû][^aeıioöuüâîû]", "lik", "liğ", "F1"),
         ("[öüû][^aeıioöuüâîû][^aeıioöuüâîû]", "lük", "lüğ", "F2"),
     ]:
-        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc, only_consonant=True)[2:]}", cond))
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc, only_consonant=True, derivs='LISZ')[2:]}", cond))
         rules.append(sfx(flag, "0", f"{suf_v}/{get_noun_chain(sc, only_vowel=True)}NE", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -1277,7 +1278,7 @@ def gen_deriv_lk2(flag: str = "LFK") -> str:
         ("[aıâ][^aeıioöuüâîû][^aeıioöuüâîû]", "lik", "liğ", "F1"),
         ("[ouû][^aeıioöuüâîû][^aeıioöuüâîû]", "lük", "lüğ", "F2"),
     ]:
-        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc, only_consonant=True)[2:]}", cond))
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc, only_consonant=True, derivs='LFLSZ')[2:]}", cond))
         rules.append(sfx(flag, "0", f"{suf_v}/{get_noun_chain(sc, only_vowel=True)}NE", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -1306,7 +1307,7 @@ def gen_deriv_ci(flag: str = "CI") -> str:
     ]:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
         lk_s, lk_v, lk_sc = lk_map[suf]
-        rules.append(sfx(flag, "0", f"{lk_s}/{get_noun_chain(lk_sc, only_consonant=True)[2:]}", cond))
+        rules.append(sfx(flag, "0", f"{lk_s}/{get_noun_chain(lk_sc, only_consonant=True, derivs='')[2:]}", cond))
         rules.append(sfx(flag, "0", f"{lk_v}/{get_noun_chain(lk_sc, only_vowel=True)}NE", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -1332,7 +1333,7 @@ def gen_deriv_ci2(flag: str = "LCI") -> str:
     ]:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
         lk_s, lk_v, lk_sc = lk_map[suf]
-        rules.append(sfx(flag, "0", f"{lk_s}/{get_noun_chain(lk_sc, only_consonant=True)[2:]}", cond))
+        rules.append(sfx(flag, "0", f"{lk_s}/{get_noun_chain(lk_sc, only_consonant=True, derivs='')[2:]}", cond))
         rules.append(sfx(flag, "0", f"{lk_v}/{get_noun_chain(lk_sc, only_vowel=True)}NE", cond))
     return make_flag_block(flag, unique(rules))
 
@@ -1359,7 +1360,7 @@ def gen_deriv_ck(flag: str = "CK") -> str:
         ("[eiîâ][^aeıioöuüâîû][çfhkpsşt]",  "çik"), ("[öüû][^aeıioöuüâîû][çfhkpsşt]",  "çük"),
     ]:
         suf_v, sc = ck_map[suf]
-        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc, only_consonant=True)[2:]}", cond))
+        rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc, only_consonant=True, derivs='LISZ')[2:]}", cond))
         rules.append(sfx(flag, "0", f"{suf_v}/{get_noun_chain(sc, only_vowel=True)}", cond))
         rules.append(sfx(flag, "0", suf, cond))
         

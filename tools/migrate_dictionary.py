@@ -362,6 +362,23 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
             if len(word) == 1:
                 for deriv in ["LI", "SZ", "LK", "CI", "SL", "DL", "DT", "DE"]:
                     chain = chain.replace(deriv, "")
+
+            # Overgeneration hardening: prevent chained pseudo-word derivations
+            w_low = word.replace('I', 'ı').replace('İ', 'i').lower()
+            if w_low.endswith(("lık", "lik", "luk", "lük")):
+                for fl in ("CI", "LCI", "LK", "LFK", "DL", "DT", "DE"):
+                    chain = chain.replace(fl, "")
+                if w_low.endswith((
+                    "cılık", "cilik", "culuk", "cülük",
+                    "çılık", "çilik", "çuluk", "çülük",
+                    "sızlık", "sizlik", "suzluk", "süzlük",
+                    "lılık", "lilik", "luluk", "lülük"
+                )):
+                    for fl in ("LI", "LF", "SZ", "LSZ", "CK", "SL"):
+                        chain = chain.replace(fl, "")
+            elif w_low.endswith(("lıklı", "likli", "luklu", "lüklü")):
+                for fl in ("DL", "DT", "DE", "CI", "LCI", "LK", "LFK"):
+                    chain = chain.replace(fl, "")
         new_parts = [chain]
         if has_prefix:
             new_parts.append("PX")  # also takes metric prefixes

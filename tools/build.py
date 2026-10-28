@@ -622,7 +622,7 @@ PALATAL_L_HEADS = {
     "meşgul", "mesul", "mamul", "malul", "maktul", "mebzul", "memul", "gayrimakul"
 }
 # Pure palatal l flags: front rounded vowels, includes P4 (-üm), P8 (-ün), PV (-ü), PQ (-ümüz), PZ (-ünüz)
-PALATAL_L_FLAGS = remap_flag_string("A4 N4 P4 PV P8 Y2 L2 R2 I2 PQ PZ CK cl LF LSZ LFK LCI PF".replace(" ", ""))
+PALATAL_L_FLAGS = "".join(LONG_TO_UTF8[f] for f in "A4 N4 P4 PV P8 Y2 L2 R2 I2 PQ PZ CK cl LF LSZ LFK LCI PF".split())
 
 # sol, bol, kaşkol, turnusol, paraçol, razmol: back-rounded words that also have a palatal-L paradigm in TDK
 for _w in ("sol", "bol", "kaşkol", "turnusol", "paraçol", "razmol"):
@@ -1343,6 +1343,23 @@ def build_hardened_aff(profile="tdk"):
                 if clean_add.endswith("ğ") and "X" not in flags:
                     parts[3] = f"{clean_add}/X{flags}"
                     line = " ".join(parts) + "\n"
+                # Overgeneration hardening: prevent chained derivations on derived suffixes
+                _lk_flags = {LONG_TO_UTF8[f] for f in ("LK", "LFK") if f in LONG_TO_UTF8}
+                _bad_on_lik = {LONG_TO_UTF8[f] for f in ("DT", "DL", "DE", "CI", "LCI", "LK", "LFK") if f in LONG_TO_UTF8}
+                _all_deriv_flags = {LONG_TO_UTF8[f] for f in ("LI", "LF", "SZ", "LSZ", "CK", "SL", "DT", "DL", "DE", "CI", "LCI", "LK", "LFK") if f in LONG_TO_UTF8}
+                if curr_flag in _lk_flags or clean_add.endswith(("lık", "lik", "luk", "lük")):
+                    flags = "".join(c for c in flags if c not in _bad_on_lik)
+                    parts[3] = f"{clean_add}/{flags}"
+                    line = " ".join(parts) + "\n"
+                if clean_add.endswith((
+                    "cılık", "cilik", "culuk", "cülük",
+                    "çılık", "çilik", "çuluk", "çülük",
+                    "sızlık", "sizlik", "suzluk", "süzlük",
+                    "lılık", "lilik", "luluk", "lülük"
+                )):
+                    flags = "".join(c for c in flags if c not in _all_deriv_flags)
+                    parts[3] = f"{clean_add}/{flags}"
+                    line = " ".join(parts) + "\n"
             if curr_flag not in STAGE2_VERB_CHARS and len(parts) >= 5:
                 clean_add = parts[3].split("/")[0]
                 if parts[2] in ("mak", "mek"):
@@ -2028,6 +2045,21 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             flags = flags.replace("≕", "")
         elif head == "boyun":
             flags = flags.replace("∓", "")
+
+        # Overgeneration hardening: prevent recursive chained pseudo-word derivations
+        _strip_lik_flags = {LONG_TO_UTF8[f] for f in ("CI", "LCI", "LK", "LFK", "DL", "DT", "DE") if f in LONG_TO_UTF8}
+        _strip_double_flags = {LONG_TO_UTF8[f] for f in ("LI", "LF", "SZ", "LSZ", "CK", "SL") if f in LONG_TO_UTF8}
+        if head_lower.endswith(("lık", "lik", "luk", "lük")):
+            flags = "".join(c for c in flags if c not in _strip_lik_flags)
+            if head_lower.endswith((
+                "cılık", "cilik", "culuk", "cülük",
+                "çılık", "çilik", "çuluk", "çülük",
+                "sızlık", "sizlik", "suzluk", "süzlük",
+                "lılık", "lilik", "luluk", "lülük"
+            )):
+                flags = "".join(c for c in flags if c not in _strip_double_flags)
+        elif head_lower.endswith(("lıklı", "likli", "luklu", "lüklü")):
+            flags = "".join(c for c in flags if c not in _strip_lik_flags)
             
         entry_key = (head, flags)
         if entry_key in seen_heads:
