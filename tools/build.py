@@ -43,6 +43,55 @@ STAGE2_VERB_CHARS = {LONG_TO_UTF8[f] for f in STAGE2_VERB_FLAGS if f in LONG_TO_
 PROPER_SUB_UTF8 = {k for k, v in UTF8_TO_LONG.items() if v.startswith("p") and len(v) == 3}
 KC_FLAG = LONG_TO_UTF8.get("KC", "")
 
+# Case and possessive flags that MUST NEVER be attached to proper nouns without apostrophe
+COMMON_CASE_CHARS = {
+    LONG_TO_UTF8[f] for f in [
+        'DE', 'DL', 'DT', 'L1', 'L2', 'R1', 'R2',
+        'a1', 'a2', 'a3', 'a4', 'i1', 'i2', 'i3', 'i4', 'n1', 'n2', 'n3', 'n4', 'y1', 'y2', 'y3', 'y4',
+        'A1', 'A2', 'A3', 'I1', 'I2', 'I3', 'Y1', 'Y2', 'Y3', 'N1', 'N2', 'N3',
+        'B1', 'B2', 'B3', 'B4', 'F1', 'F2', 'F3', 'F4', 'V1', 'V2', 'V3', 'V4', 'D1', 'D2', 'D3', 'D4', 'C1', 'C2', 'C3', 'C4', 'G1', 'G2', 'G3', 'G4',
+        'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'PB', 'PM', 'PN', 'PS', 'PO', 'PR', 'PT', 'PU', 'PW', 'PF', 'PP',
+        'Q1', 'Q2', 'Q3'
+    ] if f in LONG_TO_UTF8
+}
+
+# Canonical Turkish Proper Nouns that must never exist in lowercase and must never take un-apostrophed case suffixes
+PURE_PROPER_NOUNS = {
+    # 81 Turkish Provinces (excluding dual-meaning common words like ağrı, batman, düzce, karaman, mersin, muş, ordu, samsun, tokat, aydın, uşak)
+    "adana", "adıyaman", "afyonkarahisar", "aksaray", "amasya", "ankara", "antalya",
+    "ardahan", "artvin", "balıkesir", "bartın", "bayburt", "bilecik", "bingöl",
+    "bitlis", "bolu", "burdur", "bursa", "çanakkale", "çankırı", "çorum", "diyarbakır",
+    "edirne", "elazığ", "erzincan", "erzurum", "eskişehir", "gaziantep", "giresun", "gümüşhane",
+    "hakkari", "hatay", "iğdır", "isparta", "istanbul", "izmir", "kahramanmaraş", "karabük",
+    "kars", "kastamonu", "kayseri", "kırıkkale", "kırklareli", "kırşehir", "kilis",
+    "kocaeli", "konya", "kütahya", "malatya", "manisa", "mardin",
+    "nevşehir", "niğde", "osmaniye", "rize", "sakarya", "siirt", "sinop", "sivas",
+    "şanlıurfa", "şırnak", "tekirdağ", "trabzon", "tunceli", "van", "yalova",
+    "yozgat", "zonguldak",
+    # World Countries & Continents (excluding dual-meaning common words like mısır, arjantin, ispanya)
+    "türkiye", "almanya", "fransa", "ingiltere", "italya", "rusya", "amerika",
+    "çin", "japonya", "yunanistan", "hollanda", "belçika", "isveç", "norveç", "danimarka",
+    "finlandiya", "avusturya", "isviçre", "polonya", "macaristan", "portekiz", "romanya",
+    "bulgaristan", "ukrayna", "azerbaycan", "özbekistan", "kazakistan", "türkmenistan",
+    "kırgızistan", "iran", "irak", "suriye", "lübnan", "ürdün", "israil", "filistin",
+    "kanada", "brezilya", "meksika", "avustralya", "hindistan", "pakistan",
+    "avrupa", "asya", "afrika", "antarktika",
+    # Canonical Personal Names (pure proper only, strictly excluding common nouns/adjectives like ali, murat, pınar, duygu, özlem, gizem, ebru, mert, yunus, volkan, etc.)
+    "atatürk", "mehmet", "mustafa", "ahmet", "hüseyin", "hasan", "ibrahim", "osman",
+    "ömer", "yusuf", "fatma", "ayşe", "emine", "hatice",
+    "zeynep", "meryem", "zehra", "hira", "ecrin", "miray", "lina", "esra",
+    "merve", "kübra", "büşra", "tuğba",
+    "sinem", "didem", "nilgün", "suzan", "nuran",
+    "feride", "halide", "leyla", "şeyma", "beyza", "feyza", "rabia", "cansu",
+    "irem", "tuğçe", "melis", "alper", "emre", "serkan",
+    "gökhan", "erhan", "berke", "batuhan", "furkan", "enes",
+    "bilal", "harun", "davut", "yakup", "süleyman", "idris", "musa", "isa", "yahya",
+    "zekeriya", "lokman", "ilyas",
+    # Institutions & Major Acronyms
+    "tbmm", "tdk", "trt", "meb", "tübitak", "aselsan", "tusaş", "thy", "afad", "tse",
+    "yök", "sgk", "bddk", "rtük", "ösym", "tüik"
+}
+
 RE_OCR_FRAGMENT = re.compile(r'^[rlmny][b-df-hj-np-tv-z]')
 RE_REPEATED_CHARS = re.compile(r'(.)\1\1')
 RE_CONSONANT_CLUSTER = re.compile(r'^[b-df-hj-np-tv-z]{4,}')
@@ -1895,8 +1944,43 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             if not is_legit_upper and head_lower in existing_lower_heads:
                 removed_redundant_upper += 1
                 continue
+
+            # Architecture Enforcement: Proper Noun Inflection Contract
+            # Proper nouns (e.g. Adana, Atatürk, Türkiye, Ahmet, Ali) CANNOT take un-apostrophed common case/possessive flags!
+            is_proper = (
+                bool(proper_flags)
+                or head in custom_names_orig
+                or head_lower in custom_names
+                or head_lower in PURE_PROPER_NOUNS
+            )
+            if is_proper and not is_compound_term and head not in BRAND_FLAG_MAP:
+                # Strip all un-apostrophed common case and possessive flags
+                clean_fl = "".join(c for c in flags if c not in COMMON_CASE_CHARS)
+                # Enforce KEEPCASE so lowercase typo like 'adana' is never accepted
+                if KC_FLAG and KC_FLAG not in clean_fl:
+                    clean_fl = KC_FLAG + clean_fl
+                # Enforce proper apostrophe flags if missing
+                if not any(c in PROPER_SUB_UTF8 for c in clean_fl):
+                    last_v = ""
+                    for ch in reversed(head):
+                        if ch in "aıâouûeiîöüAIÂOUÛEİÎÖÜ":
+                            last_v = tr_lower(ch)
+                            break
+                    if last_v in "aıâ":
+                        clean_fl += PROPER_B
+                    elif last_v in "ouû":
+                        clean_fl += PROPER_O
+                    elif last_v in "eiî":
+                        clean_fl += PROPER_F
+                    elif last_v in "öü":
+                        clean_fl += PROPER_U
+                flags = clean_fl
         else:
             # Lowercase entry:
+            if head_lower in PURE_PROPER_NOUNS:
+                # Pure proper nouns must NEVER exist in lowercase!
+                removed_bad_stems += 1
+                continue
             if is_compound_term:
                 # Lowercase compound term (dağ, vadi, ova): gets ONLY common flags (no apostrophes!)
                 flags = common_flags
@@ -2198,19 +2282,22 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                         last_vowel = tr_lower(ch)
                         break
                 if last_vowel in "aıâ":
-                    proper_flags = remap_flag_string("CK CL L1 pBN pBL pBR pBY pBA pBI pBP pBC".replace(" ", ""))
+                    proper_flags = remap_flag_string("CK CL pBN pBL pBR pBY pBA pBI pBP pBC".replace(" ", ""))
                 elif last_vowel in "ouû":
-                    proper_flags = remap_flag_string("CK CL L1 pON pOL pOR pOY pOA pOI pOP pOC".replace(" ", ""))
+                    proper_flags = remap_flag_string("CK CL pON pOL pOR pOY pOA pOI pOP pOC".replace(" ", ""))
                 elif last_vowel in "eiî":
-                    proper_flags = remap_flag_string("CK cl L2 pFN pFL pFR pFY pFA pFI pFP pFC".replace(" ", ""))
+                    proper_flags = remap_flag_string("CK cl pFN pFL pFR pFY pFA pFI pFP pFC".replace(" ", ""))
                 elif last_vowel in "öü":
-                    proper_flags = remap_flag_string("CK cl L2 pUN pUL pUR pUY pUA pUI pUP pUC".replace(" ", ""))
+                    proper_flags = remap_flag_string("CK cl pUN pUL pUR pUY pUA pUI pUP pUC".replace(" ", ""))
                 else:
                     proper_flags = ""
-                combined_fl = "".join(sorted(set(base_fl + proper_flags)))
+                base_fl_clean = "".join(c for c in base_fl if c not in COMMON_CASE_CHARS)
+                combined_fl = "".join(sorted(set(base_fl_clean + proper_flags + (KC_FLAG or ""))))
                 entry_n = f"{n}/{combined_fl}" if combined_fl else n
             else:
-                entry_n = f"{n}/{base_fl}" if base_fl else n
+                base_fl_clean = "".join(c for c in base_fl if c not in COMMON_CASE_CHARS)
+                combined_fl = "".join(sorted(set(base_fl_clean + (KC_FLAG or ""))))
+                entry_n = f"{n}/{combined_fl}" if combined_fl else n
             clean_entries.append(entry_n)
             seen_heads.add((n, ""))
             added_names += 1
