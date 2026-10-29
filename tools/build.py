@@ -48,10 +48,12 @@ COMMON_CASE_CHARS = {
     LONG_TO_UTF8[f] for f in [
         'DE', 'DL', 'DT', 'L1', 'L2', 'R1', 'R2',
         'a1', 'a2', 'a3', 'a4', 'i1', 'i2', 'i3', 'i4', 'n1', 'n2', 'n3', 'n4', 'y1', 'y2', 'y3', 'y4',
-        'A1', 'A2', 'A3', 'I1', 'I2', 'I3', 'Y1', 'Y2', 'Y3', 'N1', 'N2', 'N3',
+        'A1', 'A2', 'A3', 'A4', 'I1', 'I2', 'I3', 'I4', 'Y1', 'Y2', 'Y3', 'Y4', 'N1', 'N2', 'N3', 'N4',
         'B1', 'B2', 'B3', 'B4', 'F1', 'F2', 'F3', 'F4', 'V1', 'V2', 'V3', 'V4', 'D1', 'D2', 'D3', 'D4', 'C1', 'C2', 'C3', 'C4', 'G1', 'G2', 'G3', 'G4',
-        'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'PB', 'PM', 'PN', 'PS', 'PO', 'PR', 'PT', 'PU', 'PW', 'PF', 'PP',
-        'Q1', 'Q2', 'Q3'
+        'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'PB', 'PM', 'PN', 'PS', 'PO', 'PR', 'PT', 'PU', 'PV', 'PW', 'PX', 'PZ', 'PQ', 'PF', 'PP',
+        'Q1', 'Q2', 'Q3', 'CL', 'CP', 'CV', 'cl', 'CK', 'vc', 'VC',
+        'uA', 'uE', 'uO', 'uU', 'cA', 'cE', 'cI', 'cU', 'vA', 'vE', 'sA', 'sE',
+        'pA', 'pE', 'pO', 'pU', 'qA', 'qE', 'qO', 'qU'
     ] if f in LONG_TO_UTF8
 }
 
@@ -62,22 +64,23 @@ PURE_PROPER_NOUNS = {
     "ardahan", "artvin", "balıkesir", "bartın", "bayburt", "bilecik", "bingöl",
     "bitlis", "bolu", "burdur", "bursa", "çanakkale", "çankırı", "çorum", "diyarbakır",
     "edirne", "elazığ", "erzincan", "erzurum", "eskişehir", "gaziantep", "giresun", "gümüşhane",
-    "hakkari", "hatay", "iğdır", "isparta", "istanbul", "izmir", "kahramanmaraş", "karabük",
+    "hakkari", "hatay", "iğdır", "ığdır", "isparta", "ısparta", "istanbul", "izmir", "kahramanmaraş", "karabük",
     "kars", "kastamonu", "kayseri", "kırıkkale", "kırklareli", "kırşehir", "kilis",
     "kocaeli", "konya", "kütahya", "malatya", "manisa", "mardin",
     "nevşehir", "niğde", "osmaniye", "rize", "sakarya", "siirt", "sinop", "sivas",
     "şanlıurfa", "şırnak", "tekirdağ", "trabzon", "tunceli", "van", "yalova",
     "yozgat", "zonguldak",
-    # World Countries & Continents (excluding dual-meaning common words like mısır, arjantin, ispanya)
+    # World Countries & Continents (excluding dual-meaning common words like mısır, arjantin)
     "türkiye", "almanya", "fransa", "ingiltere", "italya", "rusya", "amerika",
     "çin", "japonya", "yunanistan", "hollanda", "belçika", "isveç", "norveç", "danimarka",
     "finlandiya", "avusturya", "isviçre", "polonya", "macaristan", "portekiz", "romanya",
     "bulgaristan", "ukrayna", "azerbaycan", "özbekistan", "kazakistan", "türkmenistan",
-    "kırgızistan", "iran", "irak", "suriye", "lübnan", "ürdün", "israil", "filistin",
+    "kırgızistan", "iran", "irak", "ırak", "suriye", "lübnan", "ürdün", "israil", "filistin",
     "kanada", "brezilya", "meksika", "avustralya", "hindistan", "pakistan",
-    "avrupa", "asya", "afrika", "antarktika",
-    # Canonical Personal Names (pure proper only, strictly excluding common nouns/adjectives like ali, murat, pınar, duygu, özlem, gizem, ebru, mert, yunus, volkan, etc.)
+    "avrupa", "asya", "afrika", "antarktika", "ispanya",
+    # Canonical Personal Names (pure proper only, strictly excluding common nouns/adjectives like murat, pınar, duygu, özlem, gizem, ebru, mert, yunus, volkan, etc.)
     "atatürk", "mehmet", "mustafa", "ahmet", "hüseyin", "hasan", "ibrahim", "osman",
+    "ali",
     "ömer", "yusuf", "fatma", "ayşe", "emine", "hatice",
     "zeynep", "meryem", "zehra", "hira", "ecrin", "miray", "lina", "esra",
     "merve", "kübra", "büşra", "tuğba",
