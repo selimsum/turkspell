@@ -40,7 +40,7 @@ MAXDIFF 5
 MAXNGRAMSUGS 8
 
 
-REP 2967
+REP 2969
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -1058,6 +1058,8 @@ REP geçik gecik
 REP yerlebir yerle_bir
 REP azçok az_çok
 REP gökgürültüsü gök_gürültüsü
+REP vaadet vadet
+REP vaadede vadede
 REP dâhilî dahili
 REP hâkî haki
 REP î i

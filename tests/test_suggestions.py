@@ -438,6 +438,8 @@ class TestSuggestionRanking(unittest.TestCase):
             ("yerlebir", "yerle bir", 1),
             ("azçok", "az çok", 1),
             ("gökgürültüsü", "gök gürültüsü", 1),
+            ("vaadettiği", "vadettiği", 1),
+            ("vaadetmek", "vadetmek", 1),
         ]
         self.assertPairsSuggested(test_pairs)
 
