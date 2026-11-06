@@ -1332,21 +1332,7 @@ def load_lexicons():
 def build_hardened_aff(profile="tdk"):
     print(f"Building hardened .aff file for profile [{profile}]...")
     with open(AFF_SRC, "r", encoding="utf-8") as f:
-        raw_aff_check = f.read()
-    if "FLAG long" in raw_aff_check:
-        from compile_hunspell_utf8 import remap_aff_file
-        import tempfile
-        with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False, suffix=".aff") as tmp_aff:
-            tmp_aff_path = tmp_aff.name
-        try:
-            remap_aff_file(str(AFF_SRC), tmp_aff_path)
-            with open(tmp_aff_path, "r", encoding="utf-8") as f:
-                lines = f.readlines()
-        finally:
-            if os.path.exists(tmp_aff_path):
-                os.remove(tmp_aff_path)
-    else:
-        lines = raw_aff_check.splitlines(keepends=True)
+        lines = f.readlines()
         
     hardened_lines = []
     fixed_wildcards = 0

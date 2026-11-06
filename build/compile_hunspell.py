@@ -239,8 +239,6 @@ def compile_dictionary():
     # Distinct unhatted words in TDK that have a different meaning from Dil Derneği's hatted version
     UNHATTED_EXCEPTIONS = {'ademiyet'}
 
-    _dropped_unhatted = 0
-
     HATTED_PREFERRED_MAP = {
         'dahili': 'dâhilî', 'milli': 'millî', 'resmi': 'resmî', 'dini': 'dinî',
         'derhal': 'derhâl', 'halbuki': 'hâlbuki', 'halsiz': 'hâlsiz', 'haliyle': 'hâliyle',
@@ -300,19 +298,6 @@ def compile_dictionary():
         if os.path.exists(alt_path):
             with open(alt_path, 'r', encoding='utf-8') as f:
                 raw_custom_entries = json.load(f)
- 
-    # Inject all missing TDK words dynamically from scratch file
-    missing_tdk_path = os.path.join(base_dir, 'scratch', 'all_missing_tdk_words.txt')
-    if os.path.exists(missing_tdk_path):
-        with open(missing_tdk_path, 'r', encoding='utf-8') as _mf:
-            _mwords = [line.strip() for line in _mf if line.strip()]
-        for _mw in _mwords:
-            _pos = 'Verb' if (_mw.endswith('mak') or _mw.endswith('mek')) else 'Noun'
-            raw_custom_entries.append({'lemma': _mw, 'pos': _pos, 'attributes': []})
-        print(f'Injected {len(_mwords)} missing TDK entries into custom_entries.')
-
-    # OSCAR parsed candidates injection disabled per user directive (only TDK, Dil Derneği & custom names/abbrevs allowed)
-    pass
 
 
     ENGLISH_WORDS = {
@@ -483,20 +468,8 @@ def compile_dictionary():
     _attrs_transferred = 0
     # Dil Derneği wrongly lists front-variant derivatives of the back-harmony
     # loanword emlak ("emlakçi", "emlakçilik"); TDK has only the back forms
-    # (emlakçı, emlakçılık). They are also marked obsolete in
-    # scratch/obsolete_lemmas.json. Exclude them so they are never accepted.
+    # (emlakçı, emlakçılık). Exclude them so they are never accepted.
     _BAD_DD_VARIANTS = {'emlakçi', 'emlakçilik'}
-
-    # -----------------------------------------------------------------------
-    # Corpus-Attested Attributes Integration
-    # -----------------------------------------------------------------------
-    _corpus_attrs_path = os.path.join(_raw_dir, 'corpus_attested_attributes.json')
-    _corpus_attrs_map = {}
-    if os.path.exists(_corpus_attrs_path):
-        print(f"Reading corpus-attested attributes from {_corpus_attrs_path}...")
-        with open(_corpus_attrs_path, 'r', encoding='utf-8') as _caf:
-            _corpus_attrs_map = json.load(_caf)
-        print(f"Loaded {len(_corpus_attrs_map):,} corpus-attested stem attributes.")
 
     # -----------------------------------------------------------------------
     # TDK 2026 Dizin Official Morphological Attributes Extraction
@@ -708,7 +681,7 @@ def compile_dictionary():
         # chemical element symbols / abbreviations that produce spurious inflected
         # forms which silently accept misspellings (false negatives).
         # Exception: meaningful Turkish words like 'ay', 'çay', 'ray', 'çin', 'nil'.
-        PRONUNCIATION_GUESSED_ALLOWLIST = {'ay', 'çay', 'ray', 'çin', 'nil', 'nil', 'rn', 'sir'}
+        PRONUNCIATION_GUESSED_ALLOWLIST = {'ay', 'çay', 'ray', 'çin', 'nil', 'rn', 'sir'}
         if (
             len(lemma) <= 3
             and 'PronunciationGuessed' in attrs
@@ -736,7 +709,7 @@ def compile_dictionary():
             continue
  
         # Force common abbreviations to lowercase for optimal Hunspell case matching
-        common_abbrevs = {'km', 'abd', 'örn', 'örn.', 'dr', 'dna', 'prof', 'x', 'mö', 'ms', 'sf', 'cm', 'kg', 'vb', 'bkz', 'm', 'g', 'b', 'mm', 'ml', 'gps', 'uuı', 'uv', 'bbc', 'vr', 'dr', 'eeg', 'yz', 'sscb', 'esa', 'rfid', 'dehb', 'mit', 'ngc', 'hiv', 'sls', 'atp', 'cern', 'iq', 'vb.', 't.c.'}
+        common_abbrevs = {'km', 'abd', 'örn', 'örn.', 'dr', 'dna', 'prof', 'x', 'mö', 'ms', 'sf', 'cm', 'kg', 'vb', 'bkz', 'm', 'g', 'b', 'mm', 'ml', 'gps', 'uuı', 'uv', 'bbc', 'vr', 'eeg', 'yz', 'sscb', 'esa', 'rfid', 'dehb', 'mit', 'ngc', 'hiv', 'sls', 'atp', 'cern', 'iq', 'vb.', 't.c.'}
         if lemma.lower() in common_abbrevs:
             lemma = lemma.lower()
             
@@ -1335,9 +1308,6 @@ def compile_dictionary():
             proper_nouns_to_flag.add(lk)
             proper_nouns_attrs_map[lk] = set(item.get('attributes', []))
 
-    # Remove proper nouns from noun_lemmas to prevent them from being treated as common nouns
-    # noun_lemmas = noun_lemmas - proper_nouns_to_flag
-
     def _proper_flag_for(lemma_lower: str, attrs: set = None) -> str:
         if attrs and 'InverseHarmony' in attrs:
             return 'pF'
@@ -1353,10 +1323,8 @@ def compile_dictionary():
     # Rebuild dic_entries, enforcing capitalization with KEEPCASE (KC)
     new_dic_entries = []
     seen_overrides = set()
-    
-    # Derived proper noun patterns that MUST NOT take apostrophes (TDK rule: yapım eki almış özel adlara kesme konmaz)
-    derived_no_apostrophe_suffixes = ('ce', 'ca', 'çe', 'ça', 'lı', 'li', 'lu', 'lü', 'lık', 'lik', 'luk', 'lük')
-    
+
+
     for entry in dic_entries:
         if not entry or not entry.strip():
             continue

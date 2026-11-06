@@ -70,30 +70,6 @@ from utf8_flag_mapping import remap_flag_string
 
 
 
-CORPUS_FREQ = set()
-pickle_path = os.path.join(os.path.dirname(__file__), '..', 'scripts', 'phase1', 'data', 'corpus_words_clean.pickle')
-if os.path.exists(pickle_path):
-    try:
-        import pickle
-        with open(pickle_path, 'rb') as f:
-            CORPUS_FREQ = pickle.load(f)
-    except:
-        pass
-if not CORPUS_FREQ:
-    freq_path = os.path.join(os.path.dirname(__file__), '..', 'raw_data', 'oscar_10m_corpus_frequencies.json')
-    if os.path.exists(freq_path):
-        try:
-            with open(freq_path, 'r', encoding='utf-8') as f:
-                CORPUS_FREQ = set(json.load(f).keys())
-        except:
-            pass
-
-DERIVATION_ALLOWLIST = {
-    "levrek", "hatim", "maymun", "anzak", "ayırım", "nitrit", "ışıldak",
-    "kaymakam", "nakliye", "frekans", "leva", "konvoy", "römorkör",
-    "büro", "mahkeme", "triatlon", "mat", "batma", "yöneltme", "yetki", "idari"
-}
-
 # ---------------------------------------------------------------------------
 # Flag mapping
 # ---------------------------------------------------------------------------
@@ -333,32 +309,7 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
                 chain = chain.replace("LK", "LFK")
                 chain = chain.replace("SZ", "LSZ")
                 chain = chain.replace("CI", "LCI")
-            
-            if CORPUS_FREQ and word.lower() not in DERIVATION_ALLOWLIST:
-                new_chain = chain
-                for flag, suffixes in [
-                    ("CI", ["ci", "cı", "cu", "cü", "çi", "çı", "çu", "çü"]),
-                    ("LCI", ["ci", "cı", "cu", "cü", "çi", "çı", "çu", "çü"]),
-                    ("LI", ["li", "lı", "lu", "lü"]),
-                    ("LF", ["li", "lı", "lu", "lü"]),
-                    ("LK", ["lik", "lık", "luk", "lük"]),
-                    ("LFK", ["lik", "lık", "luk", "lük"]),
-                    ("SZ", ["siz", "sız", "suz", "süz"]),
-                    ("LSZ", ["siz", "sız", "suz", "süz"]),
-                    ("SL", ["sal", "sel"]),
-                    ("DL", ["laş", "leş"]),
-                    ("DT", ["laştır", "leştir"]),
-                    ("DE", ["len", "leş"])
-                ]:
-                    if flag in new_chain:
-                        valid = False
-                        for suf in suffixes:
-                            if (word + suf).lower() in CORPUS_FREQ:
-                                valid = True
-                                break
-                        if not valid:
-                            new_chain = new_chain.replace(flag, "")
-                chain = new_chain
+
             if len(word) == 1:
                 for deriv in ["LI", "SZ", "LK", "CI", "SL", "DL", "DT", "DE"]:
                     chain = chain.replace(deriv, "")
@@ -420,20 +371,6 @@ def migrate_dictionary(input_path: str = 'tr.dic',
                        output_path: str = 'tr.dic',
                        max_warnings: int = 50):
     """Main migration function."""
-    # Load obsolete lemmas
-    obsolete_set = set()
-    obsolete_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scratch', 'obsolete_lemmas.json')
-    if os.path.exists(obsolete_path):
-        try:
-            with open(obsolete_path, 'r', encoding='utf-8') as f:
-                obsolete_list = json.load(f)
-                obsolete_set = set(obsolete_list)
-            print(f"Loaded {len(obsolete_set)} obsolete lemmas to flag as NOSUGGEST.")
-        except Exception as e:
-            print(f"Error loading obsolete lemmas: {e}")
-    else:
-        print("Warning: obsolete_lemmas.json not found. No words will be flagged as NOSUGGEST.")
-
     print(f"Reading {input_path}...")
     with open(input_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
@@ -451,7 +388,7 @@ def migrate_dictionary(input_path: str = 'tr.dic',
     skipped = 0
 
     for i, line in enumerate(data_lines, start=2):
-        new_line, warning = migrate_line(line, i, obsolete_set)
+        new_line, warning = migrate_line(line, i)
         if warning:
             all_warnings.append(warning)
         if new_line is not None:
