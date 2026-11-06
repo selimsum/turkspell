@@ -423,5 +423,23 @@ class TestSuggestionRanking(unittest.TestCase):
         self.assertPairsSuggested(test_pairs)
 
 
+
+    def test_fineweb2_pool2_rep_suggestions(self):
+        """Validates that newly mined FineWeb-2 Pool 2 typos correctly suggest TDK forms at Top-1."""
+        test_pairs = [
+            ("asvalt", "asfalt", 1),
+            ("çeket", "ceket", 1),
+            ("diagram", "diyagram", 1),
+            ("kurdela", "kurdele", 1),
+            ("kimsayal", "kimyasal", 1),
+            ("rengarek", "rengârenk", 1),
+            ("beyeniyorum", "beğeniyorum", 1),
+            ("geçikmeyi", "gecikmeyi", 1),
+            ("yerlebir", "yerle bir", 1),
+            ("azçok", "az çok", 1),
+            ("gökgürültüsü", "gök gürültüsü", 1),
+        ]
+        self.assertPairsSuggested(test_pairs)
+
 if __name__ == "__main__":
     unittest.main()

@@ -40,8 +40,7 @@ MAXDIFF 5
 MAXNGRAMSUGS 8
 
 
-
-REP 2805
+REP 2814
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -1048,6 +1047,17 @@ REP vericek verecek
 REP açıkcası açıkçası
 REP buyrun buyurun
 REP vaad vaat
+REP asvalt asfalt
+REP çeket ceket
+REP diagram diyagram
+REP kurdela kurdele
+REP kimsayal kimyasal
+REP rengarek rengârenk
+REP beyen beğen
+REP geçik gecik
+REP yerlebir yerle_bir
+REP azçok az_çok
+REP gökgürültüsü gök_gürültüsü
 REP yanliz yalnız
 REP deil değil
 REP diil değil
@@ -1120,7 +1130,6 @@ REP şurda şurada
 REP burda burada
 REP nerde nerede
 REP gardolap gardırop
-REP asvalt asfalt
 REP karnıbahar karnabahar
 REP komidin komodin
 REP parlemento parlamento
@@ -1152,7 +1161,6 @@ REP krathane kıraathane
 REP poaça poğaça
 REP pohaça poğaça
 REP maydonoz maydanoz
-REP kurdela kurdele
 REP kanbur kambur
 REP çenber çember
 REP penbe pembe
