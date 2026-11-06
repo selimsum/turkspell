@@ -86,9 +86,16 @@ def clean_candidates(cand_path, parsed_path, output_batch_path, max_batch=5000):
     print(f"[OK] Saved next batch to {output_batch_path}")
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="Prepare clean candidate batches for LLM morphology parsing")
+    parser.add_argument("--candidates", default="raw_data/fineweb2_unrecognized_candidates.json", help="Input unparsed candidates JSON")
+    parser.add_argument("--parsed", default="raw_data/fineweb2_parsed_entries.json", help="Already parsed entries JSON")
+    parser.add_argument("--output", default="raw_data/fineweb2_llm_input_batch4.json", help="Output batch JSON")
+    parser.add_argument("--max-batch", type=int, default=5000, help="Maximum batch size (default: 5000)")
+    args = parser.parse_args()
     clean_candidates(
-        "raw_data/fineweb2_unrecognized_candidates.json",
-        "raw_data/fineweb2_parsed_entries.json",
-        "raw_data/fineweb2_llm_input_batch4.json",
-        max_batch=5000,
+        args.candidates,
+        args.parsed,
+        args.output,
+        max_batch=args.max_batch,
     )

@@ -23,23 +23,20 @@ def count_vowels(word: str) -> int:
 def discover_corpus_affixes():
     t_start = time.time()
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    freq_path = os.path.join(base_dir, 'scripts', 'phase1', 'data', 'ts_timeline_frequencies.txt')
-    clean_pickle_path = os.path.join(base_dir, 'scripts', 'phase1', 'data', 'corpus_words_clean.pickle')
     tdk_path = os.path.join(base_dir, 'raw_data', 'tdk_words.txt')
     dd_path = os.path.join(base_dir, 'raw_data', 'dil_dernegi_words.txt')
     output_path = os.path.join(base_dir, 'raw_data', 'corpus_attested_attributes.json')
 
     print("Step 1: Loading frequency data and clean corpus...")
     freq_map = {}
-    if os.path.exists(freq_path):
-        with open(freq_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                parts = line.strip().split('\t')
-                if len(parts) == 2:
-                    freq_map[_tlc(parts[0])] = int(parts[1])
-        print(f"  Loaded {len(freq_map):,} frequency entries from ts_timeline_frequencies.txt.")
-    else:
-        print(f"  Warning: {freq_path} not found.")
+    fw2_path = os.path.join(base_dir, 'raw_data', 'fineweb2_corpus_frequencies.json')
+    if os.path.exists(fw2_path):
+        with open(fw2_path, 'r', encoding='utf-8') as f:
+            fw2_freq = json.load(f)
+        for k, v in fw2_freq.items():
+            k_low = _tlc(k)
+            freq_map[k_low] = freq_map.get(k_low, 0) + v
+        print(f"  Loaded {len(fw2_freq):,} frequency entries from fineweb2_corpus_frequencies.json.")
 
     oscar_path = os.path.join(base_dir, 'raw_data', 'oscar_10m_corpus_frequencies.json')
     if os.path.exists(oscar_path):
@@ -50,21 +47,8 @@ def discover_corpus_affixes():
             freq_map[k_low] = freq_map.get(k_low, 0) + v
         print(f"  Loaded {len(oscar_freq):,} frequency entries from oscar_10m_corpus_frequencies.json.")
 
-    fw2_path = os.path.join(base_dir, 'raw_data', 'fineweb2_corpus_frequencies.json')
-    if os.path.exists(fw2_path):
-        with open(fw2_path, 'r', encoding='utf-8') as f:
-            fw2_freq = json.load(f)
-        for k, v in fw2_freq.items():
-            k_low = _tlc(k)
-            freq_map[k_low] = freq_map.get(k_low, 0) + v
-        print(f"  Loaded {len(fw2_freq):,} frequency entries from fineweb2_corpus_frequencies.json.")
-    clean_corpus = set()
-    if os.path.exists(clean_pickle_path):
-        with open(clean_pickle_path, 'rb') as f:
-            clean_corpus = pickle.load(f)
-        print(f"  Loaded {len(clean_corpus):,} words from corpus_words_clean.pickle.")
-    else:
-        print(f"  Warning: {clean_pickle_path} not found.")
+    clean_corpus = set(freq_map.keys())
+    print(f"  Clean corpus vocabulary: {len(clean_corpus):,} unique words.")
 
     print("\nStep 2: Gathering authority vocabulary from TDK & Dil Derneği...")
     authority_words = set()

@@ -20,10 +20,20 @@ AFF_SRC = TURKSPELL_DIR / "tr.aff"
 DIC_SRC = TURKSPELL_DIR / "tr.dic"
 
 def get_base_dic_lines():
-    candidates = [
-        TURKSPELL_DIR / "dist" / "turkspell-universal" / "tr.dic",
-        TURKSPELL_DIR / "tr.dic",
-    ]
+    root_dic = TURKSPELL_DIR / "tr.dic"
+    universal_dic = TURKSPELL_DIR / "dist" / "turkspell-universal" / "tr.dic"
+    # If root tr.dic is strictly newer than dist universal tr.dic (e.g. compile_hunspell.py was run),
+    # prioritize root tr.dic. Otherwise, prefer dist universal tr.dic to avoid inheriting
+    # a profile-specific deployment (e.g. TDK-only).
+    if root_dic.exists() and universal_dic.exists():
+        if root_dic.stat().st_mtime > universal_dic.stat().st_mtime:
+            print("  Base dictionary source: root tr.dic (newer than dist/turkspell-universal/tr.dic)")
+            candidates = [root_dic, universal_dic]
+        else:
+            print("  Base dictionary source: dist/turkspell-universal/tr.dic")
+            candidates = [universal_dic, root_dic]
+    else:
+        candidates = [universal_dic, root_dic]
     for dic_path in candidates:
         if dic_path.exists():
             with open(dic_path, "r", encoding="utf-8") as f:
@@ -2360,7 +2370,13 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     print(f"  Clean entries before dedup: {len(clean_entries):,} -> after dedup: {len(deduped_entries):,}")
     return deduped_entries
 
-def compile_v06(deploy_profile="universal"):
+def compile_v06(deploy_profile="universal", compile_base=False):
+    if compile_base:
+        print("\n=======================================================")
+        print("Compiling base dictionary and grammar rules...")
+        print("=======================================================")
+        import compile_hunspell
+        compile_hunspell.compile_dictionary()
     tdk_words, dd_words, bilim_sanat_lexicon, bilim_sanat_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig = load_lexicons()
     
     profiles = ["tdk", "dd", "universal"]
@@ -2432,10 +2448,15 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="Compile Turkspell Hunspell dictionaries")
     parser.add_argument(
+        "--compile-base",
+        action="store_true",
+        help="Regenerate base tr.dic and tr.aff from source lexicons using build/compile_hunspell.py first"
+    )
+    parser.add_argument(
         "--deploy-profile",
         default=os.environ.get("TURKSPELL_PROFILE", "universal"),
         choices=["tdk", "universal", "dd"],
         help="Profile to deploy to repo root and firefox-addon (default: universal)"
     )
     args = parser.parse_args()
-    compile_v06(deploy_profile=args.deploy_profile)
+    compile_v06(deploy_profile=args.deploy_profile, compile_base=args.compile_base)

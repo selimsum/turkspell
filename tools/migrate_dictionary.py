@@ -301,7 +301,7 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
         stem_flag = NOUN_FLAG_MAP[nf]
 
         if word == 'Atatürk':
-            chain = "F2uAuYuLuRuNuIuQPFuPu1u2u3u4uCLILKSZCIDLDTDE"
+            chain = "CKclLILKSZCIpUNpULpURpUYpUApUIpUPpUCKC"
         else:
             chain = noun_chain(stem_flag, only_vowel=only_vowel)
             if has_inverse:
