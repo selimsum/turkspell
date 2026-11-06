@@ -876,6 +876,49 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         self.assertEqual(rej, [], f"Corpus-mined affix derivations rejected: {rej}")
 
 
+    def test_fineweb2_corpus_rule_enhancements(self):
+        """Verifies FineWeb-2 + Modal LLM corpus-mined Category 1-3 rule enhancements and overgeneration guards."""
+        valid_words = [
+            # Category 1: Root flags (InverseHarmony, NoVoicing, LastVowelDrop, front derivational suffixes)
+            "kanaat", "kanaati", "kanaatine", "kanaatindeyim", "kanaatimce", "kanaatler",
+            "iştirak", "iştiraki", "iştirakler", "iştirakte", "iştirakten",
+            "itaat", "itaati", "itaate", "itaatte",
+            "efdal", "efdali", "efdaldir",
+            "transkript", "transkripti", "transkripte", "transkriptin",
+            "tilavet", "tilaveti", "tilavete", "tilavetin",
+            "adet", "adedi", "adede", "adedin", "adetler", "âdet", "âdeti", "âdete",
+            "rehin", "rehni", "rehne", "rehnin",
+            "cemaatçi", "cemaatçiler", "dikkatli", "şefkatli", "saatçi", "saatlik",
+            # Category 2: Grammar rules (C1 compounds, 2-hop 3sg poss + present copula, -sallık/-sellik, rounded optatives, -mayış/-meyiş, -amazlık/-emezlik, -ılabilirlik/-ilebilirlik)
+            "soyadı", "soyadları", "soyadlarını", "soyadlarının",
+            "zeytinyağı", "zeytinyağları", "tereyağı", "tereyağları", "yanardağı", "yanardağları",
+            "oğluyum", "oğlusun", "oğluyuz", "aklıyım", "hakkıyım",
+            "nedensellik", "nedenselliği", "nedenselliğin", "evrensellik", "evrenselliği", "işlevsellik", "işlevselliği",
+            "okuyalım", "okuyayım", "olalım", "olayım", "bulalım", "bulayım", "görelim", "göreyim", "yürüyelim", "yürüyeyim",
+            "olmayış", "olmayışı", "olmayışıdır", "olmayışına", "olmayışından", "gelmeyişi", "bulunmayışı",
+            "göremezlik", "göremezlikten", "göremezliği", "anlayamazlık",
+            "ulaşılabilirlik", "ulaşılabilirliği", "erişilebilirlik", "erişilebilirliği", "uygulanabilirlik",
+            # Category 2 & 3: Productive 2-hop derivations on TDK/DD verb and noun stems
+            "bilinirlik", "bilinirliği", "bilinirliğini", "bilinirliğinin",
+            "tanınırlık", "tanınırlığı", "tanınırlığın", "tanınırlıktır",
+            "öngörülebilirlik", "öngörülebilirliği", "öngörülebilirliğin", "öngörülebilirliktir",
+            "izlenebilirlik", "izlenebilirliği", "izlenebilirliğin", "izlenebilirliktir",
+            "görmezlik", "görmezlikten", "görmemezlik", "görmemezlikten",
+            "sporsever", "sporseverler", "kitapsever", "kitapseverler", "hayvansever", "sinemasever",
+        ]
+        _, rej = check_words(valid_words)
+        self.assertEqual(rej, [], f"FineWeb-2 enhanced forms rejected: {rej}")
+
+        # Overgeneration guards: archaic/labialized optatives, unattested compounds, and typos must be rejected
+        invalid_words = [
+            "okuyalum", "okuyayum", "olalum", "olayum", "görelüm", "göreyüm", "yürüyelüm", "yürüyeyüm",
+            "nedensellikçi", "evrensellikçi", "işlevsellikçi", "kavramsallıkçı", "adeti", "adete", "adetin",
+            "futbolsever", "görememezlik", "ağırlıklandırılmak", "önceliklendirilmek", "güvenlikçi",
+        ]
+        acc_inv, _ = check_words(invalid_words)
+        self.assertEqual(acc_inv, [], f"Illegal overgenerated forms leaked: {acc_inv}")
+
+
 if __name__ == "__main__":
     unittest.main()
 

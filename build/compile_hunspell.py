@@ -798,7 +798,8 @@ def compile_dictionary():
         inverse_harmony_words = {
             'kalp', 'saat', 'harf', 'rol', 'alkol', 'hâl', 'hal', 'metal', 'normal', 'ideal',
             'gol', 'kontrol', 'petrol', 'sembol', 'şefkat', 'dikkat', 'polifenol', 'flavanol',
-            'kortizol', 'istirahat', 'istimlak', 'istimlâk', 'tatil', 'varil'
+            'kortizol', 'istirahat', 'istimlak', 'istimlâk', 'tatil', 'varil',
+            'kanaat', 'iştirak', 'itaat', 'efdal'
         }
         if lemma.lower() in inverse_harmony_words or (pos != 'Verb' and (lemma.lower().endswith('âl') or lemma.lower().endswith('ûl'))):
             back = False
@@ -833,7 +834,7 @@ def compile_dictionary():
             # vaat -> vaadi) voice.
             if 'Voicing' in attrs or 'VoicingOpt' in attrs or 'VoicingSelf' in attrs or (not inverse_harmony and num_vowels >= 2) or lemma in ['asteroit', 'eşlik', 'karbondioksit']:
                 # Exclude explicitly marked NoVoicing and a few manual exceptions
-                if ('NoVoicing' not in attrs or lemma in ['eşlik', 'karbondioksit']) and lemma not in ['dikkat', 'sepet', 'paket', 'bilet', 'kaset', 'anket', 'davet', 'menfaat', 'kübit', 'kuark']:
+                if ('NoVoicing' not in attrs or lemma in ['eşlik', 'karbondioksit']) and lemma not in ['dikkat', 'sepet', 'paket', 'bilet', 'kaset', 'anket', 'davet', 'menfaat', 'kübit', 'kuark', 'transkript', 'tilavet']:
                     voicing = True
         
         voicing_map[lemma.lower()] = voicing
@@ -841,7 +842,8 @@ def compile_dictionary():
         VOWEL_DROP_ADDITIONS = {
             'mühür', 'hısım', 'atıf', 'koyun', 'kayın', 'kabız', 'ıtır', 'fülüs',
             'aşir', 'fehim', 'nesih', 'rekiz', 'buğuz', 'büyükşehir', 'açıkağız',
-            'sarıağız', 'kababurun', 'kepçeburun', 'metcezir', 'bedasıl', 'sılayırahim'
+            'sarıağız', 'kababurun', 'kepçeburun', 'metcezir', 'bedasıl', 'sılayırahim',
+            'rehin'
         }
         if lemma in ['ağız'] or lemma.lower() in VOWEL_DROP_ADDITIONS:
             attrs.add('LastVowelDrop')

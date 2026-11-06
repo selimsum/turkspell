@@ -1,21 +1,20 @@
 """
 tools/modal_pipeline.py
 ========================
-High-Performance Cloud GPU Pipeline for Turkspell using Modal.com ($30 Monthly Credits).
-
-Target: 10,000 Missing Turkish Words
+High-Performance Cloud Pipeline for Turkspell using Modal.com ($30 Monthly Credits)
+and HuggingFaceFW/fineweb-2 (tur_Latn, language_score >= 0.99).
 
 Actions:
-    # 1. Mine 10,000 unrecognized words from Turkish Wikipedia using cloud Hunspell:
-    modal run tools/modal_pipeline.py --action mine --limit 10000 --output raw_data/mined_10k_candidates.json
+    # 1. Stream FineWeb-2 (tur_Latn) in the cloud, extract clean frequencies & unrecognized candidates:
+    modal run tools/modal_pipeline.py --action mine --limit 10000 --max-docs 60000 --output raw_data/fineweb2_unrecognized_candidates.json
 
-    # 2. Parse candidate words with Qwen2.5-32B on A100 GPU:
-    modal run tools/modal_pipeline.py --action parse --input raw_data/mined_10k_candidates.json --output raw_data/parsed_10k_entries.json --limit 10000
+    # 2. Parse candidate words with Qwen/Qwen3.6-35B-A3B-FP8 via vLLM on H100 GPU:
+    modal run tools/modal_pipeline.py --action parse --input raw_data/fineweb2_unrecognized_candidates.json --output raw_data/fineweb2_parsed_entries.json --limit 5000
 
-    # 3. All-in-one: Mine 10,000 words and parse them directly in the cloud:
-    modal run tools/modal_pipeline.py --action auto --limit 10000 --output raw_data/parsed_10k_entries.json
+    # 3. All-in-one: Mine FineWeb-2 and parse candidates directly in the cloud:
+    modal run tools/modal_pipeline.py --action auto --limit 5000 --output raw_data/fineweb2_parsed_entries.json
 
-    # 4. Quick GPU test (parses 6 words to verify):
+    # 4. Quick GPU test:
     modal run tools/modal_pipeline.py --action test
 """
 
@@ -23,6 +22,7 @@ import json
 import os
 import re
 import sys
+import unicodedata
 from pathlib import Path
 
 # Ensure UTF-8 output encoding on Windows consoles
@@ -38,261 +38,357 @@ app = modal.App("turkspell")
 # Persistent cloud volume to cache Hugging Face models across runs
 cache_volume = modal.Volume.from_name("turkspell-cache", create_if_missing=True)
 
-# Cloud Container Image: Includes Hunspell + Turkspell dictionary files
-image = (
-    modal.Image.debian_slim(python_version="3.11")
-    .apt_install("git", "hunspell", "libhunspell-dev")
-    .pip_install(
-        "torch>=2.5.0",
-        "transformers>=4.44.0",
-        "accelerate>=0.33.0",
-        "bitsandbytes>=0.43.0",
-        "datasets",
-        "peft",
-    )
+# Lightweight CPU image for streaming FineWeb-2 and running Hunspell verification
+cpu_miner_image = (
+    modal.Image.debian_slim(python_version="3.12")
+    .apt_install("hunspell", "libhunspell-dev")
+    .pip_install("datasets>=3.0.0", "pyarrow", "huggingface-hub>=0.30.0")
     .env({"HF_HOME": "/cache/huggingface"})
     .add_local_file("tr.aff", "/root/tr.aff")
     .add_local_file("tr.dic", "/root/tr.dic")
 )
 
-SYSTEM_PROMPT = """You are an expert morphological analyzer for Turkish (TDK standard).
-Your task is to parse a list of Turkish words and determine:
-1. The correct Root Lemma (in lowercase Turkish).
-   - For inflected nouns/adjectives, strip case/plural/possessive suffixes (e.g., "kitabından" -> "kitap", "ağzını" -> "ağız", "osteoklastlar" -> "osteoklast", "uzaylıların" -> "uzaylı").
-   - Derived words with productive derivational suffixes (-lIk, -lI, -lAşmA, -cI) that stand as dictionary headwords keep their derived stem (e.g., "biyouyumluluk" -> "biyouyumluluk", "dijitalleşme" -> "dijitalleşme").
-   - For finite/inflected verbs, return the infinitive form with -mak/-mek (e.g., "yapıvermişlerdi" -> "yapıvermek").
-2. The Part of Speech (POS): one of 'Noun', 'Verb', 'Adjective', 'Adverb'.
-3. Attributes (list of strings, can be empty []):
-   - 'Voicing' ONLY if the final consonant of the lemma alternates (p/ç/t/k -> b/c/d/ğ) before a vowel suffix (e.g., kitap->kitabı, renk->rengi, ağaç->ağacı, umut->umudu). Words ending in a vowel (like "uzaylı") NEVER have Voicing.
-   - 'LastVowelDrop' ONLY if the narrow vowel in the final syllable of the lemma drops before a vowel suffix (e.g., burun->burnu, ağız->ağzı, karın->karnı). Note: the lemma itself still retains the vowel ("ağız", NOT "ağz").
-   - 'CompoundP3sg' ONLY for compound words formed with an inherent 3rd person singular possessive suffix -(s)I at the end (e.g., "gökkuşağı", "yıldızlararası", "denizaltı").
+# High-speed vLLM GPU image for FP8 MoE morphological analysis
+gpu_vllm_image = (
+    modal.Image.debian_slim(python_version="3.12")
+    .pip_install(
+        "vllm>=0.19.0",
+        "huggingface-hub>=0.30.0",
+    )
+    .env({
+        "HF_HOME": "/cache/huggingface",
+        "HF_XET_HIGH_PERFORMANCE": "1",
+        "VLLM_USE_DEEP_GEMM": "0",
+        "VLLM_USE_FLASHINFER_SAMPLER": "0",
+    })
+)
+
+SYSTEM_PROMPT = """You are an expert Turkish morphological analyzer and lexicographer (TDK & Dil Derneği standards).
+Analyze each input Turkish word and return a JSON array of objects with the following fields:
+
+1. "word": The exact input word.
+2. "lemma":
+   - For simple inflected words (derivation_depth = 0), return the dictionary root lemma in lowercase Turkish:
+     * Strip case/plural/possessive/copula suffixes from nouns/adjectives (e.g., "kitabından" -> "kitap", "ağzını" -> "ağız", "alkolü" -> "alkol", "koda" -> "kod", "hakkını" -> "hak").
+     * For inflected verbs (tense/person/mood/negation/converbs), return the infinitive with -mak/-mek (e.g., "yapıvermişlerdi" -> "yapıvermek", "gidiyordu" -> "gitmek").
+   - For derived words (derivation_depth >= 1), return the derived stem dictionary headword (stripped of case/plural/possessive inflections):
+     * e.g., "gözlükçüden" -> "gözlükçü", "yerelleştirmesi" -> "yerelleştirme", "okunabilirliği" -> "okunabilirlik", "sürdürülebilirliklerinden" -> "sürdürülebilirlik", "kurumsallaştırılması" -> "kurumsallaştırılma", "biyouyumluluk" -> "biyouyumluluk", "dijitalleşme" -> "dijitalleşme".
+3. "base_root":
+   - The underlying root word in TDK/Dil Derneği before derivational suffixes (e.g., for "gözlükçüden" -> "göz", "yerelleştirmesi" -> "yerel", "sürdürülebilirliklerinden" -> "sürmek", "kurumsallaştırılması" -> "kurum", "kitabından" -> "kitap").
+4. "derivation_depth": Integer (0, 1, 2, or 3):
+   - 0: Inflection only (no derivational suffixes on the lemma, or inherent compound like "gökkuşağı", or loanword stem like "osteoklast", "nörolojik", "biyouyumluluk").
+   - 1: 1 derivational suffix layer on a Turkish base root (e.g., "uzay-lı", "göz-lük", "dijital-leşme").
+   - 2: 2 derivational suffix layers on a Turkish base root (e.g., "göz-lük-çü", "yerel-leş-tirme", "okun-abil-irlik").
+   - 3: 3 or more derivational suffix layers (e.g., "sür-dür-ül-ebilir-lik" -> 3, "kurum-sal-laş-tır-ılma" -> 3).
+5. "pos": Part of speech of "lemma": one of 'Noun', 'Verb', 'Adjective', 'Adverb'.
+6. "attributes": Phonological attributes of "lemma" (JSON list of strings from this exact set, or []):
+   - 'Voicing': ONLY if "lemma" ends in p, ç, t, k and softens to b, c, d, ğ/g before a vowel suffix (e.g., "kitap" -> kitabı, "renk" -> rengi, "okunabilirlik" -> okunabilirliği, "sürdürülebilirlik" -> sürdürülebilirliği, "biyouyumluluk" -> biyouyumluluğu). Words ending in a vowel NEVER have Voicing.
+   - 'NoVoicing': ONLY if "lemma" ends in p, ç, t, k, g and does NOT soften before a vowel suffix (e.g., "ahlak" -> ahlakı, "sepet" -> sepeti, "osteoklast" -> osteoklastı).
+   - 'LastVowelDrop': ONLY if the narrow vowel (ı, i, u, ü) in the final syllable of "lemma" drops before a vowel suffix (e.g., "ağız" -> ağzı, "burun" -> burnu, "beyin" -> beyni).
+   - 'Doubling': ONLY if the final consonant of "lemma" doubles before a vowel suffix (e.g., "hak" -> hakkı, "hat" -> hattı, "ret" -> reddi, "zam" -> zammı).
+   - 'InverseHarmony': ONLY if the last vowel of "lemma" is a back vowel (a, ı, o, u, â, û) and the word takes front-vowel suffixes due to a palatal consonant (e.g., "alkol" -> alkolü, "rol" -> rolü, "saat" -> saati, "amiral" -> amirali).
+   - 'CompoundP3sg': ONLY for compound nouns ending in an inherent 3rd-person singular possessive suffix -(s)I that inflect with pronominal 'n' (e.g., "gökkuşağı" -> gökkuşağını, "yıldızlararası" -> yıldızlararasında, "denizaltı").
 
 Rules:
-- If a word is a typo, brand name, foreign word (English, Latin, etc.), or gibberish, set lemma, pos, and attributes to null.
-- Respond ONLY with a valid JSON array. No markdown fences, no explanations, no extra text."""
+- If a word is a misspelling/typo (e.g., "orjinal", "yalnış", "herkez"), a brand/proper name ("google", "instagram"), or a foreign word, set "lemma": null, "base_root": null, "derivation_depth": null, "pos": null, "attributes": null, and provide the corrected Turkish word in "correction" if it is a typo (e.g., "orjinal" -> "orijinal", "yalnış" -> "yanlış") or null if foreign/brand.
+- Respond ONLY with a valid JSON array. No markdown fences, no commentary."""
 
-FEW_SHOT_USER = 'Input: ["kitabımızdan", "yapıvermiş", "süpersimetrik", "google", "gökkuşağı", "osteoklastlar", "burnunu"]'
+FEW_SHOT_USER = 'Input: ["kitabımızdan", "yapıvermiş", "gözlükçüden", "sürdürülebilirlikleri", "alkolün", "orjinal", "google"]'
 FEW_SHOT_ASSISTANT = """[
-  {"word": "kitabımızdan", "lemma": "kitap", "pos": "Noun", "attributes": ["Voicing"]},
-  {"word": "yapıvermiş", "lemma": "yapıvermek", "pos": "Verb", "attributes": []},
-  {"word": "süpersimetrik", "lemma": "süpersimetrik", "pos": "Adjective", "attributes": []},
-  {"word": "google", "lemma": null, "pos": null, "attributes": null},
-  {"word": "gökkuşağı", "lemma": "gökkuşağı", "pos": "Noun", "attributes": ["CompoundP3sg"]},
-  {"word": "osteoklastlar", "lemma": "osteoklast", "pos": "Noun", "attributes": []},
-  {"word": "burnunu", "lemma": "burun", "pos": "Noun", "attributes": ["LastVowelDrop"]}
+  {"word": "kitabımızdan", "lemma": "kitap", "base_root": "kitap", "derivation_depth": 0, "pos": "Noun", "attributes": ["Voicing"], "correction": null},
+  {"word": "yapıvermiş", "lemma": "yapıvermek", "base_root": "yapmak", "derivation_depth": 1, "pos": "Verb", "attributes": [], "correction": null},
+  {"word": "gözlükçüden", "lemma": "gözlükçü", "base_root": "göz", "derivation_depth": 2, "pos": "Noun", "attributes": [], "correction": null},
+  {"word": "sürdürülebilirlikleri", "lemma": "sürdürülebilirlik", "base_root": "sürmek", "derivation_depth": 3, "pos": "Noun", "attributes": ["Voicing"], "correction": null},
+  {"word": "alkolün", "lemma": "alkol", "base_root": "alkol", "derivation_depth": 0, "pos": "Noun", "attributes": ["InverseHarmony"], "correction": null},
+  {"word": "orjinal", "lemma": null, "base_root": null, "derivation_depth": null, "pos": null, "attributes": null, "correction": "orijinal"},
+  {"word": "google", "lemma": null, "base_root": null, "derivation_depth": null, "pos": null, "attributes": null, "correction": null}
 ]"""
 
 
 def extract_json_array(text: str):
     """Robust JSON extraction from LLM response."""
-    text = re.sub(r'```(?:json)?\s*', '', text).strip()
-    start = text.find('[')
+    if not text:
+        return None
+    text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL)
+    text = re.sub(r"```(?:json)?\s*", "", text).strip()
+    start = text.find("[")
     if start == -1:
         return None
     depth = 0
     for i in range(start, len(text)):
-        if text[i] == '[':
+        if text[i] == "[":
             depth += 1
-        elif text[i] == ']':
+        elif text[i] == "]":
             depth -= 1
             if depth == 0:
                 try:
-                    return json.loads(text[start:i + 1])
+                    return json.loads(text[start : i + 1])
                 except json.JSONDecodeError:
                     return None
     return None
 
 
 @app.function(
-    image=image,
-    gpu="A100",
+    image=gpu_vllm_image,
+    gpu="H100",
     timeout=7200,
     volumes={"/cache": cache_volume},
 )
-def parse_words_chunk(words: list[str], batch_size: int = 25, model_id: str = "Qwen/Qwen2.5-32B-Instruct") -> list[dict]:
-    """Runs high-speed 4-bit batch inference on Modal A100 GPU for a chunk of words."""
+def parse_words_chunk(
+    words: list[str],
+    batch_size: int = 25,
+    model_id: str = "Qwen/Qwen3.6-35B-A3B-FP8",
+) -> list[dict]:
+    """Runs high-speed continuous-batched FP8 inference via vLLM on Modal H100 GPU."""
     import torch
-    from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+    from vllm import LLM, SamplingParams
 
     gpu_name = torch.cuda.get_device_name(0)
     vram = torch.cuda.get_device_properties(0).total_memory / (1024**3)
-    print(f"[*] Processing {len(words)} words with {model_id} on {gpu_name} ({vram:.0f} GB VRAM)...")
+    print(f"[*] Processing {len(words):,} words with {model_id} via vLLM on {gpu_name} ({vram:.0f} GB VRAM)...")
 
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    llm_kwargs = {
+        "model": model_id,
+        "max_model_len": 8192,
+        "gpu_memory_utilization": 0.90,
+        "trust_remote_code": True,
+        "enforce_eager": True,
+    }
+    if "Qwen3.5" in model_id or "Qwen3.6" in model_id:
+        llm_kwargs["language_model_only"] = True
 
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.bfloat16,
-    )
+    llm = LLM(**llm_kwargs)
 
-    model = AutoModelForCausalLM.from_pretrained(
-        model_id,
-        quantization_config=bnb_config,
-        device_map="auto"
-    )
-
-    results = []
-    total_batches = (len(words) + batch_size - 1) // batch_size
-
+    all_conversations = []
     for i in range(0, len(words), batch_size):
-        batch = words[i:i + batch_size]
-        batch_num = i // batch_size + 1
-        if batch_num % 10 == 0 or batch_num == 1:
-            print(f"  [Batch {batch_num}/{total_batches}] Processing: {batch[:3]}...")
-
+        batch = words[i : i + batch_size]
         messages = [
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": FEW_SHOT_USER},
             {"role": "assistant", "content": FEW_SHOT_ASSISTANT},
             {"role": "user", "content": f"Input: {json.dumps(batch, ensure_ascii=False)}"},
         ]
+        all_conversations.append(messages)
 
-        prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-        inputs = tokenizer(prompt, return_tensors="pt").to("cuda")
+    sampling_params = SamplingParams(
+        temperature=0.0,
+        max_tokens=3072,
+    )
 
-        with torch.no_grad():
-            outputs = model.generate(
-                **inputs,
-                max_new_tokens=1024,
-                do_sample=False,
-            )
+    print(f"  Running vLLM continuous batching across {len(all_conversations)} batches...")
+    try:
+        outputs = llm.chat(
+            messages=all_conversations,
+            sampling_params=sampling_params,
+            chat_template_kwargs={"enable_thinking": False},
+        )
+    except TypeError:
+        outputs = llm.chat(
+            messages=all_conversations,
+            sampling_params=sampling_params,
+        )
 
-        resp = tokenizer.decode(outputs[0][inputs.input_ids.shape[1]:], skip_special_tokens=True)
+    results = []
+    for batch_idx, out in enumerate(outputs, 1):
+        resp = out.outputs[0].text
         parsed = extract_json_array(resp)
         if parsed and isinstance(parsed, list):
             for item in parsed:
-                if isinstance(item, dict) and item.get("lemma"):
+                if isinstance(item, dict) and item.get("word"):
                     results.append(item)
         else:
-            print(f"  Warning: Batch {batch_num} could not be parsed as JSON.")
+            print(f"  Warning: Batch {batch_idx} could not be parsed as JSON.")
 
-    print(f"[OK] Chunk complete: extracted {len(results)} valid morphological entries.")
+    print(f"[OK] Chunk complete: extracted {len(results):,} analyzed entries.")
     return results
 
 
 @app.function(
-    image=image,
-    timeout=1800,
+    image=cpu_miner_image,
+    cpu=4.0,
+    memory=8192,
+    timeout=3600,
+    volumes={"/cache": cache_volume},
 )
-def mine_corpus_cloud(target_candidates: int = 10000, max_articles: int = 35000) -> list[dict]:
-    """Streams Turkish Wikipedia in the cloud and finds high-frequency unrecognized words using Hunspell."""
+def mine_corpus_cloud(
+    target_candidates: int = 10000,
+    max_docs: int = 60000,
+    min_lang_score: float = 0.99,
+    min_freq: int = 4,
+) -> dict:
+    """
+    Streams HuggingFaceFW/fineweb-2 (name='tur_Latn', language_score >= 0.99) in the cloud,
+    computes clean Turkish word frequencies, and runs Hunspell against /root/tr.
+    """
     import subprocess
     from collections import Counter
     from datasets import load_dataset
 
-    print(f"[*] Starting cloud corpus mining (target: {target_candidates:,} unique words)...")
-    print(f"  Streaming Turkish Wikipedia (up to {max_articles:,} articles)...")
+    print(f"[*] Starting FineWeb-2 (tur_Latn) cloud mining (target: {target_candidates:,} unrecognized words)...")
+    print(f"  Streaming up to {max_docs:,} documents with language_score >= {min_lang_score}...")
 
-    ds = load_dataset("wikimedia/wikipedia", "20231101.tr", split="train", streaming=True)
+    ds = load_dataset("HuggingFaceFW/fineweb-2", name="tur_Latn", split="train", streaming=True)
 
     counts = Counter()
     cap_counts = Counter()
     total_tokens = 0
+    kept_docs = 0
+    scanned_docs = 0
 
-    for idx, item in enumerate(ds):
+    token_re = re.compile(r"[a-zA-ZçÇğĞıİöÖşŞüÜâîûÂÎÛ]+")
+    valid_tr_re = re.compile(r"^[abcçdefgğhıijklmnoöprsştuüvyzâîû]+$")
+
+    for item in ds:
+        scanned_docs += 1
+        lang_score = item.get("language_score", 1.0)
+        if lang_score is not None and lang_score < min_lang_score:
+            continue
+
         text = item.get("text", "")
-        tokens = re.findall(r'[a-zA-ZçÇğĞıİöÖşŞüÜâîûÂÎÛ]+', text)
-        for t in tokens:
-            if len(t) < 3 or len(t) > 30:
+        if not text:
+            continue
+
+        kept_docs += 1
+        text = unicodedata.normalize("NFC", text).replace("\u0307", "")
+        for t in token_re.findall(text):
+            if len(t) < 3 or len(t) > 32:
                 continue
-            if any(c in 'qwxQWX' for c in t):
-                continue
-            total_tokens += 1
             lower_t = (
-                t.replace('I', 'ı').replace('İ', 'i')
-                .replace('Î', 'î').replace('Â', 'â').replace('Û', 'û')
+                t.replace("I", "ı")
+                .replace("İ", "i")
+                .replace("Î", "î")
+                .replace("Â", "â")
+                .replace("Û", "û")
                 .lower()
             )
+            if not valid_tr_re.match(lower_t):
+                continue
+            # Reject 3+ identical consecutive letters (e.g. "चोok" / "aaah")
+            if any(lower_t[i] == lower_t[i + 1] == lower_t[i + 2] for i in range(len(lower_t) - 2)):
+                continue
+
+            total_tokens += 1
             counts[lower_t] += 1
             if t[0].isupper():
                 cap_counts[lower_t] += 1
 
-        if (idx + 1) % 5000 == 0:
-            print(f"  Scanned {idx + 1:,} articles ({total_tokens:,} tokens, {len(counts):,} unique candidates)...")
+        if kept_docs % 10000 == 0:
+            print(
+                f"  Kept {kept_docs:,} docs (scanned {scanned_docs:,}) | "
+                f"{total_tokens:,} tokens | {len(counts):,} unique types..."
+            )
 
-        if idx >= max_articles:
+        if kept_docs >= max_docs:
             break
 
-    print(f"[*] Total tokens scanned: {total_tokens:,} across {idx + 1:,} articles.")
-    print(f"  Total unique candidates: {len(counts):,}")
+    print(f"[*] Total tokens extracted: {total_tokens:,} across {kept_docs:,} high-confidence Turkish documents.")
+    print(f"  Total raw unique word types: {len(counts):,}")
 
-    # Filter out proper names (words capitalized > 70% of the time with count >= 4)
+    # Filter out proper names (capitalized > 70% of occurrences) and rare hapax noise
     filtered = []
+    clean_freq_map = {}
     for w, count in counts.most_common():
-        if count < 3:
-            continue
+        if count < 2:
+            break
         if cap_counts[w] / count > 0.70:
             continue
-        filtered.append((w, count))
+        if len(clean_freq_map) < 500000:
+            clean_freq_map[w] = count
+        if count >= min_freq:
+            filtered.append((w, count))
 
-    print(f"  Filtered non-proper candidates (freq >= 3): {len(filtered):,}")
+    print(f"  Filtered non-proper candidates (freq >= {min_freq}): {len(filtered):,}")
 
-    # Run Hunspell against Turkspell (/root/tr.aff and /root/tr.dic)
+    # Verify against Hunspell (/root/tr.aff and /root/tr.dic) in batches
     words_to_check = [w for w, _ in filtered]
-    temp_file = "/tmp/candidates_to_check.txt"
-    with open(temp_file, "w", encoding="utf-8") as f:
-        f.write("\n".join(words_to_check))
+    unrecognized_set = set()
+    batch_size = 50000
+    print(f"  Running Hunspell verification on {len(words_to_check):,} words against Turkspell (/root/tr)...")
+    for i in range(0, len(words_to_check), batch_size):
+        batch = words_to_check[i : i + batch_size]
+        p = subprocess.run(
+            ["hunspell", "-d", "/root/tr", "-l"],
+            input="\n".join(batch) + "\n",
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+        )
+        for line in p.stdout.splitlines():
+            w = line.strip()
+            if w:
+                unrecognized_set.add(w)
 
-    print("  Running Hunspell verification against Turkspell (/root/tr)...")
-    p = subprocess.run(
-        ["hunspell", "-d", "/root/tr", "-l", temp_file],
-        capture_output=True,
-        text=True,
-        encoding="utf-8"
-    )
+    print(f"[*] Found {len(unrecognized_set):,} unrecognized word types (freq >= {min_freq}) in FineWeb-2!")
 
-    unrecognized_set = set(line.strip() for line in p.stdout.splitlines() if line.strip())
-    print(f"[*] Found {len(unrecognized_set):,} total unrecognized words in corpus!")
-
-    # Return top N unrecognized words sorted by frequency
     top_unrecognized = [
-        {"word": w, "freq": counts[w]}
-        for w, _ in filtered if w in unrecognized_set
+        {"word": w, "freq": count}
+        for w, count in filtered
+        if w in unrecognized_set
     ][:target_candidates]
 
-    print(f"[OK] Harvested {len(top_unrecognized):,} top unrecognized Turkish words.")
-    return top_unrecognized
+    print(f"[OK] Harvested {len(top_unrecognized):,} top unrecognized words + {len(clean_freq_map):,} clean frequencies.")
+    return {
+        "total_docs": kept_docs,
+        "total_tokens": total_tokens,
+        "unrecognized": top_unrecognized,
+        "frequencies": clean_freq_map,
+    }
 
 
 @app.local_entrypoint()
 def main(
     action: str = "test",
     input: str = "",
-    output: str = "raw_data/parsed_entries.json",
+    output: str = "raw_data/fineweb2_parsed_entries.json",
     limit: int = 10000,
-    model: str = "Qwen/Qwen2.5-32B-Instruct",
-    chunk_size: int = 1000,
+    max_docs: int = 60000,
+    model: str = "Qwen/Qwen3.6-35B-A3B-FP8",
+    chunk_size: int = 1500,
 ):
     """CLI Entrypoint executed on your local machine."""
-    print("=" * 72)
-    print(f"TURKSPELL MODAL PIPELINE: {action.upper()} (Target: {limit:,} Words | Model: {model})")
-    print("=" * 72)
+    print("=" * 76)
+    print(f"TURKSPELL FINEWEB-2 MODAL PIPELINE: {action.upper()} (Limit: {limit:,} | Model: {model})")
+    print("=" * 76)
 
     if action == "test":
-        test_words = ["biyouyumluluk", "osteoklastlar", "yapıvermişlerdi", "yıldızlararası", "gökkuşağı", "google"]
-        print(f"Running quick GPU verification on {len(test_words)} words...")
+        test_words = [
+            "kitabımızdan",
+            "gözlükçüden",
+            "sürdürülebilirliklerinden",
+            "alkolü",
+            "orjinal",
+            "google",
+        ]
+        print(f"Running quick GPU verification on {len(test_words)} words with {model}...")
         res = parse_words_chunk.remote(test_words, batch_size=10, model_id=model)
-        print("\n--- Test Results from Modal A100 GPU ---")
+        print("\n--- Test Results from Modal H100 GPU ---")
         print(json.dumps(res, ensure_ascii=False, indent=2))
         print("\n[OK] Verification successful! Modal GPU pipeline is fully operational.")
 
     elif action == "mine":
-        print(f"[*] Mining {limit:,} unrecognized words from Turkish Wikipedia...")
-        candidates = mine_corpus_cloud.remote(target_candidates=limit)
+        print(f"[*] Streaming HuggingFaceFW/fineweb-2 (tur_Latn, up to {max_docs:,} docs) in Modal cloud...")
+        cloud_data = mine_corpus_cloud.remote(target_candidates=limit, max_docs=max_docs)
+
+        candidates = cloud_data["unrecognized"]
+        freq_map = cloud_data["frequencies"]
 
         out_path = Path(output)
         out_path.parent.mkdir(parents=True, exist_ok=True)
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(candidates, f, ensure_ascii=False, indent=2)
 
-        print(f"\n[DONE] Saved {len(candidates):,} candidate words to {output}")
-        print(f"Next step: Run 'modal run tools/modal_pipeline.py --action parse --input {output}' to parse them!")
+        freq_out_path = Path("raw_data/fineweb2_corpus_frequencies.json")
+        with open(freq_out_path, "w", encoding="utf-8") as f:
+            json.dump(freq_map, f, ensure_ascii=False)
+
+        print(f"\n[DONE] Scanned {cloud_data['total_docs']:,} FineWeb-2 docs ({cloud_data['total_tokens']:,} tokens)")
+        print(f"  -> Saved {len(candidates):,} unrecognized candidates to {out_path}")
+        print(f"  -> Saved {len(freq_map):,} word frequencies to {freq_out_path}")
 
     elif action == "parse":
-        in_path = Path(input)
+        in_path = Path(input or "raw_data/fineweb2_unrecognized_candidates.json")
         if not in_path.exists():
-            print(f"Error: Input file {input} not found.")
+            print(f"Error: Input file {in_path} not found.")
             sys.exit(1)
 
         with open(in_path, encoding="utf-8") as f:
@@ -312,204 +408,55 @@ def main(
         out_path = Path(output)
         out_path.parent.mkdir(parents=True, exist_ok=True)
 
-        all_entries = []
-        if out_path.exists():
-            try:
-                with open(out_path, encoding="utf-8") as f:
-                    all_entries = json.load(f)
-                print(f"[*] Found existing output with {len(all_entries):,} already-saved entries.")
-            except Exception:
-                all_entries = []
-
-        # Dynamic resume detection
-        if len(all_entries) >= 2500 and len(words) >= 7000:
-            print(f"[*] Resuming from word 7,000! ({len(all_entries):,} entries already saved from words 0..7,000).")
-            remaining_words = words[7000:]
-            concurrency = 4
-        elif len(all_entries) >= 300 and len(words) > 1000:
-            print("[*] Chunk 1 (words 0..1,000) was already completed. Resuming from word 1,000 onwards!")
-            remaining_words = words[1000:]
-            concurrency = 6
-        else:
-            remaining_words = words
-            concurrency = 6
-
-        chunk_len = (len(remaining_words) + concurrency - 1) // concurrency
-        chunks = [remaining_words[i:i + chunk_len] for i in range(0, len(remaining_words), chunk_len)]
-
-        print(f"[*] Launching {len(chunks)} parallel cloud workers on A100 GPUs (~{chunk_len:,} words per worker)...")
-        print(f"[*] All {len(chunks)} workers will run simultaneously in Modal cloud!")
+        chunks = [words[i : i + chunk_size] for i in range(0, len(words), chunk_size)]
+        print(f"[*] Launching {len(chunks)} parallel H100 vLLM workers (~{chunk_size:,} words/worker)...")
 
         handles = [
             (idx, parse_words_chunk.spawn(chunk, batch_size=25, model_id=model))
             for idx, chunk in enumerate(chunks, 1)
         ]
 
+        all_entries = []
         for idx, handle in handles:
             chunk_res = handle.get()
             all_entries.extend(chunk_res)
             with open(out_path, "w", encoding="utf-8") as f:
                 json.dump(all_entries, f, ensure_ascii=False, indent=2)
-            print(f"  [Worker {idx}/{len(handles)} Done] +{len(chunk_res)} entries. Total saved: {len(all_entries):,} in {output}")
+            print(f"  [Worker {idx}/{len(handles)} Done] +{len(chunk_res):,} entries. Total saved: {len(all_entries):,}")
 
-        print(f"\n[DONE] All parallel workers completed! Saved {len(all_entries):,} total entries to {output}")
+        print(f"\n[DONE] Saved {len(all_entries):,} total analyzed entries to {out_path}")
 
     elif action == "auto":
-        print(f"[*] Starting End-to-End Pipeline: Mine {limit:,} words + GPU Parse...")
-        candidates = mine_corpus_cloud.remote(target_candidates=limit)
+        print(f"[*] Step 1: Mining {limit:,} unrecognized words from FineWeb-2 (tur_Latn)...")
+        cloud_data = mine_corpus_cloud.remote(target_candidates=limit, max_docs=max_docs)
+        candidates = cloud_data["unrecognized"]
+        freq_map = cloud_data["frequencies"]
+
+        cand_path = Path("raw_data/fineweb2_unrecognized_candidates.json")
+        cand_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(cand_path, "w", encoding="utf-8") as f:
+            json.dump(candidates, f, ensure_ascii=False, indent=2)
+
+        freq_path = Path("raw_data/fineweb2_corpus_frequencies.json")
+        with open(freq_path, "w", encoding="utf-8") as f:
+            json.dump(freq_map, f, ensure_ascii=False)
+
         candidate_words = [item["word"] for item in candidates]
+        print(f"[*] Step 2: Parsing {len(candidate_words):,} words on H100 GPU with {model}...")
 
-        print(f"[*] Mined {len(candidate_words):,} words. Now starting A100 GPU parsing...")
-        chunks = [candidate_words[i:i + chunk_size] for i in range(0, len(candidate_words), chunk_size)]
-
-        all_entries = []
-        out_path = Path(output)
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-
-        for chunk_idx, chunk in enumerate(chunks, 1):
-            print(f"\n--- Processing Chunk {chunk_idx}/{len(chunks)} ({len(chunk)} words) on A100 GPU ---")
-            parsed_chunk = parse_words_chunk.remote(chunk, batch_size=20, model_id=model)
-            all_entries.extend(parsed_chunk)
-
-            with open(out_path, "w", encoding="utf-8") as f:
-                json.dump(all_entries, f, ensure_ascii=False, indent=2)
-            print(f"  [Progress] Saved {len(all_entries):,} total entries so far to {output}")
-
-        print(f"\n[DONE] Pipeline complete! Saved {len(all_entries):,} entries to {output}")
-
-    elif action == "tag-pos":
-        in_path = Path(input or "raw_data/unannotated_authority_roots.json")
-        if not in_path.exists():
-            print(f"Error: Input file {in_path} not found.")
-            sys.exit(1)
-
-        with open(in_path, encoding="utf-8") as f:
-            words = json.load(f)[:limit]
-
-        out_path = Path(output)
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-
-        concurrency = 10
-        chunk_len = (len(words) + concurrency - 1) // concurrency
-        chunks = [words[i:i + chunk_len] for i in range(0, len(words), chunk_len)]
-
-        print(f"[*] Tagging POS & attributes for {len(words):,} official TDK/DD lemmas across {len(chunks)} parallel A100 GPUs (~{chunk_len:,} lemmas/GPU)...")
+        chunks = [candidate_words[i : i + chunk_size] for i in range(0, len(candidate_words), chunk_size)]
         handles = [
-            (idx, tag_lemmas_chunk.spawn(chunk, batch_size=30, model_id=model))
+            (idx, parse_words_chunk.spawn(chunk, batch_size=25, model_id=model))
             for idx, chunk in enumerate(chunks, 1)
         ]
 
         all_entries = []
+        out_path = Path(output)
         for idx, handle in handles:
             chunk_res = handle.get()
             all_entries.extend(chunk_res)
             with open(out_path, "w", encoding="utf-8") as f:
                 json.dump(all_entries, f, ensure_ascii=False, indent=2)
-            print(f"  [Worker {idx}/{len(handles)} Done] +{len(chunk_res)} lemmas tagged. Total saved: {len(all_entries):,} in {output}")
+            print(f"  [Worker {idx}/{len(handles)} Done] +{len(chunk_res):,} entries. Total saved: {len(all_entries):,}")
 
-        print(f"\n[DONE] All parallel workers completed! Saved {len(all_entries):,} tagged lemmas to {output}")
-
-
-POS_SYSTEM_PROMPT = """You are an expert Turkish lexicographer and morphological analyzer (TDK & Dil Derneği standards).
-Every input word is already a verified official Turkish dictionary headword (lemma).
-Your task is to classify each lemma's Part of Speech (POS) and morphological inflection attributes.
-
-Rules:
-1. Preserve "lemma" EXACTLY as given in the input. Never alter spelling and never return null.
-2. "pos": Must be one of 'Noun', 'Adjective', 'Adverb', 'Interjection', 'Conjunction', 'Pronoun', 'Numeral'.
-3. "attributes": A JSON list of zero or more morphological flags from this exact set:
-   - 'CompoundP3sg': ONLY for Turkish compound nouns that end in an inherent 3rd-person singular possessive suffix -(s)I (e.g., "adabalığı", "acemlalesi", "akdenizhumması", "ayçiçeği", "keçiboynuzu") which inflect with pronominal 'n' (adabalığını, acemlalesinde). Do NOT use on simplex nouns ("abadi", "abani") or nisba adjectives ("abidevi", "acemkürdi").
-   - 'Voicing': ONLY if the lemma ends in p, ç, t, k and softens to b, c, d, ğ/g before a vowel suffix (e.g., "abuzambak" -> abuzambağı, "abartık" -> abartığı, "acip" -> acibi).
-   - 'NoVoicing': ONLY if the lemma ends in p, ç, t, k, g and does NOT soften before a vowel suffix (e.g., "aberant" -> aberantı, "absent" -> absenti, "acıot" -> acıotu, "ahlak" -> ahlakı).
-   - 'InverseHarmony': ONLY if the last vowel is a back vowel (a, ı, o, u, â, û) and the word ends in a palatal 'l' or 't' taking front-vowel suffixes (e.g., "alkol" -> alkolü, "amiral" -> amirali, "hal" -> hali).
-   - 'LastVowelDrop': ONLY if the narrow vowel (ı, i, u, ü) in the final syllable drops before a vowel suffix (e.g., "ağız" -> ağzı, "burun" -> burnu).
-   - 'Doubling': ONLY if the final consonant doubles before a vowel suffix (e.g., "hak" -> hakkı, "ret" -> reddi, "zam" -> zammı).
-4. Respond ONLY with a valid JSON array of objects. No markdown, no explanations."""
-
-POS_FEW_SHOT_USER = 'Input: ["adabalığı", "abuzambak", "aberant", "abidevi", "acıot", "acitato", "amiral"]'
-POS_FEW_SHOT_ASSISTANT = """[
-  {"lemma": "adabalığı", "pos": "Noun", "attributes": ["CompoundP3sg"]},
-  {"lemma": "abuzambak", "pos": "Noun", "attributes": ["Voicing"]},
-  {"lemma": "aberant", "pos": "Adjective", "attributes": ["NoVoicing"]},
-  {"lemma": "abidevi", "pos": "Adjective", "attributes": []},
-  {"lemma": "acıot", "pos": "Noun", "attributes": ["NoVoicing"]},
-  {"lemma": "acitato", "pos": "Adverb", "attributes": []},
-  {"lemma": "amiral", "pos": "Noun", "attributes": ["InverseHarmony"]}
-]"""
-
-
-@app.function(
-    image=image,
-    gpu="A100",
-    timeout=7200,
-    volumes={"/cache": cache_volume},
-)
-def tag_lemmas_chunk(lemmas: list[str], batch_size: int = 30, model_id: str = "Qwen/Qwen2.5-32B-Instruct") -> list[dict]:
-    """Tags POS and morphological attributes for official TDK/DD lemmas on Modal A100 GPU."""
-    import torch
-    from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
-
-    gpu_name = torch.cuda.get_device_name(0)
-    vram = torch.cuda.get_device_properties(0).total_memory / (1024**3)
-    print(f"[*] Tagging {len(lemmas)} lemmas with {model_id} on {gpu_name} ({vram:.0f} GB VRAM)...")
-
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.bfloat16,
-    )
-    model = AutoModelForCausalLM.from_pretrained(
-        model_id,
-        quantization_config=bnb_config,
-        device_map="auto"
-    )
-
-    results = []
-    total_batches = (len(lemmas) + batch_size - 1) // batch_size
-
-    for i in range(0, len(lemmas), batch_size):
-        batch = lemmas[i:i + batch_size]
-        batch_num = i // batch_size + 1
-        if batch_num % 5 == 0 or batch_num == 1:
-            print(f"  [Batch {batch_num}/{total_batches}] Tagging: {batch[:3]}...")
-
-        messages = [
-            {"role": "system", "content": POS_SYSTEM_PROMPT},
-            {"role": "user", "content": POS_FEW_SHOT_USER},
-            {"role": "assistant", "content": POS_FEW_SHOT_ASSISTANT},
-            {"role": "user", "content": f"Input: {json.dumps(batch, ensure_ascii=False)}"},
-        ]
-
-        prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-        inputs = tokenizer(prompt, return_tensors="pt").to("cuda")
-
-        with torch.no_grad():
-            outputs = model.generate(
-                **inputs,
-                max_new_tokens=1200,
-                do_sample=False,
-            )
-
-        resp = tokenizer.decode(outputs[0][inputs.input_ids.shape[1]:], skip_special_tokens=True)
-        parsed = extract_json_array(resp)
-        batch_set = set(batch)
-        seen_in_batch = set()
-        if parsed and isinstance(parsed, list):
-            for item in parsed:
-                if isinstance(item, dict) and item.get("lemma") in batch_set:
-                    lem = item["lemma"]
-                    seen_in_batch.add(lem)
-                    pos = item.get("pos") or "Noun"
-                    attrs = item.get("attributes")
-                    if not isinstance(attrs, list):
-                        attrs = []
-                    results.append({"lemma": lem, "pos": pos, "attributes": attrs})
-        # Fallback for any lemma in the batch missed by JSON output
-        for lem in batch:
-            if lem not in seen_in_batch:
-                results.append({"lemma": lem, "pos": "Noun", "attributes": []})
-
-    print(f"[OK] Chunk complete: tagged {len(results)} lemmas.")
-    return results
-
+        print(f"\n[DONE] Full FineWeb-2 pipeline complete! Saved {len(all_entries):,} entries to {out_path}")

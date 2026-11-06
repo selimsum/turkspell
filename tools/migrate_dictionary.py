@@ -372,7 +372,8 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
                     "cılık", "cilik", "culuk", "cülük",
                     "çılık", "çilik", "çuluk", "çülük",
                     "sızlık", "sizlik", "suzluk", "süzlük",
-                    "lılık", "lilik", "luluk", "lülük"
+                    "lılık", "lilik", "luluk", "lülük",
+                    "sallık", "sellik"
                 )):
                     for fl in ("LI", "LF", "SZ", "LSZ", "CK", "SL"):
                         chain = chain.replace(fl, "")

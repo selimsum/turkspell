@@ -544,14 +544,16 @@ FRONT_NOVOICING_STEMS = [
     "kıyamet", "imamet", "vekalet", "kefalet", "rezalet", "cehalet", "sefalet",
     "delalet", "dalalet", "asalet", "eyalet", "sirk", "terk", "berk", "zerk",
     "sevk", "zevk", "şevk", "fevk", "tefrit", "tespit", "taksit", "muhit", "müsait",
-    "kasket", "bisiklet", "motosiklet", "atlet", "tablet", "tuvalet", "omlet", "bilet"
+    "kasket", "bisiklet", "motosiklet", "atlet", "tablet", "tuvalet", "omlet", "bilet",
+    "transkript", "tilavet"
 ]
 
 # Stems accepting both back-unvoiced and front-unvoiced suffixes (TDK front harmony -ti/-ki/-li + common back harmony)
 for _w in [
     "suikast", "belagat", "kabahat", "meşihat", "nasihat",
     "ferahnak", "helak", "ihlak", "istihlak", "istimlak", "suzinak",
-    "portal", "total", "aval", "kal", "lal"
+    "portal", "total", "aval", "kal", "lal",
+    "kanaat", "iştirak", "itaat", "efdal"
 ]:
     HEAD_FLAG_OVERRIDES[_w] = "".join(sorted(set(BACK_UNVOICED_FLAGS + FRONT_UNVOICED_FLAGS)))
 
@@ -566,7 +568,7 @@ for _w in BACK_ROUNDED_NOVOICING_STEMS:
         HEAD_FLAG_OVERRIDES[_w] = BACK_ROUNDED_UNVOICED_FLAGS
 for _w in FRONT_NOVOICING_STEMS:
     if _w not in HEAD_FLAG_OVERRIDES:
-        HEAD_FLAG_OVERRIDES[_w] = FRONT_UNVOICED_FLAGS
+        HEAD_FLAG_OVERRIDES[_w] = "".join(sorted((set(FRONT_UNVOICED_FLAGS) - set(remap_flag_string("LI SZ LK CI".replace(" ", "")))) | set(remap_flag_string("LF LSZ LFK LCI".replace(" ", ""))))) if next((c for c in reversed(_w) if c in "aeıioöuüâîû"), "e") in "aıouâû" else FRONT_UNVOICED_FLAGS
 
 # Dual-voicing stems: unvoiced per Dil Derneği, voiced per TDK
 DUAL_VOICING_BACK_ROUNDED = ["teleskop", "radyoteleskop", "stereoskop", "bergamot"]
@@ -611,6 +613,7 @@ for _w in ["aşık", "âşık", "boydak", "kaskat", "marinat", "marmelat", "sant
     HEAD_FLAG_OVERRIDES[_w] = "".join(sorted(set(BACK_UNVOICED_FLAGS + LONG_TO_UTF8["V1"])))
 
 HEAD_FLAG_OVERRIDES["sut"] = "".join(sorted(set(BACK_ROUNDED_UNVOICED_FLAGS + LONG_TO_UTF8["V2"])))
+HEAD_FLAG_OVERRIDES["adet"] = "".join(sorted(LONG_TO_UTF8[f] for f in "CI CK DE DL DT I2 L2 LI LK PF Q2 R2 SL SZ V3 cl".split() if f in LONG_TO_UTF8))
 
 # Homonym roots where an Arabic/secondary paradigm previously overwrote the primary Turkish paradigm:
 HEAD_FLAG_OVERRIDES["ad"] = "".join(sorted(set(BACK_UNVOICED_FLAGS + LONG_TO_UTF8["G3"])))
@@ -647,7 +650,7 @@ for _su_stem in ["suyum", "suyun", "suyumuz", "suyunuz"]:
 # Stems requiring vowel-drop (hece düşmesi) flags
 VOWEL_DROP_D1_HEADS = {"hısım", "atıf", "kayın", "kabız", "ıtır", "açıkağız", "sarıağız", "bedasıl"}
 VOWEL_DROP_D2_HEADS = {"koyun", "buğuz", "kababurun", "kepçeburun"}
-VOWEL_DROP_D3_HEADS = {"zehir", "emir", "aşir", "fehim", "nesih", "rekiz", "büyükşehir", "metcezir", "sılayırahim"}
+VOWEL_DROP_D3_HEADS = {"zehir", "emir", "aşir", "fehim", "nesih", "rekiz", "rehin", "büyükşehir", "metcezir", "sılayırahim"}
 VOWEL_DROP_D4_HEADS = {"mühür", "fülüs"}
 
 _voicing_table = {"p": "b", "ç": "c", "t": "d", "k": "ğ", "g": "ğ"}
@@ -809,6 +812,8 @@ VIRTUAL_STEMS = [
     "santigrad/X∀∫∲∶∼∽≂≕≣",
     "veliahd/X∀∫∲∶∼∽≂≕≣",
     "dokunmatiğ/X∂∭∴∸∿≄≆≤≽",
+    "rehn/X∂∭∴∸∿≄≆≤≽",
+    "aded/X∂∭∴∸∿≄≆≤≽",
 ]
 
 
@@ -1407,7 +1412,8 @@ def build_hardened_aff(profile="tdk"):
                     "cılık", "cilik", "culuk", "cülük",
                     "çılık", "çilik", "çuluk", "çülük",
                     "sızlık", "sizlik", "suzluk", "süzlük",
-                    "lılık", "lilik", "luluk", "lülük"
+                    "lılık", "lilik", "luluk", "lülük",
+                    "sallık", "sellik"
                 )):
                     flags = "".join(c for c in flags if c not in _all_deriv_flags)
                     parts[3] = f"{clean_add}/{flags}"
@@ -1531,6 +1537,37 @@ def build_hardened_aff(profile="tdk"):
                 if opt_rule not in seen:
                     seen.add(opt_rule)
                     kept.append(opt_rule + "\n")
+        elif flag_long in ('wi', 'wj', 'wu', 'wh'):
+            _aor_lk_specs = {
+                'wi': ('mak', 'ı', 'a', LONG_TO_UTF8['pA']),
+                'wj': ('mek', 'i', 'e', LONG_TO_UTF8['pE']),
+                'wu': ('mak', 'u', 'a', LONG_TO_UTF8['pO']),
+                'wh': ('mek', 'ü', 'e', LONG_TO_UTF8['pU']),
+            }
+            _st, _vh, _vl, _p3 = _aor_lk_specs[flag_long]
+            for _lk_s in (
+                f"{_vh}rl{_vh}k", f"{_vh}rl{_vh}kt{_vh}r",
+                f"{_vh}rl{_vh}ğ{_vh}/{_p3}", f"{_vh}rl{_vh}ğ{_vh}",
+                f"{_vh}rl{_vh}ğ{_vl}", f"{_vh}rl{_vh}ğ{_vh}n",
+                f"{_vh}rl{_vh}ğ{_vh}n{_vl}", f"{_vh}rl{_vh}ğ{_vh}nd{_vl}", f"{_vh}rl{_vh}ğ{_vh}nd{_vl}n",
+                f"{_vh}rl{_vh}ğ{_vh}n{_vh}", f"{_vh}rl{_vh}ğ{_vh}n{_vh}n",
+            ):
+                _r_lk = f"SFX {flag} {_st} {_lk_s} [nl]{_st}"
+                if _r_lk not in seen:
+                    seen.add(_r_lk)
+                    kept.append(_r_lk + "\n")
+        if flag_long in ('VA', 'VB', 'VE', 'VF', 'VG', 'VH', 'VK', 'VM', 'VN', 'VR', 'VS', 'VY'):
+            _pot_extra = []
+            for _r_existing in kept:
+                _pr = _r_existing.strip().split()
+                if len(_pr) >= 5 and _pr[3].endswith('bilirlik'):
+                    _base_b = _pr[3][:-3]  # '...bilir'
+                    for _ex_s in (f"{_base_b}liktir", f"{_base_b}liğine", f"{_base_b}liğin"):
+                        _pot_extra.append(f"SFX {flag} {_pr[2]} {_ex_s} {_pr[4]}")
+            for _rx in _pot_extra:
+                if _rx not in seen:
+                    seen.add(_rx)
+                    kept.append(_rx + "\n")
             
         parts = header.split()
         if len(parts) >= 4 and parts[2] in ('Y', 'N'):
@@ -1596,7 +1633,7 @@ MAP '’‘"""
     # Extra REP rules: clean any leading "REP " prefixes
     clean_extra = []
     for r in EXTRA_REP_RULES:
-        rule_str = r.strip()
+        rule_str = " ".join(r) if isinstance(r, list) else str(r).strip()
         while rule_str.startswith("REP "):
             rule_str = rule_str[4:].strip()
         if rule_str:
@@ -2142,7 +2179,8 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 "cılık", "cilik", "culuk", "cülük",
                 "çılık", "çilik", "çuluk", "çülük",
                 "sızlık", "sizlik", "suzluk", "süzlük",
-                "lılık", "lilik", "luluk", "lülük"
+                "lılık", "lilik", "luluk", "lülük",
+                "sallık", "sellik"
             )):
                 flags = "".join(c for c in flags if c not in _strip_double_flags)
         elif head_lower.endswith(("lıklı", "likli", "luklu", "lüklü")):

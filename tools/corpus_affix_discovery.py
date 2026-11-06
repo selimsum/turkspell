@@ -49,6 +49,15 @@ def discover_corpus_affixes():
             k_low = _tlc(k)
             freq_map[k_low] = freq_map.get(k_low, 0) + v
         print(f"  Loaded {len(oscar_freq):,} frequency entries from oscar_10m_corpus_frequencies.json.")
+
+    fw2_path = os.path.join(base_dir, 'raw_data', 'fineweb2_corpus_frequencies.json')
+    if os.path.exists(fw2_path):
+        with open(fw2_path, 'r', encoding='utf-8') as f:
+            fw2_freq = json.load(f)
+        for k, v in fw2_freq.items():
+            k_low = _tlc(k)
+            freq_map[k_low] = freq_map.get(k_low, 0) + v
+        print(f"  Loaded {len(fw2_freq):,} frequency entries from fineweb2_corpus_frequencies.json.")
     clean_corpus = set()
     if os.path.exists(clean_pickle_path):
         with open(clean_pickle_path, 'rb') as f:
@@ -223,18 +232,43 @@ def discover_corpus_affixes():
                     attrs.add('InverseHarmony')
                     stats['inverse_harmony'] += 1
 
-            # 5. Attested Derivational Affixes
+            # 5. Attested Derivational Affixes (checking bare and common inflected forms harmonically)
+            is_front_h = ('InverseHarmony' in attrs) or (last_v in front_vowels)
+            is_round_h = last_v in 'oöuüû'
+            if not is_front_h and not is_round_h:
+                v4, v2, pl, loc_t, abl_t = 'ı', 'a', 'lar', 'ta', 'tan'
+            elif not is_front_h and is_round_h:
+                v4, v2, pl, loc_t, abl_t = 'u', 'a', 'lar', 'ta', 'tan'
+            elif is_front_h and not is_round_h:
+                v4, v2, pl, loc_t, abl_t = 'i', 'e', 'ler', 'te', 'ten'
+            else:
+                v4, v2, pl, loc_t, abl_t = 'ü', 'e', 'ler', 'te', 'ten'
+
+            v4_a = 'ı' if v2 == 'a' else 'i'
+            c_cons = 'ç' if word[-1] in 'çfhkpsşt' else 'c'
+            cs = f"{c_cons}{v4}"
+            ls = f"l{v4}"
+            lks, lkv = f"l{v4}k", f"l{v4}ğ"
+            szs = f"s{v4}z"
+            sls = f"s{v2}l"
+            dls = f"l{v2}ş"
+            dts = f"l{v2}şt{v4_a}r"
+            des = f"l{v2}n"
+            de_caus = f"l{v2}nd{v4_a}r"
+
+            deriv_probe_map = [
+                ("CI", [cs, f"{cs}{pl}", f"{cs}s{v4}", f"{cs}n{v4}n", f"{cs}y{v2}", f"{cs}l{v4}k", f"{cs}l{v4}ğ{v4}", f"{cs}l{v4}ğ{v4}n"]),
+                ("LI", [ls, f"{ls}{pl}", f"{ls}s{v4}", f"{ls}y{v2}", f"{ls}d{v4}r", f"{ls}l{v4}k", f"{ls}l{v4}ğ{v4}", f"{ls}l{v4}ğ{v4}n"]),
+                ("LK", [lks, f"{lkv}{v4}", f"{lkv}{v4}n", f"{lkv}{v2}", f"{lkv}{v4}m{v4}z", f"{lks}{loc_t}", f"{lks}{abl_t}", f"{lks}{pl}", f"{lks}l{v4}"]),
+                ("SZ", [szs, f"{szs}{pl}", f"{szs}c{v2}", f"{szs}l{v4}k", f"{szs}l{v4}ğ{v4}", f"{szs}l{v4}ğ{v4}n", f"{szs}l{v4}ğ{v2}"]),
+                ("SL", [sls, f"{sls}l{v4_a}k", f"{sls}l{v4_a}ğ{v4_a}", f"{sls}l{v4_a}ğ{v4_a}n", f"{sls}l{v2}şm{v2}", f"{sls}l{v2}şm{v2}k", f"{sls}l{v2}şt{v4_a}rm{v2}", f"{sls}l{v2}şt{v4_a}rm{v2}k"]),
+                ("DL", [dls, f"{dls}m{v2}k", f"{dls}m{v2}", f"{dls}m{v2}s{v4_a}", f"{dls}m{v2}n{v4_a}n", f"{dls}t{v4_a}", f"{dls}{v4_a}yor", f"{dls}{v2}n", f"{dls}m{v4_a}ş", f"{dls}{v2}c{v2}k", f"{dls}{v4_a}ld{v4_a}", f"{dls}{v4_a}lm{v2}s{v4_a}"]),
+                ("DT", [dts, f"{dts}m{v2}k", f"{dts}m{v2}", f"{dts}m{v2}s{v4_a}", f"{dts}m{v2}n{v4_a}n", f"{dts}d{v4_a}", f"{dts}{v4_a}yor", f"{dts}{v2}n", f"{dts}m{v4_a}ş", f"{dts}{v4_a}lm{v2}k", f"{dts}{v4_a}lm{v2}", f"{dts}{v4_a}lm{v2}s{v4_a}", f"{dts}{v4_a}ld{v4_a}", f"{dts}{v4_a}l{v2}n"]),
+                ("DE", [des, f"{des}m{v2}k", f"{des}m{v2}", f"{des}m{v2}s{v4_a}", f"{des}d{v4_a}", f"{des}{v4_a}yor", f"{des}{v2}n", f"{des}m{v4_a}ş", de_caus, f"{de_caus}m{v2}k", f"{de_caus}m{v2}", f"{de_caus}m{v2}s{v4_a}", f"{de_caus}d{v4_a}", f"{de_caus}{v4_a}yor", f"{de_caus}{v2}n", f"{de_caus}{v4_a}lm{v2}k", f"{de_caus}{v4_a}lm{v2}s{v4_a}", f"{de_caus}{v4_a}ld{v4_a}", f"{de_caus}{v4_a}l{v2}n"]),
+            ]
+
             deriv_flags = []
-            for flag, suffixes in [
-                ("CI", ["ci", "cı", "cu", "cü", "çi", "çı", "çu", "çü"]),
-                ("LI", ["li", "lı", "lu", "lü"]),
-                ("LK", ["lik", "lık", "luk", "lük"]),
-                ("SZ", ["siz", "sız", "suz", "süz"]),
-                ("SL", ["sal", "sel"]),
-                ("DL", ["laş", "leş"]),
-                ("DT", ["laştır", "leştir"]),
-                ("DE", ["len", "leş"])
-            ]:
+            for flag, suffixes in deriv_probe_map:
                 attested = False
                 for suf in suffixes:
                     cand = f"{word}{suf}"

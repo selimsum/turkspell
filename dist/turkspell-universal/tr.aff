@@ -40,15 +40,7 @@ MAXDIFF 5
 MAXNGRAMSUGS 8
 
 
-
-
-
-
-
-
-
-
-REP 2910
+REP 2793
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -898,255 +890,161 @@ REP başaşağı baş_aşağı
 REP yanıbaşında yanı_başında
 REP yüzbinlerce yüz_binlerce
 REP sınırdışı sınır_dışı
-REP ıcam$ acağım
-REP icam$ eceğim
-REP ıcak$ acak
-REP icek$ ecek
-REP ıcaksın$ acaksın
-REP iceksin$ eceksin
-REP ıcaz$ acağız
-REP icez$ eceğiz
-REP ıcaksınız$ acaksınız
-REP iceksiniz$ eceksiniz
-REP ıcaklar$ acaklar
-REP icekler$ ecekler
-REP ıcaktı$ acaktı
-REP icekti$ ecekti
-REP ıcaktım$ acaktım
-REP icektim$ ecektim
-REP ıcaktın$ acaktın
-REP icektin$ ecektin
-REP ıcaktık$ acaktık
-REP icektik$ ecektik
-REP ıycam$ ayacağım
-REP iycem$ eyeceğim
-REP ıycak$ ayacak
-REP iycek$ eyecek
-REP ıycaksın$ ayacaksın
-REP iyceksin$ eyeceksin
-REP ıycaz$ ayacağız
-REP iycez$ eyeceğiz
-REP ıycaksınız$ ayacaksınız
-REP iyceksiniz$ eyeceksiniz
-REP ıycaklar$ ayacaklar
-REP iycekler$ eyecekler
-REP ıycaktı$ ayacaktı
-REP iycekti$ eyecekti
-REP ıycaktım$ ayacaktım
-REP iycektim$ eyecektim
-REP ıycaktık$ ayacaktık
-REP iycektik$ eyecektik
-REP mıycak$ mayacak
-REP miycek$ meyecek
-REP mıycam$ mayacağım
-REP miycem$ meyeceğim
-REP mıycaksın$ mayacaksın
-REP miyceksin$ meyeceksin
-REP mıycaz$ mayacağız
-REP miycez$ meyeceğiz
-REP mıycaksınız$ mayacaksınız
-REP miyceksiniz$ meyeceksiniz
-REP mıycaklar$ mayacaklar
-REP miycekler$ meyecekler
-REP mıycaktı$ mayacaktı
-REP miycekti$ meyecekti
-REP mıycaktım$ mayacaktım
-REP miycektim$ meyecektim
-REP mıycaktık$ mayacaktık
-REP miycektik$ meyecektik
-REP lcek$ lecek
-REP lcak$ lacak
-REP rcek$ recek
-REP rcak$ racak
-REP tcek$ tecek
-REP tcak$ tacak
-REP kcek$ kecek
-REP kcak$ kacak
-REP mcek$ mecek
-REP mcak$ macak
-REP ncek$ necek
-REP ncak$ nacak
-REP pcek$ pecek
-REP pcak$ pacak
-REP zcek$ zecek
-REP zcak$ zacak
-REP şcek$ şecek
-REP şcak$ şacak
-REP scek$ secek
-REP scak$ sacak
-REP dcek$ decek
-REP dcak$ dacak
-REP ıyom$ uyorum
-REP iyom$ iyorum
-REP uyom$ uyorum
-REP üyom$ üyorum
-REP ıyon$ ıyorsun
-REP iyon$ iyorsun
-REP uyon$ uyorsun
-REP üyon$ üyorsun
-REP ıyo$ ıyor
-REP iyo$ iyor
-REP uyo$ uyor
-REP üyo$ üyor
-REP ıyoz$ uyoruz
-REP iyoz$ iyoruz
-REP uyoz$ uyoruz
-REP üyoz$ üyoruz
-REP ıyolar$ uyorlar
-REP iyolar$ iyorlar
-REP uyolar$ uyorlar
-REP üyolar$ üyorlar
-REP ıyodu$ uyordu
-REP iyodu$ iyordu
-REP uyodu$ uyordu
-REP üyodu$ üyordu
-REP ıyodum$ uyordum
-REP iyodum$ iyordum
-REP uyodum$ uyordum
-REP üyodum$ üyordum
-REP ıyodun$ uyordun
-REP iyodun$ iyordun
-REP uyodun$ uyordun
-REP üyodun$ üyordun
-REP ıyoduk$ uyorduk
-REP iyoduk$ iyorduk
-REP uyoduk$ uyorduk
-REP üyoduk$ üyorduk
-REP mıyom$ mıyorum
-REP miyom$ miyorum
-REP muyom$ muyorum
-REP müyom$ müyorum
-REP mıyon$ mıyorsun
-REP miyon$ miyorsun
-REP muyon$ müyorsun
-REP müyon$ müyorsun
-REP mıyo$ mıyor
-REP miyo$ miyor
-REP muyo$ muyor
-REP müyo$ müyor
-REP mıyoz$ mıyoruz
-REP miyoz$ miyoruz
-REP muyoz$ müyoruz
-REP müyoz$ müyoruz
-REP mıyolar$ mıyorlar
-REP miyolar$ miyorlar
-REP muyolar$ müyorlar
-REP müyolar$ müyorlar
-REP ^bişey bir_şey
-REP ^hiçbişey hiçbir_şey
-REP ^herbişey her_bir_şey
-REP ^napıyon ne_yapıyorsun
-REP ^napıyosun ne_yapıyorsun
-REP ^napiyosun ne_yapıyorsun
-REP ^napıcan ne_yapacaksın
-REP ^napıyo ne_yapıyor
-REP ^napcaz ne_yapacağız
-REP ^napalım ne_yapalım
-REP ^naptın ne_yaptın
-REP ^nassın nasılsın
-REP ^naber ne_haber
-REP ^burda burada
-REP ^burdan buradan
-REP ^burdayım buradayım
-REP ^burdalar buradalar
-REP ^şurda şurada
-REP ^şurdan şuradan
-REP ^şurdayım şuradayım
-REP ^orda orada
-REP ^ordan oradan
-REP ^ordayım oradayım
-REP ^ordalar oradalar
-REP ^nerde nerede
-REP ^nerden nereden
-REP ^nerdesin neredesin
-REP de$ 'de
-REP da$ 'da
-REP te$ 'te
-REP ta$ 'ta
-REP den$ 'den
-REP dan$ 'dan
-REP ten$ 'ten
-REP tan$ 'tan
-REP nin$ 'nin
-REP nın$ 'nın
-REP nun$ 'nun
-REP nün$ 'nün
-REP in$ 'in
-REP ın$ 'ın
-REP un$ 'un
-REP ün$ 'ün
-REP ye$ 'ye
-REP ya$ 'ya
-REP yi$ 'yi
-REP yı$ 'yı
-REP yu$ 'yu
-REP yü$ 'yü
-REP e$ 'e
-REP a$ 'a
-REP i$ 'i
-REP ı$ 'ı
-REP u$ 'u
-REP ü$ 'ü
-REP le$ 'le
-REP la$ 'la
-REP yle$ 'yle
-REP yla$ 'yla
-REP deki$ 'deki
-REP daki$ 'daki
-REP teki$ 'teki
-REP taki$ 'taki
-REP afetti affetti
-REP afettim affettim
-REP afettik affettik
-REP afetmiş affetmiş
-REP afetmedi affetmedi
-REP afedecek affedecek
-REP afediyor affediyor
-REP afeder affeder
-REP hisetti hissetti
-REP hisettim hissettim
-REP hisettik hissettik
-REP hisetmiş hissetmiş
-REP hisedecek hissedecek
-REP hisediyor hissediyor
-REP hiseder hisseder
-REP haletti halletti
-REP halettim hallettim
-REP halettik hallettik
-REP haletmiş halletmiş
-REP haledecek halledecek
-REP halediyor hallediyor
-REP haleder halleder
-REP redetti reddetti
-REP redettim reddettim
-REP redettik reddettik
-REP redetmiş reddetmiş
-REP rededecek reddedecek
-REP redediyor reddediyor
-REP rededer reddeder
-REP zanetti zannetti
-REP zanettim zannettim
-REP zanettik zannettik
-REP zanetmiş zannetmiş
-REP zanedecek zannedecek
-REP zanediyor zannediyor
-REP zaneder zanneder
-REP yanliz yalnız
+REP adeti âdeti
+REP adeti adedi
+REP adete âdete
+REP adete adede
+REP adetin âdetin
+REP adetin adedin
+REP güvenirlilik güvenilirlik
+REP güvenirliliği güvenilirliği
+REP güvenirliliğini güvenilirliğini
+REP görememezlik görmezlik
+REP görememezlikten görmezlikten
+REP ilâhî ilahi
+REP ilahî ilahi
+REP menşeili menşeli
+REP tereyağ tereyağı
+REP zeytinyağ zeytinyağı
+REP imkanı imkânı
+REP cok çok
+REP icin için
+REP iddaa iddia
+REP orjinal orijinal
+REP makina makine
+REP guzel güzel
+REP oldugu olduğu
+REP nikah nikâh
+REP tiroid tiroit
+REP inkar inkâr
+REP degil değil
+REP hikayesini hikâyesini
+REP mekanda mekânda
+REP nasil nasıl
+REP oldugunu olduğunu
+REP orda orada
+REP mekanı mekânı
+REP bır bir
+REP makinası makinesi
+REP hic hiç
+REP once önce
+REP diger diğer
+REP şikayetleri şikâyetleri
+REP rengarenk rengârenk
+REP mekanlarda mekânlarda
+REP gun gün
+REP biraraya bir_araya
+REP bişey bir_şey
+REP mekanın mekânın
+REP eger eğer
+REP imkanına imkânına
+REP sey şey
+REP dogru doğru
+REP artik artık
+REP malesef maalesef
+REP tarafindan tarafından
+REP makinaları makineleri
+REP mekana mekâna
+REP vekalet vekâlet
+REP gore göre
+REP buyuk büyük
+REP tezgah tezgâh
+REP içerde içeride
+REP kase kâse
+REP varmı var_mı
+REP cihad cihat
+REP hikayenin hikâyenin
+REP boyle böyle
+REP kağıtları kâğıtları
+REP dışardan dışarıdan
+REP kadin kadın
+REP icinde içinde
+REP bazi bazı
+REP kağıda kâğıda
+REP yegane yegâne
+REP hikayeyi hikâyeyi
+REP arasinda arasında
+REP rüzgarın rüzgârın
+REP hakimiyetini hâkimiyetini
+REP yukarda yukarıda
+REP olarakta olarak_da
+REP arkadaslar arkadaşlar
+REP imkanlarını imkânlarını
+REP imkanını imkânını
+REP imkansızdır imkânsızdır
+REP laboratuar laboratuvar
+REP karsi karşı
+REP olmasi olması
+REP dışarda dışarıda
+REP fedakarlık fedakârlık
+REP vardir vardır
+REP ordan oradan
+REP imkanınız imkânınız
+REP cunku çünkü
+REP güzergah güzergâh
+REP bugun bugün
+REP yil yıl
+REP ayrica ayrıca
+REP hakkinda hakkında
+REP herşeyden her_şeyden
+REP oyle öyle
+REP gercekten gerçekten
+REP ıle ile
+REP kitab kitap
+REP farkli farklı
+REP ragmen rağmen
+REP butun bütün
+REP imkanlarla imkânlarla
+REP kiz kız
+REP mekanların mekânların
+REP şikayette şikâyette
+REP egitim eğitim
+REP aşikar aşikâr
+REP olsada olsa_da
+REP oldukca oldukça
+REP kisa kısa
+REP cocuk çocuk
+REP hurriyet hürriyet
 REP yanlız yalnız
+REP şehid şehit
+REP sunnet sünnet
+REP saglik sağlık
+REP herşeye her_şeye
+REP imkanlarıyla imkânlarıyla
+REP zekanın zekânın
+REP virus virüs
+REP pekala pekâlâ
+REP basladi başladı
+REP arkadas arkadaş
+REP şikayetlerin şikâyetlerin
+REP olmus olmuş
+REP yapilan yapılan
+REP kac kaç
+REP gözardı göz_ardı
+REP zekat zekât
+REP güzergahı güzergâhı
+REP degildir değildir
+REP kabus kâbus
+REP kafir kâfir
+REP onemli önemli
+REP mekanlara mekânlara
+REP insangucu insan_gücü
+REP canli canlı
+REP hikayeye hikâyeye
+REP birsey bir_şey
+REP rekat rekât
+REP yanliz yalnız
 REP deil değil
 REP diil değil
-REP degil değil
 REP tesekkur teşekkür
 REP tesekkür teşekkür
 REP teşekkur teşekkür
 REP hersey her_şey
-REP birsey bir_şey
 REP geliyo geliyor
 REP gelior geliyor
 REP olucak olacak
 REP olcak olacak
 REP olicak olacak
-REP oldugunu olduğunu
 REP yanlis yanlış
 REP yanlıs yanlış
 REP mumkun mümkün
@@ -1158,13 +1056,11 @@ REP sarmısak sarımsak
 REP entellektüel entelektüel
 REP vejeteryan vejetaryen
 REP insiyatif inisiyatif
-REP orjinal orijinal
 REP dinazor dinozor
 REP klüp kulüp
 REP mualif muhalif
 REP seftali şeftali
 REP direk direkt
-REP makina makine
 REP meyva meyve
 REP süpriz sürpriz
 REP eskişehir Eskişehir
@@ -1201,14 +1097,12 @@ REP tabi tabii
 REP müsade müsaade
 REP muaffakiyet muvaffakiyet
 REP müteahit müteahhit
-REP laboratuar laboratuvar
 REP konsensus konsensüs
 REP antreman antrenman
 REP ünvan unvan
 REP rasgele rastgele
 REP şurda şurada
 REP burda burada
-REP orda orada
 REP nerde nerede
 REP gardolap gardırop
 REP asvalt asfalt
@@ -1267,7 +1161,6 @@ REP gangaster gangster
 REP grapon krapon
 REP küpür kupür
 REP küsür küsur
-REP malesef maalesef
 REP mağlesef maalesef
 REP metod metot
 REP standard standart
@@ -1928,7 +1821,6 @@ REP kaldir kaldır
 REP kaldirac kaldıraç
 REP kalitimdan kalıtımdan
 REP kaynatirim kaynatırım
-REP saglik sağlık
 REP agla ağla
 REP alatış ağlatış
 REP algılyın algılayın
@@ -1942,7 +1834,6 @@ REP calis çalış
 REP cozum çözüm
 REP guclu güçlü
 REP kucuk küçük
-REP buyuk büyük
 REP guven güven
 REP ozel özel
 REP onem önem
@@ -1960,7 +1851,6 @@ REP titresim titreşim
 REP cogal çoğal
 REP gorun görün
 REP gorus görüş
-REP dogru doğru
 REP doga doğa
 REP dogal doğal
 REP agac ağaç
@@ -2060,7 +1950,6 @@ REP adet âdet
 REP alem âlem
 REP dahi dâhi
 REP sura şûra
-REP tezgah tezgâh
 REP alim âlim
 REP hakimevi hâkimevi
 REP acizleşebilme âcizleşebilme
@@ -2159,7 +2048,6 @@ REP ehlileştirilmek ehlîleştirilmek
 REP ezeli ezelî
 REP fanilik fânilik
 REP fedakar fedakâr
-REP fedakarlık fedakârlık
 REP gavur gâvur
 REP habeşi habeşî
 REP hak hâk
@@ -2182,12 +2070,10 @@ REP hükümet hükûmet
 REP hüsnühal hüsnühâl
 REP ikametgah ikametgâh
 REP inikas inikâs
-REP inkar inkâr
 REP irtikap irtikâp
 REP istihkam istihkâm
 REP isyankar isyankâr
 REP isyankarlık isyankârlık
-REP kabus kâbus
 REP kadimi kadimî
 REP kafi kâfi
 REP kafur kâfur
@@ -2202,7 +2088,6 @@ REP karlılık kârlılık
 REP karsız kârsız
 REP karsızca kârsızca
 REP karsızlık kârsızlık
-REP kase kâse
 REP kavmi kavmî
 REP kesbi kesbî
 REP keşf keşif
@@ -2283,7 +2168,6 @@ REP avdeti avdetî
 REP azimkar azimkâr
 REP azimkarane azimkârane
 REP azimkarlık azimkârlık
-REP aşikar aşikâr
 REP aşikare aşikâre
 REP aşikarlık aşikârlık
 REP bargah bargâh
@@ -2372,7 +2256,6 @@ REP gavurluk gâvurluk
 REP günahkar günahkâr
 REP günahkarlık günahkârlık
 REP güvezi güvezî
-REP güzergah güzergâh
 REP hakkak hakkâk
 REP hakkaklik hakkâklik
 REP halaskar halaskâr
@@ -2478,7 +2361,6 @@ REP keyfi keyfî
 REP kabuslu kâbuslu
 REP kabussuz kâbussuz
 REP kaffesi kâffesi
-REP kafir kâfir
 REP kafiristan kâfiristan
 REP kafirleşme kâfirleşme
 REP kafirleşmek kâfirleşmek
@@ -2609,7 +2491,6 @@ REP nefti neftî
 REP neftileşme neftîleşme
 REP neftimsi neftîmsi
 REP nigahban nigâhban
-REP nikah nikâh
 REP nikahlama nikâhlama
 REP nikahlamak nikâhlamak
 REP nikahlanma nikâhlanma
@@ -2629,7 +2510,6 @@ REP nüfuzkar nüfuzkâr
 REP nükul nükûl
 REP nümayişkar nümayişkâr
 REP ordugah ordugâh
-REP pekala pekâlâ
 REP pençgah pençgâh
 REP perestişkar perestişkâr
 REP perhizkar perhizkâr
@@ -2638,9 +2518,7 @@ REP pirifani pirifâni
 REP rahim rahîm
 REP reddihakim reddihâkim
 REP rekaket rekâket
-REP rekat rekât
 REP remzi remzî
-REP rengarenk rengârenk
 REP resmi resmî
 REP resmileşmek resmîleşmek
 REP resmileştirebilme resmîleştirebilme
@@ -2750,7 +2628,6 @@ REP tövbekar tövbekâr
 REP tövbekarlık tövbekârlık
 REP vefakar vefakâr
 REP vefakarlık vefakârlık
-REP vekalet vekâlet
 REP vekaleten vekâleten
 REP vekaletname vekâletname
 REP verimkar verimkâr
@@ -2763,7 +2640,6 @@ REP vasi vâsi
 REP yadigar yadigâr
 REP yegah yegâh
 REP yegan yegân
-REP yegane yegâne
 REP yaren yâren
 REP yarenbaşı yârenbaşı
 REP yarlik yârlik
@@ -2773,7 +2649,6 @@ REP zahir zahîr
 REP zekalılık zekâlılık
 REP zekasız zekâsız
 REP zekasızlık zekâsızlık
-REP zekat zekât
 REP zekavet zekâvet
 REP zengule zengûle
 REP zevali zevalî
@@ -3075,7 +2950,7 @@ SFX ∆ 0 0 .
 SFX ∇ Y 1
 SFX ∇ 0 0 .
 
-SFX ∈ Y 746
+SFX ∈ Y 974
 SFX ∈ 0 0 .
 SFX ∈ bı pları bı
 SFX ∈ bı pları/∎ bı
@@ -3088,7 +2963,11 @@ SFX ∈ ğı kları/∎ ğı
 SFX ∈ sı ları sı
 SFX ∈ sı ları/∎ sı
 SFX ∈ ı ları [^bcğds]ı
+SFX ∈ ı ları adı
+SFX ∈ ı ları [ybd]ağı
 SFX ∈ ı ları/∎ [^bcğds]ı
+SFX ∈ ı ları/∎ adı
+SFX ∈ ı ları/∎ [ybd]ağı
 SFX ∈ bı plarını bı
 SFX ∈ bı plarını/∎ bı
 SFX ∈ cı çlarını cı
@@ -3100,7 +2979,11 @@ SFX ∈ ğı klarını/∎ ğı
 SFX ∈ sı larını sı
 SFX ∈ sı larını/∎ sı
 SFX ∈ ı larını [^bcğds]ı
+SFX ∈ ı larını adı
+SFX ∈ ı larını [ybd]ağı
 SFX ∈ ı larını/∎ [^bcğds]ı
+SFX ∈ ı larını/∎ adı
+SFX ∈ ı larını/∎ [ybd]ağı
 SFX ∈ bı plarına bı
 SFX ∈ bı plarına/∎ bı
 SFX ∈ cı çlarına cı
@@ -3112,7 +2995,11 @@ SFX ∈ ğı klarına/∎ ğı
 SFX ∈ sı larına sı
 SFX ∈ sı larına/∎ sı
 SFX ∈ ı larına [^bcğds]ı
+SFX ∈ ı larına adı
+SFX ∈ ı larına [ybd]ağı
 SFX ∈ ı larına/∎ [^bcğds]ı
+SFX ∈ ı larına/∎ adı
+SFX ∈ ı larına/∎ [ybd]ağı
 SFX ∈ bı plarında bı
 SFX ∈ bı plarında/∎ bı
 SFX ∈ bı plarındaki bı
@@ -3254,33 +3141,89 @@ SFX ∈ sı larındakiydi sı
 SFX ∈ sı larındakiymiş sı
 SFX ∈ sı larındakiyken sı
 SFX ∈ ı larında [^bcğds]ı
+SFX ∈ ı larında adı
+SFX ∈ ı larında [ybd]ağı
 SFX ∈ ı larında/∎ [^bcğds]ı
+SFX ∈ ı larında/∎ adı
+SFX ∈ ı larında/∎ [ybd]ağı
 SFX ∈ ı larındaki [^bcğds]ı
+SFX ∈ ı larındaki adı
+SFX ∈ ı larındaki [ybd]ağı
 SFX ∈ ı larındakiler [^bcğds]ı
+SFX ∈ ı larındakiler adı
+SFX ∈ ı larındakiler [ybd]ağı
 SFX ∈ ı larındakilerin [^bcğds]ı
+SFX ∈ ı larındakilerin adı
+SFX ∈ ı larındakilerin [ybd]ağı
 SFX ∈ ı larındakilere [^bcğds]ı
+SFX ∈ ı larındakilere adı
+SFX ∈ ı larındakilere [ybd]ağı
 SFX ∈ ı larındakilerde [^bcğds]ı
+SFX ∈ ı larındakilerde adı
+SFX ∈ ı larındakilerde [ybd]ağı
 SFX ∈ ı larındakilerden [^bcğds]ı
+SFX ∈ ı larındakilerden adı
+SFX ∈ ı larındakilerden [ybd]ağı
 SFX ∈ ı larındakilerle [^bcğds]ı
+SFX ∈ ı larındakilerle adı
+SFX ∈ ı larındakilerle [ybd]ağı
 SFX ∈ ı larındakilerce [^bcğds]ı
+SFX ∈ ı larındakilerce adı
+SFX ∈ ı larındakilerce [ybd]ağı
 SFX ∈ ı larındakileri [^bcğds]ı
+SFX ∈ ı larındakileri adı
+SFX ∈ ı larındakileri [ybd]ağı
 SFX ∈ ı larındakilerini [^bcğds]ı
+SFX ∈ ı larındakilerini adı
+SFX ∈ ı larındakilerini [ybd]ağı
 SFX ∈ ı larındakilerine [^bcğds]ı
+SFX ∈ ı larındakilerine adı
+SFX ∈ ı larındakilerine [ybd]ağı
 SFX ∈ ı larındakilerinde [^bcğds]ı
+SFX ∈ ı larındakilerinde adı
+SFX ∈ ı larındakilerinde [ybd]ağı
 SFX ∈ ı larındakilerinden [^bcğds]ı
+SFX ∈ ı larındakilerinden adı
+SFX ∈ ı larındakilerinden [ybd]ağı
 SFX ∈ ı larındakileriyle [^bcğds]ı
+SFX ∈ ı larındakileriyle adı
+SFX ∈ ı larındakileriyle [ybd]ağı
 SFX ∈ ı larındakilerinin [^bcğds]ı
+SFX ∈ ı larındakilerinin adı
+SFX ∈ ı larındakilerinin [ybd]ağı
 SFX ∈ ı larındakini [^bcğds]ı
+SFX ∈ ı larındakini adı
+SFX ∈ ı larındakini [ybd]ağı
 SFX ∈ ı larındakine [^bcğds]ı
+SFX ∈ ı larındakine adı
+SFX ∈ ı larındakine [ybd]ağı
 SFX ∈ ı larındakinde [^bcğds]ı
+SFX ∈ ı larındakinde adı
+SFX ∈ ı larındakinde [ybd]ağı
 SFX ∈ ı larındakinden [^bcğds]ı
+SFX ∈ ı larındakinden adı
+SFX ∈ ı larındakinden [ybd]ağı
 SFX ∈ ı larındakinin [^bcğds]ı
+SFX ∈ ı larındakinin adı
+SFX ∈ ı larındakinin [ybd]ağı
 SFX ∈ ı larındakiyle [^bcğds]ı
+SFX ∈ ı larındakiyle adı
+SFX ∈ ı larındakiyle [ybd]ağı
 SFX ∈ ı larındakiyse [^bcğds]ı
+SFX ∈ ı larındakiyse adı
+SFX ∈ ı larındakiyse [ybd]ağı
 SFX ∈ ı larındakidir [^bcğds]ı
+SFX ∈ ı larındakidir adı
+SFX ∈ ı larındakidir [ybd]ağı
 SFX ∈ ı larındakiydi [^bcğds]ı
+SFX ∈ ı larındakiydi adı
+SFX ∈ ı larındakiydi [ybd]ağı
 SFX ∈ ı larındakiymiş [^bcğds]ı
+SFX ∈ ı larındakiymiş adı
+SFX ∈ ı larındakiymiş [ybd]ağı
 SFX ∈ ı larındakiyken [^bcğds]ı
+SFX ∈ ı larındakiyken adı
+SFX ∈ ı larındakiyken [ybd]ağı
 SFX ∈ bı plarından bı
 SFX ∈ bı plarından/∎ bı
 SFX ∈ cı çlarından cı
@@ -3292,7 +3235,11 @@ SFX ∈ ğı klarından/∎ ğı
 SFX ∈ sı larından sı
 SFX ∈ sı larından/∎ sı
 SFX ∈ ı larından [^bcğds]ı
+SFX ∈ ı larından adı
+SFX ∈ ı larından [ybd]ağı
 SFX ∈ ı larından/∎ [^bcğds]ı
+SFX ∈ ı larından/∎ adı
+SFX ∈ ı larından/∎ [ybd]ağı
 SFX ∈ bı plarının bı
 SFX ∈ bı plarının/∎ bı
 SFX ∈ bı plarınınki bı
@@ -3434,33 +3381,89 @@ SFX ∈ sı larınınkiydi sı
 SFX ∈ sı larınınkiymiş sı
 SFX ∈ sı larınınkiyken sı
 SFX ∈ ı larının [^bcğds]ı
+SFX ∈ ı larının adı
+SFX ∈ ı larının [ybd]ağı
 SFX ∈ ı larının/∎ [^bcğds]ı
+SFX ∈ ı larının/∎ adı
+SFX ∈ ı larının/∎ [ybd]ağı
 SFX ∈ ı larınınki [^bcğds]ı
+SFX ∈ ı larınınki adı
+SFX ∈ ı larınınki [ybd]ağı
 SFX ∈ ı larınınkiler [^bcğds]ı
+SFX ∈ ı larınınkiler adı
+SFX ∈ ı larınınkiler [ybd]ağı
 SFX ∈ ı larınınkilerin [^bcğds]ı
+SFX ∈ ı larınınkilerin adı
+SFX ∈ ı larınınkilerin [ybd]ağı
 SFX ∈ ı larınınkilere [^bcğds]ı
+SFX ∈ ı larınınkilere adı
+SFX ∈ ı larınınkilere [ybd]ağı
 SFX ∈ ı larınınkilerde [^bcğds]ı
+SFX ∈ ı larınınkilerde adı
+SFX ∈ ı larınınkilerde [ybd]ağı
 SFX ∈ ı larınınkilerden [^bcğds]ı
+SFX ∈ ı larınınkilerden adı
+SFX ∈ ı larınınkilerden [ybd]ağı
 SFX ∈ ı larınınkilerle [^bcğds]ı
+SFX ∈ ı larınınkilerle adı
+SFX ∈ ı larınınkilerle [ybd]ağı
 SFX ∈ ı larınınkilerce [^bcğds]ı
+SFX ∈ ı larınınkilerce adı
+SFX ∈ ı larınınkilerce [ybd]ağı
 SFX ∈ ı larınınkileri [^bcğds]ı
+SFX ∈ ı larınınkileri adı
+SFX ∈ ı larınınkileri [ybd]ağı
 SFX ∈ ı larınınkilerini [^bcğds]ı
+SFX ∈ ı larınınkilerini adı
+SFX ∈ ı larınınkilerini [ybd]ağı
 SFX ∈ ı larınınkilerine [^bcğds]ı
+SFX ∈ ı larınınkilerine adı
+SFX ∈ ı larınınkilerine [ybd]ağı
 SFX ∈ ı larınınkilerinde [^bcğds]ı
+SFX ∈ ı larınınkilerinde adı
+SFX ∈ ı larınınkilerinde [ybd]ağı
 SFX ∈ ı larınınkilerinden [^bcğds]ı
+SFX ∈ ı larınınkilerinden adı
+SFX ∈ ı larınınkilerinden [ybd]ağı
 SFX ∈ ı larınınkileriyle [^bcğds]ı
+SFX ∈ ı larınınkileriyle adı
+SFX ∈ ı larınınkileriyle [ybd]ağı
 SFX ∈ ı larınınkilerinin [^bcğds]ı
+SFX ∈ ı larınınkilerinin adı
+SFX ∈ ı larınınkilerinin [ybd]ağı
 SFX ∈ ı larınınkini [^bcğds]ı
+SFX ∈ ı larınınkini adı
+SFX ∈ ı larınınkini [ybd]ağı
 SFX ∈ ı larınınkine [^bcğds]ı
+SFX ∈ ı larınınkine adı
+SFX ∈ ı larınınkine [ybd]ağı
 SFX ∈ ı larınınkinde [^bcğds]ı
+SFX ∈ ı larınınkinde adı
+SFX ∈ ı larınınkinde [ybd]ağı
 SFX ∈ ı larınınkinden [^bcğds]ı
+SFX ∈ ı larınınkinden adı
+SFX ∈ ı larınınkinden [ybd]ağı
 SFX ∈ ı larınınkinin [^bcğds]ı
+SFX ∈ ı larınınkinin adı
+SFX ∈ ı larınınkinin [ybd]ağı
 SFX ∈ ı larınınkiyle [^bcğds]ı
+SFX ∈ ı larınınkiyle adı
+SFX ∈ ı larınınkiyle [ybd]ağı
 SFX ∈ ı larınınkiyse [^bcğds]ı
+SFX ∈ ı larınınkiyse adı
+SFX ∈ ı larınınkiyse [ybd]ağı
 SFX ∈ ı larınınkidir [^bcğds]ı
+SFX ∈ ı larınınkidir adı
+SFX ∈ ı larınınkidir [ybd]ağı
 SFX ∈ ı larınınkiydi [^bcğds]ı
+SFX ∈ ı larınınkiydi adı
+SFX ∈ ı larınınkiydi [ybd]ağı
 SFX ∈ ı larınınkiymiş [^bcğds]ı
+SFX ∈ ı larınınkiymiş adı
+SFX ∈ ı larınınkiymiş [ybd]ağı
 SFX ∈ ı larınınkiyken [^bcğds]ı
+SFX ∈ ı larınınkiyken adı
+SFX ∈ ı larınınkiyken [ybd]ağı
 SFX ∈ bı plarıyla bı
 SFX ∈ bı plarıyla/∎ bı
 SFX ∈ cı çlarıyla cı
@@ -3472,7 +3475,11 @@ SFX ∈ ğı klarıyla/∎ ğı
 SFX ∈ sı larıyla sı
 SFX ∈ sı larıyla/∎ sı
 SFX ∈ ı larıyla [^bcğds]ı
+SFX ∈ ı larıyla adı
+SFX ∈ ı larıyla [ybd]ağı
 SFX ∈ ı larıyla/∎ [^bcğds]ı
+SFX ∈ ı larıyla/∎ adı
+SFX ∈ ı larıyla/∎ [ybd]ağı
 SFX ∈ bı plarınca bı
 SFX ∈ bı plarınca/∎ bı
 SFX ∈ cı çlarınca cı
@@ -3484,7 +3491,11 @@ SFX ∈ ğı klarınca/∎ ğı
 SFX ∈ sı larınca sı
 SFX ∈ sı larınca/∎ sı
 SFX ∈ ı larınca [^bcğds]ı
+SFX ∈ ı larınca adı
+SFX ∈ ı larınca [ybd]ağı
 SFX ∈ ı larınca/∎ [^bcğds]ı
+SFX ∈ ı larınca/∎ adı
+SFX ∈ ı larınca/∎ [ybd]ağı
 SFX ∈ bı plarım bı
 SFX ∈ bı plarım/∎ bı
 SFX ∈ cı çlarım cı
@@ -3496,7 +3507,11 @@ SFX ∈ ğı klarım/∎ ğı
 SFX ∈ sı larım sı
 SFX ∈ sı larım/∎ sı
 SFX ∈ ı larım [^bcğds]ı
+SFX ∈ ı larım adı
+SFX ∈ ı larım [ybd]ağı
 SFX ∈ ı larım/∎ [^bcğds]ı
+SFX ∈ ı larım/∎ adı
+SFX ∈ ı larım/∎ [ybd]ağı
 SFX ∈ bı plarıma bı
 SFX ∈ bı plarıma/∎ bı
 SFX ∈ cı çlarıma cı
@@ -3508,7 +3523,11 @@ SFX ∈ ğı klarıma/∎ ğı
 SFX ∈ sı larıma sı
 SFX ∈ sı larıma/∎ sı
 SFX ∈ ı larıma [^bcğds]ı
+SFX ∈ ı larıma adı
+SFX ∈ ı larıma [ybd]ağı
 SFX ∈ ı larıma/∎ [^bcğds]ı
+SFX ∈ ı larıma/∎ adı
+SFX ∈ ı larıma/∎ [ybd]ağı
 SFX ∈ bı plarımda bı
 SFX ∈ bı plarımda/∎ bı
 SFX ∈ cı çlarımda cı
@@ -3520,7 +3539,11 @@ SFX ∈ ğı klarımda/∎ ğı
 SFX ∈ sı larımda sı
 SFX ∈ sı larımda/∎ sı
 SFX ∈ ı larımda [^bcğds]ı
+SFX ∈ ı larımda adı
+SFX ∈ ı larımda [ybd]ağı
 SFX ∈ ı larımda/∎ [^bcğds]ı
+SFX ∈ ı larımda/∎ adı
+SFX ∈ ı larımda/∎ [ybd]ağı
 SFX ∈ bı plarımdan bı
 SFX ∈ bı plarımdan/∎ bı
 SFX ∈ cı çlarımdan cı
@@ -3532,7 +3555,11 @@ SFX ∈ ğı klarımdan/∎ ğı
 SFX ∈ sı larımdan sı
 SFX ∈ sı larımdan/∎ sı
 SFX ∈ ı larımdan [^bcğds]ı
+SFX ∈ ı larımdan adı
+SFX ∈ ı larımdan [ybd]ağı
 SFX ∈ ı larımdan/∎ [^bcğds]ı
+SFX ∈ ı larımdan/∎ adı
+SFX ∈ ı larımdan/∎ [ybd]ağı
 SFX ∈ bı plarımı bı
 SFX ∈ bı plarımı/∎ bı
 SFX ∈ cı çlarımı cı
@@ -3544,7 +3571,11 @@ SFX ∈ ğı klarımı/∎ ğı
 SFX ∈ sı larımı sı
 SFX ∈ sı larımı/∎ sı
 SFX ∈ ı larımı [^bcğds]ı
+SFX ∈ ı larımı adı
+SFX ∈ ı larımı [ybd]ağı
 SFX ∈ ı larımı/∎ [^bcğds]ı
+SFX ∈ ı larımı/∎ adı
+SFX ∈ ı larımı/∎ [ybd]ağı
 SFX ∈ bı plarımın bı
 SFX ∈ bı plarımın/∎ bı
 SFX ∈ cı çlarımın cı
@@ -3556,7 +3587,11 @@ SFX ∈ ğı klarımın/∎ ğı
 SFX ∈ sı larımın sı
 SFX ∈ sı larımın/∎ sı
 SFX ∈ ı larımın [^bcğds]ı
+SFX ∈ ı larımın adı
+SFX ∈ ı larımın [ybd]ağı
 SFX ∈ ı larımın/∎ [^bcğds]ı
+SFX ∈ ı larımın/∎ adı
+SFX ∈ ı larımın/∎ [ybd]ağı
 SFX ∈ bı plarımla bı
 SFX ∈ bı plarımla/∎ bı
 SFX ∈ cı çlarımla cı
@@ -3568,7 +3603,11 @@ SFX ∈ ğı klarımla/∎ ğı
 SFX ∈ sı larımla sı
 SFX ∈ sı larımla/∎ sı
 SFX ∈ ı larımla [^bcğds]ı
+SFX ∈ ı larımla adı
+SFX ∈ ı larımla [ybd]ağı
 SFX ∈ ı larımla/∎ [^bcğds]ı
+SFX ∈ ı larımla/∎ adı
+SFX ∈ ı larımla/∎ [ybd]ağı
 SFX ∈ bı pların bı
 SFX ∈ bı pların/∎ bı
 SFX ∈ cı çların cı
@@ -3580,7 +3619,11 @@ SFX ∈ ğı kların/∎ ğı
 SFX ∈ sı ların sı
 SFX ∈ sı ların/∎ sı
 SFX ∈ ı ların [^bcğds]ı
+SFX ∈ ı ların adı
+SFX ∈ ı ların [ybd]ağı
 SFX ∈ ı ların/∎ [^bcğds]ı
+SFX ∈ ı ların/∎ adı
+SFX ∈ ı ların/∎ [ybd]ağı
 SFX ∈ bı plarınla bı
 SFX ∈ bı plarınla/∎ bı
 SFX ∈ cı çlarınla cı
@@ -3592,7 +3635,11 @@ SFX ∈ ğı klarınla/∎ ğı
 SFX ∈ sı larınla sı
 SFX ∈ sı larınla/∎ sı
 SFX ∈ ı larınla [^bcğds]ı
+SFX ∈ ı larınla adı
+SFX ∈ ı larınla [ybd]ağı
 SFX ∈ ı larınla/∎ [^bcğds]ı
+SFX ∈ ı larınla/∎ adı
+SFX ∈ ı larınla/∎ [ybd]ağı
 SFX ∈ bı plarımız bı
 SFX ∈ bı plarımız/∎ bı
 SFX ∈ cı çlarımız cı
@@ -3604,7 +3651,11 @@ SFX ∈ ğı klarımız/∎ ğı
 SFX ∈ sı larımız sı
 SFX ∈ sı larımız/∎ sı
 SFX ∈ ı larımız [^bcğds]ı
+SFX ∈ ı larımız adı
+SFX ∈ ı larımız [ybd]ağı
 SFX ∈ ı larımız/∎ [^bcğds]ı
+SFX ∈ ı larımız/∎ adı
+SFX ∈ ı larımız/∎ [ybd]ağı
 SFX ∈ bı plarımıza bı
 SFX ∈ bı plarımıza/∎ bı
 SFX ∈ cı çlarımıza cı
@@ -3616,7 +3667,11 @@ SFX ∈ ğı klarımıza/∎ ğı
 SFX ∈ sı larımıza sı
 SFX ∈ sı larımıza/∎ sı
 SFX ∈ ı larımıza [^bcğds]ı
+SFX ∈ ı larımıza adı
+SFX ∈ ı larımıza [ybd]ağı
 SFX ∈ ı larımıza/∎ [^bcğds]ı
+SFX ∈ ı larımıza/∎ adı
+SFX ∈ ı larımıza/∎ [ybd]ağı
 SFX ∈ bı plarımızda bı
 SFX ∈ bı plarımızda/∎ bı
 SFX ∈ cı çlarımızda cı
@@ -3628,7 +3683,11 @@ SFX ∈ ğı klarımızda/∎ ğı
 SFX ∈ sı larımızda sı
 SFX ∈ sı larımızda/∎ sı
 SFX ∈ ı larımızda [^bcğds]ı
+SFX ∈ ı larımızda adı
+SFX ∈ ı larımızda [ybd]ağı
 SFX ∈ ı larımızda/∎ [^bcğds]ı
+SFX ∈ ı larımızda/∎ adı
+SFX ∈ ı larımızda/∎ [ybd]ağı
 SFX ∈ bı plarımızdan bı
 SFX ∈ bı plarımızdan/∎ bı
 SFX ∈ cı çlarımızdan cı
@@ -3640,7 +3699,11 @@ SFX ∈ ğı klarımızdan/∎ ğı
 SFX ∈ sı larımızdan sı
 SFX ∈ sı larımızdan/∎ sı
 SFX ∈ ı larımızdan [^bcğds]ı
+SFX ∈ ı larımızdan adı
+SFX ∈ ı larımızdan [ybd]ağı
 SFX ∈ ı larımızdan/∎ [^bcğds]ı
+SFX ∈ ı larımızdan/∎ adı
+SFX ∈ ı larımızdan/∎ [ybd]ağı
 SFX ∈ bı plarımızı bı
 SFX ∈ bı plarımızı/∎ bı
 SFX ∈ cı çlarımızı cı
@@ -3652,7 +3715,11 @@ SFX ∈ ğı klarımızı/∎ ğı
 SFX ∈ sı larımızı sı
 SFX ∈ sı larımızı/∎ sı
 SFX ∈ ı larımızı [^bcğds]ı
+SFX ∈ ı larımızı adı
+SFX ∈ ı larımızı [ybd]ağı
 SFX ∈ ı larımızı/∎ [^bcğds]ı
+SFX ∈ ı larımızı/∎ adı
+SFX ∈ ı larımızı/∎ [ybd]ağı
 SFX ∈ bı plarımızın bı
 SFX ∈ bı plarımızın/∎ bı
 SFX ∈ cı çlarımızın cı
@@ -3664,7 +3731,11 @@ SFX ∈ ğı klarımızın/∎ ğı
 SFX ∈ sı larımızın sı
 SFX ∈ sı larımızın/∎ sı
 SFX ∈ ı larımızın [^bcğds]ı
+SFX ∈ ı larımızın adı
+SFX ∈ ı larımızın [ybd]ağı
 SFX ∈ ı larımızın/∎ [^bcğds]ı
+SFX ∈ ı larımızın/∎ adı
+SFX ∈ ı larımızın/∎ [ybd]ağı
 SFX ∈ bı plarımızla bı
 SFX ∈ bı plarımızla/∎ bı
 SFX ∈ cı çlarımızla cı
@@ -3676,7 +3747,11 @@ SFX ∈ ğı klarımızla/∎ ğı
 SFX ∈ sı larımızla sı
 SFX ∈ sı larımızla/∎ sı
 SFX ∈ ı larımızla [^bcğds]ı
+SFX ∈ ı larımızla adı
+SFX ∈ ı larımızla [ybd]ağı
 SFX ∈ ı larımızla/∎ [^bcğds]ı
+SFX ∈ ı larımızla/∎ adı
+SFX ∈ ı larımızla/∎ [ybd]ağı
 SFX ∈ bı plarınız bı
 SFX ∈ bı plarınız/∎ bı
 SFX ∈ cı çlarınız cı
@@ -3688,7 +3763,11 @@ SFX ∈ ğı klarınız/∎ ğı
 SFX ∈ sı larınız sı
 SFX ∈ sı larınız/∎ sı
 SFX ∈ ı larınız [^bcğds]ı
+SFX ∈ ı larınız adı
+SFX ∈ ı larınız [ybd]ağı
 SFX ∈ ı larınız/∎ [^bcğds]ı
+SFX ∈ ı larınız/∎ adı
+SFX ∈ ı larınız/∎ [ybd]ağı
 SFX ∈ bı plarınıza bı
 SFX ∈ bı plarınıza/∎ bı
 SFX ∈ cı çlarınıza cı
@@ -3700,7 +3779,11 @@ SFX ∈ ğı klarınıza/∎ ğı
 SFX ∈ sı larınıza sı
 SFX ∈ sı larınıza/∎ sı
 SFX ∈ ı larınıza [^bcğds]ı
+SFX ∈ ı larınıza adı
+SFX ∈ ı larınıza [ybd]ağı
 SFX ∈ ı larınıza/∎ [^bcğds]ı
+SFX ∈ ı larınıza/∎ adı
+SFX ∈ ı larınıza/∎ [ybd]ağı
 SFX ∈ bı plarınızda bı
 SFX ∈ bı plarınızda/∎ bı
 SFX ∈ cı çlarınızda cı
@@ -3712,7 +3795,11 @@ SFX ∈ ğı klarınızda/∎ ğı
 SFX ∈ sı larınızda sı
 SFX ∈ sı larınızda/∎ sı
 SFX ∈ ı larınızda [^bcğds]ı
+SFX ∈ ı larınızda adı
+SFX ∈ ı larınızda [ybd]ağı
 SFX ∈ ı larınızda/∎ [^bcğds]ı
+SFX ∈ ı larınızda/∎ adı
+SFX ∈ ı larınızda/∎ [ybd]ağı
 SFX ∈ bı plarınızdan bı
 SFX ∈ bı plarınızdan/∎ bı
 SFX ∈ cı çlarınızdan cı
@@ -3724,7 +3811,11 @@ SFX ∈ ğı klarınızdan/∎ ğı
 SFX ∈ sı larınızdan sı
 SFX ∈ sı larınızdan/∎ sı
 SFX ∈ ı larınızdan [^bcğds]ı
+SFX ∈ ı larınızdan adı
+SFX ∈ ı larınızdan [ybd]ağı
 SFX ∈ ı larınızdan/∎ [^bcğds]ı
+SFX ∈ ı larınızdan/∎ adı
+SFX ∈ ı larınızdan/∎ [ybd]ağı
 SFX ∈ bı plarınızı bı
 SFX ∈ bı plarınızı/∎ bı
 SFX ∈ cı çlarınızı cı
@@ -3736,7 +3827,11 @@ SFX ∈ ğı klarınızı/∎ ğı
 SFX ∈ sı larınızı sı
 SFX ∈ sı larınızı/∎ sı
 SFX ∈ ı larınızı [^bcğds]ı
+SFX ∈ ı larınızı adı
+SFX ∈ ı larınızı [ybd]ağı
 SFX ∈ ı larınızı/∎ [^bcğds]ı
+SFX ∈ ı larınızı/∎ adı
+SFX ∈ ı larınızı/∎ [ybd]ağı
 SFX ∈ bı plarınızın bı
 SFX ∈ bı plarınızın/∎ bı
 SFX ∈ cı çlarınızın cı
@@ -3748,7 +3843,11 @@ SFX ∈ ğı klarınızın/∎ ğı
 SFX ∈ sı larınızın sı
 SFX ∈ sı larınızın/∎ sı
 SFX ∈ ı larınızın [^bcğds]ı
+SFX ∈ ı larınızın adı
+SFX ∈ ı larınızın [ybd]ağı
 SFX ∈ ı larınızın/∎ [^bcğds]ı
+SFX ∈ ı larınızın/∎ adı
+SFX ∈ ı larınızın/∎ [ybd]ağı
 SFX ∈ bı plarınızla bı
 SFX ∈ bı plarınızla/∎ bı
 SFX ∈ cı çlarınızla cı
@@ -3760,7 +3859,11 @@ SFX ∈ ğı klarınızla/∎ ğı
 SFX ∈ sı larınızla sı
 SFX ∈ sı larınızla/∎ sı
 SFX ∈ ı larınızla [^bcğds]ı
+SFX ∈ ı larınızla adı
+SFX ∈ ı larınızla [ybd]ağı
 SFX ∈ ı larınızla/∎ [^bcğds]ı
+SFX ∈ ı larınızla/∎ adı
+SFX ∈ ı larınızla/∎ [ybd]ağı
 SFX ∈ 0 nı .
 SFX ∈ 0 na .
 SFX ∈ 0 nda .
@@ -9881,7 +9984,7 @@ SFX ≁ 0 nuzla [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≁ 0 nuzla/∎ [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≁ 0 nuzca [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 
-SFX ≂ Y 172
+SFX ≂ Y 182
 SFX ≂ 0 ı [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≂ 0 ı/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≂ 0 sı [aâı]
@@ -10016,6 +10119,11 @@ SFX ≂ 0 sıyla [aâı]
 SFX ≂ 0 sıyla/∎ [aâı]
 SFX ≂ 0 sınca [aâı]
 SFX ≂ 0 sınca/∎ [aâı]
+SFX ≂ 0 ıyım [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≂ 0 ısın [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≂ 0 ıyız [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≂ 0 ısınız [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≂ 0 ıdırlar [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≂ 0 ıdır [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≂ 0 ıydı [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≂ 0 ıymış [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
@@ -10031,6 +10139,11 @@ SFX ≂ 0 ıymışsın [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≂ 0 ıymışız [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≂ 0 ıymışsınız [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≂ 0 ıymışlar [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≂ 0 sıyım [aâı]
+SFX ≂ 0 sısın [aâı]
+SFX ≂ 0 sıyız [aâı]
+SFX ≂ 0 sısınız [aâı]
+SFX ≂ 0 sıdırlar [aâı]
 SFX ≂ 0 sıdır [aâı]
 SFX ≂ 0 sıydı [aâı]
 SFX ≂ 0 sıymış [aâı]
@@ -10055,7 +10168,7 @@ SFX ≂ 0 sındaymış [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≂ 0 sındaysa [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≂ 0 sındayken [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 
-SFX ≃ Y 172
+SFX ≃ Y 182
 SFX ≃ 0 u [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≃ 0 u/∎ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≃ 0 su [ouû]
@@ -10190,6 +10303,11 @@ SFX ≃ 0 suyla [ouû]
 SFX ≃ 0 suyla/∎ [ouû]
 SFX ≃ 0 sunca [ouû]
 SFX ≃ 0 sunca/∎ [ouû]
+SFX ≃ 0 uyum [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≃ 0 usun [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≃ 0 uyuz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≃ 0 usunuz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≃ 0 udurlar [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≃ 0 udur [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≃ 0 uydu [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≃ 0 uymuş [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
@@ -10205,6 +10323,11 @@ SFX ≃ 0 uymuşsun [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≃ 0 uymuşuz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≃ 0 uymuşsunuz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≃ 0 uymuşlar [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≃ 0 suyum [ouû]
+SFX ≃ 0 susun [ouû]
+SFX ≃ 0 suyuz [ouû]
+SFX ≃ 0 susunuz [ouû]
+SFX ≃ 0 sudurlar [ouû]
 SFX ≃ 0 sudur [ouû]
 SFX ≃ 0 suydu [ouû]
 SFX ≃ 0 suymuş [ouû]
@@ -10229,7 +10352,7 @@ SFX ≃ 0 sundaymuş [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≃ 0 sundaysa [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≃ 0 sundayken [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 
-SFX ≄ Y 172
+SFX ≄ Y 182
 SFX ≄ 0 i [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≄ 0 i/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≄ 0 si [Ddeiî]
@@ -10364,6 +10487,11 @@ SFX ≄ 0 siyle [Ddeiî]
 SFX ≄ 0 siyle/≩ [Ddeiî]
 SFX ≄ 0 since [Ddeiî]
 SFX ≄ 0 since/≩ [Ddeiî]
+SFX ≄ 0 iyim [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≄ 0 isin [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≄ 0 iyiz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≄ 0 isiniz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≄ 0 idirler [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≄ 0 idir [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≄ 0 iydi [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≄ 0 iymiş [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
@@ -10379,6 +10507,11 @@ SFX ≄ 0 iymişsin [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≄ 0 iymişiz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≄ 0 iymişsiniz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≄ 0 iymişler [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≄ 0 siyim [Ddeiî]
+SFX ≄ 0 sisin [Ddeiî]
+SFX ≄ 0 siyiz [Ddeiî]
+SFX ≄ 0 sisiniz [Ddeiî]
+SFX ≄ 0 sidirler [Ddeiî]
 SFX ≄ 0 sidir [Ddeiî]
 SFX ≄ 0 siydi [Ddeiî]
 SFX ≄ 0 siymiş [Ddeiî]
@@ -10403,7 +10536,7 @@ SFX ≄ 0 sindeymiş [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≄ 0 sindeyse [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≄ 0 sindeyken [AEIOUaeiouÂÎÖÛÜâîöûüİı]
 
-SFX ≅ Y 172
+SFX ≅ Y 182
 SFX ≅ 0 ü [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≅ 0 ü/≩ [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≅ 0 sü [öü]
@@ -10538,6 +10671,11 @@ SFX ≅ 0 süyle [öü]
 SFX ≅ 0 süyle/≩ [öü]
 SFX ≅ 0 sünce [öü]
 SFX ≅ 0 sünce/≩ [öü]
+SFX ≅ 0 üyüm [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≅ 0 üsün [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≅ 0 üyüz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≅ 0 üsünüz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≅ 0 üdürler [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≅ 0 üdür [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≅ 0 üydü [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≅ 0 üymüş [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
@@ -10553,6 +10691,11 @@ SFX ≅ 0 üymüşsün [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≅ 0 üymüşüz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≅ 0 üymüşsünüz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≅ 0 üymüşler [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
+SFX ≅ 0 süyüm [öü]
+SFX ≅ 0 süsün [öü]
+SFX ≅ 0 süyüz [öü]
+SFX ≅ 0 süsünüz [öü]
+SFX ≅ 0 südürler [öü]
 SFX ≅ 0 südür [öü]
 SFX ≅ 0 süydü [öü]
 SFX ≅ 0 süymüş [öü]
@@ -10944,13 +11087,25 @@ SFX ≌ 0 den/≩ [^fhkpstçş]
 SFX ≌ 0 ten [fhkpstçş]
 SFX ≌ 0 ten/≩ [fhkpstçş]
 
-SFX ≍ Y 6
+SFX ≍ Y 18
 SFX ≍ 0 sal/∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∘∖ [aouâûı]
 SFX ≍ 0 sal/∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∘∖ [aıouâû][^aeıioöuüâîû]
 SFX ≍ 0 sal/∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∘∖ [aıouâû][^aeıioöuüâîû][^aeıioöuüâîû]
+SFX ≍ 0 sallık/∧≋∡≉∺∎ [aouâûı]
+SFX ≍ 0 sallık/∧≋∡≉∺∎ [aıouâû][^aeıioöuüâîû]
+SFX ≍ 0 sallık/∧≋∡≉∺∎ [aıouâû][^aeıioöuüâîû][^aeıioöuüâîû]
+SFX ≍ 0 sallığ/∀≣∫≂∲∶∼∽≕XX [aouâûı]
+SFX ≍ 0 sallığ/∀≣∫≂∲∶∼∽≕XX [aıouâû][^aeıioöuüâîû]
+SFX ≍ 0 sallığ/∀≣∫≂∲∶∼∽≕XX [aıouâû][^aeıioöuüâîû][^aeıioöuüâîû]
 SFX ≍ 0 sel/∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍∗∘∖ [eiâîöûü]
 SFX ≍ 0 sel/∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍∗∘∖ [eiöüîâû][^aeıioöuüâîû]
 SFX ≍ 0 sel/∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍∗∘∖ [eiöüîâû][^aeıioöuüâîû][^aeıioöuüâîû]
+SFX ≍ 0 sellik/∨≌∢≊∻≩ [eiâîöûü]
+SFX ≍ 0 sellik/∨≌∢≊∻≩ [eiöüîâû][^aeıioöuüâîû]
+SFX ≍ 0 sellik/∨≌∢≊∻≩ [eiöüîâû][^aeıioöuüâîû][^aeıioöuüâîû]
+SFX ≍ 0 selliğ/∂≤∭≄∴∸∿≆≽XX [eiâîöûü]
+SFX ≍ 0 selliğ/∂≤∭≄∴∸∿≆≽XX [eiöüîâû][^aeıioöuüâîû]
+SFX ≍ 0 selliğ/∂≤∭≄∴∸∿≆≽XX [eiöüîâû][^aeıioöuüâîû][^aeıioöuüâîû]
 
 SFX ≎ Y 36
 SFX ≎ 0 sız/∀≣∧≋∫∡≉∺≂∲∶∼∽∎∩∪≎∌∍≍∗∘∖ [aâı]
@@ -11002,7 +11157,7 @@ SFX ≑ 0 0 .
 SFX ≒ Y 1
 SFX ≒ 0 0 .
 
-SFX ≓ Y 1197
+SFX ≓ Y 1237
 SFX ≓ amak ıyor/⊮ amak
 SFX ≓ amak ıyorken amak
 SFX ≓ amak ıyor amak
@@ -11308,8 +11463,10 @@ SFX ≓ mak manız mak
 SFX ≓ mak maları/⊵ mak
 SFX ≓ mak maları mak
 SFX ≓ mak yış mak
+SFX ≓ mak yıştır mak
 SFX ≓ mak yışı/⊵ mak
 SFX ≓ mak yışı mak
+SFX ≓ mak yışıdır mak
 SFX ≓ mak yışa mak
 SFX ≓ mak yışta mak
 SFX ≓ mak yıştan mak
@@ -11496,6 +11653,34 @@ SFX ≓ mak mamanız/⊹ mak
 SFX ≓ mak mamanız mak
 SFX ≓ mak mamaları/⊵ mak
 SFX ≓ mak mamaları mak
+SFX ≓ mak mayış mak
+SFX ≓ mak mayıştır mak
+SFX ≓ mak mayışı/⊵ mak
+SFX ≓ mak mayışı mak
+SFX ≓ mak mayışıdır mak
+SFX ≓ mak mayışa mak
+SFX ≓ mak mayışta mak
+SFX ≓ mak mayıştan mak
+SFX ≓ mak mayıştaki mak
+SFX ≓ mak mayıştakiler mak
+SFX ≓ mak mayışla mak
+SFX ≓ mak mayışım/⊹ mak
+SFX ≓ mak mayışım mak
+SFX ≓ mak mayışın/⊹ mak
+SFX ≓ mak mayışın mak
+SFX ≓ mak mayışımız/⊹ mak
+SFX ≓ mak mayışımız mak
+SFX ≓ mak mayışınız/⊹ mak
+SFX ≓ mak mayışınız mak
+SFX ≓ mak mayışları/⊵ mak
+SFX ≓ mak mayışları mak
+SFX ≓ mak mayışlar mak
+SFX ≓ mak mayışlara mak
+SFX ≓ mak mayışlarda mak
+SFX ≓ mak mayışlardan mak
+SFX ≓ mak mayışların mak
+SFX ≓ mak mayışlarla mak
+SFX ≓ mak mayışlarıyla mak
 SFX ≓ mak madığı/⊵ mak
 SFX ≓ mak madığı mak
 SFX ≓ mak madığım/⊹ mak
@@ -11641,6 +11826,13 @@ SFX ≓ mak yamazı mak
 SFX ≓ mak yamazdan mak
 SFX ≓ mak yamazda mak
 SFX ≓ mak yamazın mak
+SFX ≓ mak yamazlık mak
+SFX ≓ mak yamazlıkta mak
+SFX ≓ mak yamazlıktan mak
+SFX ≓ mak yamazlığı/⊵ mak
+SFX ≓ mak yamazlığı mak
+SFX ≓ mak yamazlığını mak
+SFX ≓ mak yamazlığın mak
 SFX ≓ mak yamasın mak
 SFX ≓ mak yama mak
 SFX ≓ mak yamayın mak
@@ -11893,12 +12085,15 @@ SFX ≓ mak yabilelim mak
 SFX ≓ mak yabilesiniz mak
 SFX ≓ mak yabileler mak
 SFX ≓ mak yabilirlik mak
+SFX ≓ mak yabilirliktir mak
 SFX ≓ mak yabilirliği/⊶ mak
 SFX ≓ mak yabilirliği mak
+SFX ≓ mak yabilirliğine mak
 SFX ≓ mak yabilirliğini mak
 SFX ≓ mak yabilirliğinin mak
 SFX ≓ mak yabilirliğinde mak
 SFX ≓ mak yabilirliğinden mak
+SFX ≓ mak yabilirliğin mak
 SFX ≓ mak yabilmek mak
 SFX ≓ mak yabilmekte/⊴ mak
 SFX ≓ mak yabilmekte mak
@@ -12201,7 +12396,7 @@ SFX ≓ mak yıversin mak
 SFX ≓ mak yıverin mak
 SFX ≓ mak yıveriniz mak
 
-SFX ≔ Y 1365
+SFX ≔ Y 1423
 SFX ≔ mak ıyor/⊮ mak
 SFX ≔ mak ıyorken mak
 SFX ≔ mak ıyor mak
@@ -12556,8 +12751,10 @@ SFX ≔ mak manız mak
 SFX ≔ mak maları/⊵ mak
 SFX ≔ mak maları mak
 SFX ≔ mak ış mak
+SFX ≔ mak ıştır mak
 SFX ≔ mak ışı/⊵ mak
 SFX ≔ mak ışı mak
+SFX ≔ mak ışıdır mak
 SFX ≔ mak ışa mak
 SFX ≔ mak ışta mak
 SFX ≔ mak ıştan mak
@@ -12734,6 +12931,34 @@ SFX ≔ mak mamanız/⊹ mak
 SFX ≔ mak mamanız mak
 SFX ≔ mak mamaları/⊵ mak
 SFX ≔ mak mamaları mak
+SFX ≔ mak mayış mak
+SFX ≔ mak mayıştır mak
+SFX ≔ mak mayışı/⊵ mak
+SFX ≔ mak mayışı mak
+SFX ≔ mak mayışıdır mak
+SFX ≔ mak mayışa mak
+SFX ≔ mak mayışta mak
+SFX ≔ mak mayıştan mak
+SFX ≔ mak mayıştaki mak
+SFX ≔ mak mayıştakiler mak
+SFX ≔ mak mayışla mak
+SFX ≔ mak mayışım/⊹ mak
+SFX ≔ mak mayışım mak
+SFX ≔ mak mayışın/⊹ mak
+SFX ≔ mak mayışın mak
+SFX ≔ mak mayışımız/⊹ mak
+SFX ≔ mak mayışımız mak
+SFX ≔ mak mayışınız/⊹ mak
+SFX ≔ mak mayışınız mak
+SFX ≔ mak mayışları/⊵ mak
+SFX ≔ mak mayışları mak
+SFX ≔ mak mayışlar mak
+SFX ≔ mak mayışlara mak
+SFX ≔ mak mayışlarda mak
+SFX ≔ mak mayışlardan mak
+SFX ≔ mak mayışların mak
+SFX ≔ mak mayışlarla mak
+SFX ≔ mak mayışlarıyla mak
 SFX ≔ mak madığı/⊵ mak
 SFX ≔ mak madığı mak
 SFX ≔ mak madığım/⊹ mak
@@ -12879,6 +13104,13 @@ SFX ≔ mak amazı mak
 SFX ≔ mak amazdan mak
 SFX ≔ mak amazda mak
 SFX ≔ mak amazın mak
+SFX ≔ mak amazlık mak
+SFX ≔ mak amazlıkta mak
+SFX ≔ mak amazlıktan mak
+SFX ≔ mak amazlığı/⊵ mak
+SFX ≔ mak amazlığı mak
+SFX ≔ mak amazlığını mak
+SFX ≔ mak amazlığın mak
 SFX ≔ mak amasın mak
 SFX ≔ mak ama mak
 SFX ≔ mak amayın mak
@@ -13131,12 +13363,15 @@ SFX ≔ mak abilelim mak
 SFX ≔ mak abilesiniz mak
 SFX ≔ mak abileler mak
 SFX ≔ mak abilirlik mak
+SFX ≔ mak abilirliktir mak
 SFX ≔ mak abilirliği/⊶ mak
 SFX ≔ mak abilirliği mak
+SFX ≔ mak abilirliğine mak
 SFX ≔ mak abilirliğini mak
 SFX ≔ mak abilirliğinin mak
 SFX ≔ mak abilirliğinde mak
 SFX ≔ mak abilirliğinden mak
+SFX ≔ mak abilirliğin mak
 SFX ≔ mak abilmek mak
 SFX ≔ mak abilmekte/⊴ mak
 SFX ≔ mak abilmekte mak
@@ -13506,6 +13741,14 @@ SFX ≔ mak ılmayacaktır [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılır/⊬ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılır [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılırlar [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılırlık [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılırlıktır [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılırlığı/⊵ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılırlığı [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılırlığa [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılırlığın [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılırlığını [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılırlığının [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılmaz/⊬ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılmaz [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılmazlar [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
@@ -13557,6 +13800,16 @@ SFX ≔ mak ılabilmesi [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılabildiği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılabildiği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılabilen [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılabilirlik [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılabilirliktir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılabilirliği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılabilirliği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılabilirliğine [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılabilirliğini [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılabilirliğinin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılabilirliğinde [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılabilirliğinden [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılabilirliğin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılamaz/⊬ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılamaz [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılamıyor [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
@@ -13578,7 +13831,7 @@ SFX ≕ 0 uz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≕ 0 umdur [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≕ 0 uzdur [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 
-SFX ≖ Y 1197
+SFX ≖ Y 1237
 SFX ≖ emek iyor/⊮ emek
 SFX ≖ emek iyorken emek
 SFX ≖ emek iyor emek
@@ -13884,8 +14137,10 @@ SFX ≖ mek meniz mek
 SFX ≖ mek meleri/⊶ mek
 SFX ≖ mek meleri mek
 SFX ≖ mek yiş mek
+SFX ≖ mek yiştir mek
 SFX ≖ mek yişi/⊶ mek
 SFX ≖ mek yişi mek
+SFX ≖ mek yişidir mek
 SFX ≖ mek yişe mek
 SFX ≖ mek yişte mek
 SFX ≖ mek yişten mek
@@ -14072,6 +14327,34 @@ SFX ≖ mek memeniz/⊺ mek
 SFX ≖ mek memeniz mek
 SFX ≖ mek memeleri/⊶ mek
 SFX ≖ mek memeleri mek
+SFX ≖ mek meyiş mek
+SFX ≖ mek meyiştir mek
+SFX ≖ mek meyişi/⊶ mek
+SFX ≖ mek meyişi mek
+SFX ≖ mek meyişidir mek
+SFX ≖ mek meyişe mek
+SFX ≖ mek meyişte mek
+SFX ≖ mek meyişten mek
+SFX ≖ mek meyişteki mek
+SFX ≖ mek meyiştekiler mek
+SFX ≖ mek meyişle mek
+SFX ≖ mek meyişim/⊺ mek
+SFX ≖ mek meyişim mek
+SFX ≖ mek meyişin/⊺ mek
+SFX ≖ mek meyişin mek
+SFX ≖ mek meyişimiz/⊺ mek
+SFX ≖ mek meyişimiz mek
+SFX ≖ mek meyişiniz/⊺ mek
+SFX ≖ mek meyişiniz mek
+SFX ≖ mek meyişleri/⊶ mek
+SFX ≖ mek meyişleri mek
+SFX ≖ mek meyişler mek
+SFX ≖ mek meyişlere mek
+SFX ≖ mek meyişlerde mek
+SFX ≖ mek meyişlerden mek
+SFX ≖ mek meyişlerin mek
+SFX ≖ mek meyişlerle mek
+SFX ≖ mek meyişleriyle mek
 SFX ≖ mek mediği/⊶ mek
 SFX ≖ mek mediği mek
 SFX ≖ mek mediğim/⊺ mek
@@ -14217,6 +14500,13 @@ SFX ≖ mek yemezi mek
 SFX ≖ mek yemezden mek
 SFX ≖ mek yemezde mek
 SFX ≖ mek yemezin mek
+SFX ≖ mek yemezlik mek
+SFX ≖ mek yemezlikte mek
+SFX ≖ mek yemezlikten mek
+SFX ≖ mek yemezliği/⊶ mek
+SFX ≖ mek yemezliği mek
+SFX ≖ mek yemezliğini mek
+SFX ≖ mek yemezliğin mek
 SFX ≖ mek yemesin mek
 SFX ≖ mek yeme mek
 SFX ≖ mek yemeyin mek
@@ -14469,12 +14759,15 @@ SFX ≖ mek yebilelim mek
 SFX ≖ mek yebilesiniz mek
 SFX ≖ mek yebileler mek
 SFX ≖ mek yebilirlik mek
+SFX ≖ mek yebilirliktir mek
 SFX ≖ mek yebilirliği/⊶ mek
 SFX ≖ mek yebilirliği mek
+SFX ≖ mek yebilirliğine mek
 SFX ≖ mek yebilirliğini mek
 SFX ≖ mek yebilirliğinin mek
 SFX ≖ mek yebilirliğinde mek
 SFX ≖ mek yebilirliğinden mek
+SFX ≖ mek yebilirliğin mek
 SFX ≖ mek yebilmek mek
 SFX ≖ mek yebilmekte/⊴ mek
 SFX ≖ mek yebilmekte mek
@@ -14777,7 +15070,7 @@ SFX ≖ mek yiversin mek
 SFX ≖ mek yiverin mek
 SFX ≖ mek yiveriniz mek
 
-SFX ≗ Y 1365
+SFX ≗ Y 1423
 SFX ≗ mek iyor/⊮ mek
 SFX ≗ mek iyorken mek
 SFX ≗ mek iyor mek
@@ -15132,8 +15425,10 @@ SFX ≗ mek meniz mek
 SFX ≗ mek meleri/⊶ mek
 SFX ≗ mek meleri mek
 SFX ≗ mek iş mek
+SFX ≗ mek iştir mek
 SFX ≗ mek işi/⊶ mek
 SFX ≗ mek işi mek
+SFX ≗ mek işidir mek
 SFX ≗ mek işe mek
 SFX ≗ mek işte mek
 SFX ≗ mek işten mek
@@ -15310,6 +15605,34 @@ SFX ≗ mek memeniz/⊺ mek
 SFX ≗ mek memeniz mek
 SFX ≗ mek memeleri/⊶ mek
 SFX ≗ mek memeleri mek
+SFX ≗ mek meyiş mek
+SFX ≗ mek meyiştir mek
+SFX ≗ mek meyişi/⊶ mek
+SFX ≗ mek meyişi mek
+SFX ≗ mek meyişidir mek
+SFX ≗ mek meyişe mek
+SFX ≗ mek meyişte mek
+SFX ≗ mek meyişten mek
+SFX ≗ mek meyişteki mek
+SFX ≗ mek meyiştekiler mek
+SFX ≗ mek meyişle mek
+SFX ≗ mek meyişim/⊺ mek
+SFX ≗ mek meyişim mek
+SFX ≗ mek meyişin/⊺ mek
+SFX ≗ mek meyişin mek
+SFX ≗ mek meyişimiz/⊺ mek
+SFX ≗ mek meyişimiz mek
+SFX ≗ mek meyişiniz/⊺ mek
+SFX ≗ mek meyişiniz mek
+SFX ≗ mek meyişleri/⊶ mek
+SFX ≗ mek meyişleri mek
+SFX ≗ mek meyişler mek
+SFX ≗ mek meyişlere mek
+SFX ≗ mek meyişlerde mek
+SFX ≗ mek meyişlerden mek
+SFX ≗ mek meyişlerin mek
+SFX ≗ mek meyişlerle mek
+SFX ≗ mek meyişleriyle mek
 SFX ≗ mek mediği/⊶ mek
 SFX ≗ mek mediği mek
 SFX ≗ mek mediğim/⊺ mek
@@ -15455,6 +15778,13 @@ SFX ≗ mek emezi mek
 SFX ≗ mek emezden mek
 SFX ≗ mek emezde mek
 SFX ≗ mek emezin mek
+SFX ≗ mek emezlik mek
+SFX ≗ mek emezlikte mek
+SFX ≗ mek emezlikten mek
+SFX ≗ mek emezliği/⊶ mek
+SFX ≗ mek emezliği mek
+SFX ≗ mek emezliğini mek
+SFX ≗ mek emezliğin mek
 SFX ≗ mek emesin mek
 SFX ≗ mek eme mek
 SFX ≗ mek emeyin mek
@@ -15707,12 +16037,15 @@ SFX ≗ mek ebilelim mek
 SFX ≗ mek ebilesiniz mek
 SFX ≗ mek ebileler mek
 SFX ≗ mek ebilirlik mek
+SFX ≗ mek ebilirliktir mek
 SFX ≗ mek ebilirliği/⊶ mek
 SFX ≗ mek ebilirliği mek
+SFX ≗ mek ebilirliğine mek
 SFX ≗ mek ebilirliğini mek
 SFX ≗ mek ebilirliğinin mek
 SFX ≗ mek ebilirliğinde mek
 SFX ≗ mek ebilirliğinden mek
+SFX ≗ mek ebilirliğin mek
 SFX ≗ mek ebilmek mek
 SFX ≗ mek ebilmekte/⊴ mek
 SFX ≗ mek ebilmekte mek
@@ -16082,6 +16415,14 @@ SFX ≗ mek ilmeyecektir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilir/⊭ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilirler [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilirlik [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilirliktir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilirliği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilirliği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilirliğe [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilirliğin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilirliğini [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilirliğinin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilmez/⊭ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilmez [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilmezler [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
@@ -16133,6 +16474,16 @@ SFX ≗ mek ilebilmesi [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilebildiği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilebildiği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilebilen [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilebilirlik [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilebilirliktir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilebilirliği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilebilirliği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilebilirliğine [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilebilirliğini [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilebilirliğinin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilebilirliğinde [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilebilirliğinden [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilebilirliğin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilemez/⊭ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilemez [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilemiyor [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
@@ -16144,7 +16495,7 @@ SFX ≗ mek ilemediği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilemediği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilemeyen [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 
-SFX ≘ Y 1379
+SFX ≘ Y 1437
 SFX ≘ mek üyor/⊮ mek
 SFX ≘ mek üyorken mek
 SFX ≘ mek üyor mek
@@ -16269,10 +16620,10 @@ SFX ≘ mek mekteyiz mek
 SFX ≘ mek mektesiniz mek
 SFX ≘ mek mekteler mek
 SFX ≘ mek e mek
-SFX ≘ mek eyüm mek
-SFX ≘ mek esün mek
-SFX ≘ mek elüm mek
-SFX ≘ mek esünüz mek
+SFX ≘ mek eyim mek
+SFX ≘ mek esin mek
+SFX ≘ mek elim mek
+SFX ≘ mek esiniz mek
 SFX ≘ mek eler mek
 SFX ≘ mek 0 mek
 SFX ≘ mek sün mek
@@ -16501,8 +16852,10 @@ SFX ≘ mek meniz mek
 SFX ≘ mek meleri/⊶ mek
 SFX ≘ mek meleri mek
 SFX ≘ mek üş mek
+SFX ≘ mek üştür mek
 SFX ≘ mek üşü/⊸ mek
 SFX ≘ mek üşü mek
+SFX ≘ mek üşüdür mek
 SFX ≘ mek üşe mek
 SFX ≘ mek üşte mek
 SFX ≘ mek üşten mek
@@ -16688,6 +17041,34 @@ SFX ≘ mek memeniz/⊺ mek
 SFX ≘ mek memeniz mek
 SFX ≘ mek memeleri/⊶ mek
 SFX ≘ mek memeleri mek
+SFX ≘ mek meyiş mek
+SFX ≘ mek meyiştir mek
+SFX ≘ mek meyişi/⊶ mek
+SFX ≘ mek meyişi mek
+SFX ≘ mek meyişidir mek
+SFX ≘ mek meyişe mek
+SFX ≘ mek meyişte mek
+SFX ≘ mek meyişten mek
+SFX ≘ mek meyişteki mek
+SFX ≘ mek meyiştekiler mek
+SFX ≘ mek meyişle mek
+SFX ≘ mek meyişim/⊺ mek
+SFX ≘ mek meyişim mek
+SFX ≘ mek meyişin/⊺ mek
+SFX ≘ mek meyişin mek
+SFX ≘ mek meyişimiz/⊺ mek
+SFX ≘ mek meyişimiz mek
+SFX ≘ mek meyişiniz/⊺ mek
+SFX ≘ mek meyişiniz mek
+SFX ≘ mek meyişleri/⊶ mek
+SFX ≘ mek meyişleri mek
+SFX ≘ mek meyişler mek
+SFX ≘ mek meyişlere mek
+SFX ≘ mek meyişlerde mek
+SFX ≘ mek meyişlerden mek
+SFX ≘ mek meyişlerin mek
+SFX ≘ mek meyişlerle mek
+SFX ≘ mek meyişleriyle mek
 SFX ≘ mek mediği/⊶ mek
 SFX ≘ mek mediği mek
 SFX ≘ mek mediğim/⊺ mek
@@ -16833,6 +17214,13 @@ SFX ≘ mek emezi mek
 SFX ≘ mek emezden mek
 SFX ≘ mek emezde mek
 SFX ≘ mek emezin mek
+SFX ≘ mek emezlik mek
+SFX ≘ mek emezlikte mek
+SFX ≘ mek emezlikten mek
+SFX ≘ mek emezliği/⊶ mek
+SFX ≘ mek emezliği mek
+SFX ≘ mek emezliğini mek
+SFX ≘ mek emezliğin mek
 SFX ≘ mek emesin mek
 SFX ≘ mek eme mek
 SFX ≘ mek emeyin mek
@@ -17085,12 +17473,15 @@ SFX ≘ mek ebilelim mek
 SFX ≘ mek ebilesiniz mek
 SFX ≘ mek ebileler mek
 SFX ≘ mek ebilirlik mek
+SFX ≘ mek ebilirliktir mek
 SFX ≘ mek ebilirliği/⊶ mek
 SFX ≘ mek ebilirliği mek
+SFX ≘ mek ebilirliğine mek
 SFX ≘ mek ebilirliğini mek
 SFX ≘ mek ebilirliğinin mek
 SFX ≘ mek ebilirliğinde mek
 SFX ≘ mek ebilirliğinden mek
+SFX ≘ mek ebilirliğin mek
 SFX ≘ mek ebilmek mek
 SFX ≘ mek ebilmekte/⊴ mek
 SFX ≘ mek ebilmekte mek
@@ -17460,6 +17851,14 @@ SFX ≘ mek ülmeyecektir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülür/⊯ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülür [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülürler [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülürlük [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülürlüktür [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülürlüğü/⊸ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülürlüğü [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülürlüğe [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülürlüğün [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülürlüğünü [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülürlüğünün [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülmez/⊭ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülmez [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülmezler [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
@@ -17511,6 +17910,16 @@ SFX ≘ mek ülebilmesi [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülebildiği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülebildiği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülebilen [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülebilirlik [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülebilirliktir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülebilirliği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülebilirliği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülebilirliğine [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülebilirliğini [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülebilirliğinin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülebilirliğinde [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülebilirliğinden [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülebilirliğin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülemez/⊭ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülemez [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülemiyor [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
@@ -17525,7 +17934,7 @@ SFX ≘ mek eyim [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek esin [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek elim [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 
-SFX ≙ Y 1430
+SFX ≙ Y 1468
 SFX ≙ emek üyor/⊮ emek
 SFX ≙ emek üyorken emek
 SFX ≙ emek üyor emek
@@ -17662,18 +18071,14 @@ SFX ≙ mek mekteler mek
 SFX ≙ mek ye mek
 SFX ≙ mek 0 mek
 SFX ≙ mek yeler mek
-SFX ≙ mek yeyim emek
-SFX ≙ mek yelim emek
-SFX ≙ mek yesin emek
-SFX ≙ mek yesiniz emek
+SFX ≙ mek yeyim mek
+SFX ≙ mek yelim mek
+SFX ≙ mek yesin mek
+SFX ≙ mek yesiniz mek
 SFX ≙ mek sin emek
 SFX ≙ mek yin emek
 SFX ≙ mek yiniz emek
 SFX ≙ mek sinler emek
-SFX ≙ mek yeyüm ümek
-SFX ≙ mek yelüm ümek
-SFX ≙ mek yesün ümek
-SFX ≙ mek yesünüz ümek
 SFX ≙ mek sün ümek
 SFX ≙ mek yün ümek
 SFX ≙ mek yünüz ümek
@@ -17898,8 +18303,10 @@ SFX ≙ mek meniz emek
 SFX ≙ mek meleri/⊶ emek
 SFX ≙ mek meleri emek
 SFX ≙ mek yiş emek
+SFX ≙ mek yiştir emek
 SFX ≙ mek yişi/⊶ emek
 SFX ≙ mek yişi emek
+SFX ≙ mek yişidir emek
 SFX ≙ mek yişe emek
 SFX ≙ mek yişte emek
 SFX ≙ mek yişten emek
@@ -18016,8 +18423,10 @@ SFX ≙ mek meniz ümek
 SFX ≙ mek meleri/⊶ ümek
 SFX ≙ mek meleri ümek
 SFX ≙ mek yüş ümek
+SFX ≙ mek yüştür ümek
 SFX ≙ mek yüşü/⊸ ümek
 SFX ≙ mek yüşü ümek
+SFX ≙ mek yüşüdür ümek
 SFX ≙ mek yüşe ümek
 SFX ≙ mek yüşte ümek
 SFX ≙ mek yüşten ümek
@@ -18219,6 +18628,34 @@ SFX ≙ mek memeniz/⊺ mek
 SFX ≙ mek memeniz mek
 SFX ≙ mek memeleri/⊶ mek
 SFX ≙ mek memeleri mek
+SFX ≙ mek meyiş mek
+SFX ≙ mek meyiştir mek
+SFX ≙ mek meyişi/⊶ mek
+SFX ≙ mek meyişi mek
+SFX ≙ mek meyişidir mek
+SFX ≙ mek meyişe mek
+SFX ≙ mek meyişte mek
+SFX ≙ mek meyişten mek
+SFX ≙ mek meyişteki mek
+SFX ≙ mek meyiştekiler mek
+SFX ≙ mek meyişle mek
+SFX ≙ mek meyişim/⊺ mek
+SFX ≙ mek meyişim mek
+SFX ≙ mek meyişin/⊺ mek
+SFX ≙ mek meyişin mek
+SFX ≙ mek meyişimiz/⊺ mek
+SFX ≙ mek meyişimiz mek
+SFX ≙ mek meyişiniz/⊺ mek
+SFX ≙ mek meyişiniz mek
+SFX ≙ mek meyişleri/⊶ mek
+SFX ≙ mek meyişleri mek
+SFX ≙ mek meyişler mek
+SFX ≙ mek meyişlere mek
+SFX ≙ mek meyişlerde mek
+SFX ≙ mek meyişlerden mek
+SFX ≙ mek meyişlerin mek
+SFX ≙ mek meyişlerle mek
+SFX ≙ mek meyişleriyle mek
 SFX ≙ mek mediği/⊶ mek
 SFX ≙ mek mediği mek
 SFX ≙ mek mediğim/⊺ mek
@@ -18364,6 +18801,13 @@ SFX ≙ mek yemezi mek
 SFX ≙ mek yemezden mek
 SFX ≙ mek yemezde mek
 SFX ≙ mek yemezin mek
+SFX ≙ mek yemezlik mek
+SFX ≙ mek yemezlikte mek
+SFX ≙ mek yemezlikten mek
+SFX ≙ mek yemezliği/⊶ mek
+SFX ≙ mek yemezliği mek
+SFX ≙ mek yemezliğini mek
+SFX ≙ mek yemezliğin mek
 SFX ≙ mek yemesin mek
 SFX ≙ mek yeme mek
 SFX ≙ mek yemeyin mek
@@ -18616,12 +19060,15 @@ SFX ≙ mek yebilelim mek
 SFX ≙ mek yebilesiniz mek
 SFX ≙ mek yebileler mek
 SFX ≙ mek yebilirlik mek
+SFX ≙ mek yebilirliktir mek
 SFX ≙ mek yebilirliği/⊶ mek
 SFX ≙ mek yebilirliği mek
+SFX ≙ mek yebilirliğine mek
 SFX ≙ mek yebilirliğini mek
 SFX ≙ mek yebilirliğinin mek
 SFX ≙ mek yebilirliğinde mek
 SFX ≙ mek yebilirliğinden mek
+SFX ≙ mek yebilirliğin mek
 SFX ≙ mek yebilmek mek
 SFX ≙ mek yebilmekte/⊴ mek
 SFX ≙ mek yebilmekte mek
@@ -18957,7 +19404,7 @@ SFX ≙ mek yüversin ümek
 SFX ≙ mek yüverin ümek
 SFX ≙ mek yüveriniz ümek
 
-SFX ≚ Y 1332
+SFX ≚ Y 1390
 SFX ≚ tmak dıyor/⊮ tmak
 SFX ≚ tmak dıyorken tmak
 SFX ≚ tmak dıyor tmak
@@ -19269,8 +19716,10 @@ SFX ≚ mak manız mak
 SFX ≚ mak maları/⊵ mak
 SFX ≚ mak maları mak
 SFX ≚ tmak dış tmak
+SFX ≚ tmak dıştır tmak
 SFX ≚ tmak dışı/⊵ tmak
 SFX ≚ tmak dışı tmak
+SFX ≚ tmak dışıdır tmak
 SFX ≚ tmak dışa tmak
 SFX ≚ tmak dışta tmak
 SFX ≚ tmak dıştan tmak
@@ -19457,6 +19906,34 @@ SFX ≚ mak mamanız/⊹ mak
 SFX ≚ mak mamanız mak
 SFX ≚ mak mamaları/⊵ mak
 SFX ≚ mak mamaları mak
+SFX ≚ mak mayış mak
+SFX ≚ mak mayıştır mak
+SFX ≚ mak mayışı/⊵ mak
+SFX ≚ mak mayışı mak
+SFX ≚ mak mayışıdır mak
+SFX ≚ mak mayışa mak
+SFX ≚ mak mayışta mak
+SFX ≚ mak mayıştan mak
+SFX ≚ mak mayıştaki mak
+SFX ≚ mak mayıştakiler mak
+SFX ≚ mak mayışla mak
+SFX ≚ mak mayışım/⊹ mak
+SFX ≚ mak mayışım mak
+SFX ≚ mak mayışın/⊹ mak
+SFX ≚ mak mayışın mak
+SFX ≚ mak mayışımız/⊹ mak
+SFX ≚ mak mayışımız mak
+SFX ≚ mak mayışınız/⊹ mak
+SFX ≚ mak mayışınız mak
+SFX ≚ mak mayışları/⊵ mak
+SFX ≚ mak mayışları mak
+SFX ≚ mak mayışlar mak
+SFX ≚ mak mayışlara mak
+SFX ≚ mak mayışlarda mak
+SFX ≚ mak mayışlardan mak
+SFX ≚ mak mayışların mak
+SFX ≚ mak mayışlarla mak
+SFX ≚ mak mayışlarıyla mak
 SFX ≚ mak madığı/⊵ mak
 SFX ≚ mak madığı mak
 SFX ≚ mak madığım/⊹ mak
@@ -19602,6 +20079,13 @@ SFX ≚ tmak damazı tmak
 SFX ≚ tmak damazdan tmak
 SFX ≚ tmak damazda tmak
 SFX ≚ tmak damazın tmak
+SFX ≚ tmak damazlık tmak
+SFX ≚ tmak damazlıkta tmak
+SFX ≚ tmak damazlıktan tmak
+SFX ≚ tmak damazlığı/⊵ tmak
+SFX ≚ tmak damazlığı tmak
+SFX ≚ tmak damazlığını tmak
+SFX ≚ tmak damazlığın tmak
 SFX ≚ tmak damasın tmak
 SFX ≚ tmak dama tmak
 SFX ≚ tmak damayın tmak
@@ -19854,12 +20338,15 @@ SFX ≚ tmak dabilelim tmak
 SFX ≚ tmak dabilesiniz tmak
 SFX ≚ tmak dabileler tmak
 SFX ≚ tmak dabilirlik tmak
+SFX ≚ tmak dabilirliktir tmak
 SFX ≚ tmak dabilirliği/⊶ tmak
 SFX ≚ tmak dabilirliği tmak
+SFX ≚ tmak dabilirliğine tmak
 SFX ≚ tmak dabilirliğini tmak
 SFX ≚ tmak dabilirliğinin tmak
 SFX ≚ tmak dabilirliğinde tmak
 SFX ≚ tmak dabilirliğinden tmak
+SFX ≚ tmak dabilirliğin tmak
 SFX ≚ tmak dabilmek tmak
 SFX ≚ tmak dabilmekte/⊴ tmak
 SFX ≚ tmak dabilmekte tmak
@@ -20229,6 +20716,14 @@ SFX ≚ tmak dılmayacaktır tmak
 SFX ≚ tmak dılır/⊬ tmak
 SFX ≚ tmak dılır tmak
 SFX ≚ tmak dılırlar tmak
+SFX ≚ tmak dılırlık tmak
+SFX ≚ tmak dılırlıktır tmak
+SFX ≚ tmak dılırlığı/⊵ tmak
+SFX ≚ tmak dılırlığı tmak
+SFX ≚ tmak dılırlığa tmak
+SFX ≚ tmak dılırlığın tmak
+SFX ≚ tmak dılırlığını tmak
+SFX ≚ tmak dılırlığının tmak
 SFX ≚ tmak dılmaz/⊬ tmak
 SFX ≚ tmak dılmaz tmak
 SFX ≚ tmak dılmazlar tmak
@@ -20280,6 +20775,16 @@ SFX ≚ tmak dılabilmesi tmak
 SFX ≚ tmak dılabildiği/⊶ tmak
 SFX ≚ tmak dılabildiği tmak
 SFX ≚ tmak dılabilen tmak
+SFX ≚ tmak dılabilirlik tmak
+SFX ≚ tmak dılabilirliktir tmak
+SFX ≚ tmak dılabilirliği/⊶ tmak
+SFX ≚ tmak dılabilirliği tmak
+SFX ≚ tmak dılabilirliğine tmak
+SFX ≚ tmak dılabilirliğini tmak
+SFX ≚ tmak dılabilirliğinin tmak
+SFX ≚ tmak dılabilirliğinde tmak
+SFX ≚ tmak dılabilirliğinden tmak
+SFX ≚ tmak dılabilirliğin tmak
 SFX ≚ tmak dılamaz/⊬ tmak
 SFX ≚ tmak dılamaz tmak
 SFX ≚ tmak dılamıyor tmak
@@ -20291,7 +20796,7 @@ SFX ≚ tmak dılamadığı/⊵ tmak
 SFX ≚ tmak dılamadığı tmak
 SFX ≚ tmak dılamayan tmak
 
-SFX ≜ Y 1332
+SFX ≜ Y 1390
 SFX ≜ tmek diyor/⊮ tmek
 SFX ≜ tmek diyorken tmek
 SFX ≜ tmek diyor tmek
@@ -20603,8 +21108,10 @@ SFX ≜ mek meniz mek
 SFX ≜ mek meleri/⊶ mek
 SFX ≜ mek meleri mek
 SFX ≜ tmek diş tmek
+SFX ≜ tmek diştir tmek
 SFX ≜ tmek dişi/⊶ tmek
 SFX ≜ tmek dişi tmek
+SFX ≜ tmek dişidir tmek
 SFX ≜ tmek dişe tmek
 SFX ≜ tmek dişte tmek
 SFX ≜ tmek dişten tmek
@@ -20791,6 +21298,34 @@ SFX ≜ mek memeniz/⊺ mek
 SFX ≜ mek memeniz mek
 SFX ≜ mek memeleri/⊶ mek
 SFX ≜ mek memeleri mek
+SFX ≜ mek meyiş mek
+SFX ≜ mek meyiştir mek
+SFX ≜ mek meyişi/⊶ mek
+SFX ≜ mek meyişi mek
+SFX ≜ mek meyişidir mek
+SFX ≜ mek meyişe mek
+SFX ≜ mek meyişte mek
+SFX ≜ mek meyişten mek
+SFX ≜ mek meyişteki mek
+SFX ≜ mek meyiştekiler mek
+SFX ≜ mek meyişle mek
+SFX ≜ mek meyişim/⊺ mek
+SFX ≜ mek meyişim mek
+SFX ≜ mek meyişin/⊺ mek
+SFX ≜ mek meyişin mek
+SFX ≜ mek meyişimiz/⊺ mek
+SFX ≜ mek meyişimiz mek
+SFX ≜ mek meyişiniz/⊺ mek
+SFX ≜ mek meyişiniz mek
+SFX ≜ mek meyişleri/⊶ mek
+SFX ≜ mek meyişleri mek
+SFX ≜ mek meyişler mek
+SFX ≜ mek meyişlere mek
+SFX ≜ mek meyişlerde mek
+SFX ≜ mek meyişlerden mek
+SFX ≜ mek meyişlerin mek
+SFX ≜ mek meyişlerle mek
+SFX ≜ mek meyişleriyle mek
 SFX ≜ mek mediği/⊶ mek
 SFX ≜ mek mediği mek
 SFX ≜ mek mediğim/⊺ mek
@@ -20936,6 +21471,13 @@ SFX ≜ tmek demezi tmek
 SFX ≜ tmek demezden tmek
 SFX ≜ tmek demezde tmek
 SFX ≜ tmek demezin tmek
+SFX ≜ tmek demezlik tmek
+SFX ≜ tmek demezlikte tmek
+SFX ≜ tmek demezlikten tmek
+SFX ≜ tmek demezliği/⊶ tmek
+SFX ≜ tmek demezliği tmek
+SFX ≜ tmek demezliğini tmek
+SFX ≜ tmek demezliğin tmek
 SFX ≜ tmek demesin tmek
 SFX ≜ tmek deme tmek
 SFX ≜ tmek demeyin tmek
@@ -21188,12 +21730,15 @@ SFX ≜ tmek debilelim tmek
 SFX ≜ tmek debilesiniz tmek
 SFX ≜ tmek debileler tmek
 SFX ≜ tmek debilirlik tmek
+SFX ≜ tmek debilirliktir tmek
 SFX ≜ tmek debilirliği/⊶ tmek
 SFX ≜ tmek debilirliği tmek
+SFX ≜ tmek debilirliğine tmek
 SFX ≜ tmek debilirliğini tmek
 SFX ≜ tmek debilirliğinin tmek
 SFX ≜ tmek debilirliğinde tmek
 SFX ≜ tmek debilirliğinden tmek
+SFX ≜ tmek debilirliğin tmek
 SFX ≜ tmek debilmek tmek
 SFX ≜ tmek debilmekte/⊴ tmek
 SFX ≜ tmek debilmekte tmek
@@ -21563,6 +22108,14 @@ SFX ≜ tmek dilmeyecektir tmek
 SFX ≜ tmek dilir/⊭ tmek
 SFX ≜ tmek dilir tmek
 SFX ≜ tmek dilirler tmek
+SFX ≜ tmek dilirlik tmek
+SFX ≜ tmek dilirliktir tmek
+SFX ≜ tmek dilirliği/⊶ tmek
+SFX ≜ tmek dilirliği tmek
+SFX ≜ tmek dilirliğe tmek
+SFX ≜ tmek dilirliğin tmek
+SFX ≜ tmek dilirliğini tmek
+SFX ≜ tmek dilirliğinin tmek
 SFX ≜ tmek dilmez/⊭ tmek
 SFX ≜ tmek dilmez tmek
 SFX ≜ tmek dilmezler tmek
@@ -21614,6 +22167,16 @@ SFX ≜ tmek dilebilmesi tmek
 SFX ≜ tmek dilebildiği/⊶ tmek
 SFX ≜ tmek dilebildiği tmek
 SFX ≜ tmek dilebilen tmek
+SFX ≜ tmek dilebilirlik tmek
+SFX ≜ tmek dilebilirliktir tmek
+SFX ≜ tmek dilebilirliği/⊶ tmek
+SFX ≜ tmek dilebilirliği tmek
+SFX ≜ tmek dilebilirliğine tmek
+SFX ≜ tmek dilebilirliğini tmek
+SFX ≜ tmek dilebilirliğinin tmek
+SFX ≜ tmek dilebilirliğinde tmek
+SFX ≜ tmek dilebilirliğinden tmek
+SFX ≜ tmek dilebilirliğin tmek
 SFX ≜ tmek dilemez/⊭ tmek
 SFX ≜ tmek dilemez tmek
 SFX ≜ tmek dilemiyor tmek
@@ -21625,7 +22188,7 @@ SFX ≜ tmek dilemediği/⊶ tmek
 SFX ≜ tmek dilemediği tmek
 SFX ≜ tmek dilemeyen tmek
 
-SFX ≝ Y 1343
+SFX ≝ Y 1401
 SFX ≝ tmek düyor/⊮ tmek
 SFX ≝ tmek düyorken tmek
 SFX ≝ tmek düyor tmek
@@ -21738,10 +22301,10 @@ SFX ≝ mek mekteyiz mek
 SFX ≝ mek mektesiniz mek
 SFX ≝ mek mekteler mek
 SFX ≝ tmek de tmek
-SFX ≝ tmek deyüm tmek
-SFX ≝ tmek desün tmek
-SFX ≝ tmek delüm tmek
-SFX ≝ tmek desünüz tmek
+SFX ≝ tmek deyim tmek
+SFX ≝ tmek desin tmek
+SFX ≝ tmek delim tmek
+SFX ≝ tmek desiniz tmek
 SFX ≝ tmek deler tmek
 SFX ≝ mek 0 mek
 SFX ≝ mek sün mek
@@ -21939,8 +22502,10 @@ SFX ≝ mek meniz mek
 SFX ≝ mek meleri/⊶ mek
 SFX ≝ mek meleri mek
 SFX ≝ tmek düş tmek
+SFX ≝ tmek düştür tmek
 SFX ≝ tmek düşü/⊸ tmek
 SFX ≝ tmek düşü tmek
+SFX ≝ tmek düşüdür tmek
 SFX ≝ tmek düşe tmek
 SFX ≝ tmek düşte tmek
 SFX ≝ tmek düşten tmek
@@ -22136,6 +22701,34 @@ SFX ≝ mek memeniz/⊺ mek
 SFX ≝ mek memeniz mek
 SFX ≝ mek memeleri/⊶ mek
 SFX ≝ mek memeleri mek
+SFX ≝ mek meyiş mek
+SFX ≝ mek meyiştir mek
+SFX ≝ mek meyişi/⊶ mek
+SFX ≝ mek meyişi mek
+SFX ≝ mek meyişidir mek
+SFX ≝ mek meyişe mek
+SFX ≝ mek meyişte mek
+SFX ≝ mek meyişten mek
+SFX ≝ mek meyişteki mek
+SFX ≝ mek meyiştekiler mek
+SFX ≝ mek meyişle mek
+SFX ≝ mek meyişim/⊺ mek
+SFX ≝ mek meyişim mek
+SFX ≝ mek meyişin/⊺ mek
+SFX ≝ mek meyişin mek
+SFX ≝ mek meyişimiz/⊺ mek
+SFX ≝ mek meyişimiz mek
+SFX ≝ mek meyişiniz/⊺ mek
+SFX ≝ mek meyişiniz mek
+SFX ≝ mek meyişleri/⊶ mek
+SFX ≝ mek meyişleri mek
+SFX ≝ mek meyişler mek
+SFX ≝ mek meyişlere mek
+SFX ≝ mek meyişlerde mek
+SFX ≝ mek meyişlerden mek
+SFX ≝ mek meyişlerin mek
+SFX ≝ mek meyişlerle mek
+SFX ≝ mek meyişleriyle mek
 SFX ≝ mek mediği/⊶ mek
 SFX ≝ mek mediği mek
 SFX ≝ mek mediğim/⊺ mek
@@ -22281,6 +22874,13 @@ SFX ≝ tmek demezi tmek
 SFX ≝ tmek demezden tmek
 SFX ≝ tmek demezde tmek
 SFX ≝ tmek demezin tmek
+SFX ≝ tmek demezlik tmek
+SFX ≝ tmek demezlikte tmek
+SFX ≝ tmek demezlikten tmek
+SFX ≝ tmek demezliği/⊶ tmek
+SFX ≝ tmek demezliği tmek
+SFX ≝ tmek demezliğini tmek
+SFX ≝ tmek demezliğin tmek
 SFX ≝ tmek demesin tmek
 SFX ≝ tmek deme tmek
 SFX ≝ tmek demeyin tmek
@@ -22533,12 +23133,15 @@ SFX ≝ tmek debilelim tmek
 SFX ≝ tmek debilesiniz tmek
 SFX ≝ tmek debileler tmek
 SFX ≝ tmek debilirlik tmek
+SFX ≝ tmek debilirliktir tmek
 SFX ≝ tmek debilirliği/⊶ tmek
 SFX ≝ tmek debilirliği tmek
+SFX ≝ tmek debilirliğine tmek
 SFX ≝ tmek debilirliğini tmek
 SFX ≝ tmek debilirliğinin tmek
 SFX ≝ tmek debilirliğinde tmek
 SFX ≝ tmek debilirliğinden tmek
+SFX ≝ tmek debilirliğin tmek
 SFX ≝ tmek debilmek tmek
 SFX ≝ tmek debilmekte/⊴ tmek
 SFX ≝ tmek debilmekte tmek
@@ -22908,6 +23511,14 @@ SFX ≝ tmek dülmeyecektir tmek
 SFX ≝ tmek dülür/⊯ tmek
 SFX ≝ tmek dülür tmek
 SFX ≝ tmek dülürler tmek
+SFX ≝ tmek dülürlük tmek
+SFX ≝ tmek dülürlüktür tmek
+SFX ≝ tmek dülürlüğü/⊸ tmek
+SFX ≝ tmek dülürlüğü tmek
+SFX ≝ tmek dülürlüğe tmek
+SFX ≝ tmek dülürlüğün tmek
+SFX ≝ tmek dülürlüğünü tmek
+SFX ≝ tmek dülürlüğünün tmek
 SFX ≝ tmek dülmez/⊭ tmek
 SFX ≝ tmek dülmez tmek
 SFX ≝ tmek dülmezler tmek
@@ -22959,6 +23570,16 @@ SFX ≝ tmek dülebilmesi tmek
 SFX ≝ tmek dülebildiği/⊶ tmek
 SFX ≝ tmek dülebildiği tmek
 SFX ≝ tmek dülebilen tmek
+SFX ≝ tmek dülebilirlik tmek
+SFX ≝ tmek dülebilirliktir tmek
+SFX ≝ tmek dülebilirliği/⊶ tmek
+SFX ≝ tmek dülebilirliği tmek
+SFX ≝ tmek dülebilirliğine tmek
+SFX ≝ tmek dülebilirliğini tmek
+SFX ≝ tmek dülebilirliğinin tmek
+SFX ≝ tmek dülebilirliğinde tmek
+SFX ≝ tmek dülebilirliğinden tmek
+SFX ≝ tmek dülebilirliğin tmek
 SFX ≝ tmek dülemez/⊭ tmek
 SFX ≝ tmek dülemez tmek
 SFX ≝ tmek dülemiyor tmek
@@ -22970,7 +23591,7 @@ SFX ≝ tmek dülemediği/⊶ tmek
 SFX ≝ tmek dülemediği tmek
 SFX ≝ tmek dülemeyen tmek
 
-SFX ≞ Y 1379
+SFX ≞ Y 1437
 SFX ≞ mak uyor/⊮ mak
 SFX ≞ mak uyorken mak
 SFX ≞ mak uyor mak
@@ -23095,10 +23716,10 @@ SFX ≞ mak maktayız mak
 SFX ≞ mak maktasınız mak
 SFX ≞ mak maktalar mak
 SFX ≞ mak a mak
-SFX ≞ mak ayum mak
-SFX ≞ mak asun mak
-SFX ≞ mak alum mak
-SFX ≞ mak asunuz mak
+SFX ≞ mak ayım mak
+SFX ≞ mak asın mak
+SFX ≞ mak alım mak
+SFX ≞ mak asınız mak
 SFX ≞ mak alar mak
 SFX ≞ mak 0 mak
 SFX ≞ mak sun mak
@@ -23327,8 +23948,10 @@ SFX ≞ mak manız mak
 SFX ≞ mak maları/⊵ mak
 SFX ≞ mak maları mak
 SFX ≞ mak uş mak
+SFX ≞ mak uştur mak
 SFX ≞ mak uşu/⊷ mak
 SFX ≞ mak uşu mak
+SFX ≞ mak uşudur mak
 SFX ≞ mak uşa mak
 SFX ≞ mak uşta mak
 SFX ≞ mak uştan mak
@@ -23514,6 +24137,34 @@ SFX ≞ mak mamanız/⊹ mak
 SFX ≞ mak mamanız mak
 SFX ≞ mak mamaları/⊵ mak
 SFX ≞ mak mamaları mak
+SFX ≞ mak mayış mak
+SFX ≞ mak mayıştır mak
+SFX ≞ mak mayışı/⊵ mak
+SFX ≞ mak mayışı mak
+SFX ≞ mak mayışıdır mak
+SFX ≞ mak mayışa mak
+SFX ≞ mak mayışta mak
+SFX ≞ mak mayıştan mak
+SFX ≞ mak mayıştaki mak
+SFX ≞ mak mayıştakiler mak
+SFX ≞ mak mayışla mak
+SFX ≞ mak mayışım/⊹ mak
+SFX ≞ mak mayışım mak
+SFX ≞ mak mayışın/⊹ mak
+SFX ≞ mak mayışın mak
+SFX ≞ mak mayışımız/⊹ mak
+SFX ≞ mak mayışımız mak
+SFX ≞ mak mayışınız/⊹ mak
+SFX ≞ mak mayışınız mak
+SFX ≞ mak mayışları/⊵ mak
+SFX ≞ mak mayışları mak
+SFX ≞ mak mayışlar mak
+SFX ≞ mak mayışlara mak
+SFX ≞ mak mayışlarda mak
+SFX ≞ mak mayışlardan mak
+SFX ≞ mak mayışların mak
+SFX ≞ mak mayışlarla mak
+SFX ≞ mak mayışlarıyla mak
 SFX ≞ mak madığı/⊵ mak
 SFX ≞ mak madığı mak
 SFX ≞ mak madığım/⊹ mak
@@ -23659,6 +24310,13 @@ SFX ≞ mak amazı mak
 SFX ≞ mak amazdan mak
 SFX ≞ mak amazda mak
 SFX ≞ mak amazın mak
+SFX ≞ mak amazlık mak
+SFX ≞ mak amazlıkta mak
+SFX ≞ mak amazlıktan mak
+SFX ≞ mak amazlığı/⊵ mak
+SFX ≞ mak amazlığı mak
+SFX ≞ mak amazlığını mak
+SFX ≞ mak amazlığın mak
 SFX ≞ mak amasın mak
 SFX ≞ mak ama mak
 SFX ≞ mak amayın mak
@@ -23911,12 +24569,15 @@ SFX ≞ mak abilelim mak
 SFX ≞ mak abilesiniz mak
 SFX ≞ mak abileler mak
 SFX ≞ mak abilirlik mak
+SFX ≞ mak abilirliktir mak
 SFX ≞ mak abilirliği/⊶ mak
 SFX ≞ mak abilirliği mak
+SFX ≞ mak abilirliğine mak
 SFX ≞ mak abilirliğini mak
 SFX ≞ mak abilirliğinin mak
 SFX ≞ mak abilirliğinde mak
 SFX ≞ mak abilirliğinden mak
+SFX ≞ mak abilirliğin mak
 SFX ≞ mak abilmek mak
 SFX ≞ mak abilmekte/⊴ mak
 SFX ≞ mak abilmekte mak
@@ -24286,6 +24947,14 @@ SFX ≞ mak ulmayacaktır [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulur/⊮ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulur [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulurlar [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulurluk [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulurluktur [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulurluğu/⊷ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulurluğu [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulurluğa [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulurluğun [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulurluğunu [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulurluğunun [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulmaz/⊬ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulmaz [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulmazlar [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
@@ -24337,6 +25006,16 @@ SFX ≞ mak ulabilmesi [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulabildiği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulabildiği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulabilen [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulabilirlik [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulabilirliktir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulabilirliği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulabilirliği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulabilirliğine [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulabilirliğini [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulabilirliğinin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulabilirliğinde [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulabilirliğinden [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulabilirliğin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulamaz/⊬ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulamaz [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulamıyor [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
@@ -24351,7 +25030,7 @@ SFX ≞ mak ayım [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak asın [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak alım [^AEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 
-SFX ≟ Y 1430
+SFX ≟ Y 1468
 SFX ≟ amak uyor/⊮ amak
 SFX ≟ amak uyorken amak
 SFX ≟ amak uyor amak
@@ -24488,18 +25167,14 @@ SFX ≟ mak maktalar mak
 SFX ≟ mak ya mak
 SFX ≟ mak 0 mak
 SFX ≟ mak yalar mak
-SFX ≟ mak yayım amak
-SFX ≟ mak yalım amak
-SFX ≟ mak yasın amak
-SFX ≟ mak yasınız amak
+SFX ≟ mak yayım mak
+SFX ≟ mak yalım mak
+SFX ≟ mak yasın mak
+SFX ≟ mak yasınız mak
 SFX ≟ mak sın amak
 SFX ≟ mak yın amak
 SFX ≟ mak yınız amak
 SFX ≟ mak sınlar amak
-SFX ≟ mak yayum umak
-SFX ≟ mak yalum umak
-SFX ≟ mak yasun umak
-SFX ≟ mak yasunuz umak
 SFX ≟ mak sun umak
 SFX ≟ mak yun umak
 SFX ≟ mak yunuz umak
@@ -24724,8 +25399,10 @@ SFX ≟ mak manız amak
 SFX ≟ mak maları/⊵ amak
 SFX ≟ mak maları amak
 SFX ≟ mak yış amak
+SFX ≟ mak yıştır amak
 SFX ≟ mak yışı/⊵ amak
 SFX ≟ mak yışı amak
+SFX ≟ mak yışıdır amak
 SFX ≟ mak yışa amak
 SFX ≟ mak yışta amak
 SFX ≟ mak yıştan amak
@@ -24842,8 +25519,10 @@ SFX ≟ mak manız umak
 SFX ≟ mak maları/⊵ umak
 SFX ≟ mak maları umak
 SFX ≟ mak yuş umak
+SFX ≟ mak yuştur umak
 SFX ≟ mak yuşu/⊷ umak
 SFX ≟ mak yuşu umak
+SFX ≟ mak yuşudur umak
 SFX ≟ mak yuşa umak
 SFX ≟ mak yuşta umak
 SFX ≟ mak yuştan umak
@@ -25045,6 +25724,34 @@ SFX ≟ mak mamanız/⊹ mak
 SFX ≟ mak mamanız mak
 SFX ≟ mak mamaları/⊵ mak
 SFX ≟ mak mamaları mak
+SFX ≟ mak mayış mak
+SFX ≟ mak mayıştır mak
+SFX ≟ mak mayışı/⊵ mak
+SFX ≟ mak mayışı mak
+SFX ≟ mak mayışıdır mak
+SFX ≟ mak mayışa mak
+SFX ≟ mak mayışta mak
+SFX ≟ mak mayıştan mak
+SFX ≟ mak mayıştaki mak
+SFX ≟ mak mayıştakiler mak
+SFX ≟ mak mayışla mak
+SFX ≟ mak mayışım/⊹ mak
+SFX ≟ mak mayışım mak
+SFX ≟ mak mayışın/⊹ mak
+SFX ≟ mak mayışın mak
+SFX ≟ mak mayışımız/⊹ mak
+SFX ≟ mak mayışımız mak
+SFX ≟ mak mayışınız/⊹ mak
+SFX ≟ mak mayışınız mak
+SFX ≟ mak mayışları/⊵ mak
+SFX ≟ mak mayışları mak
+SFX ≟ mak mayışlar mak
+SFX ≟ mak mayışlara mak
+SFX ≟ mak mayışlarda mak
+SFX ≟ mak mayışlardan mak
+SFX ≟ mak mayışların mak
+SFX ≟ mak mayışlarla mak
+SFX ≟ mak mayışlarıyla mak
 SFX ≟ mak madığı/⊵ mak
 SFX ≟ mak madığı mak
 SFX ≟ mak madığım/⊹ mak
@@ -25190,6 +25897,13 @@ SFX ≟ mak yamazı mak
 SFX ≟ mak yamazdan mak
 SFX ≟ mak yamazda mak
 SFX ≟ mak yamazın mak
+SFX ≟ mak yamazlık mak
+SFX ≟ mak yamazlıkta mak
+SFX ≟ mak yamazlıktan mak
+SFX ≟ mak yamazlığı/⊵ mak
+SFX ≟ mak yamazlığı mak
+SFX ≟ mak yamazlığını mak
+SFX ≟ mak yamazlığın mak
 SFX ≟ mak yamasın mak
 SFX ≟ mak yama mak
 SFX ≟ mak yamayın mak
@@ -25442,12 +26156,15 @@ SFX ≟ mak yabilelim mak
 SFX ≟ mak yabilesiniz mak
 SFX ≟ mak yabileler mak
 SFX ≟ mak yabilirlik mak
+SFX ≟ mak yabilirliktir mak
 SFX ≟ mak yabilirliği/⊶ mak
 SFX ≟ mak yabilirliği mak
+SFX ≟ mak yabilirliğine mak
 SFX ≟ mak yabilirliğini mak
 SFX ≟ mak yabilirliğinin mak
 SFX ≟ mak yabilirliğinde mak
 SFX ≟ mak yabilirliğinden mak
+SFX ≟ mak yabilirliğin mak
 SFX ≟ mak yabilmek mak
 SFX ≟ mak yabilmekte/⊴ mak
 SFX ≟ mak yabilmekte mak
@@ -25783,7 +26500,7 @@ SFX ≟ mak yuversin umak
 SFX ≟ mak yuverin umak
 SFX ≟ mak yuveriniz umak
 
-SFX ≠ Y 1219
+SFX ≠ Y 1261
 SFX ≠ emek iyor/⊮ [dy]emek
 SFX ≠ emek iyorken [dy]emek
 SFX ≠ emek iyor [dy]emek
@@ -26081,8 +26798,10 @@ SFX ≠ mek meniz mek
 SFX ≠ mek meleri/⊶ mek
 SFX ≠ mek meleri mek
 SFX ≠ mek yiş mek
+SFX ≠ mek yiştir mek
 SFX ≠ mek yişi/⊶ mek
 SFX ≠ mek yişi mek
+SFX ≠ mek yişidir mek
 SFX ≠ mek yişe mek
 SFX ≠ mek yişte mek
 SFX ≠ mek yişten mek
@@ -26107,8 +26826,10 @@ SFX ≠ mek yişlerin mek
 SFX ≠ mek yişlerle mek
 SFX ≠ mek yişleriyle mek
 SFX ≠ emek iyiş [dy]emek
+SFX ≠ emek iyiştir [dy]emek
 SFX ≠ emek iyişi/⊶ [dy]emek
 SFX ≠ emek iyişi [dy]emek
+SFX ≠ emek iyişidir [dy]emek
 SFX ≠ emek iyişe [dy]emek
 SFX ≠ emek iyişte [dy]emek
 SFX ≠ emek iyişten [dy]emek
@@ -26299,6 +27020,34 @@ SFX ≠ mek memeniz/⊺ mek
 SFX ≠ mek memeniz mek
 SFX ≠ mek memeleri/⊶ mek
 SFX ≠ mek memeleri mek
+SFX ≠ mek meyiş mek
+SFX ≠ mek meyiştir mek
+SFX ≠ mek meyişi/⊶ mek
+SFX ≠ mek meyişi mek
+SFX ≠ mek meyişidir mek
+SFX ≠ mek meyişe mek
+SFX ≠ mek meyişte mek
+SFX ≠ mek meyişten mek
+SFX ≠ mek meyişteki mek
+SFX ≠ mek meyiştekiler mek
+SFX ≠ mek meyişle mek
+SFX ≠ mek meyişim/⊺ mek
+SFX ≠ mek meyişim mek
+SFX ≠ mek meyişin/⊺ mek
+SFX ≠ mek meyişin mek
+SFX ≠ mek meyişimiz/⊺ mek
+SFX ≠ mek meyişimiz mek
+SFX ≠ mek meyişiniz/⊺ mek
+SFX ≠ mek meyişiniz mek
+SFX ≠ mek meyişleri/⊶ mek
+SFX ≠ mek meyişleri mek
+SFX ≠ mek meyişler mek
+SFX ≠ mek meyişlere mek
+SFX ≠ mek meyişlerde mek
+SFX ≠ mek meyişlerden mek
+SFX ≠ mek meyişlerin mek
+SFX ≠ mek meyişlerle mek
+SFX ≠ mek meyişleriyle mek
 SFX ≠ mek mediği/⊶ mek
 SFX ≠ mek mediği mek
 SFX ≠ mek mediğim/⊺ mek
@@ -26444,6 +27193,13 @@ SFX ≠ emek iyemezi [dy]emek
 SFX ≠ emek iyemezden [dy]emek
 SFX ≠ emek iyemezde [dy]emek
 SFX ≠ emek iyemezin [dy]emek
+SFX ≠ emek iyemezlik [dy]emek
+SFX ≠ emek iyemezlikte [dy]emek
+SFX ≠ emek iyemezlikten [dy]emek
+SFX ≠ emek iyemezliği/⊶ [dy]emek
+SFX ≠ emek iyemezliği [dy]emek
+SFX ≠ emek iyemezliğini [dy]emek
+SFX ≠ emek iyemezliğin [dy]emek
 SFX ≠ emek iyemesin [dy]emek
 SFX ≠ emek iyeme [dy]emek
 SFX ≠ emek iyemeyin [dy]emek
@@ -26696,12 +27452,15 @@ SFX ≠ emek iyebilelim [dy]emek
 SFX ≠ emek iyebilesiniz [dy]emek
 SFX ≠ emek iyebileler [dy]emek
 SFX ≠ emek iyebilirlik [dy]emek
+SFX ≠ emek iyebilirliktir [dy]emek
 SFX ≠ emek iyebilirliği/⊶ [dy]emek
 SFX ≠ emek iyebilirliği [dy]emek
+SFX ≠ emek iyebilirliğine [dy]emek
 SFX ≠ emek iyebilirliğini [dy]emek
 SFX ≠ emek iyebilirliğinin [dy]emek
 SFX ≠ emek iyebilirliğinde [dy]emek
 SFX ≠ emek iyebilirliğinden [dy]emek
+SFX ≠ emek iyebilirliğin [dy]emek
 SFX ≠ emek iyebilmek [dy]emek
 SFX ≠ emek iyebilmekte/⊴ [dy]emek
 SFX ≠ emek iyebilmekte [dy]emek
@@ -27534,7 +28293,7 @@ SFX ⊀ mek mezden mek
 SFX ⊀ mek mezde mek
 SFX ⊀ mek mezin mek
 
-SFX ⊁ Y 25
+SFX ⊁ Y 36
 SFX ⊁ mek ür/⊯ mek
 SFX ⊁ mek ür mek
 SFX ⊁ mek ürken mek
@@ -27546,6 +28305,14 @@ SFX ⊁ mek ürüz mek
 SFX ⊁ mek ürsünüz mek
 SFX ⊁ mek ürsiniz mek
 SFX ⊁ mek ürler mek
+SFX ⊁ mek ürlük [nl]mek
+SFX ⊁ mek ürlüktür [nl]mek
+SFX ⊁ mek ürlüğü/⊸ [nl]mek
+SFX ⊁ mek ürlüğü [nl]mek
+SFX ⊁ mek ürlüğe [nl]mek
+SFX ⊁ mek ürlüğün [nl]mek
+SFX ⊁ mek ürlüğünü [nl]mek
+SFX ⊁ mek ürlüğünün [nl]mek
 SFX ⊁ mek mez/⊭ mek
 SFX ⊁ mek mem mek
 SFX ⊁ mek mezsin mek
@@ -27560,8 +28327,11 @@ SFX ⊁ mek mezi mek
 SFX ⊁ mek mezden mek
 SFX ⊁ mek mezde mek
 SFX ⊁ mek mezin mek
+SFX ⊁ mek ürlüğüne [nl]mek
+SFX ⊁ mek ürlüğünde [nl]mek
+SFX ⊁ mek ürlüğünden [nl]mek
 
-SFX ⊂ Y 23
+SFX ⊂ Y 34
 SFX ⊂ mak ır/⊬ mak
 SFX ⊂ mak ır mak
 SFX ⊂ mak ırken mak
@@ -27571,6 +28341,14 @@ SFX ⊂ mak ırsın mak
 SFX ⊂ mak ırız mak
 SFX ⊂ mak ırsınız mak
 SFX ⊂ mak ırlar mak
+SFX ⊂ mak ırlık [nl]mak
+SFX ⊂ mak ırlıktır [nl]mak
+SFX ⊂ mak ırlığı/⊵ [nl]mak
+SFX ⊂ mak ırlığı [nl]mak
+SFX ⊂ mak ırlığa [nl]mak
+SFX ⊂ mak ırlığın [nl]mak
+SFX ⊂ mak ırlığını [nl]mak
+SFX ⊂ mak ırlığının [nl]mak
 SFX ⊂ mak maz/⊬ mak
 SFX ⊂ mak mam mak
 SFX ⊂ mak mazsın mak
@@ -27585,8 +28363,11 @@ SFX ⊂ mak mazı mak
 SFX ⊂ mak mazdan mak
 SFX ⊂ mak mazda mak
 SFX ⊂ mak mazın mak
+SFX ⊂ mak ırlığına [nl]mak
+SFX ⊂ mak ırlığında [nl]mak
+SFX ⊂ mak ırlığından [nl]mak
 
-SFX ⊃ Y 23
+SFX ⊃ Y 34
 SFX ⊃ mek ir/⊭ mek
 SFX ⊃ mek ir mek
 SFX ⊃ mek irken mek
@@ -27596,6 +28377,14 @@ SFX ⊃ mek irsin mek
 SFX ⊃ mek iriz mek
 SFX ⊃ mek irsiniz mek
 SFX ⊃ mek irler mek
+SFX ⊃ mek irlik [nl]mek
+SFX ⊃ mek irliktir [nl]mek
+SFX ⊃ mek irliği/⊶ [nl]mek
+SFX ⊃ mek irliği [nl]mek
+SFX ⊃ mek irliğe [nl]mek
+SFX ⊃ mek irliğin [nl]mek
+SFX ⊃ mek irliğini [nl]mek
+SFX ⊃ mek irliğinin [nl]mek
 SFX ⊃ mek mez/⊭ mek
 SFX ⊃ mek mem mek
 SFX ⊃ mek mezsin mek
@@ -27610,6 +28399,9 @@ SFX ⊃ mek mezi mek
 SFX ⊃ mek mezden mek
 SFX ⊃ mek mezde mek
 SFX ⊃ mek mezin mek
+SFX ⊃ mek irliğine [nl]mek
+SFX ⊃ mek irliğinde [nl]mek
+SFX ⊃ mek irliğinden [nl]mek
 
 SFX ⊄ Y 23
 SFX ⊄ mak ar/⊬ mak
@@ -27636,7 +28428,7 @@ SFX ⊄ mak mazdan mak
 SFX ⊄ mak mazda mak
 SFX ⊄ mak mazın mak
 
-SFX ⊅ Y 25
+SFX ⊅ Y 36
 SFX ⊅ mak ur/⊮ mak
 SFX ⊅ mak ur mak
 SFX ⊅ mak urken mak
@@ -27648,6 +28440,14 @@ SFX ⊅ mak uruz mak
 SFX ⊅ mak ursunuz mak
 SFX ⊅ mak ursınız mak
 SFX ⊅ mak urlar mak
+SFX ⊅ mak urluk [nl]mak
+SFX ⊅ mak urluktur [nl]mak
+SFX ⊅ mak urluğu/⊷ [nl]mak
+SFX ⊅ mak urluğu [nl]mak
+SFX ⊅ mak urluğa [nl]mak
+SFX ⊅ mak urluğun [nl]mak
+SFX ⊅ mak urluğunu [nl]mak
+SFX ⊅ mak urluğunun [nl]mak
 SFX ⊅ mak maz/⊬ mak
 SFX ⊅ mak mam mak
 SFX ⊅ mak mazsın mak
@@ -27662,6 +28462,9 @@ SFX ⊅ mak mazı mak
 SFX ⊅ mak mazdan mak
 SFX ⊅ mak mazda mak
 SFX ⊅ mak mazın mak
+SFX ⊅ mak urluğuna [nl]mak
+SFX ⊅ mak urluğunda [nl]mak
+SFX ⊅ mak urluğundan [nl]mak
 
 SFX ⊆ Y 2
 SFX ⊆ 0 ya .
@@ -33539,15 +34342,15 @@ SFX ⊩ 0 süzlüğ/∃≤∮≅∵∹≀≈≽XX [ouû][^aeıioöuüâîû]
 SFX ⊩ 0 süzlüğ/∃≤∮≅∵∹≀≈≽XX [ouû][^aeıioöuüâîû][^aeıioöuüâîû]
 
 SFX ⊪ Y 12
-SFX ⊪ 0 lik/∨≌∢≊∻≩⊨L≎ [aâı]
-SFX ⊪ 0 lik/∨≌∢≊∻≩⊨L≎ [aıâ][^aeıioöuüâîû]
-SFX ⊪ 0 lik/∨≌∢≊∻≩⊨L≎ [aıâ][^aeıioöuüâîû][^aeıioöuüâîû]
+SFX ⊪ 0 lik/∨≌∢≊∻≩⊨⊩ [aâı]
+SFX ⊪ 0 lik/∨≌∢≊∻≩⊨⊩ [aıâ][^aeıioöuüâîû]
+SFX ⊪ 0 lik/∨≌∢≊∻≩⊨⊩ [aıâ][^aeıioöuüâîû][^aeıioöuüâîû]
 SFX ⊪ 0 liğ/∂≤∭≄∴∸∿≆≽XX [aâı]
 SFX ⊪ 0 liğ/∂≤∭≄∴∸∿≆≽XX [aıâ][^aeıioöuüâîû]
 SFX ⊪ 0 liğ/∂≤∭≄∴∸∿≆≽XX [aıâ][^aeıioöuüâîû][^aeıioöuüâîû]
-SFX ⊪ 0 lük/∨≌∢≊∻≩⊨L≎ [ouû]
-SFX ⊪ 0 lük/∨≌∢≊∻≩⊨L≎ [ouû][^aeıioöuüâîû]
-SFX ⊪ 0 lük/∨≌∢≊∻≩⊨L≎ [ouû][^aeıioöuüâîû][^aeıioöuüâîû]
+SFX ⊪ 0 lük/∨≌∢≊∻≩⊨⊩ [ouû]
+SFX ⊪ 0 lük/∨≌∢≊∻≩⊨⊩ [ouû][^aeıioöuüâîû]
+SFX ⊪ 0 lük/∨≌∢≊∻≩⊨⊩ [ouû][^aeıioöuüâîû][^aeıioöuüâîû]
 SFX ⊪ 0 lüğ/∃≤∮≅∵∹≀≈≽XX [ouû]
 SFX ⊪ 0 lüğ/∃≤∮≅∵∹≀≈≽XX [ouû][^aeıioöuüâîû]
 SFX ⊪ 0 lüğ/∃≤∮≅∵∹≀≈≽XX [ouû][^aeıioöuüâîû][^aeıioöuüâîû]

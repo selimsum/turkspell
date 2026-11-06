@@ -410,6 +410,14 @@ def gen_stem_flag(flag: str) -> str:
                 sfx_ki(flag, strip_str, add_base, cond_neg, rules, chain_copula=True)
             else:
                 sfx_copula(flag, strip_str, add_base, cond_neg, rules)
+
+            # Intrinsic d/ğ stems in C1 compounds (soyadı -> soyadları, zeytinyağı -> zeytinyağları, yanardağı -> yanardağları)
+            if flag == "C1":
+                for cond_keep in ("adı", "[ybd]ağı"):
+                    if is_ki:
+                        sfx_ki(flag, strip_v, s, cond_keep, rules, chain_copula=True)
+                    else:
+                        sfx_copula(flag, strip_v, s, cond_keep, rules)
                 
         # 2. Suffixes that keep the final vowel (Singular cases/possessives with pronominal n/y buffer)
         singular_suffixes = [
@@ -736,9 +744,11 @@ def gen_3sg_poss_flags() -> list[str]:
 
         # 3. Direct copula inflections on 3sg possessive (bypasses 2-level affix limits for G/D/V alternant stems)
         for cop_base in [
+            f"{acc_v}y{acc_v}m", f"{acc_v}s{acc_v}n", f"{acc_v}y{acc_v}z", f"{acc_v}s{acc_v}n{acc_v}z", f"{acc_v}d{acc_v}rl{loc_v}r",
             f"{acc_v}d{acc_v}r", f"{acc_v}yd{acc_v}", f"{acc_v}ym{acc_v}ş", f"{acc_v}ys{loc_v}", f"{acc_v}yken",
             f"{acc_v}yd{acc_v}m", f"{acc_v}yd{acc_v}n", f"{acc_v}yd{acc_v}k", f"{acc_v}yd{acc_v}n{acc_v}z", f"{acc_v}yd{loc_v}l{loc_v}r",
             f"{acc_v}ym{acc_v}ş{acc_v}m", f"{acc_v}ym{acc_v}şs{acc_v}n", f"{acc_v}ym{acc_v}ş{acc_v}z", f"{acc_v}ym{acc_v}şs{acc_v}n{acc_v}z", f"{acc_v}ym{acc_v}şl{loc_v}r",
+            f"s{acc_v}y{acc_v}m", f"s{acc_v}s{acc_v}n", f"s{acc_v}y{acc_v}z", f"s{acc_v}s{acc_v}n{acc_v}z", f"s{acc_v}d{acc_v}rl{loc_v}r",
             f"s{acc_v}d{acc_v}r", f"s{acc_v}yd{acc_v}", f"s{acc_v}ym{acc_v}ş", f"s{acc_v}ys{loc_v}", f"s{acc_v}yken",
             f"s{acc_v}yd{acc_v}m", f"s{acc_v}yd{acc_v}n", f"s{acc_v}yd{acc_v}k", f"s{acc_v}yd{acc_v}n{acc_v}z", f"s{acc_v}yd{loc_v}l{loc_v}r",
             f"s{acc_v}ym{acc_v}ş{acc_v}m", f"s{acc_v}ym{acc_v}şs{acc_v}n", f"s{acc_v}ym{acc_v}ş{acc_v}z", f"s{acc_v}ym{acc_v}şs{acc_v}n{acc_v}z", f"s{acc_v}ym{acc_v}şl{loc_v}r",
@@ -1224,7 +1234,11 @@ def gen_deriv_sz2(flag: str = "LSZ") -> str:
 
 
 def gen_deriv_sl(flag: str = "SL") -> str:
-    """-sAl adjective derivation"""
+    """-sAl adjective derivation + 2-hop -sAllIk abstract noun support"""
+    lk_map = {
+        "sal": ("sallık", "sallığ", "B1"),
+        "sel": ("sellik", "selliğ", "F1"),
+    }
     rules = []
     for cond, suf, sc in [
         ("[aıouâû]",             "sal", "B1"),
@@ -1236,6 +1250,9 @@ def gen_deriv_sl(flag: str = "SL") -> str:
         ("[eiöüîâû][^aeıioöuüâîû][^aeıioöuüâîû]",  "sel", "F1"),
     ]:
         rules.append(sfx(flag, "0", f"{suf}/{get_noun_chain(sc)[2:]}", cond))
+        lk_s, lk_v, lk_sc = lk_map[suf]
+        rules.append(sfx(flag, "0", f"{lk_s}/{get_noun_chain(lk_sc, only_consonant=True, derivs='')[2:]}", cond))
+        rules.append(sfx(flag, "0", f"{lk_v}/{get_noun_chain(lk_sc, only_vowel=True)}NE", cond))
     return make_flag_block(flag, unique(rules))
 
 
@@ -3623,21 +3640,21 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(strip, f"y{v_low}", strip)
         add_r(strip, "0", strip)
         add_r(strip, f"y{v_low}l{v_low}r", strip)
+        add_r(strip, f"y{v_low}y{unrounded_high}m", strip)
+        add_r(strip, f"y{v_low}l{unrounded_high}m", strip)
+        add_r(strip, f"y{v_low}s{unrounded_high}n", strip)
+        add_r(strip, f"y{v_low}s{unrounded_high}n{unrounded_high}z", strip)
         for v_h_curr, cond_curr in sub_h:
-            add_r(strip, f"y{v_low}y{v_h_curr}m", cond_curr)
-            add_r(strip, f"y{v_low}l{v_h_curr}m", cond_curr)
-            add_r(strip, f"y{v_low}s{v_h_curr}n", cond_curr)
-            add_r(strip, f"y{v_low}s{v_h_curr}n{v_h_curr}z", cond_curr)
             add_r(strip, f"s{v_h_curr}n", cond_curr)
             add_r(strip, f"y{v_h_curr}n", cond_curr)
             add_r(strip, f"y{v_h_curr}n{v_h_curr}z", cond_curr)
             add_r(strip, f"s{v_h_curr}nl{v_low}r", cond_curr)
     elif is_vowel_stem:
         add_r(strip, f"y{v_low}", strip)
-        add_r(strip, f"y{v_low}y{v_high}m", strip)
-        add_r(strip, f"y{v_low}s{v_high}n", strip)
-        add_r(strip, f"y{v_low}l{v_high}m", strip)
-        add_r(strip, f"y{v_low}s{v_high}n{v_high}z", strip)
+        add_r(strip, f"y{v_low}y{unrounded_high}m", strip)
+        add_r(strip, f"y{v_low}s{unrounded_high}n", strip)
+        add_r(strip, f"y{v_low}l{unrounded_high}m", strip)
+        add_r(strip, f"y{v_low}s{unrounded_high}n{unrounded_high}z", strip)
         add_r(strip, f"y{v_low}l{v_low}r", strip)
         add_r(strip, "0", strip)
         add_r(strip, f"s{v_high}n", strip)
@@ -3646,10 +3663,10 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(strip, f"s{v_high}nl{v_low}r", strip)
     elif is_voicing:
         add_r(f"t{strip}", f"d{v_low}", f"t{strip}")
-        add_r(f"t{strip}", f"d{v_low}y{v_high}m", f"t{strip}")
-        add_r(f"t{strip}", f"d{v_low}s{v_high}n", f"t{strip}")
-        add_r(f"t{strip}", f"d{v_low}l{v_high}m", f"t{strip}")
-        add_r(f"t{strip}", f"d{v_low}s{v_high}n{v_high}z", f"t{strip}")
+        add_r(f"t{strip}", f"d{v_low}y{unrounded_high}m", f"t{strip}")
+        add_r(f"t{strip}", f"d{v_low}s{unrounded_high}n", f"t{strip}")
+        add_r(f"t{strip}", f"d{v_low}l{unrounded_high}m", f"t{strip}")
+        add_r(f"t{strip}", f"d{v_low}s{unrounded_high}n{unrounded_high}z", f"t{strip}")
         add_r(f"t{strip}", f"d{v_low}l{v_low}r", f"t{strip}")
         add_r(strip, "0", strip)
         add_r(strip, f"s{v_high}n", strip)
@@ -3658,10 +3675,10 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(strip, f"s{v_high}nl{v_low}r", strip)
     else:
         add_r(strip, f"{v_low}", strip)
-        add_r(strip, f"{v_low}y{v_high}m", strip)
-        add_r(strip, f"{v_low}s{v_high}n", strip)
-        add_r(strip, f"{v_low}l{v_high}m", strip)
-        add_r(strip, f"{v_low}s{v_high}n{v_high}z", strip)
+        add_r(strip, f"{v_low}y{unrounded_high}m", strip)
+        add_r(strip, f"{v_low}s{unrounded_high}n", strip)
+        add_r(strip, f"{v_low}l{unrounded_high}m", strip)
+        add_r(strip, f"{v_low}s{unrounded_high}n{unrounded_high}z", strip)
         add_r(strip, f"{v_low}l{v_low}r", strip)
         add_r(strip, "0", strip)
         add_r(strip, f"s{v_high}n", strip)
@@ -3826,8 +3843,10 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         p3_f = "pO" if (back and v_h == "u") else ("pA" if back else ("pU" if v_h == "ü" else "pE"))
         pp_f = "qO" if (back and v_h == "u") else ("qA" if back else ("qU" if v_h == "ü" else "qE"))
         add_r(s_strip, f"{is_base}", s_cond)
+        add_r(s_strip, f"{is_base}t{v_h}r", s_cond)
         add_r(s_strip, f"{is_base}{v_h}/{p3_f}", s_cond)
         add_r(s_strip, f"{is_base}{v_h}", s_cond)
+        add_r(s_strip, f"{is_base}{v_h}d{v_h}r", s_cond)
         add_r(s_strip, f"{is_base}{v_low}", s_cond)
         add_r(s_strip, f"{is_base}t{v_low}", s_cond)
         add_r(s_strip, f"{is_base}t{v_low}n", s_cond)
@@ -4248,6 +4267,8 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
     add_r(strip, f"{neg_suf}m{v_low}n{unrounded_high}z", strip)
     add_r(strip, f"{neg_suf}m{v_low}l{v_low}r{unrounded_high}/{vn_part_3sg}", strip)
     add_r(strip, f"{neg_suf}m{v_low}l{v_low}r{unrounded_high}", strip)
+    # Neg Verbal Noun (-mayış / -meyiş: olmayışı, olmayışıdır, gelmeyişine)
+    add_is_verbal_noun(strip, f"{neg_suf}y{unrounded_high}ş", strip, unrounded_high)
 
     # Neg Object Participles with Full Person Agreement (bakmadığınız, vb.)
     add_r(strip, f"{neg_suf}d{unrounded_high}ğ{unrounded_high}/{neg_part_3sg}", strip)
@@ -4350,6 +4371,13 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
     add_r(inab_strip, f"{inab_p}{v_low}zc{v_low}s{unrounded_high}n{v_low}", inab_cond)
     for c_case in [f"{v_low}", f"{unrounded_high}", f"d{v_low}n", f"d{v_low}", f"{unrounded_high}n"]:
         add_r(inab_strip, f"{inab_p}{v_low}z{c_case}", inab_cond)
+    # Inability abstract noun derivation (-amazlık / -emezlik: göremezlik, göremezlikten, çekemezlik)
+    for amz_suf in [
+        f"zl{unrounded_high}k", f"zl{unrounded_high}kt{v_low}", f"zl{unrounded_high}kt{v_low}n",
+        f"zl{unrounded_high}ğ{unrounded_high}/{neg_part_3sg}", f"zl{unrounded_high}ğ{unrounded_high}",
+        f"zl{unrounded_high}ğ{unrounded_high}n{unrounded_high}", f"zl{unrounded_high}ğ{unrounded_high}n",
+    ]:
+        add_r(inab_strip, f"{inab_p}{v_low}{amz_suf}", inab_cond)
 
     # Inab Imperative & Optative: açamasın, söyleyeme, açamayın, vb.
     add_r(inab_strip, f"{inab_p}{v_low}s{unrounded_high}n", inab_cond)
@@ -4512,14 +4540,17 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
     add_r(pot_strip, f"{pot_p}elim", pot_cond)
     add_r(pot_strip, f"{pot_p}esiniz", pot_cond)
     add_r(pot_strip, f"{pot_p}eler", pot_cond)
-    # -ebilirlik noun derivation (edebilirliği, erişebilirliği)
+    # -ebilirlik noun derivation (edebilirliği, erişebilirliği, öngörülebilirliği, izlenebilirliği)
     add_r(pot_strip, f"{pot_p}irlik", pot_cond)
+    add_r(pot_strip, f"{pot_p}irliktir", pot_cond)
     add_r(pot_strip, f"{pot_p}irliği/pE", pot_cond)
     add_r(pot_strip, f"{pot_p}irliği", pot_cond)
+    add_r(pot_strip, f"{pot_p}irliğine", pot_cond)
     add_r(pot_strip, f"{pot_p}irliğini", pot_cond)
     add_r(pot_strip, f"{pot_p}irliğinin", pot_cond)
     add_r(pot_strip, f"{pot_p}irliğinde", pot_cond)
     add_r(pot_strip, f"{pot_p}irliğinden", pot_cond)
+    add_r(pot_strip, f"{pot_p}irliğin", pot_cond)
     # Verbal Noun & Progressive
     add_r(pot_strip, f"{pot_p}mek", pot_cond)
     add_r(pot_strip, f"{pot_p}mekte/vE", pot_cond)
@@ -4706,6 +4737,14 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(pass_strip, f"{pass_p}{v_high}r/{cop_aor}", pass_cond)
         add_r(pass_strip, f"{pass_p}{v_high}r", pass_cond)
         add_r(pass_strip, f"{pass_p}{v_high}rl{v_low}r", pass_cond)
+        # Passive aorist abstract noun (-ırlık/-irlik/-urluk/-ürlük: tanınırlık, bilinirlik, görünürlük)
+        for aor_lk_suf in [
+            f"rl{v_high}k", f"rl{v_high}kt{v_high}r",
+            f"rl{v_high}ğ{v_high}/{part_3sg}", f"rl{v_high}ğ{v_high}",
+            f"rl{v_high}ğ{v_low}", f"rl{v_high}ğ{v_high}n",
+            f"rl{v_high}ğ{v_high}n{v_high}", f"rl{v_high}ğ{v_high}n{v_high}n",
+        ]:
+            add_r(pass_strip, f"{pass_p}{v_high}{aor_lk_suf}", pass_cond)
         add_r(pass_strip, f"{pass_p}m{v_low}z/{neg_cop_aor}", pass_cond)
         add_r(pass_strip, f"{pass_p}m{v_low}z", pass_cond)
         add_r(pass_strip, f"{pass_p}m{v_low}zl{v_low}r", pass_cond)
@@ -4751,6 +4790,16 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(pass_strip, f"{pass_p}{v_low}bildiği/pE", pass_cond)
         add_r(pass_strip, f"{pass_p}{v_low}bildiği", pass_cond)
         add_r(pass_strip, f"{pass_p}{v_low}bilen", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilirlik", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilirliktir", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilirliği/pE", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilirliği", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilirliğine", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilirliğini", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilirliğinin", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilirliğinde", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilirliğinden", pass_cond)
+        add_r(pass_strip, f"{pass_p}{v_low}bilirliğin", pass_cond)
         add_r(pass_strip, f"{pass_p}{v_low}m{v_low}z/{neg_cop_aor}", pass_cond)
         add_r(pass_strip, f"{pass_p}{v_low}m{v_low}z", pass_cond)
         add_r(pass_strip, f"{pass_p}{v_low}m{unrounded_high}yor", pass_cond)
@@ -4792,6 +4841,15 @@ def generate_aorist_subflag_block(flag: str, aor_vowel: str, is_back: bool, stri
     rules.append(sfx(flag, strip, f"{aor_vowel}rs{p_high}n{p_high}z", strip))
     rules.append(sfx(flag, strip, f"{aor_vowel}rs{neg_unrounded_high}n{neg_unrounded_high}z", strip))
     rules.append(sfx(flag, strip, f"{aor_vowel}rl{v_low}r", strip))
+    if aor_vowel in ('ı', 'i', 'u', 'ü'):
+        p3_aor_lk = "pO" if (is_back and aor_vowel == "u") else ("pA" if is_back else ("pU" if aor_vowel == "ü" else "pE"))
+        for lk_suf in [
+            f"{aor_vowel}rl{aor_vowel}k", f"{aor_vowel}rl{aor_vowel}kt{aor_vowel}r",
+            f"{aor_vowel}rl{aor_vowel}ğ{aor_vowel}/{p3_aor_lk}", f"{aor_vowel}rl{aor_vowel}ğ{aor_vowel}",
+            f"{aor_vowel}rl{aor_vowel}ğ{v_low}", f"{aor_vowel}rl{aor_vowel}ğ{aor_vowel}n",
+            f"{aor_vowel}rl{aor_vowel}ğ{aor_vowel}n{aor_vowel}", f"{aor_vowel}rl{aor_vowel}ğ{aor_vowel}n{aor_vowel}n",
+        ]:
+            rules.append(sfx(flag, strip, lk_suf, f"[nl]{strip}"))
 
     # Negative Aorist
     neg_cop_aor = "cA" if is_back else "cE"
