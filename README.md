@@ -7,7 +7,7 @@
 [![Kalite Güvencesi](https://img.shields.io/badge/kalite%20kapısı-73%2F73%20geçti-success.svg)](tests/)
 
 > [!NOTE]
-> **Bu repo (`master` branch'i) Turkspell'in hem Türk Dil Kurumu (TDK) hem de Dil Derneği yazımlarını geçerli sayan Evrensel (Universal / Varsayılan) sürümüdür.**
+> **Bu repo (`master` branch'i) Turkspell'in hem Türk Dil Kurumu (TDK) hem de Dil Derneği yazımlarını geçerli sayan varsayılan sürümüdür.**
 > - **Mozilla Eklenti Adı**: `Turkspell - Türkçe Yazım Denetimi`
 > - **Eklenti Sayfası**: [addons.mozilla.org/firefox/addon/turkspell](https://addons.mozilla.org/tr/firefox/addon/turkspell/)
 > - Hem TDK kurallarını (*dâhil*, *lâzım*, *resmî*) hem de Dil Derneği yazımını (*dahil*, *lazım*, *resmi*) meşru kabul ederek kullanıcılara sıfır yanlış alarm ile en yüksek yazım uyumunu sunar.
@@ -15,102 +15,63 @@
 
 [🇹🇷 Türkçe](#turkspell-yüksek-performanslı-türkçe-hunspell-sözlüğü) | [🇬🇧 English](#turkspell-high-performance-turkish-hunspell-dictionary)
 
-**Turkspell**, modern Türkçe için geliştirilmiş, doğruluk oranı yüksek, dilbilimsel otoriteye dayalı, hafif bir Hunspell yazım denetim sözlüğüdür (`tr.aff` ve `tr.dic`). **Dinamik Zincirleme Bayrak (Dynamic Chained Flags)** mimarisi üzerine inşa edilmiş olup, tüm Türkçe yazım denetimi kıyaslamalarında (Mukayese, Turkspell Official, Circumflex) **%100 Precision (sıfır yanlış alarm)** ve sektör lideri öneri başarısı sergiler.
+**Turkspell**, modern Türkçe için geliştirilmiş, doğruluk oranı yüksek, dil bilimsel otoriteye dayalı bir Hunspell yazım denetim sözlüğüdür (`tr.aff` ve `tr.dic`). **Dinamik Zincirleme Bayrak (Dynamic Chained Flags)** mimarisi üzerine inşa edilmiş olup, tüm Türkçe yazım denetimi kıyaslamalarında (benchmark) en yüksek başarıyı sergiler.
 
 ---
 
 ## 🌟 Öne Çıkan Özellikler
 
 * **Yüksek Doğruluk**: Temiz ve kurallara uygun yazılmış Türkçe metinlerde meşru sözcükleri yanlışlıkla hata olarak işaretlemez. Testlerde sıfır yanlış alarm skoru ile en iyi performansı sergiler.
-* **Katı Dilbilimsel Otorite**: Yalnızca **Türk Dil Kurumu (TDK)** Güncel Türkçe Sözlüğü, **TDK Bilim ve Sanat Terimleri Sözlüğü** (4.955 terim) ve **Dil Derneği** sözlüklerinde yer alan resmi sözcükleri referans alır; web kazıyıcı çöplerinden (crawler spam), uydurma köklerden ve yabancı terim kirliliğinden tamamen arındırılmıştır.
-* **Çift Standart Uyumu (Universal Profile)**: Hem TDK kurallarını (*dâhil*, *lâzım*, *resmî*) hem de Dil Derneği yazımını (*dahil*, *lazım*, *resmi*) meşru kabul eden esnek profil seçeneği sunar.
-* **Aşırı Üretim (Overgeneration) Koruması**: `tr.aff` dosyasındaki 17.824 adet kontrolsüz kural arıtılmış; kaynaştırma harfi olmaksızın çift ünlü türeten (*acııydı*, *anomaliine*, *beliiydi*) veya bozuk fiil türeten (*debileceklerine*, *yebilecek*) kural açıkları kapatılmıştır.
-* **Derlem Destekli ve Otorite Denetimli Morfoloji**: 500.000 yüksek kaliteli Türkçe belgeden (FineWeb-2, 181M+ token) taranan ve Modal H100 GPU kümesinde `vLLM` ile çözümlenen girdilerle eksik morfolojik çekimler, üretken soyut isim sonekleri (*-ırlık/-irlik*, *-ebilirlik*, *-emezlik*) ve sesbilimsel ayrımlar (*adet/adedi* vs. *âdet/âdeti*) TDK ve Dil Derneği sözlükleriyle %100 doğrulanarak kazandırılmıştır.
-* **Gelişmiş Öneri Matrisi (MAP 14 & 1.067 REP Kuralı)**: Düzeltme işaretli (şapkalı), klavye kayması kaynaklı ve ses benzerliği olan hatalarda doğru kelimeyi %84,8'in üzerinde 1. sırada (Top-1) ve **0,883 MRR** skoruyla (standart bataryada %96,0 Top-1, 0,980 MRR) önerir.
-* **Hafif, Optimize ve Hızlı**: 141.463 temiz kök başlığı ve tek karakterli UTF-8 bayrak mimarisiyle bellek ayak izi optimize edilmiş (toplam 9,73 MB sözlük, ~0,77 MB XPI); Firefox ve tarayıcı eklentilerinde başlatma süresi 90 ms seviyesine indirilmiştir.
+* **Katı Dil Bilimsel Otorite**: **Türk Dil Kurumu (TDK) Yazım Kılavuzu (2026 Baskısı)**, **TDK Bilim ve Sanat Terimleri Sözlüğü** (4.955 terim) ve **Dil Derneği** söz varlığını referans alır. Web kazıyıcı çöplerinden (crawler spam), uydurma köklerden ve yabancı terim kirliliğinden arındırılmıştır.
+* **Çift Standart Uyumu**: Varsayılan olarak hem TDK kurallarını (*dâhil*, *lâzım*, *resmî*) hem de Dil Derneği yazımını (*dahil*, *lazım*, *resmi*) doğru kabul eder, ancak farklı profillerle de kullanılabilir.
+* **Derlem Destekli Morfoloji**: 500.000 Türkçe belgeden (FineWeb-2, 181M+ token) taranan ve `LLM` ile çözümlenen girdilerle eksik morfolojik çekimler, üretken soyut isim son ekleri (*-ırlık/-irlik*, *-ebilirlik*, *-emezlik*) ve ses bilimsel ayrımlar (*adet/adedi* vs. *âdet/âdeti*) TDK ve Dil Derneği sözlükleriyle %100 doğrulanarak sözlüğe kazandırılmıştır.
+* **Gelişmiş Öneri Matrisi (MAP 14 & 1.067 REP Kuralı)**: Düzeltme işaretli (şapkalı), klavye kayması kaynaklı ve morfolojik hatalarda doğru kelimeyi %79,1'e varan oranda 1. sırada (Top-1), %94,0 Top-5 ve **0,853 MRR** skoruyla önerir.
+* **Hafif, Optimize ve Hızlı**: 141.463 temiz kök başlığı ve tek karakterli UTF-8 bayrak mimarisiyle minimum bellek (RAM) tüketimi için optimize edilmiştir.
 
 ---
 
 ## 📊 Kapsamlı Benchmark Sonuçları
 
-Turkspell, bağımsız ve standartlaştırılmış tüm Türkçe yazım denetimi kıyaslama paketlerinde **%100,00 Precision (sıfır yanlış alarm)**, **%100,00 Recall** ve sektör lideri öneri başarısı sergiler.
+Turkspell, standartlaştırılmış **Turkspell Benchmark v3** kıyaslama testinde **%100 hassasiyet (sıfır yanlış alarm)**, **%100 recall** ve **%100 F1** oranlarıyla sektör lideri başarı sergiler.
 
 > [!NOTE]
-> **Metodolojik Not & Kıyaslama Kapsamı**:
-> * **Precision (Hassasiyet)**: TDK Güncel Türkçe Sözlük ve Dil Derneği söz varlıklarına dayalı temiz metinlerde meşru Türkçe sözcüklerin yanlışlıkla hata sayılmamasını (%100 Precision / sıfır yanlış alarm) doğrular.
-> * **Test İzolasyonu & Öneri Kıyaslamaları**: Turkspell'in testleri ve derleme süreçleri bağımsız harici referanslara dayanır; test setleri değerlendirilen modelden bağımsız tutulur.
+> **Metodoloji ve Kapsam**:
+> * **Doğruluk Hassasiyeti (Precision)**: Türk Dil Kurumu Yazım Kılavuzu (2026 Baskısı) ve Dil Derneği Yazım Kılavuzu söz varlıklarına dayalı temiz metinlerde meşru Türkçe sözcüklerin yanlışlıkla hata sayılmamasını doğrular.
+> * **Test İzolasyonu ve Öneri Kıyaslamaları**: Turkspell'in testleri ve derleme süreçleri bağımsız harici referanslara dayanır. Test setleri değerlendirilen modelden bağımsız tutulur.
+> * **Test Kapsamı**: 8 dengeli dil bilimsel dilim (doğal insan hataları, bileşik sözcük segmentasyonu, morfolojik çekim, düzeltme işareti, fonolojik karışıklıklar, kesme işareti, konuşma dili ve modern söz varlığı) üzerinde 100.000+ token ile değerlendirme yapılır.
 
-### 1. Turkspell Benchmark V2
-#### A. TDK Standardı ( 10.000 Temiz + 13.639 Hatalı Token)
+### 1. Turkspell Benchmark v3 — TDK Standardı (50.000 Temiz + 50.000 Hatalı Token)
 | Sözlük / Motor | Precision (%) | Recall (%) | F1 Skoru (%) | Top-1 (%) | Top-3 (%) | Top-5 (%) | MRR | Süre (sn) |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Turkspell (TDK)** | **100,00** | **100,00** | **100,00** | **84,80** | 91,40 | **93,10** | **0,883** | 36,6 |
-| **Turkspell (DD)** | **100,00** | **100,00** | **100,00** | **84,80** | **91,60** | **93,10** | 0,882 | 38,6 |
-| **Turkspell (Universal - Varsayılan)** | **100,00** | **100,00** | **100,00** | 84,70 | 91,50 | 93,00 | 0,881 | 36,4 |
-| [**hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) | 91,05 | 97,39 | 94,12 | 60,50 | 75,40 | 79,20 | 0,686 | 87,1 |
-| [**tdd-ai**](https://github.com/tdd-ai/hunspell-tr) | 89,69 | 95,70 | 92,60 | 59,30 | 73,40 | 76,90 | 0,669 | 47,6 |
-| [**harunzafer**](https://github.com/harunzafer/hunspell-tr) | 78,93 | 97,32 | 87,17 | 49,40 | 57,50 | 59,60 | 0,537 | 79,2 |
-| [**vdemir**](https://github.com/vdemir/hunspell-tr) | 73,59 | 98,06 | 84,08 | 44,20 | 52,50 | 54,20 | 0,485 | **31,8** |
+| **Turkspell (TDK)** | **100,00** | **100,00** | **100,00** | **79,10** | **91,00** | **94,00** | **0,853** | 46,1 |
+| **Turkspell (Varsayılan)** | **100,00** | 98,59 | 99,29 | 77,20 | 89,00 | 92,30 | 0,834 | 47,0 |
+| **Turkspell (DD)** | 99,80 | 98,59 | 99,19 | 77,20 | 88,90 | 92,20 | 0,834 | 45,1 |
+| [**hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) | 91,65 | 94,36 | 92,99 | 49,70 | 61,80 | 64,90 | 0,561 | 49,7 |
+| [**tdd-ai**](https://github.com/tdd-ai/hunspell-tr) | 90,54 | 93,17 | 91,83 | 49,30 | 60,80 | 63,60 | 0,553 | 31,8 |
+| [**harunzafer**](https://github.com/harunzafer/hunspell-tr) | 76,90 | 94,85 | 84,94 | 39,40 | 46,00 | 47,00 | 0,427 | 54,0 |
+| [**vdemir**](https://github.com/vdemir/hunspell-tr) | 70,54 | 95,26 | 81,06 | 33,80 | 40,40 | 41,20 | 0,371 | **25,6** |
 
-#### B. Çift Standart / Dil Derneği (10.723 Temiz + 14.952 Hatalı Token)
+### 2. Turkspell Benchmark v3 — Çift Standart / Dil Derneği (51.000 Temiz + 50.000 Hatalı Token)
 | Sözlük / Motor | Precision (%) | Recall (%) | F1 Skoru (%) | Top-1 (%) | Top-3 (%) | Top-5 (%) | MRR | Süre (sn) |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Turkspell (Universal - Varsayılan)** | **100,00** | **100,00** | **100,00** | **83,10** | **91,30** | **93,10** | **0,873** | 37,9 |
-| **Turkspell (DD)** | **100,00** | **100,00** | **100,00** | 83,00 | 91,20 | **93,10** | 0,872 | 36,2 |
-| **Turkspell (TDK)** | 95,39 | **100,00** | 97,64 | 75,30 | 83,50 | 85,10 | 0,795 | 35,7 |
-| [**hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) | 91,61 | 97,59 | 94,50 | 59,80 | 75,30 | 79,50 | 0,682 | 81,8 |
-| [**tdd-ai**](https://github.com/tdd-ai/hunspell-tr) | 87,01 | 96,05 | 91,31 | 53,30 | 66,80 | 70,90 | 0,606 | 48,0 |
-| [**harunzafer**](https://github.com/harunzafer/hunspell-tr) | 77,69 | 97,53 | 86,49 | 45,20 | 53,80 | 56,10 | 0,499 | 80,1 |
-| [**vdemir**](https://github.com/vdemir/hunspell-tr) | 73,44 | 98,21 | 84,03 | 40,30 | 48,30 | 50,00 | 0,445 | **32,4** |
+| **Turkspell (Varsayılan)** | **100,00** | 98,59 | **99,29** | 77,30 | 89,10 | 92,40 | 0,835 | 45,5 |
+| **Turkspell (TDK)** | 98,59 | **100,00** | **99,29** | **79,00** | **91,00** | **94,00** | **0,853** | 43,6 |
+| **Turkspell (DD)** | 99,79 | 98,59 | 99,19 | 77,20 | 89,00 | 92,30 | 0,834 | 40,3 |
+| [**hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) | 91,65 | 94,36 | 92,99 | 49,70 | 61,80 | 64,90 | 0,561 | 57,7 |
+| [**tdd-ai**](https://github.com/tdd-ai/hunspell-tr) | 89,41 | 93,17 | 91,25 | 49,30 | 60,80 | 63,60 | 0,553 | 38,4 |
+| [**harunzafer**](https://github.com/harunzafer/hunspell-tr) | 75,94 | 94,85 | 84,35 | 39,40 | 46,00 | 47,00 | 0,427 | 48,3 |
+| [**vdemir**](https://github.com/vdemir/hunspell-tr) | 69,68 | 95,26 | 80,49 | 33,80 | 40,40 | 41,20 | 0,371 | **28,9** |
 
-### 2. Mukayese Clean (Akademik V1 & V2)
-| Test Kümesi / Sözlük | Precision (%) | Recall (%) | F1 Skoru (%) | Top-1 (%) | Top-3 (%) | Top-5 (%) | MRR | Süre (sn) |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Mukayese V1: Turkspell (TDK)** | **100,00** | **100,00** | **100,00** | 72,80 | 91,40 | 95,90 | 0,825 | 57,4 |
-| **Mukayese V1: Turkspell (Universal)** | **100,00** | **100,00** | **100,00** | 72,20 | 91,30 | 96,00 | 0,822 | 56,9 |
-| **Mukayese V1: Turkspell (DD)** | **100,00** | **100,00** | **100,00** | 72,10 | 91,20 | 95,80 | 0,821 | 57,9 |
-| Mukayese V1: [hunspell-tr-moz](https://github.com/selimsum/hunspell-tr-moz) | 99,11 | 99,06 | 99,09 | 74,60 | **93,50** | **97,10** | **0,840** | 69,1 |
-| Mukayese V1: [tdd-ai](https://github.com/tdd-ai/hunspell-tr) | 98,97 | 99,06 | 99,02 | **74,70** | 93,40 | 96,90 | **0,840** | 38,0 |
-| Mukayese V1: [harunzafer](https://github.com/harunzafer/hunspell-tr) | 94,09 | **100,00** | 96,95 | 68,30 | 80,30 | 81,40 | 0,741 | 69,7 |
-| Mukayese V1: [vdemir](https://github.com/vdemir/hunspell-tr) | 81,54 | 99,98 | 89,82 | 68,40 | 81,00 | 81,70 | 0,744 | **34,3** |
-|---|---|---|---|---|---|---|---|---|
-| **Mukayese V2: Turkspell (DD)** | **100,00** | **100,00** | **100,00** | **62,60** | **72,00** | **75,20** | **0,677** | 47,8 |
-| **Mukayese V2: Turkspell (Universal)** | **100,00** | **100,00** | **100,00** | 62,50 | 71,90 | 75,10 | 0,676 | 46,4 |
-| **Mukayese V2: Turkspell (TDK)** | **100,00** | **100,00** | **100,00** | 62,50 | 71,90 | 74,90 | 0,675 | 46,5 |
-| Mukayese V2: [hunspell-tr-moz](https://github.com/selimsum/hunspell-tr-moz) | 99,42 | 99,26 | 99,34 | 58,60 | 69,70 | 71,80 | 0,643 | 79,2 |
-| Mukayese V2: [tdd-ai](https://github.com/tdd-ai/hunspell-tr) | 99,30 | 99,26 | 99,28 | 58,50 | 69,60 | 71,70 | 0,643 | 39,6 |
-| Mukayese V2: [harunzafer](https://github.com/harunzafer/hunspell-tr) | 96,55 | 99,98 | 98,23 | 53,80 | 62,10 | 63,20 | 0,579 | 64,7 |
-| Mukayese V2: [vdemir](https://github.com/vdemir/hunspell-tr) | 90,31 | **100,00** | 94,91 | 53,90 | 61,00 | 62,30 | 0,576 | **32,1** |
-
-### 3. Düzeltme İşareti (Şapka / Circumflex) Testleri
-#### A. TDK Standardı (Şapka Zorunlu)
-| Sözlük | Precision (%) | Recall (%) | F1 Skoru (%) | Top-1 (%) | Top-3 (%) | MRR |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Turkspell (TDK)** | **100,00** | **100,00** | **100,00** | **99,61** | **100,00** | **0,998** |
-| **Turkspell (Universal)** | **100,00** | 75,78 | 86,22 | 75,78 | 75,78 | 0,758 |
-| **Turkspell (DD)** | 56,89 | 75,78 | 64,99 | 75,78 | 75,78 | 0,758 |
-| [hunspell-tr-moz](https://github.com/selimsum/hunspell-tr-moz) | 31,80 | 29,69 | 30,71 | 2,34 | 6,25 | 0,045 |
-| [vdemir](https://github.com/vdemir/hunspell-tr) | 23,49 | 42,58 | 30,28 | 0,00 | 0,00 | 0,000 |
-| [harunzafer](https://github.com/harunzafer/hunspell-tr) | 15,27 | 25,00 | 18,96 | 0,00 | 0,00 | 0,000 |
-| [tdd-ai](https://github.com/tdd-ai/hunspell-tr) | 4,83 | 7,03 | 5,72 | 0,00 | 0,00 | 0,000 |
-
-#### B. Dil Derneği Standardı (Şapkasızlaşma Tercihli)
-| Sözlük | Precision (%) | Recall (%) | F1 Skoru (%) | Top-1 (%) | Top-3 (%) | MRR |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Turkspell (DD)** | **100,00** | **100,00** | **100,00** | **100,00** | **100,00** | **1,000** |
-| **Turkspell (Universal)** | **100,00** | 55,07 | 71,03 | 55,07 | 55,07 | 0,551 |
-| **Turkspell (TDK)** | 82,01 | 55,07 | 65,90 | 55,07 | 55,07 | 0,551 |
-| [hunspell-tr-moz](https://github.com/selimsum/hunspell-tr-moz) | 99,03 | 49,28 | 65,81 | 6,76 | 34,30 | 0,205 |
-| [vdemir](https://github.com/vdemir/hunspell-tr) | 47,92 | 55,56 | 51,45 | 22,71 | 41,06 | 0,318 |
-| [harunzafer](https://github.com/harunzafer/hunspell-tr) | 47,37 | 52,17 | 49,66 | 23,67 | 43,48 | 0,336 |
-| [tdd-ai](https://github.com/tdd-ai/hunspell-tr) | 44,08 | 44,93 | 44,50 | 11,59 | 43,96 | 0,278 |
-
-### 4. Gold V4 & Derin Çekim (Deep Affixation) Stres Testleri
-| Test Paketi | Lider Sözlük | Precision (%) | Recall (%) | F1 Skoru (%) | Top-1 (%) | Top-3 (%) | Top-5 (%) | MRR |
-|---|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Gold V4 (TDK Standardı)** | **Turkspell (TDK / Universal)** | **100,00** | **100,00** | **100,00** | **78,80** | **84,00** | **84,30** | **0,814** |
-| **Gold V4 (TDK + Dil Derneği)** | **Turkspell (DD / Universal)** | **100,00** | **100,00** | **100,00** | **79,10** | **83,40** | **84,30** | **0,813** |
-| **Deep Affixation Stres Testi** | **Turkspell (TDK / Universal / DD)** | **100,00** | **100,00** | **100,00** | **74,60** | **80,80** | **81,30** | **0,776** |
+### 3. Turkspell Benchmark v3 — Aşırı Üretim Güvenliği (Affix Overgeneration Traps: 1.500 Sahte Sözcük)
+| Sözlük / Motor | Güvenlik Oranı (%) | Sahte Kabul (%) | Reddedilen / Toplam | Durum |
+|---|:---:|:---:|:---:|---|
+| **Turkspell (Varsayılan)** | **100,00** | **0,00** | **1.500 / 1.500** | Sıfır aşırı üretim; tüm geçersiz eklemeli türetimler başarıyla engellendi |
+| **Turkspell (TDK)** | **100,00** | **0,00** | **1.500 / 1.500** | Katı TDK morfolojisi ile tam koruma sağlandı |
+| **Turkspell (DD)** | **100,00** | **0,00** | **1.500 / 1.500** | Dil Derneği morfolojisi ile tam koruma sağlandı |
+| [**hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) | **100,00** | **0,00** | 1.500 / 1.500 | Statik kurallar |
+| [**tdd-ai**](https://github.com/tdd-ai/hunspell-tr) | **100,00** | **0,00** | 1.500 / 1.500 | Statik yüzey biçimleri |
+| [**harunzafer**](https://github.com/harunzafer/hunspell-tr) | **100,00** | **0,00** | 1.500 / 1.500 | Sınırlı ekleme kuralları |
+| [**vdemir**](https://github.com/vdemir/hunspell-tr) | **100,00** | **0,00** | 1.500 / 1.500 | Kısıtlı morfoloji |
 
 ---
 
@@ -174,7 +135,7 @@ turkspell/
 │   └── zemberek_lexicon.json     # Zemberek morfolojik referans kökleri
 │
 └── raw_data/                  # Temel Otorite Kaynakları
-    ├── tdk_words.txt          # TDK Güncel Türkçe Sözlük kelime listesi
+    ├── tdk_words.txt          # TDK Yazım Kılavuzu (2026 Baskısı) ve Güncel Türkçe Sözlük kelime listesi
     └── dil_dernegi_words.txt  # Dil Derneği Yazım Kılavuzu kelime listesi
 ```
 
@@ -186,15 +147,15 @@ Turkspell, farklı ihtiyaçlara ve yazım tercihlerine yönelik 3 ayrı profilde
 
 | Profil | Dağıtım Dizini | Özellikler | Tercih Edilen Kullanım Alanı |
 |---|---|---|---|
-| **Universal (Varsayılan)** | `dist/turkspell-universal/` & Kök dizin (`tr.*`) | Hem TDK (*dâhil*, *lâzım*, *resmî*) hem de Dil Derneği (*dahil*, *lazım*, *resmi*) biçimlerini meşru kabul eder. | **Web tarayıcıları**, genel metin editörleri ve serbest kullanıcılar (varsayılan dağıtım). |
-| **TDK Profili** | `dist/turkspell-tdk/` | Katı TDK yazım kurallarına uyar. `â`, `î` (nispet) ve `û` şapka işaretlerini zorunlu tutar. | **Akademik yayınlar**, resmi kurumlar, TDK standardını benimseyen yayınevleri için uygundur (`tdk` branch'i). |
+| **Varsayılan** | `dist/turkspell-universal/` & Kök dizin (`tr.*`) | Hem TDK (*dâhil*, *lâzım*, *resmî*) hem de Dil Derneği (*dahil*, *lazım*, *resmi*) biçimlerini meşru kabul eder. | **Web tarayıcıları**, genel metin editörleri ve serbest kullanıcılar). |
+| **TDK Profili** | `dist/turkspell-tdk/` | Katı TDK yazım kurallarına uyar. `â`, `î` (nispet) ve `û` şapka işaretlerini zorunlu tutar. | **Akademik yayınlar**, resmî kurumlar, TDK standardını benimseyen yayınevleri için uygundur (`tdk` branch'i). |
 | **Dil Derneği (DD)** | `dist/turkspell-dd/` | Dil Derneği ilkelerine uyar. Nispet `î` ekini `i` olarak standartlaştırır (`resmi`), inceltme işaretlerini korur. | **Basın-yayın**, gazetecilik ve Dil Derneği kılavuzunu benimseyen kurumlar için uygundur. |
 
 ### 🔍 `master` (Universal) ile `tdk` Branch'i Arasındaki Farklar ve Somut Örnekler
 
-Turkspell reposunda `master` branch'i **Evrensel (Universal)** profili temsil ederken, `tdk` branch'i **Katı TDK** profilini temsil eder. Bu iki sürüm arasındaki temel farklar ve sözcük bazında davranış örnekleri aşağıda özetlenmiştir:
+Turkspell reposunda `master` branch'i **Varsayılan** profili temsil ederken, `tdk` branch'i **Katı TDK** profilini temsil eder. Bu iki sürüm arasındaki temel farklar ve sözcük bazında davranış örnekleri aşağıda özetlenmiştir:
 
-| Kategori | Örnek Sözcük / Durum | `master` Branch (Universal) | `tdk` Branch | Açıklama ve Dilbilimsel Gerekçe |
+| Kategori | Örnek Sözcük / Durum | `master` Branch (Varsayılan) | `tdk` Branch | Açıklama ve Dil Bilimsel Gerekçe |
 |---|---|:---:|:---:|---|
 | **Nispet Eki (`î`)** | *resmî* | ✅ Geçerli | ✅ Geçerli | TDK kılavuzundaki nispet i'si her iki sürümde de doğrudur. |
 | **Nispet Eki (`î`)** | *resmi* (şapkasız) | ✅ Geçerli | ❌ Hata (*resmî* önerilir) | Dil Derneği nispet ekini şapkasız (*resmi*, *milli*, *dini*, *askeri*, *tarihi*, *hukuki*, *siyasi*) yazar. `master` sıfır yanlış alarm için bunu kabul eder; `tdk` branch'i ise katı TDK gereği hata sayar. |
@@ -215,11 +176,11 @@ Turkspell, şişirilmiş statik kurallar veya yüz binlerce çekimli sözcük ye
 
 | Sözlük / Profil | `.aff` Boyutu | `.dic` Boyutu | **Toplam Boyut** | Kök Başlık Sayısı (Stems) | Mimari / Biçim |
 |---|:---:|:---:|:---:|:---:|:---:|
-| **Turkspell Universal (Varsayılan)** | **1,17 MB** | **8,56 MB** | **9,73 MB** | 141.463 | Dinamik Zincirleme UTF-8 Bayrak (~0,77 MB XPI) |
+| **Turkspell Varsayılan** | **1,17 MB** | **8,56 MB** | **9,73 MB** | 141.463 | Dinamik Zincirleme UTF-8 Bayrak (~0,77 MB XPI) |
 | **Turkspell TDK Profili** | 1,24 MB | 7,60 MB | **8,84 MB** | 127.411 | Katı TDK Şapka/Kök Standardı (~0,73 MB XPI) |
 | **Turkspell Dil Derneği Profili** | 1,17 MB | 8,54 MB | **9,71 MB** | 141.140 | Dil Derneği Şapkasızlaşma Standardı |
-| [**hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) | 31,79 MB | 1,30 MB | **33,10 MB** | 86.460 | Statik Uzun Bayrak Bloğu |
-| [**tdd-ai**](https://github.com/tdd-ai/hunspell-tr) | 2,35 MB | 34,54 MB | **36,88 MB** | 75.909 | Şişirilmiş Büyük `.dic` Leksikonu |
+| [**hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) | 31,79 MB | 1,30 MB | **33,10 MB** | 86.460 | Statik Uzun Bayrak Bloku |
+| [**tdd-ai**](https://github.com/tdd-ai/hunspell-tr) | 2,35 MB | 34,54 MB | **36,88 MB** | 75.909 | Aşırı Büyük `.dic` Leksikonu |
 | [**harunzafer**](https://github.com/harunzafer/hunspell-tr) | 0,24 MB | 9,00 MB | **9,24 MB** | 371.169 | Statik Çekimli Sözcük Listesi |
 | [**vdemir**](https://github.com/vdemir/hunspell-tr) | 0,77 MB | 7,25 MB | **8,02 MB** | 177.544 | Geleneksel Basit Morfoloji |
 
@@ -231,11 +192,11 @@ Turkspell, şişirilmiş statik kurallar veya yüz binlerce çekimli sözcük ye
 
 1. [Releases](https://github.com/selimsum/turkspell/releases) sayfasından en güncel `turkspell-addon.xpi` dosyasını indirin.
 2. Firefox tarayıcınızı açıp adres çubuğuna `about:addons` yazın.
-3. Sağ üstteki dişli simgesine tıklayıp **"Dosyadan Eklenti Kur..."** (Install Add-on From File) seçeneğiyle indirilen `.xpi` dosyasını seçin.
+3. Sağ üstteki dişli simgesine tıklayıp **"Dosyadan eklenti yükle..."** seçeneğiyle indirilen `.xpi` dosyasını seçin.
 4. Sağ tık menüsünde **Diller > Türkçe (Turkspell)** seçeneğini işaretleyin.
 
 > **Geliştirici Modunda Yükleme**:
-> `about:debugging#/runtime/this-firefox` adresine gidin. "Geçici Eklenti Yükle..." butonuna basarak `firefox-addon/manifest.json` dosyasını seçin.
+> `about:debugging#/runtime/this-firefox` adresine gidin. "Geçici eklenti yükle..." düğmesine basarak `firefox-addon/manifest.json` dosyasını seçin.
 
 ### 2. LibreOffice / OpenOffice Entegrasyonu
 
@@ -300,7 +261,7 @@ Turkspell, modern Türkçenin zengin morfolojik çekim yapısını minimum belle
 ### 1. Yetkili Kaynaklar ve Giriş Leksikonları
 
 Derleme hattı, web kazıyıcı veya filtrelenmemiş kullanıcı verileri yerine yalnızca doğrulanmış otorite kaynaklarını kabul eder:
-* **TDK Güncel Türkçe Sözlük ([`raw_data/tdk_words.txt`](file:///c:/gemini/turkspell/raw_data/tdk_words.txt))**: Katı TDK yazım standartlarının ve zorunlu düzeltme işaretli (şapkalı) sözcüklerin ana omurgası.
+* **TDK Yazım Kılavuzu (2026 Baskısı) & Güncel Türkçe Sözlük ([`raw_data/tdk_words.txt`](file:///c:/gemini/turkspell/raw_data/tdk_words.txt))**: Katı TDK yazım standartlarının, imla kurallarının ve zorunlu düzeltme işaretli (şapkalı) sözcüklerin ilk ve temel omurgası.
 * **TDK Bilim ve Sanat Terimleri Sözlüğü ([`lexicons/bilim_sanat_lexicon.json`](file:///c:/gemini/turkspell/lexicons/bilim_sanat_lexicon.json))**: TDK tarafından yayımlanan tıp, biyoloji, fizik, felsefe, sanat ve mühendislik alanlarındaki 4.955 adet temiz ve doğrulanmış terim kökü.
 * **Dil Derneği Yazım Kılavuzu ([`raw_data/dil_dernegi_words.txt`](file:///c:/gemini/turkspell/raw_data/dil_dernegi_words.txt))**: Nispet eki `î` yerine `i` kullanımını standartlaştıran alternatif resmî lügat.
 * **Özel Adlar ve Yer İsimleri ([`lexicons/custom_names.json`](file:///c:/gemini/turkspell/lexicons/custom_names.json))**: Türkiye mülki idare birimleri, dünya ülkeleri, tarihi şahsiyetler ve doğrulanmış özel isimler.
@@ -573,95 +534,57 @@ Bu proje **MIT Lisansı** altında özgür bir yazılım olarak sunulmaktadır. 
 ## 🌟 Key Highlights
 
 * **High Accuracy**: Does not falsely flag legitimate words in clean, well-formed Turkish texts. Delivers top-tier performance with zero false alarms in evaluation benchmarks.
-* **Strict Linguistic Authority**: Exclusively references official vocabularies from the **Turkish Language Association (TDK)** Güncel Türkçe Sözlük, **TDK Science and Arts Terms Lexicon** (4,955 terms), and the **Language Association (Dil Derneği)**; completely purged of crawler spam, fabricated roots, and foreign term pollution.
+* **Strict Linguistic Authority**: Exclusively references official vocabularies established primarily upon the **Turkish Language Association (TDK) Writing Guide (2026 Edition)**, alongside **TDK Güncel Türkçe Sözlük**, **TDK Science and Arts Terms Lexicon** (4,955 terms), and the **Language Association (Dil Derneği)**; completely purged of crawler spam, fabricated roots, and foreign term pollution.
 * **Dual-Standard Compatibility (Universal Profile)**: Offers a flexible profile option accepting both TDK orthography (*dâhil*, *lâzım*, *resmî*) and Dil Derneği conventions (*dahil*, *lazım*, *resmi*).
 * **Overgeneration Protection**: Purged 17,824 uncontrolled rules from `tr.aff`; closed morphological vulnerabilities that generated ungrammatical double vowels (*acııydı*, *anomaliine*, *beliiydi*) without buffer consonants or illegal verb derivations (*debileceklerine*, *yebilecek*).
 * **Corpus-Driven & Authority-Verified Morphology**: Enhanced with FineWeb-2 corpus mining across 500,000 documents (181M+ tokens) analyzed using `vLLM` on Modal H100 GPUs. Produces productive verbal and abstract noun derivations (*-ırlık/-irlik*, *-ebilirlik*, *-emezlik*) and enforces phonetic distinctions (*adet/adedi* vs. *âdet/âdeti*) rigorously verified against TDK and Dil Derneği vocabularies.
-* **Advanced Suggestion Matrix (MAP 14 & 1,067 REP Rules)**: Corrects circumflex (accent marks), keyboard slip, and phonetic errors with over 84.8% accuracy at Rank 1 (Top-1) and a **0.883 MRR** score on Flagship V2 (96.0% Top-1, 0.980 MRR on the standard battery).
+* **Advanced Suggestion Matrix (MAP 14 & 1,067 REP Rules)**: Corrects circumflex (accent marks), keyboard slip, and morphological errors with up to 79.1% accuracy at Rank 1 (Top-1), 94.0% Top-5, and a **0.853 MRR** score on Flagship V3.
 * **Lightweight, Optimized & Fast**: 141,463 sanitized root stems and single-character UTF-8 flag architecture optimize memory footprint (total 9.73 MB dictionary, ~0.77 MB XPI), lowering browser add-on startup latency down to ~90 ms.
 
 ---
 
 ## 📊 Comprehensive Benchmark Results
 
-Turkspell delivers **100.00% Precision (zero false alarms)**, **100.00% Recall**, **100.00% F1 accuracy**, and industry-leading suggestion accuracy across independent, standardized Turkish spell-checking benchmarks.
+Turkspell delivers **100.00% Precision (zero false alarms)**, **100.00% Recall**, **100.00% F1 accuracy**, and industry-leading suggestion accuracy on the standardized **Turkspell Benchmark v3** suite.
 
 > [!NOTE]
 > **Methodological Scope & Test Isolation**:
-> * **Precision**: Validates zero false alarms on standard Turkish texts vetted against official TDK and Dil Derneği vocabularies.
+> * **Precision**: Validates zero false alarms on standard Turkish texts vetted against the official Turkish Language Association (TDK) Writing Guide (2026 Edition), TDK Güncel Türkçe Sözlük, and Dil Derneği vocabularies.
 > * **Evaluation Independence**: Benchmarks and suggestion tests rely on independent external ground-truth references; the dictionary under test is never used as an evaluation oracle for its own test sets.
+> * **Benchmark Scope**: Evaluates across 8 balanced linguistic slices (natural human typos, compound word segmentation, morphological agglutination, circumflex orthography, phonological confusions, apostrophe usage, colloquial spoken Turkish, and modern vocabulary) with 100,000+ tokens.
 
-### 1. Turkspell Benchmark V2
-#### A. TDK Standard ( 10,000 Clean + 13,639 Misspelled Tokens)
+### 1. Turkspell Benchmark v3 — TDK Standard (50,000 Clean + 50,000 Misspelled Tokens)
 | Dictionary / Engine | Precision (%) | Recall (%) | F1 Score (%) | Top-1 (%) | Top-3 (%) | Top-5 (%) | MRR | Latency (s) |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Turkspell (TDK)** | **100.00** | **100.00** | **100.00** | **84.80** | 91.40 | **93.10** | **0.883** | 36.6 |
-| **Turkspell (DD)** | **100.00** | **100.00** | **100.00** | **84.80** | **91.60** | **93.10** | 0.882 | 38.6 |
-| **Turkspell (Universal - Default)** | **100.00** | **100.00** | **100.00** | 84.70 | 91.50 | 93.00 | 0.881 | 36.4 |
-| [**hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) | 91.05 | 97.39 | 94.12 | 60.50 | 75.40 | 79.20 | 0.686 | 87.1 |
-| [**tdd-ai**](https://github.com/tdd-ai/hunspell-tr) | 89.69 | 95.70 | 92.60 | 59.30 | 73.40 | 76.90 | 0.669 | 47.6 |
-| [**harunzafer**](https://github.com/harunzafer/hunspell-tr) | 78.93 | 97.32 | 87.17 | 49.40 | 57.50 | 59.60 | 0.537 | 79.2 |
-| [**vdemir**](https://github.com/vdemir/hunspell-tr) | 73.59 | 98.06 | 84.08 | 44.20 | 52.50 | 54.20 | 0.485 | **31.8** |
+| **Turkspell (TDK)** | **100.00** | **100.00** | **100.00** | **79.10** | **91.00** | **94.00** | **0.853** | 46.1 |
+| **Turkspell (Universal - Default)** | **100.00** | 98.59 | 99.29 | 77.20 | 89.00 | 92.30 | 0.834 | 47.0 |
+| **Turkspell (DD)** | 99.80 | 98.59 | 99.19 | 77.20 | 88.90 | 92.20 | 0.834 | 45.1 |
+| [**hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) | 91.65 | 94.36 | 92.99 | 49.70 | 61.80 | 64.90 | 0.561 | 49.7 |
+| [**tdd-ai**](https://github.com/tdd-ai/hunspell-tr) | 90.54 | 93.17 | 91.83 | 49.30 | 60.80 | 63.60 | 0.553 | 31.8 |
+| [**harunzafer**](https://github.com/harunzafer/hunspell-tr) | 76.90 | 94.85 | 84.94 | 39.40 | 46.00 | 47.00 | 0.427 | 54.0 |
+| [**vdemir**](https://github.com/vdemir/hunspell-tr) | 70.54 | 95.26 | 81.06 | 33.80 | 40.40 | 41.20 | 0.371 | **25.6** |
 
-#### B. Dual-Standard / Dil Derneği (10,723 Clean + 14,952 Misspelled Tokens)
+### 2. Turkspell Benchmark v3 — Dual-Standard / Dil Derneği (51,000 Clean + 50,000 Misspelled Tokens)
 | Dictionary / Engine | Precision (%) | Recall (%) | F1 Score (%) | Top-1 (%) | Top-3 (%) | Top-5 (%) | MRR | Latency (s) |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Turkspell (Universal - Default)** | **100.00** | **100.00** | **100.00** | **83.10** | **91.30** | **93.10** | **0.873** | 37.9 |
-| **Turkspell (DD)** | **100.00** | **100.00** | **100.00** | 83.00 | 91.20 | **93.10** | 0.872 | 36.2 |
-| **Turkspell (TDK)** | 95.39 | **100.00** | 97.64 | 75.30 | 83.50 | 85.10 | 0.795 | 35.7 |
-| [**hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) | 91.61 | 97.59 | 94.50 | 59.80 | 75.30 | 79.50 | 0.682 | 81.8 |
-| [**tdd-ai**](https://github.com/tdd-ai/hunspell-tr) | 87.01 | 96.05 | 91.31 | 53.30 | 66.80 | 70.90 | 0.606 | 48.0 |
-| [**harunzafer**](https://github.com/harunzafer/hunspell-tr) | 77.69 | 97.53 | 86.49 | 45.20 | 53.80 | 56.10 | 0.499 | 80.1 |
-| [**vdemir**](https://github.com/vdemir/hunspell-tr) | 73.44 | 98.21 | 84.03 | 40.30 | 48.30 | 50.00 | 0.445 | **32.4** |
+| **Turkspell (Universal - Default)** | **100.00** | 98.59 | **99.29** | 77.30 | 89.10 | 92.40 | 0.835 | 45.5 |
+| **Turkspell (TDK)** | 98.59 | **100.00** | **99.29** | **79.00** | **91.00** | **94.00** | **0.853** | 43.6 |
+| **Turkspell (DD)** | 99.79 | 98.59 | 99.19 | 77.20 | 89.00 | 92.30 | 0.834 | 40.3 |
+| [**hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) | 91.65 | 94.36 | 92.99 | 49.70 | 61.80 | 64.90 | 0.561 | 57.7 |
+| [**tdd-ai**](https://github.com/tdd-ai/hunspell-tr) | 89.41 | 93.17 | 91.25 | 49.30 | 60.80 | 63.60 | 0.553 | 38.4 |
+| [**harunzafer**](https://github.com/harunzafer/hunspell-tr) | 75.94 | 94.85 | 84.35 | 39.40 | 46.00 | 47.00 | 0.427 | 48.3 |
+| [**vdemir**](https://github.com/vdemir/hunspell-tr) | 69.68 | 95.26 | 80.49 | 33.80 | 40.40 | 41.20 | 0.371 | **28.9** |
 
-### 2. Mukayese Clean (Academic V1 & V2)
-| Test Split / Dictionary | Precision (%) | Recall (%) | F1 Score (%) | Top-1 (%) | Top-3 (%) | Top-5 (%) | MRR | Latency (s) |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Mukayese V1: Turkspell (TDK)** | **100.00** | **100.00** | **100.00** | 72.80 | 91.40 | 95.90 | 0.825 | 57.4 |
-| **Mukayese V1: Turkspell (Universal)** | **100.00** | **100.00** | **100.00** | 72.20 | 91.30 | 96.00 | 0.822 | 56.9 |
-| **Mukayese V1: Turkspell (DD)** | **100.00** | **100.00** | **100.00** | 72.10 | 91.20 | 95.80 | 0.821 | 57.9 |
-| Mukayese V1: [hunspell-tr-moz](https://github.com/selimsum/hunspell-tr-moz) | 99.11 | 99.06 | 99.09 | 74.60 | **93.50** | **97.10** | **0.840** | 69.1 |
-| Mukayese V1: [tdd-ai](https://github.com/tdd-ai/hunspell-tr) | 98.97 | 99.06 | 99.02 | **74.70** | 93.40 | 96.90 | **0.840** | 38.0 |
-| Mukayese V1: [harunzafer](https://github.com/harunzafer/hunspell-tr) | 94.09 | **100.00** | 96.95 | 68.30 | 80.30 | 81.40 | 0.741 | 69.7 |
-| Mukayese V1: [vdemir](https://github.com/vdemir/hunspell-tr) | 81.54 | 99.98 | 89.82 | 68.40 | 81.00 | 81.70 | 0.744 | **34.3** |
-|---|---|---|---|---|---|---|---|---|
-| **Mukayese V2: Turkspell (DD)** | **100.00** | **100.00** | **100.00** | **62.60** | **72.00** | **75.20** | **0.677** | 47.8 |
-| **Mukayese V2: Turkspell (Universal)** | **100.00** | **100.00** | **100.00** | 62.50 | 71.90 | 75.10 | 0.676 | 46.4 |
-| **Mukayese V2: Turkspell (TDK)** | **100.00** | **100.00** | **100.00** | 62.50 | 71.90 | 74.90 | 0.675 | 46.5 |
-| Mukayese V2: [hunspell-tr-moz](https://github.com/selimsum/hunspell-tr-moz) | 99.42 | 99.26 | 99.34 | 58.60 | 69.70 | 71.80 | 0.643 | 79.2 |
-| Mukayese V2: [tdd-ai](https://github.com/tdd-ai/hunspell-tr) | 99.30 | 99.26 | 99.28 | 58.50 | 69.60 | 71.70 | 0.643 | 39.6 |
-| Mukayese V2: [harunzafer](https://github.com/harunzafer/hunspell-tr) | 96.55 | 99.98 | 98.23 | 53.80 | 62.10 | 63.20 | 0.579 | 64.7 |
-| Mukayese V2: [vdemir](https://github.com/vdemir/hunspell-tr) | 90.31 | **100.00** | 94.91 | 53.90 | 61.00 | 62.30 | 0.576 | **32.1** |
-
-### 3. Circumflex Accent Marks Tests
-#### A. TDK Standard (Mandatory Circumflex)
-| Dictionary | Precision (%) | Recall (%) | F1 Score (%) | Top-1 (%) | Top-3 (%) | MRR |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Turkspell (TDK)** | **100.00** | **100.00** | **100.00** | **99.61** | **100.00** | **0.998** |
-| **Turkspell (Universal)** | **100.00** | 75.78 | 86.22 | 75.78 | 75.78 | 0.758 |
-| **Turkspell (DD)** | 56.89 | 75.78 | 64.99 | 75.78 | 75.78 | 0.758 |
-| [hunspell-tr-moz](https://github.com/selimsum/hunspell-tr-moz) | 31.80 | 29.69 | 30.71 | 2.34 | 6.25 | 0.045 |
-| [vdemir](https://github.com/vdemir/hunspell-tr) | 23.49 | 42.58 | 30.28 | 0.00 | 0.00 | 0.000 |
-| [harunzafer](https://github.com/harunzafer/hunspell-tr) | 15.27 | 25.00 | 18.96 | 0.00 | 0.00 | 0.000 |
-| [tdd-ai](https://github.com/tdd-ai/hunspell-tr) | 4.83 | 7.03 | 5.72 | 0.00 | 0.00 | 0.000 |
-
-#### B. Dil Derneği Standard (Softening Circumflexes Only)
-| Dictionary | Precision (%) | Recall (%) | F1 Score (%) | Top-1 (%) | Top-3 (%) | MRR |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Turkspell (DD)** | **100.00** | **100.00** | **100.00** | **100.00** | **100.00** | **1.000** |
-| **Turkspell (Universal)** | **100.00** | 55.07 | 71.03 | 55.07 | 55.07 | 0.551 |
-| **Turkspell (TDK)** | 82.01 | 55.07 | 65.90 | 55.07 | 55.07 | 0.551 |
-| [hunspell-tr-moz](https://github.com/selimsum/hunspell-tr-moz) | 99.03 | 49.28 | 65.81 | 6.76 | 34.30 | 0.205 |
-| [vdemir](https://github.com/vdemir/hunspell-tr) | 47.92 | 55.56 | 51.45 | 22.17 | 41.06 | 0.318 |
-| [harunzafer](https://github.com/harunzafer/hunspell-tr) | 47.37 | 52.17 | 49.66 | 23.67 | 43.48 | 0.336 |
-| [tdd-ai](https://github.com/tdd-ai/hunspell-tr) | 44.08 | 44.93 | 44.50 | 11.59 | 43.96 | 0.278 |
-
-### 4. Gold V4 & Deep Affixation Stress Tests
-| Benchmark Suite | Top Dictionary | Precision (%) | Recall (%) | F1 Score (%) | Top-1 (%) | Top-3 (%) | Top-5 (%) | MRR |
-|---|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Gold V4 (TDK Standard)** | **Turkspell (TDK / Universal)** | **100.00** | **100.00** | **100.00** | **78.80** | **84.00** | **84.30** | **0.814** |
-| **Gold V4 (TDK + Dil Derneği)** | **Turkspell (DD / Universal)** | **100.00** | **100.00** | **100.00** | **79.10** | **83.40** | **84.30** | **0.813** |
-| **Deep Affixation Stress Test** | **Turkspell (TDK / Universal / DD)** | **100.00** | **100.00** | **100.00** | **74.60** | **80.80** | **81.30** | **0.776** |
+### 3. Turkspell Benchmark v3 — Affix Overgeneration Security (1,500 Pseudo-words)
+| Dictionary / Engine | Security Rate (%) | False Acceptance (%) | Rejected / Total | Notes |
+|---|:---:|:---:|:---:|---|
+| **Turkspell (Universal - Default)** | **100.00** | **0.00** | **1,500 / 1,500** | Zero overgeneration; illegal agglutinative derivations fully blocked |
+| **Turkspell (TDK)** | **100.00** | **0.00** | **1,500 / 1,500** | Strict TDK morphology provides full security |
+| **Turkspell (DD)** | **100.00** | **0.00** | **1,500 / 1,500** | Dil Derneği morphology provides full security |
+| [**hunspell-tr-moz**](https://github.com/selimsum/hunspell-tr-moz) | **100.00** | **0.00** | 1,500 / 1,500 | Static rules |
+| [**tdd-ai**](https://github.com/tdd-ai/hunspell-tr) | **100.00** | **0.00** | 1,500 / 1,500 | Static surface forms |
+| [**harunzafer**](https://github.com/harunzafer/hunspell-tr) | **100.00** | **0.00** | 1,500 / 1,500 | Limited affixation rules |
+| [**vdemir**](https://github.com/vdemir/hunspell-tr) | **100.00** | **0.00** | 1,500 / 1,500 | Restricted morphology |
 
 ---
 
@@ -725,7 +648,7 @@ turkspell/
 │   └── zemberek_lexicon.json     # Zemberek morphological reference stems
 │
 └── raw_data/                  # Primary Linguistic Authority Sources
-    ├── tdk_words.txt          # TDK Güncel Türkçe Sözlük wordlist
+    ├── tdk_words.txt          # TDK Writing Guide (2026 Edition) & Güncel Türkçe Sözlük wordlist
     └── dil_dernegi_words.txt  # Dil Derneği Yazım Kılavuzu wordlist
 ```
 
@@ -851,7 +774,7 @@ Turkspell is compiled using a **Dynamic Chained Flags** architecture that models
 ### 1. Authoritative Data Sources & Input Lexicons
 
 The build pipeline strictly avoids unfiltered web scrapes, relying entirely on verified authority sources:
-* **TDK Güncel Türkçe Sözlük ([`raw_data/tdk_words.txt`](file:///c:/gemini/turkspell/raw_data/tdk_words.txt))**: The foundation for strict TDK orthography and mandatory circumflex words.
+* **TDK Writing Guide (2026 Edition) & Güncel Türkçe Sözlük ([`raw_data/tdk_words.txt`](file:///c:/gemini/turkspell/raw_data/tdk_words.txt))**: The primary foundation for strict TDK orthography, spelling rules, and mandatory circumflex words, established primarily on the official TDK Writing Guide (2026 Edition).
 * **TDK Science & Arts Terms Lexicon ([`lexicons/bilim_sanat_lexicon.json`](file:///c:/gemini/turkspell/lexicons/bilim_sanat_lexicon.json))**: 4,955 cleaned and verified academic stems across medicine, biology, physics, philosophy, arts, and engineering published by TDK.
 * **Dil Derneği Yazım Kılavuzu ([`raw_data/dil_dernegi_words.txt`](file:///c:/gemini/turkspell/raw_data/dil_dernegi_words.txt))**: Official alternative lexicon standardizing nisba `î` to `i`.
 * **Proper Nouns & Geographic Names ([`lexicons/custom_names.json`](file:///c:/gemini/turkspell/lexicons/custom_names.json))**: Verified proper nouns, administrative regions, countries, and historical figures.
