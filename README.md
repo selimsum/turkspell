@@ -190,6 +190,12 @@ Turkspell, şişirilmiş statik kurallar veya yüz binlerce çekimli sözcük ye
 
 ### 1. Mozilla Firefox Eklentisi Olarak Kurulum
 
+#### Yöntem A: Firefox Add-ons (AMO) Üzerinden (Tercih Edilen Yöntem)
+1. Resmî eklenti sayfasını ziyaret edin: [addons.mozilla.org/firefox/addon/turkspell](https://addons.mozilla.org/tr/firefox/addon/turkspell/)
+2. **"Firefox'a Ekle"** butonuna tıklayın ve onay verin.
+3. Herhangi bir metin kutusuna sağ tıklayıp **Diller > Türkçe (Turkspell)** seçeneğini işaretleyin.
+
+#### Yöntem B: GitHub Releases (.xpi Dosyası İle)
 1. [Releases](https://github.com/selimsum/turkspell/releases) sayfasından en güncel `turkspell-addon.xpi` dosyasını indirin.
 2. Firefox tarayıcınızı açıp adres çubuğuna `about:addons` yazın.
 3. Sağ üstteki dişli simgesine tıklayıp **"Dosyadan eklenti yükle..."** seçeneğiyle indirilen `.xpi` dosyasını seçin.
@@ -198,7 +204,38 @@ Turkspell, şişirilmiş statik kurallar veya yüz binlerce çekimli sözcük ye
 > **Geliştirici Modunda Yükleme**:
 > `about:debugging#/runtime/this-firefox` adresine gidin. "Geçici eklenti yükle..." düğmesine basarak `firefox-addon/manifest.json` dosyasını seçin.
 
-### 2. LibreOffice / OpenOffice Entegrasyonu
+### 2. Mozilla Thunderbird Eklentisi Olarak Kurulum
+
+Turkspell, Mozilla Thunderbird e-posta istemcisi ve SeaMonkey paketiyle tam uyumludur (Thunderbird 102, 115 "Supernova", 128 "Nebula" ve üzeri; SeaMonkey 2.53.24+).
+
+#### Yöntem A: Thunderbird Add-ons (ATN) Üzerinden
+1. Thunderbird eklenti sayfasını ziyaret edin: [addons.thunderbird.net/thunderbird/addon/turkspell](https://addons.thunderbird.net/en-US/thunderbird/addon/turkspell/) (veya Thunderbird içi **Eklentiler ve Temalar** arama çubuğuna `Turkspell` yazın).
+2. **"Thunderbird'e Ekle"** düğmesine tıklayın.
+3. E-posta yazma penceresinde sağ tıklayıp **Yazım Denetimi > Diller > Türkçe** seçeneğini işaretleyin.
+
+#### Yöntem B: GitHub Releases (.xpi Dosyası İle)
+1. [Releases](https://github.com/selimsum/turkspell/releases) sayfasından `turkspell-thunderbird.xpi` dosyasını indirin.
+2. Thunderbird menüsünden **Araçlar > Eklentiler ve Temalar** sekmesini açın.
+3. Dişli çark simgesine tıklayıp **"Dosyadan eklenti kur..."** seçeneğini kullanarak indirilen `.xpi` dosyasını seçin ve onaylayın.
+4. Detaylı ATN dağıtım rehberi için [THUNDERBIRD.md](THUNDERBIRD.md) belgesini inceleyin.
+
+### 3. ONLYOFFICE Entegrasyonu
+
+ONLYOFFICE, yerel olarak **Hunspell** formatını (`.aff` ve `.dic`) destekler. Turkspell'i masaüstü veya sunucu sürümüne kolayca entegre edebilirsiniz:
+
+#### ONLYOFFICE Desktop Editors (Masaüstü)
+1. Kurulum dizinindeki Türkçe sözlük klasörüne gidin:
+   * **Windows**: `C:\Program Files\ONLYOFFICE\DesktopEditors\dictionaries\tr_TR\`
+   * **Linux**: `/opt/onlyoffice/desktopeditors/dictionaries/tr_TR/` (veya `~/.local/share/onlyoffice/desktopeditors/dictionaries/tr_TR/`)
+   * **macOS**: `/Applications/ONLYOFFICE.app/Contents/Resources/dictionaries/tr_TR/`
+2. Klasördeki mevcut `tr_TR.aff` ve `tr_TR.dic` dosyalarının yedeğini alın.
+3. Tercih ettiğiniz Turkspell profiline ait `tr.aff` ve `tr.dic` dosyalarını bu klasöre kopyalayın ve adlarını `tr_TR.aff` ve `tr_TR.dic` olarak değiştirin.
+4. ONLYOFFICE'i yeniden başlatın; Türkçe yazım denetimi artık Turkspell ile çalışacaktır.
+
+#### ONLYOFFICE Docs (Document Server / Web)
+Sunucu veya Docker kurulumlarında sözlükleri `/var/www/onlyoffice/documentserver/dictionaries/tr_TR/` klasörüne kopyalayıp `server/dictionaries/update.py` betiğini çalıştırarak ve servisi yeniden başlatarak kullanabilirsiniz.
+
+### 4. LibreOffice / OpenOffice Entegrasyonu
 
 1. LibreOffice'te **Araçlar > Seçenekler > Dil Ayarları > Yazma Yardımcıları** sekmesine gidin.
 2. İlgili profil dizinindeki (`tr.aff` ve `tr.dic`) dosyalarını LibreOffice kullanıcı sözlükleri klasörüne kopyalayın:
@@ -206,7 +243,7 @@ Turkspell, şişirilmiş statik kurallar veya yüz binlerce çekimli sözcük ye
    * **Windows**: `%APPDATA%\LibreOffice\4\user\wordbook\`
    * **macOS**: `~/Library/Application Support/LibreOffice/4/user/wordbook/`
 
-### 3. Linux / macOS Sistem Geneli Kurulum
+### 5. Linux / macOS Sistem Geneli Kurulum
 
 ```bash
 # Linux (Debian/Ubuntu/Fedora/Arch)
@@ -218,7 +255,7 @@ cp tr.aff ~/Library/Spelling/tr_TR.aff
 cp tr.dic ~/Library/Spelling/tr_TR.dic
 ```
 
-### 4. Komut Satırından (CLI) Kullanım
+### 6. Komut Satırından (CLI) Kullanım
 
 Sözlüğü doğrudan sisteminizde kurulu `hunspell` ikilisi ile test edebilirsiniz:
 
@@ -230,7 +267,7 @@ hunspell -d tr -l metin.txt
 hunspell -d tr -a
 ```
 
-### 5. Python Projelerinde Kullanım
+### 7. Python Projelerinde Kullanım
 
 ```python
 import subprocess
@@ -702,6 +739,12 @@ Rather than bloated static rule sets or hundreds of thousands of pre-inflected w
 
 ### 1. Installation as a Mozilla Firefox Add-on
 
+#### Method A: Via Firefox Add-ons (AMO) (Preferred Method)
+1. Visit the official add-on page: [addons.mozilla.org/firefox/addon/turkspell](https://addons.mozilla.org/tr/firefox/addon/turkspell/)
+2. Click **"Add to Firefox"** and confirm the prompt.
+3. In any text area, right-click and ensure **Languages > Türkçe (Turkspell)** is selected.
+
+#### Method B: Via GitHub Releases (.xpi)
 1. Download the latest `turkspell-addon.xpi` from the [Releases](https://github.com/selimsum/turkspell/releases) page.
 2. Open Firefox and navigate to `about:addons`.
 3. Click the gear icon at the top right, select **"Install Add-on From File..."**, and pick the downloaded `.xpi` file.
@@ -710,7 +753,38 @@ Rather than bloated static rule sets or hundreds of thousands of pre-inflected w
 > **Developer Mode Installation**:
 > Navigate to `about:debugging#/runtime/this-firefox`. Click "Load Temporary Add-on..." and select `firefox-addon/manifest.json`.
 
-### 2. LibreOffice / OpenOffice Integration
+### 2. Installation as a Mozilla Thunderbird Add-on
+
+Turkspell is fully compatible with Mozilla Thunderbird and the SeaMonkey suite (Thunderbird 102, 115 "Supernova", 128 "Nebula", and later; SeaMonkey 2.53.24+).
+
+#### Method A: Via Thunderbird Add-ons (ATN)
+1. Visit the add-on page: [addons.thunderbird.net/thunderbird/addon/turkspell](https://addons.thunderbird.net/en-US/thunderbird/addon/turkspell/) (or search for `Turkspell` inside Thunderbird's **Add-ons and Themes** manager).
+2. Click **"Add to Thunderbird"**.
+3. In any compose window, right-click and ensure **Spell Check > Languages > Türkçe** is selected.
+
+#### Method B: Via GitHub Releases (.xpi)
+1. Download `turkspell-thunderbird.xpi` from the [Releases](https://github.com/selimsum/turkspell/releases) page.
+2. In Thunderbird, open **Tools > Add-ons and Themes**.
+3. Click the gear icon, select **"Install Add-on From File..."**, and choose the downloaded `.xpi` file.
+4. For developer distribution instructions on ATN, see [THUNDERBIRD.md](THUNDERBIRD.md).
+
+### 3. ONLYOFFICE Integration
+
+ONLYOFFICE natively supports **Hunspell** format (`.aff` and `.dic`). You can easily integrate Turkspell into both desktop and server editions:
+
+#### ONLYOFFICE Desktop Editors
+1. Navigate to the Turkish dictionary directory:
+   * **Windows**: `C:\Program Files\ONLYOFFICE\DesktopEditors\dictionaries\tr_TR\`
+   * **Linux**: `/opt/onlyoffice/desktopeditors/dictionaries/tr_TR/` (or `~/.local/share/onlyoffice/desktopeditors/dictionaries/tr_TR/`)
+   * **macOS**: `/Applications/ONLYOFFICE.app/Contents/Resources/dictionaries/tr_TR/`
+2. Back up the existing `tr_TR.aff` and `tr_TR.dic` files.
+3. Copy the Turkspell `tr.aff` and `tr.dic` files from your chosen profile into this folder and rename them to `tr_TR.aff` and `tr_TR.dic`.
+4. Restart ONLYOFFICE; Turkish spell checking will now use Turkspell.
+
+#### ONLYOFFICE Docs (Document Server / Web)
+On server or Docker installations, place the files in `/var/www/onlyoffice/documentserver/dictionaries/tr_TR/`, run the `server/dictionaries/update.py` script, and restart the document server service.
+
+### 4. LibreOffice / OpenOffice Integration
 
 1. In LibreOffice, navigate to **Tools > Options > Language Settings > Writing Aids**.
 2. Copy the dictionary files (`tr.aff` and `tr.dic`) from your preferred profile into the LibreOffice user wordbook directory:
@@ -718,7 +792,7 @@ Rather than bloated static rule sets or hundreds of thousands of pre-inflected w
    * **Windows**: `%APPDATA%\LibreOffice\4\user\wordbook\`
    * **macOS**: `~/Library/Application Support/LibreOffice/4/user/wordbook/`
 
-### 3. Linux / macOS System-wide Installation
+### 5. Linux / macOS System-wide Installation
 
 ```bash
 # Linux (Debian/Ubuntu/Fedora/Arch)
@@ -730,7 +804,7 @@ cp tr.aff ~/Library/Spelling/tr_TR.aff
 cp tr.dic ~/Library/Spelling/tr_TR.dic
 ```
 
-### 4. Command-Line (CLI) Usage
+### 6. Command-Line (CLI) Usage
 
 Test the dictionary directly using your system's installed `hunspell` binary:
 
@@ -742,7 +816,7 @@ hunspell -d tr -l input.txt
 hunspell -d tr -a
 ```
 
-### 5. Usage in Python Projects
+### 7. Usage in Python Projects
 
 ```python
 import subprocess

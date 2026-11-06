@@ -12,17 +12,20 @@ EXCLUDED_FILENAMES = {'.DS_Store', 'Thumbs.db', 'ehthumbs.db'}
 
 
 def package_profile(profile: str = "universal"):
-    """Package a specific profile ('universal' or 'tdk') into its corresponding .xpi file."""
+    """Package a specific profile ('universal', 'tdk', 'thunderbird', 'thunderbird-tdk') into its corresponding .xpi file."""
     _root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-    if profile == "tdk":
+    is_tdk = profile in ("tdk", "thunderbird-tdk")
+    is_tb = profile in ("thunderbird", "thunderbird-tdk")
+
+    if is_tdk:
         source_dir = os.path.join(_root_dir, "firefox-addon-tdk")
-        xpi_name = "turkspell-tdk-addon.xpi"
+        xpi_name = "turkspell-thunderbird-tdk.xpi" if is_tb else "turkspell-tdk-addon.xpi"
         dic_src = os.path.join(_root_dir, "dist", "turkspell-tdk", "tr.dic")
         aff_src = os.path.join(_root_dir, "dist", "turkspell-tdk", "tr.aff")
     else:  # universal
         source_dir = os.path.join(_root_dir, "firefox-addon")
-        xpi_name = "turkspell-addon.xpi"
+        xpi_name = "turkspell-thunderbird.xpi" if is_tb else "turkspell-addon.xpi"
         dic_src = os.path.join(_root_dir, "dist", "turkspell-universal", "tr.dic")
         aff_src = os.path.join(_root_dir, "dist", "turkspell-universal", "tr.aff")
         if not (os.path.exists(dic_src) and os.path.exists(aff_src)):
@@ -85,14 +88,20 @@ def package_profile(profile: str = "universal"):
     return xpi_filename
 
 def main():
-    parser = argparse.ArgumentParser(description="Package Turkspell Firefox Extension(s)")
-    parser.add_argument("--profile", choices=["universal", "tdk", "all"], default="all",
-                        help="Profile to package: 'universal' (turkspell-addon.xpi), 'tdk' (turkspell-tdk-addon.xpi), or 'all' (both)")
+    parser = argparse.ArgumentParser(description="Package Turkspell Firefox & Thunderbird Extension(s)")
+    parser.add_argument(
+        "--profile",
+        choices=["universal", "tdk", "thunderbird", "thunderbird-tdk", "all"],
+        default="all",
+        help="Profile to package: 'universal', 'tdk', 'thunderbird', 'thunderbird-tdk', or 'all' (packages all variants)",
+    )
     args = parser.parse_args()
 
     if args.profile == "all":
         package_profile("universal")
         package_profile("tdk")
+        package_profile("thunderbird")
+        package_profile("thunderbird-tdk")
     else:
         package_profile(args.profile)
 

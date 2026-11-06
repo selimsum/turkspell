@@ -1,0 +1,39 @@
+{
+  "name": "Turkspell - Türkçe Yazım Denetimi",
+  "summary": "Hem Türk Dil Kurumu hem Dil Derneği kurallarını destekleyen evrensel, modern Türkçe yazım denetimi sözlüğü.",
+  "categories": [
+    "dictionaries"
+  ],
+  "version": {
+    "license": "MIT",
+    "compatibility": {
+      "thunderbird": {
+        "min": "102.0"
+      }
+    }
+  },
+  "profiles": {
+    "universal": {
+      "id": "turkspell@mozilla.org.tr",
+      "name": "Turkspell - Türkçe Yazım Denetimi",
+      "xpi": "turkspell-thunderbird.xpi",
+      "description": "Turkspell, Thunderbird için geliştirilmiş kapsamlı, yüksek doğruluklu ve düşük bellek tüketimli modern Türkçe yazım denetimi (imla kılavuzu) eklentisidir. Hem Türk Dil Kurumu (TDK) hem Dil Derneği yazım kurallarını evrensel olarak destekler. E-postalarınızı yazarken otomatik olarak yazım hatalarını tespit eder ve bağlama en uygun Türkçe önerileri sunar."
+    },
+    "tdk": {
+      "id": "turkspell-tdk@mozilla.org.tr",
+      "name": "Turkspell - Türkçe Yazım Denetimi (TDK 2026)",
+      "xpi": "turkspell-thunderbird-tdk.xpi",
+      "description": "Yalnızca Türk Dil Kurumu (TDK 2026) güncel yazım kurallarını ve sözlüğünü esas alan resmî Türkçe yazım denetimi eklentisidir. Düzeltme işaretleri (şapka/inceltme) ve nispet 'î' kurallarını katı bir şekilde denetler. Resmî ve kurumsal yazışmalar için idealdir."
+    }
+  },
+  "tags": [
+    "türkçe",
+    "yazım denetimi",
+    "sözlük",
+    "imla",
+    "turkish",
+    "spellcheck",
+    "dictionary",
+    "tdk"
+  ]
+}

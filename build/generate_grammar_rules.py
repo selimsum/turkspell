@@ -4748,6 +4748,17 @@ def generate_verb_stage1_block(flag: str, back: bool, round_v: bool, is_vowel_st
         add_r(pass_strip, f"{pass_p}m{v_low}z/{neg_cop_aor}", pass_cond)
         add_r(pass_strip, f"{pass_p}m{v_low}z", pass_cond)
         add_r(pass_strip, f"{pass_p}m{v_low}zl{v_low}r", pass_cond)
+        # Substantivized negative aorist participles (vazgeçilmezi, vazgeçilmezidir, vazgeçilmezleri, vazgeçilmezlerinden, vazgeçilmezlerindendir)
+        for part_suf in [
+            f"{unrounded_high}", f"{unrounded_high}d{unrounded_high}r",
+            f"l{v_low}r{unrounded_high}", f"l{v_low}r{unrounded_high}n{v_low}",
+            f"l{v_low}r{unrounded_high}nd{v_low}", f"l{v_low}r{unrounded_high}nd{v_low}n",
+            f"l{v_low}r{unrounded_high}nd{v_low}nd{unrounded_high}r",
+            f"l{v_low}r{unrounded_high}n", f"l{v_low}r{unrounded_high}n{unrounded_high}",
+            f"l{v_low}r{unrounded_high}n{unrounded_high}n",
+            f"{v_low}", f"d{v_low}", f"d{v_low}n", f"d{v_low}nd{unrounded_high}r",
+        ]:
+            add_r(pass_strip, f"{pass_p}m{v_low}z{part_suf}", pass_cond)
         # Necessitative, Conditional & Imperative
         add_r(pass_strip, f"{pass_p}m{v_low}l{unrounded_high}/{cop_vow}", pass_cond)
         add_r(pass_strip, f"{pass_p}m{v_low}l{unrounded_high}", pass_cond)
@@ -4864,6 +4875,19 @@ def generate_aorist_subflag_block(flag: str, aor_vowel: str, is_back: bool, stri
     rules.append(sfx(flag, strip, f"{neg_suf}zc{v_low}s{neg_unrounded_high}n{v_low}", strip))
     for c_case in [f"{v_low}", f"{neg_unrounded_high}", f"d{v_low}n", f"d{v_low}", f"{neg_unrounded_high}n"]:
         rules.append(sfx(flag, strip, f"{neg_suf}z{c_case}", strip))
+    for part_suf in [
+        f"{neg_unrounded_high}d{neg_unrounded_high}r",
+        f"l{v_low}r{neg_unrounded_high}",
+        f"l{v_low}r{neg_unrounded_high}n{v_low}",
+        f"l{v_low}r{neg_unrounded_high}nd{v_low}",
+        f"l{v_low}r{neg_unrounded_high}nd{v_low}n",
+        f"l{v_low}r{neg_unrounded_high}nd{v_low}nd{neg_unrounded_high}r",
+        f"l{v_low}r{neg_unrounded_high}n",
+        f"l{v_low}r{neg_unrounded_high}n{neg_unrounded_high}",
+        f"l{v_low}r{neg_unrounded_high}n{neg_unrounded_high}n",
+        f"d{v_low}nd{neg_unrounded_high}r",
+    ]:
+        rules.append(sfx(flag, strip, f"{neg_suf}z{part_suf}", strip))
 
     return make_verb_flag_block(flag, rules)
 

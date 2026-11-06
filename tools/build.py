@@ -645,6 +645,7 @@ HEAD_FLAG_OVERRIDES["dolayı"] = remap_flag_string("B3 a1 y1 L1 R1 n1 i1 Q1 PB P
 HEAD_FLAG_OVERRIDES["göre"] = remap_flag_string("cl".replace(" ", ""))
 HEAD_FLAG_OVERRIDES["ötürü"] = remap_flag_string("cl".replace(" ", ""))
 HEAD_FLAG_OVERRIDES["dair"] = remap_flag_string("cl".replace(" ", ""))
+HEAD_FLAG_OVERRIDES["diyerek"] = remap_flag_string("cl".replace(" ", ""))
 
 # Erroneous verb stems that are genuine nouns/adjectives:
 NON_VERB_MAK_NOUNS = ["ahmak", "çomak", "madımak", "tutamak", "başmak"]
@@ -1552,6 +1553,26 @@ def build_hardened_aff(profile="tdk"):
                 if _r_lk not in seen:
                     seen.add(_r_lk)
                     kept.append(_r_lk + "\n")
+            _is_b = flag_long in ('wa', 'wi', 'wr', 'wu')
+            _st = 'mak' if _is_b else 'mek'
+            _vl = 'a' if _is_b else 'e'
+            _vuh = 'ı' if _is_b else 'i'
+            for _part_s in (
+                f"m{_vl}z{_vuh}d{_vuh}r",
+                f"m{_vl}zl{_vl}r{_vuh}",
+                f"m{_vl}zl{_vl}r{_vuh}n{_vl}",
+                f"m{_vl}zl{_vl}r{_vuh}nd{_vl}",
+                f"m{_vl}zl{_vl}r{_vuh}nd{_vl}n",
+                f"m{_vl}zl{_vl}r{_vuh}nd{_vl}nd{_vuh}r",
+                f"m{_vl}zl{_vl}r{_vuh}n",
+                f"m{_vl}zl{_vl}r{_vuh}n{_vuh}",
+                f"m{_vl}zl{_vl}r{_vuh}n{_vuh}n",
+                f"m{_vl}zd{_vl}nd{_vuh}r",
+            ):
+                _r_part = f"SFX {flag} {_st} {_part_s} {_st}"
+                if _r_part not in seen:
+                    seen.add(_r_part)
+                    kept.append(_r_part + "\n")
         if flag_long in ('VA', 'VB', 'VE', 'VF', 'VG', 'VH', 'VK', 'VM', 'VN', 'VR', 'VS', 'VY'):
             _pot_extra = []
             for _r_existing in kept:

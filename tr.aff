@@ -40,7 +40,8 @@ MAXDIFF 5
 MAXNGRAMSUGS 8
 
 
-REP 2793
+
+REP 2805
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -1033,6 +1034,20 @@ REP canli canlı
 REP hikayeye hikâyeye
 REP birsey bir_şey
 REP rekat rekât
+REP varolan var_olan
+REP boşver boş_ver
+REP güleryüzlü güler_yüzlü
+REP terkedilmiş terk_edilmiş
+REP hakettiği hak_ettiği
+REP farkeden fark_eden
+REP tehditkar tehditkâr
+REP topyekün topyekûn
+REP tehtid tehdit
+REP eğtim eğitim
+REP vericek verecek
+REP açıkcası açıkçası
+REP buyrun buyurun
+REP vaad vaat
 REP yanliz yalnız
 REP deil değil
 REP diil değil
@@ -1154,7 +1169,6 @@ REP hıristiyan Hristiyan
 REP yahudi Yahudi
 REP muatap muhatap
 REP muhatab muhatap
-REP vaad vaat
 REP tesbit tespit
 REP isbat ispat
 REP gangaster gangster
@@ -2598,7 +2612,6 @@ REP tebdilimekan tebdilimekân
 REP tecavüzkar tecavüzkâr
 REP tecavüzkarlık tecavüzkârlık
 REP tecelligah tecelligâh
-REP tehditkar tehditkâr
 REP tehditkarlık tehditkârlık
 REP tekalif tekâlif
 REP tekamül tekâmül
@@ -12396,7 +12409,7 @@ SFX ≓ mak yıversin mak
 SFX ≓ mak yıverin mak
 SFX ≓ mak yıveriniz mak
 
-SFX ≔ Y 1423
+SFX ≔ Y 1437
 SFX ≔ mak ıyor/⊮ mak
 SFX ≔ mak ıyorken mak
 SFX ≔ mak ıyor mak
@@ -13752,6 +13765,20 @@ SFX ≔ mak ılırlığının [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılmaz/⊬ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılmaz [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılmazlar [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılmazı [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılmazıdır [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılmazları [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılmazlarına [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılmazlarında [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılmazlarından [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılmazlarındandır [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılmazların [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılmazlarını [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılmazlarının [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılmaza [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılmazda [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılmazdan [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≔ mak ılmazdandır [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılmalı/⊳ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılmalı [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≔ mak ılmalıdır [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
@@ -15070,7 +15097,7 @@ SFX ≖ mek yiversin mek
 SFX ≖ mek yiverin mek
 SFX ≖ mek yiveriniz mek
 
-SFX ≗ Y 1423
+SFX ≗ Y 1437
 SFX ≗ mek iyor/⊮ mek
 SFX ≗ mek iyorken mek
 SFX ≗ mek iyor mek
@@ -16426,6 +16453,20 @@ SFX ≗ mek ilirliğinin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilmez/⊭ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilmez [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilmezler [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilmezi [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilmezidir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilmezleri [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilmezlerine [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilmezlerinde [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilmezlerinden [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilmezlerindendir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilmezlerin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilmezlerini [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilmezlerinin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilmeze [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilmezde [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilmezden [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≗ mek ilmezdendir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilmeli/⊴ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilmeli [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilmelidir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
@@ -16495,7 +16536,7 @@ SFX ≗ mek ilemediği/⊶ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilemediği [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≗ mek ilemeyen [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 
-SFX ≘ Y 1437
+SFX ≘ Y 1451
 SFX ≘ mek üyor/⊮ mek
 SFX ≘ mek üyorken mek
 SFX ≘ mek üyor mek
@@ -17862,6 +17903,20 @@ SFX ≘ mek ülürlüğünün [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülmez/⊭ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülmez [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülmezler [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmezi [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmezidir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmezleri [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmezlerine [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmezlerinde [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmezlerinden [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmezlerindendir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmezlerin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmezlerini [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmezlerinin [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmeze [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmezde [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmezden [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
+SFX ≘ mek ülmezdendir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülmeli/⊴ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülmeli [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
 SFX ≘ mek ülmelidir [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mek
@@ -19404,7 +19459,7 @@ SFX ≙ mek yüversin ümek
 SFX ≙ mek yüverin ümek
 SFX ≙ mek yüveriniz ümek
 
-SFX ≚ Y 1390
+SFX ≚ Y 1404
 SFX ≚ tmak dıyor/⊮ tmak
 SFX ≚ tmak dıyorken tmak
 SFX ≚ tmak dıyor tmak
@@ -20727,6 +20782,20 @@ SFX ≚ tmak dılırlığının tmak
 SFX ≚ tmak dılmaz/⊬ tmak
 SFX ≚ tmak dılmaz tmak
 SFX ≚ tmak dılmazlar tmak
+SFX ≚ tmak dılmazı tmak
+SFX ≚ tmak dılmazıdır tmak
+SFX ≚ tmak dılmazları tmak
+SFX ≚ tmak dılmazlarına tmak
+SFX ≚ tmak dılmazlarında tmak
+SFX ≚ tmak dılmazlarından tmak
+SFX ≚ tmak dılmazlarındandır tmak
+SFX ≚ tmak dılmazların tmak
+SFX ≚ tmak dılmazlarını tmak
+SFX ≚ tmak dılmazlarının tmak
+SFX ≚ tmak dılmaza tmak
+SFX ≚ tmak dılmazda tmak
+SFX ≚ tmak dılmazdan tmak
+SFX ≚ tmak dılmazdandır tmak
 SFX ≚ tmak dılmalı/⊳ tmak
 SFX ≚ tmak dılmalı tmak
 SFX ≚ tmak dılmalıdır tmak
@@ -20796,7 +20865,7 @@ SFX ≚ tmak dılamadığı/⊵ tmak
 SFX ≚ tmak dılamadığı tmak
 SFX ≚ tmak dılamayan tmak
 
-SFX ≜ Y 1390
+SFX ≜ Y 1404
 SFX ≜ tmek diyor/⊮ tmek
 SFX ≜ tmek diyorken tmek
 SFX ≜ tmek diyor tmek
@@ -22119,6 +22188,20 @@ SFX ≜ tmek dilirliğinin tmek
 SFX ≜ tmek dilmez/⊭ tmek
 SFX ≜ tmek dilmez tmek
 SFX ≜ tmek dilmezler tmek
+SFX ≜ tmek dilmezi tmek
+SFX ≜ tmek dilmezidir tmek
+SFX ≜ tmek dilmezleri tmek
+SFX ≜ tmek dilmezlerine tmek
+SFX ≜ tmek dilmezlerinde tmek
+SFX ≜ tmek dilmezlerinden tmek
+SFX ≜ tmek dilmezlerindendir tmek
+SFX ≜ tmek dilmezlerin tmek
+SFX ≜ tmek dilmezlerini tmek
+SFX ≜ tmek dilmezlerinin tmek
+SFX ≜ tmek dilmeze tmek
+SFX ≜ tmek dilmezde tmek
+SFX ≜ tmek dilmezden tmek
+SFX ≜ tmek dilmezdendir tmek
 SFX ≜ tmek dilmeli/⊴ tmek
 SFX ≜ tmek dilmeli tmek
 SFX ≜ tmek dilmelidir tmek
@@ -22188,7 +22271,7 @@ SFX ≜ tmek dilemediği/⊶ tmek
 SFX ≜ tmek dilemediği tmek
 SFX ≜ tmek dilemeyen tmek
 
-SFX ≝ Y 1401
+SFX ≝ Y 1415
 SFX ≝ tmek düyor/⊮ tmek
 SFX ≝ tmek düyorken tmek
 SFX ≝ tmek düyor tmek
@@ -23522,6 +23605,20 @@ SFX ≝ tmek dülürlüğünün tmek
 SFX ≝ tmek dülmez/⊭ tmek
 SFX ≝ tmek dülmez tmek
 SFX ≝ tmek dülmezler tmek
+SFX ≝ tmek dülmezi tmek
+SFX ≝ tmek dülmezidir tmek
+SFX ≝ tmek dülmezleri tmek
+SFX ≝ tmek dülmezlerine tmek
+SFX ≝ tmek dülmezlerinde tmek
+SFX ≝ tmek dülmezlerinden tmek
+SFX ≝ tmek dülmezlerindendir tmek
+SFX ≝ tmek dülmezlerin tmek
+SFX ≝ tmek dülmezlerini tmek
+SFX ≝ tmek dülmezlerinin tmek
+SFX ≝ tmek dülmeze tmek
+SFX ≝ tmek dülmezde tmek
+SFX ≝ tmek dülmezden tmek
+SFX ≝ tmek dülmezdendir tmek
 SFX ≝ tmek dülmeli/⊴ tmek
 SFX ≝ tmek dülmeli tmek
 SFX ≝ tmek dülmelidir tmek
@@ -23591,7 +23688,7 @@ SFX ≝ tmek dülemediği/⊶ tmek
 SFX ≝ tmek dülemediği tmek
 SFX ≝ tmek dülemeyen tmek
 
-SFX ≞ Y 1437
+SFX ≞ Y 1451
 SFX ≞ mak uyor/⊮ mak
 SFX ≞ mak uyorken mak
 SFX ≞ mak uyor mak
@@ -24958,6 +25055,20 @@ SFX ≞ mak ulurluğunun [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulmaz/⊬ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulmaz [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulmazlar [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmazı [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmazıdır [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmazları [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmazlarına [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmazlarında [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmazlarından [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmazlarındandır [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmazların [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmazlarını [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmazlarının [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmaza [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmazda [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmazdan [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
+SFX ≞ mak ulmazdandır [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulmalı/⊳ [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulmalı [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
 SFX ≞ mak ulmalıdır [^lAEIOUaeiouÂÎÖÛÜâîöûüİı]mak
@@ -28218,7 +28329,7 @@ SFX ≽ 0 üz [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≽ 0 ümdür [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 SFX ≽ 0 üzdür [^AEIOUaeiouÂÎÖÛÜâîöûüİı]
 
-SFX ≾ Y 23
+SFX ≾ Y 33
 SFX ≾ mak ar/⊬ mak
 SFX ≾ mak ar mak
 SFX ≾ mak arken mak
@@ -28242,8 +28353,18 @@ SFX ≾ mak mazı mak
 SFX ≾ mak mazdan mak
 SFX ≾ mak mazda mak
 SFX ≾ mak mazın mak
+SFX ≾ mak mazıdır mak
+SFX ≾ mak mazları mak
+SFX ≾ mak mazlarına mak
+SFX ≾ mak mazlarında mak
+SFX ≾ mak mazlarından mak
+SFX ≾ mak mazlarındandır mak
+SFX ≾ mak mazların mak
+SFX ≾ mak mazlarını mak
+SFX ≾ mak mazlarının mak
+SFX ≾ mak mazdandır mak
 
-SFX ≿ Y 23
+SFX ≿ Y 33
 SFX ≿ mek er/⊭ mek
 SFX ≿ mek er mek
 SFX ≿ mek erken mek
@@ -28267,8 +28388,18 @@ SFX ≿ mek mezi mek
 SFX ≿ mek mezden mek
 SFX ≿ mek mezde mek
 SFX ≿ mek mezin mek
+SFX ≿ mek mezidir mek
+SFX ≿ mek mezleri mek
+SFX ≿ mek mezlerine mek
+SFX ≿ mek mezlerinde mek
+SFX ≿ mek mezlerinden mek
+SFX ≿ mek mezlerindendir mek
+SFX ≿ mek mezlerin mek
+SFX ≿ mek mezlerini mek
+SFX ≿ mek mezlerinin mek
+SFX ≿ mek mezdendir mek
 
-SFX ⊀ Y 23
+SFX ⊀ Y 33
 SFX ⊀ mek er/⊭ mek
 SFX ⊀ mek er mek
 SFX ⊀ mek erken mek
@@ -28292,8 +28423,18 @@ SFX ⊀ mek mezi mek
 SFX ⊀ mek mezden mek
 SFX ⊀ mek mezde mek
 SFX ⊀ mek mezin mek
+SFX ⊀ mek mezidir mek
+SFX ⊀ mek mezleri mek
+SFX ⊀ mek mezlerine mek
+SFX ⊀ mek mezlerinde mek
+SFX ⊀ mek mezlerinden mek
+SFX ⊀ mek mezlerindendir mek
+SFX ⊀ mek mezlerin mek
+SFX ⊀ mek mezlerini mek
+SFX ⊀ mek mezlerinin mek
+SFX ⊀ mek mezdendir mek
 
-SFX ⊁ Y 36
+SFX ⊁ Y 46
 SFX ⊁ mek ür/⊯ mek
 SFX ⊁ mek ür mek
 SFX ⊁ mek ürken mek
@@ -28327,11 +28468,21 @@ SFX ⊁ mek mezi mek
 SFX ⊁ mek mezden mek
 SFX ⊁ mek mezde mek
 SFX ⊁ mek mezin mek
+SFX ⊁ mek mezidir mek
+SFX ⊁ mek mezleri mek
+SFX ⊁ mek mezlerine mek
+SFX ⊁ mek mezlerinde mek
+SFX ⊁ mek mezlerinden mek
+SFX ⊁ mek mezlerindendir mek
+SFX ⊁ mek mezlerin mek
+SFX ⊁ mek mezlerini mek
+SFX ⊁ mek mezlerinin mek
+SFX ⊁ mek mezdendir mek
 SFX ⊁ mek ürlüğüne [nl]mek
 SFX ⊁ mek ürlüğünde [nl]mek
 SFX ⊁ mek ürlüğünden [nl]mek
 
-SFX ⊂ Y 34
+SFX ⊂ Y 44
 SFX ⊂ mak ır/⊬ mak
 SFX ⊂ mak ır mak
 SFX ⊂ mak ırken mak
@@ -28363,11 +28514,21 @@ SFX ⊂ mak mazı mak
 SFX ⊂ mak mazdan mak
 SFX ⊂ mak mazda mak
 SFX ⊂ mak mazın mak
+SFX ⊂ mak mazıdır mak
+SFX ⊂ mak mazları mak
+SFX ⊂ mak mazlarına mak
+SFX ⊂ mak mazlarında mak
+SFX ⊂ mak mazlarından mak
+SFX ⊂ mak mazlarındandır mak
+SFX ⊂ mak mazların mak
+SFX ⊂ mak mazlarını mak
+SFX ⊂ mak mazlarının mak
+SFX ⊂ mak mazdandır mak
 SFX ⊂ mak ırlığına [nl]mak
 SFX ⊂ mak ırlığında [nl]mak
 SFX ⊂ mak ırlığından [nl]mak
 
-SFX ⊃ Y 34
+SFX ⊃ Y 44
 SFX ⊃ mek ir/⊭ mek
 SFX ⊃ mek ir mek
 SFX ⊃ mek irken mek
@@ -28399,11 +28560,21 @@ SFX ⊃ mek mezi mek
 SFX ⊃ mek mezden mek
 SFX ⊃ mek mezde mek
 SFX ⊃ mek mezin mek
+SFX ⊃ mek mezidir mek
+SFX ⊃ mek mezleri mek
+SFX ⊃ mek mezlerine mek
+SFX ⊃ mek mezlerinde mek
+SFX ⊃ mek mezlerinden mek
+SFX ⊃ mek mezlerindendir mek
+SFX ⊃ mek mezlerin mek
+SFX ⊃ mek mezlerini mek
+SFX ⊃ mek mezlerinin mek
+SFX ⊃ mek mezdendir mek
 SFX ⊃ mek irliğine [nl]mek
 SFX ⊃ mek irliğinde [nl]mek
 SFX ⊃ mek irliğinden [nl]mek
 
-SFX ⊄ Y 23
+SFX ⊄ Y 33
 SFX ⊄ mak ar/⊬ mak
 SFX ⊄ mak ar mak
 SFX ⊄ mak arken mak
@@ -28427,8 +28598,18 @@ SFX ⊄ mak mazı mak
 SFX ⊄ mak mazdan mak
 SFX ⊄ mak mazda mak
 SFX ⊄ mak mazın mak
+SFX ⊄ mak mazıdır mak
+SFX ⊄ mak mazları mak
+SFX ⊄ mak mazlarına mak
+SFX ⊄ mak mazlarında mak
+SFX ⊄ mak mazlarından mak
+SFX ⊄ mak mazlarındandır mak
+SFX ⊄ mak mazların mak
+SFX ⊄ mak mazlarını mak
+SFX ⊄ mak mazlarının mak
+SFX ⊄ mak mazdandır mak
 
-SFX ⊅ Y 36
+SFX ⊅ Y 46
 SFX ⊅ mak ur/⊮ mak
 SFX ⊅ mak ur mak
 SFX ⊅ mak urken mak
@@ -28462,6 +28643,16 @@ SFX ⊅ mak mazı mak
 SFX ⊅ mak mazdan mak
 SFX ⊅ mak mazda mak
 SFX ⊅ mak mazın mak
+SFX ⊅ mak mazıdır mak
+SFX ⊅ mak mazları mak
+SFX ⊅ mak mazlarına mak
+SFX ⊅ mak mazlarında mak
+SFX ⊅ mak mazlarından mak
+SFX ⊅ mak mazlarındandır mak
+SFX ⊅ mak mazların mak
+SFX ⊅ mak mazlarını mak
+SFX ⊅ mak mazlarının mak
+SFX ⊅ mak mazdandır mak
 SFX ⊅ mak urluğuna [nl]mak
 SFX ⊅ mak urluğunda [nl]mak
 SFX ⊅ mak urluğundan [nl]mak

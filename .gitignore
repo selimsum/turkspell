@@ -23,11 +23,14 @@ __pycache__/
 !tests/golden_verbs_baseline.json
 !update.json
 !amo-metadata.json
+!atn-metadata.json
 !requirements*.txt
 
 # Generated build outputs (kept out of source control)
 turkspell-addon.xpi
 turkspell-tdk-addon.xpi
+turkspell-thunderbird.xpi
+turkspell-thunderbird-tdk.xpi
 *-unsigned.xpi
 tr_test.*
 

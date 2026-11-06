@@ -905,6 +905,7 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
             "izlenebilirlik", "izlenebilirliği", "izlenebilirliğin", "izlenebilirliktir",
             "görmezlik", "görmezlikten", "görmemezlik", "görmemezlikten",
             "sporsever", "sporseverler", "kitapsever", "kitapseverler", "hayvansever", "sinemasever",
+            "vazgeçilmezi", "vazgeçilmezidir", "vazgeçilmezleri", "vazgeçilmezlerinden", "vazgeçilmezlerindendir",
         ]
         _, rej = check_words(valid_words)
         self.assertEqual(rej, [], f"FineWeb-2 enhanced forms rejected: {rej}")
@@ -914,6 +915,7 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
             "okuyalum", "okuyayum", "olalum", "olayum", "görelüm", "göreyüm", "yürüyelüm", "yürüyeyüm",
             "nedensellikçi", "evrensellikçi", "işlevsellikçi", "kavramsallıkçı", "adeti", "adete", "adetin",
             "futbolsever", "görememezlik", "ağırlıklandırılmak", "önceliklendirilmek", "güvenlikçi",
+            "olaraktan", "diyerekten", "terketti", "varolan", "muhafazakar",
         ]
         acc_inv, _ = check_words(invalid_words)
         self.assertEqual(acc_inv, [], f"Illegal overgenerated forms leaked: {acc_inv}")

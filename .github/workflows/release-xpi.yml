@@ -12,6 +12,7 @@ on:
       - 'firefox-addon/manifest.json'
       - 'firefox-addon-tdk/manifest.json'
       - 'amo-metadata.json'
+      - 'atn-metadata.json'
       - 'tools/sign_addon.py'
       - 'build/package_addon.py'
       - '.github/workflows/release-xpi.yml'
@@ -114,13 +115,26 @@ jobs:
 
           # If signed packages exist, publish only signed packages to avoid distributing unverified add-ons
           if signed_files:
-              files_to_publish = signed_files
+              files_to_publish = list(signed_files)
+              if 'turkspell-addon.xpi' in signed_files:
+                  shutil.copyfile('turkspell-addon.xpi', 'turkspell-thunderbird.xpi')
+                  files_to_publish.append('turkspell-thunderbird.xpi')
+              if 'turkspell-tdk-addon.xpi' in signed_files:
+                  shutil.copyfile('turkspell-tdk-addon.xpi', 'turkspell-thunderbird-tdk.xpi')
+                  files_to_publish.append('turkspell-thunderbird-tdk.xpi')
           else:
               # In developer/unsigned runs without AMO keys, provide packages labeled -unsigned
               print('Warning: No signed extensions found. Publishing as unsigned packages.')
               shutil.copyfile('turkspell-addon.xpi', 'turkspell-addon-unsigned.xpi')
               shutil.copyfile('turkspell-tdk-addon.xpi', 'turkspell-tdk-addon-unsigned.xpi')
-              files_to_publish = ['turkspell-addon-unsigned.xpi', 'turkspell-tdk-addon-unsigned.xpi']
+              shutil.copyfile('turkspell-thunderbird.xpi', 'turkspell-thunderbird-unsigned.xpi')
+              shutil.copyfile('turkspell-thunderbird-tdk.xpi', 'turkspell-thunderbird-tdk-unsigned.xpi')
+              files_to_publish = [
+                  'turkspell-addon-unsigned.xpi',
+                  'turkspell-tdk-addon-unsigned.xpi',
+                  'turkspell-thunderbird-unsigned.xpi',
+                  'turkspell-thunderbird-tdk-unsigned.xpi',
+              ]
 
           with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
               out.write('release_files<<EOF\n')
