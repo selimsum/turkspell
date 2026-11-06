@@ -40,7 +40,7 @@ MAXDIFF 5
 MAXNGRAMSUGS 8
 
 
-REP 2969
+REP 2981
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -1060,6 +1060,19 @@ REP azçok az_çok
 REP gökgürültüsü gök_gürültüsü
 REP vaadet vadet
 REP vaadede vadede
+REP okadar o_kadar
+REP şuana şu_ana
+REP nekadar ne_kadar
+REP ozaman o_zaman
+REP ikiside ikisi_de
+REP sarfedip sarf_edip
+REP alırmıyım alır_mıyım
+REP zorundamıyım zorunda_mıyım
+REP elimlede elimle_de
+REP sektörüde sektörü_de
+REP olucak olacak
+REP yapıcak yapacak
+REP gidicek gidecek
 REP dâhilî dahili
 REP hâkî haki
 REP î i
@@ -1223,7 +1236,6 @@ REP teşekkur teşekkür
 REP hersey her_şey
 REP geliyo geliyor
 REP gelior geliyor
-REP olucak olacak
 REP olcak olacak
 REP olicak olacak
 REP yanlis yanlış

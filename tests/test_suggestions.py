@@ -440,6 +440,19 @@ class TestSuggestionRanking(unittest.TestCase):
             ("gökgürültüsü", "gök gürültüsü", 1),
             ("vaadettiği", "vadettiği", 1),
             ("vaadetmek", "vadetmek", 1),
+            ("okadar", "o kadar", 1),
+            ("şuana", "şu ana", 1),
+            ("nekadar", "ne kadar", 1),
+            ("ozaman", "o zaman", 1),
+            ("ikiside", "ikisi de", 1),
+            ("sarfedip", "sarf edip", 1),
+            ("alırmıyım", "alır mıyım", 1),
+            ("zorundamıyım", "zorunda mıyım", 1),
+            ("elimlede", "elimle de", 1),
+            ("sektörüde", "sektörü de", 1),
+            ("olucak", "olacak", 1),
+            ("yapıcak", "yapacak", 1),
+            ("gidicek", "gidecek", 1),
         ]
         self.assertPairsSuggested(test_pairs)
 
