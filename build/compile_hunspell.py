@@ -997,9 +997,9 @@ def compile_dictionary():
     # (genitive, locative, ablative, dative, accusative, instrumental,
     #  3sg-possessive, copula)
     PROPER_HARMONY = {
-        'a': 'pB', 'ı': 'pB',
-        'o': 'pO', 'u': 'pO',
-        'e': 'pF', 'i': 'pF',
+        'a': 'pB', 'ı': 'pB', 'â': 'pB',
+        'o': 'pO', 'u': 'pO', 'û': 'pO',
+        'e': 'pF', 'i': 'pF', 'î': 'pF',
         'ö': 'pU', 'ü': 'pU',
     }
     PROPER_SUB_FLAGS = list('NLRYAIPC')

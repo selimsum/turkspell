@@ -1743,7 +1743,7 @@ MAP '’‘"""
 
     # Remove all existing REP lines and replace cleanly after MAXNGRAMSUGS
     aff_text = re.sub(r'^REP.*$\n?', '', aff_text, flags=re.MULTILINE)
-    aff_text = re.sub(r'(MAXNGRAMSUGS \d+\n+)', r'\1' + rep_block + '\n', aff_text, count=1)
+    aff_text = re.sub(r'(MAXNGRAMSUGS \d+)\n+', r'\1\n\n' + rep_block + '\n', aff_text, count=1)
     
     return aff_text
 
@@ -1835,12 +1835,18 @@ def get_abbrev_flags(w: str) -> str:
     return ""
 
 
-def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig, bilim_sanat_lexicon=None, bilim_sanat_words=None, profile="tdk"):
+def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig, bilim_sanat_lexicon=None, bilim_sanat_words=None, profile="tdk", raw_lines=None):
     print(f"Sanitizing .dic file for profile [{profile}]...")
     
     unhatted_to_purge = {tr_lower(v) for v in MANDATORY_HATTED_WORDS.values()}
     unhat_map = str.maketrans('âîûÂÎÛ', 'aiuAIU')
-    for h in (tdk_words | dd_words):
+    _hat_scan_words = (
+        tdk_words
+        | dd_words
+        | (bilim_sanat_words if bilim_sanat_words else set())
+        | {tr_lower(w.split("/")[0]) for w in LEGITIMATE_MISSED_WORDS + EXTRA_AUTHORITY_HEADWORDS}
+    )
+    for h in _hat_scan_words:
         if any(c in h for c in 'âîû'):
             u = h.translate(unhat_map)
             if profile == "tdk":
@@ -1855,12 +1861,17 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     if profile in ("universal", "bilim-sanat", "tdk") and bilim_sanat_words:
         authority_all = authority_all | bilim_sanat_words
     dd_words_to_purge = set()
+    bilim_sanat_only_to_purge = set()
     if profile == "tdk":
         all_ref = tdk_words | (bilim_sanat_words if bilim_sanat_words else set())
         dd_words_to_purge = (dd_words - all_ref) - custom_names - custom_abbrevs - {tr_lower(c) for c in COMPOUND_SET}
         print(f"  Dil Derneği-only words targeted for purge: {len(dd_words_to_purge)}")
     elif profile == "dd":
         all_ref = dd_words
+        if bilim_sanat_words:
+            _legit_heads = {tr_lower(w.split("/")[0]) for w in LEGITIMATE_MISSED_WORDS + EXTRA_AUTHORITY_HEADWORDS}
+            _bs_only = (bilim_sanat_words - dd_words - tdk_words) - custom_names - custom_abbrevs - {tr_lower(c) for c in COMPOUND_SET} - _legit_heads
+            bilim_sanat_only_to_purge = _bs_only | {w.replace("î", "i") for w in _bs_only}
     else:
         all_ref = authority_all
     whitelist = (all_ref - unhatted_to_purge) | custom_abbrevs | custom_names | {tr_lower(c) for c in COMPOUND_SET}
@@ -1879,7 +1890,8 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     _VC_CHAR = LONG_TO_UTF8["VC"]
     _vc_CHAR = LONG_TO_UTF8["vc"]
     
-    raw_lines = get_base_dic_lines()
+    if raw_lines is None:
+        raw_lines = get_base_dic_lines()
     if raw_lines and raw_lines[0].strip().isdigit():
         raw_lines = raw_lines[1:]
         
@@ -1942,6 +1954,8 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         # 1b. In TDK profile, purge words unique to Dil Derneği
         if profile == "tdk" and head_lower in dd_words_to_purge:
             removed_dd_words += 1
+            continue
+        if profile == "dd" and head_lower in bilim_sanat_only_to_purge:
             continue
             
         # 2. Purge unhatted duplicates for mandatory hatted words
@@ -2069,7 +2083,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             flags = get_abbrev_flags(head)
         elif head in custom_abbrevs_orig and not head.islower():
             flags = "".join(sorted(set(flags + get_abbrev_flags(head))))
-        elif head_lower in HEAD_FLAG_OVERRIDES:
+        elif head_lower in HEAD_FLAG_OVERRIDES and (head.islower() or head not in COMPOUND_SET):
             flags = HEAD_FLAG_OVERRIDES[head_lower]
         elif head_lower in PALATAL_L_HEADS:
             flags = PALATAL_L_FLAGS
@@ -2139,7 +2153,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
 
         # Loanwords ending in 'ing' must take front-vowel noun suffixes
         if head.lower().endswith("ing") and ("≑" in flags or not flags):
-            flags = flags.replace("≑", "") + "∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍⊘⊙⊚⊛⊜⊝⊞⊟"
+            flags = flags.replace("≑", "") + "∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍" + (PROPER_F if not head.islower() else "")
             
         # For TDK profile: dual voicing stems (teleskop, bergamot, baç) take only consonant suffixes
         if profile == "tdk" and head_lower in (DUAL_VOICING_BACK_ROUNDED + DUAL_VOICING_BACK_UNROUNDED):
@@ -2315,7 +2329,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             
     lower_to_flags = {}
     for h, fl in parsed_lines:
-        if h.islower():
+        if h.islower() and h not in virtual_stem_heads and "X" not in fl:
             lower_to_flags[h] = fl
 
     added_names = 0
@@ -2399,6 +2413,17 @@ def compile_v06(deploy_profile="universal", compile_base=False):
         import compile_hunspell
         compile_hunspell.compile_dictionary()
     tdk_words, dd_words, bilim_sanat_lexicon, bilim_sanat_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig = load_lexicons()
+    base_lines = get_base_dic_lines()
+    if compile_base:
+        print("\nNormalizing base dictionary and affix rules through universal pipeline...")
+        norm_aff = build_hardened_aff(profile="universal")
+        with open(AFF_SRC, "w", encoding="utf-8") as f:
+            f.write(norm_aff)
+        base_lines = build_sanitized_dic(
+            tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig,
+            bilim_sanat_lexicon=bilim_sanat_lexicon, bilim_sanat_words=bilim_sanat_words,
+            profile="universal", raw_lines=base_lines
+        )
     
     profiles = ["tdk", "dd", "universal"]
     DIST_DIR.mkdir(parents=True, exist_ok=True)
@@ -2420,7 +2445,8 @@ def compile_v06(deploy_profile="universal", compile_base=False):
         # Build dic
         dic_entries = build_sanitized_dic(
             tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig,
-            bilim_sanat_lexicon=bilim_sanat_lexicon, bilim_sanat_words=bilim_sanat_words, profile=prof
+            bilim_sanat_lexicon=bilim_sanat_lexicon, bilim_sanat_words=bilim_sanat_words,
+            profile=prof, raw_lines=base_lines
         )
         dic_out = prof_dir / "tr.dic"
         with open(dic_out, "w", encoding="utf-8") as f:
