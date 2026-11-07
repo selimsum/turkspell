@@ -40,7 +40,7 @@ MAXDIFF 5
 MAXNGRAMSUGS 8
 
 
-REP 5398
+REP 5442
 REP bakicısıyla bakıcısıyla
 REP etkinleştirim etkinleştirdim
 REP mezhebide mezhebinde
@@ -1073,6 +1073,52 @@ REP sektörüde sektörü_de
 REP olucak olacak
 REP yapıcak yapacak
 REP gidicek gidecek
+REP kalb kalp
+REP inşaa inşa
+REP sebeb sebep
+REP çünki çünkü
+REP heralde herhalde
+REP metod metot
+REP felan filan
+REP süpriz sürpriz
+REP azad azat
+REP edeb edep
+REP uluslarası uluslararası
+REP vücud vücut
+REP harb harp
+REP şöfor şoför
+REP vaadeder vadeder
+REP vaadeden vadeden
+REP birarada bir_arada
+REP bukadar bu_kadar
+REP heryerde her_yerde
+REP hertürlü her_türlü
+REP birdaha bir_daha
+REP farkedip fark_edip
+REP yoketmek yok_etmek
+REP sevketmek sevk_etmek
+REP olurmu olur_mu
+REP değilmi değil_mi
+REP yokmu yok_mu
+REP varmıdır var_mıdır
+REP istermisiniz ister_misiniz
+REP olabilirmi olabilir_mi
+REP varmi var_mı
+REP oldumu oldu_mu
+REP istermisin ister_misin
+REP olurmusunuz olur_musunuz
+REP alabilirmiyim alabilir_miyim
+REP biliyormusunuz biliyor_musunuz
+REP olmasada olmasa_da
+REP benide beni_de
+REP ikisininde ikisinin_de
+REP görünsede görünse_de
+REP onlarıda onları_da
+REP bunlarıda bunları_da
+REP sizede size_de
+REP sizleride sizleri_de
+REP ikisinide ikisini_de
+REP bizede bize_de
 REP resmi resmî
 REP milli millî
 REP dini dinî
@@ -3686,7 +3732,6 @@ REP mualif muhalif
 REP seftali şeftali
 REP direk direkt
 REP meyva meyve
-REP süpriz sürpriz
 REP eskişehir Eskişehir
 REP anadolu Anadolu
 REP atatürk'ün Atatürk'ün
@@ -3783,7 +3828,6 @@ REP grapon krapon
 REP küpür kupür
 REP küsür küsur
 REP mağlesef maalesef
-REP metod metot
 REP standard standart
 REP katalok katalog
 REP monolok monolog
