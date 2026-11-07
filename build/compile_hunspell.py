@@ -1320,6 +1320,17 @@ def compile_dictionary():
         lv = get_last_vowel(lemma_lower)
         return PROPER_HARMONY.get(lv, 'pB')  # default back-unrounded
 
+    import sys as _sys
+    _tools_dir = os.path.join(base_dir, 'tools')
+    if _tools_dir not in _sys.path:
+        _sys.path.insert(0, _tools_dir)
+    from build import COMPOUND_SET as _COMPOUND_SET, VIRTUAL_STEMS as _VIRTUAL_STEMS
+    _lowercase_proper_keep = (
+        {_tlc(c) for c in _COMPOUND_SET}
+        | {_tlc(a.get('lemma', '').strip()) for a in abbrev_list if a.get('lemma', '').strip().islower()}
+        | {_tlc(n.get('lemma', '').strip()) for n in names_list if n.get('lemma', '').strip().islower()}
+    )
+
     # Rebuild dic_entries, enforcing capitalization with KEEPCASE (KC)
     new_dic_entries = []
     seen_overrides = set()
@@ -1387,13 +1398,11 @@ def compile_dictionary():
             if lkey not in {'km', 'cm', 'mm', 'kg', 'gr', 'ml', 'mg', 'dl', 'cl', 'şii'}:
                 new_dic_entries.append(f"{lkey}/{flags_part}" if flags_part else lkey)
 
-        # Case 2: Word is a common noun (but not explicitly tagged as proper noun/override)
-        elif lkey in noun_lemmas:
-            # Attach proper noun flags directly to the lowercase entry (Alternative 1)
+        # Case 2: Word is a common noun (only attach proper-noun flags if it is a compound title/abbrev/name)
+        elif lkey in noun_lemmas and lkey in _lowercase_proper_keep:
             item_attrs = proper_nouns_attrs_map.get(lkey, set())
             pfx = _proper_flag_for(lkey, item_attrs)
             proper_flags = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
-            
             if flags_part:
                 new_dic_entries.append(f"{lkey}/{flags_part},{proper_flags}")
             else:
@@ -1491,6 +1500,9 @@ def compile_dictionary():
     # first match, so a byte-identical repeat is dead weight — it only inflates
     # the file and the load-time rule table. The block header declares its rule
     # count, so it has to be rewritten to match or Hunspell misparses the block.
+    _dead_aff_flags = {LONG_TO_UTF8[k] for k in ('NX', 'VL', 'Vb', 'Vf') if k in LONG_TO_UTF8}
+    for _df in _dead_aff_flags:
+        sfx_blocks.pop(_df, None)
     _aff_dropped = 0
     for flag, block in sfx_blocks.items():
         header, rules = block[0], block[1:]
@@ -1564,6 +1576,20 @@ def compile_dictionary():
     # both Noun and Adjective) but map to the same stem class and flag chain.
     # Entries for the same word with *different* flags are kept: Hunspell treats
     # them as homonyms and each contributes its own paradigm.
+    # Include numeral stems (N5..ND) and custom names/abbreviations skipped by English/verb filters
+    for _vs in _VIRTUAL_STEMS:
+        if _vs[0].isdigit():
+            dic_out.append(_vs + '\n')
+    for _extra_entry in (
+        'Always/∍∎∥⊈⊉⊊⊋⊌⊍⊎⊏', 'BI/⊈⊉⊊⊋⊌⊍⊎⊏', 'Bi/∍∥≩⊘⊙⊚⊛⊜⊝⊞⊟',
+        'EFFE/⊘⊙⊚⊛⊜⊝⊞⊟', 'Edge/∍∥≩⊘⊙⊚⊛⊜⊝⊞⊟', 'First/∍∥≩⊘⊙⊚⊛⊜⊝⊞⊟',
+        'GOG/⊐⊑⊒⊓⊔⊕⊖⊗⊘⊙⊚⊛⊜⊝⊞⊟', 'LİST/⊘⊙⊚⊛⊜⊝⊞⊟', 'MES/⊘⊙⊚⊛⊜⊝⊞⊟',
+        'MİLE/⊘⊙⊚⊛⊜⊝⊞⊟', 'PUR/⊐⊑⊒⊓⊔⊕⊖⊗⊘⊙⊚⊛⊜⊝⊞⊟', 'Seat/∍∎∥⊈⊉⊊⊋⊌⊍⊎⊏',
+        'Side/∍∥≩⊘⊙⊚⊛⊜⊝⊞⊟', 'Total/∀∂∄∌∍∎∖∙∡∢∧∨∩∪∫∭∲∴∶∸∺∻∼∽∿≂≄≆≉≊≋≌≍≎≕≣≤≩≽',
+        'WHO/⊐⊑⊒⊓⊔⊕⊖⊗', 'Ü', 'öl/⊠⊡⊢⊣⊤⊥⊦⊧',
+    ):
+        dic_out.append(_extra_entry + '\n')
+
     _seen_entries = set()
     _deduped = []
     for _e in dic_out:
