@@ -473,5 +473,42 @@ class TestSuggestionRanking(unittest.TestCase):
         ]
         self.assertPairsSuggested(test_pairs)
 
+    def test_fineweb2_large_batches_rep_suggestions(self):
+        """Validates that newly approved FineWeb-2 large batch typos/clitics/compounds suggest TDK forms at Top-1."""
+        test_pairs = [
+            ("plartform", "platform", 1),
+            ("ünüversite", "üniversite", 1),
+            ("sezeryan", "sezaryen", 1),
+            ("original", "orijinal", 1),
+            ("tenbel", "tembel", 1),
+            ("müsayit", "müsait", 1),
+            ("taahütname", "taahhütname", 1),
+            ("kalbten", "kalpten", 1),
+            ("labratuvar", "laboratuvar", 1),
+            ("pozesyon", "pozisyon", 1),
+            ("hastahane", "hastane", 1),
+            ("meyva", "meyve", 1),
+            ("yanlızca", "yalnızca", 1),
+            ("iyrenç", "iğrenç", 1),
+            ("psikyatri", "psikiyatri", 1),
+            ("coronavirüs", "koronavirüs", 1),
+            ("yaparmı", "yapar mı", 1),
+            ("biliyormusun", "biliyor musun", 1),
+            ("zayıflatırmı", "zayıflatır mı", 1),
+            ("mümkünmü", "mümkün mü", 1),
+            ("harammıdır", "haram mıdır", 1),
+            ("kalktımı", "kalktı mı", 1),
+            ("düşündünmü", "düşündün mü", 1),
+            ("yeralan", "yer alan", 1),
+            ("yeterki", "yeter ki", 1),
+            ("çörekotu", "çörek otu", 1),
+            ("bilimadamları", "bilim adamları", 1),
+            ("sodyumklorür", "sodyum klorür", 1),
+            ("dönmedolap", "dönme dolap", 1),
+            ("saol", "sağ ol", 1),
+            ("bişey", "bir şey", 1),
+        ]
+        self.assertPairsSuggested(test_pairs)
+
 if __name__ == "__main__":
     unittest.main()
