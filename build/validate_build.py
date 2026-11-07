@@ -273,21 +273,37 @@ def check_regression_tests(errors):
 
 
 def main():
-    dic = sys.argv[1] if len(sys.argv) > 1 else 'tr.dic'
-    aff = sys.argv[2] if len(sys.argv) > 2 else 'tr.aff'
+    args = [a for a in sys.argv[1:] if a != '--no-tests']
+    run_tests = '--no-tests' not in sys.argv[1:]
+    explicit_paths = len(args) > 0
+    dic = args[0] if len(args) > 0 else 'tr.dic'
+    aff = args[1] if len(args) > 1 else 'tr.aff'
 
-    print(f"Validating {dic} / {aff} ...")
-    errors, warnings = validate(dic, aff)
+    targets = [(dic, aff, run_tests)]
+    if not explicit_paths:
+        for prof in ('tdk', 'dd', 'universal'):
+            p_dic = os.path.join(BASE_DIR, 'dist', f'turkspell-{prof}', 'tr.dic')
+            p_aff = os.path.join(BASE_DIR, 'dist', f'turkspell-{prof}', 'tr.aff')
+            if os.path.exists(p_dic) and os.path.exists(p_aff):
+                targets.append((p_dic, p_aff, False))
 
-    for w in warnings:
-        print(f"  WARNING: {w}")
-    for e in errors:
-        print(f"  ERROR:   {e}")
+    all_errors, all_warnings = [], []
+    for t_dic, t_aff, t_tests in targets:
+        rel_dic = os.path.relpath(t_dic, BASE_DIR) if os.path.isabs(t_dic) else t_dic
+        rel_aff = os.path.relpath(t_aff, BASE_DIR) if os.path.isabs(t_aff) else t_aff
+        print(f"Validating {rel_dic} / {rel_aff} ...")
+        errors, warnings = validate(t_dic, t_aff, run_tests=t_tests)
+        for w in warnings:
+            print(f"  WARNING [{rel_dic}]: {w}")
+            all_warnings.append(f"[{rel_dic}] {w}")
+        for e in errors:
+            print(f"  ERROR   [{rel_dic}]: {e}")
+            all_errors.append(f"[{rel_dic}] {e}")
 
-    if errors:
-        print(f"\nFAILED: {len(errors)} error(s), {len(warnings)} warning(s).")
+    if all_errors:
+        print(f"\nFAILED: {len(all_errors)} error(s), {len(all_warnings)} warning(s).")
         return 1
-    print(f"\nOK: 0 errors, {len(warnings)} warning(s).")
+    print(f"\nOK: 0 errors, {len(all_warnings)} warning(s).")
     return 0
 
 

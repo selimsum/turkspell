@@ -38,14 +38,20 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
 
-      - name: Run Build Validation
+      - name: Run Build Validation (All Profiles)
         run: |
-          python build/validate_build.py
+          python build/validate_build.py --no-tests
+
+      - name: Verify Build Reproducibility & Artifact Sync
+        run: |
+          python tools/build.py --skip-tests
+          git diff --exit-code -- tr.dic tr.aff dist/
 
       - name: Run Pytest (Universal Profile)
         run: |
           pytest -v
 
-      - name: Run Overgeneration Suite (TDK Profile)
+      - name: Run Overgeneration Suite (TDK & DD Profiles)
         run: |
           TURKSPELL_DICT=dist/turkspell-tdk/tr pytest tests/test_overgeneration.py -v
+          TURKSPELL_DICT=dist/turkspell-dd/tr pytest tests/test_overgeneration.py -v

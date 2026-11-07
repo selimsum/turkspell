@@ -2405,7 +2405,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
     print(f"  Clean entries before dedup: {len(clean_entries):,} -> after dedup: {len(deduped_entries):,}")
     return deduped_entries
 
-def compile_v06(deploy_profile="universal", compile_base=False):
+def compile_v06(deploy_profile="universal", compile_base=False, skip_tests=False):
     if compile_base:
         print("\n=======================================================")
         print("Compiling base dictionary and grammar rules...")
@@ -2480,16 +2480,29 @@ def compile_v06(deploy_profile="universal", compile_base=False):
         _copy_file(DIST_DIR / "turkspell-tdk" / "tr.dic", addon_tdk_dict_dir / "tr.dic")
         
     print("Deployment complete!")
-    print("\nValidating deployed dictionary and running regression tests...")
+    print("\nValidating all profile dictionaries and deployed root dictionary...")
     from validate_build import validate
-    errors, warnings = validate(str(TURKSPELL_DIR / "tr.dic"), str(TURKSPELL_DIR / "tr.aff"), run_tests=True)
-    for w in warnings:
+    all_errors, all_warnings = [], []
+    for prof in profiles:
+        p_dic = str(DIST_DIR / f"turkspell-{prof}" / "tr.dic")
+        p_aff = str(DIST_DIR / f"turkspell-{prof}" / "tr.aff")
+        p_errs, p_warns = validate(p_dic, p_aff, verbose=False, run_tests=False)
+        all_errors.extend(f"[{prof}] {e}" for e in p_errs)
+        all_warnings.extend(f"[{prof}] {w}" for w in p_warns)
+    errors, warnings = validate(
+        str(TURKSPELL_DIR / "tr.dic"),
+        str(TURKSPELL_DIR / "tr.aff"),
+        run_tests=not skip_tests,
+    )
+    all_errors.extend(errors)
+    all_warnings.extend(warnings)
+    for w in all_warnings:
         print(f"  WARNING: {w}")
-    for e in errors:
+    for e in all_errors:
         print(f"  ERROR:   {e}")
-    if errors:
-        raise SystemExit(f"\nDeployed dictionary failed validation: {len(errors)} error(s).")
-    print(f"Validation and regression tests passed ({len(warnings)} warning(s)).")
+    if all_errors:
+        raise SystemExit(f"\nDictionary validation failed: {len(all_errors)} error(s).")
+    print(f"Validation passed ({len(all_warnings)} warning(s)).")
 
 if __name__ == "__main__":
     import argparse
@@ -2505,5 +2518,10 @@ if __name__ == "__main__":
         choices=["tdk", "universal", "dd"],
         help="Profile to deploy to repo root and firefox-addon (default: universal)"
     )
+    parser.add_argument(
+        "--skip-tests",
+        action="store_true",
+        help="Skip running the full morphological regression test suite during post-build validation"
+    )
     args = parser.parse_args()
-    compile_v06(deploy_profile=args.deploy_profile, compile_base=args.compile_base)
+    compile_v06(deploy_profile=args.deploy_profile, compile_base=args.compile_base, skip_tests=args.skip_tests)
