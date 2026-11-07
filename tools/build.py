@@ -1402,7 +1402,7 @@ def compile_v06(deploy_profile="universal", compile_base=False, skip_tests=False
                 shutil.copyfileobj(f_in, f_out)
 
     # Deploy selected profile to repository root
-    print(f"\nDeploying Turkspell ({deploy_profile.upper()}) to repository root ({TURKSPELL_DIR / "tr.*"})...")
+    print(f"\nDeploying Turkspell ({deploy_profile.upper()}) to repository root ({TURKSPELL_DIR / 'tr.*'})...")
     _copy_file(DIST_DIR / f"turkspell-{deploy_profile}" / "tr.aff", TURKSPELL_DIR / "tr.aff")
     _copy_file(DIST_DIR / f"turkspell-{deploy_profile}" / "tr.dic", TURKSPELL_DIR / "tr.dic")
     
