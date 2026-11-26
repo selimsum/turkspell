@@ -16,16 +16,29 @@ __pycache__/
 !lexicons/custom_names.json
 !lexicons/authority_pos_completed.json
 !lexicons/bilim_sanat_lexicon.json
+!lexicons/extra_rep_rules.json
+!lexicons/bad_stems.json
+!lexicons/build_wordlists.json
 !firefox-addon/manifest.json
 !firefox-addon-tdk/manifest.json
 !tests/golden_verbs_baseline.json
 !update.json
 !amo-metadata.json
+!atn-metadata.json
+!requirements*.txt
 
 # Generated build outputs (kept out of source control)
 turkspell-addon.xpi
 turkspell-tdk-addon.xpi
+turkspell-thunderbird.xpi
+turkspell-thunderbird-tdk.xpi
+*-unsigned.xpi
 tr_test.*
+
+# Firefox extension staging dictionaries & signing artifacts
+firefox-addon/dictionaries/
+firefox-addon-tdk/dictionaries/
+signed_dist/
 
 # Temporary/Experimental build outputs
 test_tr.*
@@ -40,9 +53,11 @@ scratch/
 # External dictionaries
 external_dictionaries/
 
-# Raw data directory
-raw_data/
+# Raw data directory (track only authoritative build inputs)
+raw_data/*
+!raw_data/tdk_words.txt
+!raw_data/dil_dernegi_words.txt
+!raw_data/tdk_dizin_2026.json
+!raw_data/custom_entries.json
 
 *.pickle
-
-

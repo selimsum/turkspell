@@ -14,7 +14,7 @@ import json
 import os
 from pathlib import Path
 
-BASE_DIR = Path(r"c:\gemini\turkspell")
+BASE_DIR = Path(__file__).resolve().parent.parent
 NAMES_PATH = BASE_DIR / "lexicons" / "custom_names.json"
 BACKUP_PATH = BASE_DIR / "lexicons" / "custom_names.json.bak"
 

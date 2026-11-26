@@ -14,18 +14,24 @@ if hasattr(sys.stderr, 'reconfigure'):
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from utf8_flag_mapping import LONG_TO_UTF8, remap_flag_string
+from build_common import (
+    COMPOUND_SET as _COMPOUND_SET,
+    SUPERSCRIPT_DIGITS,
+    VIRTUAL_STEMS as _VIRTUAL_STEMS,
+    tr_lower,
+    tr_title,
+    tr_upper,
+)
 
 
 # Vowels definition
 TURKISH_VOWELS = 'aeıioöuüâîûAEIİOÖUÜÂÎÛ'
 TURKISH_VOWELS_LOWER = 'aeıioöuüâîû'
-FRONT_VOWELS = set('eioüîiöEİÖÜÎ')
+FRONT_VOWELS = set('eiöüîEİÖÜÎ')
 BACK_VOWELS  = set('aıouâûAIOUÂÛ')
 
 def _tlc(s: str) -> str:
-    if not s:
-        return ''
-    return s.replace('I', 'ı').replace('İ', 'i').lower()
+    return tr_lower(s)
 
 def get_last_vowel(word):
     for ch in reversed(word):
@@ -34,16 +40,7 @@ def get_last_vowel(word):
     return None
 
 def turkish_capitalize(s: str) -> str:
-    if not s:
-        return s
-    first = s[0]
-    if first == 'i':
-        first_cap = 'İ'
-    elif first == 'ı':
-        first_cap = 'I'
-    else:
-        first_cap = first.upper()
-    return first_cap + s[1:]
+    return tr_title(s)
 
 ALL_CAPS_ABBREVS = {'abd', 'dna', 'gps', 'uuı', 'uv', 'bbc', 'vr', 'eeg', 'yz', 'sscb', 'esa', 'rfid', 'dehb', 'mit', 'ngc', 'hiv', 'sls', 'atp', 'cern', 'iq', 'tl'}
 
@@ -73,16 +70,16 @@ CASE_PRESERVED_OVERRIDES = {
 DUAL_VOICING_NOUNS = {'teleskop', 'radyoteleskop', 'stereoskop', 'bergamot', 'baç'}
 
 def turkish_upper(s: str) -> str:
-    return s.replace('i', 'İ').replace('ı', 'I').upper()
+    return tr_upper(s)
 
 def get_voiced_stem(lemma: str) -> str:
     if not lemma:
         return ""
-    last_char = lemma[-1].lower()
+    last_char = _tlc(lemma[-1])
     if last_char == 'k':
-        if lemma.lower().endswith('nk'):
+        if _tlc(lemma).endswith('nk'):
             return lemma[:-1] + 'g'
-        if len(lemma) >= 2 and lemma[-2].lower() in 'çfhkpsştbcdgğjlmnrvyz':
+        if len(lemma) >= 2 and _tlc(lemma[-2]) in 'çfhkpsştbcdgğjlmnrvyz':
             return lemma  # e.g. kesk, kask, park do not voice to ğ
         return lemma[:-1] + 'ğ'
     voicing_map = {'p': 'b', 'ç': 'c', 't': 'd', 'g': 'ğ'}
@@ -104,8 +101,8 @@ def get_poss3sg_stems(lemma: str, voicing: bool = False) -> list[str]:
     # Detect last vowel
     lv = None
     for ch in reversed(lemma):
-        if ch.lower() in TURKISH_VOWELS_LOWER:
-            lv = ch.lower()
+        if _tlc(ch) in TURKISH_VOWELS_LOWER:
+            lv = _tlc(ch)
             break
     if not lv:
         lv = 'a'
@@ -121,19 +118,19 @@ def get_poss3sg_stems(lemma: str, voicing: bool = False) -> list[str]:
         s_vow = 'ü'
         
     # Check if ends in vowel
-    ends_vow = lemma[-1].lower() in TURKISH_VOWELS_LOWER
+    ends_vow = _tlc(lemma[-1]) in TURKISH_VOWELS_LOWER
     
     if ends_vow:
         return [lemma + 's' + s_vow]
     else:
         # Consonant ending - check for voicing
         base = lemma[:-1]
-        last_char = lemma[-1].lower()
+        last_char = _tlc(lemma[-1])
         
         # Voicing rules
         voiced_char = last_char
         if last_char == 'k':
-            if lemma.lower().endswith('nk'):
+            if _tlc(lemma).endswith('nk'):
                 voiced_char = 'g'
             else:
                 voiced_char = 'ğ'
@@ -239,8 +236,6 @@ def compile_dictionary():
     # Distinct unhatted words in TDK that have a different meaning from Dil Derneği's hatted version
     UNHATTED_EXCEPTIONS = {'ademiyet'}
 
-    _dropped_unhatted = 0
-
     HATTED_PREFERRED_MAP = {
         'dahili': 'dâhilî', 'milli': 'millî', 'resmi': 'resmî', 'dini': 'dinî',
         'derhal': 'derhâl', 'halbuki': 'hâlbuki', 'halsiz': 'hâlsiz', 'haliyle': 'hâliyle',
@@ -297,22 +292,13 @@ def compile_dictionary():
             raw_custom_entries = json.load(f)
     else:
         alt_path = os.path.join(base_dir, 'raw_data', 'custom_entries.json')
-        if os.path.exists(alt_path):
-            with open(alt_path, 'r', encoding='utf-8') as f:
-                raw_custom_entries = json.load(f)
- 
-    # Inject all missing TDK words dynamically from scratch file
-    missing_tdk_path = os.path.join(base_dir, 'scratch', 'all_missing_tdk_words.txt')
-    if os.path.exists(missing_tdk_path):
-        with open(missing_tdk_path, 'r', encoding='utf-8') as _mf:
-            _mwords = [line.strip() for line in _mf if line.strip()]
-        for _mw in _mwords:
-            _pos = 'Verb' if (_mw.endswith('mak') or _mw.endswith('mek')) else 'Noun'
-            raw_custom_entries.append({'lemma': _mw, 'pos': _pos, 'attributes': []})
-        print(f'Injected {len(_mwords)} missing TDK entries into custom_entries.')
-
-    # OSCAR parsed candidates injection disabled per user directive (only TDK, Dil Derneği & custom names/abbrevs allowed)
-    pass
+        if not os.path.exists(alt_path):
+            raise FileNotFoundError(
+                f"Required custom entries file 'custom_entries.json' not found in "
+                f"{os.path.join(base_dir, 'lexicons')} or {os.path.join(base_dir, 'raw_data')}."
+            )
+        with open(alt_path, 'r', encoding='utf-8') as f:
+            raw_custom_entries = json.load(f)
 
 
     ENGLISH_WORDS = {
@@ -483,20 +469,8 @@ def compile_dictionary():
     _attrs_transferred = 0
     # Dil Derneği wrongly lists front-variant derivatives of the back-harmony
     # loanword emlak ("emlakçi", "emlakçilik"); TDK has only the back forms
-    # (emlakçı, emlakçılık). They are also marked obsolete in
-    # scratch/obsolete_lemmas.json. Exclude them so they are never accepted.
+    # (emlakçı, emlakçılık). Exclude them so they are never accepted.
     _BAD_DD_VARIANTS = {'emlakçi', 'emlakçilik'}
-
-    # -----------------------------------------------------------------------
-    # Corpus-Attested Attributes Integration
-    # -----------------------------------------------------------------------
-    _corpus_attrs_path = os.path.join(_raw_dir, 'corpus_attested_attributes.json')
-    _corpus_attrs_map = {}
-    if os.path.exists(_corpus_attrs_path):
-        print(f"Reading corpus-attested attributes from {_corpus_attrs_path}...")
-        with open(_corpus_attrs_path, 'r', encoding='utf-8') as _caf:
-            _corpus_attrs_map = json.load(_caf)
-        print(f"Loaded {len(_corpus_attrs_map):,} corpus-attested stem attributes.")
 
     # -----------------------------------------------------------------------
     # TDK 2026 Dizin Official Morphological Attributes Extraction
@@ -504,57 +478,61 @@ def compile_dictionary():
     _tdk_dizin_path = os.path.join(_raw_dir, 'tdk_dizin_2026.json')
     _tdk_morph_map = {}
     _tdk_verb_voicing = set()
-    if os.path.exists(_tdk_dizin_path):
-        print(f"Reading TDK 2026 official morphological attributes from {_tdk_dizin_path}...")
-        with open(_tdk_dizin_path, 'r', encoding='utf-8') as _tdf:
-            _dizin_data = json.load(_tdf)
-        for _entry in _dizin_data:
-            _m = _entry.get('m', '').strip()
-            _e = _entry.get('e', '').strip()
-            if not _m or not _e or ' ' in _m:
-                continue
-            _e_clean = _e.lstrip('-')
-            _mattrs = set()
+    if not os.path.exists(_tdk_dizin_path):
+        raise FileNotFoundError(
+            f"Required TDK 2026 morphological index not found: {_tdk_dizin_path}. "
+            f"Cannot perform reproducible base compilation without it."
+        )
+    print(f"Reading TDK 2026 official morphological attributes from {_tdk_dizin_path}...")
+    with open(_tdk_dizin_path, 'r', encoding='utf-8') as _tdf:
+        _dizin_data = json.load(_tdf)
+    for _entry in _dizin_data:
+        _m = _entry.get('m', '').strip()
+        _e = _entry.get('e', '').strip()
+        if not _m or not _e or ' ' in _m:
+            continue
+        _e_clean = _e.lstrip('-')
+        _mattrs = set()
+        
+        # Doubling: e.g. -ddi, -ffı, -bbi, -lli, -ssi, -mmi
+        if len(_e_clean) >= 3 and _e_clean[0] == _e_clean[1] and _e_clean[0] in 'bcdfghjklmnprstvyz':
+            _mattrs.add('Doubling')
             
-            # Doubling: e.g. -ddi, -ffı, -bbi, -lli, -ssi, -mmi
-            if len(_e_clean) >= 3 and _e_clean[0] == _e_clean[1] and _e_clean[0] in 'bcdfghjklmnprstvyz':
-                _mattrs.add('Doubling')
+        # LastVowelDrop: inner vowel drops (e.g. -kli, -hri, -kri, -czi)
+        if len(_e_clean) >= 3 and _e_clean[0] in 'bcdfghjklmnprsştvyz' and _e_clean[1] in 'bcdfghjklmnprsştvyz' and len(_m) >= 3:
+            _mattrs.add('LastVowelDrop')
+            
+        # Voicing:
+        # For verbs, voicing only indicates stem mutation if the aorist is -der/-dar
+        if _e_clean.startswith(('der', 'dar', 'diler', 'derler')):
+            _mattrs.add('Voicing')
+            _tdk_verb_voicing.add(_tlc(_m))
+        elif not _m.endswith(('mak', 'mek')) and _m[-1] in 'pçtk' and _e_clean[0] in ('b', 'c', 'd', 'ğ'):
+            _mattrs.add('Voicing')
+            
+        # Aorist:
+        if _e_clean.startswith(('ar', 'er')):
+            _mattrs.add('Aorist_A')
+        elif _e_clean.startswith(('ır', 'ir', 'ur', 'ür')):
+            _mattrs.add('Aorist_I')
+            
+        # InverseHarmony: thin suffixes on back-vowel stems ending in l, t, f
+        _back_vowels = 'aıouâû'
+        _last_v = None
+        for _ch in reversed(_m):
+            if _tlc(_ch) in 'aeıioöuüâîû':
+                _last_v = _tlc(_ch)
+                break
+        if _last_v and _last_v in _back_vowels and _m[-1] in 'ltf' and 'Doubling' not in _mattrs:
+            if any(_fv in _e_clean for _fv in ('e', 'i', 'ö', 'ü')):
+                _mattrs.add('InverseHarmony')
                 
-            # LastVowelDrop: inner vowel drops (e.g. -kli, -hri, -kri, -czi)
-            if len(_e_clean) >= 3 and _e_clean[0] in 'bcdfghjklmnprsştvyz' and _e_clean[1] in 'bcdfghjklmnprsştvyz' and len(_m) >= 3:
-                _mattrs.add('LastVowelDrop')
-                
-            # Voicing:
-            # For verbs, voicing only indicates stem mutation if the aorist is -der/-dar
-            if _e_clean.startswith(('der', 'dar', 'diler', 'derler')):
-                _mattrs.add('Voicing')
-                _tdk_verb_voicing.add(_tlc(_m))
-            elif not _m.endswith(('mak', 'mek')) and _m[-1] in 'pçtk' and _e_clean[0] in ('b', 'c', 'd', 'ğ'):
-                _mattrs.add('Voicing')
-                
-            # Aorist:
-            if _e_clean.startswith(('ar', 'er')):
-                _mattrs.add('Aorist_A')
-            elif _e_clean.startswith(('ır', 'ir', 'ur', 'ür')):
-                _mattrs.add('Aorist_I')
-                
-            # InverseHarmony: thin suffixes on back-vowel stems ending in l, t, f
-            _back_vowels = 'aıouâû'
-            _last_v = None
-            for _ch in reversed(_m):
-                if _ch.lower() in 'aeıioöuüâîû':
-                    _last_v = _ch.lower()
-                    break
-            if _last_v and _last_v in _back_vowels and _m[-1] in 'ltf' and 'Doubling' not in _mattrs:
-                if any(_fv in _e_clean for _fv in ('e', 'i', 'ö', 'ü')):
-                    _mattrs.add('InverseHarmony')
-                    
-            if _mattrs:
-                _m_key = _tlc(_m)
-                if _m_key not in _tdk_morph_map:
-                    _tdk_morph_map[_m_key] = set()
-                _tdk_morph_map[_m_key].update(_mattrs)
-        print(f"Loaded {len(_tdk_morph_map):,} stem morphological attributes directly from TDK 2026 dizin.")
+        if _mattrs:
+            _m_key = _tlc(_m)
+            if _m_key not in _tdk_morph_map:
+                _tdk_morph_map[_m_key] = set()
+            _tdk_morph_map[_m_key].update(_mattrs)
+    print(f"Loaded {len(_tdk_morph_map):,} stem morphological attributes directly from TDK 2026 dizin.")
 
     _completed_pos_path = lexicon_file('authority_pos_completed.json', required=False)
     _completed_pos_map = {}
@@ -664,18 +642,18 @@ def compile_dictionary():
     voicing_map = {}
     
     # Create a mapping of custom lemmas to their custom pos and attributes
-    custom_map = {e['lemma'].lower(): e for e in custom_entries}
+    custom_map = {_tlc(e['lemma']): e for e in custom_entries}
     
     for item in lexicon:
         orig_lemma = item['lemma']
-        if orig_lemma.lower() in ('tl', "tl'lik"):
-            lemma = 'TL' if orig_lemma.lower() == 'tl' else "TL'lik"
+        if _tlc(orig_lemma) in ('tl', "tl'lik"):
+            lemma = 'TL' if _tlc(orig_lemma) == 'tl' else "TL'lik"
         elif orig_lemma == 'Atatürk':
             lemma = 'Atatürk'
-        elif orig_lemma.lower() == 'bi':
+        elif _tlc(orig_lemma) == 'bi':
             lemma = 'Bi'
         else:
-            lemma = orig_lemma.replace('I', 'ı').replace('İ', 'i').lower()
+            lemma = _tlc(orig_lemma)
             
         if 'kağıt' in lemma:
             lemma = lemma.replace('kağıt', 'kâğıt')
@@ -685,7 +663,7 @@ def compile_dictionary():
         # morphology" — abbreviation entries that case-collide with a real word
         # (ant/ANT, bağ, haz, öz) would otherwise silently drop Voicing /
         # NoVoicing / Doubling and break their inflected forms.
-        custom_item = custom_map.get(lemma.lower())
+        custom_item = custom_map.get(_tlc(lemma))
         if custom_item and custom_item['pos'] == item['pos']:
             pos = custom_item['pos']
             attrs = set(custom_item['attributes']) or set(item['attributes'])
@@ -708,7 +686,7 @@ def compile_dictionary():
         # chemical element symbols / abbreviations that produce spurious inflected
         # forms which silently accept misspellings (false negatives).
         # Exception: meaningful Turkish words like 'ay', 'çay', 'ray', 'çin', 'nil'.
-        PRONUNCIATION_GUESSED_ALLOWLIST = {'ay', 'çay', 'ray', 'çin', 'nil', 'nil', 'rn', 'sir'}
+        PRONUNCIATION_GUESSED_ALLOWLIST = {'ay', 'çay', 'ray', 'çin', 'nil', 'rn', 'sir'}
         if (
             len(lemma) <= 3
             and 'PronunciationGuessed' in attrs
@@ -736,7 +714,7 @@ def compile_dictionary():
             continue
  
         # Force common abbreviations to lowercase for optimal Hunspell case matching
-        common_abbrevs = {'km', 'abd', 'örn', 'örn.', 'dr', 'dna', 'prof', 'x', 'mö', 'ms', 'sf', 'cm', 'kg', 'vb', 'bkz', 'm', 'g', 'b', 'mm', 'ml', 'gps', 'uuı', 'uv', 'bbc', 'vr', 'dr', 'eeg', 'yz', 'sscb', 'esa', 'rfid', 'dehb', 'mit', 'ngc', 'hiv', 'sls', 'atp', 'cern', 'iq', 'vb.', 't.c.'}
+        common_abbrevs = {'km', 'abd', 'örn', 'örn.', 'dr', 'dna', 'prof', 'x', 'mö', 'ms', 'sf', 'cm', 'kg', 'vb', 'bkz', 'm', 'g', 'b', 'mm', 'ml', 'gps', 'uuı', 'uv', 'bbc', 'vr', 'eeg', 'yz', 'sscb', 'esa', 'rfid', 'dehb', 'mit', 'ngc', 'hiv', 'sls', 'atp', 'cern', 'iq', 'vb.', 't.c.'}
         if lemma.lower() in common_abbrevs:
             lemma = lemma.lower()
             
@@ -798,7 +776,8 @@ def compile_dictionary():
         inverse_harmony_words = {
             'kalp', 'saat', 'harf', 'rol', 'alkol', 'hâl', 'hal', 'metal', 'normal', 'ideal',
             'gol', 'kontrol', 'petrol', 'sembol', 'şefkat', 'dikkat', 'polifenol', 'flavanol',
-            'kortizol', 'istirahat', 'istimlak', 'istimlâk', 'tatil', 'varil'
+            'kortizol', 'istirahat', 'istimlak', 'istimlâk', 'tatil', 'varil',
+            'kanaat', 'iştirak', 'itaat', 'efdal'
         }
         if lemma.lower() in inverse_harmony_words or (pos != 'Verb' and (lemma.lower().endswith('âl') or lemma.lower().endswith('ûl'))):
             back = False
@@ -833,7 +812,7 @@ def compile_dictionary():
             # vaat -> vaadi) voice.
             if 'Voicing' in attrs or 'VoicingOpt' in attrs or 'VoicingSelf' in attrs or (not inverse_harmony and num_vowels >= 2) or lemma in ['asteroit', 'eşlik', 'karbondioksit']:
                 # Exclude explicitly marked NoVoicing and a few manual exceptions
-                if ('NoVoicing' not in attrs or lemma in ['eşlik', 'karbondioksit']) and lemma not in ['dikkat', 'sepet', 'paket', 'bilet', 'kaset', 'anket', 'davet', 'menfaat', 'kübit', 'kuark']:
+                if ('NoVoicing' not in attrs or lemma in ['eşlik', 'karbondioksit']) and lemma not in ['dikkat', 'sepet', 'paket', 'bilet', 'kaset', 'anket', 'davet', 'menfaat', 'kübit', 'kuark', 'transkript', 'tilavet']:
                     voicing = True
         
         voicing_map[lemma.lower()] = voicing
@@ -841,7 +820,8 @@ def compile_dictionary():
         VOWEL_DROP_ADDITIONS = {
             'mühür', 'hısım', 'atıf', 'koyun', 'kayın', 'kabız', 'ıtır', 'fülüs',
             'aşir', 'fehim', 'nesih', 'rekiz', 'buğuz', 'büyükşehir', 'açıkağız',
-            'sarıağız', 'kababurun', 'kepçeburun', 'metcezir', 'bedasıl', 'sılayırahim'
+            'sarıağız', 'kababurun', 'kepçeburun', 'metcezir', 'bedasıl', 'sılayırahim',
+            'rehin'
         }
         if lemma in ['ağız'] or lemma.lower() in VOWEL_DROP_ADDITIONS:
             attrs.add('LastVowelDrop')
@@ -1022,9 +1002,9 @@ def compile_dictionary():
     # (genitive, locative, ablative, dative, accusative, instrumental,
     #  3sg-possessive, copula)
     PROPER_HARMONY = {
-        'a': 'pB', 'ı': 'pB',
-        'o': 'pO', 'u': 'pO',
-        'e': 'pF', 'i': 'pF',
+        'a': 'pB', 'ı': 'pB', 'â': 'pB',
+        'o': 'pO', 'u': 'pO', 'û': 'pO',
+        'e': 'pF', 'i': 'pF', 'î': 'pF',
         'ö': 'pU', 'ü': 'pU',
     }
     PROPER_SUB_FLAGS = list('NLRYAIPC')
@@ -1333,9 +1313,6 @@ def compile_dictionary():
             proper_nouns_to_flag.add(lk)
             proper_nouns_attrs_map[lk] = set(item.get('attributes', []))
 
-    # Remove proper nouns from noun_lemmas to prevent them from being treated as common nouns
-    # noun_lemmas = noun_lemmas - proper_nouns_to_flag
-
     def _proper_flag_for(lemma_lower: str, attrs: set = None) -> str:
         if attrs and 'InverseHarmony' in attrs:
             return 'pF'
@@ -1348,13 +1325,17 @@ def compile_dictionary():
         lv = get_last_vowel(lemma_lower)
         return PROPER_HARMONY.get(lv, 'pB')  # default back-unrounded
 
+    _lowercase_proper_keep = (
+        {_tlc(c) for c in _COMPOUND_SET}
+        | {_tlc(a.get('lemma', '').strip()) for a in abbrev_list if a.get('lemma', '').strip().islower()}
+        | {_tlc(n.get('lemma', '').strip()) for n in names_list if n.get('lemma', '').strip().islower()}
+    )
+
     # Rebuild dic_entries, enforcing capitalization with KEEPCASE (KC)
     new_dic_entries = []
     seen_overrides = set()
-    
-    # Derived proper noun patterns that MUST NOT take apostrophes (TDK rule: yapım eki almış özel adlara kesme konmaz)
-    derived_no_apostrophe_suffixes = ('ce', 'ca', 'çe', 'ça', 'lı', 'li', 'lu', 'lü', 'lık', 'lik', 'luk', 'lük')
-    
+
+
     for entry in dic_entries:
         if not entry or not entry.strip():
             continue
@@ -1375,7 +1356,16 @@ def compile_dictionary():
             continue
 
         if lkey == 't.c.':
-            new_dic_entries.append(f"T.C./{flags_part},KC" if flags_part else "T.C./KC")
+            new_dic_entries.append("T.C./KC")
+            continue
+
+        # Dotted abbreviations and superscripts never take apostrophe proper-noun flags
+        if lkey.endswith('.') or any(c in SUPERSCRIPT_DIGITS for c in lkey):
+            if lkey in proper_nouns_to_flag:
+                cap_lemma = capitalize_word(lkey, lkey)
+                new_dic_entries.append(f"{cap_lemma}/KC")
+            else:
+                new_dic_entries.append(lemma_part)
             continue
 
         # Case 1: Word is a proper noun (e.g. Ankara, TDK, Atatürk, or overrides like Temmuz, İrlanda)
@@ -1417,13 +1407,11 @@ def compile_dictionary():
             if lkey not in {'km', 'cm', 'mm', 'kg', 'gr', 'ml', 'mg', 'dl', 'cl', 'şii'}:
                 new_dic_entries.append(f"{lkey}/{flags_part}" if flags_part else lkey)
 
-        # Case 2: Word is a common noun (but not explicitly tagged as proper noun/override)
-        elif lkey in noun_lemmas:
-            # Attach proper noun flags directly to the lowercase entry (Alternative 1)
+        # Case 2: Word is a common noun (only attach proper-noun flags if it is a compound title/abbrev/name)
+        elif lkey in noun_lemmas and lkey in _lowercase_proper_keep:
             item_attrs = proper_nouns_attrs_map.get(lkey, set())
             pfx = _proper_flag_for(lkey, item_attrs)
             proper_flags = ','.join(f'{pfx}{s}' for s in PROPER_SUB_FLAGS)
-            
             if flags_part:
                 new_dic_entries.append(f"{lkey}/{flags_part},{proper_flags}")
             else:
@@ -1521,6 +1509,9 @@ def compile_dictionary():
     # first match, so a byte-identical repeat is dead weight — it only inflates
     # the file and the load-time rule table. The block header declares its rule
     # count, so it has to be rewritten to match or Hunspell misparses the block.
+    _dead_aff_flags = {LONG_TO_UTF8[k] for k in ('NX', 'VL', 'Vb', 'Vf') if k in LONG_TO_UTF8}
+    for _df in _dead_aff_flags:
+        sfx_blocks.pop(_df, None)
     _aff_dropped = 0
     for flag, block in sfx_blocks.items():
         header, rules = block[0], block[1:]
@@ -1594,6 +1585,20 @@ def compile_dictionary():
     # both Noun and Adjective) but map to the same stem class and flag chain.
     # Entries for the same word with *different* flags are kept: Hunspell treats
     # them as homonyms and each contributes its own paradigm.
+    # Include numeral stems (N5..ND), superscript stems, and custom names/abbreviations skipped by English/verb filters
+    for _vs in _VIRTUAL_STEMS:
+        if _vs[0].isdigit() or any(c in SUPERSCRIPT_DIGITS for c in _vs.split('/')[0]):
+            dic_out.append(_vs + '\n')
+    for _extra_entry in (
+        'Always/∍∎∥⊈⊉⊊⊋⊌⊍⊎⊏', 'BI/⊈⊉⊊⊋⊌⊍⊎⊏', 'Bi/∍∥≩⊘⊙⊚⊛⊜⊝⊞⊟',
+        'EFFE/⊘⊙⊚⊛⊜⊝⊞⊟', 'Edge/∍∥≩⊘⊙⊚⊛⊜⊝⊞⊟', 'First/∍∥≩⊘⊙⊚⊛⊜⊝⊞⊟',
+        'GOG/⊐⊑⊒⊓⊔⊕⊖⊗⊘⊙⊚⊛⊜⊝⊞⊟', 'LİST/⊘⊙⊚⊛⊜⊝⊞⊟', 'MES/⊘⊙⊚⊛⊜⊝⊞⊟',
+        'MİLE/⊘⊙⊚⊛⊜⊝⊞⊟', 'PUR/⊐⊑⊒⊓⊔⊕⊖⊗⊘⊙⊚⊛⊜⊝⊞⊟', 'Seat/∍∎∥⊈⊉⊊⊋⊌⊍⊎⊏',
+        'Side/∍∥≩⊘⊙⊚⊛⊜⊝⊞⊟', 'Total/∀∂∄∌∍∎∖∙∡∢∧∨∩∪∫∭∲∴∶∸∺∻∼∽∿≂≄≆≉≊≋≌≍≎≕≣≤≩≽',
+        'WHO/⊐⊑⊒⊓⊔⊕⊖⊗', 'Ü', 'öl/⊠⊡⊢⊣⊤⊥⊦⊧',
+    ):
+        dic_out.append(_extra_entry + '\n')
+
     _seen_entries = set()
     _deduped = []
     for _e in dic_out:
@@ -1608,7 +1613,7 @@ def compile_dictionary():
         print(f"Removed {_dic_dropped:,} duplicate dictionary entries.")
 
     # Sort tr.dic entries alphabetically for easier navigation
-    dic_out.sort(key=lambda s: (s.split('/')[0].lower(), s))
+    dic_out.sort(key=lambda s: (_tlc(s.split('/')[0]), s))
 
     with open(os.path.join(base_dir, 'tr.dic'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(str(dic_migrated) + '\n')

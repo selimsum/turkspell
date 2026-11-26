@@ -284,13 +284,13 @@ def generate_verb_forms(vinfo: dict) -> list[str]:
     if vowel_end:
         forms.add(f"{stem}y{v_high}n")
         forms.add(f"{stem}y{v_high}n{v_high}z")
-        forms.add(f"{stem}y{v_low}y{v_high}m")
-        forms.add(f"{stem}y{v_low}l{v_high}m")
+        forms.add(f"{stem}y{v_low}y{unrounded_v}m")
+        forms.add(f"{stem}y{v_low}l{unrounded_v}m")
     else:
         forms.add(f"{st_v(True)}{v_high}n")
         forms.add(f"{st_v(True)}{v_high}n{v_high}z")
-        forms.add(f"{st_v(True)}{v_low}y{v_high}m")
-        forms.add(f"{st_v(True)}{v_low}l{v_high}m")
+        forms.add(f"{st_v(True)}{v_low}y{unrounded_v}m")
+        forms.add(f"{st_v(True)}{v_low}l{unrounded_v}m")
     forms.add(f"{stem}s{v_high}nl{v_low}r")
 
     # 10. Progressive -makta / -mekte

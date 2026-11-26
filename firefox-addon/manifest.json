@@ -1,14 +1,14 @@
 {
   "manifest_version": 2,
   "name": "Turkspell - Türkçe Yazım Denetimi",
-  "version": "0.7.27",
+  "version": "0.7.40",
   "description": "Hem Türk Dil Kurumu hem Dil Derneği yazım kurallarını destekleyen evrensel Türkçe yazım denetimi eklentisi. Yüksek doğruluk ve düşük bellek tüketimi sağlar.",
   "author": "Selim Şumlu",
   "homepage_url": "https://github.com/selimsum/turkspell",
   "browser_specific_settings": {
     "gecko": {
       "id": "turkspell@mozilla.org.tr",
-      "strict_min_version": "109.0"
+      "strict_min_version": "60.0"
     }
   },
   "dictionaries": {

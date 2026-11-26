@@ -16,19 +16,20 @@ import unittest
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
-DICT_PATH = str(ROOT_DIR / "tr")
+DICT_PATH = os.environ.get("TURKSPELL_DICT", str(ROOT_DIR / "tr"))
 
-winget_pkg_dir = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages")
-for root, dirs, files in os.walk(winget_pkg_dir):
-    if "hunspell.exe" in files:
-        if root not in os.environ.get("PATH", ""):
-            os.environ["PATH"] = root + os.pathsep + os.environ["PATH"]
-        break
-HUNSPELL_BIN = shutil.which("hunspell") or "hunspell"
+sys.path.insert(0, str(ROOT_DIR / "build"))
+from build_common import find_hunspell
+
+HUNSPELL_BIN = find_hunspell() or "hunspell"
 
 
 def check_illegal_words(words: list[str], dict_path: str = DICT_PATH) -> list[str]:
     """Runs hunspell -l on words that MUST be rejected. Returns any that leaked (were accepted)."""
+    aff_file = Path(f"{dict_path}.aff")
+    dic_file = Path(f"{dict_path}.dic")
+    if not aff_file.exists() or not dic_file.exists():
+        raise FileNotFoundError(f"Dictionary files not found at {dict_path} (.aff/.dic)")
     p = subprocess.run(
         [HUNSPELL_BIN, "-d", dict_path, "-l"],
         input="\n".join(words) + "\n",
@@ -36,6 +37,8 @@ def check_illegal_words(words: list[str], dict_path: str = DICT_PATH) -> list[st
         capture_output=True,
         encoding="utf-8"
     )
+    if p.returncode != 0:
+        raise RuntimeError(f"hunspell process failed with code {p.returncode}: {p.stderr.strip()}")
     flagged = set(line.strip() for line in p.stdout.splitlines() if line.strip())
     # A leaked word is one that hunspell accepted (NOT in flagged)
     leaked = [w for w in words if w not in flagged]
@@ -91,6 +94,8 @@ class TestOvergenerationProtection(unittest.TestCase):
             "arabadaın", "çocukdaden", "masadanler"
         ]
         leaked = check_illegal_words(illegal)
+        self.assertEqual(leaked, [], f"Impossible suffix chains leaked: {leaked}")
+
     def test_bare_virtual_stems(self):
         """Virtual stems guarded by NEEDAFFIX X must never be recognized as bare words."""
         illegal = [
@@ -114,6 +119,60 @@ class TestOvergenerationProtection(unittest.TestCase):
         ]
         leaked = check_illegal_words(illegal)
         self.assertEqual(leaked, [], f"Plural singular copulas overgenerated: {leaked}")
+
+    def test_chained_derivation_overgeneration(self):
+        """Recursive chained affix pseudo-words (*kitaplıkçılıklaştırmak, *denizlikleşebilen) must be rejected."""
+        illegal = [
+            "denizlikleşebilen", "akılsızlıkçılıklaştırmak", "kapılılıkçılıklaştırmak",
+            "havasızlıkçılıklaştırmak", "kitaplıkçılıklaştırmak", "topraksızlıkçılıklaştırmak",
+            "dağlıkçılıklaştırmak", "insanlıkçılıklaştırmak", "kapısızlıkçılıklaştırmak",
+            "çiçeklikleşebilen", "mühendislikleşebilen", "güneşlikleşebilen",
+            "arabalıkçılıklaştırmak", "ormanlıkçılıklaştırmak", "avukatlıkçılıklaştırmak",
+            "ağaçlıklılaşabilmek", "arabasızlıkçılıklaştırmak", "ağaçlıkçılıklaştırmak",
+            "zamansızlıkçılıklaştırmak", "ağaçlılıkçılıklaştırmak", "masasızlıkçılıklaştırmak",
+            "dünyalıkçılıklaştırmak", "şehircilikleştiriliverme", "dağlılıkçılıklaştırmak",
+            "kalemlikleşebilen", "evlikleşebilen"
+        ]
+        leaked = check_illegal_words(illegal)
+        self.assertEqual(leaked, [], f"Chained derivation pseudo-words leaked: {leaked}")
+
+    def test_rounded_aorist_harmony_rejection(self):
+        """Rounded aorist stems (-ur/-ür) must reject unrounded 2sg/2pl forms (*olursın, *görürsin)."""
+        illegal = [
+            "olursın", "olursınız", "bulursın", "bulursınız", "durursın",
+            "vurursın", "görürsin", "görürsiniz", "ölürsin", "ölürsiniz",
+        ]
+        leaked = check_illegal_words(illegal)
+        self.assertEqual(leaked, [], f"Unrounded 2nd-person forms on rounded aorists leaked: {leaked}")
+
+    def test_voicing_copula_rounding_harmony(self):
+        """1sg/1pl copulas (VC/vc) must respect rounding harmony."""
+        illegal = [
+            "devletüm", "devletüz", "kitabum", "sanatum",
+            "pilotım", "pilotız", "stokım", "stokız",
+            "çöpim", "çöpiz", "kulpım",
+        ]
+        leaked = check_illegal_words(illegal)
+        self.assertEqual(leaked, [], f"Rounding-violating VC/vc copulas leaked: {leaked}")
+
+    def test_invalid_24h_clock_times(self):
+        """Only 24.00 is valid for hour 24; 24.01..24.59 must be rejected."""
+        illegal = ["24.01'de", "24.15'te", "24.30'da", "24.59'da"]
+        leaked = check_illegal_words(illegal)
+        self.assertEqual(leaked, [], f"Invalid 24h clock times leaked: {leaked}")
+
+    def test_dotted_and_superscript_apostrophe_rejection(self):
+        """TDK: abbreviations ending in '.' or superscripts must NOT take apostrophes or mismatched inflections."""
+        illegal = [
+            "vb.'leri", "vb.'ne", "vb.'de", "Alm.'dan", "Alm.'da",
+            "İng.'yi", "İng.'de", "a.g.e.'de", "a.g.e.'den", "yy.'da",
+            "Dr.'a", "Prof.'a", "T.C.'de", "T.C.ler", "a.lar",
+            "cm³'e", "cm³'te", "cm³de", "m²'ye", "m²'de", "m²da",
+            "6⁴'ten", "6⁴dan", "m²nci", "cm³üncü",
+            "mat'ın", "zıt'a", "kal'ın", "ark'a",
+        ]
+        leaked = check_illegal_words(illegal)
+        self.assertEqual(leaked, [], f"Illegal apostrophed or leaked abbreviation/override forms accepted: {leaked}")
 
 
 if __name__ == "__main__":

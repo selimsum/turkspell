@@ -1,0 +1,980 @@
+[
+  {
+    "lemma": "ahenk",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "diyalog",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "dip",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "Türk",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "patlama",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "moderatör",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "arktik",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "bulabilmek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "gerekçelendirme",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "gerçekleştirme",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "güçsüzleşme",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "miting",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "yükseltmek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "fi",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "Amerika Birleşik Devletleri",
+    "pos": "Noun",
+    "attributes": [
+      "CompoundP3sg"
+    ]
+  },
+  {
+    "lemma": "hal",
+    "pos": "Noun",
+    "attributes": [
+      "InverseHarmony",
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "ihlal",
+    "pos": "Noun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "istiklal",
+    "pos": "Noun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "hilal",
+    "pos": "Noun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "celal",
+    "pos": "Noun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "implant",
+    "pos": "Noun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "konuşmacı",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kriptografi",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "planlamacı",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "sistem",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "yaralı",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "sadakat",
+    "pos": "Noun",
+    "attributes": [
+      "InverseHarmony",
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Neandertal",
+    "pos": "Noun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "Paralimpik",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "antiviral",
+    "pos": "Noun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "manipüle",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "bugünkü",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "dünkü",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "yarınki",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "şimdiki",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "sonraki",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "önceki",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "bazlı",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kirlilik",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "dolanık",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "enfekte",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "koronavirüs",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "siber",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "tarihlenmek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "krallık",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "kriyojenik",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "modifiye",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "dokunmatik",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "pandemi",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "karbondioksit",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "membran",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "yetmezlik",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "kap",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "ithafen",
+    "pos": "Adverb",
+    "attributes": []
+  },
+  {
+    "lemma": "piksel",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "hipotermi",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "mekânsal",
+    "pos": "Adjective",
+    "attributes": []
+  },
+  {
+    "lemma": "psikiyatrist",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "depresif",
+    "pos": "Adjective",
+    "attributes": []
+  },
+  {
+    "lemma": "emoji",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kod",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kodlamak",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "buzdolabı",
+    "pos": "Noun",
+    "attributes": [
+      "CompoundP3sg"
+    ]
+  },
+  {
+    "lemma": "gözlemevi",
+    "pos": "Noun",
+    "attributes": [
+      "CompoundP3sg"
+    ]
+  },
+  {
+    "lemma": "sürdürülebilir",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "sürdürülebilirlik",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "ivmelenme",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kıtasal",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "daralmak",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "gözlemek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "cisimleşmek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "yayınlamak",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "modellemek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "ivmelenmek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "ölçeklemek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "ölçeklenmek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "gençleşmek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "kıraçlaşmak",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "derebeylik",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "deneyimlemek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "havas",
+    "pos": "Noun",
+    "attributes": [
+      "Doubling"
+    ]
+  },
+  {
+    "lemma": "başörtülü",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "başörtüsüz",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "sekülerleşmek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "zeytinyağlı",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kutucuk",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "fonlamak",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "gerekçe",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kovalamaca",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "menüsküs",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "refakatçi",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "tarihlemek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "tarihleme",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "pozlama",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "filtreleme",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "yazıcı",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "immün",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "volt",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "amper",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "metre",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "gram",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "litre",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kalori",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kütle",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "hertz",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "bayt",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "bit",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "saniye",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "dakika",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "gün",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "yıl",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kombin",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "havalimanı",
+    "pos": "Noun",
+    "attributes": [
+      "CompoundP3sg"
+    ]
+  },
+  {
+    "lemma": "havaalanı",
+    "pos": "Noun",
+    "attributes": [
+      "CompoundP3sg"
+    ]
+  },
+  {
+    "lemma": "cumhurbaşkanı",
+    "pos": "Noun",
+    "attributes": [
+      "CompoundP3sg"
+    ]
+  },
+  {
+    "lemma": "dijitalleşmek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "dijitalleştirmek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "eşlikçi",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "İrlanda",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "yarışmacı",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "merkezi",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "reflü",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "sürüntü",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "yanlışlamak",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "basınç",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "kullanışlı",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "savunmacı",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "taşınım",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "bakıvermek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "algınlık",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "istikrarsızlaştırmak",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "anlaşmak",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "kavuşmak",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "mı",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "mi",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "mu",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "mü",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "nemalanmak",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "yamultmak",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "Şii",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "değişmek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "giriş",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "alp",
+    "pos": "Noun",
+    "attributes": [
+      "InverseHarmony"
+    ]
+  },
+  {
+    "lemma": "alıvermek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "emzirmek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "sarkmak",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "kuran",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "Ziya",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Derya",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "Füsun",
+    "pos": "ProperNoun",
+    "attributes": []
+  },
+  {
+    "lemma": "tilavet",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "alicenaplık",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "dilemek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "harbi",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kadro",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "sürdürmek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "kurban",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "resmileştirme",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "resmileştirmek",
+    "pos": "Verb",
+    "attributes": []
+  },
+  {
+    "lemma": "yapılandırma",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "total",
+    "pos": "Adj",
+    "attributes": []
+  },
+  {
+    "lemma": "elmek",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "istimlak",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "Total",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "turp",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "varil",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "tatil",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "gönderim",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "üzere",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kalım",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "araz",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "karadelik",
+    "pos": "Noun",
+    "attributes": [
+      "Voicing"
+    ]
+  },
+  {
+    "lemma": "çip",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "kripto",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "algoritma",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "yapay zekâ",
+    "pos": "Noun",
+    "attributes": []
+  },
+  {
+    "lemma": "golf",
+    "pos": "Noun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "dönüştürmek",
+    "pos": "Verb",
+    "attributes": [
+      "Aorist_I"
+    ]
+  },
+  {
+    "lemma": "tasavvuf",
+    "pos": "Noun",
+    "attributes": [
+      "NoVoicing"
+    ]
+  },
+  {
+    "lemma": "Atatürk",
+    "pos": "ProperNoun",
+    "attributes": []
+  }
+]

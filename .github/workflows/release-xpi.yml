@@ -9,9 +9,11 @@ on:
     paths:
       - 'tr.aff'
       - 'tr.dic'
+      - 'dist/**'
       - 'firefox-addon/manifest.json'
       - 'firefox-addon-tdk/manifest.json'
       - 'amo-metadata.json'
+      - 'atn-metadata.json'
       - 'tools/sign_addon.py'
       - 'build/package_addon.py'
       - '.github/workflows/release-xpi.yml'
@@ -54,6 +56,23 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'requirements-dev.txt'
+
+      - name: Install System Dependencies (Hunspell)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y hunspell
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Validate Build & Run Test Suite
+        run: |
+          python build/validate_build.py --no-tests
+          pytest -v
 
       - name: Determine & Bump Extension Version
         id: bump
@@ -71,10 +90,59 @@ jobs:
           AMO_KEY: ${{ secrets.AMO_JWT_ISSUER }}
           AMO_SECRET: ${{ secrets.AMO_JWT_SECRET }}
         run: |
-          echo "Signing Universal profile on AMO..."
-          python tools/sign_addon.py --profile universal --version "${{ steps.bump.outputs.version }}"
-          echo "Signing TDK profile on AMO..."
-          python tools/sign_addon.py --profile tdk --version "${{ steps.bump.outputs.version }}" || echo "Notice: TDK addon signing on AMO pending initial manual submission on AMO Developer Hub."
+          if [ -n "$AMO_KEY" ] && [ -n "$AMO_SECRET" ]; then
+            echo "Signing Universal profile on AMO..."
+            python tools/sign_addon.py --profile universal --version "${{ steps.bump.outputs.version }}"
+            echo "Signing TDK profile on AMO..."
+            python tools/sign_addon.py --profile tdk --version "${{ steps.bump.outputs.version }}" || echo "Notice: TDK addon signing on AMO pending initial manual submission on AMO Developer Hub."
+          else
+            echo "AMO secrets not present. Skipping signing step."
+          fi
+
+      - name: Verify & Prepare Release Assets
+        id: assets
+        run: |
+          python -c "
+          import os, sys, shutil
+          from tools.sign_addon import is_signed_xpi
+
+          signed_files = []
+          for name, xpi in [('Universal', 'turkspell-addon.xpi'), ('TDK', 'turkspell-tdk-addon.xpi')]:
+              if is_signed_xpi(xpi):
+                  print(f'OK: {name} ({xpi}) is cryptographically signed by Mozilla.')
+                  signed_files.append(xpi)
+              else:
+                  print(f'Notice: {name} ({xpi}) does not contain Mozilla signatures.')
+
+          # If signed packages exist, publish only signed packages to avoid distributing unverified add-ons
+          if signed_files:
+              files_to_publish = list(signed_files)
+              if 'turkspell-addon.xpi' in signed_files:
+                  shutil.copyfile('turkspell-addon.xpi', 'turkspell-thunderbird.xpi')
+                  files_to_publish.append('turkspell-thunderbird.xpi')
+              if 'turkspell-tdk-addon.xpi' in signed_files:
+                  shutil.copyfile('turkspell-tdk-addon.xpi', 'turkspell-thunderbird-tdk.xpi')
+                  files_to_publish.append('turkspell-thunderbird-tdk.xpi')
+          else:
+              # In developer/unsigned runs without AMO keys, provide packages labeled -unsigned
+              print('Warning: No signed extensions found. Publishing as unsigned packages.')
+              shutil.copyfile('turkspell-addon.xpi', 'turkspell-addon-unsigned.xpi')
+              shutil.copyfile('turkspell-tdk-addon.xpi', 'turkspell-tdk-addon-unsigned.xpi')
+              shutil.copyfile('turkspell-thunderbird.xpi', 'turkspell-thunderbird-unsigned.xpi')
+              shutil.copyfile('turkspell-thunderbird-tdk.xpi', 'turkspell-thunderbird-tdk-unsigned.xpi')
+              files_to_publish = [
+                  'turkspell-addon-unsigned.xpi',
+                  'turkspell-tdk-addon-unsigned.xpi',
+                  'turkspell-thunderbird-unsigned.xpi',
+                  'turkspell-thunderbird-tdk-unsigned.xpi',
+              ]
+
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              out.write('release_files<<EOF\n')
+              for f in files_to_publish:
+                  out.write(f'{f}\n')
+              out.write('EOF\n')
+          "
 
       - name: Commit & Tag New Version
         run: |
@@ -106,8 +174,6 @@ jobs:
           name: "Release ${{ steps.bump.outputs.tag_name || format('v{0}', steps.bump.outputs.version) }}"
           body: |
             Automated release for version `${{ steps.bump.outputs.tag_name || steps.bump.outputs.version }}` of the Turkspell Firefox dictionary extensions (Universal & TDK 2026).
-          files: |
-            turkspell-addon.xpi
-            turkspell-tdk-addon.xpi
+          files: ${{ steps.assets.outputs.release_files }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

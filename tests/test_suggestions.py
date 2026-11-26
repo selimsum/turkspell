@@ -11,19 +11,41 @@ import subprocess
 import unittest
 from pathlib import Path
 
+import shutil
+
 ROOT_DIR = Path(__file__).resolve().parent.parent
-DICT_PATH = str(ROOT_DIR / "tr")
+DICT_PATH = os.environ.get("TURKSPELL_DICT", str(ROOT_DIR / "tr"))
+
+sys.path.insert(0, str(ROOT_DIR / "build"))
+from build_common import find_hunspell
+
+HUNSPELL_BIN = find_hunspell() or "hunspell"
+
+
+def is_tdk_profile(dict_path: str = None) -> bool:
+    target = dict_path or os.environ.get("TURKSPELL_DICT", DICT_PATH)
+    dic_path = target if target.endswith(".dic") else (target + ".dic")
+    if os.path.exists(dic_path):
+        with open(dic_path, "r", encoding="utf-8") as f:
+            return not any(line.split('/')[0] == "zanaat" for line in f)
+    return False
 
 
 def get_batch_suggestions(words: list[str], dict_path: str = DICT_PATH) -> dict[str, list[str]]:
     """Runs hunspell -a for a list of words in a single fast process invocation."""
+    aff_file = Path(f"{dict_path}.aff")
+    dic_file = Path(f"{dict_path}.dic")
+    if not aff_file.exists() or not dic_file.exists():
+        raise FileNotFoundError(f"Dictionary files not found at {dict_path} (.aff/.dic)")
     p = subprocess.run(
-        ["hunspell", "-d", dict_path, "-a"],
+        [HUNSPELL_BIN, "-d", dict_path, "-a"],
         input="\n".join(words) + "\n",
         text=True,
         capture_output=True,
         encoding="utf-8"
     )
+    if p.returncode != 0:
+        raise RuntimeError(f"hunspell process failed with code {p.returncode}: {p.stderr.strip()}")
     result = {w: [] for w in words}
     for line in p.stdout.splitlines():
         line = line.strip()
@@ -406,6 +428,106 @@ class TestSuggestionRanking(unittest.TestCase):
         ]
         self.assertPairsSuggested(test_pairs)
 
+
+
+    def test_fineweb2_pool2_rep_suggestions(self):
+        """Validates that newly mined FineWeb-2 Pool 2 typos correctly suggest TDK forms at Top-1."""
+        test_pairs = [
+            ("asvalt", "asfalt", 1),
+            ("çeket", "ceket", 1),
+            ("diagram", "diyagram", 1),
+            ("kurdela", "kurdele", 1),
+            ("kimsayal", "kimyasal", 1),
+            ("rengarek", "rengârenk", 1),
+            ("beyeniyorum", "beğeniyorum", 1),
+            ("geçikmeyi", "gecikmeyi", 1),
+            ("yerlebir", "yerle bir", 1),
+            ("azçok", "az çok", 1),
+            ("gökgürültüsü", "gök gürültüsü", 1),
+            ("vaadettiği", "vadettiği", 1),
+            ("vaadetmek", "vadetmek", 1),
+            ("okadar", "o kadar", 1),
+            ("şuana", "şu ana", 1),
+            ("nekadar", "ne kadar", 1),
+            ("ozaman", "o zaman", 1),
+            ("ikiside", "ikisi de", 1),
+            ("sarfedip", "sarf edip", 1),
+            ("alırmıyım", "alır mıyım", 1),
+            ("zorundamıyım", "zorunda mıyım", 1),
+            ("elimlede", "elimle de", 1),
+            ("sektörüde", "sektörü de", 1),
+            ("olucak", "olacak", 1),
+            ("yapıcak", "yapacak", 1),
+            ("gidicek", "gidecek", 1),
+            ("süpriz", "sürpriz", 1),
+            ("inşaa", "inşa", 1),
+            ("çünki", "çünkü", 1),
+            ("heralde", "herhâlde" if is_tdk_profile() else "herhalde", 1),
+            ("felan", "filan", 1),
+            ("şöfor", "şoför", 1),
+            ("metod", "metot", 1),
+            ("kalb", "kalp", 1),
+            ("sebeb", "sebep", 1),
+            ("vaadeder", "vadeder", 1),
+            ("vaadeden", "vadeden", 1),
+            ("birarada", "bir arada", 1),
+            ("bukadar", "bu kadar", 1),
+            ("olurmu", "olur mu", 1),
+            ("değilmi", "değil mi", 1),
+            ("olmasada", "olmasa da", 1),
+            ("benide", "beni de", 1),
+        ]
+        self.assertPairsSuggested(test_pairs)
+
+    def test_fineweb2_large_batches_rep_suggestions(self):
+        """Validates that newly approved FineWeb-2 large batch typos/clitics/compounds suggest TDK forms at Top-1."""
+        test_pairs = [
+            ("plartform", "platform", 1),
+            ("ünüversite", "üniversite", 1),
+            ("sezeryan", "sezaryen", 1),
+            ("original", "orijinal", 1),
+            ("tenbel", "tembel", 1),
+            ("müsayit", "müsait", 1),
+            ("taahütname", "taahhütname", 1),
+            ("kalbten", "kalpten", 1),
+            ("labratuvar", "laboratuvar", 1),
+            ("pozesyon", "pozisyon", 1),
+            ("hastahane", "hastane", 1),
+            ("meyva", "meyve", 1),
+            ("yanlızca", "yalnızca", 1),
+            ("iyrenç", "iğrenç", 1),
+            ("psikyatri", "psikiyatri", 1),
+            ("coronavirüs", "koronavirüs", 1),
+            ("yaparmı", "yapar mı", 1),
+            ("biliyormusun", "biliyor musun", 1),
+            ("zayıflatırmı", "zayıflatır mı", 1),
+            ("mümkünmü", "mümkün mü", 1),
+            ("harammıdır", "haram mıdır", 1),
+            ("kalktımı", "kalktı mı", 1),
+            ("düşündünmü", "düşündün mü", 1),
+            ("yeralan", "yer alan", 1),
+            ("yeterki", "yeter ki", 1),
+            ("çörekotu", "çörek otu", 1),
+            ("bilimadamları", "bilim adamları", 1),
+            ("sodyumklorür", "sodyum klorür", 1),
+            ("dönmedolap", "dönme dolap", 1),
+            ("saol", "sağ ol", 1),
+            ("bişey", "bir şey", 1),
+        ]
+        self.assertPairsSuggested(test_pairs)
+
+    def test_dotted_and_superscript_abbreviation_suggestions(self):
+        """Apostrophed typos on dotted abbreviations & superscripts must suggest apostrophe-less TDK forms at Top-1."""
+        test_pairs = [
+            ("vb.'leri", "vb.leri", 1),
+            ("Alm.'dan", "Alm.dan", 1),
+            ("İng.'yi", "İng.yi", 1),
+            ("cm³'e", "cm³e", 1),
+            ("cm³'te", "cm³te", 1),
+            ("m²'ye", "m²ye", 1),
+            ("6⁴'ten", "6⁴ten", 1),
+        ]
+        self.assertPairsSuggested(test_pairs)
 
 if __name__ == "__main__":
     unittest.main()

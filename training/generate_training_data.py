@@ -11,21 +11,28 @@ def turkish_lowercase(text):
 
 def load_english_words():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    english_path = os.path.join(base_dir, "data", "english_words_large.txt")
-    if not os.path.exists(english_path):
-        print(f"Warning: {english_path} not found. English cleaning will be skipped.")
-        return set()
-    with open(english_path, "r", encoding="utf-8", errors="ignore") as f:
-        return {turkish_lowercase(line.strip()) for line in f if line.strip()}
+    for rel_path in [("raw_data", "english_words_large.txt"), ("data", "english_words_large.txt")]:
+        english_path = os.path.join(base_dir, *rel_path)
+        if os.path.exists(english_path):
+            with open(english_path, "r", encoding="utf-8", errors="ignore") as f:
+                return {turkish_lowercase(line.strip()) for line in f if line.strip()}
+    print("Warning: English wordlist not found. English cleaning will be skipped.")
+    return set()
 
 def load_roots():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    roots_path = os.path.join(base_dir, "data", "merged_dictionary_cleaned.txt")
-    if not os.path.exists(roots_path):
-        print(f"Warning: {roots_path} not found.")
-        return set()
-    with open(roots_path, "r", encoding="utf-8", errors="ignore") as f:
-        return {turkish_lowercase(line.strip()) for line in f if line.strip()}
+    for rel_path in [("raw_data", "tdk_words.txt"), ("data", "merged_dictionary_cleaned.txt")]:
+        roots_path = os.path.join(base_dir, *rel_path)
+        if os.path.exists(roots_path):
+            with open(roots_path, "r", encoding="utf-8", errors="ignore") as f:
+                roots = set()
+                for line in f:
+                    w = line.strip()
+                    if w and not w.startswith("#"):
+                        roots.add(turkish_lowercase(w.split("/")[0].split()[0]))
+                return roots
+    print("Warning: Roots wordlist not found.")
+    return set()
 
 def process_corpus(file_path, english_words, proper_names_global):
     """
@@ -129,6 +136,7 @@ def generate_training_data():
     # Ensure local dictionary is compiled first
     print("Recompiling dictionary to ensure tr.aff is up to date...")
     try:
+        sys.path.insert(0, os.path.join(base_dir, "build"))
         import compile_hunspell
         compile_hunspell.compile_dictionary()
     except Exception as e:
@@ -179,7 +187,8 @@ def generate_training_data():
     print(f"Grouped root gaps identified: {len(valid_groups)}")
     
     # Load generate_grammar_rules.py content to provide context for the prompt
-    with open("generate_grammar_rules.py", "r", encoding="utf-8") as f:
+    grammar_path = os.path.join(base_dir, "build", "generate_grammar_rules.py")
+    with open(grammar_path, "r", encoding="utf-8") as f:
         grammar_rules_code = f.read()
         
     # Extract only the suffix templates definitions (to keep context window short)
@@ -235,7 +244,7 @@ def generate_training_data():
         })
         
     # Write to train_dataset.jsonl
-    output_dataset = "train_dataset.jsonl"
+    output_dataset = os.path.join(base_dir, "training", "train_dataset.jsonl")
     with open(output_dataset, "w", encoding="utf-8") as f:
         for s in samples:
             f.write(json.dumps(s, ensure_ascii=False) + "\n")

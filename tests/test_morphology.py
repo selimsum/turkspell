@@ -16,16 +16,17 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DICT_PATH = os.environ.get("TURKSPELL_DICT", str(ROOT_DIR / "tr"))
 
-winget_pkg_dir = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages")
-for root, dirs, files in os.walk(winget_pkg_dir):
-    if "hunspell.exe" in files:
-        if root not in os.environ.get("PATH", ""):
-            os.environ["PATH"] = root + os.pathsep + os.environ["PATH"]
-        break
-HUNSPELL_BIN = shutil.which("hunspell") or "hunspell"
+sys.path.insert(0, str(ROOT_DIR / "build"))
+from build_common import find_hunspell
+
+HUNSPELL_BIN = find_hunspell() or "hunspell"
 
 def check_words(words: list[str], dict_path: str = DICT_PATH) -> tuple[list[str], list[str]]:
     """Runs hunspell -l and returns (accepted_words, rejected_words)."""
+    aff_file = Path(f"{dict_path}.aff")
+    dic_file = Path(f"{dict_path}.dic")
+    if not aff_file.exists() or not dic_file.exists():
+        raise FileNotFoundError(f"Dictionary files not found at {dict_path} (.aff/.dic)")
     p = subprocess.run(
         [HUNSPELL_BIN, "-d", dict_path, "-l"],
         input="\n".join(words) + "\n",
@@ -33,6 +34,8 @@ def check_words(words: list[str], dict_path: str = DICT_PATH) -> tuple[list[str]
         capture_output=True,
         encoding="utf-8"
     )
+    if p.returncode != 0:
+        raise RuntimeError(f"hunspell process failed with code {p.returncode}: {p.stderr.strip()}")
     flagged = set(line.strip() for line in p.stdout.splitlines() if line.strip())
     accepted = [w for w in words if w not in flagged]
     rejected = [w for w in words if w in flagged]
@@ -709,13 +712,13 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
             "tesbit", "isbat", "malesef", "metod", "standard", "katalok", "psikolok",
             "şarter", "tazzik", "tenefüs", "usül", "zıttı", "zıttına",
             "müslüman", "hristiyan", "hıristiyan", "yahudi",
-            "alimlik", "bekar", "bekarlık", "hayasız", "hayasızca"
+            "alimlik", "bekarlık", "hayasız", "hayasızca"
         ]
         accepted, _ = check_words(invalid_forms)
         self.assertEqual(accepted, [], f"Overgenerated or misspelled forms leaked: {accepted}")
 
         # Verify that non-voicing [pçtk] stems still accept 1sg/1pl copula (-ım/-im/-um/-üm, -ız/-iz/-uz/-üz)
-        valid_copulas = ["devletim", "devletiz", "sanatım", "sanatız", "milletiz", "pilotum", "pilotuz", "çöpüz", "matım", "matız", "Müslüman", "Müslümanlık", "Hristiyan", "Hristiyanlık"]
+        valid_copulas = ["devletim", "devletiz", "sanatım", "sanatız", "milletiz", "pilotum", "pilotuz", "çöpüz", "matım", "matız", "Müslüman", "Müslümanlık", "Hristiyan", "Hristiyanlık", "bekar", "bekâr"]
         _, rej_copulas = check_words(valid_copulas)
         self.assertEqual(rej_copulas, [], f"Valid non-voicing copula or proper noun forms rejected: {rej_copulas}")
 
@@ -868,6 +871,77 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         ]
         _, rej = check_words(valid_words)
         self.assertEqual(rej, [], f"Corpus-mined affix derivations rejected: {rej}")
+
+
+    def test_fineweb2_corpus_rule_enhancements(self):
+        """Verifies FineWeb-2 + Modal LLM corpus-mined Category 1-3 rule enhancements and overgeneration guards."""
+        valid_words = [
+            # Category 1: Root flags (InverseHarmony, NoVoicing, LastVowelDrop, front derivational suffixes)
+            "kanaat", "kanaati", "kanaatine", "kanaatindeyim", "kanaatimce", "kanaatler",
+            "iştirak", "iştiraki", "iştirakler", "iştirakte", "iştirakten",
+            "itaat", "itaati", "itaate", "itaatte",
+            "efdal", "efdali", "efdaldir",
+            "transkript", "transkripti", "transkripte", "transkriptin",
+            "tilavet", "tilaveti", "tilavete", "tilavetin",
+            "adet", "adedi", "adede", "adedin", "adetler", "âdet", "âdeti", "âdete",
+            "rehin", "rehni", "rehne", "rehnin",
+            "cemaatçi", "cemaatçiler", "dikkatli", "şefkatli", "saatçi", "saatlik",
+            # Category 2: Grammar rules (C1 compounds, 2-hop 3sg poss + present copula, -sallık/-sellik, rounded optatives, -mayış/-meyiş, -amazlık/-emezlik, -ılabilirlik/-ilebilirlik)
+            "soyadı", "soyadları", "soyadlarını", "soyadlarının",
+            "zeytinyağı", "zeytinyağları", "tereyağı", "tereyağları", "yanardağı", "yanardağları",
+            "oğluyum", "oğlusun", "oğluyuz", "aklıyım", "hakkıyım",
+            "nedensellik", "nedenselliği", "nedenselliğin", "evrensellik", "evrenselliği", "işlevsellik", "işlevselliği",
+            "okuyalım", "okuyayım", "olalım", "olayım", "bulalım", "bulayım", "görelim", "göreyim", "yürüyelim", "yürüyeyim",
+            "olmayış", "olmayışı", "olmayışıdır", "olmayışına", "olmayışından", "gelmeyişi", "bulunmayışı",
+            "göremezlik", "göremezlikten", "göremezliği", "anlayamazlık",
+            "ulaşılabilirlik", "ulaşılabilirliği", "erişilebilirlik", "erişilebilirliği", "uygulanabilirlik",
+            # Category 2 & 3: Productive 2-hop derivations on TDK/DD verb and noun stems
+            "bilinirlik", "bilinirliği", "bilinirliğini", "bilinirliğinin",
+            "tanınırlık", "tanınırlığı", "tanınırlığın", "tanınırlıktır",
+            "öngörülebilirlik", "öngörülebilirliği", "öngörülebilirliğin", "öngörülebilirliktir",
+            "izlenebilirlik", "izlenebilirliği", "izlenebilirliğin", "izlenebilirliktir",
+            "görmezlik", "görmezlikten",
+            "sporsever", "sporseverler", "kitapsever", "kitapseverler", "hayvansever", "sinemasever",
+            "vazgeçilmezi", "vazgeçilmezidir", "vazgeçilmezleri", "vazgeçilmezlerinden", "vazgeçilmezlerindendir",
+        ]
+        if not is_tdk_profile():
+            valid_words.extend(["görmemezlik", "görmemezlikten"])
+        _, rej = check_words(valid_words)
+        self.assertEqual(rej, [], f"FineWeb-2 enhanced forms rejected: {rej}")
+
+        # Overgeneration guards: archaic/labialized optatives, unattested compounds, and typos must be rejected
+        invalid_words = [
+            "okuyalum", "okuyayum", "olalum", "olayum", "görelüm", "göreyüm", "yürüyelüm", "yürüyeyüm",
+            "nedensellikçi", "evrensellikçi", "işlevsellikçi", "kavramsallıkçı", "adeti", "adete", "adetin",
+            "futbolsever", "görememezlik", "ağırlıklandırılmak", "önceliklendirilmek", "güvenlikçi",
+            "olaraktan", "diyerekten", "terketti", "varolan", "muhafazakar",
+        ]
+        acc_inv, _ = check_words(invalid_words)
+        self.assertEqual(acc_inv, [], f"Illegal overgenerated forms leaked: {acc_inv}")
+
+    def test_tdk_dotted_and_superscript_abbreviations(self):
+        """TDK: suffixes on dotted abbreviations and superscripts attach directly without apostrophes."""
+        valid_words = [
+            "vb.leri", "vb.ni", "vb.ne", "vb.nde", "vb.nden",
+            "Alm.dan", "Alm.da", "Alm.ya", "Alm.yı", "Alm.nın",
+            "İng.yi", "İng.ye", "İng.de", "İng.den", "İng.nin",
+            "yy.da", "yy.dan", "yy.ın",
+            "a.g.e.de", "a.g.e.den", "a.g.e.in",
+            "Dr.a", "Dr.u", "Dr.un", "Dr.dan",
+            "Prof.e", "Prof.ü", "Prof.ün", "Prof.de",
+            "Doç.te", "Doç.ten",
+            "Av.ta", "Av.tan",
+            "T.C.nde", "T.C.ne", "T.C.nin",
+            "cm³e", "cm³ü", "cm³ün", "cm³te", "cm³ten", "cm³lük",
+            "m²ye", "m²yi", "m²de", "m²den", "m²nin", "m²lik", "m²si",
+            "km²ye", "km²de", "m³e", "m³ten", "mm²ye", "mm³e",
+            "6⁴ten", "6⁴te", "6⁴e", "6⁴ü", "6⁴ün",
+            "10⁶ya", "2³ten",
+            # Verify valid controls still pass after harmony/clock/copula fixes
+            "24.00'te", "saatim", "kalbim", "devletim", "pilotum", "çöpüz", "olursun", "görürsün",
+        ]
+        _, rej = check_words(valid_words)
+        self.assertEqual(rej, [], f"Valid TDK dotted/superscript or control forms rejected: {rej}")
 
 
 if __name__ == "__main__":

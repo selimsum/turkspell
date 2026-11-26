@@ -9,6 +9,7 @@ Loads the golden baseline dataset and verifies:
 """
 
 import os
+import sys
 import json
 import shutil
 import subprocess
@@ -17,23 +18,22 @@ from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 BASELINE_PATH = ROOT_DIR / "tests" / "golden_verbs_baseline.json"
-DICT_PATH = str(ROOT_DIR / "tr")
+DICT_PATH = os.environ.get("TURKSPELL_DICT", str(ROOT_DIR / "tr"))
 
-# Ensure hunspell is in PATH
-winget_pkg_dir = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages")
-for root, dirs, files in os.walk(winget_pkg_dir):
-    if "hunspell.exe" in files:
-        if root not in os.environ.get("PATH", ""):
-            os.environ["PATH"] = root + os.pathsep + os.environ["PATH"]
-        break
+sys.path.insert(0, str(ROOT_DIR / "build"))
+from build_common import find_hunspell
 
-HUNSPELL_BIN = shutil.which("hunspell")
+HUNSPELL_BIN = find_hunspell()
 
 
 def check_words_batch(words: list[str], dict_path: str = DICT_PATH) -> set[str]:
     """Runs hunspell -l on words and returns unrecognized (flagged) words."""
     if not HUNSPELL_BIN:
         raise RuntimeError("hunspell binary not found in PATH!")
+    aff_file = Path(f"{dict_path}.aff")
+    dic_file = Path(f"{dict_path}.dic")
+    if not aff_file.exists() or not dic_file.exists():
+        raise FileNotFoundError(f"Dictionary files not found at {dict_path} (.aff/.dic)")
     p = subprocess.run(
         [HUNSPELL_BIN, "-d", dict_path, "-l"],
         input="\n".join(words) + "\n",
@@ -41,6 +41,8 @@ def check_words_batch(words: list[str], dict_path: str = DICT_PATH) -> set[str]:
         capture_output=True,
         encoding="utf-8"
     )
+    if p.returncode != 0:
+        raise RuntimeError(f"hunspell process failed with code {p.returncode}: {p.stderr.strip()}")
     return set(line.strip() for line in p.stdout.splitlines() if line.strip())
 
 
@@ -68,7 +70,8 @@ class TestGoldenVerbs(unittest.TestCase):
 
     def test_canary_overgeneration_rejection(self):
         """Verifies that canary illegal formations are not accepted."""
-        canaries = [
+        # Test full 49-canary suite from golden baseline if present
+        canaries = self.baseline.get("canary_forms", []) or [
             # Broken demek/yemek rules
             "debilecek", "debilecekler", "debileceklerine", "debileceklerini",
             "yebilecek", "yebilecekler", "yebileceklerine", "yebileceklerini",

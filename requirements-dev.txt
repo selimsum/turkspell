@@ -1,0 +1,6 @@
+# Development and testing dependencies for Turkspell
+pytest>=7.0.0
+pytest-subtests>=0.10.0
+
+# Optional HTTP client for standalone corpus scripts (e.g. tools/extract_oscar_vocab.py)
+requests>=2.28.0
