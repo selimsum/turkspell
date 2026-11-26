@@ -19,30 +19,29 @@ BILIM_SANAT_PATH = TURKSPELL_DIR / "lexicons" / "bilim_sanat_lexicon.json"
 AFF_SRC = TURKSPELL_DIR / "tr.aff"
 DIC_SRC = TURKSPELL_DIR / "tr.dic"
 
-def get_base_dic_lines():
+def get_base_dic_lines(compile_base=False):
     root_dic = TURKSPELL_DIR / "tr.dic"
     universal_dic = TURKSPELL_DIR / "dist" / "turkspell-universal" / "tr.dic"
-    # If root tr.dic is strictly newer than dist universal tr.dic (e.g. compile_hunspell.py was run),
-    # prioritize root tr.dic. Otherwise, prefer dist universal tr.dic to avoid inheriting
-    # a profile-specific deployment (e.g. TDK-only).
-    if root_dic.exists() and universal_dic.exists():
-        if root_dic.stat().st_mtime > universal_dic.stat().st_mtime:
-            print("  Base dictionary source: root tr.dic (newer than dist/turkspell-universal/tr.dic)")
-            candidates = [root_dic, universal_dic]
-        else:
-            print("  Base dictionary source: dist/turkspell-universal/tr.dic")
-            candidates = [universal_dic, root_dic]
-    else:
-        candidates = [universal_dic, root_dic]
+    candidates = [root_dic, universal_dic] if compile_base else [universal_dic, root_dic]
     for dic_path in candidates:
         if dic_path.exists():
             with open(dic_path, "r", encoding="utf-8") as f:
                 lines = f.readlines()
             if len(lines) > 50000:
+                print(f"  Base dictionary source: {dic_path.relative_to(TURKSPELL_DIR)}")
                 return lines
     return []
 
 sys.path.insert(0, str(TURKSPELL_DIR / "build"))
+from build_common import (
+    COMPOUND_SET,
+    SUPERSCRIPT_DIGITS,
+    SUPERSCRIPT_FLAG_MAP,
+    VIRTUAL_STEMS,
+    load_build_wordlists,
+    tr_lower,
+    tr_title,
+)
 from utf8_flag_mapping import UTF8_TO_LONG, LONG_TO_UTF8, remap_flag_string, STAGE2_VERB_FLAGS
 
 vowels = "AEIOUaeiouÂÎÖÛÜâîöûüİı"
@@ -68,9 +67,7 @@ COMMON_CASE_CHARS = {
 }
 
 # Structured build wordlists, morphological overrides, and virtual stems loaded from lexicons/build_wordlists.json
-_BUILD_WORDLISTS_PATH = TURKSPELL_DIR / "lexicons" / "build_wordlists.json"
-with open(_BUILD_WORDLISTS_PATH, "r", encoding="utf-8") as _bwf:
-    _BUILD_WORDLISTS = json.load(_bwf)
+_BUILD_WORDLISTS = load_build_wordlists(TURKSPELL_DIR)
 
 PURE_PROPER_NOUNS = set(_BUILD_WORDLISTS["pure_proper_nouns"])
 
@@ -88,7 +85,6 @@ else:
 
 MANDATORY_HATTED_WORDS = dict(_BUILD_WORDLISTS["mandatory_hatted_words"])
 COMPOUND_PROPER_TERMS = list(_BUILD_WORDLISTS["compound_proper_terms"])
-COMPOUND_SET = set(COMPOUND_PROPER_TERMS)
 LEGITIMATE_MISSED_WORDS = list(_BUILD_WORDLISTS["legitimate_missed_words"])
 
 # Standard regular non-voicing inflection flags (including VC/vc for 1sg/1pl vowel-initial copulas on [pçtk] stems)
@@ -101,6 +97,30 @@ B3_VOWEL_FLAGS = remap_flag_string("B3 a1 y1 L1 R1 n1 i1 Q1 PB PS P1 P5 PM PN CL
 B4_VOWEL_FLAGS = remap_flag_string("B4 a2 y1 L1 R1 n2 i1 Q1 PB PT P2 P6 PO PR CL LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
 F3_VOWEL_FLAGS = remap_flag_string("F3 a3 y2 L2 R2 n3 i2 Q2 PF PU P3 P7 PP PW cl LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
 F4_VOWEL_FLAGS = remap_flag_string("F4 a4 y2 L2 R2 n4 i2 Q2 PF PV P4 P8 PQ PZ cl LI LK SZ CI CK SL DL DT DE".replace(" ", ""))
+
+COMPOUND_P3SG_FLAGS = {
+    "ı": remap_flag_string("A1 C1 CI CK CL DE DL DT I1 L1 LI LK N1 P1 P5 PB PM PN PS Q1 R1 SL SZ Y1".replace(" ", "")),
+    "u": remap_flag_string("A2 C2 CI CK CL DE DL DT I1 L1 LI LK N2 P2 P6 PB PO PR PT Q1 R1 SL SZ Y1".replace(" ", "")),
+    "i": remap_flag_string("A3 C3 CI CK DE DL DT I2 L2 LI LK N3 P3 P7 PF PP PU PW Q2 R2 SL SZ Y2 cl".replace(" ", "")),
+    "ü": remap_flag_string("A4 C4 CI CK DE DL DT I2 L2 LI LK N4 P4 P8 PF PQ PV PZ Q2 R2 SL SZ Y2 cl".replace(" ", "")),
+}
+
+_VERB_FLAG_CHARS = set(remap_flag_string("VB VE VF VG VH VK VL VM VN VR VS VY Vb".replace(" ", "")))
+_V3_CHAR = LONG_TO_UTF8["V3"]
+_ING_FRONT_FLAGS = remap_flag_string("F1 A3 Y2 L2 R2 N3 I2 Q2 PF PU P3 P7 PP PW cl LI LK SZ CI CK SL".replace(" ", ""))
+_D2_CHAR = LONG_TO_UTF8["D2"]
+_CK_CHAR = LONG_TO_UTF8["CK"]
+_SPECIAL_EXTRA_CHARS = {LONG_TO_UTF8[f] for f in ("NE", "KC", "NS") if f in LONG_TO_UTF8}
+_DERIV_STRIP_ON_DOTTED = {
+    LONG_TO_UTF8[f]
+    for f in ("LI", "LF", "LK", "LFK", "CI", "LCI", "SZ", "LSZ", "DL", "DT", "DE", "CK", "SL", "VC", "vc")
+    if f in LONG_TO_UTF8
+}
+
+DOTTED_ABBREV_FLAGS = {
+    k: remap_flag_string(v.replace(" ", ""))
+    for k, v in _BUILD_WORDLISTS.get("dotted_abbrev_flags", {}).items()
+}
 
 HEAD_FLAG_OVERRIDES = dict(_BUILD_WORDLISTS["base_head_flag_overrides"])
 BACK_NOVOICING_STEMS = list(_BUILD_WORDLISTS["back_novoicing_stems"])
@@ -135,15 +155,8 @@ if _COMPLETED_POS_PATH.exists():
             _attrs = _item.get("attributes", [])
             if _lem in HEAD_FLAG_OVERRIDES or _lem in PALATAL_L_HEADS:
                 continue
-            if "CompoundP3sg" in _attrs:
-                if _lem.endswith("ı"):
-                    HEAD_FLAG_OVERRIDES[_lem] = "∀∈∌∍∎∖∗∘∡∧∩∪∫∲∶∺∼∽≂≉≋≍≎≣"
-                elif _lem.endswith("u"):
-                    HEAD_FLAG_OVERRIDES[_lem] = "∁∉∌∍∎∖∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≣"
-                elif _lem.endswith("i"):
-                    HEAD_FLAG_OVERRIDES[_lem] = "∂∊∌∍∖∗∘∢∨∩∪∭∴∸∻∿≄≆≊≌≍≎≤≩"
-                elif _lem.endswith("ü"):
-                    HEAD_FLAG_OVERRIDES[_lem] = "∃∋∌∍∖∗∘∢∨∩∪∮∵∹∻≀≅≈≊≌≍≎≤≩"
+            if "CompoundP3sg" in _attrs and _lem and _lem[-1] in COMPOUND_P3SG_FLAGS:
+                HEAD_FLAG_OVERRIDES[_lem] = COMPOUND_P3SG_FLAGS[_lem[-1]]
             elif "InverseHarmony" in _attrs:
                 if _lem.endswith(("ol", "ul")):
                     PALATAL_L_HEADS.add(_lem)
@@ -152,87 +165,7 @@ if _COMPLETED_POS_PATH.exists():
             elif _pos in ("Interjection", "Conjunction"):
                 HEAD_FLAG_OVERRIDES[_lem] = ""
 
-VIRTUAL_STEMS = list(_BUILD_WORDLISTS["base_virtual_stems"])
-
-
-def get_numeral_flag_code(n: int) -> str:
-    """Return the 2-char numeral affix flag code (N5..ND) for integer n based on its Turkish reading."""
-    if n == 0:
-        return "NC"
-    u = n % 10
-    if u != 0:
-        return {
-            1: "N5", 2: "N6", 3: "N7", 4: "N7", 5: "N8",
-            6: "N9", 7: "N6", 8: "N5", 9: "NA"
-        }[u]
-    t = n % 100
-    if t != 0:
-        return {
-            10: "NA", 20: "N6", 30: "NA", 40: "NB", 50: "N6",
-            60: "NB", 70: "N8", 80: "N5", 90: "NC"
-        }[t]
-    if n % 1000 != 0:
-        return "ND"  # yüz
-    if n % 1000000 != 0:
-        return "N5"  # bin
-    if n % 1000000000 != 0:
-        return "NA"  # milyon
-    return "NC"      # milyar
-
-
-def generate_numeral_virtual_stems() -> list[str]:
-    """Generate NEEDAFFIX-guarded numeric and clock-time stems for apostrophe inflections."""
-    stems = {}
-
-    def _add(token: str, flag_code: str):
-        u_char = LONG_TO_UTF8.get(flag_code, "")
-        if u_char:
-            stems[token] = f"{token}/X{u_char}"
-
-    # 1. Integers 0..2100 and leading-zero 01..09
-    for n in range(0, 2101):
-        _add(str(n), get_numeral_flag_code(n))
-    for n in range(1, 10):
-        _add(f"0{n}", get_numeral_flag_code(n))
-
-    # 2. Round numbers & dotted thousand-separator forms
-    round_nums = [
-        1000, 1500, 2000, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900,
-        3000, 3500, 4000, 4500, 5000, 6000, 7000, 7500, 8000, 9000,
-        10000, 15000, 20000, 25000, 30000, 40000, 50000, 60000, 70000, 75000, 80000, 90000,
-        100000, 150000, 200000, 250000, 300000, 400000, 500000, 600000, 700000, 750000, 800000, 900000,
-        1000000, 2000000, 5000000, 10000000, 100000000, 1000000000,
-    ]
-    for n in round_nums:
-        fc = get_numeral_flag_code(n)
-        _add(str(n), fc)
-        dotted = f"{n:,}".replace(",", ".")
-        _add(dotted, fc)
-
-    # 3. 24-hour clock times HH.MM (where .00 follows hour phonology per TDK rules)
-    for hh in range(0, 25):
-        hh_strs = [f"{hh:02d}"] + ([str(hh)] if 1 <= hh <= 9 else [])
-        for mm in range(0, 60):
-            fc = get_numeral_flag_code(hh) if mm == 0 else get_numeral_flag_code(mm)
-            mm_str = f"{mm:02d}"
-            for hs in hh_strs:
-                _add(f"{hs}.{mm_str}", fc)
-
-    return list(stems.values())
-
-
-VIRTUAL_STEMS.extend(generate_numeral_virtual_stems())
-
 EXTRA_AUTHORITY_HEADWORDS = list(_BUILD_WORDLISTS["extra_authority_headwords"])
-
-def tr_lower(s: str) -> str:
-    return s.replace("I", "ı").replace("İ", "i").lower()
-
-def tr_title(s: str) -> str:
-    if not s: return s
-    if s[0] == 'i': return 'İ' + s[1:]
-    if s[0] == 'ı': return 'I' + s[1:]
-    return s[0].upper() + s[1:]
 
 def load_lexicons():
     print("Loading authority sets & custom lexicons...")
@@ -308,35 +241,7 @@ def build_hardened_aff(profile="tdk"):
                 sfx_blocks[curr_flag] = []
             sfx_blocks[curr_flag].append(line)
         elif curr_flag is not None and len(parts) >= 2 and parts[0] in ('SFX', 'PFX') and parts[1] == curr_flag:
-            # Suffix rule within curr_flag block
-            # Safely disable ungrammatical / vowel-violating rules
-            if line_s.startswith("SFX ≠") and "emek ebilecek" in line_s:
-                if len(parts) >= 5: parts[4] = "X"; line = " ".join(parts) + "\n"
-            elif line_s == "SFX ≖ emek enr emek": line = "SFX ≖ emek enr X\n"
-            elif line_s == "SFX ≟ umak unr umak": line = "SFX ≟ umak unr X\n"
-            elif line_s == "SFX ≟ amak atrsanız amak": line = "SFX ≟ amak atrsanız X\n"
-            elif line_s in ("SFX ⊁ mek mesü mek", "SFX ≘ mek mesü mek"): line = line.replace("mek\n", "X\n")
-            elif line_s.startswith("SFX ≟") and "masunı" in line_s:
-                parts[-1] = "X"; line = " ".join(parts) + "\n"
-            elif line_s.startswith("SFX ⊂ mak ırm"):
-                parts[-1] = "X"; line = " ".join(parts) + "\n"
-            elif line_s.startswith("SFX ⊁ mek üre"):
-                parts[-1] = "X"; line = " ".join(parts) + "\n"
-            elif line_s in ("SFX ≓ amak adırıp amak", "SFX ≓ ımak ıdırıp ımak"):
-                parts = line_s.split(); parts[-1] = "X"; line = " ".join(parts) + "\n"
-            elif line_s.startswith("SFX ⊃ mek irme/"):
-                parts[-1] = "X"; line = " ".join(parts) + "\n"
-            elif line_s == "SFX ≚ tmak dıktan tmak":
-                line = "SFX ≚ mak tıktan tmak\n"
-            elif line_s == "SFX ≛ tmak duktan tmak":
-                line = "SFX ≛ mak tuktan tmak\n"
-            elif line_s == "SFX ≜ tmek dikten tmek":
-                line = "SFX ≜ mek tikten tmek\n"
-            elif line_s == "SFX ≝ tmek dükten tmek":
-                line = "SFX ≝ mek tükten tmek\n"
-            elif line_s in ("SFX ≠ emek idikten [dy]emek", "SFX ≠ emek idikten demek", "SFX ≠ emek idikten yemek"):
-                line = f"SFX ≠ mek dikten {parts[4]}\n"
-            elif len(parts) >= 4 and "/" in parts[3]:
+            if len(parts) >= 4 and "/" in parts[3]:
                 clean_add, flags = parts[3].split("/", 1)
                 if clean_add.endswith("ğ") and "X" not in flags:
                     parts[3] = f"{clean_add}/X{flags}"
@@ -646,7 +551,8 @@ MAP '’‘"""
             "baçı bacı",
             "bilim$ _bilimi",
             "^hayalilik$ hayalîlik",
-            "^haki$ hâkî"
+            "^haki$ hâkî",
+            "heralde herhâlde"
         ])
         # Load all TDK-open compound suggestions (where joined is used in Dil Derneği)
         clean_extra.extend(_BUILD_WORDLISTS.get("tdk_open_compound_rep", []))
@@ -681,7 +587,12 @@ MAP '’‘"""
 
     # Remove all existing REP lines and replace cleanly after MAXNGRAMSUGS
     aff_text = re.sub(r'^REP.*$\n?', '', aff_text, flags=re.MULTILINE)
-    aff_text = re.sub(r'(MAXNGRAMSUGS \d+)\n+', r'\1\n\n' + rep_block + '\n', aff_text, count=1)
+    aff_text = re.sub(
+        r'(MAXNGRAMSUGS \d+)\n+',
+        lambda m: f"{m.group(1)}\n\n{rep_block}\n",
+        aff_text,
+        count=1,
+    )
     
     return aff_text
 
@@ -711,8 +622,40 @@ BRAND_FLAG_MAP = {
 }
 
 
+def _resolve_dotted_or_superscript_flags(head: str, head_lower: str, flags: str) -> tuple[bool, str]:
+    """Return (handled, flags) enforcing TDK apostrophe-less rules on dotted and superscript stems."""
+    if head.endswith("."):
+        if head in DOTTED_ABBREV_FLAGS:
+            return True, DOTTED_ABBREV_FLAGS[head]
+        if head_lower in DOTTED_ABBREV_FLAGS and head.islower():
+            return True, DOTTED_ABBREV_FLAGS[head_lower]
+        kc = KC_FLAG if head[0].isupper() else ""
+        if " " in head or len(head) <= 2:
+            return True, kc
+        cleaned = "".join(
+            c for c in flags
+            if c not in PROPER_SUB_UTF8 and c not in COMMON_CASE_CHARS and c not in _DERIV_STRIP_ON_DOTTED
+        )
+        if kc and kc not in cleaned:
+            cleaned = kc + cleaned
+        last_v = "e"
+        for ch in reversed(head_lower[:-1]):
+            if ch in "aıâouûeiîöü":
+                last_v = ch
+                break
+        n_code = "N9" if last_v in "aıâouû" else "N6"
+        n_char = LONG_TO_UTF8.get(n_code, "")
+        if n_char and n_char not in cleaned:
+            cleaned += n_char
+        return True, cleaned
+    if head and head[-1] in SUPERSCRIPT_DIGITS:
+        fc = SUPERSCRIPT_FLAG_MAP[head[-1]]
+        return True, LONG_TO_UTF8.get(fc, "")
+    return False, flags
+
+
 def get_abbrev_flags(w: str) -> str:
-    if not w or len(w) <= 1 or any(c in w for c in ". '/"):
+    if not w or len(w) <= 1 or w.endswith(".") or any(c in w for c in ". '/") or any(c in SUPERSCRIPT_DIGITS for c in w):
         return ""
     if w in UNIT_FLAG_MAP:
         return UNIT_FLAG_MAP[w]
@@ -835,6 +778,8 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         
     clean_entries = []
     seen_heads = set()
+    seen_head_words = set()
+    overridden_heads = set()
     
     removed_permutations = 0
     removed_crawler_spam = 0
@@ -956,11 +901,16 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
 
             # Architecture Enforcement: Proper Noun Inflection Contract
             # Proper nouns (e.g. Adana, Atatürk, Türkiye, Ahmet, Ali) CANNOT take un-apostrophed common case/possessive flags!
+            # Dotted abbreviations and superscripts NEVER take apostrophe proper-noun flags per TDK rules.
             is_proper = (
-                bool(proper_flags)
-                or head in custom_names_orig
-                or head_lower in custom_names
-                or head_lower in PURE_PROPER_NOUNS
+                (
+                    bool(proper_flags)
+                    or head in custom_names_orig
+                    or head_lower in custom_names
+                    or head_lower in PURE_PROPER_NOUNS
+                )
+                and not head.endswith(".")
+                and not any(c in SUPERSCRIPT_DIGITS for c in head)
             )
             if is_proper and not is_compound_term and head not in BRAND_FLAG_MAP:
                 # Strip all un-apostrophed common case and possessive flags
@@ -997,6 +947,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 cap_head = tr_title(head)
                 if proper_flags and (cap_head, proper_flags) not in seen_heads:
                     seen_heads.add((cap_head, proper_flags))
+                    seen_head_words.add(cap_head)
                     clean_entries.append(f"{cap_head}/{proper_flags}")
             elif head in UNIT_FLAG_MAP:
                 flags = UNIT_FLAG_MAP[head]
@@ -1013,16 +964,25 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                     flags = common_flags
                     
         # Morphological flag overrides for core stems:
-        if head in UNIT_FLAG_MAP:
+        _handled_special, _special_flags = _resolve_dotted_or_superscript_flags(head, head_lower, flags)
+        if _handled_special:
+            flags = _special_flags
+            overridden_heads.add(head)
+        elif head in UNIT_FLAG_MAP:
             flags = UNIT_FLAG_MAP[head]
+            overridden_heads.add(head)
         elif head in BRAND_FLAG_MAP:
             flags = BRAND_FLAG_MAP[head]
+            overridden_heads.add(head)
         elif len(head) >= 2 and head.isupper() and head.isalpha():
             flags = get_abbrev_flags(head)
         elif head in custom_abbrevs_orig and not head.islower():
             flags = "".join(sorted(set(flags + get_abbrev_flags(head))))
         elif head_lower in HEAD_FLAG_OVERRIDES and (head.islower() or head not in COMPOUND_SET):
             flags = HEAD_FLAG_OVERRIDES[head_lower]
+            if head.islower():
+                overridden_heads.add(head)
+                overridden_heads.add(head_lower)
         elif head_lower in PALATAL_L_HEADS:
             flags = PALATAL_L_FLAGS
         elif head_lower.endswith((" etmek", " gitmek")) or head_lower in ("kayetmek", "kayyetmek"):
@@ -1031,7 +991,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             flags = LONG_TO_UTF8["VK"]
         elif head_lower.endswith(" gütmek"):
             flags = LONG_TO_UTF8["VN"]
-        elif not head_lower.endswith(("mak", "mek")) and "X" not in flags and any(c in flags for c in "≔≖≗≘≙≚≛≜≝≞≟≠≡"):
+        elif not head_lower.endswith(("mak", "mek")) and "X" not in flags and any(c in _VERB_FLAG_CHARS for c in flags):
             # Rescue non-mak/mek nouns/adjectives that erroneously received verb flags
             if head_lower in {
                 "aktı", "bakarak", "bakındı", "defol", "evlensek", "gebere", "görsün",
@@ -1090,8 +1050,8 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 flags += k1_flag
 
         # Loanwords ending in 'ing' must take front-vowel noun suffixes
-        if head.lower().endswith("ing") and ("≑" in flags or not flags):
-            flags = flags.replace("≑", "") + "∙∂≤∨≌∭∢≊∻≄∴∸∿≆≩∩∪≎∌∍≍" + (PROPER_F if not head.islower() else "")
+        if head_lower.endswith("ing") and (_V3_CHAR in flags or not flags):
+            flags = flags.replace(_V3_CHAR, "") + _ING_FRONT_FLAGS + (PROPER_F if not head.islower() else "")
             
         # For TDK profile: dual voicing stems (teleskop, bergamot, baç) take only consonant suffixes
         if profile == "tdk" and head_lower in (DUAL_VOICING_BACK_ROUNDED + DUAL_VOICING_BACK_UNROUNDED):
@@ -1116,7 +1076,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                     clean_entries.append(f"{head_unhatted}/{flags}" if flags else head_unhatted)
 
         # Dil Derneği accepts unhatted forms for certain words like batıni, batıniye
-        if head.lower() in ("bâtıni", "bâtıniye"):
+        if head_lower in ("bâtıni", "bâtıniye"):
             head_unhatted = head.replace("â", "a")
             if profile == "dd":
                 head = head_unhatted
@@ -1124,20 +1084,21 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 entry_unhatted = (head_unhatted, flags)
                 if entry_unhatted not in seen_heads:
                     seen_heads.add(entry_unhatted)
+                    seen_head_words.add(head_unhatted)
                     clean_entries.append(f"{head_unhatted}/{flags}" if flags else head_unhatted)
                 
         if len(head) == 1:
             flags = ""
-        elif head_lower.endswith(("p", "ç", "t", "k")):
+        elif head_lower.endswith(("p", "ç", "t", "k")) and head not in overridden_heads:
             if any(c in _B12_CHARS for c in flags) and _VC_CHAR not in flags:
                 flags += _VC_CHAR
             if any(c in _F12_CHARS for c in flags) and _vc_CHAR not in flags:
                 flags += _vc_CHAR
             
         if head == "boyn":
-            flags = flags.replace("≕", "")
+            flags = flags.replace(_VC_CHAR, "")
         elif head == "boyun":
-            flags = flags.replace("∓", "")
+            flags = flags.replace(_D2_CHAR, "")
 
         # Overgeneration hardening: prevent recursive chained pseudo-word derivations
         _strip_lik_flags = {LONG_TO_UTF8[f] for f in ("CI", "LCI", "LK", "LFK", "DL", "DT", "DE") if f in LONG_TO_UTF8}
@@ -1159,6 +1120,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         if entry_key in seen_heads:
             continue
         seen_heads.add(entry_key)
+        seen_head_words.add(head)
         clean_entries.append(f"{head}/{flags}" if flags else head)
         
     print(f"  Removed: {removed_permutations} permutation noises, {removed_crawler_spam} crawler spam, {removed_unhatted_dups} unhatted dups, {removed_bad_stems} bad stems.")
@@ -1174,13 +1136,15 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         head_lower = tr_lower(head_w)
         if (head_w in unhatted_to_purge or head_lower in unhatted_to_purge) and not (head_w == "Misakımilli" and profile in ("universal", "dd")):
             continue
+        if head_w in overridden_heads:
+            continue
         fl_w = w.split("/")[1] if "/" in w else ""
-        if head_w.lower() in HEAD_FLAG_OVERRIDES and not fl_w:
-            fl_w = HEAD_FLAG_OVERRIDES[head_w.lower()]
+        if head_lower in HEAD_FLAG_OVERRIDES and not fl_w:
+            fl_w = HEAD_FLAG_OVERRIDES[head_lower]
         entry_w = f"{head_w}/{fl_w}" if fl_w else head_w
-        if (head_w, "") not in seen_heads and (head_w.lower(), "") not in seen_heads:
+        if "/" in w or (head_w not in seen_head_words and head_lower not in seen_head_words):
             clean_entries.append(entry_w)
-            seen_heads.add((head_w, ""))
+            seen_head_words.add(head_w)
             added_legit += 1
             
     for w in VIRTUAL_STEMS + EXTRA_AUTHORITY_HEADWORDS:
@@ -1190,11 +1154,15 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             continue
         if profile == "dd" and "î" in head_w:
             continue
+        if head_w in overridden_heads:
+            continue
+        if "/" not in w and head_w in seen_head_words:
+            continue
         if "/" not in w and head_lower in HEAD_FLAG_OVERRIDES:
             clean_entries.append(f"{w}/{HEAD_FLAG_OVERRIDES[head_lower]}")
         else:
             clean_entries.append(w)
-        seen_heads.add((head_w, ""))
+        seen_head_words.add(head_w)
         added_legit += 1
             
     # 5b. Inject Bilim ve Sanat Terimleri
@@ -1205,7 +1173,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             head_lower = tr_lower(w)
             if w in unhatted_to_purge or head_lower in unhatted_to_purge:
                 continue
-            if (w, "") in seen_heads or (head_lower, "") in seen_heads:
+            if w in seen_head_words or head_lower in seen_head_words:
                 continue
             attrs = t_item.get("attributes", [])
             pos = t_item.get("pos", "Noun")
@@ -1214,16 +1182,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
             elif head_lower in PALATAL_L_HEADS or "InverseHarmony" in attrs:
                 fl = PALATAL_L_FLAGS
             elif "CompoundP3sg" in attrs:
-                if head_lower.endswith("ı"):
-                    fl = "∀∈∌∍∎∖∗∘∡∧∩∪∫∲∶∺∼∽≂≉≋≍≎≣"
-                elif head_lower.endswith("u"):
-                    fl = "∁∉∌∍∎∖∗∘∡∧∩∪∬∳∷∺∾≁≃≉≋≍≎≣"
-                elif head_lower.endswith("i"):
-                    fl = "∂∊∌∍∖∗∘∢∨∩∪∭∴∸∻∿≄≆≊≌≍≎≤≩"
-                elif head_lower.endswith("ü"):
-                    fl = "∃∋∌∍∖∗∘∢∨∩∪∮∵∹∻≀≅≈≊≌≍≎≤≩"
-                else:
-                    fl = ""
+                fl = COMPOUND_P3SG_FLAGS.get(head_lower[-1], "") if head_lower else ""
             elif pos == "Verb" and head_lower.endswith(("mak", "mek")):
                 fl = ""
             else:
@@ -1249,21 +1208,25 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                         fl = FRONT_ROUNDED_UNVOICED_FLAGS + (LONG_TO_UTF8["V4"] if has_voicing else "")
             
             clean_entries.append(f"{w}/{fl}" if fl else w)
-            seen_heads.add((w, ""))
+            seen_head_words.add(w)
             added_terimler += 1
         print(f"  Injected: {added_terimler:,} Bilim ve Sanat Terimleri lemmas into profile [{profile}].")
 
     # 6. Inject all missing custom abbreviations and names from lexicons
     added_abbrevs = 0
     for a in custom_abbrevs_orig:
-        if (a, "") not in seen_heads:
-            if (a.lower(), "") not in seen_heads or a != a.lower():
+        a_lower = tr_lower(a)
+        if a in overridden_heads or (a.islower() and a_lower in overridden_heads):
+            continue
+        if a not in seen_head_words and (a_lower not in seen_head_words or a != a_lower):
+            _handled_a, fl_a = _resolve_dotted_or_superscript_flags(a, a_lower, "")
+            if not _handled_a:
                 fl_a = get_abbrev_flags(a)
-                if not fl_a and a.lower() in HEAD_FLAG_OVERRIDES:
-                    fl_a = HEAD_FLAG_OVERRIDES[a.lower()]
-                clean_entries.append(f"{a}/{fl_a}" if fl_a else a)
-                seen_heads.add((a, ""))
-                added_abbrevs += 1
+                if not fl_a and a_lower in HEAD_FLAG_OVERRIDES:
+                    fl_a = HEAD_FLAG_OVERRIDES[a_lower]
+            clean_entries.append(f"{a}/{fl_a}" if fl_a else a)
+            seen_head_words.add(a)
+            added_abbrevs += 1
             
     lower_to_flags = {}
     for h, fl in parsed_lines:
@@ -1275,16 +1238,21 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
         n_lower = tr_lower(n)
         if (n in unhatted_to_purge or n_lower in unhatted_to_purge) and not any(c in n for c in "âîû"):
             continue
-        if (n, "") not in seen_heads and ((n.lower(), "") not in seen_heads or (n and (n[0].isupper() or any(c.isupper() for c in n)))):
-            base_fl = lower_to_flags.get(n.lower(), "")
+        if n in overridden_heads or (n.islower() and n_lower in overridden_heads):
+            continue
+        if n not in seen_head_words and (n_lower not in seen_head_words or (n and (n[0].isupper() or any(c.isupper() for c in n)))):
+            base_fl = lower_to_flags.get(n_lower, "")
             # Assign harmonic proper noun apostrophe inflection flags for capitalized proper names
-            if n in BRAND_FLAG_MAP:
+            if n.endswith(".") or any(c in SUPERSCRIPT_DIGITS for c in n):
+                _, sp_fl = _resolve_dotted_or_superscript_flags(n, n_lower, "")
+                entry_n = f"{n}/{sp_fl}" if sp_fl else n
+            elif n in BRAND_FLAG_MAP:
                 entry_n = f"{n}/{BRAND_FLAG_MAP[n]}"
             elif len(n) >= 2 and n.isupper() and n.isalpha():
                 fl_n = get_abbrev_flags(n)
                 entry_n = f"{n}/{fl_n}" if fl_n else n
-            elif n.lower() in HEAD_FLAG_OVERRIDES:
-                entry_n = f"{n}/{HEAD_FLAG_OVERRIDES[n.lower()]}"
+            elif n_lower in HEAD_FLAG_OVERRIDES:
+                entry_n = f"{n}/{HEAD_FLAG_OVERRIDES[n_lower]}"
             elif n and (n[0].isupper() or any(c.isupper() for c in n)) and not any(c in n for c in "0123456789."):
                 last_vowel = ""
                 for ch in reversed(n):
@@ -1309,7 +1277,7 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
                 combined_fl = "".join(sorted(set(base_fl_clean + (KC_FLAG or ""))))
                 entry_n = f"{n}/{combined_fl}" if combined_fl else n
             clean_entries.append(entry_n)
-            seen_heads.add((n, ""))
+            seen_head_words.add(n)
             added_names += 1
             
     print(f"  Injected: {added_legit} legitimate missed words, {added_abbrevs} missing abbrevs, {added_names} missing names.")
@@ -1331,12 +1299,12 @@ def build_sanitized_dic(tdk_words, dd_words, custom_abbrevs, custom_abbrevs_orig
 
     valid_dic_flags = (set(UTF8_TO_LONG.keys()) - DEAD_FLAG_CHARS - {
         LONG_TO_UTF8[f] for f in ('u1', 'u2', 'u3', 'u4', 'uC', 'uI', 'uL', 'uN', 'uP', 'uQ', 'uR', 'uY') if f in LONG_TO_UTF8
-    }) | {'X', '∥', '∰'}
+    }) | _SPECIAL_EXTRA_CHARS
     deduped_entries = []
     for h in sorted(merged_heads.keys()):
         fl_set = merged_heads[h] & valid_dic_flags
         if h in ("co", "Co"):
-            fl_set.discard("∍")
+            fl_set.discard(_CK_CHAR)
         fl_combined = "".join(sorted(fl_set))
         deduped_entries.append(f"{h}/{fl_combined}" if fl_combined else h)
 
@@ -1351,7 +1319,7 @@ def compile_v06(deploy_profile="universal", compile_base=False, skip_tests=False
         import compile_hunspell
         compile_hunspell.compile_dictionary()
     tdk_words, dd_words, bilim_sanat_lexicon, bilim_sanat_words, custom_abbrevs, custom_abbrevs_orig, custom_names, custom_names_orig = load_lexicons()
-    base_lines = get_base_dic_lines()
+    base_lines = get_base_dic_lines(compile_base=compile_base)
     if compile_base:
         print("\nNormalizing base dictionary and affix rules through universal pipeline...")
         norm_aff = build_hardened_aff(profile="universal")
@@ -1395,11 +1363,24 @@ def compile_v06(deploy_profile="universal", compile_base=False, skip_tests=False
         print(f"Successfully compiled: {prof_dir / 'tr.aff'} and {prof_dir / 'tr.dic'}")
         
     def _copy_file(src, dst):
-        try:
-            shutil.copy2(src, dst)
-        except OSError:
-            with open(src, "rb") as f_in, open(dst, "wb") as f_out:
-                shutil.copyfileobj(f_in, f_out)
+        import time
+        tmp_dst = Path(str(dst) + ".tmp")
+        for attempt in range(5):
+            try:
+                shutil.copy2(src, tmp_dst)
+                os.replace(tmp_dst, dst)
+                return
+            except OSError:
+                if tmp_dst.exists():
+                    try:
+                        tmp_dst.unlink()
+                    except OSError:
+                        pass
+                if attempt == 4:
+                    with open(src, "rb") as f_in, open(dst, "wb") as f_out:
+                        shutil.copyfileobj(f_in, f_out)
+                    return
+                time.sleep(0.2)
 
     # Deploy selected profile to repository root
     print(f"\nDeploying Turkspell ({deploy_profile.upper()}) to repository root ({TURKSPELL_DIR / 'tr.*'})...")

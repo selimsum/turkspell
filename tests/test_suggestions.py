@@ -16,13 +16,19 @@ import shutil
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DICT_PATH = os.environ.get("TURKSPELL_DICT", str(ROOT_DIR / "tr"))
 
-winget_pkg_dir = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages")
-for root, dirs, files in os.walk(winget_pkg_dir):
-    if "hunspell.exe" in files:
-        if root not in os.environ.get("PATH", ""):
-            os.environ["PATH"] = root + os.pathsep + os.environ["PATH"]
-        break
-HUNSPELL_BIN = shutil.which("hunspell") or "hunspell"
+sys.path.insert(0, str(ROOT_DIR / "build"))
+from build_common import find_hunspell
+
+HUNSPELL_BIN = find_hunspell() or "hunspell"
+
+
+def is_tdk_profile(dict_path: str = None) -> bool:
+    target = dict_path or os.environ.get("TURKSPELL_DICT", DICT_PATH)
+    dic_path = target if target.endswith(".dic") else (target + ".dic")
+    if os.path.exists(dic_path):
+        with open(dic_path, "r", encoding="utf-8") as f:
+            return not any(line.split('/')[0] == "zanaat" for line in f)
+    return False
 
 
 def get_batch_suggestions(words: list[str], dict_path: str = DICT_PATH) -> dict[str, list[str]]:
@@ -456,7 +462,7 @@ class TestSuggestionRanking(unittest.TestCase):
             ("süpriz", "sürpriz", 1),
             ("inşaa", "inşa", 1),
             ("çünki", "çünkü", 1),
-            ("heralde", "herhalde", 1),
+            ("heralde", "herhâlde" if is_tdk_profile() else "herhalde", 1),
             ("felan", "filan", 1),
             ("şöfor", "şoför", 1),
             ("metod", "metot", 1),
@@ -507,6 +513,19 @@ class TestSuggestionRanking(unittest.TestCase):
             ("dönmedolap", "dönme dolap", 1),
             ("saol", "sağ ol", 1),
             ("bişey", "bir şey", 1),
+        ]
+        self.assertPairsSuggested(test_pairs)
+
+    def test_dotted_and_superscript_abbreviation_suggestions(self):
+        """Apostrophed typos on dotted abbreviations & superscripts must suggest apostrophe-less TDK forms at Top-1."""
+        test_pairs = [
+            ("vb.'leri", "vb.leri", 1),
+            ("Alm.'dan", "Alm.dan", 1),
+            ("İng.'yi", "İng.yi", 1),
+            ("cm³'e", "cm³e", 1),
+            ("cm³'te", "cm³te", 1),
+            ("m²'ye", "m²ye", 1),
+            ("6⁴'ten", "6⁴ten", 1),
         ]
         self.assertPairsSuggested(test_pairs)
 

@@ -1,9 +1,8 @@
-import os
-import shutil
+import sys
+from pathlib import Path
 
-winget_pkg_dir = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages")
-for root, dirs, files in os.walk(winget_pkg_dir):
-    if "hunspell.exe" in files:
-        if root not in os.environ.get("PATH", ""):
-            os.environ["PATH"] = root + os.pathsep + os.environ["PATH"]
-        break
+ROOT_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT_DIR / "build"))
+from build_common import find_hunspell
+
+find_hunspell()

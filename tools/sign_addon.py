@@ -20,8 +20,10 @@ def is_signed_xpi(xpi_path: str) -> bool:
         return False
     try:
         with zipfile.ZipFile(xpi_path, "r") as zf:
-            names = zf.namelist()
-            return any(n.startswith("META-INF/") for n in names)
+            names = set(zf.namelist())
+            has_rsa = any(n.startswith("META-INF/") and n.endswith(".rsa") for n in names)
+            has_sf = any(n.startswith("META-INF/") and n.endswith(".sf") for n in names)
+            return has_rsa and has_sf
     except Exception:
         return False
 
@@ -97,8 +99,8 @@ def download_signed_file(file_url: str, output_path: str, issuer: str, secret: s
     req.add_header("User-Agent", "turkspell-release-automation")
 
     try:
-        resp = opener.open(req, timeout=60)
-        content = resp.read()
+        with opener.open(req, timeout=60) as resp:
+            content = resp.read()
     except urllib.error.HTTPError as e:
         if e.code in (301, 302, 303, 307, 308):
             target_url = urllib.parse.urljoin(file_url, e.headers.get("Location", ""))

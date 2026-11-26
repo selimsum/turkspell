@@ -22,6 +22,10 @@ Estimated output: ~8,000 rules (vs 775,000 in v1)
 """
 
 import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from build_common import noun_chain
 
 # ---------------------------------------------------------------------------
 # Vowel Harmony Simulator (reused from v1 — identical)
@@ -105,21 +109,23 @@ def make_flag_block(flag: str, rules: list[str]) -> str:
             continue
             
         pos_chars = set()
-        neg_chars = set()
+        seen_neg = set()
+        neg_conds = []
         others = []
         for c in conds:
             if re.fullmatch(r'\[([^\]]+)\]', c):
                 inner = c[1:-1]
                 if inner.startswith('^'):
-                    neg_chars.update(list(inner[1:]))
+                    if c not in seen_neg:
+                        seen_neg.add(c)
+                        neg_conds.append(c)
                 else:
                     pos_chars.update(list(inner))
             else:
                 others.append(c)
                 
-        if neg_chars:
-            sorted_neg = ''.join(sorted(neg_chars))
-            consolidated.append(' '.join(prefix) + ' [^' + sorted_neg + ']')
+        for nc in neg_conds:
+            consolidated.append(' '.join(prefix) + ' ' + nc)
         if pos_chars:
             sorted_pos = ''.join(sorted(pos_chars))
             consolidated.append(' '.join(prefix) + ' [' + sorted_pos + ']')
@@ -187,89 +193,7 @@ def sfx_ki(flag: str, strip: str, add: str, cond: str, rules: list, chain_copula
         rules.append(sfx(flag, strip, add + ki_part + infl, cond))
 
 def get_noun_chain(stem_flag: str, only_vowel: bool = False, only_consonant: bool = False, derivs: str = None) -> str:
-    if stem_flag in ("PX", "NX"):
-        return stem_flag
-    back_flags = {"B1", "B2", "V1", "V2", "D1", "D2", "C1", "C2", "G1", "G2"}  # back cons
-    back_vowel_flags = {"B3", "B4"}                                               # back vowel-end
-    front_flags = {"F1", "F2", "V3", "V4", "D3", "D4", "C3", "C4", "G3", "G4"} # front cons
-    front_vowel_flags = {"F3", "F4"}                                              # front vowel-end
-    rounded_flags = {"B2", "V2", "D2", "C2", "G2", "B4", "F2", "V4", "D4", "C4", "G4", "F4"}
-    
-    is_back = stem_flag in back_flags | back_vowel_flags
-    is_front = stem_flag in front_flags | front_vowel_flags
-    is_rounded = stem_flag in rounded_flags
-    is_vowel = stem_flag in back_vowel_flags | front_vowel_flags
-
-    def adjust_flag(base: str) -> str:
-        return base.lower() if is_vowel else base
-
-    if is_back and not is_rounded:     acc_f = adjust_flag("A1")
-    elif is_back and is_rounded:       acc_f = adjust_flag("A2")
-    elif is_front and not is_rounded:  acc_f = adjust_flag("A3")
-    else:                              acc_f = adjust_flag("A4")
-
-    dat_f = adjust_flag("Y1") if is_back else adjust_flag("Y2")
-    loc_f = "L1" if is_back else "L2"
-    abl_f = "R1" if is_back else "R2"
-
-    if is_back and not is_rounded:     gen_f = adjust_flag("N1")
-    elif is_back and is_rounded:       gen_f = adjust_flag("N2")
-    elif is_front and not is_rounded:  gen_f = adjust_flag("N3")
-    else:                              gen_f = adjust_flag("N4")
-
-    ins_f = adjust_flag("I1") if is_back else adjust_flag("I2")
-    eq_f  = "Q1" if is_back else "Q2"
-
-    plural = "PB" if is_back else "PF"
-
-    if is_back and not is_rounded:     p3 = "PS"
-    elif is_back and is_rounded:       p3 = "PT"
-    elif is_front and not is_rounded:  p3 = "PU"
-    else:                              p3 = "PV"
-
-    if is_back and not is_rounded:     p1 = "P1"
-    elif is_back and is_rounded:       p1 = "P2"
-    elif is_front and not is_rounded:  p1 = "P3"
-    else:                              p1 = "P4"
-
-    if is_back and not is_rounded:     p2s = "P5"
-    elif is_back and is_rounded:       p2s = "P6"
-    elif is_front and not is_rounded:  p2s = "P7"
-    else:                              p2s = "P8"
-
-    if is_back and not is_rounded:     p1pl = "PM"
-    elif is_back and is_rounded:       p1pl = "PO"
-    elif is_front and not is_rounded:  p1pl = "PP"
-    else:                              p1pl = "PQ"
-
-    if is_back and not is_rounded:     p2pl = "PN"
-    elif is_back and is_rounded:       p2pl = "PR"
-    elif is_front and not is_rounded:  p2pl = "PW"
-    else:                              p2pl = "PZ"
-
-    default_derivs = "LILKSZCICKSLDLDTDE"
-    effective_derivs = default_derivs if derivs is None else derivs
-
-    exclude_vowel = stem_flag[0] in ("V", "D", "G")
-    if only_vowel:
-        cases = f"{acc_f}{dat_f}{gen_f}"
-        possessives = f"{p3}{p1}{p2s}{p1pl}{p2pl}"
-        copula_flag = "VC" if is_back else "vc"
-        effective_derivs = ""
-        plural = ""
-    elif only_consonant or exclude_vowel:
-        cases = f"{loc_f}{abl_f}{ins_f}{eq_f}"
-        possessives = ""
-        copula_flag = "CL" if is_back else "cl"
-    else:
-        cases = f"{acc_f}{dat_f}{loc_f}{abl_f}{gen_f}{ins_f}{eq_f}"
-        possessives = f"{p3}{p1}{p2s}{p1pl}{p2pl}"
-        copula_flag = "CL" if is_back else "cl"
-
-    if only_vowel:
-        return f"{cases}{possessives}{copula_flag}NE"
-    else:
-        return f"{stem_flag}{cases}{plural}{possessives}{copula_flag}{effective_derivs}"
+    return noun_chain(stem_flag, only_vowel=only_vowel, only_consonant=only_consonant, derivs=derivs)
 
 
 def get_vowel_chain(stem_flag: str) -> str:
@@ -1463,39 +1387,6 @@ def gen_deriv_len(flag: str = "DE") -> str:
 # ---------------------------------------------------------------------------
 # SECTION 9: Verb paradigm flags (reuse TAM/NEG from v1)
 # ---------------------------------------------------------------------------
-# NOTE: Verb paradigms are the largest flags. We keep negative forms baked in
-# (as per user decision). The verb paradigm flags are generated using the SAME
-# generate_verb_suffixes() + format_verb_rules() logic from v1, but now the
-# flag names are 2-char FLAG long identifiers.
-
-def get_v1_verb_content() -> str:
-    """
-    Import and re-run the old generator's verb section, but relabeling
-    the output flags to FLAG long identifiers.
-    
-    Old → New flag mapping:
-      9   → VB   (back consonant, unrounded)
-      109 → VR   (back consonant, rounded)
-      10  → VF   (front consonant, unrounded)
-      110 → VG   (front consonant, rounded)
-      11  → VA   (back vowel stem, unrounded)
-      111 → VS   (back vowel stem, rounded)
-      12  → VE   (front vowel stem, unrounded)
-      112 → VH   (front vowel stem, rounded)
-      15  → VK   (back consonant voicing)
-      115 → VL   (back consonant voicing, rounded)
-      16  → VM   (front consonant voicing)
-      116 → VN   (front consonant voicing, rounded)
-      17  → VY   (narrowing: demek/yemek)
-    
-    This function is a stub — the actual verb generation is done by calling
-    the v1 generate_verb_suffixes() and format_verb_rules() functions and
-    post-processing to replace integer flags with 2-char flags.
-    """
-    return "# (Verb flags generated by patching v1 logic — see generate_grammar.py)"
-
-
-# ---------------------------------------------------------------------------
 # SECTION 10: Prefix flag
 # ---------------------------------------------------------------------------
 
@@ -2494,7 +2385,7 @@ NEEDAFFIX NE
 LANG tr
 NOSPLITSUGS
 NOPOLYSUGS
-WORDCHARS '’‘.0123456789
+WORDCHARS '’‘.0123456789⁰¹²³⁴⁵⁶⁷⁸⁹
 
 # Break characters (allow breaking at hyphens, en-dashes, and em-dashes)
 BREAK 5
@@ -2522,7 +2413,6 @@ MAXNGRAMSUGS 8
 
 def generate_grammar():
     """Main entry point — generates the new chained tr.aff."""
-    import os
     _build_dir = os.path.dirname(os.path.abspath(__file__))
     _root_dir = os.path.dirname(_build_dir)  # project root (one level up from build/)
     content = generate_header()
@@ -2673,8 +2563,7 @@ def generate_grammar():
     # Count rules
     total_sfx = content.count('\nSFX ')
     print(f"Done. Total SFX rules: {total_sfx}")
-    import os as _os
-    size_kb = _os.path.getsize(os.path.join(_root_dir, 'tr.aff')) / 1024
+    size_kb = os.path.getsize(os.path.join(_root_dir, 'tr.aff')) / 1024
     print(f"tr.aff size: {size_kb:.1f} KB")
 
 
@@ -3041,17 +2930,6 @@ def gen_proper_flags() -> list[str]:
 
     return blocks
 
-
-def get_verbal_noun_chain(stem_flag: str) -> str:
-    """Verbal nouns (like -mak, -me, -iş) should only take case, plural, possessive, and copula.
-    They must never take noun/adjective derivations (like -lik, -li, -siz, -ci, -leş, -len).
-    """
-    if stem_flag in ("PX", "NX"):
-        return stem_flag
-    chain = get_noun_chain(stem_flag)
-    for deriv in ["LI", "LF", "SZ", "LSZ", "LK", "LFK", "CI", "LCI", "CK", "DL", "DT", "DE"]:
-        chain = chain.replace(deriv, "")
-    return chain
 
 # ---------------------------------------------------------------------------
 # FACTORIZED VERB AFFIX GENERATOR (2-MACRO-STAGE ARCHITECTURE)
@@ -4847,10 +4725,8 @@ def generate_aorist_subflag_block(flag: str, aor_vowel: str, is_back: bool, stri
     rules.append(sfx(flag, strip, f"{aor_vowel}rc{v_low}s{neg_unrounded_high}n{v_low}", strip))
     rules.append(sfx(flag, strip, f"{aor_vowel}r{p_high}m", strip))
     rules.append(sfx(flag, strip, f"{aor_vowel}rs{p_high}n", strip))
-    rules.append(sfx(flag, strip, f"{aor_vowel}rs{neg_unrounded_high}n", strip))
     rules.append(sfx(flag, strip, f"{aor_vowel}r{p_high}z", strip))
     rules.append(sfx(flag, strip, f"{aor_vowel}rs{p_high}n{p_high}z", strip))
-    rules.append(sfx(flag, strip, f"{aor_vowel}rs{neg_unrounded_high}n{neg_unrounded_high}z", strip))
     rules.append(sfx(flag, strip, f"{aor_vowel}rl{v_low}r", strip))
     if aor_vowel in ('ı', 'i', 'u', 'ü'):
         p3_aor_lk = "pO" if (is_back and aor_vowel == "u") else ("pA" if is_back else ("pU" if aor_vowel == "ü" else "pE"))
@@ -4934,63 +4810,52 @@ def generate_factorized_verb_rules() -> str:
 
 
 def gen_voicing_copula_flags() -> list[str]:
-    # VC (back voicing copulas: unrounded + rounded)
-    rules_VC = [
-        sfx("VC", "0", "ım", "."),
-        sfx("VC", "0", "ız", "."),
-        sfx("VC", "0", "ımdır", "."),
-        sfx("VC", "0", "ızdır", "."),
-        sfx("VC", "0", "um", "."),
-        sfx("VC", "0", "uz", "."),
-        sfx("VC", "0", "umdur", "."),
-        sfx("VC", "0", "uzdur", ".")
-    ]
+    c_cond = "[^aeıioöuüâîûAEIİOÖUÜÂÎÛ]"
+
+    def _add_harmony_rules(rules: list[str], flag: str, suffix: str, vowels_cls: str) -> None:
+        for c_count in range(1, 4):
+            rules.append(sfx(flag, "0", suffix, vowels_cls + (c_cond * c_count)))
+
+    # VC (back voicing copulas: unrounded vs rounded)
+    rules_VC = []
+    for suf in ("ım", "ız", "ımdır", "ızdır"):
+        _add_harmony_rules(rules_VC, "VC", suf, "[aıâAIÂ]")
+    for suf in ("um", "uz", "umdur", "uzdur"):
+        _add_harmony_rules(rules_VC, "VC", suf, "[ouûOUÛ]")
     block_VC = make_flag_block("VC", unique(rules_VC))
 
-    # vc (front voicing copulas: unrounded + rounded)
-    rules_vc = [
-        sfx("vc", "0", "im", "."),
-        sfx("vc", "0", "iz", "."),
-        sfx("vc", "0", "imdir", "."),
-        sfx("vc", "0", "izdir", "."),
-        sfx("vc", "0", "üm", "."),
-        sfx("vc", "0", "üz", "."),
-        sfx("vc", "0", "ümdür", "."),
-        sfx("vc", "0", "üzdür", ".")
-    ]
+    # vc (front voicing copulas, including inverse-harmony stems: unrounded vs rounded)
+    rules_vc = []
+    for suf in ("im", "iz", "imdir", "izdir"):
+        _add_harmony_rules(rules_vc, "vc", suf, "[eiîaâEİÎAÂ]")
+    for suf in ("üm", "üz", "ümdür", "üzdür"):
+        _add_harmony_rules(rules_vc, "vc", suf, "[öüouûÖÜOUÛ]")
     block_vc = make_flag_block("vc", unique(rules_vc))
 
     return [block_VC, block_vc]
 
 
 def gen_numeral_flags() -> list[str]:
-    """Generate apostrophe-suffix flags for the 9 Turkish phonological numeral classes (N5..ND).
+    """Generate suffix flags for the 9 Turkish phonological classes (N5..ND).
 
-    Every Turkish number and clock time maps to one of 9 suffix paradigms based on
-    the pronunciation of its final spoken element:
-      - N5: 1, 8, 80, 1000 (bir, sekiz, seksen, bin: front unrounded, voiced consonant)
-      - N6: 2, 7, 20, 50   (iki, yedi, yirmi, elli: front unrounded, vowel-ending)
-      - N7: 3, 4           (üç, dört: front rounded, unvoiced consonant)
-      - N8: 5, 70          (beş, yetmiş: front unrounded, unvoiced consonant)
-      - N9: 6              (altı: back unrounded, vowel-ending)
-      - NA: 9, 10, 30, 10^6(dokuz, on, otuz, milyon: back rounded, voiced consonant)
-      - NB: 40, 60         (kırk, altmış: back unrounded, unvoiced consonant)
-      - NC: 90, 0, 10^9    (doksan, sıfır, milyar: back unrounded, voiced consonant)
-      - ND: 100            (yüz: front rounded, voiced consonant)
+    Covers:
+      1. Numeric/clock-time stems ending in [0-9]: apostrophe-separated inflections.
+      2. Superscript stems (⁰..⁹) & dotted abbreviations (.): apostrophe-less inflections
+         (excluding ordinals and distributives) per TDK rules.
     """
     specs = [
-        ("N5", "e", "i", False, False),
-        ("N6", "e", "i", True,  False),
-        ("N7", "e", "ü", False, True),
-        ("N8", "e", "i", False, True),
-        ("N9", "a", "ı", True,  False),
-        ("NA", "a", "u", False, False),
-        ("NB", "a", "ı", False, True),
-        ("NC", "a", "ı", False, False),
-        ("ND", "e", "ü", False, False),
+        ("N5", "e", "i", False, False, "[¹⁸.]"),
+        ("N6", "e", "i", True,  False, "[²⁷.]"),
+        ("N7", "e", "ü", False, True,  "[³⁴.]"),
+        ("N8", "e", "i", False, True,  "[⁵.]"),
+        ("N9", "a", "ı", True,  False, "[⁶.]"),
+        ("NA", "a", "u", False, False, "[⁹.]"),
+        ("NB", "a", "ı", False, True,  "[.]"),
+        ("NC", "a", "ı", False, False, "[⁰.]"),
+        ("ND", "e", "ü", False, False, "[.]"),
     ]
     blocks = []
-    for flag, v_low, v_high, is_vowel, is_unvoiced in specs:
+    for flag, v_low, v_high, is_vowel, is_unvoiced, no_apos_cond in specs:
         d = "t" if is_unvoiced else "d"
         c_eq = "ç" if is_unvoiced else "c"
         v_unround = "ı" if v_low == "a" else "i"
@@ -5003,7 +4868,8 @@ def gen_numeral_flags() -> list[str]:
         p1pl = f"'{ '' if is_vowel else v_high }m{v_high}z"
         p2pl = f"'{ '' if is_vowel else v_high }n{v_high}z"
 
-        suffixes = [
+        # Sections allowed WITHOUT apostrophe on superscripts & dotted abbreviations (1, 2, 5, 6, 7)
+        base_suffixes = [
             # 1. Singular Cases + Locative -ki
             f"'{y_buf}{v_low}",
             f"'{y_buf}{v_high}",
@@ -5036,35 +4902,6 @@ def gen_numeral_flags() -> list[str]:
             # 1pl & 2pl Possessives (e.g. 3'ümüz, 2'miz, 1'imiz)
             p1pl, f"{p1pl}{v_low}", f"{p1pl}d{v_low}", f"{p1pl}d{v_low}n", f"{p1pl}{v_high}", f"{p1pl}{v_high}n",
             p2pl, f"{p2pl}{v_low}", f"{p2pl}d{v_low}", f"{p2pl}d{v_low}n", f"{p2pl}{v_high}", f"{p2pl}{v_high}n",
-            # 3. Ordinals (-ıncı/-inci/-uncu/-üncü/-ncı/-nci) + Cases & Possessives
-            ord_base,
-            f"{ord_base}y{v_low}",
-            f"{ord_base}y{v_high}",
-            f"{ord_base}d{v_low}",
-            f"{ord_base}d{v_low}ki",
-            f"{ord_base}d{v_low}n",
-            f"{ord_base}n{v_high}n",
-            f"{ord_base}yl{v_low}",
-            f"{ord_base}s{v_high}",
-            f"{ord_base}s{v_high}n{v_low}",
-            f"{ord_base}s{v_high}nd{v_low}",
-            f"{ord_base}s{v_high}nd{v_low}n",
-            f"{ord_base}s{v_high}n{v_high}",
-            f"{ord_base}s{v_high}n{v_high}n",
-            f"{ord_base}s{v_high}yl{v_low}",
-            f"{ord_base}l{v_low}r",
-            f"{ord_base}l{v_low}rd{v_low}",
-            f"{ord_base}l{v_low}rd{v_low}n",
-            f"{ord_base}l{v_low}r{v_low}",
-            f"{ord_base}l{v_low}r{v_unround}",
-            f"{ord_base}l{v_low}r{v_unround}n",
-            f"{ord_base}l{v_high}k",
-            f"{ord_base}l{v_high}ğ{v_high}",
-            f"{ord_base}l{v_high}ğ{v_low}",
-            # 4. Distributives ('er/'şer/'ar/'şar)
-            dist_base,
-            f"{dist_base}l{v_unround}",
-            f"{dist_base}d{v_low}n",
             # 5. Plurals (e.g. 1980'ler, 80'lerde, 30'ların, 100'lerin, 100'lerce)
             pl_base,
             f"{pl_base}d{v_low}",
@@ -5116,10 +4953,48 @@ def gen_numeral_flags() -> list[str]:
             f"'{d}{v_low}nd{v_unround}r",
             f"'{d}{v_low}nd{v_unround}",
         ]
+
+        # Numeric-only apostrophe sections (3: Ordinals, 4: Distributives)
+        num_only_suffixes = [
+            # 3. Ordinals (-ıncı/-inci/-uncu/-üncü/-ncı/-nci) + Cases & Possessives
+            ord_base,
+            f"{ord_base}y{v_low}",
+            f"{ord_base}y{v_high}",
+            f"{ord_base}d{v_low}",
+            f"{ord_base}d{v_low}ki",
+            f"{ord_base}d{v_low}n",
+            f"{ord_base}n{v_high}n",
+            f"{ord_base}yl{v_low}",
+            f"{ord_base}s{v_high}",
+            f"{ord_base}s{v_high}n{v_low}",
+            f"{ord_base}s{v_high}nd{v_low}",
+            f"{ord_base}s{v_high}nd{v_low}n",
+            f"{ord_base}s{v_high}n{v_high}",
+            f"{ord_base}s{v_high}n{v_high}n",
+            f"{ord_base}s{v_high}yl{v_low}",
+            f"{ord_base}l{v_low}r",
+            f"{ord_base}l{v_low}rd{v_low}",
+            f"{ord_base}l{v_low}rd{v_low}n",
+            f"{ord_base}l{v_low}r{v_low}",
+            f"{ord_base}l{v_low}r{v_unround}",
+            f"{ord_base}l{v_low}r{v_unround}n",
+            f"{ord_base}l{v_high}k",
+            f"{ord_base}l{v_high}ğ{v_high}",
+            f"{ord_base}l{v_high}ğ{v_low}",
+            # 4. Distributives ('er/'şer/'ar/'şar)
+            dist_base,
+            f"{dist_base}l{v_unround}",
+            f"{dist_base}d{v_low}n",
+        ]
+
         rules = []
-        for suf in unique(suffixes):
-            rules.append(sfx(flag, "0", suf, "."))
-            rules.append(sfx(flag, "0", suf.replace("'", "’"), "."))
+        for suf in unique(base_suffixes + num_only_suffixes):
+            rules.append(sfx(flag, "0", suf, "[0123456789]"))
+            rules.append(sfx(flag, "0", suf.replace("'", "’"), "[0123456789]"))
+        for suf in unique(base_suffixes):
+            no_apos = suf.lstrip("'")
+            if no_apos:
+                rules.append(sfx(flag, "0", no_apos, no_apos_cond))
         blocks.append(make_flag_block(flag, unique(rules)))
     return blocks
 

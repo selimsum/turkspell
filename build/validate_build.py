@@ -21,6 +21,8 @@ if hasattr(sys.stderr, 'reconfigure'):
     sys.stderr.reconfigure(encoding='utf-8', line_buffering=True)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from build_common import find_hunspell, tr_lower
 
 # Floor, not a target — guards against a truncated or half-written dictionary.
 MIN_ENTRIES = 90_000
@@ -31,7 +33,7 @@ MIN_PRESENCE = 0.95
 
 def _tlc(s: str) -> str:
     """Turkish lowercase (I->ı, İ->i)."""
-    return s.replace('I', 'ı').replace('İ', 'i').lower()
+    return tr_lower(s)
 
 
 def _load_dic(path):
@@ -246,15 +248,7 @@ def validate(dic_path='tr.dic', aff_path='tr.aff', verbose=True, run_tests=True)
 def check_regression_tests(errors):
     test_script = os.path.join(BASE_DIR, "tests", "test_morphology.py")
     if os.path.exists(test_script):
-        import shutil
-        if shutil.which("hunspell") is None:
-            winget_pkg_dir = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages")
-            for root, dirs, files in os.walk(winget_pkg_dir):
-                if "hunspell.exe" in files:
-                    if root not in os.environ.get("PATH", ""):
-                        os.environ["PATH"] = root + os.pathsep + os.environ["PATH"]
-                    break
-        if shutil.which("hunspell") is None:
+        if find_hunspell() is None:
             print("  morphological regression tests: SKIPPED (hunspell binary not found in PATH)")
             return
         import subprocess

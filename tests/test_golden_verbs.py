@@ -9,6 +9,7 @@ Loads the golden baseline dataset and verifies:
 """
 
 import os
+import sys
 import json
 import shutil
 import subprocess
@@ -19,15 +20,10 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 BASELINE_PATH = ROOT_DIR / "tests" / "golden_verbs_baseline.json"
 DICT_PATH = os.environ.get("TURKSPELL_DICT", str(ROOT_DIR / "tr"))
 
-# Ensure hunspell is in PATH
-winget_pkg_dir = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages")
-for root, dirs, files in os.walk(winget_pkg_dir):
-    if "hunspell.exe" in files:
-        if root not in os.environ.get("PATH", ""):
-            os.environ["PATH"] = root + os.pathsep + os.environ["PATH"]
-        break
+sys.path.insert(0, str(ROOT_DIR / "build"))
+from build_common import find_hunspell
 
-HUNSPELL_BIN = shutil.which("hunspell")
+HUNSPELL_BIN = find_hunspell()
 
 
 def check_words_batch(words: list[str], dict_path: str = DICT_PATH) -> set[str]:

@@ -64,8 +64,9 @@ import os
 import json
 from pathlib import Path
 
-# utf8_flag_mapping lives in build/ — make it importable regardless of CWD.
+# utf8_flag_mapping and build_common live in build/ — make them importable regardless of CWD.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'build'))
+from build_common import noun_chain, tr_lower
 from utf8_flag_mapping import remap_flag_string
 
 
@@ -106,110 +107,6 @@ VERB_FLAG_MAP = {
 
 ALL_FLAG_MAP = {**NOUN_FLAG_MAP, **VERB_FLAG_MAP}
 
-# ---------------------------------------------------------------------------
-# Noun morphological chains per harmony class
-# ---------------------------------------------------------------------------
-# Each noun stem class maps to a set of morphological flags.
-# The chain includes: cases, plural, all possessives, copula, relative-ki, derivations.
-
-def noun_chain(stem_flag: str, only_vowel: bool = False) -> str:
-    """Return the morphological flag chain for a given stem class flag."""
-    if stem_flag in ("PX", "NX"):
-        return stem_flag
-    back_flags = {"B1", "B2", "V1", "V2", "D1", "D2", "C1", "C2", "G1", "G2"}  # back cons
-    back_vowel_flags = {"B3", "B4"}                                               # back vowel-end
-    front_flags = {"F1", "F2", "V3", "V4", "D3", "D4", "C3", "C4", "G3", "G4"} # front cons
-    front_vowel_flags = {"F3", "F4"}                                              # front vowel-end
-    rounded_flags = {"B2", "V2", "D2", "C2", "G2", "B4", "F2", "V4", "D4", "C4", "G4", "F4"}
-    is_back = stem_flag in back_flags | back_vowel_flags
-    is_front = stem_flag in front_flags | front_vowel_flags
-    is_rounded = stem_flag in rounded_flags
-    is_vowel = stem_flag in back_vowel_flags | front_vowel_flags
-
-    def adjust_flag(base: str) -> str:
-        return base.lower() if is_vowel else base
-
-    # Case flags split by harmony
-    if is_back and not is_rounded:     acc_f = adjust_flag("A1")
-    elif is_back and is_rounded:       acc_f = adjust_flag("A2")
-    elif is_front and not is_rounded:  acc_f = adjust_flag("A3")
-    else:                              acc_f = adjust_flag("A4")
-
-    dat_f = adjust_flag("Y1") if is_back else adjust_flag("Y2")
-    loc_f = "L1" if is_back else "L2"
-    abl_f = "R1" if is_back else "R2"
-
-    if is_back and not is_rounded:     gen_f = adjust_flag("N1")
-    elif is_back and is_rounded:       gen_f = adjust_flag("N2")
-    elif is_front and not is_rounded:  gen_f = adjust_flag("N3")
-    else:                              gen_f = adjust_flag("N4")
-
-    ins_f = adjust_flag("I1") if is_back else adjust_flag("I2")
-    eq_f  = "Q1" if is_back else "Q2"
-
-    plural = "PB" if is_back else "PF"
-
-    if is_back and not is_rounded:     p3 = "PS"
-    elif is_back and is_rounded:       p3 = "PT"
-    elif is_front and not is_rounded:  p3 = "PU"
-    else:                              p3 = "PV"
-
-    if is_back and not is_rounded:     p1 = "P1"
-    elif is_back and is_rounded:       p1 = "P2"
-    elif is_front and not is_rounded:  p1 = "P3"
-    else:                              p1 = "P4"
-
-    if is_back and not is_rounded:     p2s = "P5"
-    elif is_back and is_rounded:       p2s = "P6"
-    elif is_front and not is_rounded:  p2s = "P7"
-    else:                              p2s = "P8"
-
-    if is_back and not is_rounded:     p1pl = "PM"
-    elif is_back and is_rounded:       p1pl = "PO"
-    elif is_front and not is_rounded:  p1pl = "PP"
-    else:                              p1pl = "PQ"
-
-    if is_back and not is_rounded:     p2pl = "PN"
-    elif is_back and is_rounded:       p2pl = "PR"
-    elif is_front and not is_rounded:  p2pl = "PW"
-    else:                              p2pl = "PZ"
-
-    exclude_vowel = stem_flag[0] in ("V", "D", "G")
-    if only_vowel:
-        cases = f"{acc_f}{dat_f}{gen_f}"
-        possessives = f"{p3}{p1}{p2s}{p1pl}{p2pl}"
-        plural = ""
-        copula_flag = "VC" if is_back else "vc"
-        derivs = ""
-    elif exclude_vowel:
-        cases = f"{loc_f}{abl_f}{ins_f}{eq_f}"
-        possessives = ""
-        copula_flag = "CL" if is_back else "cl"
-        derivs = "LILKSZCICKSL" + "DLDTDE"
-    else:
-        cases = f"{acc_f}{dat_f}{loc_f}{abl_f}{gen_f}{ins_f}{eq_f}"
-        possessives = f"{p3}{p1}{p2s}{p1pl}{p2pl}"
-        copula_flag = "CL" if is_back else "cl"
-        derivs = "LILKSZCICKSL" + "DLDTDE"
-
-    if only_vowel:
-        return (
-            f"{cases}"
-            f"{possessives}"
-            f"{copula_flag}"
-            f"NE"
-        )
-    else:
-        return (
-            f"{stem_flag}"
-            f"{cases}"
-            f"{plural}"
-            f"{possessives}"
-            f"{copula_flag}"
-            f"{derivs}"
-        )
-
-
 
 # ---------------------------------------------------------------------------
 # Parser
@@ -247,7 +144,7 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
     else:
         # No flags — check if word is obsolete
         word = line
-        w_lower = word.replace('I', 'ı').replace('İ', 'i').lower()
+        w_lower = tr_lower(word)
         if obsolete_set and w_lower in obsolete_set:
             return f"{word}/NS", ''
         return line, ''
@@ -257,7 +154,7 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
 
     # Check if word is obsolete
     is_obsolete = False
-    w_lower = word.replace('I', 'ı').replace('İ', 'i').lower()
+    w_lower = tr_lower(word)
     if obsolete_set and w_lower in obsolete_set:
         is_obsolete = True
 
@@ -315,7 +212,7 @@ def migrate_line(line: str, line_num: int, obsolete_set: set[str] = None, only_v
                     chain = chain.replace(deriv, "")
 
             # Overgeneration hardening: prevent chained pseudo-word derivations
-            w_low = word.replace('I', 'ı').replace('İ', 'i').lower()
+            w_low = tr_lower(word)
             if w_low.endswith(("lık", "lik", "luk", "lük")):
                 for fl in ("CI", "LCI", "LK", "LFK", "DL", "DT", "DE"):
                     chain = chain.replace(fl, "")

@@ -53,7 +53,11 @@ scratch/
 # External dictionaries
 external_dictionaries/
 
-# Raw data directory
-raw_data/
+# Raw data directory (track only authoritative build inputs)
+raw_data/*
+!raw_data/tdk_words.txt
+!raw_data/dil_dernegi_words.txt
+!raw_data/tdk_dizin_2026.json
+!raw_data/custom_entries.json
 
 *.pickle

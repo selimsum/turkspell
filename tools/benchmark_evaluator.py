@@ -4,6 +4,9 @@ import subprocess
 import sys
 import time
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "build"))
+from build_common import find_hunspell
+
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
@@ -11,12 +14,7 @@ if hasattr(sys.stdout, 'reconfigure'):
 class NativeHunspellAdapter:
     def __init__(self, dict_path: str):
         self.dict_path = dict_path
-        winget_pkg_dir = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages")
-        for root, _, files in os.walk(winget_pkg_dir):
-            if "hunspell.exe" in files and root not in os.environ.get("PATH", ""):
-                os.environ["PATH"] = root + os.pathsep + os.environ.get("PATH", "")
-                break
-        self.bin = shutil.which("hunspell")
+        self.bin = find_hunspell()
         if not self.bin:
             raise RuntimeError("hunspell binary not found in PATH")
 

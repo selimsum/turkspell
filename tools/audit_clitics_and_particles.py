@@ -2,7 +2,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(r"c:\gemini\turkspell")
+ROOT = Path(__file__).resolve().parent.parent
 HUNSPELL = "hunspell"
 
 PROFILES = {

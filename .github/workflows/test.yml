@@ -44,14 +44,14 @@ jobs:
 
       - name: Verify Build Reproducibility & Artifact Sync
         run: |
-          python tools/build.py --skip-tests
+          python tools/build.py --compile-base --skip-tests
           git diff --exit-code -- tr.dic tr.aff dist/
 
       - name: Run Pytest (Universal Profile)
         run: |
           pytest -v
 
-      - name: Run Overgeneration Suite (TDK & DD Profiles)
+      - name: Run Multi-Profile Suite (TDK & DD Profiles)
         run: |
-          TURKSPELL_DICT=dist/turkspell-tdk/tr pytest tests/test_overgeneration.py -v
-          TURKSPELL_DICT=dist/turkspell-dd/tr pytest tests/test_overgeneration.py -v
+          TURKSPELL_DICT=dist/turkspell-tdk/tr pytest tests/test_morphology.py tests/test_overgeneration.py tests/test_golden_verbs.py -v
+          TURKSPELL_DICT=dist/turkspell-dd/tr pytest tests/test_morphology.py tests/test_overgeneration.py tests/test_golden_verbs.py -v

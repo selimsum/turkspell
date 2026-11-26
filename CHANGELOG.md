@@ -2,6 +2,30 @@
 
 Tüm önemli değişiklikler bu dosyada belgelenmektedir. Proje [Semantic Versioning](https://semver.org/) prensiplerini takip eder.
 
+## [Unreleased]
+
+### 🛠️ Morfoloji, TDK Kısaltma Kuralları ve Kalite İyileştirmeleri
+- **TDK Noktalı ve Üs İşaretli Kısaltma Desteği (`build/generate_grammar_rules.py`, `build/build_common.py`, `tools/build.py`, `lexicons/build_wordlists.json`)**:
+  - Sonunda nokta bulunan kısaltmalarla (`vb.leri`, `Alm.dan`, `İng.yi`, `a.g.e.de`, `Dr.a`, `Prof.e`, `yy.da`, `T.C.nde`) üs işaretli kısaltmalara/sayılara (`cm³e`, `m²ye`, `6⁴ten`, `10⁶ya`) gelen eklerin kesme işareti olmadan okunuşa uygun bitişik yazılması sağlandı; kesmeli hatalı biçimler (`vb.'leri`, `Alm.'dan`, `cm³'e`, `m²'ye`, `6⁴'ten`) reddedilip `REP` kurallarıyla Top-1 öneriye bağlandı.
+  - `WORDCHARS` başlığına üs rakamları (`⁰¹²³⁴⁵⁶⁷⁸⁹`) eklendi; noktalı kısaltmalara sızan cins isim/yapım eki ve özel ad kesme bayrakları temizlendi.
+- **Morfolojik Aşırı Üretim ve Saat Düzeltmeleri (`build/generate_grammar_rules.py`, `build/build_common.py`)**:
+  - Yuvarlak geniş zaman fiil köklerindeki uyumsuz 2. tekil/çoğul biçimler (`*olursın`, `*görürsin`, `*bulursınız`, `*ölürsiniz`) kaldırıldı.
+  - Yumuşayan adlarda 1. tekil/çoğul ek eylem (`VC`/`vc`) kurallarına yuvarlaklık uyumu koşulları eklendi (`*devletüm`, `*pilotım`, `*stokım`, `*çöpim` engellendi).
+  - 24 saatlik saat gösteriminde geçersiz `24.01`–`24.59` kökleri kaldırıldı (`24.00` korundu).
+  - `tools/build.py` içindeki `seen_heads` demet uyumsuzluğu giderilerek `mat`, `zıt`, `kal`, `ark`, `tutamak` köklerine sızan fazladan bayraklar temizlendi.
+- **Tekrarlanabilir Derleme, CI ve Kod Temizliği**:
+  - Ortak Türkçe harf dönüştürme (`tr_lower`/`tr_upper`/`tr_title`), `find_hunspell()`, sayı/üs üretimi ve `noun_chain` yardımcıları `build/build_common.py` modülünde birleştirilerek `build/` ↔ `tools/build.py` döngüsel bağımlılığı kaldırıldı.
+  - Temiz klonlarda `--compile-base` derlemesinin eksiksiz çalışması için `raw_data/tdk_dizin_2026.json` ve `raw_data/custom_entries.json` sürüm kontrolüne alındı ve eksik girdi sessizce atlanmak yerine hata fırlatacak şekilde sertleştirildi.
+  - CI iş akışı (`.github/workflows/test.yml`) `--compile-base` tekrarlanabilirliğini ve `TDK`/`DD` profilleri için tam morfoloji + fiil regresyon testlerini doğrulayacak şekilde genişletildi (`tests/test_morphology.py` içindeki `görmemezlik` TDK profili koruması eklendi).
+  - `README.md` içindeki 44 yerel `file:///` bağlantısı göreli depo yollarıyla değiştirildi, metrikler güncellendi, `tools/profile_affix_rules.py` UTF-8 BOM'u ve araçlardaki sabit yerel makine yolları temizlendi.
+
+## [0.7.26] - [0.7.40] - 2026-10-24 / 2026-11-26
+
+### ✨ Öne Çıkan Değişiklikler (Git Geçmişi Özeti)
+- **FineWeb-2 Derlem Madenciliği ve Öneri (`REP`) Genişletmeleri**: Büyük Türkçe derlemlerden doğrulanmış yüzlerce ortografik yazım yanlışı, ayrı/bitişik bileşik ve bağlaç (`de`/`da`, `ki`, `mı`) düzeltme kuralı eklendi.
+- **Derleme Boru Hattı ve Bayrak Hijyeni**: Satır içi kelime listeleri ve istisnalar `lexicons/build_wordlists.json` dosyasına taşındı; cins isim bayrak şişkinliği ve ara derleme uyarıları giderildi; `--compile-base` ve artımlı derlemeler %100 bayt-özdeş (idempotent) hâle getirildi.
+- **Özel Ad Kesme Sözleşmesi**: Özel adlardan kesmesiz cins isim hal/iyelik bayrakları ayrıştırıldı; sürüm otomasyonu ve çoklu profil CI doğrulamaları eklendi.
+
 ## [0.7.25] - 2026-10-23
 
 ### 🧹 Sözlük Hijyeni, Morfolojik Kural Sertleştirmesi & Kalite Kapıları

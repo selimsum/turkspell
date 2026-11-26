@@ -16,13 +16,10 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DICT_PATH = os.environ.get("TURKSPELL_DICT", str(ROOT_DIR / "tr"))
 
-winget_pkg_dir = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages")
-for root, dirs, files in os.walk(winget_pkg_dir):
-    if "hunspell.exe" in files:
-        if root not in os.environ.get("PATH", ""):
-            os.environ["PATH"] = root + os.pathsep + os.environ["PATH"]
-        break
-HUNSPELL_BIN = shutil.which("hunspell") or "hunspell"
+sys.path.insert(0, str(ROOT_DIR / "build"))
+from build_common import find_hunspell
+
+HUNSPELL_BIN = find_hunspell() or "hunspell"
 
 def check_words(words: list[str], dict_path: str = DICT_PATH) -> tuple[list[str], list[str]]:
     """Runs hunspell -l and returns (accepted_words, rejected_words)."""
@@ -903,10 +900,12 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
             "tanınırlık", "tanınırlığı", "tanınırlığın", "tanınırlıktır",
             "öngörülebilirlik", "öngörülebilirliği", "öngörülebilirliğin", "öngörülebilirliktir",
             "izlenebilirlik", "izlenebilirliği", "izlenebilirliğin", "izlenebilirliktir",
-            "görmezlik", "görmezlikten", "görmemezlik", "görmemezlikten",
+            "görmezlik", "görmezlikten",
             "sporsever", "sporseverler", "kitapsever", "kitapseverler", "hayvansever", "sinemasever",
             "vazgeçilmezi", "vazgeçilmezidir", "vazgeçilmezleri", "vazgeçilmezlerinden", "vazgeçilmezlerindendir",
         ]
+        if not is_tdk_profile():
+            valid_words.extend(["görmemezlik", "görmemezlikten"])
         _, rej = check_words(valid_words)
         self.assertEqual(rej, [], f"FineWeb-2 enhanced forms rejected: {rej}")
 
@@ -919,6 +918,30 @@ class TestZemberekAnomalyRescues(unittest.TestCase):
         ]
         acc_inv, _ = check_words(invalid_words)
         self.assertEqual(acc_inv, [], f"Illegal overgenerated forms leaked: {acc_inv}")
+
+    def test_tdk_dotted_and_superscript_abbreviations(self):
+        """TDK: suffixes on dotted abbreviations and superscripts attach directly without apostrophes."""
+        valid_words = [
+            "vb.leri", "vb.ni", "vb.ne", "vb.nde", "vb.nden",
+            "Alm.dan", "Alm.da", "Alm.ya", "Alm.yı", "Alm.nın",
+            "İng.yi", "İng.ye", "İng.de", "İng.den", "İng.nin",
+            "yy.da", "yy.dan", "yy.ın",
+            "a.g.e.de", "a.g.e.den", "a.g.e.in",
+            "Dr.a", "Dr.u", "Dr.un", "Dr.dan",
+            "Prof.e", "Prof.ü", "Prof.ün", "Prof.de",
+            "Doç.te", "Doç.ten",
+            "Av.ta", "Av.tan",
+            "T.C.nde", "T.C.ne", "T.C.nin",
+            "cm³e", "cm³ü", "cm³ün", "cm³te", "cm³ten", "cm³lük",
+            "m²ye", "m²yi", "m²de", "m²den", "m²nin", "m²lik", "m²si",
+            "km²ye", "km²de", "m³e", "m³ten", "mm²ye", "mm³e",
+            "6⁴ten", "6⁴te", "6⁴e", "6⁴ü", "6⁴ün",
+            "10⁶ya", "2³ten",
+            # Verify valid controls still pass after harmony/clock/copula fixes
+            "24.00'te", "saatim", "kalbim", "devletim", "pilotum", "çöpüz", "olursun", "görürsün",
+        ]
+        _, rej = check_words(valid_words)
+        self.assertEqual(rej, [], f"Valid TDK dotted/superscript or control forms rejected: {rej}")
 
 
 if __name__ == "__main__":

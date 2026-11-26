@@ -26,16 +26,12 @@ if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
-BENCH_DIR = Path(r"c:\gemini\turkspell-benchmarks")
+BENCH_DIR = Path(os.environ.get("TURKSPELL_BENCHMARKS_DIR", ROOT_DIR.parent / "turkspell-benchmarks"))
 
-# Locate hunspell binary
-winget_pkg_dir = os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages")
-for root, dirs, files in os.walk(winget_pkg_dir):
-    if "hunspell.exe" in files:
-        if root not in os.environ.get("PATH", ""):
-            os.environ["PATH"] = root + os.pathsep + os.environ["PATH"]
-        break
-HUNSPELL_BIN = shutil.which("hunspell") or "hunspell"
+sys.path.insert(0, str(ROOT_DIR / "build"))
+from build_common import find_hunspell
+
+HUNSPELL_BIN = find_hunspell() or "hunspell"
 
 _TOKEN_RE = re.compile(r"[a-zA-ZçÇğĞıİöÖşŞüÜâÂîÎûÛ]+")
 _VALID_TR_RE = re.compile(r"^[abcçdefgğhıijklmnoöprsştuüvyzâîû]+$")

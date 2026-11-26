@@ -70,7 +70,7 @@ jobs:
 
       - name: Validate Build & Run Test Suite
         run: |
-          python build/validate_build.py
+          python build/validate_build.py --no-tests
           pytest -v
 
       - name: Determine & Bump Extension Version
